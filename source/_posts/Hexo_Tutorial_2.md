@@ -1,6 +1,10 @@
 ---
-title: Hexo教程(二)
-tags:
+title: Hexo教程（二）
+date: 2019-01-05 20:05:35
+categories: 
+- 教程
+- Hexo
+tags: Hexo
 ---
 
 这一篇我们将学习使用主题，`themes`文件夹即为主题文件存在的路径。Hexo安装后自带了`landscape`主题，在Hexo官网上也有多个主题供选择，这里我选择了较为经典的模版`nexT`，`nexT`的[官网文档](http://theme-next.iissnan.com/)可能因为较长时间未更新，文档的中的一些配置已经无法在最新的`nexT`中生效。
@@ -41,7 +45,7 @@ language: zh-CN
 
 ## Menu菜单
 
-默认的Menu菜单只有归档和首页两个页面，如果要增加更多的页面，在主题配置文件的`menu`字段中加入即可，字段的格式如下。其中Icon为[Font Awesome]("http://fontawesome.dashgame.com/")图标，名字与`Font Awesome`对应即可
+默认的Menu菜单只有归档和首页两个页面，如果要增加更多的页面，在主题配置文件的`menu`字段中加入即可，字段的格式如下。其中Icon为[Font Awesome](http://fontawesome.dashgame.com/)图标，名字与`Font Awesome`对应即可
 
 ```yml
 menu:
