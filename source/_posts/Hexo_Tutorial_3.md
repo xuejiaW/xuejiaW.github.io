@@ -90,3 +90,82 @@ motion:
 ```
 
 上例中的tags即为[FontAwesome图标](https://fontawesome.com/icons?d=gallery)
+
+## 首页增加阅读全文功能
+
+在文章想要出现在首页的内容之后加入`<!--more-->`即可
+
+```md
+这一篇主要是说明标签页面和分类页面如何创建以及一些针对主题的细枝末节的修改。本篇文章也将持续更新，在每次网站主题修改后，都将在本篇中记录修改方法。
+
+<!--more-->
+```
+
+![阅读全文效果](Hexo_Tutorial_3/2019-01-06-20-13-28.png)
+
+在点击了阅读全文按钮进入文章后会发现，文章自动跳转到了首页显示内容之后的地方，如果要关闭这个功能，在主题配置文件中修改`scroll_to_more`字段
+
+```yml
+scroll_to_more: false
+```
+
+## 关闭归档页面Cheers
+
+进入归档页面后会发现默认有以下效果
+
+![归档页面Cheers](Hexo_Tutorial_3/2019-01-06-20-23-04.png)
+
+如果需要关闭的话，在主题配置文件中找到`cheers_enabled`字段
+
+```yml
+cheers_enabled: false
+```
+
+## 文章及站点字数统计
+
+> Github支持地址：https://github.com/theme-next/hexo-symbols-count-time
+
+首先在Hexo目录下运行`npm install hexo-symbols-count-time --save`安装需要的插件，后在站点配置文件中添加
+
+```yml
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: false
+```
+
+再在主题配置文件中修改`symbols_count_time`字段
+
+```yml
+symbols_count_time:
+  separated_meta: true
+  item_text_post: true
+  item_text_total: true
+  awl: 2 # 统计的语言 中文为2，英语为5，俄语为6
+  wpm: 275 # 每分钟估计的阅读字符数
+```
+
+## 增加本地搜索功能
+
+> Github支持地址 https://github.com/theme-next/hexo-generator-searchdb
+
+首先在Hexo目录下运行`npm install hexo-generator-searchdb --save`安装需要的插件，后在站点配置文件中添加
+
+```yml
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000 #最大搜索的文章数，10000即为在最新的10000篇文章中搜索
+```
+
+再在主题文件中配置修改`local_search`字段
+
+```yml
+local_search:
+  enable: true
+  trigger: auto
+  top_n_per_article: 1
+  unescape: false
+```
