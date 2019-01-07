@@ -97,11 +97,13 @@ tags: Hexo
 
    * 注意page页面只能是master，hexo源码可以保存在自己新建的任意分支
 
-3. 运行`hexo deploy`将数据部署到网站
+3. 运行`npm install hexo-deployer-git --save`安装部署插件
+
+4. 运行`hexo deploy`将数据部署到网站
 
    * 注意：有时候部署后，发现本地发生了变化，但是网站上没有变化，此时运行先运行 `hexo clean`再`hexo deploy`
   
-4. 访问地址
+5. 访问地址
 
     将上面看到的路径复制到游览器中即可看到自己的博客效果。
 
