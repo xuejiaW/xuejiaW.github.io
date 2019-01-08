@@ -169,3 +169,74 @@ local_search:
   top_n_per_article: 1
   unescape: false
 ```
+
+## 修改背景
+
+在`\themes\next\source\css\_custom\custom.styl`文件下增加
+
+```css
+body {
+    background:url("background url");
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    background-size: cover;
+    width: 100%;
+}
+```
+
+## 修改页面其他元素
+
+实际上next自定义的修改都可放在`\themes\next\source\css\_custom\custom.styl`下，想要修改某一部分时，可以先打开博客网页（以Chrome游览器为例），然后按F12，唤出调试界面。
+![修改页面元素](Hexo_Tutorial_3/2019-01-09-01-02-13.png)
+当在Element情况下选择部分代码，左侧页面相关部分会高亮，这部分类也会相应的显示出来，如上图中为`.sidebar-inner`，只要把最右侧的相关代码
+
+```css
+.sidebar-inner {
+    position: relative;
+    padding: 20px 10px;
+    color: #999;
+    text-align: center;
+}
+```
+
+改动后复制到`custom.styl`即可。
+
+由于我不懂CSS，所以这部分的修改也是摸石头过河，就不多说了。
+
+## 增加Valine评论系统
+
+[Valine](https://valine.js.org/quickstart.html)是一个轻量级，无后端的评论系统，它完全依赖于[Leancloud](https://leancloud.cn/)运行，配置起来也十分便捷。
+在`Leancloud`上完成账号的注册登录，并创建完应用后。如下图进入应用界面，并进入设置找到AppID与AppKey。
+
+![LeanCloud界面](Hexo_Tutorial_3/2019-01-09-01-16-01.png)
+
+在主题配置文件中开启Valine并填入相应参数即可
+
+```yml
+valine:
+  enable: true
+  appid:  APPID
+  appkey:  APPKEY
+  notify: false
+  verify: false
+  placeholder: 匿名的！不需要注册！想说啥直接说吧！
+  avatar: mm
+  guest_info: nick,mail,link
+  pageSize: 10
+  visitor: true #这里开启后注意该文件中还有一个leancloud_visitors字段，这两个功能相同，选一个开启就好，否则会有冲突
+```
+
+完成配置后刷新页面，每篇文章下便会出现评论，之前的分类及标签页面也会出现，如果不想在这两个页面显示评论，可以修改对应的`index.md`文件，如
+
+```yml
+---
+title: 标签
+date: 2019-01-06 00:21:31
+type: "tags"
+comments: false
+---
+```
+
+## 待续
+
+...
