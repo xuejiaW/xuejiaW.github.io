@@ -7,7 +7,11 @@ categories:
 tags: Hexo
 ---
 
+{% cq %}
+
 这一篇我们将学习使用主题，`themes`文件夹即为主题文件存在的路径。Hexo安装后自带了`landscape`主题，在Hexo官网上也有多个主题供选择，这里我选择了较为经典的模版`nexT`，`nexT`的[官网文档](http://theme-next.iissnan.com/)可能因为较长时间未更新，文档的中的一些配置已经无法在最新（本文创建时为V6.7.0）的`nexT`中生效，所以本文的一些内容会与官网文档不同。
+
+{% endcq %}
 
 <!--more-->
 
