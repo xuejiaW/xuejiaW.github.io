@@ -43,7 +43,7 @@ language: zh-CN
 
 支持的语言版本由主题文件来决定，在主题文件夹下存在`languages`文件夹，下面存放了该主题所支持的语言。如nexT所支持的语言为：
 
-![nexT支持语言](Hexo_Tutorial_2/2019-01-05-17-32-08.png)
+![nexT支持语言](Hexo-Tutorial-2/2019-01-05-17-32-08.png)
 
 ## Menu菜单
 
@@ -83,3 +83,5 @@ description: To see the world as it is, and to love it.
 keywords:
 author: 三叔
 ```
+
+***
