@@ -53,7 +53,7 @@ tags: Hexo
 
    也可以通过`Hexo server -p <port>`来指定生成本地Host的端口
 
-   ![Hexo Server 运行后结果](Hexo-Tutorial-1/2018-12-17-00-29-25.png)
+   ![Hexo Server 运行后结果](HexoTutorial-1/2018-12-17-00-29-25.png)
 
 ## 文件夹及目录介绍
 
@@ -78,15 +78,15 @@ tags: Hexo
 1. 新建工程以生成外网路径
 
    注意工程的名字必须为`<Owner>.github.io`
-   ![新建工程](Hexo-Tutorial-1/2018-12-17-23-45-06.png)
+   ![新建工程](HexoTutorial-1/2018-12-17-23-45-06.png)
 
    新工程会自动生成一个外部访问的网址，点开Setting即可看到
 
-   ![点开Setting](Hexo-Tutorial-1/2018-12-17-23-48-14.png)
+   ![点开Setting](HexoTutorial-1/2018-12-17-23-48-14.png)
 
    下图红框地址即为最终博客的地址
 
-   ![地址](Hexo-Tutorial-1/2018-12-17-23-48-35.png)
+   ![地址](HexoTutorial-1/2018-12-17-23-48-35.png)
 
 2. 配置Hexo至Github工程
 
@@ -111,7 +111,7 @@ tags: Hexo
 
     将上面看到的路径复制到游览器中即可看到自己的博客效果。
 
-    ![搭建效果](Hexo-Tutorial-1/2018-12-31-14-35-49.png)
+    ![搭建效果](HexoTutorial-1/2018-12-31-14-35-49.png)
 
 
 *** 

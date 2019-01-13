@@ -272,28 +272,28 @@ note:
 
 现在我编写Markdown时主要使用的就是VSCode，VSCode本身即支持Markdown的实时预览，在运行`Markdown: 打开侧边预览`功能后即可，默认快捷键时`Ctrl K +V`
 
-![Markdown实时预览](Markdown-Tutorial/2019-01-13-14-25-36.png)
+![Markdown实时预览](MarkdownTutorial/2019-01-13-14-25-36.png)
 
 如果使用VSCode编写Markdown，推荐安装`Paste Image`插件，该插件可以直接将截图复制进md文件，并且下载到本地。
 
 
-![Paste Image](Markdown-Tutorial/2019-01-13-14-33-17.png)
+![Paste Image](MarkdownTutorial/2019-01-13-14-33-17.png)
 
 ### Typora
 
 [Typora](https://www.typora.io/)是一个轻量级的专门的Markdown编写工具，我从Typora换为VSCode的主要原因也就是觉得没必要多装一个应用，并非Typora本身存在什么缺陷。
 
-![Typora](Markdown-Tutorial/2019-01-13-15-04-17.png)
+![Typora](MarkdownTutorial/2019-01-13-15-04-17.png)
 
 ### Onenote + OneMarkdown
 
 我从大学开始是一个OneNote的重度使用者，但无奈目前OneNote不支持Markdown，于是只能寻找一些曲线救国的方法。]OneNoteGem](https://www.onenotegem.com/addins.html)是一个付费的OneNote插件，其中有一个模块叫做`OneMarkdown`。
 
-![OneMarkdown](Markdown-Tutorial/2019-01-13-14-57-00.png)
+![OneMarkdown](MarkdownTutorial/2019-01-13-14-57-00.png)
 
 当使用付费版之后，在OneMarkdown上编辑的页面会自动同步到OneNote上。
 
-![自动同步至OneNote](Markdown-Tutorial/2019-01-13-14-58-08.png)
+![自动同步至OneNote](MarkdownTutorial/2019-01-13-14-58-08.png)
 
 OneMarkdown最终的显示效果并不是太理想，所以`Onenote+OneMakeDown`最好只作为数据的归档使用。OneNoteGem在淘宝上有相应的店家，但OneMakeDown因为销量太低没有上架，所以要购买需要单独找店家资讯。
 
