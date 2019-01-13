@@ -10,3 +10,9 @@ tags:
 {% endcq %}
 
 <!--more-->
+
+{% note primary %}
+
+{% endnote %}
+
+***
