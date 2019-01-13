@@ -35,7 +35,7 @@ type: "tags"
 ```
 
 在下图的红框及黄框处都会自动链接到Tags页面，Tags页面也将自动统计目前所使用的标签数
-![标签显示效果](Hexo-Tutorial-3/2019-01-06-13-43-18.png)
+![标签显示效果](HexoTutorial-3/2019-01-06-13-43-18.png)
 
 ## 创建分类页面
 
@@ -105,7 +105,7 @@ motion:
 <!--more-->
 ```
 
-![阅读全文效果](Hexo-Tutorial-3/2019-01-06-20-13-28.png)
+![阅读全文效果](HexoTutorial-3/2019-01-06-20-13-28.png)
 
 在点击了阅读全文按钮进入文章后会发现，文章自动跳转到了首页显示内容之后的地方，如果要关闭这个功能，在主题配置文件中修改`scroll_to_more`字段
 
@@ -117,7 +117,7 @@ scroll_to_more: false
 
 进入归档页面后会发现默认有以下效果
 
-![归档页面Cheers](Hexo-Tutorial-3/2019-01-06-20-23-04.png)
+![归档页面Cheers](HexoTutorial-3/2019-01-06-20-23-04.png)
 
 如果需要关闭的话，在主题配置文件中找到`cheers_enabled`字段
 
@@ -191,7 +191,7 @@ body {
 ## 修改页面其他元素
 
 实际上next自定义的修改都可放在`\themes\next\source\css\_custom\custom.styl`下，想要修改某一部分时，可以先打开博客网页（以Chrome游览器为例），然后按F12，唤出调试界面。
-![修改页面元素](Hexo-Tutorial-3/2019-01-09-01-02-13.png)
+![修改页面元素](HexoTutorial-3/2019-01-09-01-02-13.png)
 当在Element情况下选择部分代码，左侧页面相关部分会高亮，这部分类也会相应的显示出来，如上图中为`.sidebar-inner`，只要把最右侧的相关代码
 
 ```css
@@ -212,7 +212,7 @@ body {
 [Valine](https://valine.js.org/quickstart.html)是一个轻量级，无后端的评论系统，它完全依赖于[Leancloud](https://leancloud.cn/)运行，配置起来也十分便捷。
 在`Leancloud`上完成账号的注册登录，并创建完应用后。如下图进入应用界面，并进入设置找到AppID与AppKey。
 
-![LeanCloud界面](Hexo-Tutorial-3/2019-01-09-01-16-01.png)
+![LeanCloud界面](HexoTutorial-3/2019-01-09-01-16-01.png)
 
 在主题配置文件中开启Valine并填入相应参数即可
 
