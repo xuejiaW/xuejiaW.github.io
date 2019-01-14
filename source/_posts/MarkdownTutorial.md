@@ -242,7 +242,7 @@ note:
 
 ```html
 {% tabs Tab名字 , 2 %}<!--格式 <tabs 名字,初始状态点第几个tab> -->
-<!-- tab -->
+<!-- tab --> <!-- 这里tab后也能跟名字，这样可以改写每个Tab各自的名字，否则使用上面定义的名字-->
 第一个Tab
 <!-- endtab -->
 <!-- tab -->
@@ -265,6 +265,19 @@ note:
 第三个Tab
 <!-- endtab -->
 {% endtabs %}
+
+注意在Tabs中插入代码块存在[Bug](https://theme-next.org/docs/troubleshooting/)，如果要插入代码，可以使用Hexo的[Code Tags](https://hexo.io/zh-cn/docs/tag-plugins.html)
+
+```test
+{% codeblock 测试 lang:csharp %}
+Debug.Log("ABC")
+{% endcodeblock %}
+```
+
+{% codeblock 测试 lang:csharp %}
+Debug.Log("ABC")
+{% endcodeblock %}
+
 
 ## Markdown编辑工具
 
