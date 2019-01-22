@@ -375,7 +375,7 @@ public class Mocha : CondimentDecorator
 
 #### 测试及结果
 
-```测试代码
+```c# 测试代码
 Espresso espresso = new Espresso();
 Console.WriteLine(espresso.getDescription() + " Cost: " + espresso.Cost());
 
@@ -389,7 +389,239 @@ Console.WriteLine(doubleMochaWhipEspresso.getDescription() + " Cost: " + doubleM
 
 ## 工厂模式
 
+工厂模式是为了将对象的实例化与对对象的操作解耦。因为有时我们会根据情况的不同，实例化出对象的不同版本，而我们不希望这种对于情况的判断与逻辑代码耦合在一起。
+
+工厂模式有三个较为常见的变种，下面会以创建披萨为例子来说明工厂模式。
+
 ### 简单工厂模式
+
+简单工厂模式严格意义上并不是一个设计模式，只是它被太多人的使用，所以需要单独进行说明。
+
+简单工厂模式会定义一个工厂类来进行对象的实例化。
+
+我们定义一个披萨商店，他将会管理披萨产出的整个流程。我们为了将披萨的生产与之后的操作（如切披萨）拆分开，需要定义一个简单披萨工厂。
+
+#### 披萨类及其实例化
+
+```c# 披萨基类
+public abstract class Pizza
+{
+    protected Cheese cheese = null;
+    protected Sauce sauce = null;
+    protected Onion onion = null;
+
+    public string name { get; set; }
+
+    public abstract void prepare();
+
+    public void bake()
+    {
+        Console.WriteLine("Bake for 25 minutes at 350");
+    }
+
+    public void cut()
+    {
+        Console.WriteLine("Cutting the pizza into diagonal slices");
+    }
+
+    public void box()
+    {
+        Console.WriteLine("Place pizza in official PizzaStore box");
+    }
+
+    public void Debug()
+    {
+        Console.WriteLine("--------------");
+        Console.WriteLine(name);
+        Console.WriteLine("Cheese is " + (cheese != null ? cheese.ToString() : "Null"));
+        Console.WriteLine("Sauce is " + (sauce != null ? sauce.ToString() : "Null"));
+        Console.WriteLine("Onion is " + (onion != null ? onion.ToString() : "Null"));
+        Console.WriteLine("--------------");
+    }
+}
+```
+
+```c# 披萨实现
+public class CheesePizza : Pizza
+{
+    public override void prepare()
+    {
+        cheese = new Cheese();
+    }
+}
+
+public class SaucePizza : Pizza
+{
+    public override void prepare()
+    {
+        sauce = new Sauce();
+    }
+}
+```
+
+#### 披萨商店与简单披萨工厂
+
+```c# 披萨商店
+public class PizzaStore
+{
+    SimplePizzaFactory simpleFactory;
+    public PizzaStore(SimplePizzaFactory factory)
+    {
+        this.simpleFactory = factory;
+    }
+
+    public Pizza orderPizza(string type)
+    {
+        Pizza pizza = simpleFactory.createPizza(type);
+        pizza.prepare();
+        pizza.bake();
+        pizza.cut();
+        pizza.box();
+        return pizza;
+    }
+}
+```
+
+```c# 简单披萨工厂
+public class SimplePizzaFactory
+{
+    public Pizza createPizza(string type)
+    {
+        Pizza pizza = null;
+        if (type.Equals("cheese"))
+            pizza = new CheesePizza();
+        else if (type.Equals("sauce"))
+            pizza = new SaucePizza();
+        return pizza;
+    }
+}
+```
+
+#### 测试及结果
+
+```c# 测试代码
+PizzaStore store = new PizzaStore(new SimplePizzaFactory());
+Pizza pizza = store.orderPizza("cheese");
+pizza.Debug();
+```
+
+运行结果:
+![简单工厂运行结果](HeadFirstDesignPatternNotes_1/2019-01-20-21-24-34.png)
+
+### 工厂方法模式
+
+简单工厂提供了一个类来作为对象实例化的工厂，它解决了对象实例化与逻辑代码耦合的问题，但没有提供扩写这个工厂的方法。例如上例中，我们需要在工厂中增加新的产品只能扩写原先的工厂类，但这可能会造成单个工厂类的逻辑过于复杂。
+而工厂方法模式则是通过一个抽象函数来作为工厂，在各派生类中重写该函数，达到工厂的扩写。
+
+我们定义一个抽象的披萨商店，并在其中定义一个抽象函数`createPizza`，并在披萨商店的继承类中重写这个方法来演示工厂方法模式。
+
+{% note warning %}
+注意这个例子完全可以通过建立多个简单工厂来实现，这里只是为了说明工厂方法模式的结构。
+{% endnote %}
+
+#### 抽象披萨商店及实例化
+
+```c# 抽象披萨商店
+public abstract class PizzaStore
+{
+    public Pizza orderPizza(string type)
+    {
+        Pizza pizza = createPizza(type);
+        pizza.prepare();
+        pizza.bake();
+        pizza.cut();
+        pizza.box();
+        return pizza;
+    }
+
+    protected abstract Pizza createPizza(string type);
+}
+```
+
+```c# 纽约披萨商店
+public class NYPizzaStore : PizzaStore
+{
+    protected override Pizza createPizza(string type)
+    {
+        Pizza pizza = null;
+        if (type.Equals("cheese"))
+            pizza = new NYStyleCheesePizza();
+        else if (type.Equals("sauce"))
+            pizza = new NYStyleSausePizza();
+        return pizza;
+    }
+}
+```
+
+```c# 芝加哥披萨商店
+public class ChicagoPizzaStore : PizzaStore
+{
+    protected override Pizza createPizza(string type)
+    {
+        Pizza pizza = null;
+        if (type.Equals("cheese"))
+            pizza = new ChicagoStyleCheesePizza();
+        else if (type.Equals("sauce"))
+            pizza = new ChicagoStyleSaucePizza();
+        return pizza;
+    }
+}
+```
+
+#### 不同风格的披萨实现
+
+```c# 纽约风格的披萨
+public class NYStyleCheesePizza : Pizza
+{
+    public override void prepare()
+    {
+        cheese = new NYCheese();
+    }
+}
+
+public class NYStyleSausePizza : Pizza
+{
+    public override void prepare()
+    {
+        sauce = new NYSauce();
+    }
+}
+```
+
+```c# 芝加哥风格的披萨
+public class ChicagoStyleCheesePizza : Pizza
+{
+    public override void prepare()
+    {
+        cheese = new ChicagoCheese();
+    }
+}
+
+public class ChicagoStyleSaucePizza : Pizza
+{
+    public override void prepare()
+    {
+        sauce = new ChicagoSauce();
+    }
+}
+```
+
+#### 测试及结果
+
+```c# 测试代码
+PizzaStore store = new ChicagoPizzaStore();
+Pizza pizza = store.orderPizza("cheese");
+pizza.Debug();
+store = new NYPizzaStore();
+pizza=store.orderPizza("cheese");
+pizza.Debug();
+```
+
+运行结果：
+
+![工厂方法模式运行结果](HeadFirstDesignPatternNotes_1/2019-01-23-00-29-35.png)
+
+### 抽象工厂模式
 
 {% note primary %}
 引用：
