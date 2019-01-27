@@ -1,18 +1,22 @@
 ---
+layout: posts
 title: HeadFirst-设计模式 笔记（一）
+date: 2019-01-27 21:07:41
+tags: 设计模式
 categories:
-tags:
+- 读书笔记
+- 设计模式
 ---
 
 {% cq %}
-读书笔记1
+读《HeadFirst 设计模式》时的笔记，这一篇将会介绍策略模式，观察者模式，装饰模式，工厂模式。在介绍每一个设计模式时，都会用一个简单的例子来说明，完整的测试代码可以在[这里查看](https://github.com/xuejiaW/DesignPattern)
 {% endcq %}
 
 <!--more-->
 
 ## 策略模式
 
-策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些被封装类都继承自同一个接口，该接口定义了算法。对于环境类来说，它只保存一个算法接口，而具体实现了这个算法的类，则可以在运行时动态更改。
+策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。
 
 例如有我们有一个项目需要描述鸭子，可能有50种不同的鸭子都派生自基类`Duck`，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。
 
@@ -22,14 +26,14 @@ tags:
 
 #### 算法接口及实现类
 
-```c# 飞行方法接口
+```cs 飞行方法接口
 public interface IFlyBehavior
 {
     void Fly();
 }
 ```
 
-```c# 飞行方法实现
+```cs 飞行方法实现
 
 public class FlyNoWay : IFlyBehavior
 {
@@ -57,7 +61,7 @@ public class FlyWithWings : IFlyBehavior
 
 #### 环境类
 
-```c# 鸭子基类 
+```cs 鸭子基类 
 public abstract class Duck
 {
     private IFlyBehavior flyBehavior;
@@ -78,7 +82,7 @@ public abstract class Duck
 }
 ```
 
-```c# 鸭子派生类 
+```cs 鸭子派生类 
 public class BlackDuck : Duck
 {
     public BlackDuck() : base()
@@ -107,7 +111,7 @@ public class RubberDuck : Duck
 
 #### 测试及结果
 
-```c# 测试代码
+```cs 测试代码
 RubberDuck rubberDuck = new RubberDuck();
 rubberDuck.disPlay();
 rubberDuck.PerformFly();
@@ -121,7 +125,7 @@ blackDuck.PerformFly();
 
 运行结果
 
-![策略模式运行结果](HeadFirstDesignPatternNotes_1/2019-01-15-00-12-45.png)
+![策略模式运行结果](HeadFirstDesignPatternNotes-1/2019-01-15-00-12-45.png)
 
 ***
 
@@ -135,7 +139,7 @@ blackDuck.PerformFly();
 
 #### 观察者及被观察者接口
 
-```c# 被观察者
+```cs 被观察者
 public interface ISubject
 {
     void RegisterObserver(IObserver observer);
@@ -144,7 +148,7 @@ public interface ISubject
 }
 ```
 
-```c# 观察者
+```cs 观察者
 public interface IObserver
 {
     void Update(ISubject subject);
@@ -153,7 +157,7 @@ public interface IObserver
 
 #### 观察者实现
 
-```c# 温度计
+```cs 温度计
 public class TemperatureObserver : IObserver
 {
     private ISubject subject;
@@ -174,7 +178,7 @@ public class TemperatureObserver : IObserver
 }
 ```
 
-```C# 压力计
+```cs 压力计
 public class PressureObserver : IObserver
 {
     private ISubject subject;
@@ -195,7 +199,7 @@ public class PressureObserver : IObserver
 
 #### 被观察者实现
 
-```c# 天气数据
+```cs 天气数据
 public class WeatherData : ISubject
 {
     private List<IObserver> observersList;
@@ -241,7 +245,7 @@ public class WeatherData : ISubject
 
 #### 测试及结果
 
-```c# 测试代码
+```cs 测试代码
 WeatherData weatherData = new WeatherData();
 TemperatureObserver temperatureObserver = new TemperatureObserver(weatherData);
 PressureObserver pressureObserver = new PressureObserver(weatherData);
@@ -254,7 +258,7 @@ weatherData.SetMeasurements(10, 50, 15);
 
 运行结果：
 
-![观察者模式运行结果](HeadFirstDesignPatternNotes_1/2019-01-15-23-20-09.png)
+![观察者模式运行结果](HeadFirstDesignPatternNotes-1/2019-01-15-23-20-09.png)
 
 
 ***
@@ -263,7 +267,7 @@ weatherData.SetMeasurements(10, 50, 15);
 
 装饰模式(Decorator Pattern))提供了一个动态增加一个类功能的方法，主要实现思想是通过一个作为装饰者的类（`Decorators`）包裹被装饰类（`Component`）（装饰类以及被装饰类都有共同的基类）,`Decorators`会在`Component`类的某一个函数执行前或后进行一些操作，进而达到增加功能的作用。
 
-装饰模式主要实现了“代码应该对扩展功能开放而对于修改关闭”的面向对象原则，它在增加新功能的前提下，不需要改动既有的代码，只需要增加新的`Decorators`并且包括既有的`Component`即可。
+装饰模式主要实现了“代码应该对扩展功能开放而对于修改关闭”的面向对象原则，它在增加新功能的前提下，不需要改动既有的代码，只需要增加新的`Decorators`并且包含既有的`Component`即可。
 
 例如我们要计算一杯咖啡的价格，而这杯咖啡的价格还会受到额外的配料的影响，比如要加抹茶需要额外支付0.2元，加奶泡需要额外支付0.3元等。如果对各种配料都各自使用一个类来表示，则会存在较多的类需要维护，而且一旦配料发生变化等，还需要进行代码修改。而使用装饰模式则可以将原始的咖啡作为被装饰类，而所有的配料都是装饰类，则配料的更改仅需要增加或删除外部的装饰类即可。
 
@@ -271,7 +275,7 @@ weatherData.SetMeasurements(10, 50, 15);
 
 #### 装饰类及被装饰类基类
 
-```c# 被装饰类基类
+```cs 被装饰类基类
 public abstract class Beverage
 {
     protected string description = "UnKnown Beverage";
@@ -285,7 +289,7 @@ public abstract class Beverage
 }
 ```
 
-```c# 装饰类基类
+```cs 装饰类基类
 public abstract class CondimentDecorator : Beverage
 {
     protected Beverage beverage;
@@ -305,7 +309,7 @@ public abstract class CondimentDecorator : Beverage
 
 #### 被装饰类实现
 
-```c# 浓咖啡
+```cs 浓咖啡
 public class Espresso : Beverage
 {
     public Espresso()
@@ -322,7 +326,7 @@ public class Espresso : Beverage
 
 #### 装饰类实现
 
-```c# 酱油
+```cs 酱油
 public class Soy : CondimentDecorator
 {
     public Soy(Beverage beverage) : base(beverage) { }
@@ -339,7 +343,7 @@ public class Soy : CondimentDecorator
 }
 ```
 
-```c# 奶泡
+```cs 奶泡
 public class Whip : CondimentDecorator
 {
     public Whip(Beverage beverage) : base(beverage) { }
@@ -356,7 +360,7 @@ public class Whip : CondimentDecorator
 }
 ```
 
-```c# 抹茶
+```cs 抹茶
 public class Mocha : CondimentDecorator
 {
     public Mocha(Beverage beverage) : base(beverage) { }
@@ -375,7 +379,7 @@ public class Mocha : CondimentDecorator
 
 #### 测试及结果
 
-```c# 测试代码
+```cs 测试代码
 Espresso espresso = new Espresso();
 Console.WriteLine(espresso.getDescription() + " Cost: " + espresso.Cost());
 
@@ -385,13 +389,13 @@ Console.WriteLine(doubleMochaWhipEspresso.getDescription() + " Cost: " + doubleM
 
 运行结果：
 
-![装饰模式运行结果](HeadFirstDesignPatternNotes_1/2019-01-15-23-43-20.png)
+![装饰模式运行结果](HeadFirstDesignPatternNotes-1/2019-01-15-23-43-20.png)
 
 ## 工厂模式
 
 工厂模式是为了将对象的实例化与对对象的操作解耦。因为有时我们会根据情况的不同，实例化出对象的不同版本，而我们不希望这种对于情况的判断与逻辑代码耦合在一起。
 
-工厂模式有三个较为常见的变种，下面会以创建披萨为例子来说明工厂模式。
+工厂模式有三个较为常见的变种，简单工厂模式，工厂方法模式，抽象工厂模式，下面会以创建披萨为例子来具体说明。
 
 ### 简单工厂模式
 
@@ -403,7 +407,7 @@ Console.WriteLine(doubleMochaWhipEspresso.getDescription() + " Cost: " + doubleM
 
 #### 披萨类及其实例化
 
-```c# 披萨基类
+```cs 披萨基类
 public abstract class Pizza
 {
     protected Cheese cheese = null;
@@ -441,7 +445,7 @@ public abstract class Pizza
 }
 ```
 
-```c# 披萨实现
+```cs 披萨实现
 public class CheesePizza : Pizza
 {
     public override void prepare()
@@ -461,7 +465,7 @@ public class SaucePizza : Pizza
 
 #### 披萨商店与简单披萨工厂
 
-```c# 披萨商店
+```cs 披萨商店
 public class PizzaStore
 {
     SimplePizzaFactory simpleFactory;
@@ -482,7 +486,7 @@ public class PizzaStore
 }
 ```
 
-```c# 简单披萨工厂
+```cs 简单披萨工厂
 public class SimplePizzaFactory
 {
     public Pizza createPizza(string type)
@@ -499,14 +503,14 @@ public class SimplePizzaFactory
 
 #### 测试及结果
 
-```c# 测试代码
+```cs 测试代码
 PizzaStore store = new PizzaStore(new SimplePizzaFactory());
 Pizza pizza = store.orderPizza("cheese");
 pizza.Debug();
 ```
 
 运行结果:
-![简单工厂运行结果](HeadFirstDesignPatternNotes_1/2019-01-20-21-24-34.png)
+![简单工厂运行结果](HeadFirstDesignPatternNotes-1/2019-01-20-21-24-34.png)
 
 ### 工厂方法模式
 
@@ -521,7 +525,7 @@ pizza.Debug();
 
 #### 抽象披萨商店及实例化
 
-```c# 抽象披萨商店
+```cs 抽象披萨商店
 public abstract class PizzaStore
 {
     public Pizza orderPizza(string type)
@@ -538,7 +542,7 @@ public abstract class PizzaStore
 }
 ```
 
-```c# 纽约披萨商店
+```cs 纽约披萨商店
 public class NYPizzaStore : PizzaStore
 {
     protected override Pizza createPizza(string type)
@@ -553,7 +557,7 @@ public class NYPizzaStore : PizzaStore
 }
 ```
 
-```c# 芝加哥披萨商店
+```cs 芝加哥披萨商店
 public class ChicagoPizzaStore : PizzaStore
 {
     protected override Pizza createPizza(string type)
@@ -570,7 +574,7 @@ public class ChicagoPizzaStore : PizzaStore
 
 #### 不同风格的披萨实现
 
-```c# 纽约风格的披萨
+```cs 纽约风格的披萨
 public class NYStyleCheesePizza : Pizza
 {
     public override void prepare()
@@ -588,7 +592,7 @@ public class NYStyleSausePizza : Pizza
 }
 ```
 
-```c# 芝加哥风格的披萨
+```cs 芝加哥风格的披萨
 public class ChicagoStyleCheesePizza : Pizza
 {
     public override void prepare()
@@ -608,7 +612,7 @@ public class ChicagoStyleSaucePizza : Pizza
 
 #### 测试及结果
 
-```c# 测试代码
+```cs 测试代码
 PizzaStore store = new ChicagoPizzaStore();
 Pizza pizza = store.orderPizza("cheese");
 pizza.Debug();
@@ -619,7 +623,7 @@ pizza.Debug();
 
 运行结果：
 
-![工厂方法模式运行结果](HeadFirstDesignPatternNotes_1/2019-01-23-00-29-35.png)
+![工厂方法模式运行结果](HeadFirstDesignPatternNotes-1/2019-01-23-00-29-35.png)
 
 ### 抽象工厂模式
 
@@ -635,7 +639,7 @@ pizza.Debug();
 
 #### 披萨原料工厂接口及实现
 
-```c# 披萨原料工厂接口
+```cs 披萨原料工厂接口
 public interface PizzaIngredientFactory
 {
     Onion createOnion();
@@ -644,7 +648,7 @@ public interface PizzaIngredientFactory
 }
 ```
 
-```c# 纽约披萨原料商店
+```cs 纽约披萨原料商店
 public class NYPizzaIngredientFactory : PizzaIngredientFactory
 {
     public Cheese createCheese()
@@ -664,7 +668,7 @@ public class NYPizzaIngredientFactory : PizzaIngredientFactory
 }
 ```
 
-```c# 芝加哥披萨原料商店
+```cs 芝加哥披萨原料商店
 public class ChicagoPizzaIngredientFactory : PizzaIngredientFactory
 {
     public Cheese createCheese()
@@ -690,7 +694,7 @@ public class ChicagoPizzaIngredientFactory : PizzaIngredientFactory
 
 #### 抽象披萨商店及实例化
 
-```c# 抽象披萨商店
+```cs 抽象披萨商店
 public abstract class PizzaStore
 {
     public Pizza orderPizza(string type)
@@ -707,7 +711,7 @@ public abstract class PizzaStore
 }
 ```
 
-```c# 纽约披萨商店
+```cs 纽约披萨商店
 protected override Pizza createPizza(string item)
 {
     Pizza pizza = null;
@@ -720,7 +724,7 @@ protected override Pizza createPizza(string item)
 }
 ```
 
-```c# 芝加哥披萨商店
+```cs 芝加哥披萨商店
 public class ChicagoPizzaStore : PizzaStore
 {
     protected override Pizza createPizza(string item)
@@ -744,7 +748,7 @@ public class ChicagoPizzaStore : PizzaStore
 
 在披萨类的实例化中，我们使用了抽象工厂模式，披萨的实例化会包含一个披萨原料的抽象工厂，通过不同的披萨原料工厂来取得不同风味的披萨
 
-```c# 披萨基类
+```cs 披萨基类
 public abstract class Pizza
 {
     protected Cheese cheese = null;
@@ -829,7 +833,7 @@ pizza.Debug();
 ```
 
 运行结果：
-![抽象工厂模式运行结果](HeadFirstDesignPatternNotes_1/2019-01-24-01-01-50.png)
+![抽象工厂模式运行结果](HeadFirstDesignPatternNotes-1/2019-01-24-01-01-50.png)
 
 {% note primary %}
 引用：
