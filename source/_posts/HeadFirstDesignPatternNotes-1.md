@@ -14,9 +14,14 @@ categories:
 这一篇将会介绍策略模式，观察者模式，装饰模式，工厂模式。
 
 在介绍每一个设计模式时，都会用一个简单的例子来说明，完整的测试代码可以在[这里查看](https://github.com/xuejiaW/DesignPattern)
+
 {% endcq %}
 
 <!--more-->
+
+{% note info %}
+原书中的示例代码都是Java，而我在工作中C#用的较多，所以这里的测试代码使用的都是C#。
+{% endnote %}
 
 ## 策略模式
 
@@ -394,6 +399,8 @@ Console.WriteLine(doubleMochaWhipEspresso.getDescription() + " Cost: " + doubleM
 运行结果：
 
 ![装饰模式运行结果](HeadFirstDesignPatternNotes-1/2019-01-15-23-43-20.png)
+
+***
 
 ## 工厂模式
 
