@@ -9,7 +9,11 @@ categories:
 ---
 
 {% cq %}
-读《HeadFirst 设计模式》时的笔记，这一篇将会介绍策略模式，观察者模式，装饰模式，工厂模式。在介绍每一个设计模式时，都会用一个简单的例子来说明，完整的测试代码可以在[这里查看](https://github.com/xuejiaW/DesignPattern)
+这一系列为读《HeadFirst 设计模式》时的笔记。
+
+这一篇将会介绍策略模式，观察者模式，装饰模式，工厂模式。
+
+在介绍每一个设计模式时，都会用一个简单的例子来说明，完整的测试代码可以在[这里查看](https://github.com/xuejiaW/DesignPattern)
 {% endcq %}
 
 <!--more-->
