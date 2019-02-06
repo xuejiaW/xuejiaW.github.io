@@ -1,6 +1,6 @@
 ---
 layout: posts
-title: HeadFirst-设计模式 笔记（一）
+title: 《Head First 设计模式》 笔记（一）
 date: 2019-01-27 21:07:41
 tags: 设计模式
 categories:
