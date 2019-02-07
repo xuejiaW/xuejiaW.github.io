@@ -8,19 +8,7 @@ categories:
 ---
 
 {% cq %}
-
-{% endcq %}
-
-<!--more-->
-
-{% note primary %}
-
-{% endnote %}
-
-***
-
-{% cq %}
-这一篇将会介绍状态模式，代理模式和组合模式并整理了书中提到了9个设计原则。
+这一篇将会介绍状态模式，代理模式和复合模式并整理了书中提到了9个设计原则。
 {% endcq %}
 
 <!--more-->
@@ -419,7 +407,7 @@ view.OnVolumeDownButtonClick();
 
 运行结果：
 
-![组合模式运行结果](HeadFirstDesignPatternNotes-3/2019-02-07-15-53-23.png)
+![复合模式运行结果](HeadFirstDesignPatternNotes-3/2019-02-07-15-53-23.png)
 
 ***
 
