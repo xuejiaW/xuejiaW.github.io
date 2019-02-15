@@ -1,7 +1,9 @@
 ---
 title: 《Head First 设计模式》 笔记（三）
 date: 2019-02-07 16:28:08
-tags: 设计模式
+tags: 
+- 读书笔记
+- 设计模式
 categories:
 - 读书笔记
 - 设计模式
