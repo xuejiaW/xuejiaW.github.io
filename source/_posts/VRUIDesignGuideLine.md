@@ -64,7 +64,8 @@ Unity中Scale为1表示为1米
 {% note primary %}
 引用：
 1. [Google I/O 视频](https://www.youtube.com/watch?v=ES9jArHRFHQ)
-2. [如何 VR 界面设计规范与实操](https://www.jianshu.com/p/c21addac9b0e)
+2. [Google Design Sticker Sheet](https://developers.google.com/vr/design/sticker-sheet)
+3. [如何 VR 界面设计规范与实操](https://www.jianshu.com/p/c21addac9b0e)
 {% endnote %}
 
 ***
