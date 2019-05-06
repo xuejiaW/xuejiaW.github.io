@@ -55,9 +55,13 @@ tags:
 
 ![控制面板界面](ShadowsocksRTutorial/2019-04-28-00-22-15.png)
 
-点击左侧`Install new OS`安装新的操作系统，选择`debian-7-x86_64`，同意款项，并安装。
+点击左侧`Install new OS`安装新的操作系统，选择`ubuntu 12.04 X86_04`，同意款项，并安装。
 
-![安装新OS](ShadowsocksRTutorial/2019-04-27-23-22-59.png)
+{% note warning %}
+严格意义上，SSR服务端安装脚本并不依赖于特定系统版本，CentOS 6+，Debian 7+，Ubuntu 12+的系统均可。如果在某版本的系统上出现安装错误（如20194月前后，Debian服务器访问失效），可尝试使用其他版本的系统。
+{% endnote %}
+
+![安装新OS](ShadowsocksRTutorial/2019-05-06-20-55-11.png)
 
 在OS安装后，会显示处`SSH`的登录密码及端口，通过截图或者其他方法将它们保存下来，之后的步骤需要用到。通常情况下，搬瓦工也会发送一封邮件到你的注册邮箱告诉你密码及端口。
 
@@ -72,7 +76,7 @@ tags:
 
 ![填入服务器地址及端口](ShadowsocksRTutorial/2019-04-28-00-27-42.png)
 
-点击确认后，会自动回到会话窗口，双击刚刚建立的会话，则会自动常识连接，在连接过程中会提示`SSH安全警告`，点击`接受并保持`即可，之后会弹出`SSH用户省份验证`窗口，将之前记录下的密码填入即可。
+点击确认后，会自动回到会话窗口，双击刚刚建立的会话，输入用户名`root`，在连接过程中会提示`SSH安全警告`，点击`接受并保持`即可，之后会弹出`SSH用户省份验证`窗口，将之前记录下的密码填入即可。
 
 ![填入密码](ShadowsocksRTutorial/2019-04-28-00-30-45.png)
 
@@ -83,15 +87,16 @@ tags:
 之后我们就要进行SSR软件安装，复制命令
 
 ```text
-wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh
-chmod +x shadowsocksR.sh
-./shadowsocksR.sh 2>&1 | tee shadowsocksR.log
+wget --no-check-certificate -O shadowsocks-all.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh
+chmod +x shadowsocks-all.sh
+./shadowsocks-all.sh 2>&1 | tee shadowsocks-all.log
 ```
 
-在Xshell界面，通过鼠标右键黏贴，然后回车运行，之后会需要用户输入一系列信息，如密码，端口，混淆方式，加密方式等。下图中红框位置即为输入信息，这些参数都可以根据自己的情况调整（如端口号可随意设为1111），通常而言不会引发问题。
+在Xshell界面，通过鼠标右键黏贴，然后回车运行，首先我们选择需要运行的脚本，在这里我们需要的是`ShadowsocksR`。之后会需要用户输入一系列信息，如密码，端口，混淆方式，加密方式等。下图中红框位置即为输入信息，这些参数都可以根据自己的情况调整（如端口号可随意设为1111），通常而言不会引发问题。
 
-![需要输入信息_1](ShadowsocksRTutorial/2019-04-28-01-01-07.png)
-![需要输入信息_2](ShadowsocksRTutorial/2019-04-28-00-39-01.png)
+![需要输入信息_1](ShadowsocksRTutorial/2019-05-06-20-57-51.png)
+![需要输入信息_2](ShadowsocksRTutorial/2019-04-28-01-01-07.png)
+![需要输入信息_3](ShadowsocksRTutorial/2019-04-28-00-39-01.png)
 
 `SSR`软件安装完成后，所有的设定信息都会显示出来
 
@@ -130,6 +135,7 @@ IOS: Potatso Lite、shadowrocket等软件
 1. SS原工程 https://github.com/shadowsocks/shadowsocks
 2. SS作者关于安全性的回复 https://github.com/shadowsocks/shadowsocks/issues/169
 3. https://sphard3.github.io/ssr/ssr.html
+4. SSR服务端安装脚本作者 https://teddysun.com/486.html/comment-page-60#comments
 {% endnote %}
 
 ***
