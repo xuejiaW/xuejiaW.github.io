@@ -126,11 +126,6 @@ IOS: Potatso Lite、shadowrocket等软件
 
 如果在安装过程中遇到任何问题，可以直接在下面评论区提出。
 
-[^1]: [原工程](https://github.com/shadowsocks/shadowsocks)目前只剩下了一条Commit
-
-[^2]: https://github.com/shadowsocks/shadowsocks/issues/169
-
-
 {% note primary %}
 1. SS原工程 https://github.com/shadowsocks/shadowsocks
 2. SS作者关于安全性的回复 https://github.com/shadowsocks/shadowsocks/issues/169
@@ -138,4 +133,7 @@ IOS: Potatso Lite、shadowrocket等软件
 4. SSR服务端安装脚本作者 https://teddysun.com/486.html/comment-page-60#comments
 {% endnote %}
 
-***
+
+[^1]: [原工程](https://github.com/shadowsocks/shadowsocks)目前只剩下了一条Commit
+
+[^2]: https://github.com/shadowsocks/shadowsocks/issues/169
