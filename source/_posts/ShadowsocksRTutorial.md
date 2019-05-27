@@ -57,6 +57,8 @@ tags:
 
 点击左侧`Install new OS`安装新的操作系统，选择`ubuntu 12.04 X86_04`，同意款项，并安装。
 
+> 如果需要BBR加速的话，建议选择最高的X64版本，因为BBR依赖于4.9以上的Linux内核
+
 {% note warning %}
 严格意义上，SSR服务端安装脚本并不依赖于特定系统版本，CentOS 6+，Debian 7+，Ubuntu 12+的系统均可。如果在某版本的系统上出现安装错误（如2019年4月前后，Debian服务器访问失效，导致对应依赖库无法安装），可尝试使用其他版本的系统。
 {% endnote %}
@@ -123,6 +125,37 @@ IOS: Potatso Lite、shadowrocket等软件
 ![全局模式](ShadowsocksRTutorial/2019-04-28-00-54-17.png)
 
 至此，一切步骤完成，可以打开游览器，尝试是否可以正常访问谷歌。
+
+## BBR加速
+
+BBR是一套TCP拥塞控制算法，由谷歌开源并提交到Linux内核，在Linux4.9以上，可以使用这套算法来加速网络访问速度。
+
+先使用以下命令来检测Linux内核版本
+
+```text
+uname -r
+```
+
+大于4.9就可以直接切换，如果小于4.9的话，可以选择安装更高版本的OS。
+
+之后通过以下命令只要下载并运行脚本
+
+```text
+wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+```
+
+完成后运行以下语句验证BBR是否正常工作
+
+```
+sysctl net.ipv4.tcp_congestion_control net.core.default_qdisc
+```
+
+显示以下结果说明运行成功
+
+```text
+net.ipv4.tcp_congestion_control = bbr
+net.core.default_qdisc = fq
+```
 
 如果在安装过程中遇到任何问题，可以直接在下面评论区提出。
 
