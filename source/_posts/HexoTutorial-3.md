@@ -241,6 +241,35 @@ comments: false
 ---
 ```
 
+## 增加角标功能
+
+运行命令安装角标插件
+
+```text
+npm install hexo-footnotes --save
+```
+
+在主题配置文件中启用插件
+
+```yml
+plugins:
+  - hexo-footnotes
+```
+
+角标语法如下
+```md
+basic footnote[^1]
+here is an inline footnote[^2](inline footnote)
+and another one[^3]
+and another one[^4]
+
+[^1]: basic footnote content
+[^3]: paragraph
+footnote
+content
+[^4]: footnote content with some [markdown](https://en.wikipedia.org/wiki/Markdown
+```
+
 ## 待续
 
 ...
