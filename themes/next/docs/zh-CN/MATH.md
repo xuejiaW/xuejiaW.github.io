@@ -203,19 +203,17 @@ math:
   enable: false
 
   # Default(true) will load mathjax/katex script on demand
-  # That is it only render those page who has 'mathjax: true' in Front Matter.
+  # That is it only render those page who has 'mathjax: true' in Front-matter.
   # If you set it to false, it will load mathjax/katex srcipt EVERY PAGE.
   per_page: true
 
   engine: mathjax
   #engine: katex
 
-  # hexo-rendering-pandoc (or hexo-renderer-kramed) needed to full MathJax support.
+  # hexo-renderer-pandoc (or hexo-renderer-kramed) needed to full MathJax support.
   mathjax:
     # Use 2.7.1 as default, jsdelivr as default CDN, works everywhere even in China
     cdn: //cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML
-    # For newMathJax CDN (cdnjs.cloudflare.com) with fallback to oldMathJax (cdn.mathjax.org).
-    #cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
     # For direct link to MathJax.js with CloudFlare CDN (cdnjs.cloudflare.com).
     #cdn: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML
 
@@ -240,9 +238,9 @@ math:
 
 这个选项是控制是否在每篇文章都渲染数学公式；
 
-默认(`true`) 的行为是**只对 Front Matter 中含有 `mathjax: true` 的文章进行数学公式渲染**。
+默认(`true`) 的行为是**只对 Front-matter 中含有 `mathjax: true` 的文章进行数学公式渲染**。
 
-如果 Front Matter 中不含有 `mathjax: true`，或者 `mathjax: false`，那么 NexT 将不会对这些文章进行数学公式渲染。
+如果 Front-matter 中不含有 `mathjax: true`，或者 `mathjax: false`，那么 NexT 将不会对这些文章进行数学公式渲染。
 
 例如：
 
