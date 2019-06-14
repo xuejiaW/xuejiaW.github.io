@@ -7,7 +7,7 @@
 </script>
 
 {% set js_vendors = {} %}
-{% set js_vendors.jquery = 'jquery/index.js?v=2.1.3' %}
+{% set js_vendors.jquery = 'jquery/index.js?v=3.4.1' %}
 
 {% if theme.fastclick %}
   {% set js_vendors.fastclick = 'fastclick/lib/fastclick.min.js?v=1.0.6' %}
@@ -21,7 +21,7 @@
 {% set js_vendors.velocity_ui = 'velocity/velocity.ui.min.js?v=1.2.1' %}
 
 {% if theme.fancybox %}
-  {% set js_vendors.fancybox = 'fancybox/source/jquery.fancybox.pack.js?v=2.1.5' %}
+  {% set js_vendors.fancybox = 'fancybox/source/jquery.fancybox.pack.js' %}
 {% endif %}
 
 {% if theme.canvas_nest.enable %}
