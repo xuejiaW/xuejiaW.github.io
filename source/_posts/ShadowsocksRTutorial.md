@@ -3,7 +3,11 @@ title: ShadowsocksR 翻墙教程
 mathjax: false
 date: 2019-04-28 01:02:24
 categories:
+- 教程
+- 翻墙梯子
 tags:
+- 翻墙梯子
+- 软件推荐
 ---
 
 {% cq %}
