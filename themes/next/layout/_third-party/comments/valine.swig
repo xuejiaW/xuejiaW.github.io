@@ -13,7 +13,7 @@
 <script>
   var GUEST = ['nick', 'mail', 'link'];
   var guest = '{{ theme.valine.guest_info }}';
-  guest = guest.split(',').filter(function(item) {
+  guest = guest.split(',').filter(function (item) {
     return GUEST.indexOf(item) > -1;
   });
   new Valine({
@@ -26,7 +26,6 @@
     avatar: '{{ theme.valine.avatar }}',
     meta: guest,
     pageSize: '{{ theme.valine.pageSize }}' || 10,
-    visitor: {{ theme.valine.visitor }},
-    lang: '{{ theme.valine.language }}' || 'zh-cn'
+    visitor: {{ theme.valine.visitor }}
   });
 </script>

@@ -1,7 +1,7 @@
 {%
   set js_commons = [
-    'utils.js',
-    'motion.js'
+    'src/utils.js',
+    'src/motion.js'
   ]
 %}
 

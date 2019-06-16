@@ -1,5 +1,13 @@
 /**
- * group-pictures.js | https://theme-next.org/docs/tag-plugins/group-pictures
+ * group-pictures.js
+ *
+ * Usage:
+ *
+ * {% grouppicture [group]-[layout] %}{% endgrouppicture %}
+ * {% gp [group]-[layout] %}{% endgp %}
+ *
+ * [group]  : Total number of pictures to add in the group.
+ * [layout] : Default picture under the group to show.
  */
 
 /* global hexo */

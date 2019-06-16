@@ -1,15 +1,3 @@
-@keyframes octocat-wave {
-  0%, 100% {
-    transform: rotate(0);
-  }
-  20%, 60% {
-    transform: rotate(-25deg);
-  }
-  40%, 80% {
-    transform: rotate(10deg);
-  }
-}
-
 .github-corner {
   scheme = hexo-config('scheme');
   bg_color = unquote(hexo-config('android_chrome_color'));
@@ -18,19 +6,22 @@
   :hover .octo-arm {
     animation: octocat-wave 560ms ease-in-out;
   }
-  > svg {
-    fill: bg_color;
-    color: #fff;
-    position: absolute;
-    top: 0;
-    border: 0;
-    right: 0;
+  @keyframes octocat-wave {
+    0%,100% {
+      transform: rotate(0);
+    }
+    20%,60% {
+      transform: rotate(-25deg);
+    }
+    40%,80% {
+      transform: rotate(10deg);
+    }
   }
   +tablet-mobile() {
-    > svg {
+    >svg {
       if (scheme == 'Pisces') || (scheme == 'Gemini') {
-        fill: #fff;
-        color: bg_color;
+        fill: #fff !important;
+        color: bg_color !important;
       }
     }
     .github-corner:hover .octo-arm {
@@ -41,9 +32,10 @@
     }
   }
   +mobile() {
-    > svg {
+    >svg {
       if (scheme == 'Mist') {
-        top: inherit;
+        top: inherit !important;
+        margin-top: -50px;
         if mobile_layout_economy {
           +mobile-small() {
             margin-top: initial;
