@@ -66,11 +66,10 @@ leancloud_visitors:
   var query = new AV.Query("Counter");
   if (request.object.updatedKeys.indexOf('time') !== -1) {
       return query.get(request.object.id).then(function (obj) {
-          if (obj.get("time") > request.object.get("time")) {
+          if (obj.get("time") + 1 !== request.object.get("time")) {
               throw new AV.Cloud.Error('Invalid update!');
-          } 
-          return request.object.save();
-      });
+          }
+      })
   }
   ```
 

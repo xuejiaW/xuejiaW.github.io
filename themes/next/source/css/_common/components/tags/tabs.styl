@@ -1,6 +1,6 @@
 .post-body .tabs {
   position: relative;
-  show();
+  display: block;
   margin-bottom: 20px;
   padding-top: 10px;
 
@@ -11,27 +11,26 @@
     margin: 0;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
     margin-bottom: -1px;
 
     +mobile-smallest() {
-      show();
+      display: block;
       margin-bottom: 5px;
     }
 
     li.tab {
-      flex-grow: 1;
-      list-style-type: none;
+      list-style-type: none !important;
+      margin: 0 .25em 0 0;
       border-top: 3px solid transparent;
-      border-right: 1px solid transparent;
-      border-bottom: 1px solid #ddd;
       border-left: 1px solid transparent;
+      border-right: 1px solid transparent;
 
       +mobile-smallest() {
+        margin: initial;
         border-top: 1px solid transparent;
+        border-left: 3px solid transparent;
         border-right: 1px solid transparent;
         border-bottom: 1px solid transparent;
-        border-left: 3px solid transparent;
       }
 
       if tbr > 0 {
@@ -41,10 +40,9 @@
       if hexo-config('tabs.transition.tabs') { the-transition-ease-out(); }
 
       & a {
-        text-align: center;
         outline: 0;
         border-bottom: initial;
-        show();
+        display: block;
         line-height: 1.8em;
         padding: .25em .75em;
         & i { width: (18em / 14); }
@@ -53,15 +51,15 @@
 
       &.active {
         border-top: 3px solid $orange;
-        border-right: 1px solid $table-border-color;
-        border-bottom: 1px solid transparent;
         border-left: 1px solid $table-border-color;
+        border-right: 1px solid $table-border-color;
+        background-color: #fff;
 
         +mobile-smallest() {
           border-top: 1px solid $table-border-color;
+          border-left: 3px solid $orange;
           border-right: 1px solid $table-border-color;
           border-bottom: 1px solid $table-border-color;
-          border-left: 3px solid $orange;
         }
 
         & a {
@@ -73,6 +71,7 @@
   }
 
   .tab-content {
+    background-color: #fff;
 
     .tab-pane {
       border: 1px solid $table-border-color;

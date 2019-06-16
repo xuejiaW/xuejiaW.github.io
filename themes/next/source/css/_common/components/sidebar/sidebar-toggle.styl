@@ -9,10 +9,14 @@
   line-height: 0;
   z-index: $zindex-5;
   cursor: pointer;
+  -webkit-transform: translateZ(0);
 
-  +tablet-mobile() {
-    opacity: $b2t-opacity-hover;
-    right: $b2t-position-right-mobile;
+  +tablet() {
+    fixbutton() if hexo-config('sidebar.onmobile');
+    hide() if not hexo-config('sidebar.onmobile');
+  }
+  +mobile() {
+    fixbutton() if hexo-config('sidebar.onmobile');
     hide() if not hexo-config('sidebar.onmobile');
   }
 }
