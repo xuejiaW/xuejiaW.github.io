@@ -55,6 +55,25 @@ tags: Hexo
 
    ![Hexo Server 运行后结果](HexoTutorial-1/2018-12-17-00-29-25.png)
 
+6. 创建草稿
+
+    在正式的发布文章前，我们可以先创建草稿
+
+    运行`hexo new draft 'draftName'`在`_draft`文件夹下创建名字为'draftName'的草稿文本。
+
+7. 测试草稿
+
+    `hexo server`创建的测试网站，默认是不渲染草稿的，如果需要渲染草稿需要加上后缀`hexo server --draft`
+    
+8. 发布草稿
+
+    `hexo publish posts 'draftName'`将名为'draftName'的草稿发布为文章，所有的文章存储与`_posts`文件夹下。
+
+9. 创建文章
+
+    如果需要直接创建文章，可使用命令`hexo new posts 'PostsName'`
+    
+
 ## 文件夹及目录介绍
 
 1. scaffolds 文件夹
@@ -112,6 +131,5 @@ tags: Hexo
     将上面看到的路径复制到游览器中即可看到自己的博客效果。
 
     ![搭建效果](HexoTutorial-1/2018-12-31-14-35-49.png)
-
 
 *** 
