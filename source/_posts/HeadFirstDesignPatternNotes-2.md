@@ -1,5 +1,4 @@
 ---
-layout: posts
 title: 《Head First 设计模式》 笔记（二）
 date: 2019-02-06 16:33:15
 tags: 
