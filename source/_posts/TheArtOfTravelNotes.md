@@ -1,12 +1,8 @@
 ---
-layout: posts
 title: 《旅行的艺术》 笔记
-tags:
-  - 读书笔记
-mathjax: false
-categories:
-  - 读书笔记
 date: 2019-07-13 00:38:55
+tags: 读书笔记
+categories: 读书笔记
 ---
 
 
