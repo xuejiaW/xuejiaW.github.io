@@ -67,11 +67,11 @@ tags: Hexo
     
 8. 发布草稿
 
-    `hexo publish posts 'draftName'`将名为'draftName'的草稿发布为文章，所有的文章存储与`_posts`文件夹下。
+    `hexo publish post 'draftName'`将名为'draftName'的草稿发布为文章，所有的文章存储与`_posts`文件夹下。
 
 9. 创建文章
 
-    如果需要直接创建文章，可使用命令`hexo new posts 'PostsName'`
+    如果需要直接创建文章，可使用命令`hexo new post 'PostsName'`
     
 
 ## 文件夹及目录介绍
