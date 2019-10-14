@@ -195,6 +195,10 @@ refernece方式，是用[]包裹住需要加入超链接的文字，再接一个
 | 数据1 | 数据2 |
 | 数据3 | 数据4 |
 
+{% note info %}
+ 如果表格中的元素需要换行，可加入`<br>`作为\n
+ {% endnote %}
+
 ## Next特定标签
 
 使用Next编写博客时，可以在文章的md文件中使用一些特定的标记来增加文章样式。
@@ -237,6 +241,16 @@ note:
 
 支持的class有`default`,`primary`,`success`,`info`,`warning`,`danger`
 
+
+### 颜色高亮
+
+将部分文字修改颜色
+
+```html
+<label style="color:red"> 红色文字 </label>
+```
+
+<label style="color:red"> 红色文字 </label>
 
 ### Tab
 
