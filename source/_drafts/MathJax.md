@@ -52,12 +52,14 @@ $$
 
 ## 罗马字符
 
-| 罗马字符 | 表达式 |
-| -------- | ------ |
-| $\Theta$ | \Theta |
-| $\theta$ | \theta |
-| $\Omega$ | \Omega |
-| $\omega$ | \omega |
+| 罗马字符      | 表达式      |
+| ------------- | ----------- |
+| $\Theta$      | \Theta      |
+| $\theta$      | \theta      |
+| $\Omega$      | \Omega      |
+| $\omega$      | \omega      |
+| $\varepsilon$ | \varepsilon |
+| $\epsilon$    | \epsilon    |
 
 ## 特殊符号 
 
@@ -67,7 +69,7 @@ $$
 | $\infty$     | \infty     | $\infin$      | \infin（Hexo不识别该写法，但官方支持） |
 | $\lfloor$    | \lfloor    | $\rfloor$     | \rfloor                                |
 | $\lceil$     | \lceil     | $\rceil$      | \rceil                                 |
-| $\equiv$ | \equiv | 
+| $\equiv$     | \equiv     |
 
 
 #### 数学模式
