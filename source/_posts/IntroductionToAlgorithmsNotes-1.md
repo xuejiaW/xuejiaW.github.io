@@ -1035,6 +1035,8 @@ $$
 
 {% note primary %}
 
+引用：
+
 1. *Introduction to Algorithms* 3rd Sep.2009
 
 {% endnote %}

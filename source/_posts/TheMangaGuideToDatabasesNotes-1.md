@@ -321,6 +321,8 @@ DBMS-Database management system
 
 {% note primary %}
 
+引用：
+
 1. *The Manga Guide to Databases* 2009
 
 {% endnote %}
