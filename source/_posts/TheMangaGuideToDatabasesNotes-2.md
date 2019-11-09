@@ -108,11 +108,11 @@ CREATE TABLE <TableName>
 
 如
 
-create table if not exists SALES_TABLE
+create table if not exists `SALES_TABLE`
 (
-REPORT_CODE int,
-EXPORT_DATE date,
-EXPORT_DESTINATION_CODE int,
+`REPORT_CODE` int Not NULL,
+`EXPORT_DATE` date,
+`EXPORT_DESTINATION_CODE` int,
 
 primary key(REPORT_CODE) -- set primary Key
 );
