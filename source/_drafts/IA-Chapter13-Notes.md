@@ -370,10 +370,121 @@ bool RBTree::Insert(int value)
 
 ![情况1的修复](IA-Chapter13-Notes/2019-11-07-10-52-42.png)
 
+对于情况2、3的修复：
 
-这里先给出`RB-INSERT-FIXUP(T,z)`的伪代码实现
+在情况2和3下，$z.uncle$是黑色，因此$z.uncle$和$z.p$的颜色不同，也就不能像情况1的修复一样统一改成黑色，不然会影响他们子树的黑高。因此这两种情况需要用到旋转来修复。
 
+情况2下$z$作为$z.p$的右子树，因此可以对$z.p$进行左旋。于$z.p$进行左旋后，将原先$z.p$定义为$z$即转换为了情况3，如下图所示
 
+![情况2转换为情况3](IA-Chapter13-Notes/2019-11-09-20-08-02.png)
+
+对于情况3，我们对$z.p.p$，即上图中的$C$进行右旋。旋转后如下图所示。
+
+![情况3对于z.p.p右旋](IA-Chapter13-Notes/2019-11-09-20-30-37.png)
+
+可以看到路径存在$A$结点的树的黑高都减一（原先父结点是黑色的$C$,现在变成了红色的$B$），而包含$C$结点的路径黑高是不变的。而且此时$A$和$B$还是不满足性质4。这里再将原先的$B$调整为黑色，原先的$C$调整为红色。对于包含$A$的路径而言，黑高+1，对于包含$C$的路径而言，黑高不变，因为路径上一个结点变成了红，一个结点变成了黑。因此情况三的最终变化如下：
+
+![情况3变化](IA-Chapter13-Notes/2019-11-09-20-35-41.png)
+
+情况3调整后性质4和5都满足了，而不像情况1调整后仍然可能存在违背性质4的可能。
+
+另外对于情况2和3的处理，不能是情况3通过右旋$z.p$来转换为情况2再进行修复。因为如果在情况2下对$C$进行右旋，会出现如下情况。
+
+![对情况2进行直接修复](IA-Chapter13-Notes/2019-11-09-20-44-24.png)
+
+此时满足了性质4，但是包含$\alpha$结点路径的黑高少了1，如果为了满足性质5将$A$结点和$C$结点调整颜色，那么$C$结点和$B$结点又会违背性质4。
+
+情况4，5，6的调整与情况1，2，3是镜像这里就不复述了。
+
+整个给出`RB-INSERT-FIXUP(T,z)`的伪代码实现
+
+```pseudocode
+RB-INSERT-FIXUP(T,z)
+
+while z.p.color == RED
+	if z.p == z.p.p.left // Case 1,2,3
+		y= z.p.p.right
+		if (y.color == RED) //Case 1
+			z.p.color = BLACK
+			y.color = BLACK
+			z.p.p.color = RED
+			z = z.p.p
+		else
+			if z == z.p.right //Case 2
+				z = z.p
+				LEFT-ROTATE(T,z)
+			z.p.color = BLACK // Case 3
+			z.p.p.color = RED
+			RIGHT-ROTATE(T,z.p.p)
+	else //Case 4,5,6
+		...
+		//和情况1,2,3类似，将right和left对调即可
+T.root.color = BLACK //保证性质2
+```
+
+c++代码如下
+
+```c++
+void RBTree::InsertFixUp(RBTreeNode* node)
+{
+	while (node->parent->color == RED)
+	{
+		if (node->parent == node->parent->parent->left)//The first three cases
+		{
+			RBTreeNode* uncle = node->parent->parent->right;
+
+			if (uncle->color == RED) //Case 1
+			{
+				node->parent->color = BLACK;
+				uncle->color = BLACK;
+				node->parent->parent->color = RED;
+				node = node->parent->parent;
+			}
+			else
+			{
+				if (node == node->parent->right) //Case 2
+				{
+					node = node->parent;
+					LeftRotate(node);
+				}
+
+				//Case3
+				node->parent->color = BLACK;
+				node->parent->parent->color = RED;
+				RightRotate(node->parent->parent);
+			}
+		}
+		else
+		{
+			//The remainging three cases, as the symmetry of the first three
+
+			RBTreeNode* uncle = node->parent->parent->left;
+			if (uncle->color == RED)
+			{
+				node->parent->color = BLACK;
+				uncle->color = BLACK;
+				node->parent->parent->color = RED;
+				node = node->parent->parent;
+			}
+			else
+			{
+				if (node == node->parent->left)
+				{
+					node = node->parent;
+					RightRotate(node);
+				}
+
+				node->parent->color = BLACK;
+				node->parent->parent->color = RED;
+				LeftRotate(node->parent->parent);
+			}
+		}
+	}
+	rootNode->color = BLACK;
+}
+```
+
+## Deletion
 
 {% note primary %}
 
