@@ -376,7 +376,9 @@ void BinarySearchTree::Insert(int value)
 
 3. $z$有两个子结点
 
-    找到$z$的`Successor`，这里称为$y$，然后需要再细分为两种情况讨论
+    找到$z$的`Successor`，这里称为$y$，然后需要再细分为两种情况讨论。
+	
+	注意这两种情况下$y$的左树不需要管，因为左树必然为空，否则`Successor`将出现在$y$的左树中。
 
     (1) $y$是$z$的右子节点
     
@@ -384,7 +386,7 @@ void BinarySearchTree::Insert(int value)
 
     (2) $y$不是$z$的右子节点
 
-    用$y$的右树替换$y$的位置，$y$的左树不需要管，因为左树必然为空，否则`Successor`将出现在左树中。将$z$的右树作为$y$的右树，再用$y$替换$z$
+    用$y$的右树替换$y$的位置。将$z$的右树作为$y$的右树，再用$y$替换$z$
 
 * 因为$z$有两个子节点，所以`Successor`必然是$z$右子树中的最小值
   
