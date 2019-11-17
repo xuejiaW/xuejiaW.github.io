@@ -1,6 +1,6 @@
 ---
 title: 《算法导论》 第十章笔记
-mathjax: false
+mathjax: true
 date: 2019-11-05 14:32:10
 categories: 
 - 读书笔记

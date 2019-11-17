@@ -1,6 +1,6 @@
 ---
 title: 《算法导论》 第十二章笔记
-mathjax: false
+mathjax: true
 date: 2019-11-06 14:10:37
 categories: 
 - 读书笔记
