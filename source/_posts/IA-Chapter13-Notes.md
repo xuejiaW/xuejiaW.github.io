@@ -1,9 +1,13 @@
 ---
 title: 《算法导论》 第十三章笔记
-mathjax: false
+mathjax: true
 date: 2019-11-16 23:12:31
-categories:
+categories: 
+- 读书笔记
+- 数据结构与算法
 tags:
+- 读书笔记
+- 数据结构与算法
 ---
 
 {% cq %}
