@@ -413,6 +413,287 @@ int CutRodSolution(int* priceTable, int rodLength)
 
 ## Matrix-chain multiplication
 
+定义有一系列的矩阵$<A_1,A_2,...,A_n>$，要计算这一些矩阵的乘积即$A_1A_2...A_n$。因为矩阵满足乘法合并律，所以可以决定哪一部分先相乘。
+
+如一共有三个矩阵$<A_1,A_2,A_3>$，则$((A_1A_2)A_3)$与$(A_1(A_2A_3))$两种计算顺序最后得到的结果是相同的，但是这两种顺序花费的时间是不同的。
+
+这里先给出矩阵相乘的算法：
+
+```pseudocode
+MATRIX-MULTIPLY(A,B)
+
+if A.columns != B.rows
+    error "incompatible dimensions"
+else
+    let C be a new A.rows X B.columns matrix
+    for i = 1 to A.rows
+        for j = 1 to B.columns
+            c[i][j] = 0 
+            for k = 1 to A.columns
+                c[i][j] = c[i][j] + a[i][k] * b[k][j]
+    return C
+```
+
+c++实现如下：
+
+```c++
+Matrix* Matrix::multiply(Matrix* mat)
+{
+	int matColumn = mat->column;
+	Matrix* result = new Matrix(row, matColumn);
+	for (int i = 0; i < row; i++)
+	{
+		for (int j = 0; j < matColumn; j++)
+		{
+			result->data[i][j] = 0;
+			for (int k = 0; k < column; k++)
+			{
+				result->data[i][j] = result->data[i][j] + data[i][k] * mat->data[k][j];
+			}
+		}
+	}
+	return result;
+}
+```
+
+设两个相乘的矩阵分别为$A$和$B$，从上面的算法实现中可以看出，矩阵相乘的时间复杂度为$O(A.row*B.column*A.row)$。
+
+在三个矩阵$<A_1,A_2,A_3>$的例子中,假设$A_1$的大小为$10\times100$，$100\times 5$，$5\times50$。
+
+1. 如果计算顺序为$((A_1A_2)A_3)$，则整个计算需要进行的操作数为$10\times5\times100 +10\times50\times5=7500$。
+   
+2. 如果计算顺序为$(A_1(A_2A_3))$，则整个计算需要进行的操作数为$100\times50\times5+10\times50\times100=75000$
+
+两种计算顺序的计算量差距在10倍。
+
+`将矩阵乘法问题（matrix-chain multiplication problem）`定义为：对于数目为$n$的一些列矩阵$<A_1,A_2,...,A_n>$，为了满足矩阵相乘的要求，矩阵$A_i$的大小都为$p_{i-1}\times p_i$，要求的使相乘计算量最小的矩阵相乘顺序。
+
+### Counting the number of parenthesizations
+
+首先确认暴力枚举所有可能的顺序这个方法是很低效的，用$P(n)$来表示所有可能的计算顺序。设有$n$个矩阵，当$n=1$的情况下，只有一种可能，当$n\geq 2$的情况下，可以将$n$拆成两部分，$k$和$n-k$，所有的可能为这两部分可能的乘积，即$P(k)P(n-k)$。所以,
+
+$$
+P(n)=
+\begin{cases}
+    1 & \text{ if } n=1 \\\\
+    \sum_{k=1}^{n-1} P(k)P(n-k) &\text{ if } n \geq 2
+\end{cases}
+$$
+
+可以用数学归纳法证明$P(n)$的时间复杂度为$\Omega(2^n)$：
+
+1. 在$n=1$的情况下，$P(n)=1$，得证
+
+2. 在$n\geq2$的情况下，假设$p(n)=c2^n$代入式子得
+
+    $$
+    P(n)=\sum_{k=1}^{n-1} c2^k\cdot c2^{n-k} \\\\
+    =\sum_{k=1}^{n-1} c^2 2^n\\\\
+    =c^2(n-1)2^n\\\\
+    \geq c_1 2^n
+    $$
+
+    即$P(n)\geq c_1 2^n$，也得证。
+
+因此暴力枚举所有可能的顺序时间复杂度是一个指数型的函数， 效率是十分低下的。
+
+### Applying dynamic programming
+
+可以用动态规划来解决这个问题，这里根据之前定义的动态规划四步骤来解决答案：
+
+1. 找到最优解的结构
+2. 递归定义最优解的值
+3. 计算出最优解的值，通常是通过一个自下而上的递归方式解决
+4. 使用计算得出的数据构建出最优解
+
+#### Step 1:The structure of an optimal parethesization
+
+用符号$A_{i...j}$表示矩阵序列$A_i,A_{i+1},...,A_{j}$的乘积，在$i\neq j$的情况下，可以将矩阵序列拆成两部分，$A_i,A_{i+1},...,A_{k}$和$A_{k+1},A_{k+2},...,A_{j}$，其中$i\leq k < j$。
+
+整个$A_{i...j}$的花费变成了$A_{i...k}$的花费加上$A_{k+1...j}$的花费再加上将两部分结果相乘的时间。
+
+在按两部分分割下，如果$A_{i...j}$是最佳解，那么分出的$A_{i...k}$和$A_{k+1...j}$两部分也必然是各自的最佳解，因为如果其中一个可以更优的话，那么$A_{i...j}$则也可以变得更优。
+
+因此矩阵相乘问题的最优解也变为了先求得两个子问题的最优解，再将两个最优解合并起来。
+
+#### Step2: A recursive solution
+
+用$m[i,j]$来表示$A_{i...j}$的操作量，根据Step1中的解释，$A_{i...j}$的花费变成了$A_{i...k}$的花费加上$A_{k+1...j}$的花费再加上将两部分结果相乘的时间。
+
+因为矩阵$A_i$的尺寸为$p_{i-1}\times p_i$，所以矩阵$A_{i...k}$为$p_{i-1}\times p_k$，矩阵$A_{k+1...j}$的尺寸为$p_{k}\times p_j$。因此将两部分合并的操作数为$p_{i-1}p_kp_j$。
+
+当$i=j$时，只有一个矩阵即不需要相乘，这种情况下$m[i,j]$为0，综上
+
+$$
+m[i,j] = \begin{cases}
+    0 & \text{ if } i=j \\\\
+    \min_{i\leq k <j} {m[i,k]+m[k+1,j]+p_{i-1}p_kp_j} & \text { if } i <j
+\end{cases}
+$$
+
+但$m[i,j]$表示的只是最佳解的值，为了获得最佳解，需要定义一个$s[i,j]$，它记录每个子问题的最佳解时$k$的值。
+
+#### Step 3: Computing the optimal costs
+
+$m[i,j]$的计算依赖于矩阵的尺寸$p_{i-1} \times p_i$，如果存在$n$个矩阵，则表示数据尺寸的数组有$n+1$个元素，因为对于$A_1$而言，尺寸为$p_0 \times p_1$，所以$p$的数组是从0到$n$。
+
+使用数组$m[i,j]$来表示$A_i...A_j$的最少操作数。其中$i$的取值范围是$1\sim n$，$j$的取值范围是$1\sim n$。当$i=j$时，$m[i,j]=0$
+
+使用数组$s[i,j]$表示$A_i...A_j$有最少操作数时，$k$的取值。其中$i$的取值范围是$1\sim {n-1}$，$j$的取值范围是$2\sim n$。这是因为如果$i$必须小于$j$，如果$i=j$，那么根本就没有$k$的存在。
+
+对于矩阵序列$A_i...A_j$，一共有$l$个元素，$l=i-j+1$
+
+计算矩阵序列最佳解的算法伪代码如下：
+
+```pseudocode
+MATRIX-CHAIN-ORDER(p)
+
+n = p.length -1
+m = new matrix[1~n][1~n]
+s = new matrix[1~n-1][2~n]
+for i = 1 to n //matrix chain only has one matrix
+    m[i,i] = 0
+for l = 2 to n
+    for i =1 to n-l+1 // set i's arrange according to the length
+         j = i + l -1 //we can calculated the j according to the i and l
+         m[i,j]= MAX
+        for k = i to j-1
+            q = m[j,k] + m[k+1,j] + p[i-1]p[k]p[j]
+            if q < m[j,k]
+                m[i,j] = q
+                s[i,j] = k 
+return m and s
+```
+
+上述伪代码的第6-7行，即对于`m[i,i] = 0`的处理，实际上就是表示整个矩阵序列只有一个矩阵的情况。
+
+算法的核心是从第八行开始的三重循环，最外层循环`l = 2 to n`，表示矩阵序列中的矩阵数量从$2\sim n$的情况。因为算法使用了自底向上的方法，所以从矩阵数量为$2$开始计算直到矩阵数量为$n$。
+
+第二层循环`i =1 to n-l+1`，是对于$i$数值的循环，因为矩阵序列的长度为$l$，所以$i$最大为$n-l+1$，否则$j=i+l-1$会大于$n$。
+
+因为$l$和$i$都已经确认，所以在第二层循环中，可以算出$j=i+l-1$，至此$m[i,j]$中的$i$和$j$都已经确认，剩下要求的就是分割点$k$。
+
+第三层循环`k=i to j-1`是循环$k$取值的每一个可能，并检查其是否是最佳值，如果是则填入$m[i,j]$和$s[i,j]$
+
+c++实现如下：
+
+```c++
+void MatrixChainOrder(int* matrixSizeArray, Matrix* minMultiplications, Matrix* minMultiplicationCut)
+{
+
+		int totalMatrixLength = minMultiplications->row;
+
+		for (int i = 0; i < totalMatrixLength; i++)
+			minMultiplications->data[i][i] = 0;
+
+		for (int matrixLength = 2; matrixLength <= totalMatrixLength; matrixLength++)
+		{
+			for (int i = 0; i < totalMatrixLength - matrixLength + 1; i++)
+			{
+				int j = matrixLength + i - 1;
+				minMultiplications->data[i][j] = INT_MAX;
+				for (int k = i; k <= j - 1; k++)
+				{
+					int tempMin = minMultiplications->data[i][k] + minMultiplications->data[k + 1][j] +
+						matrixSizeArray[i] * matrixSizeArray[k + 1] * matrixSizeArray[j + 1];
+					if (tempMin < minMultiplications->data[i][j])
+					{
+						minMultiplications->data[i][j] = tempMin;
+						minMultiplicationCut->data[i][j] = k;
+					}
+				}
+			}
+		}
+
+		minMultiplications->PrintMatrix(15);
+		cout << endl;
+		minMultiplicationCut->PrintMatrix(15);
+}
+```
+
+c++实现中，`matrixSizeArray`表示存有矩阵尺寸的数组，如有$n$个矩阵，则该数组大小为$n+1$。`minMultiplications`等同于伪代码中的$m[i,j]$，`minMultiplicationCut`等同于伪代码中的$s[i,j]$。这两个都用了`Matrix`进行表示，两个`Matrix`尺寸都为$n$。虽然在伪代码中，$s[i,j]$的尺寸只要是$n-1$即可，但这里为了实现方便，还是用了$n$。
+
+如果输入的`matrixSizeArray`数据有7个数据，即表示有6个矩阵，且初始化为:
+
+```c++
+int matrixSizeArray[] = { 30,35,15,5,10,20,25 };
+```
+
+则C++运算结果如下：
+
+![MatrixChainMultiplicationResult](IA-Chapter15-Notes/2019-11-22-11-25-54.png)
+
+结果中的`-842150451`是`Int`数值的默认值，在不同电脑上可能不一样。
+
+`minMultiplications`的对角线表示长度为1的情况，这时候不需要操作了，即为0。从对角线向右上角，每一条都长度+1的情况。右上角顶点$15125$即表示长度为6时的结果。
+
+同理，`minMultiplicationCut`的对角线有表示长度为`1`的情况，但因为长度只有1，所以没法分割，也就是没法定义`k`，因此这个矩阵的对角线值是未定义的即`-842450451`。同样的从对角线向右上角，每一条都长度+1的情况。
+
+将两个矩阵结果的未定义部分删去，并进行一个旋转，让对角线变成水平，则结果如下图所示，左边是$m[i,j]$，右边是$s[i,j]$：
+
+![旋转后的运行结果](IA-Chapter15-Notes/2019-11-22-11-32-00.png)
+
+算法是从最底部逐渐向上运行。
+
+* 图中的$s[i,j]$与代码运行的结果不同，每一个数值都大了1，这是因为代码中矩阵位置是从0开始，而图解中是从1开始。
+
+因为算法有三种循环，所以时间复杂度为$O(n^3)$，且算法需要$\Theta(n^2)$的空间复杂度。
+
+#### Step 4: Constructing an optimal solution
+
+在步骤三中求得的$m[i,j]$只是最佳解的值。如例子中如果要求6个矩阵的最小工作量，可以从$m[i,j]$的最顶部获得，为$15125$。但如果要求6个矩阵最佳情况下该以怎样的顺序进行计算，步骤三并没有直接给出。这里可以通过步骤三中获得的$s[i,j]$矩阵获取矩阵相乘最佳情况下的顺序。
+
+伪代码如下：
+
+```pseudocode
+PRINT-OPTIMAL-PARENS(s,i,j)
+
+if i == j
+    print "A_"i
+else
+    print "("
+    PRINT-OPTIMAL-PARENS(s,i,s[i,j])
+    PRINT-OPTIMAL-PARENS(s,s[i,j]+1,j)
+    print ")"
+```
+
+这里利用了步骤三中求得的$s[i,j]$，如果输入值为$0 \sim 5$（以C++实现的数据为准，所以不是$1\sim6$），则算法的图解如下：
+
+![打印矩阵最佳解图解](2019-11-22-12-00-59.png)
+
+黑色表示$(i,j)$，蓝色表示$s[i,j]$的取值，红色表示算法中的输出。
+
+最后树以中序打印则为结果(因为算法中都是在递归左树和右树前先打印了数据，所以是中序)
+
+c++实现如下：
+
+```c++
+void PrintOptimalParens(Matrix* minMultiplicationsCut, int i, int j)
+{
+	if (i == j)
+		cout << "A_" << i;
+	else
+	{
+		cout << "(";
+		int k = minMultiplicationsCut->data[i][j];
+		PrintOptimalParens(minMultiplicationsCut, i, k);
+		PrintOptimalParens(minMultiplicationsCut, k + 1, j);
+		cout << ")";
+	}
+}
+```
+
+输入值为$0\sim5$的话，最终结果为$((A_0(A_1A_2))((A_3A_4)A_5))$。
+
+## Elements of dynamic programming
+
+一个优化问题可以用动态规划解决必须有两个关键因素：`最右子结构（Optimal substructure）`和`重叠的子问题（overlapping subproblems）`。
+
+### Optimal substructure
+
+
+
+
 {% note primary %}
 
 {% endnote %}
