@@ -691,7 +691,7 @@ void PrintOptimalParens(Matrix* minMultiplicationsCut, int i, int j)
 
 ### Optimal substructure
 
-
+在两个
 
 
 {% note primary %}
