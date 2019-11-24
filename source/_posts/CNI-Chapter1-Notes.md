@@ -22,11 +22,11 @@ tags:
 
 # Chapter1 Introduction And Overview
 
-## 1.1 Growth Of Computer Networking
+## Growth Of Computer Networking
 
 计算机网络正在持续的爆炸性成长。在1970年代它只是一个非常小范围的研究课题，在1980年也只有几个网站，但到现在计算机网络已经成为了生活中的一部分。
 
-## 1.2 Why Networking Seems Complex
+## Why Networking Seems Complex
 
 计算机网络是一个高速发展的领域。
 
@@ -34,7 +34,7 @@ tags:
 
 计算机网络用语也并没有一个统一的标准，许多组织都定义过自己一套用语规范，这又很容易让初学者们感到困惑。
 
-## 1.3 The Five Key ASpects of Networking
+## The Five Key ASpects of Networking
 
 计算机网络包括五个关键领域：
 
@@ -143,7 +143,7 @@ MAC层的协议指定了对网络通信的细节以及网络硬件与Layer3（In
 
 应用层的协议指定了通过网络交流的应用传输的数据信息的格式和意义，以及需要执行的步骤。如邮件，文件传输，语音电话等的实现都属于应用层。
 
-## 1.7 How Data passes Through Layers
+## How Data passes Through Layers
 
 分组模型并不只是为了帮助理解协议，协议的实现满足某一层协议的输出需要匹配相邻层协议的输入。
 
@@ -154,7 +154,7 @@ MAC层的协议指定了对网络通信的细节以及网络硬件与Layer3（In
 一号电脑是数据的发送方，二号电脑是数据的接收方。数据从一号电脑的应用层逐渐向下传递，通过接口层进入网络，在进入网络并传输后，通过二号电脑的接口层传入，再向上逐渐传递到应用层。
 
 
-## 1.8 Headers And Layers
+## Headers And Layers
 
 每一层的协议为了保证数据被正确的传递都进行了一些计算。在发送端的每一层中都将一些额外的信息加到了数据包中，对应的，在接受段的每一层中都将解析并移除这些额外的信息。
 
@@ -164,7 +164,7 @@ MAC层的协议指定了对网络通信的细节以及网络硬件与Layer3（In
 
 * 虽然图中每个被添加的数据头大小看起来相同，但实际上都不是一个固定的大小。
 
-## 1.9 ISO And The OSI Seven Layer Reference Model
+## ISO And The OSI Seven Layer Reference Model
 
 在因特网模型发展的过程中，有两个组织定义了一个替代的参考模型，称为`开放式系统互联参考七层模型(Open Systems Interconnection Seven-Layer Reference Model)`，简称为`OSI模型`。
 
@@ -178,7 +178,7 @@ TCP/IP协议比OSI协议更为高效合理，发展和部署OSI协议的工作�
 
 虽然许多工程师和商业部门知道`OSI协议`不如`TCP/IP协议`高效，但他们依然处于某些原因在坚持使用。
 
-## 1.10 Remainder Of The Text
+## Remainder Of The Text
 
 书的剩下部分将分为五个部分，基本对应与1.3节中提到的五个重要领域。
 
