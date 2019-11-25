@@ -168,7 +168,7 @@ MAC层的协议指定了对网络通信的细节以及网络硬件与Layer3（In
 
 在因特网模型发展的过程中，有两个组织定义了一个替代的参考模型，称为`开放式系统互联参考七层模型(Open Systems Interconnection Seven-Layer Reference Model)`，简称为`OSI模型`。
 
-这两个组织分别是`国际标准化组织（International Organization for Standardization）`，简称为$ISO$和`国际电信联盟（International Telecommunications Union）(ITU)`中的电信标准部门。
+这两个组织分别是`国际标准化组织（International Organization for Standardization）`，简称为`ISO`和`国际电信联盟（International Telecommunications Union）(ITU)`中的电信标准部门。
 
 `OSI`协议图如下：
 
