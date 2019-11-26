@@ -1,17 +1,20 @@
 ---
 title: 《算法导论》 第十五章笔记
 mathjax: true
-categories: 
-- 读书笔记
-- 数据结构与算法
+categories:
+  - 读书笔记
+  - 数据结构与算法
 tags:
-- 读书笔记
-- 数据结构与算法
+  - 读书笔记
+  - 数据结构与算法
+date: 2019-11-26 13:51:03
 ---
 
 {% cq %}
 
 《算法导论》 第十五章笔记，介绍动态规划的概念及一些运用了动态规划的算法。
+
+15.4及15.5节尚未整理
 
 {% endcq %}
 
@@ -72,14 +75,14 @@ tags:
 可以把求得$r_n$，即整个钢条的最大化过程看作先切割一刀，这时候钢条变成了两部分，左部分就不再动了，对右部分继续切割，找到右部分的最佳切割方式，即对右部分求最佳解。数学可表示为
 
 $$
-r_n= \max _{1\leq i \leq n}(p_i + r_{n-i})
+r_n= \max_{1\leq i \leq n}(p_i + r_{n-i})
 $$
 
 这就是钢条切割问题的最佳解结构：整个问题的最佳解是与子问题的最佳解相关的。如上式中，最佳解的值是依赖于子问题的最佳解的值得到的。
 
 ### 递归解法
 
-递归解法的伪代码如下，这个方法就是对式子$r_n= \max _{1\leq i \leq n}(p_i + r_{n-i})$的实现
+递归解法的伪代码如下，这个方法就是对式子$r_n=\max_{1\leq i \leq n}(p_i + r_{n-i})$的实现
 
 ```pseudocode
 CUT-ROD(p,n)
@@ -456,7 +459,7 @@ Matrix* Matrix::multiply(Matrix* mat)
 }
 ```
 
-设两个相乘的矩阵分别为$A$和$B$，从上面的算法实现中可以看出，矩阵相乘的时间复杂度为$O(A.row*B.column*A.row)$。
+设两个相乘的矩阵分别为$A$和$B$，从上面的算法实现中可以看出，矩阵相乘的时间复杂度为$O(A.row\times B.column\times A.row)$。
 
 在三个矩阵$<A_1,A_2,A_3>$的例子中,假设$A_1$的大小为$10\times100$，$100\times 5$，$5\times50$。
 
@@ -554,7 +557,7 @@ s = new matrix[1~n-1][2~n]
 for i = 1 to n //matrix chain only has one matrix
     m[i,i] = 0
 for l = 2 to n
-    for i =1 to n-l+1 // set i's arrange according to the length
+    for i = 1 to n-l+1 // set i's arrange according to the length
          j = i + l -1 //we can calculated the j according to the i and l
          m[i,j]= MAX
         for k = i to j-1
@@ -659,7 +662,7 @@ else
 
 这里利用了步骤三中求得的$s[i,j]$，如果输入值为$0 \sim 5$（以C++实现的数据为准，所以不是$1\sim6$），则算法的图解如下：
 
-![打印矩阵最佳解图解](2019-11-22-12-00-59.png)
+![打印矩阵最佳解图解](IA-Chapter15-Notes/2019-11-22-12-00-59.png)
 
 黑色表示$(i,j)$，蓝色表示$s[i,j]$的取值，红色表示算法中的输出。
 
@@ -687,14 +690,221 @@ void PrintOptimalParens(Matrix* minMultiplicationsCut, int i, int j)
 
 ## Elements of dynamic programming
 
-一个优化问题可以用动态规划解决必须有两个关键因素：`最右子结构（Optimal substructure）`和`重叠的子问题（overlapping subproblems）`。
+一个优化问题可以用动态规划解决必须有两个关键因素：`最优子结构（Optimal substructure）`和`重叠的子问题（overlapping subproblems）`。
 
 ### Optimal substructure
 
-在两个
+如果一个问题具有最优子结构，那么这个问题的最优解一定是伴随着他的子问题的最优解。
 
+可以从以下步骤找寻问题的最优结构：
+
+1. 问题的第一部分首先可以通过一个选择进行切分。切分后会产生一个或多个子问题。
+
+   这一步相当于先确定最内层的循环表达形式，如在切割钢条问题中是选择第一刀切割的长度$l$，矩阵乘法问题中是分割矩阵的位置(求$k$)。
+
+2. 在步骤一的选择中，假设已经知道最优解的选择是什么。
+
+   步骤一中的值是需要一个循环来遍历每个可能的值并找到最佳值的，步骤二即假设已经找到了最佳解。
+
+3. 限定子问题空间，即运用最优解的子问题（在步骤二中假设已经知道了解决每个问题的最优解）。限定子问题空间时尽可能简单。
+
+   例如对于钢条切割问题，子问题空间包含的问题是长度为$i$的钢条的最优切割问题，$i$取值从$1\sim n$。因此钢条切割问题外部只有一层循环。
+
+   但对于矩阵乘法问题，求$A_1A_2...A_n$的最佳分割方式，分割并不一定是从$A_1$开始的，所以需要子问题的两端都需要变化，即$A_i...A_j$，其中$i$的取值是$1\sim n$，$j$的取值是$i$到$n$。（$i$和$j$决定了矩阵序列的长度，在实际算法中，取$i$和长度$l$变量，$j$根据$i$和$l$算出）。因此矩阵乘法问题的子问题空间包含两个变量，外部有双层循环。
+
+4. 证明用来构成问题最优解的子问题本身必须是最优解。可以通过反证法，如果子问题不是最优解，那么将问题中的这一部分子问题替换为最优解，原问题能获取到更优的解。这个证明方法称为`“剪切-黏贴”（Cut-and-Paste）`方法
+
+对于不同的问题，最优子结构的不同体现在两个方面（这里关注的是循环最内层的表达式）
+
+1. 原问题的最优解包含多少个子问题
+
+2. 在确定最优解使用哪些子问题时，要考察多少种可能。
+
+对于钢条切割问题，最优解只需要包含一个子问题，求钢条切割一刀后，剩下部分的最佳切割方式。对于长度为$n$的钢条，第一刀长度一共有$n$种可能性。
+
+对于矩阵乘法问题，最优解需要包含两个子问题，切割后的$A_i..A_k$与$A_k..A_j$各自的最佳切分方式。对于$A_i...A_j$，$k$的取值一共有$j-i$种可能性。
+
+可以从一个问题一共可能的子问题个数和每个子问题需要考察的可能性数量两方面来确定一个问题的时间复杂度。
+
+例如钢条切割问题，长度为$n$的钢条，一共有$\Theta(n)$个子问题，每个子问题最多有$n$个可能性，所以时间复杂度为$O(n^2)$。对于矩阵乘法问题，因为$i$和$j$的变化，一共有$\Theta(n^2)$个子问题，每个子问题最多有$n-1$个可能性，所以时间复杂度为$O(n^3)$。
+
+#### Subtitles
+
+需要注意不要在不是最优子结构的时候使用动态规划。
+
+如求有向图的最短路径可以使用动态规划，但求最长路径就无法使用动态规划。这里的最长路径限定没有闭环，不然可以通过无限次闭环来增加路径。
+
+以结点$u$到结点$v$为例子，在最短路径问题下是**存在**最佳子结构的。假设在$u$到$v$的最短路径上存在结点$w$，$u$到$w$和$w$到$v$都必然是最短路径。否则应用剪切黏贴法，如果有$u$到$w$的更短路径，那么用更短的路径替换则能得到$u$到$v$的更优解。
+
+但在最长路径问题下是**不存在**最佳子结构的，即$u$到$v$的最长路径上存在结点$w$，$u$到$w$和$w$到$v$不一定是各自的最长路径。以下图为例
+
+![最长路径反例](IA-Chapter15-Notes/2019-11-26-10-35-55.png)。
+
+如果求$q$到$t$的的最长路径，那么应该是$q\rightarrow r \rightarrow t$。但是$q\rightarrow r$并不是$q$到$r$的最长路径，其最长路径为$q \rightarrow s \rightarrow t \rightarrow r$，$r$到$t$的最长路径为$r \rightarrow q \rightarrow s \rightarrow t$。而$q$到$r$和$r$到$t$不能取各自最长路径的原因是，如果这么做了就会形成闭环回路。
+
+虽然最长路径和最短路径都是将原问题拆分为了两个子问题，但是因为最长路径的两个子问题是**相关**的，所以不能用动态规划。例如在求$q$到$r$的最长路径的子问题时，因为用了$q \rightarrow s \rightarrow t$,在求$r$到$t$的时候就不能使用$q \rightarrow s \rightarrow t$，否则就存在了闭。即一个子问题的解会干扰到另一个子问题的求解，这就是`子问题相关`。
+
+在最短路径问题下，不存在子问题相关，在两个子问题中也不会出现相同的结点。证明如下：
+
+如果从$u$到$w$和从$w$到$v$两个子问题中都需要经过结点$x$，即路径时$u\rightarrow x\rightarrow w$和$w \rightarrow x \rightarrow v$，那么$x \rightarrow w$和$w \rightarrow x$可以相互抵消，最终路径为$u \rightarrow x \rightarrow v$。这又与经过$w$的假设不匹配，所以两端路径不可能都经过$x$。
+
+### Overlapping subproblems
+
+另一个动态规划需要满足的要求是重叠子问题，即在递归子问题空间中的问题时，子问题是需要是重复出现的，而不是一直出现新的子问题。与动态规划相对的是分治法，在分治法中，解决的每个的子问题都是全新的子问题，其中也不包含已经解决的小子问题。
+
+如矩阵乘法问题中，$m[3,4]$这个子问题的求解，在求$m[2,4]$,$m[1,4]$,$m[3,5]$等中都会出现。下图展示了在求解$m[1,4]$的过程中，出现的子问题，其中深色部分为已经出现过的子问题。
+
+![重叠子问题](IA-Chapter15-Notes/2019-11-26-11-28-09.png)
+
+因为使用了自底向上法或者备忘录法来规避了子问题的重复计算时间，动态规划的时间复杂度才能是多项式级别的，否则是指数形式。
+
+在切割钢条问题的一节中，已经从数学上证明了迭代求解切割钢条问题复杂度为$O(2^n)$，也可证明矩阵乘法问题，迭代求解的复杂度也为$O(2^n)$。迭代法的伪代码为：
+
+```pseudocode
+RECURSIVE-MATRIX-CHAIN(p,i,j)
+if i == j
+    return 0
+
+m[i,j] = MAX
+
+for k = i to j-1
+    q = RECURSIVE-MATRIX-CHAIN(p,i,k) + RECURSIVE-MATRIX-CHAIN(p,k+1,j) +
+        p[i-1]p[k]p[j]
+    if q < m[i,j]
+        m[i,j] = q
+
+return m[i,j]
+```
+
+c++代码如下：
+
+```c++
+int RecursiveMatrixChain(int* matrixSizeArray, Matrix* minMultiplications, int i, int j)
+{
+	if (i == j)
+		return 0;
+	minMultiplications->data[i][j] = INT_MAX;
+	for (int k = i; k < j; k++)
+	{
+		int tempMin = RecursiveMatrixChain(matrixSizeArray, minMultiplications, i, k) +
+			RecursiveMatrixChain(matrixSizeArray, minMultiplications, k + 1, j) + matrixSizeArray[i] * matrixSizeArray[k + 1] * matrixSizeArray[j + 1];
+		if (tempMin < minMultiplications->data[i][j])
+			minMultiplications->data[i][j] = tempMin;
+	}
+
+	return minMultiplications->data[i][j];
+}
+```
+
+时间复杂为
+
+$$
+T(n)\geq
+\begin{cases}
+    1 & n=1 \\\\
+    1 + \sum_{k=1}^{n-1}(T(k)+T(n-k)+1) & n > 1
+\end{cases}
+$$
+
+可以用数学归纳法证明$T(n)=O(2^n)$
+
+假设$T(n)=\Omega(2^n)$，可取$T(n)\geq 2^{n-1}，$当$n=1$时，$T(n)\geq 1 = 2^0$，得证。
+
+当$n\geq 2$时，
+
+$$
+T(n) \geq 1 + \sum_{k=1}^{n-1}(T(k)+T(n-k)+1) \\\\ 
+= 1 +  \sum_{k=1}^{n-1} T(k) +\sum_{k=1}^{n-1}T(n-k) +\sum_{k=1}^{n-1} 1 \\\\
+= 1 +  \sum_{k=1}^{n-1} T(k) + \sum_{i = n-1}^{1} T(i) +(n-1) \\\\
+= 2\sum_{i=1}^{n-1}2^{i-1}+n \\\\
+= 2(2^{n-1}-1)+n \\\\
+= 2^n -2 +n \\\\
+\geq 2^{n-1}
+$$
+
+得证。而使用动态递归的方法，将时间复杂度变味了$n^3$，大幅提升了算法的效率。
+
+### Reconstructing an optimal solution
+
+为了重构出最佳解（在写算法时，关注的是最佳解的值），需要在计算过程中保留一些关键数据，如在矩阵乘法问题中保存每一步的$k$值，即矩阵$s[i,j]$
+
+### Memoization
+
+如在求解钢条切割问题一样，矩阵乘法问题也可以通过自顶向下的备忘录法解决，伪代码如下：
+
+```pseucode
+MEMOIZED-MATRIX-CHAIN(p)
+n = p.length - 1
+m = new matrix[1~n][1~n]
+for i = 1 to n
+    for j = i to n
+        m[i,j] = MAX
+return LOOKUP-CHAIN(m,p,1,n)
+
+LOOKUP-CHAIN(m,p,i,j)
+
+if m[i,j] < MAX
+    return m[i,j]
+else
+    for k = i to j-1
+        q = LOOKUP-CHAIN(m,p,i,k) + LOOKUP-CHAIN(m,p,k+1,j)
+        + p[i-1]p[k]p[j]
+    if q < m[i,j]
+        m[i,j] = q
+return m[i,j]
+```
+
+c++代码如下：
+
+```c++
+void MemoizedMatrixChain(int* matrixSizeArray, Matrix* minMultiplications)
+{
+	for (int i = 0; i < minMultiplications->row; i++)
+	{
+		for (int j = 0; j < minMultiplications->column; j++)
+			minMultiplications->data[i][j] = INT_MAX;
+	}
+	LookupChain(matrixSizeArray, minMultiplications, 0, 5);
+}
+
+int LookupChain(int* matrixSizeArray, Matrix* minMultiplications, int i, int j)
+{
+	if (minMultiplications->data[i][j] < INT_MAX)
+		return minMultiplications->data[i][j];
+	if (i == j)
+		minMultiplications->data[i][j] = 0;
+	else
+	{
+		minMultiplications->data[i][j] = INT_MAX;
+		for (int k = i; k < j; k++)
+		{
+			int tempMin = RecursiveMatrixChain(matrixSizeArray, minMultiplications, i, k) +
+				RecursiveMatrixChain(matrixSizeArray, minMultiplications, k + 1, j) + matrixSizeArray[i] * matrixSizeArray[k + 1] * matrixSizeArray[j + 1];
+			if (tempMin < minMultiplications->data[i][j])
+				minMultiplications->data[i][j] = tempMin;
+		}
+	}
+	return minMultiplications->data[i][j];
+}
+```
+
+该算法的时间复杂度同样为$O(n^3)$
+
+如果一个问题的子问题空间中的所有问题都必须被解决，那么自底向上法的效率更高，因为它减少了函数调用堆栈的花销。但如果子问题空间的问题并一定需要全部被解决，那么自顶向下备忘法可能效率更高，因为他只会计算需要用到的子问题。
+
+## Longest common subsequence
+
+//TODO
+
+## Optimal binary search trees
+
+//TODO
 
 {% note primary %}
+
+引用：
+
+1. *Introduction to Algorithms* 3rd Sep.2009
 
 {% endnote %}
 
