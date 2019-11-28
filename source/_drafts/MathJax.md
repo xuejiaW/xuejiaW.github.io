@@ -60,6 +60,8 @@ $$
 | $\omega$      | \omega      |
 | $\varepsilon$ | \varepsilon |
 | $\epsilon$    | \epsilon    |
+| $\phi$        | \phi        |
+| $\Phi$        | \Phi        |
 
 ## 运算符号
 
