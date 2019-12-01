@@ -1,6 +1,6 @@
 ---
 title: 《计算机网络与因特网》 第六章笔记
-mathjax: false
+mathjax: true
 categories:
   - 读书笔记
   - 计算机网络
