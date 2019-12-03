@@ -193,7 +193,7 @@ $$
 8000 \frac{samples}{second} \times 8 \frac{bits}{sample} = 64000 \frac{bits}{second}
 $$
 
-因此电话系统每秒传递64000-bits数据（64Kbps）。
+因此电话系统每秒传递64000-bits数据（64Kbps），也可见采样频率越高，可携带的数据也就越多。
 
 ## Nonlinear Encoding
 
