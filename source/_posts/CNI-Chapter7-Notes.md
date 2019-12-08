@@ -142,7 +142,7 @@ date: 2019-12-03 17:24:21
 
 下图是三种红外线通信的常见技术：
 
-![红外线通信技术](2019-12-03-09-54-25.png)
+![红外线通信技术](CNI-Chapter7-Notes/2019-12-03-09-54-25.png)
 
 ## Point-To-Point Laser Communication
 
