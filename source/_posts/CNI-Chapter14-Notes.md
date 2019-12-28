@@ -20,7 +20,7 @@ date: 2019-12-09 11:44:17
 
 # Chapter 14 The IEEE MAC Sublayer
 
-* 这一章原书中的Statiion一词，在笔记中翻译为终端。
+* 这一章原书中的Statiion一词，在笔记中翻译为`终端`。
 
 ## Introduction
 
