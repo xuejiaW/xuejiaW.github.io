@@ -81,6 +81,8 @@ date: 2019-12-09 11:44:17
 
 IEEE是由一群关注于协议栈最下两层（物理层（Physical）和数据链接层（Data Link））的工程师构成的。协议栈的不同层由不同的机构负责，如IEFT关注传输层和因特网协议，WWW组织关注应用层。机构与其关注的协议如下图所示：
 
+在1980年，IEEE组织了`802项目局域网/城域网标准委员（Project 802 LAN/MAN Standards Commitee）`会为网络设定标准。
+
 ![组织和协议](CNI-Chapter13-Notes/2019-12-09-09-12-05.png)
 
 ## IEEE 802 Model And Standards
