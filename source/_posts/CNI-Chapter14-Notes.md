@@ -34,7 +34,7 @@ date: 2019-12-09 11:44:17
 
 下图展示了按照共享媒介所使用的方法的分类：
 
-![](CNI-Chapter14-Notes/2019-12-27-22-55-32.png)
+![共享媒介的分类方法](CNI-Chapter14-Notes/2019-12-27-22-55-32.png)
 
 ## Static And Dynamic Channel Allocation
 
@@ -136,7 +136,7 @@ ALOHA的实现逻辑很直接：当终端有数据要发送时，使用入站频
 
 ALOHA示意图如下：
 
-![](CNI-Chapter14-Notes/2019-12-28-12-56-15.png)
+![ALOHA示意图](CNI-Chapter14-Notes/2019-12-28-12-56-15.png)
 
 ### CSMA/CD
 
@@ -181,12 +181,12 @@ While(Collision occured)
 
 CSMA/CD并不能被运用在无线网络中，因为无线网络中的设备存在一个最远距离$\delta$。即如果两个终端的距离大于$\delta$，则CSMA/DA中的载波监听就无法被应用，因为一个终端并不能知道另一个是否在发送信息。这种情况如下图所示，如果Computer1在发送信息，Computer3是无法得知的，因此冲突只有Computer2可以知晓，这种情况称为`隐藏终端问题(Hidden Station Problem)`。
 
-![](CNI-Chapter14-Notes/2019-12-28-15-00-02.png)
+![隐藏终端问题](CNI-Chapter14-Notes/2019-12-28-15-00-02.png)
 
 
 所以无线网络中使用`具有冲突规避的载波侦听多路访问（CSMA/CA，Carrier Sense Multi-Access With Collision Avoidance）`。以上图的例子，Computer3在发送数据前会先向所有它的$\delta$范围内的设备发出一个短信息表明自己需要发送数据了，接受到Computer3发出的短信息的设备会检查自己是否正在接受其他的数据，如果不是则回复可以发送的信号。如下图所示：
 
-![](CNI-Chapter14-Notes/2019-12-28-15-08-19.png)
+![CSMA/CA图解](CNI-Chapter14-Notes/2019-12-28-15-08-19.png)
 
 如果发送端没有收到接收方的回执，则会在随机时间后再次尝试发送。
 
