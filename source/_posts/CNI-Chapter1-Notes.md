@@ -129,7 +129,9 @@ TCP/IP标准成功的一个重要原因是它宽容的异质性。TCP/IP使用�
 
 ### Layer 2: Network Interface(MAC)
 
-MAC层的协议指定了对网络通信的细节以及网络硬件与Layer3（Internet层）的通信细节。硬件地址，网络地址，网络可支持的最大包数据以及传输媒介的协议等信息都属于网络接口层。
+网络接口层的协议指定了对网络通信的细节以及网络硬件与Layer3（Internet层）的通信细节。硬件地址，网络地址，网络可支持的最大包数据以及传输媒介的协议等信息都属于网络接口层。
+
+TCP/IP的设计者将这一层命名为`网络接口层（Network Interface）`，但一些协会更喜欢称为`数据链路层（Data Link）`，工业界又喜欢称为`媒介访问控制层（Media Access Control,MAC）`
 
 ### Layer 3：Internet
 
