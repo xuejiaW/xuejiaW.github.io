@@ -87,7 +87,7 @@ IEEE是由一群关注于协议栈最下两层（物理层（Physical）和数�
 
 ## IEEE 802 Model And Standards
 
-IEEE将数据链接层又在细分为了两层，`逻辑链接控制层（Logical Link Control,LLC）`和`媒介访问控制层（Media Access Control,MAC）`。
+IEEE将数据链接层又在细分为了两层，`逻辑链接控制层（Logical Link Control,LLC）`(第15章中描述)和`媒介访问控制层（Media Access Control,MAC）`。
 
 逻辑链接控制层设备的地址和在解复用中地址的使用。媒介访问控制层关注于多个计算机如何共享底层的媒介。
 
