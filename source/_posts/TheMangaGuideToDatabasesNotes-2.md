@@ -307,7 +307,7 @@ where PRODUCT_CODE IN
 where QUANTITY>=1000);
 ```
 
-另外还有`相关子查询(CORRELATED SUBQUERY)`，线管子查询最大的区别是先运行括号外的内容，再将结果一条条传递给括号内的查询，如
+另外还有`相关子查询(CORRELATED SUBQUERY)`，相关子查询最大的区别是先运行括号外的内容，再将结果一条条传递给括号内的查询，如
 
 ```sql
 select * from sales_statement_table U
