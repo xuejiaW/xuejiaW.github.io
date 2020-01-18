@@ -77,8 +77,13 @@ $$
 | $\infty$     | \infty     | $\infin$      | \infin（Hexo不识别该写法，但官方支持） |
 | $\lfloor$    | \lfloor    | $\rfloor$     | \rfloor                                |
 | $\lceil$     | \lceil     | $\rceil$      | \rceil                                 |
-| $\equiv$     | \equiv     |
+| $\equiv$     | \equiv     | $\infty$      | \infty                                 |
 
+## 上标符号
+
+| 上标符号 | 表达式 |
+| -------- | ------ |
+| $\hat{a}$ | \hat{a} |
 
 #### 数学模式
 
