@@ -206,7 +206,7 @@ TreeNode* BinarySearchTree::Minimum(TreeNode* node)
 
 ![二叉搜索树](IA-Chapter12-Notes/2019-11-05-17-12-58.png)
 
-`Successor`伪代码
+`Successor`和`Predecessor`伪代码
 
 ```pseudocode
 

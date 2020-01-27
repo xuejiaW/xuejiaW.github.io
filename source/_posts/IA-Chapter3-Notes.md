@@ -107,7 +107,7 @@ $\Omega$标记的证明与$\Theta$类似，且与$O$一样都能描述算法的�
 
 #### Asymoptotic notation in equations and inequalities
 
-在书中，有时会在表达式和不等式中用渐进表达式来省去一些不关注的细节，如表达式$2n^2+3^n+1=2n^3+\Theta(n)$表示$2n^2+3^n+1=2n^3+f(n)$，其中$f(n)\in \Theta(n)$
+在书中，有时会在表达式和不等式中用渐进表达式来省去一些不关注的细节，如表达式$2n^2+3n+1=2n^2+\Theta(n)$表示$2n^2+3n+1=2n^2+f(n)$，其中$f(n)\in \Theta(n)$
 
 #### $o$-notation
 

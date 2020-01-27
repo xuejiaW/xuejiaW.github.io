@@ -405,7 +405,7 @@ $$
 
 #### Using the master method
 
-1. 式子$T(n)=9T(n/3)=n$
+1. 式子$T(n)=9T(n/3)+n$
 
     可知$a=9,b=3,f(n)=n$，$n^{\log_ba}=n^2$，只要$\epsilon<=1$，都可满足$f(n)=O(n^{\log_ba-\epsilon})$，符合条件一，时间复杂度为$T(n)=\Theta(n^2)$
 
