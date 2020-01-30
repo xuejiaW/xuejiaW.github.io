@@ -1,5 +1,5 @@
 ---
-title: 《算法导论》 第六章
+title: 《算法导论》 第六章笔记
 mathjax: true
 date: 2020-01-29 13:42:54
 categories:
