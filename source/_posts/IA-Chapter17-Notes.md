@@ -1,5 +1,5 @@
 ---
-title: 《算法导论》 第十七章
+title: 《算法导论》 第十七章笔记
 mathjax: true
 date: 2020-01-18 19:30:22
 categories:

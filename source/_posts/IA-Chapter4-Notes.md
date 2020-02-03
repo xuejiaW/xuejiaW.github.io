@@ -287,6 +287,7 @@ C=\begin{pmatrix}
 \end{pmatrix}
 $$
 $$
+
 C=A \cdot B =\begin{pmatrix}
 	C_{11} & C_{12}\\\\
 	C_{21} & C_{22}
