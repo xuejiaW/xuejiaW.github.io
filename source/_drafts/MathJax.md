@@ -68,6 +68,7 @@ $$
 | 运算符号 | 表达式 |
 | -------- | ------ |
 | $\times$ | \times |
+| $\cdot$  | \cdot  |
 
 ## 特殊符号 
 
@@ -78,11 +79,12 @@ $$
 | $\lfloor$    | \lfloor    | $\rfloor$     | \rfloor                                |
 | $\lceil$     | \lceil     | $\rceil$      | \rceil                                 |
 | $\equiv$     | \equiv     | $\infty$      | \infty                                 |
+| $\dotsc$     | \dotsc     |
 
 ## 上标符号
 
-| 上标符号 | 表达式 |
-| -------- | ------ |
+| 上标符号  | 表达式  |
+| --------- | ------- |
 | $\hat{a}$ | \hat{a} |
 
 #### 数学模式
