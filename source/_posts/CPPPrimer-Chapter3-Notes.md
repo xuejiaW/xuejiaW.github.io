@@ -234,6 +234,16 @@ There are 3 punctuation characters in Hello World!!!
 */
 ```
 
+在使用range for的时候，为了避免数值的拷贝，可以使用引用，并且在只访问数据的情况下，为了避免对值进行修改，可以使用const reference，如下：
+
+```cpp
+for (const auto &c : s)
+{
+    if (ispunct(c))
+        ++punct_cnt;
+}
+```
+
 #### Using a Range for to Change the Characters in a string
 
 `Range for`实际上是返回值的拷贝，如上节的例子中在每次迭代的情况下，是将str中下个字符拷贝至c中。因此如果需要通过Range for修改string中的数值，就需要使用引用，如下是将字符串中的每个字符转换为大写的代码：
