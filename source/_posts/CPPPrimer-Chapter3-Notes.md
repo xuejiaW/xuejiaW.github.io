@@ -589,6 +589,8 @@ int *(*pparray)[10] = &ptrs; //pparray is a pointer point toan int* array of siz
 
 ### Accessing the Elements of an Array
 
+当使用一个参数来作为数组的下标值时，这个参数的类型应该时`size_t`。`size_t`是一个机器相关的unsigned type。size_t定义在头文件cstddef中，该头文件是从C语言的头文件`stddef.h`改写而来。
+
 同样可以使用下标和range for对数组进行操作，如下使用下标访问元素，使用range for遍历所有的元素，代码的功能是将输入的数组分类，判断有多少是在0-9范围中，有多少在10-19范围中等：
 
 ```cpp
