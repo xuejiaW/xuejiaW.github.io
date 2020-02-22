@@ -920,7 +920,7 @@ cout << endl;
 
 ## Multidimensional Arrays
 
-C++并没有多维数组的概念，实际上多维数组的实现是通过数组的数组。如`ia[3][4]`可以看作是一个三行四列的数组。
+C++并没有多维数组的概念，实际上多维数组的实现是通过数组的数组。如`ia[3][4]`可以看作是一个三行四列的数组。对于多维数组必须指定维度，不能初始值来推断。
 
 #### Initializing the Elements of a Multidimensional Array
 
