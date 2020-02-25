@@ -931,6 +931,8 @@ Sales_data accum, trans, *salesptr;
 
 结构体中的变量如果没有初始值，将会默认初始化。
 
+而如同`double revenue = 0.0`这样在类的内部定义变量时直接赋予初值，称为类内初始化（in-class initializer）。这也是C++11的特性。
+
 ### Using the Sales_data Class
 
 无重要内容
