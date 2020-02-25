@@ -44,7 +44,7 @@ tags:
 
 左右参数在使用`decltype`时也会体现出区别，当传入decltype的是表达式时，且表达式的结果是左参数，那么decltype的结果是引用。
 
-假设`p`的类型是`int *`，那么`decltype(*p)`返回的是左参数，因此结果是int&，而`decltype(&p)`，因为取地址符返回的是右参数，所以结果是`int* *`，而不是引用`int** &`
+假设`p`的类型是`int *`，那么`*p`返回的是左参数，因此`decltype(*p)`结果是int&，而因为取地址符返回的是右参数，即`(&p)`结果为为右参数，所以`decltype(&p)`结果是`int* *`，而不是引用`int** &`
 
 ### Precedence and Associativity
 
