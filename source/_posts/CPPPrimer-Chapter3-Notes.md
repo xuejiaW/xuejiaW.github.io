@@ -20,7 +20,7 @@ tags:
 
 <!--more-->
 
-# Chapter3 String, Vectors, And Arrays
+# Chapter 3 String, Vectors, And Arrays
 
 ## Namespace using Declarations
 
