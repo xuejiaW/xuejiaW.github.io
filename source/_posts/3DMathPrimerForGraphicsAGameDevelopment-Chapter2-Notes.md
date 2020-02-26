@@ -1,6 +1,7 @@
 ---
 title: 《3D数学基础：图形和游戏开发》第二章笔记
 mathjax: true
+date: 2020-02-26 19:22:56
 categories:
   - 读书笔记
   - 图形学
