@@ -24,7 +24,7 @@ tags:
 
 <!--more-->
 
-# Meaningful Play
+# Chapter 3: Meaningful Play
 
 ## Introducing Meaningful Play
 
