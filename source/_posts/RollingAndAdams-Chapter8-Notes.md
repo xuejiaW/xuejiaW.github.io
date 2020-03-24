@@ -1,5 +1,5 @@
 ---
-title: RollingAndAdams-Chapter8-Notes
+title: 《Andrew Rollings and Ernest Adams on Game Design chapters》 第八章笔记
 mathjax: false
 date: 2020-03-22 17:55:01
 categories:
