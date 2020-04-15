@@ -14,6 +14,8 @@ tags:
 
 《C++ Primer》 第二章笔记，关于变量与基本类型。
 
+![第二章内容](CPPPrimer-Chapter2-Notes/2020-04-15-22-06-48.png)
+
 {% endcq %}
 
 <!--more-->
@@ -22,7 +24,7 @@ tags:
 
 ## Primitive Built-in-Types
 
-C++的原始类别（Primitive Type）包括算数类型和空（Void）。算数类型可以用来表示字符，整数，布尔值，浮点数。
+C++的内置类型（Primitive Type）包括算数类型和空（Void）。算数类型可以用来表示字符，整数，布尔值，浮点数。
 
 ### Arithmetic Types
 
@@ -71,7 +73,7 @@ C++有的算数类型如下：
 
 默认的类型，如int，short，long和long long都是有字符的，可以通过加上相应的`unsigned`关键字得到无字符版本，如`unsigned long`。`unsigned int`被缩写为`unsigned`。
 
-但是对于char类型，有三个类型，`char`，`signed char`，`unsigned char`三个版本。`char`是`signed char`或`unsigned char`中的一种，具体是哪一种由编译器决定。
+但是对于char类型，有三个类型`char`，`signed char`，`unsigned char`三个版本。`char`是`signed char`或`unsigned char`中的一种，具体是哪一种由编译器决定。
 
 标准并没有定义有符号类型如何表示数据，但是定义了正数部分和负数部分应该是均匀的分割，如8-bit的 signed char，应该保证能覆盖$-127 \sim 127$的范围。大多数现代设备的实现下，char表示的范围是$-128\sim127$。
 
@@ -181,10 +183,9 @@ int month = 09;//error, 09 is treated as octal
 
 十进制的字面值会被默认是有符号的，八进制和十六进制则可以是是无符号也可以是有符号的。即十进制的字面值类型会被认为是`int,long,long long`之中最小的满足值的类型。八进制或十六进制则会在`int,unsigned int,long,unsigned long,long long, unsigned long long`中选择最小的满足的类型。
 
-如果字面值的大小超过long long 或unsigned longlong所能匹配的值，则无法匹配任意一种类型，编译器将会报错，如以下语句无法通过编译：
+如果字面值的大小超过long long 或unsigned long long所能匹配的值，则无法匹配任意一种类型，编译器将会报错，如以下语句无法通过编译：
 
 ```cpp
-//cout << 9223372036854775807 << endl;
 //cout << 9223372036854775808 << endl;
 //cout << -9223372036854775808 << endl;
 ```
@@ -236,7 +237,7 @@ cout<<"This is first string literal"
 | \n     | 换行    | \t     | 水平 tab                  |
 | \v     | 纵向tab | \<\*>  | 打印出特殊符号\*，如" ' \ |
 
-也可以使用数字和转义符来生成转移序列，假设编译器使用的是[`Latin-1`字符集](CPPPrimer-Chapter2-Notes/"https://kb.iu.edu/d/aepu")。可在`\x`后跟1或多位十六进制数组，或在`\`后跟着1至3位八进制数字，如以下代码都将显示一样的结果：
+也可以使用数字和转义符来生成转义序列，假设编译器使用的是[`Latin-1`字符集](CPPPrimer-Chapter2-Notes/"https://kb.iu.edu/d/aepu")。可在`\x`后跟1或多位十六进制数组，或在`\`后跟着1至3位八进制数字，如以下代码都将显示一样的结果：
 
 ```cpp
 cout << "M\n";	 //M
@@ -308,10 +309,7 @@ int sum = 0, value, units_sold = 0;
 ```cpp
 double price = 109.99, discount = price * 0.16;
 ```
-	int units_sold = 0;
-	// int units_sold(0);
-	// int units_sold = {0};
-	// int units_sold{0};
+
 在C++中初始化（Initialization）和赋值（assignment）是两个不同的操作，在许多语言中这两者的区别几乎可以忽略。但是在C++中两者的区别却很重要，初始化是一个变量在创建时给予参数的过程，赋值是变量已经生成后由新的参数替代原先参数的过程。
 
 * 在后续的章节中会进一步讨论两者的差异。
@@ -358,7 +356,7 @@ C++支持单独编译（Separate Compilation），即可以把整个程序放在
 
 可以使用关键字`external`来指定操作是声明而不是定义，不允许在函数内部使用external关键字。
 
-如上所属，声明是不包括函数的初始值的，所以如果一个声明包含了对变量的初始化，那么该声明实际上是定义（在后续章节中可以看到，对于const变量会需要同时使用extern和初始化）。如下所示：
+如上所属，声明是不包括函数的初始值的，所以如果一个声明包含了对变量的初始化，那么该声明实际上是定义（在后续章节中可以看到，对于const变量会需要同时使用external和初始化）。如下所示：
 
 ```cpp
 //Declarations and Definitions
@@ -381,7 +379,7 @@ C++中的标识符（变量名称）由字符，数字和下划线构成，C++�
 
 作用域有的时候会形成嵌套，如果产生嵌套的话，外部作用域（Outer scope）中定义的参数可以被内部作用域（Inner scope）使用，如果内部作用域定义了一个与外部作用域中某变量名字相同的新变量，外部作用域中的变量将会被隐藏，但可以使用操作符`::`来访问被隐藏了的变量。
 
-如下所示，其中定义在所有函数外的变量有`全局作用域(Global scope)`，否则有`代码块作用域(block scope)`。
+如下所示，其中定义在所有函数外的变量有`全局作用域(Global scope)`，否则的话有`代码块作用域(block scope)`。
 
 ```cpp
 int reused = 42; //global scope
@@ -656,7 +654,7 @@ cout << "value is: " << bufSize; //value is: 42
 
 将有限定词const的引用成为`const reference`，但这个称呼有的时候会造成干扰，实际上应该的表达时reference to const。因为严格意义上，所有的引用本身在初始化后都是无法修改的（无法绑定至别人的变量），所以所有的引用都是const的。
 
-一个const变量的引用必须是const reference，否则就可以通过普通的引用来修改const变量。实例如下：
+一个const变量的引用必须是const reference，否则就可以通过普通的引用来修改const变量。示例如下：
 
 ```cpp
 const int ci = 1024;
@@ -706,7 +704,7 @@ cout << "value is " << r2 << endl; //value is 0
 
 ### Points and const
 
-对于const变量的指针也必须是针对const类型的。另外对于const变量的指针而言，也可以指向非const的变量，但仍然不能绑定至类型不同的变量和字面值。如下所示：
+指向const变量的指针也必须是const类型的指针。对于指向const变量的指针而言，也可以指向非const的变量，但仍然不能绑定至类型不同的变量和字面值。如下所示：
 
 ```cpp
 const double pi = 3.14;
@@ -751,7 +749,7 @@ const double *const pip = &pi;
 
 ### Top-Level const
 
-使用术语`top-level const`来表示指针本身是const,使用术语`low-level const`表示指针指向的值是const类型。
+使用术语`top-level const`来表示本身是const,使用术语`low-level const`表示指向的值是const类型。
 
 更宽泛的说，任何类型都可以是top-level const的，复合类型如引用和指针可以是low-level const的。而指针与其他类型不同，可以同时是top-level和low-level的const。
 
@@ -768,7 +766,7 @@ const int *p2 = &ci; //low level const
 const int *const p4 = p2; //both top and low level const
 const int &r1 = ci;		  //low level const
 // int &r2 = ci;	//error,differnt low level const,and const can't convert to nonconst
-i = ci;			   //i is low level const, high level const of ci is ignored
+i = ci;			   //high level const of ci is ignored
 p2 = p4;		   //high level of p4 is ignored
 p2 = &i;		   //although different low level const,but nonconst can convert to const
 const int &r3 = i; //although different low level const,but nonconst can convert to const
