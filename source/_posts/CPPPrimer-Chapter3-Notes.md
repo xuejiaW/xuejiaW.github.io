@@ -14,7 +14,9 @@ tags:
 
 《C++ Primer》 第三章笔记。
 
-第二章介绍的是C++中的内建类型，这一章则是会介绍C++标准库中的一些重要类型，包括String，Vectors和Array。
+第二章介绍的是C++中的内建类型，这一章则是会介绍C++标准库中的一些重要类型。
+
+![第三章内容](CPPPrimer-Chapter3-Notes/Ch3.png)
 
 {% endcq %}
 
@@ -83,7 +85,7 @@ string s4 = "value";
 char str[] = "value";
 cout << sizeof(str) / sizeof(*str) << endl; //6
 cout << s3.length() << endl;                //5
-cout << s4.length() << endl;                //6
+cout << s4.length() << endl;                //5
 ```
 
 #### Direct and Copy Forms of Initialization
@@ -105,6 +107,7 @@ cout << s4.length() << endl;                //6
 | getline(is,s) | 读取is中的一行，返回is                        |
 | s.empty()     | s是否为空                                     |
 | s.size()      | s中的字符数                                   |
+| s.length()    | s中的字符数，与size是同义api，返回的结果相同  |
 | s[n]          | 去s中index为n的字符                           |
 | s1 + s2       | 返回一个新string,值为s1和s2的结合             |
 | s1 = s2       | 将s1中的值替换为s2的值                        |
@@ -296,15 +299,15 @@ Vector中可以容纳绝大部分的类型，无论是内建类型还是自定�
 
 定义和初始化vector的方法如下所示：
 
-| 示例代码                 | 解释                                                                          |
-| ------------------------ | ----------------------------------------------------------------------------- |
-| vectore<T> v1            | vector中的元素类型未T，v1为空                                                 |
-| vector<T> v2(v1)         | v2中包含有v1中每个元素的拷贝                                                  |
-| vector<T> v2 = v1        | 与上式一样                                                                    |
-| vector<T> v3(n,val)      | v3中有n个元素，每个元素的值都是val                                            |
-| vector<T> v4(n)          | v4中有n个元素，每个元素都是T的默认值                                          |
+| 示例代码                 | 解释                                                         |
+| ------------------------ | ------------------------------------------------------------ |
+| vectore<T> v1            | vector中的元素类型为T，v1为空                                |
+| vector<T> v2(v1)         | v2中包含有v1中每个元素的拷贝                                 |
+| vector<T> v2 = v1        | 与上式一样                                                   |
+| vector<T> v3(n,val)      | v3中有n个元素，每个元素的值都是val                           |
+| vector<T> v4(n)          | v4中有n个元素，每个元素都是T的默认值                         |
 | vector<T> v5{a, b, c}    | 如果a,b,c与T类型匹配，则v5包含a,b,c三个元素（不匹配的情况在下面有详细说明）。 |
-| vector<T> v5 = {a, b, c} | 与上式相同                                                                    |
+| vector<T> v5 = {a, b, c} | 与上式相同                                                   |
 
 
 vector的创建同样分类为拷贝初始化和直接初始化，定义和string中的初始化一样，如`vector<T> v2 = v1`和`vector<T> v5 = {a, b, c}`为拷贝初始化，其他的都为直接初始化。
@@ -353,7 +356,7 @@ v8 size is 10
 
 使用`push_back`方法来增加vector中的元素。
 
-在标准库中vector的实现下，vector的扩张是很高效的，所以通常来说不需要用括号的初始化方法来定义vector的大小，有的时候定义元素的大小反而会造成性能方面的影响。除了所有的元素都是相同值的情况，否则尽量避免使用括号的初始化方法。
+在标准库中vector的实现下，vector的扩张是很高效的，所以通常来说不需要用括号的初始化方法来定义vector的大小，有的时候定义vector的大小反而会造成性能方面的影响。除了所有的元素都是相同值的情况，否则尽量避免使用括号的初始化方法。
 
 #### Programming Implications of Adding Elements to a vector
 
@@ -480,7 +483,7 @@ auto cIter = v1.cbegin();
 
 ### Iterator Arithmetic
 
-vector和string支持一些额外的迭代器操作，如下标所示：
+vector和string支持一些额外的迭代器操作，如下表所示：
 
 | 代码实例      | 含义                                           |
 | ------------- | ---------------------------------------------- |
@@ -617,7 +620,7 @@ for (auto c : scores)
 }
 ```
 
-注意必须对scores进行初始化。被初始化的第一条语句，执行的是默认初始化，而第二天语句`unsigned scores[11] = {}`使用的是值初始化。因此在函数内，后者可以保证所有的元素有确定的初始值（unsigned为0），而前者的值是未定义的。
+注意必须对scores进行初始化。被初始化的第一条语句，执行的是默认初始化，而第二条语句`unsigned scores[11] = {}`使用的是值初始化。因此在函数内，后者可以保证所有的元素有确定的初始值（unsigned为0），而前者的值是未定义的。
 
 如输入为`33 1 44 112 100 22 77 76 75 ^Z`，输出可能为` 1  0  268501010  1  16713577  0  898214646  32766  8  0  1 `，在这种情况下输出的结果是无法保证的。
 
@@ -798,9 +801,9 @@ cout << ap[0] << endl;  // a
 cout << ap[-1] << endl; //undefined result
 ```
 
-如上所示，通过解引用符号*对指针的访问，相当于使用`[0]`操作,因此如`iaP[-2]`和`*(iaP - 2)`是等效的。
+如上所示，通过解引用符号\*对指针的访问，相当于使用`[0]`操作,因此如`iaP[-2]`和`*(iaP - 2)`是等效的。
 
-### 3.5.4 C-Style Character Strings
+### C-Style Character Strings
 
 C++中的string字面值实际上是继承自C语言的。通过C++的string存储string字面值会将其转换为string类型，但如果要完全体现String字面值（C风格的String）本身的特性，可以使用char数组或者指针，如`char str[] = "ABC";`，该数组的大小为4，因为还有在最后包含一个空字符。
 
@@ -835,7 +838,7 @@ Although cs1>cs1 also yield correct result,but it's nomeaning.
 
 #### Caller is Responsible for Size of a Destination String
 
-使用C-Stype字符串相关操作时需要额外的小写，如`strcat`和`strcpy`操作，并不会检查第一个参数，即装填最终结果的数组的大小，如果数组大小不满足，则会产生错误结果。
+使用C-Stype字符串相关操作时需要额外的小心，如`strcat`和`strcpy`操作，并不会检查第一个参数，即装填最终结果的数组的大小，如果数组大小不满足，则会产生错误结果。
 
 另外`strlen`的长度通常是通过找寻C-Style字符串最后的空字符来实现的，如果参数是一个没有空字符的C-Style字符串，那么结果是未定义的，如下：
 
@@ -1016,7 +1019,7 @@ cout << endl;
 
 #### Pointers and Multidimensional Arrays
 
-首先要注意数组与指针的关系，式子`int *ip[4]`表示ip是一个长度为4的数组，其中元素类型为int*。式子`int (*ip)[4]`表示ip是一个指针，指向长度为4的数组。
+首先要注意数组与指针的关系，式子`int *ip[4]`表示ip是一个长度为4的数组，其中元素类型为int\*。式子`int (*ip)[4]`表示ip是一个指针，指向长度为4的数组。
 
 可以使用指针来遍历数组，如下：
 
@@ -1078,7 +1081,7 @@ cout << endl;
 */
 ```
 
-示例中，将长度为4的int数组称为int_array。实例中使用using和typedef是等效的。
+示例中，将长度为4的int数组称为int_array。示例中使用using和typedef是等效的。
 
 
 {% note primary %}
