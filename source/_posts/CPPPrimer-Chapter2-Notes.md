@@ -181,7 +181,7 @@ int month = 09;//error, 09 is treated as octal
 
 上式无法通过编译，因为0开头的字面值会被认为是八进制数，而数字9不会出现在八进制数中。
 
-十进制的字面值会被默认是有符号的，八进制和十六进制则可以是是无符号也可以是有符号的。即十进制的字面值类型会被认为是`int,long,long long`之中最小的满足值的类型。八进制或十六进制则会在`int,unsigned int,long,unsigned long,long long, unsigned long long`中选择最小的满足的类型。
+十进制的字面值会被默认是有符号的，八进制和十六进制则可以是无符号也可以是有符号的。即十进制的字面值类型会被认为是`int,long,long long`之中最小的满足值的类型。八进制或十六进制则会在`int,unsigned int,long,unsigned long,long long, unsigned long long`中选择最小的满足的类型。
 
 如果字面值的大小超过long long 或unsigned long long所能匹配的值，则无法匹配任意一种类型，编译器将会报错，如以下语句无法通过编译：
 
