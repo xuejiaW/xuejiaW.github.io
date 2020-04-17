@@ -932,7 +932,7 @@ cout << endl;
 
 C++并没有多维数组的概念，实际上多维数组的实现是通过数组的数组。如`ia[3][4]`可以看作是一个三行四列的数组。对于多维数组必须指定维度，不能初始值来推断。
 
-#### Initializing the Elements of a Multidimensional Array
+### Initializing the Elements of a Multidimensional Array
 
 以下是初始化多维数组的几种方式：
 
@@ -947,7 +947,7 @@ int ix[3][4] = {0, 4, 8};
 
 其中`ic`和`id`的初始化结果是相同的，`ie`是初始化了每一行的第一个元素的值，`ix`的初始化了第一行的前三个元素，之后的元素都会被装填为0（进行了值初始化）。
 
-#### Subscripting a Multidimentional Array
+### Subscripting a Multidimentional Array
 
 ```cpp
 int ia[3][4]= = {{0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11}};
@@ -973,7 +973,7 @@ cout << endl;
 */
 ```
 
-#### Using a Range for with Multidimentsional Arrays
+### Using a Range for with Multidimentsional Arrays
 
 当使用C++ 11标准的`range for`遍历多维数组时，需要注意除了最内侧的数组外，外层的遍历都需要用引用，如下：
 
