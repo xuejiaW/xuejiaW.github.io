@@ -22,7 +22,7 @@ tags:
 
 # Chapter 4 Expressions
 
-## undatmentals
+## Fundatmentals
 
 ### Basic Concepts
 
