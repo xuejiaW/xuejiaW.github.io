@@ -881,6 +881,7 @@ value is ABCD慅a, size is 7
 需要注意的是，c_str返回的是字符串第一个元素的指针，且最后是由空字符结尾，并且标准库的string值改变的话，对应返回的数据也会自动改变，如下
 
 ```cpp
+string s = "ABCD";
 // char *cs3 = s; //error,can't direct convert
 const char *cs3 = s.c_str();
 cout << "value is " << cs3 << endl;
