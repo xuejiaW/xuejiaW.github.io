@@ -16,6 +16,8 @@ tags:
 
 主要关于对内建类型的操作。
 
+![第四章内容](CPPPrimer-Chapter4-Notes/Ch4.png)
+
 {% endcq %}
 
 <!--more-->
@@ -55,6 +57,8 @@ tags:
 可以使用括号来重新决定优先级和结合性。
 
 ### Order of Evaluation
+
+求值顺序决定了操作符的多个参数，哪个还会先进行求值。
 
 如下代码：
 
@@ -146,17 +150,17 @@ b2 is 1short value is -32768
 
 所有的逻辑和关系运算符优先级如下标：
 
-| 优先级 | 结合性 | 操作符 | 含义     | 使用      |
-| ------ | ------ | ------ | -------- | --------- |
-| 1      | Right  | !      | 取非     | expr expr |
-| 2      | Left   | <      | 小于     | expr expr |
-| 2      | Left   | <=     | 小于等于 | expr expr |
-| 2      | Left   | >      | 大于     | expr expr |
-| 2      | Left   | >=     | 大于等于 | expr expr |
-| 3      | Left   | ==     | 相等     | expr expr |
-| 3      | Left   | !=     | 不等     | expr expr |
-| 4      | Left   | &&     | 与       | expr expr |
-| 4      | Left   | \|\|   | 或       | expr expr |
+| 优先级 | 结合性 | 操作符 | 含义     |
+| ------ | ------ | ------ | -------- |
+| 1      | Right  | !      | 取非     |
+| 2      | Left   | <      | 小于     |
+| 2      | Left   | <=     | 小于等于 |
+| 2      | Left   | >      | 大于     |
+| 2      | Left   | >=     | 大于等于 |
+| 3      | Left   | ==     | 相等     |
+| 3      | Left   | !=     | 不等     |
+| 4      | Left   | &&     | 与       |
+| 4      | Left   | \|\|   | 或       |
 
 `&&`操作和`||`操作都是最短路径求值
 
@@ -190,7 +194,6 @@ if(val) {/* ... */}//true if val is nonzero value
 ```
 
 但上式不能改写为
-val
 ```cpp
 if(val == true)  {/* ... */}
 ```
@@ -303,6 +306,10 @@ aAAAAAA
 //Others
 ```
 
+右侧的`*beg++`中的两个操作符的顺序是固定的，即先进行累加，在进行解引用。
+
+但是左侧的`*beg`和右侧的`*beg++`哪个先进行运算结果是不一定的，如果先运行了左侧，则结果对应上述第一种可能，否则对应上述第二种可能。
+
 ## The Member Access Operators
 
 `ptr->mem`相当于`(*ptr).mem`
@@ -343,7 +350,6 @@ cout << endl;
 // cout << grade < 60 ? "fail" : "pass"; //Error
 
 /*
-55
 fail
 1
 */
@@ -363,7 +369,7 @@ cout << grade;
 // cout < 60 ? "fail" : "pass"; //Error, can not use < on cout
 ```
 
-### The Bitwise Operators
+## The Bitwise Operators
 
 位操作符（Bitwise Operators）使用整数类型来表示一系列的bits。如果操作的对象类型小于操作的结果类型，则会首先将操作的对象转换为结果类型，然后再进行操作。
 
@@ -374,11 +380,11 @@ cout << grade;
 | 1      | ~    | 位取反 | ~expr          |
 | 2      | <<   | 左移   | expr1 << expr2 |
 | 2      | >>   | 右移   | expr1 >> expr2 |
-| 3      | &    | 与     | expr1 expr2    |
-| 3      | ^    | 异或   | expr1 expr2    |
-| 3      | \|   | 或     | expr1 expr2    |
+| 3      | &    | 与     | expr1 & expr2    |
+| 3      | ^    | 异或   | expr1 ^ expr2    |
+| 3      | \|   | 或     | expr1 \ expr2    |
 
-#### Bitwise Shift Operators
+### Bitwise Shift Operators
 
 1. `<<`和`>>`都是位移操作，右侧的参数必须是正整数，而且必须小于左侧操作对象的bit数，否则将是未定义的。
    
@@ -408,13 +414,13 @@ cout << grade;
 如果执行的函数是`bits >> 3`，即将bits右移动3位，结果为
 `000000000 00010011`，最右侧的三位移出了范围，所以被丢弃了。
 
-#### Bitwise Not Operator
+### Bitwise Not Operator
 
 同样在操作前，如果操作对象的整数类型较小，需要将其提升为结果的整数类型，如结果为int（16-bits）,对象为char，且值为`10010111`，则对其进行取反操作的结果为：
 
 `11111111 01101000`
 
-#### Bitwise And,Or
+### Bitwise And,Or
 
 同样在操作前，如果操作对象的整数类型较小，需要将其提升为结果的整数类型。
 
@@ -428,7 +434,7 @@ cout << grade;
 
 `00000000 00000000 00000000 01110001`
 
-然后进行取反操作即
+然后进行取反操作，结果为
 
 `11111111 11111111 11111111 10001110`，
 
@@ -446,7 +452,7 @@ cout << grade;
 
 表达为10进制为7296,所以结果为-7296。
 
-#### Using Bitwise Operators
+### Using Bitwise Operators
 
 如果有一个int值quiz1，需要将其第27位变为1，则可使用以下代码
 
@@ -466,7 +472,7 @@ quize1 &= ~(1UL << 27);
 bool status= quiz1 & (1UL << 27)
 ```
 
-#### Shift Operators Are Left Associateive
+### Shift Operators Are Left Associateive
 
 位移操作符的结合性是从左至右的，而IO的操作符是继承自位移操作符的，因此IO的操作符的结合性也同样是从左至右的，因此如下代码将会无法通过编译：
 
@@ -485,7 +491,7 @@ cout < 24
 
 ## The sizeof Operator
 
-sizeof操作符返回类型的大小，单位位byte，该操作符结合性是从右至左的，结果为`type_t`类型。有以下两种表达方式：
+sizeof操作符返回类型的大小，单位为byte，该操作符结合性是从右至左的，结果为`type_t`类型。有以下两种表达方式：
 
 ```cpp
 sizeof (type)
@@ -510,9 +516,9 @@ cout << sizeof(string) << endl;//32
 cout << sizeof ss << endl;//32
 cout << sizeof s << endl;//32
 cout << sizeof sp << endl;//8
-cout << sizeof *sp << endl;//3
+cout << sizeof *sp << endl;//32
 cout << sizeof s.size() << endl;//8
-cout << sizeof(size_t) << endl;//
+cout << sizeof(size_t) << endl;// 8
 
 int arr[3]{1, 2, 3};
 cout << sizeof(arr) << endl;//12
@@ -700,9 +706,9 @@ value2 is 3
 
 * 虽然在测试中得到了期望的结果，但是极度不推荐用这样的方法。
 
-#### reinterptre_cast
+#### reinterpret_cast
 
-reinterptre_cast可以在更低的层次转换类型，因此提供了更多的转换可能。
+reinterpret_cast可以在更低的层次转换类型，因此提供了更多的转换可能。
 
 但在转换后的类型很可能是无法正常操作的，如：
 
