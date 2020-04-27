@@ -16,6 +16,8 @@ tags:
 
 讨论了基础语句，循环语句和条件判断语句，以及讨论了C++的异常处理。
 
+![第五章内容](CPPPrimer-Chapter5-Notes/Ch_5.png)
+
 {% endcq %}
 
 <!--more-->
@@ -24,7 +26,7 @@ tags:
 
 ## Simple Statements
 
-#### Null Statements
+### Null Statements
 
 一个单一的分号即构成了一条空语句（Null Statements），当语言语法需要一条语句，但是代码逻辑并不需要的时候，空语句是很有用的。如：
 
@@ -35,7 +37,7 @@ while(cin>> s && s != sought)
 
 建议在每个空语句后都加上注释，表明是故意使用空语句而不是不小心遗漏。
 
-#### Compound Statements(Blocks)
+### Compound Statements(Blocks)
 
 多条语句可以放在一个代码块中，代码块以两个大括号构成。如果代码块中没有任何的语句，则相当于一个空语句，如
 
@@ -248,7 +250,7 @@ C++中一共有四种跳转语句，`break`,`continue`,`goto`,`return`，`return
 
 break语句可以出现在`while`，`do while`，`for`和`switch`语句中，break语句只影响最近的loop或者switch语句，使用了break后会终止整个循环。
 
-### The continues Statement
+### The continue Statement
 
 continue语句会终止当前的循环语句，并进入下一次循环。continue只出现在for,while和do while中（break还能出现在switch中），continue只有在switch是嵌套在循环中的时候才能写在switch内部，而且终止的也是嵌套switch的循环。
 
