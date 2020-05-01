@@ -290,7 +290,7 @@ begin:
 
 上述代码中，如果执行了`goto begin`，则变量sz会被销毁并被重新定义。
 
-## try Blocks and Exception Handling
+## Try Blocks and Exception Handling
 
 异常（Exceptions）是runtime时的不正常情况，如数据库连接错误，错误输入等。
 
