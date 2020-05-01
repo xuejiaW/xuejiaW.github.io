@@ -16,6 +16,8 @@ tags:
 
 关于函数的定义，函数参数的传递方式，函数重载，函数指针。
 
+![第六章内容](CPPPrimer-Chapter5-Notes/Ch_6.png)
+
 {% endcq %}
 
 <!--more-->
@@ -45,7 +47,7 @@ void pareNoName(int, float fval)
 {
 }
 
-// pareNoName(0.1f);//Although int doesn't have name, we still mustassign it
+// pareNoName(0.1f);//Although int doesn't have name, we still must assign it
 pareNoName(3, 0.1f);
 ```
 
@@ -76,7 +78,7 @@ void TestLocalObject()
 }
 ```
 
-全局变量的声明周期是从定义到程序终止，局部变量的生命周期是当退出了作用域。
+全局变量的生命周期是从定义到程序终止，局部变量的生命周期是当退出了作用域。
 
 #### Automatic Objects
 
@@ -84,7 +86,7 @@ void TestLocalObject()
 
 #### Local static Objects
 
-本地的静态物体是在第一次被调用时创建，在程序终止时被摧毁，作用域在函数内部。如：
+局部静态物体是在第一次被调用时创建，在程序终止时被摧毁，作用域在函数内部。如：
 
 ```cpp
 int count_calls()
@@ -437,7 +439,7 @@ void print(int (*matrix)[2], int rowSize)
 
 其中因为传入的是长度为2的数组的指针，所以在循环中，可以确认内部循环的最大值为2。`matrix[i]`实际上获取的是长度为2的数组，但是会自动转为int*，所以`matrix[i][i]`实际上对一个int*使用`[j]`。也可以通过解引用符进行访问，即写成`*((*(matrix + i)) + j)`
 
-注意是，无法直接通过指针的指针，如`int**`来进行传递的。因为数组的大小是类型的一部分，在上例中，`mat`的会自动转换为`int*[2]`而不是`int*`。因此如果函数的形参为`int**`，将无法匹配。如果要使用指针的指针来传递，那么就必须用指针来表示多维数组，如：
+需要注意的是，无法直接通过指针的指针，如`int**`来进行传递的。因为数组的大小是类型的一部分，在上例中，`mat`的会自动转换为`int*[2]`而不是`int*`。因此如果函数的形参为`int**`，将无法匹配。如果要使用指针的指针来传递，那么就必须用指针来表示多维数组，如：
 
 ```cpp
 //Initial array
@@ -615,9 +617,9 @@ const string &manip()
 }
 ```
 
-在例子中，如果返回的是ret，那么返回的是一个局部变量的引用，当推出函数时，该变量会被释放，于是引用的就是一个空参数。如果返回的是"empty"，实际上返回的是值为empty的临时变量的引用。
+在例子中，如果返回的是ret，那么返回的是一个局部变量的引用，当退出函数时，该变量会被释放，于是引用的就是一个空参数。如果返回的是"empty"，实际上返回的是值为empty的临时变量的引用。
 
-这两种放回方式的结果都是未定义的。
+这两种返回方式的结果都是未定义的。
 
 #### Reference Returns Are Lvalues
 
@@ -699,7 +701,7 @@ funcArray()表明形参为空，(*funcArray())表明返回的是一个指针类�
 
 #### Using a Trailing Return Type
 
-该方法是C++11的特性，Trailing Return可以针对任何的类型的函数，但针对返回值为数组的指针的函数，尤为有效。如
+该方法是C++11的特性，Trailing Return可以针对任何的类型的函数，但针对返回值为数组的指针的函数时尤为有效。如
 
 ```cpp
 auto funcArray() -> int (*)[];
@@ -757,7 +759,7 @@ const string &shorterString(const string &s1, const string &s2)
 }
 ```
 
-函数的形参是low level的const引用，返回的类型也为low level的const引用。如果调用的实参为非const的引用，会进行隐式的类型转换，此时返回结果将仍然是low level的const引用。
+函数的形参是low level的const引用，返回的类型也为low level的const引用。如果调用的实参为非const的引用，会进行隐式的类型转换，此时返回结果将仍然是const的引用。
 
 而如果想要实现，传入的实参是const的，返回为const类型；传入的实参是non-const类型，返回也会non-const类型，就需要进行函数重载。如下所示：
 
@@ -837,7 +839,7 @@ string screen(int,int,char = ' ');
 string screen(int=24,int=80,char);
 ```
 
-在第一条语句执行后，第二条语句无法通过编译，因为它重新声明了char类型的形参的默认值，造成了重复定义。而第三天语句仍然可以执行，且第三天语句执行后，函数`screen`的三个形参都有了默认值。
+在第一条语句执行后，第二条语句无法通过编译，因为它重新声明了char类型的形参的默认值，造成了重复定义。而第三条语句仍然可以执行，且第三条语句执行后，函数`screen`的三个形参都有了默认值。
 
 ```cpp
 string screen(int, int, char = '*');
@@ -949,7 +951,7 @@ cout << GetDoubleNum();
 
 可以看到在`Chapter6_Functions.cpp`和`GetNum.cpp`两个源文件中都对`GetDoubleNum`函数进行了定义，且仍然可以正常运行。而如果尝试在`Chapter6_Functions.cpp`中再次定义`GetNum`函数，则会发生编译错误。
 
-这是因为对于内联函数而言，是在本源文件中搜索内联函数的定义然后进行替代，所以在`Chapter6_Functions.cpp`中必须进行`GetDoubleNum`函数的定义。
+这是因为对于内联函数而言，是在本源文件中搜索内联函数的定义然后进行替代。
 
 最合理的方式是将内联函数的定义放在头文件中，这样在使用include时，实际上就将内联函数的定义拷贝到了源文件中。
 
@@ -1057,7 +1059,7 @@ Dateis Feb 22 2020
 1. 实参类型与形参类型完全匹配，包括
    a. 实参类型与形参类型相同，不需要任何转换
    b. 实参是数组或函数，形参是对应的指针类型
-   c. 实参和形参的差距是可以可以无视的top-level const
+   c. 实参和形参的差距是可以无视的top-level const
 
 2. 需要进行const转换
    low level的const转换，如实参是nonconst的引用，形参是const的引用。
@@ -1099,7 +1101,7 @@ void manip(float);
 // manip(3.14); // ambiguous call
 ```
 
-无论调用哪个函数都会进行算数转换，即使转换的目标类型不同，但是函数的优先级仍然是一样的，所以未歧义调用。
+无论调用哪个函数都会进行算数转换，即使转换的目标类型不同，但是函数的优先级仍然是一样的，所以为歧义调用。
 
 ## Pointers to Functions
 
@@ -1134,6 +1136,7 @@ bool (*fp)(const string &, const string &) = lengthCompare;
 bool b1 = fp("hello", "goodbyte");
 bool b2 = (*fp)("hello", "goodbyte");// equal to above
 bool b3 = lengthCompare("hello", "goodby");//equal ro above
+
 cout << "b1: " << b1 << endl;
 cout << "b2: " << b2 << endl;
 cout << "b3: " << b3 << endl;
@@ -1144,12 +1147,11 @@ b2: 0
 b3: 0
 */
 
-#### Pointers to Overloaded Functions
 
 当使用函数指针时，赋值给函数指针的函数的类型必须与函数指针的类型完全一致。
 
 ```cpp
-void ff(unsigned int val);
+void ff(nt val);
 void (*p1)(unsigned int) = ff;
 // void (*p2)(int) = ff; //error, can't convert unsigned int to int
 ```
