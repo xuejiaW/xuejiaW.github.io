@@ -14,9 +14,7 @@ tags:
 
 《C++ Primer》 第七章笔记
 
-7.1节-7.2使用定义Sales_data的过程作为例子讲解了Class的一些基本特性。
-7.3节对前两节探讨的特性进行了进一步的分析。
-7.4-7.6节针对类作用域，构造函数和静态成员各自进行了详细的讨论。
+![第七章内容](CPPPrimer-Chapter7-Notes/Ch_7.png)
 
 {% endcq %}
 
@@ -122,7 +120,7 @@ const Sales_data cTotal;
 // cTotal.isbn();//error
 ```
 
-在编译器的隐式转换后，`cTotal.isbn()`会变成用一个`const Sales_data\* const`初始化`Sales_data\* const`，如之前章节所述，该操作是非法的。
+在编译器的隐式转换后，`cTotal.isbn()`会变成用一个`const Sales_data* const`类型的指针区初始化一个`Sales_data* const`类型的指针，如之前章节所述，该操作是非法的。
 
 #### Class Scope and Member Functions
 
@@ -212,7 +210,7 @@ istream &read(istream &is, Sales_data &item)
 
 #### Some Classes Cannot Rely on the synthesized Default Constructor
 
-一些函数无法依赖合成默认构造函数，因为
+一些类无法依赖合成默认构造函数，因为
 
 1. 只有类没有定义任何构造函数时，才会有合成默认构造函数
 2. 当没有类内初始化值时，合成默认构造函数会使用变量默认初始化，但内建类型（int等）和复合类型（array，pointer）出现在函数内部时默认值是未定义的。所以当且仅当这些参数有类内初始化值时才可以依赖合成默认构造函数，否则构造的结果是未定义的。
@@ -307,6 +305,11 @@ cout << endl;
 cout << "Second one value is: " << endl;
 for (int i : secondOne.value)
     cout << i << "";
+
+// First one value is: 
+// 4 2 3
+// Second one value is:
+// 123
 ```
 
 Test类中仅包含一个vector，如下：
@@ -643,7 +646,7 @@ struct NotDefined;
 
 1. 定义该类型的指针或引用
 2. 作为函数声明中的参数或者返回类型。注意是声明，不是定义
-3. 作为静态类型作为在类的成员
+3. 作为静态类型成为类的成员
 
 在类的定义过程中，类还是不完整的。因为不完整类型可以用于以上三个地方，所以一个类型可以将本类型的指针或引用作为成员参数，或作为静态成员。也可以用本类型作为成员函数的形参和返回值。如：
 
@@ -673,7 +676,7 @@ class Screen
 }
 ```
 
-定义普通的友函数一样，定义友类的语句可以出现在类定义内部的任何地方。此时，虽然出现了`Window_mgr`类名，但并不需要`Window_mgr`类被定义，甚至不需要其被声明。
+与定义普通的友函数一样，定义友类的语句可以出现在类定义内部的任何地方。此时，虽然出现了`Window_mgr`类名，但并不需要`Window_mgr`类被定义，甚至不需要其被声明。
 
 定义`Window_mgr`类的代码如下：
 
@@ -751,9 +754,9 @@ void Window_mgr::Clear(Window_mgr::ScreenIndex index)
 
 注意当设置某类中的成员函数作为另一个类的友函数时，要额外注意引用依赖问题。
 
-在本例中，因为在Screen类里要访问Window_mgr中的clear函数，所以这时就必须引入`Window_mgr.h`。但这就会造成`Screen.h`中`include "Window_mgr.h"`，`Window_mgr.h`中`include "Screen.h"`的相互依赖。
+在本例中，因为在Screen类里要访问Window_mgr中的clear函数，所以这时就必须引入（include）`Window_mgr.h`。但这就会造成`Screen.h`中`include "Window_mgr.h"`，`Window_mgr.h`中`include "Screen.h"`的相互依赖。
 
-实际上在`Window_mgr.h`中根本不需要访问`Screen`类中的成员，而仅仅是将`Screen`类作为形参类型和Vector中元素类型，因此完全可以使用不完整类型，即仅仅声明Screen类，代码中为`class Screen;`。而在`Window_mgr.cpp`中因为需要访问了`Screen`类中的成员，所以必须引入`Screen.h`。
+实际上在`Window_mgr.h`中根本不需要访问`Screen`类中的成员，而仅仅是将`Screen`类作为形参类型和Vector中元素类型，因此完全可以使用不完整类型，即仅仅声明Screen类，代码中写为`class Screen;`。而在`Window_mgr.cpp`中因为需要访问了`Screen`类中的成员，所以必须引入`Screen.h`。
 
 总结定义和声明顺序应该为：
 
@@ -840,7 +843,7 @@ C++找寻一个名字的含义时步骤是：
 C++找寻名字的策略和类编译顺序共同决定了以下结果：
 
 1. 当名字出现在返回类型或者参数列表中时，该名字必须在使用前已经声明过
-2. 当名字出现在成员函数主体中时，如果在使用该名字前无法在函数内部找到该名字的声明，则在类内部搜索该名字，所有的成员变量都会被搜索，无论它的出现顺序。
+2. 当名字出现在成员函数主体中时，如果在使用该名字前无法在函数内部找到该名字的声明，则在类内部搜索该名字，所有的类成员变量都会被搜索，无论它的出现顺序。
 
 如：
 
@@ -856,7 +859,7 @@ private:
 };
 ```
 
-在上述代码中，函数`balance`返回的bal是成员变量`Money bal`，而不是全局变量string，即使成员变量的声明在变量`bal`使用后面。
+在上述代码中，函数`balance`返回的bal是成员变量`Money bal`，而不是全局变量string，即使成员变量的声明在全局变量`bal`使用后面。
 
 #### Type Names Are Special
 
@@ -1069,7 +1072,7 @@ struct B
 
 同理，在`B`中必须手动的在初始化列表中为`NonDefault`类型变量初始化，否则在尝试调用其默认构造函数时会发生错误。
 
-### Implicit Class-Type COnversions
+### Implicit Class-Type Conversions
 
 可以通过**一个参数**被调用的类构造器提供了隐式类型转换，从调用参数转换为该类型。
 
@@ -1131,7 +1134,7 @@ item.combine(static_cast<Sales_data>(null_book));//static_cast
 
 标准库中：
 1. string类型有通过const char*的构造函数，如`string("abc")`，该构造函数不是explicit的
-2. vector类型中有通过int的构造函数，如`vector(2)`，该构造函数时explicit的
+2. vector类型中有通过int的构造函数，如`vector(2)`，该构造函数是explicit的
 
 ### Aggregate Classes
 
@@ -1244,7 +1247,7 @@ class Account_S
 }
 ```
 
-当尝试使用类内初始值时就会发生编译错误，静态成员变量的初始化与静态成员函数相同，如下
+当尝试使用类内初始值时就会发生编译错误，静态成员变量的初始化过程与静态成员函数定义过程相同，如下
 
 ```cpp
 //inside class
@@ -1252,15 +1255,20 @@ class Account_S
 {
 public:
     typedef double RateD;
+
+private:
+    static RateD interestRate;
+    static double interest;
+    static double InitRate() { return 0; }
 ...
 }
 
 //outside class
 Account_S::RateD Account_S::interestRate = InitRate();
-double Account_S::interest = InitRate();
+double Account_S::interest = 2.0;
 ```
 
-如同在定义成员函数时一样，当成员函数的名字出现后，参数列表和函数主体就已经在作用域内部了。同理在上述定义中，当成员变量`interRate`名字出现后，其余的部分就已经在作用域里了（变量的参数类型在名字出现前，所以不在作用域里），因此`InitRate`不需要使用作用域操作符来访问。
+如同在定义成员函数时一样，当成员函数的名字出现后，参数列表和函数主体就已经在作用域内部了。同理在上述定义中，当成员变量`interestRate`名字出现后，其余的部分就已经在作用域里了（变量的参数类型在名字出现前，所以不在作用域里），因此`InitRate`不需要使用作用域操作符来访问。
 
 #### In-Class Initialization of static Data Members
 
@@ -1279,7 +1287,7 @@ class Bar
 }
 ```
 
-2. 可以在类中使用静态成员变量作为成员函数的初始值，而普通成员函数不行，如
+2. 可以在类中使用静态成员变量作为成员函数的初始值，而普通成员变量不行，如
 
 ```cpp
 class Account_S
