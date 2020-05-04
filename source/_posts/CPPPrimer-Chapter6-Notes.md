@@ -16,7 +16,7 @@ tags:
 
 关于函数的定义，函数参数的传递方式，函数重载，函数指针。
 
-![第六章内容](CPPPrimer-Chapter5-Notes/Ch_6.png)
+![第六章内容](CPPPrimer-Chapter6-Notes/Ch_6.png)
 
 {% endcq %}
 
