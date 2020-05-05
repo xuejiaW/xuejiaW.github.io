@@ -115,7 +115,7 @@ cout << s4.length() << endl;                //5
 | s1 != s2      | s1和s2是否不同                                |
 | <,<=,>,>=     | s1和s2的大小，根据字典规则排序                |
 
-其中`is >> s`是以whitespace分隔的（空格，换行，tab），当读到whitespace时一个读取便结束，如下所示
+其中`is >> s`是以whitespace分隔的（空格，换行，tab），当读到whitespace时一个读取便结束（不包括whitespace），如下所示
 
 ```cpp
 string s1, s2;
