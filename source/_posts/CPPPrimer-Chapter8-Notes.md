@@ -1,13 +1,20 @@
 ---
-title: CPPPrimer-Chapter8-Notes
+title: 《C++ Primer》 第八章笔记
 mathjax: false
+date: 2020-05-14 07:07:55
 categories:
+  - 读书笔记
+  - 计算机语言
 tags:
+  - 读书笔记
+  - C++
 ---
 
 {% cq %}
 
 《C++ Primer》 第六章笔记。
+
+![第八章内容](CPPPrimer-Chapter8-Notes/Ch_8.png)
 
 {% endcq %}
 
@@ -381,12 +388,6 @@ cout << ssf.str() << endl;
 123 456
 */
 ```
-
-
-
-
-
-
 
 {% note primary %}
 
