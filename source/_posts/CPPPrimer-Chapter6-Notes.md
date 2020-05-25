@@ -1117,6 +1117,12 @@ pf为指向两个形参都是`const string&`，返回值为bool的函数的指�
 bool lengthCompare(const string &, const string &);
 ```
 
+但是并不能指向类内成员函数，即使形参和返回值类型一样，因为类内函数实际上有一个this指针的传递，如
+
+```cpp
+bool lengthCompare(const string &, const string &);
+```
+
 注意，定义pf时，外面的括号不能缺少，不然变成
 
 ```cpp
