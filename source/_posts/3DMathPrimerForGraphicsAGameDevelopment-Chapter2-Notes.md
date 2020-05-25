@@ -382,7 +382,7 @@ a\cdot b= \Vert a\Vert \Vert b\Vert cos\theta \\\\
 \theta=arccos(\frac{a\cdot b}{\Vert a\Vert \Vert b\Vert})
 > $$
 
-因此，如果点乘的两个向量夹角范围在$-90^\circ \sim 90^\circ$,结果为正数。如果夹角为90°，结果为0。如果范围在$90^\circ \sim 270^\circ$，结果为负数。
+因此，如果点乘的两个向量夹角范围在$-90^\circ \sim 90^\circ$,结果为正数。如果夹角为90°，结果为0。如果范围在$90^\circ \sim 270^\circ$，结果为负数。如果是正数，则b和a是在指向同一个方向（比如都往前），而负数则表示指向不同方向（一个向前，一个向后）。
 
 ## Vector Cross Product
 
