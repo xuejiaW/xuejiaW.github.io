@@ -12,7 +12,7 @@ tags:
 
 {% cq %}
 
-《C++ Primer》 第六章笔记。
+《C++ Primer》 第八章笔记。
 
 ![第八章内容](CPPPrimer-Chapter8-Notes/Ch_8.png)
 
