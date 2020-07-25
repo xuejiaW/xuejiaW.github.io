@@ -1080,7 +1080,7 @@ cout << endl;
 ```
 
 对于`ostream_iterator`而言`，*`和`++`操作符实际上是没有任何操作的，因此可以被省略（`istream_iterator`不可省略）。但实际中为了代码的统一，通常还是加上`*`和`++`。
-
+ 
 ```cpp
 for (int i : ivec)
     *out_iter++ = i;
