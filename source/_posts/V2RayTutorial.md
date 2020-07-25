@@ -54,6 +54,14 @@ SS及SSR因为其易用性和使用人数的广泛，已经逐渐被GFW识别。
 
 可以使用命令`cat /etc/v2ray/config.json`来查看服务器端`V2Ray`的配置，后续章节会说明`V2Ray`的配置文件。
 
+### V2Ray服务器加速
+
+安装了服务器后可安装锐速加速算法：
+
+```text
+wget –N —no–check–certificate https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder-all.sh && bash serverspeeder-all.sh
+```
+
 ### V2Ray客户端安装
 
 #### 安卓版本

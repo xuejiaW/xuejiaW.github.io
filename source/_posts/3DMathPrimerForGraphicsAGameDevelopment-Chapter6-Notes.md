@@ -572,7 +572,7 @@ $$\mathbf{M}=\left[\begin{array}{ll}
 \mathbf{t} & 1
 \end{array}\right]$$
 
-另外如前所述，当一个齐次空间中的向量坐标的第四个元素$w=0$时，这个坐标表示的是位移而不是位置，如下所示，取向量的坐标为$\left[\begin{array}{llll}x & y & z & 0\end{array}\right]$，与$\mathbf{M}$相乘的结果将不包含位移信息，如：
+另外如前所述，当一个齐次空间中的向量坐标的第四个元素$w=0$时，这个坐标表示的是位置而不是位移，如下所示，取向量的坐标为$\left[\begin{array}{llll}x & y & z & 0\end{array}\right]$，与$\mathbf{M}$相乘的结果将不包含位移信息，如：
 
 $$\begin{array}{ll}
 \left[\begin{array}{llllllll}
