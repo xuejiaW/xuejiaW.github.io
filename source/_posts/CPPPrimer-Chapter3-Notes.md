@@ -816,7 +816,7 @@ C++中的string字面值实际上是继承自C语言的。通过C++的string存�
 | strcat(p1,p2) | 将p2的内容添加到p1后，返回p1                                        |
 | strcpy(p1,p2) | 将p2的内容拷贝到p1中，返回p1                                        |
 
-对C-Sty;e字符串（使用char数组或指针）进行判断，必须使用`strcmp`，如下所示：
+对C-Style字符串（使用char数组或指针）进行判断，必须使用`strcmp`，如下所示：
 
 ```cpp
 string s1 = "A string example";
