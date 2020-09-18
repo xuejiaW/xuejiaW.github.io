@@ -59,7 +59,7 @@ C++有的算数类型如下：
 
 内存可以分配的最小单元是byte，存储的基本单元为word。在c++中，byte的大小是可以容纳机器基本字符集的大小，通常为8 bits。word的大小通常为32 bits或者64 bits，即4到8 bytes。
 
-> 通常编译器会提供给浮点数比最低要求更高的精度，float一般表示7位有效数字，double表示16位有效数字。通常float用1个word表示，double用两个words表示，long double用3或4个words表示。但要注意的是这些精度与尺寸都不是固定的，可能儿因设备的不同而不同。
+> 通常编译器会提供给浮点数比最低要求更高的精度，float一般表示7位有效数字，double表示16位有效数字。通常float用1个word表示，double用两个words表示，long double用3或4个words表示。但要注意的是这些精度与尺寸都不是固定的，可能因设备的不同而不同。
 
 大多数的计算机都会给每个byte分配一个地址。如在一台8-bit byte和 32-bit words的电脑上，一个word的内存如下，可以说是地址在736424的word或地址在736427的byte。
 
@@ -354,9 +354,9 @@ C++支持单独编译（Separate Compilation），即可以把整个程序放在
 
 每个变量都只可以被定义一次，但可以被声明多次。
 
-可以使用关键字`external`来指定操作是声明而不是定义，不允许在函数内部使用external关键字。
+可以使用关键字`extern`来指定操作是声明而不是定义，不允许在函数内部使用extern关键字。
 
-如上所属，声明是不包括函数的初始值的，所以如果一个声明包含了对变量的初始化，那么该声明实际上是定义（在后续章节中可以看到，对于const变量会需要同时使用external和初始化）。如下所示：
+如上所属，声明是不包括函数的初始值的，所以如果一个声明包含了对变量的初始化，那么该声明实际上是定义（在后续章节中可以看到，对于const变量会需要同时使用extern和初始化）。如下所示：
 
 ```cpp
 //Declarations and Definitions
@@ -388,7 +388,7 @@ int main()
 {
   int unique = 0;							   //block scope
   cout << reused << " " << unique << endl;   //42 0
-  int reused = 0;							   //local named reused hidesglobal   reused
+  int reused = 0;							   //local named reused hides global reused
   cout << reused << " " << unique << endl;   // 0 0
   cout << ::reused << " " << unique << endl; // 42 0
 }
@@ -429,7 +429,7 @@ int &refVal3 = refVal; //the same value as ival
 
 引用符号`&`是针对变量名称而言的，所以每个引用在定义的时候前面都需要加上引用符号。
 
-另外除了在2.4节（const reference可以绑定至任意可转换的对象）和15.2节提到的两个特殊情况，引用类型必须和被捆绑的值类型一致，且引用类型不能捆绑至字面值。
+另外除了在2.4节（const reference可以绑定至任意可转换的对象）和15.2节(基类的引用可以绑定派生类对象)提到的两个特殊情况，引用类型必须和被捆绑的值类型一致，且引用类型不能捆绑至字面值。
 
 ```cpp
 int i = 1024, i2 = 2048;
@@ -441,7 +441,7 @@ double dval = 3.14;
 
 ### Pointers
 
-指针（Pointers）是一个“指向”别的类型的符合类型。
+指针（Pointers）是一个“指向”别的类型的复合类型。
 
 与引用不同的是，指针是一个物体，因此它可以被拷贝和赋值，在指针的生命周期内，它可以被指向多个不同的物体。而且指针在定义时并不一定要被初始化，但与其他的内建类型一样，在代码块作用域中的指针如果未被初始化赋值，则它的值是未定义的。
 
