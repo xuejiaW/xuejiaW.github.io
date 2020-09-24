@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;&amp;#x7B97;&amp;#x6CD5;&amp;#x5BFC;&amp;#x8BBA;&amp;#x300B; &amp;#x7B2C;&amp;#x5341;&amp;#x4E94;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#xFF0C;&amp;#x4ECB;&amp;#x7ECD;&amp;#x52A8;&amp;#x6001;&amp;#x89C4;&amp;#x5212;&amp;#x7684;&amp;#x6982;&amp;#x5FF5;&amp;#x53CA;&amp;#">
+<meta name="keywords" content="读书笔记,数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《算法导论》 第十五章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/IA-Chapter15-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;&amp;#x7B97;&amp;#x6CD5;&amp;#x5BFC;&amp;#x8BBA;&amp;#x300B; &amp;#x7B2C;&amp;#x5341;&amp;#x4E94;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#xFF0C;&amp;#x4ECB;&amp;#x7ECD;&amp;#x52A8;&amp;#x6001;&amp;#x89C4;&amp;#x5212;&amp;#x7684;&amp;#x6982;&amp;#x5FF5;&amp;#x53CA;&amp;#">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/2020-01-20-02-17-36.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/2019-11-19-19-33-22.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/2019-11-22-11-25-54.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/2019-11-22-11-32-00.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/2019-11-22-12-00-59.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/2019-11-26-10-35-55.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/2019-11-26-11-28-09.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.476Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《算法导论》 第十五章笔记">
+<meta name="twitter:description" content="&amp;#x300A;&amp;#x7B97;&amp;#x6CD5;&amp;#x5BFC;&amp;#x8BBA;&amp;#x300B; &amp;#x7B2C;&amp;#x5341;&amp;#x4E94;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#xFF0C;&amp;#x4ECB;&amp;#x7ECD;&amp;#x52A8;&amp;#x6001;&amp;#x89C4;&amp;#x5212;&amp;#x7684;&amp;#x6982;&amp;#x5FF5;&amp;#x53CA;&amp;#">
+<meta name="twitter:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/2020-01-20-02-17-36.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/IA-Chapter15-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《算法导论》 第十五章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/IA-Chapter15-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《算法导论》 第十五章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-26 13:51:03" itemprop="dateCreated datePublished" datetime="2019-11-26T13:51:03+08:00">2019-11-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/数据结构与算法/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/IA-Chapter15-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《算法导论》 第十五章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/IA-Chapter15-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/IA-Chapter15-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>20k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>37 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;&#x7B97;&#x6CD5;&#x5BFC;&#x8BBA;&#x300B; &#x7B2C;&#x5341;&#x4E94;&#x7AE0;&#x7B14;&#x8BB0;&#xFF0C;&#x4ECB;&#x7ECD;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x7684;&#x6982;&#x5FF5;&#x53CA;&#x4E00;&#x4E9B;&#x8FD0;&#x7528;&#x4E86;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x7684;&#x7B97;&#x6CD5;&#x3002;</p>
+<p>15.4&#x53CA;15.5&#x8282;&#x5C1A;&#x672A;&#x6574;&#x7406;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-15.-dynamic-programming">Chapter 15. Dynamic Programming</h1>
+<p>&#x52A8;&#x6001;&#x89C4;&#x5212;(Dynamic Programming)&#x5982;&#x5206;&#x6CBB;&#x6CD5;(divide-and-conquer method)&#x4E00;&#x6837;&#x90FD;&#x662F;&#x901A;&#x8FC7;&#x7EC4;&#x5408;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x89E3;&#x7B54;&#x6765;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x3002;&#x4E24;&#x8005;&#x7684;&#x533A;&#x522B;&#x5728;&#x4E8E;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5206;&#x6CBB;&#x6CD5;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x662F;&#x4E92;&#x76F8;&#x72EC;&#x7ACB;&#x7684;&#xFF0C;&#x4E0D;&#x5B58;&#x5728;&#x91CD;&#x53E0;</li>
+<li>&#x52A8;&#x6001;&#x89C4;&#x5212;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x662F;&#x76F8;&#x4E92;&#x91CD;&#x53E0;&#x7684;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x91CD;&#x53E0;&#x5B50;&#x95EE;&#x9898;&#x3002;&#x82E5;&#x5BF9;&#x4E8E;&#x6BCF;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x90FD;&#x6C42;&#x89E3;&#x4E00;&#x6B21;&#xFF0C;&#x5219;&#x4F1A;&#x51FA;&#x73B0;&#x91CD;&#x590D;&#x8BA1;&#x7B97;</li>
+</ol>
+<p>&#x52A8;&#x6001;&#x89C4;&#x5212;&#x5E38;&#x88AB;&#x7528;&#x6765;&#x89E3;&#x51B3;&#x6700;&#x4F18;&#x95EE;&#x9898;&#xFF08;optimization problems&#xFF09;&#xFF0C;&#x8FD9;&#x79CD;&#x95EE;&#x9898;&#x901A;&#x5E38;&#x6709;&#x8BB8;&#x591A;&#x53EF;&#x80FD;&#x7684;&#x89E3;&#x7B54;&#xFF0C;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x7684;&#x76EE;&#x6807;&#x662F;&#x6C42;&#x5F97;&#x4E00;&#x4E2A;&#x6700;&#x4F18;&#x89E3;&#xFF08;&#x901A;&#x5E38;&#x662F;&#x4F17;&#x591A;&#x89E3;&#x7B54;&#x4E2D;&#x7684;&#x6700;&#x5927;&#x503C;&#x6216;&#x6700;&#x5C0F;&#x503C;&#xFF09;&#x3002;</p>
+<p>&#x52A8;&#x6001;&#x89C4;&#x5212;&#x7684;&#x6B65;&#x9AA4;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol type="1">
+<li>&#x627E;&#x5230;&#x6700;&#x4F18;&#x89E3;&#x7684;&#x7ED3;&#x6784;</li>
+<li>&#x9012;&#x5F52;&#x5B9A;&#x4E49;&#x6700;&#x4F18;&#x89E3;&#x7684;&#x503C;</li>
+<li>&#x8BA1;&#x7B97;&#x51FA;&#x6700;&#x4F18;&#x89E3;&#x7684;&#x503C;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;&#x81EA;&#x4E0B;&#x800C;&#x4E0A;&#x7684;&#x9012;&#x5F52;&#x65B9;&#x5F0F;&#x89E3;&#x51B3;</li>
+<li>&#x4F7F;&#x7528;&#x8BA1;&#x7B97;&#x5F97;&#x51FA;&#x7684;&#x6570;&#x636E;&#x6784;&#x5EFA;&#x51FA;&#x6700;&#x4F18;&#x89E3;</li>
+</ol>
+<p>&#x6B65;&#x9AA4;1-3&#x662F;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x5982;&#x679C;&#x53EA;&#x9700;&#x8981;&#x6C42;&#x5F97;&#x6700;&#x4F18;&#x89E3;&#x7684;&#x503C;&#x800C;&#x975E;&#x6700;&#x4F18;&#x89E3;&#x672C;&#x8EAB;&#xFF0C;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#x6B65;&#x9AA4;4&#x3002;</p>
+<h2 id="rod-cutting">Rod cutting</h2>
+<p>&#x94A2;&#x6761;&#x5207;&#x5272;&#x95EE;&#x9898;(Rod cutting)&#x662F;&#x5047;&#x8BBE;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x94A2;&#x6761;&#xFF0C;&#x5207;&#x5272;&#x6210;&#x4E0D;&#x540C;&#x957F;&#x5EA6;&#x53EF;&#x4EE5;&#x5356;&#x4E0D;&#x540C;&#x7684;&#x94B1;&#xFF0C;&#x8BBE;&#x5207;&#x5272;&#x51FA;&#x7684;&#x957F;&#x5EA6;&#x4E3A;<span class="math inline">\(i\)</span>&#xFF0C;&#x5BF9;&#x5E94;&#x8FD9;&#x4E00;&#x6BB5;&#x957F;&#x5EA6;&#x7684;&#x5356;&#x4EF7;&#x4E3A;<span class="math inline">\(P_i\)</span>&#x3002;&#x5047;&#x8BBE;&#x94A2;&#x6761;&#x957F;&#x5EA6;&#x4ECE;1-10&#x7684;&#x5356;&#x4EF7;&#x5982;&#x4E0B;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x957F;&#x5EA6;</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&#x4EF7;&#x683C;</td>
+<td>1</td>
+<td>5</td>
+<td>8</td>
+<td>9</td>
+<td>10</td>
+<td>17</td>
+<td>17</td>
+<td>20</td>
+<td>24</td>
+<td>30</td>
+</tr>
+</tbody>
+</table>
+<p>&#x4E00;&#x6BB5;&#x957F;&#x5EA6;&#x4E3A;<span class="math inline">\(i\)</span>&#x7684;&#x94A2;&#x6761;&#xFF0C;&#x4E00;&#x5171;&#x6709;<span class="math inline">\(2^{n-1}\)</span>&#x4E2A;&#x5207;&#x5272;&#x65B9;&#x6CD5;&#x3002;&#x56E0;&#x4E3A;&#x5C06;&#x957F;&#x5EA6;&#x4E3A;<span class="math inline">\(i\)</span>&#x7684;&#x94A2;&#x6761;&#x770B;&#x4F5C;&#x662F;&#x6709;<span class="math inline">\(i\)</span>&#x4E2A;&#x957F;&#x5EA6;&#x4E3A;1&#x7684;&#x7ED3;&#x70B9;&#x8FDB;&#x884C;&#x5206;&#x7C7B;&#xFF0C;&#x4E00;&#x5171;&#x6709;<span class="math inline">\(n-1\)</span>&#x4E2A;&#x8FDE;&#x63A5;&#x70B9;&#xFF0C;&#x6BCF;&#x4E2A;&#x8FDE;&#x63A5;&#x70B9;&#x90FD;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x5207;&#x6216;&#x8005;&#x4E0D;&#x5207;&#xFF0C;&#x6240;&#x4EE5;&#x6709;<span class="math inline">\(2^{n-1}\)</span>&#x4E2A;&#x53EF;&#x80FD;&#x3002;</p>
+<ul>
+<li>&#x5982;&#x6709;3&#x4E2A;&#x7ED3;&#x70B9;&#xFF0C;1-2&#x7684;&#x5207;&#x5206;&#x548C;2-1&#x7684;&#x5207;&#x5206;&#x770B;&#x4F5C;&#x662F;&#x4E24;&#x79CD;&#x53EF;&#x80FD;&#x3002;</li>
+</ul>
+<p>&#x8BBE;&#x4E00;&#x6BB5;&#x94A2;&#x6761;&#x5728;&#x5356;&#x4EF7;&#x6700;&#x5927;&#x5316;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x8981;&#x5207;&#x5206;&#x6210;<span class="math inline">\(k\)</span>&#x5757;&#xFF0C;&#x5219;&#x603B;&#x957F;&#x5EA6;&#x4E3A;<span class="math inline">\(n\)</span>&#x7684;&#x94A2;&#x6761;&#x53EF;&#x4EE5;&#x8868;&#x793A;&#x4E3A; <span class="math inline">\(n=i_1+i_2+...+i_k\)</span>&#xFF0C;&#x6700;&#x5927;&#x5316;&#x7684;&#x603B;&#x4EF7;&#x4E3A;&#x4E3A;<span class="math inline">\(r_n\)</span>&#xFF0C;&#x53EF;&#x8868;&#x793A;&#x4E3A;<span class="math inline">\(r_n=p_{i_1}+p_{i_2}+...+p_{i_k}\)</span></p>
+<p>&#x5BF9;&#x4E8E;&#x4E0A;&#x9762;&#x5047;&#x8BBE;&#x7684;&#x5356;&#x4EF7;&#xFF0C;&#x5BF9;&#x5E94;&#x94A2;&#x6761;&#x7684;&#x957F;&#x5EA6;&#x4ECE;1-10&#xFF0C;&#x5404;&#x81EA;&#x7684;&#x6700;&#x4F73;&#x5356;&#x4EF7;&#x548C;&#x5207;&#x5272;&#x65B9;&#x6CD5;&#x5982;&#x4E0B;</p>
+<ul>
+<li>&#x5982;&#x5207;&#x5272;&#x65B9;&#x5F0F;<span class="math inline">\(2+2\)</span>&#x8868;&#x793A;&#x5199;&#x6210;&#x4E24;&#x534A;&#xFF0C;&#x4E00;&#x5757;&#x4E3A;&#x957F;&#x5EA6;&#x4E3A;2&#xFF0C;&#x53E6;&#x4E00;&#x5757;&#x4E5F;&#x4E3A;2.&#x5982;&#x679C;&#x5207;&#x5272;&#x65B9;&#x5F0F;&#x4E0E;&#x603B;&#x957F;&#x5EA6;&#x76F8;&#x540C;&#xFF0C;&#x5982;&#x90FD;&#x4E3A;3,&#x5219;&#x8868;&#x793A;&#x4E0D;&#x5207;&#x5272;&#x5373;&#x4E3A;&#x6700;&#x4F73;&#x5207;&#x5272;&#x65B9;&#x5F0F;&#x3002;</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>&#x94A2;&#x6761;&#x603B;&#x957F;&#x5EA6;</th>
+<th>&#x6700;&#x5927;&#x5316;&#x5356;&#x4EF7;</th>
+<th>&#x6700;&#x4F73;&#x5207;&#x5272;&#x65B9;&#x5F0F;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>5</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>8</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>10</td>
+<td>2+2</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>13</td>
+<td>2+3</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>17</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>18</td>
+<td>1+6 / 2+2+3</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>22</td>
+<td>2+6</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>25</td>
+<td>3+6</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>30</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>&#x8868;&#x683C;&#x4E2D;&#x7684;&#x6700;&#x4F73;&#x5207;&#x5272;&#x65B9;&#x5F0F;&#x662F;&#x94A2;&#x6761;&#x5207;&#x5272;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F73;&#x89E3;&#xFF0C;&#x800C;&#x6700;&#x5927;&#x5316;&#x5356;&#x4EF7;&#x662F;&#x6700;&#x4F73;&#x5207;&#x5272;&#x65B9;&#x5F0F;&#x7684;&#x6570;&#x503C;&#x3002;</li>
+</ul>
+<p>&#x53EF;&#x4EE5;&#x628A;&#x6C42;&#x5F97;<span class="math inline">\(r_n\)</span>&#xFF0C;&#x5373;&#x6574;&#x4E2A;&#x94A2;&#x6761;&#x7684;&#x6700;&#x5927;&#x5316;&#x8FC7;&#x7A0B;&#x770B;&#x4F5C;&#x5148;&#x5207;&#x5272;&#x4E00;&#x5200;&#xFF0C;&#x8FD9;&#x65F6;&#x5019;&#x94A2;&#x6761;&#x53D8;&#x6210;&#x4E86;&#x4E24;&#x90E8;&#x5206;&#xFF0C;&#x5DE6;&#x90E8;&#x5206;&#x5C31;&#x4E0D;&#x518D;&#x52A8;&#x4E86;&#xFF0C;&#x5BF9;&#x53F3;&#x90E8;&#x5206;&#x7EE7;&#x7EED;&#x5207;&#x5272;&#xFF0C;&#x627E;&#x5230;&#x53F3;&#x90E8;&#x5206;&#x7684;&#x6700;&#x4F73;&#x5207;&#x5272;&#x65B9;&#x5F0F;&#xFF0C;&#x5373;&#x5BF9;&#x53F3;&#x90E8;&#x5206;&#x6C42;&#x6700;&#x4F73;&#x89E3;&#x3002;&#x6570;&#x5B66;&#x53EF;&#x8868;&#x793A;&#x4E3A;</p>
+<p><span class="math display">\[
+r_n= \max_{1\leq i \leq n}(p_i + r_{n-i})
+\]</span></p>
+<p>&#x8FD9;&#x5C31;&#x662F;&#x94A2;&#x6761;&#x5207;&#x5272;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F73;&#x89E3;&#x7ED3;&#x6784;&#xFF1A;&#x6574;&#x4E2A;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F73;&#x89E3;&#x662F;&#x4E0E;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F73;&#x89E3;&#x76F8;&#x5173;&#x7684;&#x3002;&#x5982;&#x4E0A;&#x5F0F;&#x4E2D;&#xFF0C;&#x6700;&#x4F73;&#x89E3;&#x7684;&#x503C;&#x662F;&#x4F9D;&#x8D56;&#x4E8E;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F73;&#x89E3;&#x7684;&#x503C;&#x5F97;&#x5230;&#x7684;&#x3002;</p>
+<h3 id="&#x9012;&#x5F52;&#x89E3;&#x6CD5;">&#x9012;&#x5F52;&#x89E3;&#x6CD5;</h3>
+<p>&#x9012;&#x5F52;&#x89E3;&#x6CD5;&#x7684;&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x5BF9;&#x5F0F;&#x5B50;<span class="math inline">\(r_n=\max_{1\leq i \leq n}(p_i + r_{n-i})\)</span>&#x7684;&#x5B9E;&#x73B0;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CUT-ROD(p,n)</span><br><span class="line">if n == 0</span><br><span class="line">    return 0</span><br><span class="line"></span><br><span class="line">q = -MAX</span><br><span class="line">for i = 1 to n</span><br><span class="line">    q = max (q, p[i] + CUT-ROD(p,n-i))</span><br><span class="line">return q</span><br></pre></td></tr></table></figure>
+<p>&#x4F46;&#x8FD9;&#x4E2A;&#x8FD0;&#x7B97;&#x662F;&#x975E;&#x5E38;&#x4F4E;&#x6548;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x5B58;&#x5728;&#x8BB8;&#x591A;&#x7684;&#x91CD;&#x590D;&#x8BA1;&#x7B97;&#xFF0C;&#x5982;&#x5BF9;&#x4E8E;<span class="math inline">\(n=4\)</span>&#xFF0C;&#x7B97;&#x6CD5;&#x4F1A;&#x5728;&#x5FAA;&#x73AF;&#x4E2D;&#x5206;&#x522B;&#x4EE5;<span class="math inline">\(n=0,n=1,n=2,n=3\)</span>&#x8C03;&#x7528;CUT-ROD&#x7B97;&#x6CD5;&#xFF0C;&#x800C;&#x5728;&#x4EE5;<span class="math inline">\(n=3\)</span>&#x8C03;&#x7528;&#x65F6;&#x53C8;&#x4F1A;&#x5728;&#x5FAA;&#x73AF;&#x4E2D;&#x4EE5;<span class="math inline">\(n=0,n=1,n=2\)</span>&#x8C03;&#x7528;&#xFF0C;&#x8FD9;&#x5C31;&#x9020;&#x6210;&#x4E86;&#x91CD;&#x590D;&#x8FD0;&#x7B97;&#x3002;&#x8C03;&#x7528;&#x65F6;&#x7684;&#x8BA1;&#x7B97;&#x5982;&#x4E0B;&#x56FE;</p>
+<p><img src="/IA-Chapter15-Notes/2020-01-20-02-17-36.png" alt="&#x9012;&#x5F52;&#x89E3;&#x6CD5;&#x56FE;&#x89E3;"></p>
+<p>&#x56FE;&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x7ED3;&#x70B9;&#x8868;&#x793A;&#x4E00;&#x6B21;&#x8C03;&#x7528;&#xFF0C;&#x7ED3;&#x70B9;&#x4E2D;&#x7684;&#x6570;&#x503C;&#x8868;&#x793A;<span class="math inline">\(n\)</span>&#x7684;&#x53D6;&#x503C;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6709;&#x975E;&#x5E38;&#x591A;&#x91CD;&#x590D;&#x7684;&#x7ED3;&#x70B9;&#x3002;</p>
+<p>&#x8BBE;<span class="math inline">\(T(n)\)</span>&#x4E3A;&#x8BE5;&#x7B97;&#x6CD5;&#x7684;&#x6267;&#x884C;&#x65F6;&#x95F4;&#xFF0C;&#x53EF;&#x4EE5;&#x8868;&#x793A;&#x4E3A;</p>
+<p><span class="math display">\[
+T(n)= 1 + \sum _{i=1}^{n} T(n-i)
+\]</span></p>
+<p>&#x53EF;&#x53D6;<span class="math inline">\(j=n-1\)</span>&#xFF0C;&#x5C06;&#x5F0F;&#x5B50;&#x8F6C;&#x6362;&#x4E3A;</p>
+<p><span class="math display">\[
+T(n)= 1 + \sum _{j=0}^{n-1} T(j)
+\]</span></p>
+<p>&#x53EF;&#x901A;&#x8FC7;&#x6570;&#x5B66;&#x5F52;&#x7EB3;&#x6CD5;&#x8BC1;&#x660E;&#x8BE5;&#x5F0F;&#x5B50;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(T(n)=2^n\)</span>&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x6307;&#x6570;&#x578B;&#x589E;&#x957F;&#x7684;&#x5F0F;&#x5B50;&#xFF0C;&#x6240;&#x4EE5;&#x8BE5;&#x7B97;&#x6CD5;&#x7684;&#x6548;&#x7387;&#x5341;&#x5206;&#x4F4E;&#x4E0B;&#x3002;</p>
+<p><span class="math inline">\(T(n)=1 + \sum _{j=0}^{n-1} T(j)=2^n\)</span>&#x7684;&#x8BC1;&#x660E;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x5F53;n=0&#x65F6;<span class="math inline">\(T(0)=2^0=1\)</span>&#xFF0C;&#x6EE1;&#x8DB3;&#x5F0F;&#x5B50;&#xFF0C;&#x5F97;&#x8BC1;</p></li>
+<li><p>&#x5F53;n&gt;0&#x65F6; <span class="math display">\[
+T(n)=1+\sum _{j=0}^{n-1} 2^{j} \\\\
+=1 + 2^0 \cdot \frac{1-2^{n}}{1-2} \\\\
+= 1 + (2^n -1) \\\\
+= 2^n
+\]</span></p>
+<p>&#x6EE1;&#x8DB3;&#x539F;&#x5F0F;&#x5B50;&#xFF0C;&#x5F97;&#x8BC1;&#x3002;</p></li>
+</ol>
+<p>&#x9012;&#x5F52;&#x89E3;&#x6CD5;&#x7684;c++&#x5B9E;&#x73B0;&#x5982;&#x4E0B;:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CutRod</span><span class="params">(<span class="keyword">int</span>* priceTable, <span class="keyword">int</span> rodLength)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="keyword">if</span> (rodLength == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> price = INT_MIN;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= rodLength; i++) <span class="comment">//cut from 1 to length(equals to no cuts)</span></span><br><span class="line">	{</span><br><span class="line">		<span class="keyword">int</span> tempPrice = priceTable[i] + CutRod(priceTable, rodLength - i);</span><br><span class="line">		<span class="keyword">if</span> (tempPrice &gt; price)</span><br><span class="line">			price = tempPrice;</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">return</span> price;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="using-dynamic-programming-for-optimal-rod-cutting">using dynamic programming for optimal rod cutting</h3>
+<p>&#x5728;&#x4E0A;&#x4E00;&#x8282;&#x7684;&#x9012;&#x5F52;&#x7B97;&#x6CD5;&#x4E2D;&#xFF0C;&#x56E0;&#x4E3A;&#x5927;&#x91CF;&#x91CD;&#x590D;&#x7684;&#x8BA1;&#x7B97;&#x5BFC;&#x81F4;&#x4E86;&#x7B97;&#x6CD5;&#x7684;&#x4F4E;&#x6548;&#x3002;&#x5728;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x7684;&#x89E3;&#x6CD5;&#x4E2D;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x901A;&#x8FC7;&#x5C06;&#x8BA1;&#x7B97;&#x8FC7;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x89E3;&#x5B58;&#x50A8;&#x4E0B;&#x6765;&#xFF0C;&#x4E4B;&#x540E;&#x518D;&#x6B21;&#x9047;&#x5230;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x5373;&#x53EF;&#xFF0C;&#x6240;&#x4EE5;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x672C;&#x8D28;&#x4E0A;&#x662F;&#x4E00;&#x4E2A;&#x7A7A;&#x95F4;&#x4E0E;&#x65F6;&#x95F4;&#x7684;&#x6743;&#x8861;(time-memory trade-off)&#x3002;</p>
+<p>&#x901A;&#x8FC7;&#x52A8;&#x6001;&#x89C4;&#x5212;&#xFF0C;&#x57FA;&#x672C;&#x53EF;&#x4EE5;&#x5C06;&#x4E00;&#x4E2A;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;&#x6307;&#x6570;&#x578B;&#x7684;&#x7B97;&#x6CD5;&#xFF08;&#x5982;<span class="math inline">\(2^n\)</span>&#xFF09;&#x8F6C;&#x6362;&#x4E3A;&#x4E00;&#x4E2A;&#x591A;&#x9879;&#x5F0F;&#x578B;&#x7684;&#x7B97;&#x6CD5;&#xFF08;&#x5982;<span class="math inline">\(n^2\)</span>&#xFF09;</p>
+<p>&#x52A8;&#x6001;&#x89C4;&#x5212;&#x4E00;&#x822C;&#x6709;&#x4E24;&#x79CD;&#x89E3;&#x6CD5;&#xFF0C;&#x4E00;&#x79CD;&#x662F;<code>&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x5907;&#x5FD8;&#x5F55;&#x6CD5;&#xFF08;top-down with memoization&#xFF09;</code>&#xFF0C;&#x4E00;&#x79CD;&#x662F;<code>&#x81EA;&#x5E95;&#x800C;&#x4E0A;&#x6CD5;(bottom-up method)</code>&#x3002;&#x4E0B;&#x9762;&#x4F1A;&#x4EE5;&#x94A2;&#x94C1;&#x5207;&#x5272;&#x95EE;&#x9898;&#x5206;&#x522B;&#x8BF4;&#x660E;&#x4E24;&#x79CD;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x5907;&#x5FD8;&#x5F55;&#x6CD5;</p>
+<p>&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x4E0E;&#x4E4B;&#x524D;&#x7684;&#x9012;&#x5F52;&#x6CD5;&#x7ED3;&#x6784;&#x51E0;&#x4E4E;&#x76F8;&#x540C;&#xFF0C;&#x4E5F;&#x662F;&#x4E25;&#x683C;&#x6309;&#x7167;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x89E3;&#x6CD5;&#x7684;&#x5B9A;&#x4E49;&#xFF0C;&#x5373;&#x5C06;&#x8FD0;&#x7B97;&#x8FC7;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x7B54;&#x6848;&#x8BB0;&#x5F55;&#x4E0B;&#x6765;&#x3002;&#x5207;&#x5272;&#x94A2;&#x6761;&#x95EE;&#x9898;&#x4F7F;&#x7528;&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x7684;&#x5907;&#x5FD8;&#x5F55;&#x6CD5;&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">MEMOIZED-CUT-ROD(p,n):</span><br><span class="line"></span><br><span class="line">r = new array[n+1]</span><br><span class="line">for i =0 to n</span><br><span class="line">    r[i] = -MAX</span><br><span class="line">return MEMOIZED-CUT-ROD-AUX(p,r,n)</span><br><span class="line"></span><br><span class="line">MEMOIZED-CUT-ROD-AUX(p,r,n):</span><br><span class="line"></span><br><span class="line">if r[n] &gt; 0 //means there are record for this subproblem</span><br><span class="line">    return r[n]</span><br><span class="line">if n == 0</span><br><span class="line">    q = 0</span><br><span class="line">else</span><br><span class="line">    q = -MAX</span><br><span class="line">    for i = 1 to n</span><br><span class="line">    q = max (q, p[i] + MEMOIZED-CUT-ROD-AUX(p,r,n-i))</span><br><span class="line">r[n] = q</span><br><span class="line">return q</span><br></pre></td></tr></table></figure></p>
+<p><code>MEMOIZED-CUT-ROD</code>&#x4E3B;&#x8981;&#x529F;&#x80FD;&#x662F;&#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;<span class="math inline">\(r\)</span>&#xFF0C;&#x8FD9;&#x4E2A;&#x6570;&#x7EC4;&#x5B58;&#x50A8;&#x4E86;&#x6240;&#x6709;&#x8BA1;&#x7B97;&#x8FC7;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x7B54;&#x6848;&#xFF0C;<code>MEMOIZED-CUT-ROD-AUX</code>&#x5B9E;&#x9645;&#x5BF9;&#x5E94;&#x4E4B;&#x524D;&#x7684;&#x9012;&#x5F52;&#x7B97;&#x6CD5;<code>CUTROD</code>&#xFF0C;&#x4E0D;&#x540C;&#x70B9;&#x53EA;&#x662F;&#x5F53;&#x53D1;&#x73B0;&#x7B54;&#x6848;&#x8BB0;&#x5F55;&#x8FC7;&#x5C31;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x3002;</p>
+<p>c++ &#x4EE3;&#x7801;&#x5982;&#x4E0B;:</p>
+<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MemoizedCutRod</span><span class="params">(<span class="keyword">int</span>* priceTable, <span class="keyword">int</span> rodLength)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="comment">//create an array from 0 to rodLength, array length is (rodLength+1)</span></span><br><span class="line">    <span class="comment">//array[0] = 0, array[rodLength] means the max PriceMemo for rod of rodLength</span></span><br><span class="line">    <span class="keyword">int</span>* maxPriceMemo = <span class="keyword">new</span> <span class="keyword">int</span>[rodLength + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rodLength + <span class="number">1</span>; i++)</span><br><span class="line">    {</span><br><span class="line">        maxPriceMemo[i] = INT_MIN;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> maxPrice = MemoizedCutRodAux(priceTable, maxPriceMemo, rodLength);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//for (int i = 1; i &lt; rodLength + 1; i++)</span></span><br><span class="line">    <span class="comment">//{</span></span><br><span class="line">    <span class="comment">//    cout &lt;&lt; &quot;Max price for &quot; &lt;&lt; i &lt;&lt; &quot; is &quot; &lt;&lt; maxPriceMemo[i] &lt;&lt; endl;</span></span><br><span class="line">    <span class="comment">//}</span></span><br><span class="line">    <span class="keyword">return</span> maxPrice;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MemoizedCutRodAux</span><span class="params">(<span class="keyword">int</span>* priceTable, <span class="keyword">int</span>* maxPriceMemo, <span class="keyword">int</span> rodLength)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">if</span> (maxPriceMemo[rodLength] &gt; <span class="number">0</span>)<span class="comment">//has record</span></span><br><span class="line">        <span class="keyword">return</span> maxPriceMemo[rodLength];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> price = INT_MIN;</span><br><span class="line">    <span class="keyword">if</span> (rodLength == <span class="number">0</span>)</span><br><span class="line">        price = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= rodLength; i++)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">int</span> tempPrice = priceTable[i] + MemoizedCutRodAux(priceTable, maxPriceMemo, rodLength - i);</span><br><span class="line">            <span class="keyword">if</span> (tempPrice &gt; price)</span><br><span class="line">                price = tempPrice;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">    maxPriceMemo[rodLength] = price;</span><br><span class="line">    <span class="keyword">return</span> price;</span><br><span class="line">}</span><br></pre></td></tr></table></figure></p>
+<p><code>priceTable</code>&#x8868;&#x793A;&#x4E0D;&#x540C;&#x957F;&#x5EA6;&#x7684;&#x94A2;&#x6761;&#x7684;&#x4EF7;&#x683C;&#x6570;&#x7EC4;&#xFF0C;&#x521D;&#x59CB;&#x5316;&#x5B9A;&#x4E49;&#x4E3A;&#xFF1A;</p>
+<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> priceTable[] = { <span class="number">0</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">20</span>,<span class="number">24</span>,<span class="number">30</span> };</span><br></pre></td></tr></table></figure></p>
+<p>&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x7684;&#x6570;&#x7EC4;&#x957F;&#x5EA6;&#x90FD;&#x4E3A;<span class="math inline">\(rodLength+1\)</span>&#xFF0C;&#x8FD9;&#x662F;&#x4E3A;&#x4E86;&#x5C06;&#x957F;&#x5EA6;&#x4E0E;Index&#x5BF9;&#x9F50;&#xFF0C;&#x5982;&#x957F;&#x5EA6;&#x4E3A;1&#x7684;&#x94A2;&#x677F;&#x7684;&#x6700;&#x5927;&#x552E;&#x4EF7;&#xFF0C;&#x5219;&#x4F7F;&#x7528;<span class="math inline">\(maxPriceMemo[1]\)</span>&#x5373;&#x53EF;&#x3002;</p></li>
+<li><p>&#x81EA;&#x5E95;&#x800C;&#x4E0A;&#x6CD5;</p>
+<p>&#x81EA;&#x5E95;&#x800C;&#x4E0A;&#x6CD5;&#x5F62;&#x5F0F;&#x4E0A;&#x66F4;&#x4E3A;&#x7B80;&#x5355;&#xFF0C;&#x4F46;&#x5B83;&#x5229;&#x7528;&#x4E86;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x7684;&#x4E00;&#x4E2A;&#x7279;&#x6027;&#xFF1A;&#x8F83;&#x5927;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x5305;&#x542B;&#x8F83;&#x5C0F;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x5982;&#x679C;&#x4ECE;&#x6700;&#x5C0F;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x5F00;&#x59CB;&#x89E3;&#x51B3;&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x89E3;&#x51B3;&#x540E;&#x9762;&#x66F4;&#x5927;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x65F6;&#xFF0C;&#x5B83;&#x6240;&#x4F9D;&#x8D56;&#x7684;&#x6240;&#x6709;&#x5C0F;&#x5B50;&#x95EE;&#x9898;&#x90FD;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;&#x89E3;&#x7B54;&#xFF0C;&#x4E5F;&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x50CF;&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x5907;&#x5FD8;&#x6CD5;&#x90A3;&#x6837;&#x53BB;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x5B50;&#x95EE;&#x9898;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;&#x7B54;&#x6848;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x5982;&#x679C;&#x8981;&#x6C42;&#x957F;&#x5EA6;&#x4E3A;<span class="math inline">\(n\)</span>&#x7684;&#x94A2;&#x6761;&#x7684;&#x6700;&#x5927;&#x552E;&#x4EF7;&#xFF0C;&#x53EA;&#x8981;&#x4ECE;&#x957F;&#x5EA6;&#x4E3A;1&#x5F00;&#x59CB;&#x6C42;&#x8D77;&#xFF0C;&#x4F9D;&#x6B21;&#x6C42;&#x5230;&#x957F;&#x5EA6;&#x4E3A;<span class="math inline">\(n\)</span></p>
+<p>&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">BOTTOM-UP-CUT-ROD(p,n)</span><br><span class="line"></span><br><span class="line">r = new array[n+1]</span><br><span class="line">for i =0 to n</span><br><span class="line">    r[i] = -MAX</span><br><span class="line">r[0] = 0</span><br><span class="line"></span><br><span class="line">for i = 1 to n</span><br><span class="line">    q = -MAX</span><br><span class="line">    for j = 1 to i</span><br><span class="line">        q = MAX(q , p[j] + r[i-j])</span><br><span class="line">    r[i]=q</span><br><span class="line"></span><br><span class="line">return r[n]</span><br></pre></td></tr></table></figure></p>
+<p>c++&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BottomUpCutRod</span><span class="params">(<span class="keyword">int</span>* priceTable, <span class="keyword">int</span> rodLength)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="comment">//Init for maxPriceMemo</span></span><br><span class="line">    <span class="keyword">int</span>* maxPriceMemo = <span class="keyword">new</span> <span class="keyword">int</span>[rodLength + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rodLength + <span class="number">1</span>; i++)</span><br><span class="line">    {</span><br><span class="line">        maxPriceMemo[i] = INT_MIN;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    maxPriceMemo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Calculate the MaxPriceMemo for length from 1 to length</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= rodLength; i++)</span><br><span class="line">    {</span><br><span class="line">        <span class="comment">//Calculate cutRod for length = i</span></span><br><span class="line">        <span class="keyword">int</span> price = INT_MIN;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= i; j++)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">int</span> tempPrice = priceTable[j] + maxPriceMemo[i - j];</span><br><span class="line">            <span class="keyword">if</span> (tempPrice &gt; price)</span><br><span class="line">                price = tempPrice;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        maxPriceMemo[i] = price;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; rodLength + <span class="number">1</span>; i++)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Max price for &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; is &quot;</span> &lt;&lt; maxPriceMemo[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> maxPriceMemo[rodLength];</span><br><span class="line">}</span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<p>&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x5B9E;&#x9645;&#x4E0A;&#x90FD;&#x662F;<span class="math inline">\(\Theta(n^2)\)</span>&#x3002;<code>BOTTOM-UP-CUT-ROD</code>&#x4E2D;&#x56E0;&#x4E3A;&#x6709;&#x4E2A;&#x53CC;&#x91CD;&#x5FAA;&#x73AF;&#xFF0C;&#x6240;&#x4EE5;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(\Theta(n^2)\)</span>&#xFF0C;<code>MemoizedCutRod</code>&#x4E2D;&#x867D;&#x7136;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x5FAA;&#x73AF;&#xFF0C;&#x4F46;&#x5728;&#x6BCF;&#x6B21;&#x7684;&#x5FAA;&#x73AF;&#x4E2D;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x9012;&#x5F52;&#x8C03;&#x7528;&#x5E76;&#x9700;&#x8981;&#x89E3;&#x51B3;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x5B50;&#x95EE;&#x9898;&#x5E76;&#x4E0D;&#x4F1A;&#x91CD;&#x590D;&#x8C03;&#x7528;&#xFF0C;&#x56E0;&#x6B64;&#x4E00;&#x5171;&#x89E3;&#x51B3;<span class="math inline">\(n\)</span>&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x5FAA;&#x73AF;&#x52A0;&#x4E0A;&#x89E3;&#x51B3;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x65F6;&#x95F4;&#x53EF;&#x5F97;&#x5230;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x540C;&#x6837;&#x4E3A;<span class="math inline">\(\Theta(n^2)\)</span>&#x3002;</p>
+<p>&#x867D;&#x7136;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x90FD;&#x662F;<span class="math inline">\(\Theta(n^2)\)</span>&#xFF0C;&#x4F46;&#x662F;<code>BOTTOM-UP-CUT-ROD</code>&#x5728;&#x5B9E;&#x9645;&#x4F7F;&#x7528;&#x4E2D;&#x56E0;&#x4E3A;&#x51CF;&#x5C11;&#x4E86;&#x51FD;&#x6570;&#x7684;&#x9012;&#x5F52;&#x8C03;&#x7528;&#x65F6;&#x95F4;&#xFF0C;&#x6240;&#x4EE5;&#x66F4;&#x4E3A;&#x9AD8;&#x6548;&#x3002;</p>
+<h3 id="subproblem-graphs">Subproblem graphs</h3>
+<p>&#x5B50;&#x95EE;&#x9898;&#x56FE;&#xFF08;subproblem graphs&#xFF09;&#x662F;&#x4E00;&#x4E2A;&#x6709;&#x5411;&#x56FE;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;&#x9876;&#x70B9;&#x90FD;&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x3002;&#x5982;&#x679C;&#x4EE3;&#x8868;&#x5B50;&#x95EE;&#x9898;<span class="math inline">\(x\)</span>&#x7684;&#x7ED3;&#x70B9;&#x6307;&#x5411;&#x4EE3;&#x8868;&#x5B50;&#x7ED3;&#x70B9;<span class="math inline">\(y\)</span>&#x7684;&#x7ED3;&#x70B9;&#xFF0C;&#x5219;&#x8BF4;&#x660E;<span class="math inline">\(x\)</span>&#x95EE;&#x9898;&#x7684;&#x89E3;&#x4F9D;&#x8D56;&#x4E8E;<span class="math inline">\(y\)</span>&#x3002;</p>
+<p>&#x5B50;&#x95EE;&#x9898;&#x56FE;&#x5982;&#x4E0B;,&#x5B83;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x662F;&#x8868;&#x793A;&#x9012;&#x5F52;&#x89E3;&#x6CD5;&#x7684;&#x56FE;&#x7684;&#x7CBE;&#x7B80;&#x7248;&#xFF0C;&#x5220;&#x9664;&#x4E86;&#x6240;&#x6709;&#x91CD;&#x590D;&#x7684;&#x70B9;&#xFF0C;&#x4E5F;&#x8868;&#x793A;&#x5B50;&#x95EE;&#x9898;&#x5E76;&#x4E0D;&#x4F1A;&#x88AB;&#x91CD;&#x590D;&#x7684;&#x8BA1;&#x7B97;&#xFF1A;</p>
+<p><img src="/IA-Chapter15-Notes/2019-11-19-19-33-22.png" alt="&#x5B50;&#x95EE;&#x9898;&#x56FE;"></p>
+<p>&#x5B50;&#x95EE;&#x9898;&#x56FE;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x83B7;&#x77E5;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x95EE;&#x9898;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#xFF0C;&#x56E0;&#x4E3A;&#x56FE;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x56FE;&#x4E2D;&#x8FDE;&#x63A5;&#x7ED3;&#x70B9;&#x7684;&#x8FB9;&#x8868;&#x793A;&#x7528;&#x6765;&#x7EC4;&#x5408;&#x4E24;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x7B54;&#x6848;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x56E0;&#x6B64;&#x7528;&#x6765;&#x89E3;&#x51B3;&#x6574;&#x4E2A;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x95EE;&#x9898;&#x7684;&#x65F6;&#x95F4;&#x57FA;&#x672C;&#x4E0A;&#x4E0E;&#x5B50;&#x95EE;&#x9898;&#x56FE;&#x7684;&#x9876;&#x70B9;&#x6570;+&#x8FB9;&#x6570;&#x662F;&#x5448;&#x7EBF;&#x6027;&#x5173;&#x7CFB;&#x7684;&#x3002;</p>
+<h3 id="reconstructing-a-solution">Reconstructing a solution</h3>
+<p>&#x4E0A;&#x9762;&#x7684;&#x6240;&#x6709;&#x5173;&#x4E8E;&#x94A2;&#x6761;&#x5207;&#x5272;&#x95EE;&#x9898;&#x7684;&#x7B97;&#x6CD5;&#x90FD;&#x53EA;&#x8BA1;&#x7B97;&#x4E86;&#x94A2;&#x6761;&#x7684;&#x6700;&#x5927;&#x552E;&#x4EF7;&#xFF08;&#x6700;&#x4F73;&#x89E3;&#x7684;&#x503C;&#xFF09;&#xFF0C;&#x800C;&#x5BF9;&#x4E8E;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x771F;&#x6B63;&#x7684;&#x89E3;&#xFF0C;&#x5982;&#x4F55;&#x5207;&#x5272;&#x94A2;&#x6761;&#xFF08;&#x6700;&#x540E;&#x94A2;&#x6761;&#x8981;&#x5207;&#x6210;&#x51E0;&#x5757;&#xFF0C;&#x6BCF;&#x5757;&#x591A;&#x957F;&#xFF09;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x5F97;&#x51FA;&#x3002;&#x6240;&#x4EE5;&#x4E0A;&#x9762;&#x7684;&#x6240;&#x6709;&#x6B65;&#x9AA4;&#x90FD;&#x53EA;&#x5B8C;&#x6210;&#x4E86;&#x89E3;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x95EE;&#x9898;&#x56DB;&#x6B65;&#x9AA4;&#x7684;&#x524D;&#x4E09;&#x6B65;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x5F97;&#x5230;&#x6700;&#x4F73;&#x89E3;&#x9700;&#x8981;&#x5BF9;&#x4E0A;&#x9762;&#x7684;&#x6B65;&#x9AA4;&#x8FDB;&#x884C;&#x8C03;&#x6574;&#xFF0C;&#x8C03;&#x6574;&#x6709;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x5728;&#x8BA1;&#x7B97;&#x4E2D;&#x518D;&#x591A;&#x4FDD;&#x7559;&#x4E00;&#x4E9B;&#x6570;&#x636E;&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x4EE5;&#x81EA;&#x5E95;&#x5411;&#x4E0A;&#x7684;<code>BOTTOM-UP-CUT-ROD</code>&#x4E3A;&#x4F8B;&#xFF0C;&#x5728;&#x7B97;&#x6CD5;&#x4E2D;&#xFF0C;&#x5728;&#x7B97;&#x6CD5;&#x4E2D;&#x7528;&#x4E86;<code>p[j] + r[i-j]</code>&#x6765;&#x8868;&#x793A;&#x7B2C;&#x4E00;&#x5200;&#x780D;&#x7684;&#x957F;&#x5EA6;<span class="math inline">\(j\)</span>&#x4E0E;&#x5269;&#x4E0B;&#x90E8;&#x5206;<span class="math inline">\(i-j\)</span>&#x3002;&#x5728;&#x552E;&#x4EF7;&#x6700;&#x5927;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8BB0;&#x5F55;&#x4E0B;&#x7B2C;&#x4E00;&#x5200;&#x780D;&#x7684;&#x957F;&#x5EA6;<span class="math inline">\(j\)</span>&#x5373;&#x80FD;&#x83B7;&#x5F97;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x7684;&#x6700;&#x4F73;&#x89E3;&#xFF0C;&#x56E0;&#x4E3A;&#x5728;&#x6BCF;&#x4E00;&#x6B21;&#x7684;&#x5FAA;&#x73AF;&#x4E2D;&#xFF0C;&#x90FD;&#x5C06;&#x5F53;&#x524D;&#x957F;&#x5EA6;&#x4E0B;&#x7B2C;&#x4E00;&#x5200;&#x780D;&#x7684;&#x957F;&#x5EA6;&#x4FDD;&#x5B58;&#x4E86;&#x4E0B;&#x6765;&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x5269;&#x4E0B;&#x7684;&#x957F;&#x5EA6;&#x8D8A;&#x6765;&#x8D8A;&#x5C0F;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x6574;&#x4E2A;&#x5207;&#x5272;&#x8FC7;&#x7A0B;&#x7684;&#x6BCF;&#x4E00;&#x5200;&#x957F;&#x5EA6;&#x90FD;&#x88AB;&#x8BB0;&#x5F55;&#x4E86;&#x4E0B;&#x6765;&#x3002;</p>
+<p>&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF0C;&#x8FD9;&#x91CC;&#x7684;&#x6570;&#x7EC4;<span class="math inline">\(s\)</span>&#x5373;&#x4E3A;&#x8BB0;&#x5F55;&#x7B2C;&#x4E00;&#x5200;&#x957F;&#x5EA6;&#x7684;&#x6570;&#x7EC4;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">EXTENDED-BOTTOM-UP-CUT-ROD(p,n)</span><br><span class="line"></span><br><span class="line">r = new array[n+1]</span><br><span class="line">s = new array[n+1]</span><br><span class="line"></span><br><span class="line">for i =0 to n</span><br><span class="line">    r[i] = -MAX</span><br><span class="line">r[0] = 0</span><br><span class="line"></span><br><span class="line">for i = 1 to n</span><br><span class="line">    q = -MAX</span><br><span class="line">    for j = 1 to i</span><br><span class="line">        q = MAX(q , p[j] + r[i-j])</span><br><span class="line">    r[i]=q</span><br><span class="line">    s[i]=j</span><br><span class="line"></span><br><span class="line">return s and s</span><br></pre></td></tr></table></figure>
+<p>c++&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF0C;&#x5F62;&#x53C2;&#x4E2D;&#x7684;<code>cutLength</code>&#x5373;&#x8868;&#x793A;&#x4E0D;&#x540C;&#x957F;&#x5EA6;&#x4E0B;&#x7B2C;&#x4E00;&#x5200;&#x8981;&#x780D;&#x7684;&#x8DDD;&#x79BB;&#xFF1A;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ExtendedBottomUpCutRod</span><span class="params">(<span class="keyword">int</span>* priceTable, <span class="keyword">int</span> rodLength, <span class="keyword">int</span>* maxPriceMemo, <span class="keyword">int</span>* cutLength)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rodLength + <span class="number">1</span>; i++)</span><br><span class="line">	{</span><br><span class="line">		maxPriceMemo[i] = INT_MIN;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	maxPriceMemo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Calculate the MaxPriceMemo for length from 1 to length</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= rodLength; i++)</span><br><span class="line">	{</span><br><span class="line">		<span class="comment">//Calculate cutRod for length = i</span></span><br><span class="line">		<span class="keyword">int</span> price = INT_MIN;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= i; j++)</span><br><span class="line">		{</span><br><span class="line">			<span class="keyword">int</span> tempPrice = priceTable[j] + maxPriceMemo[i - j];</span><br><span class="line">			<span class="keyword">if</span> (tempPrice &gt; price)</span><br><span class="line">			{</span><br><span class="line">				price = tempPrice;</span><br><span class="line">				cutLength[i] = j;</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		maxPriceMemo[i] = price;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="comment">//for (int i = 1; i &lt; rodLength + 1; i++)</span></span><br><span class="line">	<span class="comment">//{</span></span><br><span class="line">	<span class="comment">//	//cout &lt;&lt; &quot;Max price for &quot; &lt;&lt; i &lt;&lt; &quot; is &quot; &lt;&lt; maxPriceMemo[i] &lt;&lt; endl;</span></span><br><span class="line">	<span class="comment">//	cout &lt;&lt; &quot;First cut length for &quot; &lt;&lt; i &lt;&lt; &quot; is &quot; &lt;&lt; cutLength[i] &lt;&lt; endl;</span></span><br><span class="line">	<span class="comment">//}</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x83B7;&#x5F97;&#x4E86;&#x6700;&#x4F73;&#x89E3;&#x540E;&#x5C31;&#x53EF;&#x6253;&#x5370;&#x51FA;&#x5BF9;&#x4E8E;&#x957F;&#x5EA6;&#x4E3A;<span class="math inline">\(n\)</span>&#x7684;&#x94A2;&#x6761;&#xFF0C;&#x6BCF;&#x4E00;&#x5200;&#x9700;&#x8981;&#x780D;&#x7684;&#x957F;&#x5EA6;&#xFF0C;&#x4F2A;&#x4EE3;&#x7801;&#x7B97;&#x6CD5;&#x5982;&#x4E0B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PRINT-CUT-ROD-SOLUTION(p,n)</span><br><span class="line"></span><br><span class="line">(r,s) = EXTENDED-EXTENDED-BOTTOM-UP-CUT-ROD(p,n)</span><br><span class="line">while n &gt; 0</span><br><span class="line">    print s[n]</span><br><span class="line">    n = s - n</span><br></pre></td></tr></table></figure>
+<p>c++&#x5B9E;&#x73B0;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CutRodSolution</span><span class="params">(<span class="keyword">int</span>* priceTable, <span class="keyword">int</span> rodLength)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="keyword">int</span>* maxPriceMemo = <span class="keyword">new</span> <span class="keyword">int</span>[rodLength + <span class="number">1</span>];</span><br><span class="line">	<span class="keyword">int</span>* cutLength = <span class="keyword">new</span> <span class="keyword">int</span>[rodLength + <span class="number">1</span>];</span><br><span class="line">	ExtendedBottomUpCutRod(priceTable, rodLength, maxPriceMemo, cutLength);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> remainLength = rodLength;</span><br><span class="line">	<span class="keyword">while</span> (remainLength &gt; <span class="number">0</span>)</span><br><span class="line">	{</span><br><span class="line">		<span class="keyword">int</span> length = cutLength[remainLength];</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;to Cut &quot;</span> &lt;&lt; length &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		remainLength = remainLength - length;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> maxPriceMemo[rodLength];</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h2 id="matrix-chain-multiplication">Matrix-chain multiplication</h2>
+<p>&#x5B9A;&#x4E49;&#x6709;&#x4E00;&#x7CFB;&#x5217;&#x7684;&#x77E9;&#x9635;<span class="math inline">\(&lt;A_1,A_2,...,A_n&gt;\)</span>&#xFF0C;&#x8981;&#x8BA1;&#x7B97;&#x8FD9;&#x4E00;&#x4E9B;&#x77E9;&#x9635;&#x7684;&#x4E58;&#x79EF;&#x5373;<span class="math inline">\(A_1A_2...A_n\)</span>&#x3002;&#x56E0;&#x4E3A;&#x77E9;&#x9635;&#x6EE1;&#x8DB3;&#x4E58;&#x6CD5;&#x5408;&#x5E76;&#x5F8B;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x51B3;&#x5B9A;&#x54EA;&#x4E00;&#x90E8;&#x5206;&#x5148;&#x76F8;&#x4E58;&#x3002;</p>
+<p>&#x5982;&#x4E00;&#x5171;&#x6709;&#x4E09;&#x4E2A;&#x77E9;&#x9635;<span class="math inline">\(&lt;A_1,A_2,A_3&gt;\)</span>&#xFF0C;&#x5219;<span class="math inline">\(((A_1A_2)A_3)\)</span>&#x4E0E;<span class="math inline">\((A_1(A_2A_3))\)</span>&#x4E24;&#x79CD;&#x8BA1;&#x7B97;&#x987A;&#x5E8F;&#x6700;&#x540E;&#x5F97;&#x5230;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x76F8;&#x540C;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x4E24;&#x79CD;&#x987A;&#x5E8F;&#x82B1;&#x8D39;&#x7684;&#x65F6;&#x95F4;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x3002;</p>
+<p>&#x8FD9;&#x91CC;&#x5148;&#x7ED9;&#x51FA;&#x77E9;&#x9635;&#x76F8;&#x4E58;&#x7684;&#x7B97;&#x6CD5;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MATRIX-MULTIPLY(A,B)</span><br><span class="line"></span><br><span class="line">if A.columns != B.rows</span><br><span class="line">    error &quot;incompatible dimensions&quot;</span><br><span class="line">else</span><br><span class="line">    let C be a new A.rows X B.columns matrix</span><br><span class="line">    for i = 1 to A.rows</span><br><span class="line">        for j = 1 to B.columns</span><br><span class="line">            c[i][j] = 0 </span><br><span class="line">            for k = 1 to A.columns</span><br><span class="line">                c[i][j] = c[i][j] + a[i][k] * b[k][j]</span><br><span class="line">    return C</span><br></pre></td></tr></table></figure>
+<p>c++&#x5B9E;&#x73B0;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Matrix* Matrix::multiply(Matrix* mat)</span><br><span class="line">{</span><br><span class="line">	<span class="keyword">int</span> matColumn = mat-&gt;column;</span><br><span class="line">	Matrix* result = <span class="keyword">new</span> Matrix(row, matColumn);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; row; i++)</span><br><span class="line">	{</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; matColumn; j++)</span><br><span class="line">		{</span><br><span class="line">			result-&gt;data[i][j] = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; column; k++)</span><br><span class="line">			{</span><br><span class="line">				result-&gt;data[i][j] = result-&gt;data[i][j] + data[i][k] * mat-&gt;data[k][j];</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8BBE;&#x4E24;&#x4E2A;&#x76F8;&#x4E58;&#x7684;&#x77E9;&#x9635;&#x5206;&#x522B;&#x4E3A;<span class="math inline">\(A\)</span>&#x548C;<span class="math inline">\(B\)</span>&#xFF0C;&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x7B97;&#x6CD5;&#x5B9E;&#x73B0;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x77E9;&#x9635;&#x76F8;&#x4E58;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(O(A.row\times B.column\times A.column)\)</span>&#x3002;</p>
+<p>&#x5728;&#x4E09;&#x4E2A;&#x77E9;&#x9635;<span class="math inline">\(&lt;A_1,A_2,A_3&gt;\)</span>&#x7684;&#x4F8B;&#x5B50;&#x4E2D;,&#x5047;&#x8BBE;<span class="math inline">\(A_1\)</span>&#x7684;&#x5927;&#x5C0F;&#x4E3A;<span class="math inline">\(10\times100\)</span>&#xFF0C;<span class="math inline">\(100\times 5\)</span>&#xFF0C;<span class="math inline">\(5\times50\)</span>&#x3002;</p>
+<ol type="1">
+<li><p>&#x5982;&#x679C;&#x8BA1;&#x7B97;&#x987A;&#x5E8F;&#x4E3A;<span class="math inline">\(((A_1A_2)A_3)\)</span>&#xFF0C;&#x5219;&#x6574;&#x4E2A;&#x8BA1;&#x7B97;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x7684;&#x64CD;&#x4F5C;&#x6570;&#x4E3A;<span class="math inline">\(10\times5\times100 +10\times50\times5=7500\)</span>&#x3002;</p></li>
+<li><p>&#x5982;&#x679C;&#x8BA1;&#x7B97;&#x987A;&#x5E8F;&#x4E3A;<span class="math inline">\((A_1(A_2A_3))\)</span>&#xFF0C;&#x5219;&#x6574;&#x4E2A;&#x8BA1;&#x7B97;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x7684;&#x64CD;&#x4F5C;&#x6570;&#x4E3A;<span class="math inline">\(100\times50\times5+10\times50\times100=75000\)</span></p></li>
+</ol>
+<p>&#x4E24;&#x79CD;&#x8BA1;&#x7B97;&#x987A;&#x5E8F;&#x7684;&#x8BA1;&#x7B97;&#x91CF;&#x5DEE;&#x8DDD;&#x5728;10&#x500D;&#x3002;</p>
+<p><code>&#x5C06;&#x77E9;&#x9635;&#x4E58;&#x6CD5;&#x95EE;&#x9898;&#xFF08;matrix-chain multiplication problem&#xFF09;</code>&#x5B9A;&#x4E49;&#x4E3A;&#xFF1A;&#x5BF9;&#x4E8E;&#x6570;&#x76EE;&#x4E3A;<span class="math inline">\(n\)</span>&#x7684;&#x4E00;&#x4E9B;&#x5217;&#x77E9;&#x9635;<span class="math inline">\(&lt;A_1,A_2,...,A_n&gt;\)</span>&#xFF0C;&#x4E3A;&#x4E86;&#x6EE1;&#x8DB3;&#x77E9;&#x9635;&#x76F8;&#x4E58;&#x7684;&#x8981;&#x6C42;&#xFF0C;&#x77E9;&#x9635;<span class="math inline">\(A_i\)</span>&#x7684;&#x5927;&#x5C0F;&#x90FD;&#x4E3A;<span class="math inline">\(p_{i-1}\times p_i\)</span>&#xFF0C;&#x8981;&#x6C42;&#x7684;&#x4F7F;&#x76F8;&#x4E58;&#x8BA1;&#x7B97;&#x91CF;&#x6700;&#x5C0F;&#x7684;&#x77E9;&#x9635;&#x76F8;&#x4E58;&#x987A;&#x5E8F;&#x3002;</p>
+<h3 id="counting-the-number-of-parenthesizations">Counting the number of parenthesizations</h3>
+<p>&#x9996;&#x5148;&#x786E;&#x8BA4;&#x66B4;&#x529B;&#x679A;&#x4E3E;&#x6240;&#x6709;&#x53EF;&#x80FD;&#x7684;&#x987A;&#x5E8F;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x662F;&#x5F88;&#x4F4E;&#x6548;&#x7684;&#xFF0C;&#x7528;<span class="math inline">\(P(n)\)</span>&#x6765;&#x8868;&#x793A;&#x6240;&#x6709;&#x53EF;&#x80FD;&#x7684;&#x8BA1;&#x7B97;&#x987A;&#x5E8F;&#x3002;&#x8BBE;&#x6709;<span class="math inline">\(n\)</span>&#x4E2A;&#x77E9;&#x9635;&#xFF0C;&#x5F53;<span class="math inline">\(n=1\)</span>&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x53EA;&#x6709;&#x4E00;&#x79CD;&#x53EF;&#x80FD;&#xFF0C;&#x5F53;<span class="math inline">\(n\geq 2\)</span>&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;<span class="math inline">\(n\)</span>&#x62C6;&#x6210;&#x4E24;&#x90E8;&#x5206;&#xFF0C;<span class="math inline">\(k\)</span>&#x548C;<span class="math inline">\(n-k\)</span>&#xFF0C;&#x6240;&#x6709;&#x7684;&#x53EF;&#x80FD;&#x4E3A;&#x8FD9;&#x4E24;&#x90E8;&#x5206;&#x53EF;&#x80FD;&#x7684;&#x4E58;&#x79EF;&#xFF0C;&#x5373;<span class="math inline">\(P(k)P(n-k)\)</span>&#x3002;&#x6240;&#x4EE5;,</p>
+<p><span class="math display">\[
+P(n)=
+\begin{cases}
+    1 &amp; \text{ if } n=1 \\\\
+    \sum_{k=1}^{n-1} P(k)P(n-k) &amp;\text{ if } n \geq 2
+\end{cases}
+\]</span></p>
+<p>&#x53EF;&#x4EE5;&#x7528;&#x6570;&#x5B66;&#x5F52;&#x7EB3;&#x6CD5;&#x8BC1;&#x660E;<span class="math inline">\(P(n)\)</span>&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(\Omega(2^n)\)</span>&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x5728;<span class="math inline">\(n=1\)</span>&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;<span class="math inline">\(P(n)=1\)</span>&#xFF0C;&#x5F97;&#x8BC1;</p></li>
+<li><p>&#x5728;<span class="math inline">\(n\geq2\)</span>&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5047;&#x8BBE;<span class="math inline">\(p(n)=c2^n\)</span>&#x4EE3;&#x5165;&#x5F0F;&#x5B50;&#x5F97;</p>
+<p><span class="math display">\[
+ P(n)=\sum_{k=1}^{n-1} c2^k\cdot c2^{n-k} \\\\
+ =\sum_{k=1}^{n-1} c^2 2^n\\\\
+ =c^2(n-1)2^n\\\\
+ \geq c_1 2^n
+ \]</span></p>
+<p>&#x5373;<span class="math inline">\(P(n)\geq c_1 2^n\)</span>&#xFF0C;&#x4E5F;&#x5F97;&#x8BC1;&#x3002;</p></li>
+</ol>
+<p>&#x56E0;&#x6B64;&#x66B4;&#x529B;&#x679A;&#x4E3E;&#x6240;&#x6709;&#x53EF;&#x80FD;&#x7684;&#x987A;&#x5E8F;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x662F;&#x4E00;&#x4E2A;&#x6307;&#x6570;&#x578B;&#x7684;&#x51FD;&#x6570;&#xFF0C; &#x6548;&#x7387;&#x662F;&#x5341;&#x5206;&#x4F4E;&#x4E0B;&#x7684;&#x3002;</p>
+<h3 id="applying-dynamic-programming">Applying dynamic programming</h3>
+<p>&#x53EF;&#x4EE5;&#x7528;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x6765;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x8FD9;&#x91CC;&#x6839;&#x636E;&#x4E4B;&#x524D;&#x5B9A;&#x4E49;&#x7684;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x56DB;&#x6B65;&#x9AA4;&#x6765;&#x89E3;&#x51B3;&#x7B54;&#x6848;&#xFF1A;</p>
+<ol type="1">
+<li>&#x627E;&#x5230;&#x6700;&#x4F18;&#x89E3;&#x7684;&#x7ED3;&#x6784;</li>
+<li>&#x9012;&#x5F52;&#x5B9A;&#x4E49;&#x6700;&#x4F18;&#x89E3;&#x7684;&#x503C;</li>
+<li>&#x8BA1;&#x7B97;&#x51FA;&#x6700;&#x4F18;&#x89E3;&#x7684;&#x503C;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;&#x81EA;&#x4E0B;&#x800C;&#x4E0A;&#x7684;&#x9012;&#x5F52;&#x65B9;&#x5F0F;&#x89E3;&#x51B3;</li>
+<li>&#x4F7F;&#x7528;&#x8BA1;&#x7B97;&#x5F97;&#x51FA;&#x7684;&#x6570;&#x636E;&#x6784;&#x5EFA;&#x51FA;&#x6700;&#x4F18;&#x89E3;</li>
+</ol>
+<h4 id="step-1the-structure-of-an-optimal-parethesization">Step 1:The structure of an optimal parethesization</h4>
+<p>&#x7528;&#x7B26;&#x53F7;<span class="math inline">\(A_{i...j}\)</span>&#x8868;&#x793A;&#x77E9;&#x9635;&#x5E8F;&#x5217;<span class="math inline">\(A_i,A_{i+1},...,A_{j}\)</span>&#x7684;&#x4E58;&#x79EF;&#xFF0C;&#x5728;<span class="math inline">\(i\neq j\)</span>&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;&#x77E9;&#x9635;&#x5E8F;&#x5217;&#x62C6;&#x6210;&#x4E24;&#x90E8;&#x5206;&#xFF0C;<span class="math inline">\(A_i,A_{i+1},...,A_{k}\)</span>&#x548C;<span class="math inline">\(A_{k+1},A_{k+2},...,A_{j}\)</span>&#xFF0C;&#x5176;&#x4E2D;<span class="math inline">\(i\leq k &lt; j\)</span>&#x3002;</p>
+<p>&#x6574;&#x4E2A;<span class="math inline">\(A_{i...j}\)</span>&#x7684;&#x82B1;&#x8D39;&#x53D8;&#x6210;&#x4E86;<span class="math inline">\(A_{i...k}\)</span>&#x7684;&#x82B1;&#x8D39;&#x52A0;&#x4E0A;<span class="math inline">\(A_{k+1...j}\)</span>&#x7684;&#x82B1;&#x8D39;&#x518D;&#x52A0;&#x4E0A;&#x5C06;&#x4E24;&#x90E8;&#x5206;&#x7ED3;&#x679C;&#x76F8;&#x4E58;&#x7684;&#x65F6;&#x95F4;&#x3002;</p>
+<p>&#x5728;&#x6309;&#x4E24;&#x90E8;&#x5206;&#x5206;&#x5272;&#x4E0B;&#xFF0C;&#x5982;&#x679C;<span class="math inline">\(A_{i...j}\)</span>&#x662F;&#x6700;&#x4F73;&#x89E3;&#xFF0C;&#x90A3;&#x4E48;&#x5206;&#x51FA;&#x7684;<span class="math inline">\(A_{i...k}\)</span>&#x548C;<span class="math inline">\(A_{k+1...j}\)</span>&#x4E24;&#x90E8;&#x5206;&#x4E5F;&#x5FC5;&#x7136;&#x662F;&#x5404;&#x81EA;&#x7684;&#x6700;&#x4F73;&#x89E3;&#xFF0C;&#x56E0;&#x4E3A;&#x5982;&#x679C;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x66F4;&#x4F18;&#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;<span class="math inline">\(A_{i...j}\)</span>&#x5219;&#x4E5F;&#x53EF;&#x4EE5;&#x53D8;&#x5F97;&#x66F4;&#x4F18;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x77E9;&#x9635;&#x76F8;&#x4E58;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F18;&#x89E3;&#x4E5F;&#x53D8;&#x4E3A;&#x4E86;&#x5148;&#x6C42;&#x5F97;&#x4E24;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F18;&#x89E3;&#xFF0C;&#x518D;&#x5C06;&#x4E24;&#x4E2A;&#x6700;&#x4F18;&#x89E3;&#x5408;&#x5E76;&#x8D77;&#x6765;&#x3002;</p>
+<h4 id="step2-a-recursive-solution">Step2: A recursive solution</h4>
+<p>&#x7528;<span class="math inline">\(m[i,j]\)</span>&#x6765;&#x8868;&#x793A;<span class="math inline">\(A_{i...j}\)</span>&#x7684;&#x64CD;&#x4F5C;&#x91CF;&#xFF0C;&#x6839;&#x636E;Step1&#x4E2D;&#x7684;&#x89E3;&#x91CA;&#xFF0C;<span class="math inline">\(A_{i...j}\)</span>&#x7684;&#x82B1;&#x8D39;&#x53D8;&#x6210;&#x4E86;<span class="math inline">\(A_{i...k}\)</span>&#x7684;&#x82B1;&#x8D39;&#x52A0;&#x4E0A;<span class="math inline">\(A_{k+1...j}\)</span>&#x7684;&#x82B1;&#x8D39;&#x518D;&#x52A0;&#x4E0A;&#x5C06;&#x4E24;&#x90E8;&#x5206;&#x7ED3;&#x679C;&#x76F8;&#x4E58;&#x7684;&#x65F6;&#x95F4;&#x3002;</p>
+<p>&#x56E0;&#x4E3A;&#x77E9;&#x9635;<span class="math inline">\(A_i\)</span>&#x7684;&#x5C3A;&#x5BF8;&#x4E3A;<span class="math inline">\(p_{i-1}\times p_i\)</span>&#xFF0C;&#x6240;&#x4EE5;&#x77E9;&#x9635;<span class="math inline">\(A_{i...k}\)</span>&#x4E3A;<span class="math inline">\(p_{i-1}\times p_k\)</span>&#xFF0C;&#x77E9;&#x9635;<span class="math inline">\(A_{k+1...j}\)</span>&#x7684;&#x5C3A;&#x5BF8;&#x4E3A;<span class="math inline">\(p_{k}\times p_j\)</span>&#x3002;&#x56E0;&#x6B64;&#x5C06;&#x4E24;&#x90E8;&#x5206;&#x5408;&#x5E76;&#x7684;&#x64CD;&#x4F5C;&#x6570;&#x4E3A;<span class="math inline">\(p_{i-1}p_kp_j\)</span>&#x3002;</p>
+<p>&#x5F53;<span class="math inline">\(i=j\)</span>&#x65F6;&#xFF0C;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x77E9;&#x9635;&#x5373;&#x4E0D;&#x9700;&#x8981;&#x76F8;&#x4E58;&#xFF0C;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;<span class="math inline">\(m[i,j]\)</span>&#x4E3A;0&#xFF0C;&#x7EFC;&#x4E0A;</p>
+<p><span class="math display">\[
+m[i,j] = \begin{cases}
+    0 &amp; \text{ if } i=j \\\\
+    \min_{i\leq k &lt;j} {m[i,k]+m[k+1,j]+p_{i-1}p_kp_j} &amp; \text { if } i &lt;j
+\end{cases}
+\]</span></p>
+<p>&#x4F46;<span class="math inline">\(m[i,j]\)</span>&#x8868;&#x793A;&#x7684;&#x53EA;&#x662F;&#x6700;&#x4F73;&#x89E3;&#x7684;&#x503C;&#xFF0C;&#x4E3A;&#x4E86;&#x83B7;&#x5F97;&#x6700;&#x4F73;&#x89E3;&#xFF0C;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;<span class="math inline">\(s[i,j]\)</span>&#xFF0C;&#x5B83;&#x8BB0;&#x5F55;&#x6BCF;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F73;&#x89E3;&#x65F6;<span class="math inline">\(k\)</span>&#x7684;&#x503C;&#x3002;</p>
+<h4 id="step-3-computing-the-optimal-costs">Step 3: Computing the optimal costs</h4>
+<p><span class="math inline">\(m[i,j]\)</span>&#x7684;&#x8BA1;&#x7B97;&#x4F9D;&#x8D56;&#x4E8E;&#x77E9;&#x9635;&#x7684;&#x5C3A;&#x5BF8;<span class="math inline">\(p_{i-1} \times p_i\)</span>&#xFF0C;&#x5982;&#x679C;&#x5B58;&#x5728;<span class="math inline">\(n\)</span>&#x4E2A;&#x77E9;&#x9635;&#xFF0C;&#x5219;&#x8868;&#x793A;&#x6570;&#x636E;&#x5C3A;&#x5BF8;&#x7684;&#x6570;&#x7EC4;&#x6709;<span class="math inline">\(n+1\)</span>&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x56E0;&#x4E3A;&#x5BF9;&#x4E8E;<span class="math inline">\(A_1\)</span>&#x800C;&#x8A00;&#xFF0C;&#x5C3A;&#x5BF8;&#x4E3A;<span class="math inline">\(p_0 \times p_1\)</span>&#xFF0C;&#x6240;&#x4EE5;<span class="math inline">\(p\)</span>&#x7684;&#x6570;&#x7EC4;&#x662F;&#x4ECE;0&#x5230;<span class="math inline">\(n\)</span>&#x3002;</p>
+<p>&#x4F7F;&#x7528;&#x6570;&#x7EC4;<span class="math inline">\(m[i,j]\)</span>&#x6765;&#x8868;&#x793A;<span class="math inline">\(A_i...A_j\)</span>&#x7684;&#x6700;&#x5C11;&#x64CD;&#x4F5C;&#x6570;&#x3002;&#x5176;&#x4E2D;<span class="math inline">\(i\)</span>&#x7684;&#x53D6;&#x503C;&#x8303;&#x56F4;&#x662F;<span class="math inline">\(1\sim n\)</span>&#xFF0C;<span class="math inline">\(j\)</span>&#x7684;&#x53D6;&#x503C;&#x8303;&#x56F4;&#x662F;<span class="math inline">\(1\sim n\)</span>&#x3002;&#x5F53;<span class="math inline">\(i=j\)</span>&#x65F6;&#xFF0C;<span class="math inline">\(m[i,j]=0\)</span></p>
+<p>&#x4F7F;&#x7528;&#x6570;&#x7EC4;<span class="math inline">\(s[i,j]\)</span>&#x8868;&#x793A;<span class="math inline">\(A_i...A_j\)</span>&#x6709;&#x6700;&#x5C11;&#x64CD;&#x4F5C;&#x6570;&#x65F6;&#xFF0C;<span class="math inline">\(k\)</span>&#x7684;&#x53D6;&#x503C;&#x3002;&#x5176;&#x4E2D;<span class="math inline">\(i\)</span>&#x7684;&#x53D6;&#x503C;&#x8303;&#x56F4;&#x662F;<span class="math inline">\(1\sim {n-1}\)</span>&#xFF0C;<span class="math inline">\(j\)</span>&#x7684;&#x53D6;&#x503C;&#x8303;&#x56F4;&#x662F;<span class="math inline">\(2\sim n\)</span>&#x3002;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x5982;&#x679C;<span class="math inline">\(i\)</span>&#x5FC5;&#x987B;&#x5C0F;&#x4E8E;<span class="math inline">\(j\)</span>&#xFF0C;&#x5982;&#x679C;<span class="math inline">\(i=j\)</span>&#xFF0C;&#x90A3;&#x4E48;&#x6839;&#x672C;&#x5C31;&#x6CA1;&#x6709;<span class="math inline">\(k\)</span>&#x7684;&#x5B58;&#x5728;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x77E9;&#x9635;&#x5E8F;&#x5217;<span class="math inline">\(A_i...A_j\)</span>&#xFF0C;&#x4E00;&#x5171;&#x6709;<span class="math inline">\(l\)</span>&#x4E2A;&#x5143;&#x7D20;&#xFF0C;<span class="math inline">\(l=i-j+1\)</span></p>
+<p>&#x8BA1;&#x7B97;&#x77E9;&#x9635;&#x5E8F;&#x5217;&#x6700;&#x4F73;&#x89E3;&#x7684;&#x7B97;&#x6CD5;&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">MATRIX-CHAIN-ORDER(p)</span><br><span class="line"></span><br><span class="line">n = p.length -1</span><br><span class="line">m = new matrix[1~n][1~n]</span><br><span class="line">s = new matrix[1~n-1][2~n]</span><br><span class="line">for i = 1 to n //matrix chain only has one matrix</span><br><span class="line">    m[i,i] = 0</span><br><span class="line">for l = 2 to n</span><br><span class="line">    for i = 1 to n-l+1 // set i&apos;s arrange according to the length</span><br><span class="line">         j = i + l -1 //we can calculated the j according to the i and l</span><br><span class="line">         m[i,j]= MAX</span><br><span class="line">        for k = i to j-1</span><br><span class="line">            q = m[j,k] + m[k+1,j] + p[i-1]p[k]p[j]</span><br><span class="line">            if q &lt; m[j,k]</span><br><span class="line">                m[i,j] = q</span><br><span class="line">                s[i,j] = k </span><br><span class="line">return m and s</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4F2A;&#x4EE3;&#x7801;&#x7684;&#x7B2C;6-7&#x884C;&#xFF0C;&#x5373;&#x5BF9;&#x4E8E;<code>m[i,i] = 0</code>&#x7684;&#x5904;&#x7406;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x5C31;&#x662F;&#x8868;&#x793A;&#x6574;&#x4E2A;&#x77E9;&#x9635;&#x5E8F;&#x5217;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x77E9;&#x9635;&#x7684;&#x60C5;&#x51B5;&#x3002;</p>
+<p>&#x7B97;&#x6CD5;&#x7684;&#x6838;&#x5FC3;&#x662F;&#x4ECE;&#x7B2C;&#x516B;&#x884C;&#x5F00;&#x59CB;&#x7684;&#x4E09;&#x91CD;&#x5FAA;&#x73AF;&#xFF0C;&#x6700;&#x5916;&#x5C42;&#x5FAA;&#x73AF;<code>l = 2 to n</code>&#xFF0C;&#x8868;&#x793A;&#x77E9;&#x9635;&#x5E8F;&#x5217;&#x4E2D;&#x7684;&#x77E9;&#x9635;&#x6570;&#x91CF;&#x4ECE;<span class="math inline">\(2\sim n\)</span>&#x7684;&#x60C5;&#x51B5;&#x3002;&#x56E0;&#x4E3A;&#x7B97;&#x6CD5;&#x4F7F;&#x7528;&#x4E86;&#x81EA;&#x5E95;&#x5411;&#x4E0A;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x6240;&#x4EE5;&#x4ECE;&#x77E9;&#x9635;&#x6570;&#x91CF;&#x4E3A;<span class="math inline">\(2\)</span>&#x5F00;&#x59CB;&#x8BA1;&#x7B97;&#x76F4;&#x5230;&#x77E9;&#x9635;&#x6570;&#x91CF;&#x4E3A;<span class="math inline">\(n\)</span>&#x3002;</p>
+<p>&#x7B2C;&#x4E8C;&#x5C42;&#x5FAA;&#x73AF;<code>i =1 to n-l+1</code>&#xFF0C;&#x662F;&#x5BF9;&#x4E8E;<span class="math inline">\(i\)</span>&#x6570;&#x503C;&#x7684;&#x5FAA;&#x73AF;&#xFF0C;&#x56E0;&#x4E3A;&#x77E9;&#x9635;&#x5E8F;&#x5217;&#x7684;&#x957F;&#x5EA6;&#x4E3A;<span class="math inline">\(l\)</span>&#xFF0C;&#x6240;&#x4EE5;<span class="math inline">\(i\)</span>&#x6700;&#x5927;&#x4E3A;<span class="math inline">\(n-l+1\)</span>&#xFF0C;&#x5426;&#x5219;<span class="math inline">\(j=i+l-1\)</span>&#x4F1A;&#x5927;&#x4E8E;<span class="math inline">\(n\)</span>&#x3002;</p>
+<p>&#x56E0;&#x4E3A;<span class="math inline">\(l\)</span>&#x548C;<span class="math inline">\(i\)</span>&#x90FD;&#x5DF2;&#x7ECF;&#x786E;&#x8BA4;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x7B2C;&#x4E8C;&#x5C42;&#x5FAA;&#x73AF;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x7B97;&#x51FA;<span class="math inline">\(j=i+l-1\)</span>&#xFF0C;&#x81F3;&#x6B64;<span class="math inline">\(m[i,j]\)</span>&#x4E2D;&#x7684;<span class="math inline">\(i\)</span>&#x548C;<span class="math inline">\(j\)</span>&#x90FD;&#x5DF2;&#x7ECF;&#x786E;&#x8BA4;&#xFF0C;&#x5269;&#x4E0B;&#x8981;&#x6C42;&#x7684;&#x5C31;&#x662F;&#x5206;&#x5272;&#x70B9;<span class="math inline">\(k\)</span>&#x3002;</p>
+<p>&#x7B2C;&#x4E09;&#x5C42;&#x5FAA;&#x73AF;<code>k=i to j-1</code>&#x662F;&#x5FAA;&#x73AF;<span class="math inline">\(k\)</span>&#x53D6;&#x503C;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x53EF;&#x80FD;&#xFF0C;&#x5E76;&#x68C0;&#x67E5;&#x5176;&#x662F;&#x5426;&#x662F;&#x6700;&#x4F73;&#x503C;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x5219;&#x586B;&#x5165;<span class="math inline">\(m[i,j]\)</span>&#x548C;<span class="math inline">\(s[i,j]\)</span></p>
+<p>c++&#x5B9E;&#x73B0;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MatrixChainOrder</span><span class="params">(<span class="keyword">int</span>* matrixSizeArray, Matrix* minMultiplications, Matrix* minMultiplicationCut)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> totalMatrixLength = minMultiplications-&gt;row;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; totalMatrixLength; i++)</span><br><span class="line">			minMultiplications-&gt;data[i][i] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> matrixLength = <span class="number">2</span>; matrixLength &lt;= totalMatrixLength; matrixLength++)</span><br><span class="line">		{</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; totalMatrixLength - matrixLength + <span class="number">1</span>; i++)</span><br><span class="line">			{</span><br><span class="line">				<span class="keyword">int</span> j = matrixLength + i - <span class="number">1</span>;</span><br><span class="line">				minMultiplications-&gt;data[i][j] = INT_MAX;</span><br><span class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> k = i; k &lt;= j - <span class="number">1</span>; k++)</span><br><span class="line">				{</span><br><span class="line">					<span class="keyword">int</span> tempMin = minMultiplications-&gt;data[i][k] + minMultiplications-&gt;data[k + <span class="number">1</span>][j] +</span><br><span class="line">						matrixSizeArray[i] * matrixSizeArray[k + <span class="number">1</span>] * matrixSizeArray[j + <span class="number">1</span>];</span><br><span class="line">					<span class="keyword">if</span> (tempMin &lt; minMultiplications-&gt;data[i][j])</span><br><span class="line">					{</span><br><span class="line">						minMultiplications-&gt;data[i][j] = tempMin;</span><br><span class="line">						minMultiplicationCut-&gt;data[i][j] = k;</span><br><span class="line">					}</span><br><span class="line">				}</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		minMultiplications-&gt;PrintMatrix(<span class="number">15</span>);</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		minMultiplicationCut-&gt;PrintMatrix(<span class="number">15</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>c++&#x5B9E;&#x73B0;&#x4E2D;&#xFF0C;<code>matrixSizeArray</code>&#x8868;&#x793A;&#x5B58;&#x6709;&#x77E9;&#x9635;&#x5C3A;&#x5BF8;&#x7684;&#x6570;&#x7EC4;&#xFF0C;&#x5982;&#x6709;<span class="math inline">\(n\)</span>&#x4E2A;&#x77E9;&#x9635;&#xFF0C;&#x5219;&#x8BE5;&#x6570;&#x7EC4;&#x5927;&#x5C0F;&#x4E3A;<span class="math inline">\(n+1\)</span>&#x3002;<code>minMultiplications</code>&#x7B49;&#x540C;&#x4E8E;&#x4F2A;&#x4EE3;&#x7801;&#x4E2D;&#x7684;<span class="math inline">\(m[i,j]\)</span>&#xFF0C;<code>minMultiplicationCut</code>&#x7B49;&#x540C;&#x4E8E;&#x4F2A;&#x4EE3;&#x7801;&#x4E2D;&#x7684;<span class="math inline">\(s[i,j]\)</span>&#x3002;&#x8FD9;&#x4E24;&#x4E2A;&#x90FD;&#x7528;&#x4E86;<code>Matrix</code>&#x8FDB;&#x884C;&#x8868;&#x793A;&#xFF0C;&#x4E24;&#x4E2A;<code>Matrix</code>&#x5C3A;&#x5BF8;&#x90FD;&#x4E3A;<span class="math inline">\(n\)</span>&#x3002;&#x867D;&#x7136;&#x5728;&#x4F2A;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;<span class="math inline">\(s[i,j]\)</span>&#x7684;&#x5C3A;&#x5BF8;&#x53EA;&#x8981;&#x662F;<span class="math inline">\(n-1\)</span>&#x5373;&#x53EF;&#xFF0C;&#x4F46;&#x8FD9;&#x91CC;&#x4E3A;&#x4E86;&#x5B9E;&#x73B0;&#x65B9;&#x4FBF;&#xFF0C;&#x8FD8;&#x662F;&#x7528;&#x4E86;<span class="math inline">\(n\)</span>&#x3002;</p>
+<p>&#x5982;&#x679C;&#x8F93;&#x5165;&#x7684;<code>matrixSizeArray</code>&#x6570;&#x636E;&#x6709;7&#x4E2A;&#x6570;&#x636E;&#xFF0C;&#x5373;&#x8868;&#x793A;&#x6709;6&#x4E2A;&#x77E9;&#x9635;&#xFF0C;&#x4E14;&#x521D;&#x59CB;&#x5316;&#x4E3A;:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> matrixSizeArray[] = { <span class="number">30</span>,<span class="number">35</span>,<span class="number">15</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">25</span> };</span><br></pre></td></tr></table></figure>
+<p>&#x5219;C++&#x8FD0;&#x7B97;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/IA-Chapter15-Notes/2019-11-22-11-25-54.png" alt="MatrixChainMultiplicationResult"></p>
+<p>&#x7ED3;&#x679C;&#x4E2D;&#x7684;<code>-842150451</code>&#x662F;<code>Int</code>&#x6570;&#x503C;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#xFF0C;&#x5728;&#x4E0D;&#x540C;&#x7535;&#x8111;&#x4E0A;&#x53EF;&#x80FD;&#x4E0D;&#x4E00;&#x6837;&#x3002;</p>
+<p><code>minMultiplications</code>&#x7684;&#x5BF9;&#x89D2;&#x7EBF;&#x8868;&#x793A;&#x957F;&#x5EA6;&#x4E3A;1&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x8FD9;&#x65F6;&#x5019;&#x4E0D;&#x9700;&#x8981;&#x64CD;&#x4F5C;&#x4E86;&#xFF0C;&#x5373;&#x4E3A;0&#x3002;&#x4ECE;&#x5BF9;&#x89D2;&#x7EBF;&#x5411;&#x53F3;&#x4E0A;&#x89D2;&#xFF0C;&#x6BCF;&#x4E00;&#x6761;&#x90FD;&#x957F;&#x5EA6;+1&#x7684;&#x60C5;&#x51B5;&#x3002;&#x53F3;&#x4E0A;&#x89D2;&#x9876;&#x70B9;<span class="math inline">\(15125\)</span>&#x5373;&#x8868;&#x793A;&#x957F;&#x5EA6;&#x4E3A;6&#x65F6;&#x7684;&#x7ED3;&#x679C;&#x3002;</p>
+<p>&#x540C;&#x7406;&#xFF0C;<code>minMultiplicationCut</code>&#x7684;&#x5BF9;&#x89D2;&#x7EBF;&#x6709;&#x8868;&#x793A;&#x957F;&#x5EA6;&#x4E3A;<code>1</code>&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x4F46;&#x56E0;&#x4E3A;&#x957F;&#x5EA6;&#x53EA;&#x6709;1&#xFF0C;&#x6240;&#x4EE5;&#x6CA1;&#x6CD5;&#x5206;&#x5272;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6CA1;&#x6CD5;&#x5B9A;&#x4E49;<code>k</code>&#xFF0C;&#x56E0;&#x6B64;&#x8FD9;&#x4E2A;&#x77E9;&#x9635;&#x7684;&#x5BF9;&#x89D2;&#x7EBF;&#x503C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x5373;<code>-842450451</code>&#x3002;&#x540C;&#x6837;&#x7684;&#x4ECE;&#x5BF9;&#x89D2;&#x7EBF;&#x5411;&#x53F3;&#x4E0A;&#x89D2;&#xFF0C;&#x6BCF;&#x4E00;&#x6761;&#x90FD;&#x957F;&#x5EA6;+1&#x7684;&#x60C5;&#x51B5;&#x3002;</p>
+<p>&#x5C06;&#x4E24;&#x4E2A;&#x77E9;&#x9635;&#x7ED3;&#x679C;&#x7684;&#x672A;&#x5B9A;&#x4E49;&#x90E8;&#x5206;&#x5220;&#x53BB;&#xFF0C;&#x5E76;&#x8FDB;&#x884C;&#x4E00;&#x4E2A;&#x65CB;&#x8F6C;&#xFF0C;&#x8BA9;&#x5BF9;&#x89D2;&#x7EBF;&#x53D8;&#x6210;&#x6C34;&#x5E73;&#xFF0C;&#x5219;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x5DE6;&#x8FB9;&#x662F;<span class="math inline">\(m[i,j]\)</span>&#xFF0C;&#x53F3;&#x8FB9;&#x662F;<span class="math inline">\(s[i,j]\)</span>&#xFF1A;</p>
+<p><img src="/IA-Chapter15-Notes/2019-11-22-11-32-00.png" alt="&#x65CB;&#x8F6C;&#x540E;&#x7684;&#x8FD0;&#x884C;&#x7ED3;&#x679C;"></p>
+<p>&#x7B97;&#x6CD5;&#x662F;&#x4ECE;&#x6700;&#x5E95;&#x90E8;&#x9010;&#x6E10;&#x5411;&#x4E0A;&#x8FD0;&#x884C;&#x3002;</p>
+<ul>
+<li>&#x56FE;&#x4E2D;&#x7684;<span class="math inline">\(s[i,j]\)</span>&#x4E0E;&#x4EE3;&#x7801;&#x8FD0;&#x884C;&#x7684;&#x7ED3;&#x679C;&#x4E0D;&#x540C;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;&#x6570;&#x503C;&#x90FD;&#x5927;&#x4E86;1&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x4EE3;&#x7801;&#x4E2D;&#x77E9;&#x9635;&#x4F4D;&#x7F6E;&#x662F;&#x4ECE;0&#x5F00;&#x59CB;&#xFF0C;&#x800C;&#x56FE;&#x89E3;&#x4E2D;&#x662F;&#x4ECE;1&#x5F00;&#x59CB;&#x3002;</li>
+</ul>
+<p>&#x56E0;&#x4E3A;&#x7B97;&#x6CD5;&#x6709;&#x4E09;&#x79CD;&#x5FAA;&#x73AF;&#xFF0C;&#x6240;&#x4EE5;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(O(n^3)\)</span>&#xFF0C;&#x4E14;&#x7B97;&#x6CD5;&#x9700;&#x8981;<span class="math inline">\(\Theta(n^2)\)</span>&#x7684;&#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x3002;</p>
+<h4 id="step-4-constructing-an-optimal-solution">Step 4: Constructing an optimal solution</h4>
+<p>&#x5728;&#x6B65;&#x9AA4;&#x4E09;&#x4E2D;&#x6C42;&#x5F97;&#x7684;<span class="math inline">\(m[i,j]\)</span>&#x53EA;&#x662F;&#x6700;&#x4F73;&#x89E3;&#x7684;&#x503C;&#x3002;&#x5982;&#x4F8B;&#x5B50;&#x4E2D;&#x5982;&#x679C;&#x8981;&#x6C42;6&#x4E2A;&#x77E9;&#x9635;&#x7684;&#x6700;&#x5C0F;&#x5DE5;&#x4F5C;&#x91CF;&#xFF0C;&#x53EF;&#x4EE5;&#x4ECE;<span class="math inline">\(m[i,j]\)</span>&#x7684;&#x6700;&#x9876;&#x90E8;&#x83B7;&#x5F97;&#xFF0C;&#x4E3A;<span class="math inline">\(15125\)</span>&#x3002;&#x4F46;&#x5982;&#x679C;&#x8981;&#x6C42;6&#x4E2A;&#x77E9;&#x9635;&#x6700;&#x4F73;&#x60C5;&#x51B5;&#x4E0B;&#x8BE5;&#x4EE5;&#x600E;&#x6837;&#x7684;&#x987A;&#x5E8F;&#x8FDB;&#x884C;&#x8BA1;&#x7B97;&#xFF0C;&#x6B65;&#x9AA4;&#x4E09;&#x5E76;&#x6CA1;&#x6709;&#x76F4;&#x63A5;&#x7ED9;&#x51FA;&#x3002;&#x8FD9;&#x91CC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6B65;&#x9AA4;&#x4E09;&#x4E2D;&#x83B7;&#x5F97;&#x7684;<span class="math inline">\(s[i,j]\)</span>&#x77E9;&#x9635;&#x83B7;&#x53D6;&#x77E9;&#x9635;&#x76F8;&#x4E58;&#x6700;&#x4F73;&#x60C5;&#x51B5;&#x4E0B;&#x7684;&#x987A;&#x5E8F;&#x3002;</p>
+<p>&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PRINT-OPTIMAL-PARENS(s,i,j)</span><br><span class="line"></span><br><span class="line">if i == j</span><br><span class="line">    print &quot;A_&quot;i</span><br><span class="line">else</span><br><span class="line">    print &quot;(&quot;</span><br><span class="line">    PRINT-OPTIMAL-PARENS(s,i,s[i,j])</span><br><span class="line">    PRINT-OPTIMAL-PARENS(s,s[i,j]+1,j)</span><br><span class="line">    print &quot;)&quot;</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x5229;&#x7528;&#x4E86;&#x6B65;&#x9AA4;&#x4E09;&#x4E2D;&#x6C42;&#x5F97;&#x7684;<span class="math inline">\(s[i,j]\)</span>&#xFF0C;&#x5982;&#x679C;&#x8F93;&#x5165;&#x503C;&#x4E3A;<span class="math inline">\(0 \sim 5\)</span>&#xFF08;&#x4EE5;C++&#x5B9E;&#x73B0;&#x7684;&#x6570;&#x636E;&#x4E3A;&#x51C6;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x662F;<span class="math inline">\(1\sim6\)</span>&#xFF09;&#xFF0C;&#x5219;&#x7B97;&#x6CD5;&#x7684;&#x56FE;&#x89E3;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/IA-Chapter15-Notes/2019-11-22-12-00-59.png" alt="&#x6253;&#x5370;&#x77E9;&#x9635;&#x6700;&#x4F73;&#x89E3;&#x56FE;&#x89E3;"></p>
+<p>&#x9ED1;&#x8272;&#x8868;&#x793A;<span class="math inline">\((i,j)\)</span>&#xFF0C;&#x84DD;&#x8272;&#x8868;&#x793A;<span class="math inline">\(s[i,j]\)</span>&#x7684;&#x53D6;&#x503C;&#xFF0C;&#x7EA2;&#x8272;&#x8868;&#x793A;&#x7B97;&#x6CD5;&#x4E2D;&#x7684;&#x8F93;&#x51FA;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x6811;&#x4EE5;&#x4E2D;&#x5E8F;&#x6253;&#x5370;&#x5219;&#x4E3A;&#x7ED3;&#x679C;(&#x56E0;&#x4E3A;&#x7B97;&#x6CD5;&#x4E2D;&#x90FD;&#x662F;&#x5728;&#x9012;&#x5F52;&#x5DE6;&#x6811;&#x548C;&#x53F3;&#x6811;&#x524D;&#x5148;&#x6253;&#x5370;&#x4E86;&#x6570;&#x636E;&#xFF0C;&#x6240;&#x4EE5;&#x662F;&#x4E2D;&#x5E8F;)</p>
+<p>c++&#x5B9E;&#x73B0;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintOptimalParens</span><span class="params">(Matrix* minMultiplicationsCut, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="keyword">if</span> (i == j)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;A_&quot;</span> &lt;&lt; i;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	{</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;(&quot;</span>;</span><br><span class="line">		<span class="keyword">int</span> k = minMultiplicationsCut-&gt;data[i][j];</span><br><span class="line">		PrintOptimalParens(minMultiplicationsCut, i, k);</span><br><span class="line">		PrintOptimalParens(minMultiplicationsCut, k + <span class="number">1</span>, j);</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;)&quot;</span>;</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8F93;&#x5165;&#x503C;&#x4E3A;<span class="math inline">\(0\sim5\)</span>&#x7684;&#x8BDD;&#xFF0C;&#x6700;&#x7EC8;&#x7ED3;&#x679C;&#x4E3A;<span class="math inline">\(((A_0(A_1A_2))((A_3A_4)A_5))\)</span>&#x3002;</p>
+<h2 id="elements-of-dynamic-programming">Elements of dynamic programming</h2>
+<p>&#x4E00;&#x4E2A;&#x4F18;&#x5316;&#x95EE;&#x9898;&#x53EF;&#x4EE5;&#x7528;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x89E3;&#x51B3;&#x5FC5;&#x987B;&#x6709;&#x4E24;&#x4E2A;&#x5173;&#x952E;&#x56E0;&#x7D20;&#xFF1A;<code>&#x6700;&#x4F18;&#x5B50;&#x7ED3;&#x6784;&#xFF08;Optimal substructure&#xFF09;</code>&#x548C;<code>&#x91CD;&#x53E0;&#x7684;&#x5B50;&#x95EE;&#x9898;&#xFF08;overlapping subproblems&#xFF09;</code>&#x3002;</p>
+<h3 id="optimal-substructure">Optimal substructure</h3>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x5177;&#x6709;&#x6700;&#x4F18;&#x5B50;&#x7ED3;&#x6784;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F18;&#x89E3;&#x4E00;&#x5B9A;&#x662F;&#x4F34;&#x968F;&#x7740;&#x4ED6;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F18;&#x89E3;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x4ECE;&#x4EE5;&#x4E0B;&#x6B65;&#x9AA4;&#x627E;&#x5BFB;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F18;&#x7ED3;&#x6784;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x95EE;&#x9898;&#x7684;&#x7B2C;&#x4E00;&#x90E8;&#x5206;&#x9996;&#x5148;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;&#x9009;&#x62E9;&#x8FDB;&#x884C;&#x5207;&#x5206;&#x3002;&#x5207;&#x5206;&#x540E;&#x4F1A;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x8FD9;&#x4E00;&#x6B65;&#x76F8;&#x5F53;&#x4E8E;&#x5148;&#x786E;&#x5B9A;&#x6700;&#x5185;&#x5C42;&#x7684;&#x5FAA;&#x73AF;&#x8868;&#x8FBE;&#x5F62;&#x5F0F;&#xFF0C;&#x5982;&#x5728;&#x5207;&#x5272;&#x94A2;&#x6761;&#x95EE;&#x9898;&#x4E2D;&#x662F;&#x9009;&#x62E9;&#x7B2C;&#x4E00;&#x5200;&#x5207;&#x5272;&#x7684;&#x957F;&#x5EA6;<span class="math inline">\(l\)</span>&#xFF0C;&#x77E9;&#x9635;&#x4E58;&#x6CD5;&#x95EE;&#x9898;&#x4E2D;&#x662F;&#x5206;&#x5272;&#x77E9;&#x9635;&#x7684;&#x4F4D;&#x7F6E;(&#x6C42;<span class="math inline">\(k\)</span>)&#x3002;</p></li>
+<li><p>&#x5728;&#x6B65;&#x9AA4;&#x4E00;&#x7684;&#x9009;&#x62E9;&#x4E2D;&#xFF0C;&#x5047;&#x8BBE;&#x5DF2;&#x7ECF;&#x77E5;&#x9053;&#x6700;&#x4F18;&#x89E3;&#x7684;&#x9009;&#x62E9;&#x662F;&#x4EC0;&#x4E48;&#x3002;</p>
+<p>&#x6B65;&#x9AA4;&#x4E00;&#x4E2D;&#x7684;&#x503C;&#x662F;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x5FAA;&#x73AF;&#x6765;&#x904D;&#x5386;&#x6BCF;&#x4E2A;&#x53EF;&#x80FD;&#x7684;&#x503C;&#x5E76;&#x627E;&#x5230;&#x6700;&#x4F73;&#x503C;&#x7684;&#xFF0C;&#x6B65;&#x9AA4;&#x4E8C;&#x5373;&#x5047;&#x8BBE;&#x5DF2;&#x7ECF;&#x627E;&#x5230;&#x4E86;&#x6700;&#x4F73;&#x89E3;&#x3002;</p></li>
+<li><p>&#x9650;&#x5B9A;&#x5B50;&#x95EE;&#x9898;&#x7A7A;&#x95F4;&#xFF0C;&#x5373;&#x8FD0;&#x7528;&#x6700;&#x4F18;&#x89E3;&#x7684;&#x5B50;&#x95EE;&#x9898;&#xFF08;&#x5728;&#x6B65;&#x9AA4;&#x4E8C;&#x4E2D;&#x5047;&#x8BBE;&#x5DF2;&#x7ECF;&#x77E5;&#x9053;&#x4E86;&#x89E3;&#x51B3;&#x6BCF;&#x4E2A;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F18;&#x89E3;&#xFF09;&#x3002;&#x9650;&#x5B9A;&#x5B50;&#x95EE;&#x9898;&#x7A7A;&#x95F4;&#x65F6;&#x5C3D;&#x53EF;&#x80FD;&#x7B80;&#x5355;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x5BF9;&#x4E8E;&#x94A2;&#x6761;&#x5207;&#x5272;&#x95EE;&#x9898;&#xFF0C;&#x5B50;&#x95EE;&#x9898;&#x7A7A;&#x95F4;&#x5305;&#x542B;&#x7684;&#x95EE;&#x9898;&#x662F;&#x957F;&#x5EA6;&#x4E3A;<span class="math inline">\(i\)</span>&#x7684;&#x94A2;&#x6761;&#x7684;&#x6700;&#x4F18;&#x5207;&#x5272;&#x95EE;&#x9898;&#xFF0C;<span class="math inline">\(i\)</span>&#x53D6;&#x503C;&#x4ECE;<span class="math inline">\(1\sim n\)</span>&#x3002;&#x56E0;&#x6B64;&#x94A2;&#x6761;&#x5207;&#x5272;&#x95EE;&#x9898;&#x5916;&#x90E8;&#x53EA;&#x6709;&#x4E00;&#x5C42;&#x5FAA;&#x73AF;&#x3002;</p>
+<p>&#x4F46;&#x5BF9;&#x4E8E;&#x77E9;&#x9635;&#x4E58;&#x6CD5;&#x95EE;&#x9898;&#xFF0C;&#x6C42;<span class="math inline">\(A_1A_2...A_n\)</span>&#x7684;&#x6700;&#x4F73;&#x5206;&#x5272;&#x65B9;&#x5F0F;&#xFF0C;&#x5206;&#x5272;&#x5E76;&#x4E0D;&#x4E00;&#x5B9A;&#x662F;&#x4ECE;<span class="math inline">\(A_1\)</span>&#x5F00;&#x59CB;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x4E24;&#x7AEF;&#x90FD;&#x9700;&#x8981;&#x53D8;&#x5316;&#xFF0C;&#x5373;<span class="math inline">\(A_i...A_j\)</span>&#xFF0C;&#x5176;&#x4E2D;<span class="math inline">\(i\)</span>&#x7684;&#x53D6;&#x503C;&#x662F;<span class="math inline">\(1\sim n\)</span>&#xFF0C;<span class="math inline">\(j\)</span>&#x7684;&#x53D6;&#x503C;&#x662F;<span class="math inline">\(i\)</span>&#x5230;<span class="math inline">\(n\)</span>&#x3002;&#xFF08;<span class="math inline">\(i\)</span>&#x548C;<span class="math inline">\(j\)</span>&#x51B3;&#x5B9A;&#x4E86;&#x77E9;&#x9635;&#x5E8F;&#x5217;&#x7684;&#x957F;&#x5EA6;&#xFF0C;&#x5728;&#x5B9E;&#x9645;&#x7B97;&#x6CD5;&#x4E2D;&#xFF0C;&#x53D6;<span class="math inline">\(i\)</span>&#x548C;&#x957F;&#x5EA6;<span class="math inline">\(l\)</span>&#x53D8;&#x91CF;&#xFF0C;<span class="math inline">\(j\)</span>&#x6839;&#x636E;<span class="math inline">\(i\)</span>&#x548C;<span class="math inline">\(l\)</span>&#x7B97;&#x51FA;&#xFF09;&#x3002;&#x56E0;&#x6B64;&#x77E9;&#x9635;&#x4E58;&#x6CD5;&#x95EE;&#x9898;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x7A7A;&#x95F4;&#x5305;&#x542B;&#x4E24;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x5916;&#x90E8;&#x6709;&#x53CC;&#x5C42;&#x5FAA;&#x73AF;&#x3002;</p></li>
+<li><p>&#x8BC1;&#x660E;&#x7528;&#x6765;&#x6784;&#x6210;&#x95EE;&#x9898;&#x6700;&#x4F18;&#x89E3;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x672C;&#x8EAB;&#x5FC5;&#x987B;&#x662F;&#x6700;&#x4F18;&#x89E3;&#x3002;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x53CD;&#x8BC1;&#x6CD5;&#xFF0C;&#x5982;&#x679C;&#x5B50;&#x95EE;&#x9898;&#x4E0D;&#x662F;&#x6700;&#x4F18;&#x89E3;&#xFF0C;&#x90A3;&#x4E48;&#x5C06;&#x95EE;&#x9898;&#x4E2D;&#x7684;&#x8FD9;&#x4E00;&#x90E8;&#x5206;&#x5B50;&#x95EE;&#x9898;&#x66FF;&#x6362;&#x4E3A;&#x6700;&#x4F18;&#x89E3;&#xFF0C;&#x539F;&#x95EE;&#x9898;&#x80FD;&#x83B7;&#x53D6;&#x5230;&#x66F4;&#x4F18;&#x7684;&#x89E3;&#x3002;&#x8FD9;&#x4E2A;&#x8BC1;&#x660E;&#x65B9;&#x6CD5;&#x79F0;&#x4E3A;<code>&#x201C;&#x526A;&#x5207;-&#x9ECF;&#x8D34;&#x201D;&#xFF08;Cut-and-Paste&#xFF09;</code>&#x65B9;&#x6CD5;</p></li>
+</ol>
+<p>&#x5BF9;&#x4E8E;&#x4E0D;&#x540C;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x6700;&#x4F18;&#x5B50;&#x7ED3;&#x6784;&#x7684;&#x4E0D;&#x540C;&#x4F53;&#x73B0;&#x5728;&#x4E24;&#x4E2A;&#x65B9;&#x9762;&#xFF08;&#x8FD9;&#x91CC;&#x5173;&#x6CE8;&#x7684;&#x662F;&#x5FAA;&#x73AF;&#x6700;&#x5185;&#x5C42;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#xFF09;</p>
+<ol type="1">
+<li><p>&#x539F;&#x95EE;&#x9898;&#x7684;&#x6700;&#x4F18;&#x89E3;&#x5305;&#x542B;&#x591A;&#x5C11;&#x4E2A;&#x5B50;&#x95EE;&#x9898;</p></li>
+<li><p>&#x5728;&#x786E;&#x5B9A;&#x6700;&#x4F18;&#x89E3;&#x4F7F;&#x7528;&#x54EA;&#x4E9B;&#x5B50;&#x95EE;&#x9898;&#x65F6;&#xFF0C;&#x8981;&#x8003;&#x5BDF;&#x591A;&#x5C11;&#x79CD;&#x53EF;&#x80FD;&#x3002;</p></li>
+</ol>
+<p>&#x5BF9;&#x4E8E;&#x94A2;&#x6761;&#x5207;&#x5272;&#x95EE;&#x9898;&#xFF0C;&#x6700;&#x4F18;&#x89E3;&#x53EA;&#x9700;&#x8981;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x6C42;&#x94A2;&#x6761;&#x5207;&#x5272;&#x4E00;&#x5200;&#x540E;&#xFF0C;&#x5269;&#x4E0B;&#x90E8;&#x5206;&#x7684;&#x6700;&#x4F73;&#x5207;&#x5272;&#x65B9;&#x5F0F;&#x3002;&#x5BF9;&#x4E8E;&#x957F;&#x5EA6;&#x4E3A;<span class="math inline">\(n\)</span>&#x7684;&#x94A2;&#x6761;&#xFF0C;&#x7B2C;&#x4E00;&#x5200;&#x957F;&#x5EA6;&#x4E00;&#x5171;&#x6709;<span class="math inline">\(n\)</span>&#x79CD;&#x53EF;&#x80FD;&#x6027;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x77E9;&#x9635;&#x4E58;&#x6CD5;&#x95EE;&#x9898;&#xFF0C;&#x6700;&#x4F18;&#x89E3;&#x9700;&#x8981;&#x5305;&#x542B;&#x4E24;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x5207;&#x5272;&#x540E;&#x7684;<span class="math inline">\(A_i..A_k\)</span>&#x4E0E;<span class="math inline">\(A_k..A_j\)</span>&#x5404;&#x81EA;&#x7684;&#x6700;&#x4F73;&#x5207;&#x5206;&#x65B9;&#x5F0F;&#x3002;&#x5BF9;&#x4E8E;<span class="math inline">\(A_i...A_j\)</span>&#xFF0C;<span class="math inline">\(k\)</span>&#x7684;&#x53D6;&#x503C;&#x4E00;&#x5171;&#x6709;<span class="math inline">\(j-i\)</span>&#x79CD;&#x53EF;&#x80FD;&#x6027;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x4ECE;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x4E00;&#x5171;&#x53EF;&#x80FD;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x4E2A;&#x6570;&#x548C;&#x6BCF;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x9700;&#x8981;&#x8003;&#x5BDF;&#x7684;&#x53EF;&#x80FD;&#x6027;&#x6570;&#x91CF;&#x4E24;&#x65B9;&#x9762;&#x6765;&#x786E;&#x5B9A;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x94A2;&#x6761;&#x5207;&#x5272;&#x95EE;&#x9898;&#xFF0C;&#x957F;&#x5EA6;&#x4E3A;<span class="math inline">\(n\)</span>&#x7684;&#x94A2;&#x6761;&#xFF0C;&#x4E00;&#x5171;&#x6709;<span class="math inline">\(\Theta(n)\)</span>&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x6BCF;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x6700;&#x591A;&#x6709;<span class="math inline">\(n\)</span>&#x4E2A;&#x53EF;&#x80FD;&#x6027;&#xFF0C;&#x6240;&#x4EE5;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(O(n^2)\)</span>&#x3002;&#x5BF9;&#x4E8E;&#x77E9;&#x9635;&#x4E58;&#x6CD5;&#x95EE;&#x9898;&#xFF0C;&#x56E0;&#x4E3A;<span class="math inline">\(i\)</span>&#x548C;<span class="math inline">\(j\)</span>&#x7684;&#x53D8;&#x5316;&#xFF0C;&#x4E00;&#x5171;&#x6709;<span class="math inline">\(\Theta(n^2)\)</span>&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x6BCF;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x6700;&#x591A;&#x6709;<span class="math inline">\(n-1\)</span>&#x4E2A;&#x53EF;&#x80FD;&#x6027;&#xFF0C;&#x6240;&#x4EE5;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(O(n^3)\)</span>&#x3002;</p>
+<h4 id="subtitles">Subtitles</h4>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x4E0D;&#x8981;&#x5728;&#x4E0D;&#x662F;&#x6700;&#x4F18;&#x5B50;&#x7ED3;&#x6784;&#x7684;&#x65F6;&#x5019;&#x4F7F;&#x7528;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x3002;</p>
+<p>&#x5982;&#x6C42;&#x6709;&#x5411;&#x56FE;&#x7684;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x52A8;&#x6001;&#x89C4;&#x5212;&#xFF0C;&#x4F46;&#x6C42;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#x5C31;&#x65E0;&#x6CD5;&#x4F7F;&#x7528;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x3002;&#x8FD9;&#x91CC;&#x7684;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#x9650;&#x5B9A;&#x6CA1;&#x6709;&#x95ED;&#x73AF;&#xFF0C;&#x4E0D;&#x7136;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x65E0;&#x9650;&#x6B21;&#x95ED;&#x73AF;&#x6765;&#x589E;&#x52A0;&#x8DEF;&#x5F84;&#x3002;</p>
+<p>&#x4EE5;&#x7ED3;&#x70B9;<span class="math inline">\(u\)</span>&#x5230;&#x7ED3;&#x70B9;<span class="math inline">\(v\)</span>&#x4E3A;&#x4F8B;&#x5B50;&#xFF0C;&#x5728;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x95EE;&#x9898;&#x4E0B;&#x662F;<strong>&#x5B58;&#x5728;</strong>&#x6700;&#x4F73;&#x5B50;&#x7ED3;&#x6784;&#x7684;&#x3002;&#x5047;&#x8BBE;&#x5728;<span class="math inline">\(u\)</span>&#x5230;<span class="math inline">\(v\)</span>&#x7684;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x4E0A;&#x5B58;&#x5728;&#x7ED3;&#x70B9;<span class="math inline">\(w\)</span>&#xFF0C;<span class="math inline">\(u\)</span>&#x5230;<span class="math inline">\(w\)</span>&#x548C;<span class="math inline">\(w\)</span>&#x5230;<span class="math inline">\(v\)</span>&#x90FD;&#x5FC5;&#x7136;&#x662F;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x3002;&#x5426;&#x5219;&#x5E94;&#x7528;&#x526A;&#x5207;&#x9ECF;&#x8D34;&#x6CD5;&#xFF0C;&#x5982;&#x679C;&#x6709;<span class="math inline">\(u\)</span>&#x5230;<span class="math inline">\(w\)</span>&#x7684;&#x66F4;&#x77ED;&#x8DEF;&#x5F84;&#xFF0C;&#x90A3;&#x4E48;&#x7528;&#x66F4;&#x77ED;&#x7684;&#x8DEF;&#x5F84;&#x66FF;&#x6362;&#x5219;&#x80FD;&#x5F97;&#x5230;<span class="math inline">\(u\)</span>&#x5230;<span class="math inline">\(v\)</span>&#x7684;&#x66F4;&#x4F18;&#x89E3;&#x3002;</p>
+<p>&#x4F46;&#x5728;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#x95EE;&#x9898;&#x4E0B;&#x662F;<strong>&#x4E0D;&#x5B58;&#x5728;</strong>&#x6700;&#x4F73;&#x5B50;&#x7ED3;&#x6784;&#x7684;&#xFF0C;&#x5373;<span class="math inline">\(u\)</span>&#x5230;<span class="math inline">\(v\)</span>&#x7684;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#x4E0A;&#x5B58;&#x5728;&#x7ED3;&#x70B9;<span class="math inline">\(w\)</span>&#xFF0C;<span class="math inline">\(u\)</span>&#x5230;<span class="math inline">\(w\)</span>&#x548C;<span class="math inline">\(w\)</span>&#x5230;<span class="math inline">\(v\)</span>&#x4E0D;&#x4E00;&#x5B9A;&#x662F;&#x5404;&#x81EA;&#x7684;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#x3002;&#x4EE5;&#x4E0B;&#x56FE;&#x4E3A;&#x4F8B;</p>
+<p><img src="/IA-Chapter15-Notes/2019-11-26-10-35-55.png" alt="&#x6700;&#x957F;&#x8DEF;&#x5F84;&#x53CD;&#x4F8B;">&#x3002;</p>
+<p>&#x5982;&#x679C;&#x6C42;<span class="math inline">\(q\)</span>&#x5230;<span class="math inline">\(t\)</span>&#x7684;&#x7684;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#xFF0C;&#x90A3;&#x4E48;&#x5E94;&#x8BE5;&#x662F;<span class="math inline">\(q\rightarrow r \rightarrow t\)</span>&#x3002;&#x4F46;&#x662F;<span class="math inline">\(q\rightarrow r\)</span>&#x5E76;&#x4E0D;&#x662F;<span class="math inline">\(q\)</span>&#x5230;<span class="math inline">\(r\)</span>&#x7684;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#xFF0C;&#x5176;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#x4E3A;<span class="math inline">\(q \rightarrow s \rightarrow t \rightarrow r\)</span>&#xFF0C;<span class="math inline">\(r\)</span>&#x5230;<span class="math inline">\(t\)</span>&#x7684;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#x4E3A;<span class="math inline">\(r \rightarrow q \rightarrow s \rightarrow t\)</span>&#x3002;&#x800C;<span class="math inline">\(q\)</span>&#x5230;<span class="math inline">\(r\)</span>&#x548C;<span class="math inline">\(r\)</span>&#x5230;<span class="math inline">\(t\)</span>&#x4E0D;&#x80FD;&#x53D6;&#x5404;&#x81EA;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#x7684;&#x539F;&#x56E0;&#x662F;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x4E48;&#x505A;&#x4E86;&#x5C31;&#x4F1A;&#x5F62;&#x6210;&#x95ED;&#x73AF;&#x56DE;&#x8DEF;&#x3002;</p>
+<p>&#x867D;&#x7136;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#x548C;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x90FD;&#x662F;&#x5C06;&#x539F;&#x95EE;&#x9898;&#x62C6;&#x5206;&#x4E3A;&#x4E86;&#x4E24;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;&#x56E0;&#x4E3A;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#x7684;&#x4E24;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x662F;<strong>&#x76F8;&#x5173;</strong>&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x80FD;&#x7528;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x3002;&#x4F8B;&#x5982;&#x5728;&#x6C42;<span class="math inline">\(q\)</span>&#x5230;<span class="math inline">\(r\)</span>&#x7684;&#x6700;&#x957F;&#x8DEF;&#x5F84;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x65F6;&#xFF0C;&#x56E0;&#x4E3A;&#x7528;&#x4E86;<span class="math inline">\(q \rightarrow s \rightarrow t\)</span>,&#x5728;&#x6C42;<span class="math inline">\(r\)</span>&#x5230;<span class="math inline">\(t\)</span>&#x7684;&#x65F6;&#x5019;&#x5C31;&#x4E0D;&#x80FD;&#x4F7F;&#x7528;<span class="math inline">\(q \rightarrow s \rightarrow t\)</span>&#xFF0C;&#x5426;&#x5219;&#x5C31;&#x5B58;&#x5728;&#x4E86;&#x95ED;&#x3002;&#x5373;&#x4E00;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x89E3;&#x4F1A;&#x5E72;&#x6270;&#x5230;&#x53E6;&#x4E00;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x6C42;&#x89E3;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;<code>&#x5B50;&#x95EE;&#x9898;&#x76F8;&#x5173;</code>&#x3002;</p>
+<p>&#x5728;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x95EE;&#x9898;&#x4E0B;&#xFF0C;&#x4E0D;&#x5B58;&#x5728;&#x5B50;&#x95EE;&#x9898;&#x76F8;&#x5173;&#xFF0C;&#x5728;&#x4E24;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x4E2D;&#x4E5F;&#x4E0D;&#x4F1A;&#x51FA;&#x73B0;&#x76F8;&#x540C;&#x7684;&#x7ED3;&#x70B9;&#x3002;&#x8BC1;&#x660E;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p>&#x5982;&#x679C;&#x4ECE;<span class="math inline">\(u\)</span>&#x5230;<span class="math inline">\(w\)</span>&#x548C;&#x4ECE;<span class="math inline">\(w\)</span>&#x5230;<span class="math inline">\(v\)</span>&#x4E24;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x4E2D;&#x90FD;&#x9700;&#x8981;&#x7ECF;&#x8FC7;&#x7ED3;&#x70B9;<span class="math inline">\(x\)</span>&#xFF0C;&#x5373;&#x8DEF;&#x5F84;&#x65F6;<span class="math inline">\(u\rightarrow x\rightarrow w\)</span>&#x548C;<span class="math inline">\(w \rightarrow x \rightarrow v\)</span>&#xFF0C;&#x90A3;&#x4E48;<span class="math inline">\(x \rightarrow w\)</span>&#x548C;<span class="math inline">\(w \rightarrow x\)</span>&#x53EF;&#x4EE5;&#x76F8;&#x4E92;&#x62B5;&#x6D88;&#xFF0C;&#x6700;&#x7EC8;&#x8DEF;&#x5F84;&#x4E3A;<span class="math inline">\(u \rightarrow x \rightarrow v\)</span>&#x3002;&#x8FD9;&#x53C8;&#x4E0E;&#x7ECF;&#x8FC7;<span class="math inline">\(w\)</span>&#x7684;&#x5047;&#x8BBE;&#x4E0D;&#x5339;&#x914D;&#xFF0C;&#x6240;&#x4EE5;&#x4E24;&#x7AEF;&#x8DEF;&#x5F84;&#x4E0D;&#x53EF;&#x80FD;&#x90FD;&#x7ECF;&#x8FC7;<span class="math inline">\(x\)</span>&#x3002;</p>
+<h3 id="overlapping-subproblems">Overlapping subproblems</h3>
+<p>&#x53E6;&#x4E00;&#x4E2A;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x9700;&#x8981;&#x6EE1;&#x8DB3;&#x7684;&#x8981;&#x6C42;&#x662F;&#x91CD;&#x53E0;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x5373;&#x5728;&#x9012;&#x5F52;&#x5B50;&#x95EE;&#x9898;&#x7A7A;&#x95F4;&#x4E2D;&#x7684;&#x95EE;&#x9898;&#x65F6;&#xFF0C;&#x5B50;&#x95EE;&#x9898;&#x662F;&#x9700;&#x8981;&#x662F;&#x91CD;&#x590D;&#x51FA;&#x73B0;&#x7684;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x4E00;&#x76F4;&#x51FA;&#x73B0;&#x65B0;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x3002;&#x4E0E;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x76F8;&#x5BF9;&#x7684;&#x662F;&#x5206;&#x6CBB;&#x6CD5;&#xFF0C;&#x5728;&#x5206;&#x6CBB;&#x6CD5;&#x4E2D;&#xFF0C;&#x89E3;&#x51B3;&#x7684;&#x6BCF;&#x4E2A;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x90FD;&#x662F;&#x5168;&#x65B0;&#x7684;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x5176;&#x4E2D;&#x4E5F;&#x4E0D;&#x5305;&#x542B;&#x5DF2;&#x7ECF;&#x89E3;&#x51B3;&#x7684;&#x5C0F;&#x5B50;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x5982;&#x77E9;&#x9635;&#x4E58;&#x6CD5;&#x95EE;&#x9898;&#x4E2D;&#xFF0C;<span class="math inline">\(m[3,4]\)</span>&#x8FD9;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x6C42;&#x89E3;&#xFF0C;&#x5728;&#x6C42;<span class="math inline">\(m[2,4]\)</span>,<span class="math inline">\(m[1,4]\)</span>,<span class="math inline">\(m[3,5]\)</span>&#x7B49;&#x4E2D;&#x90FD;&#x4F1A;&#x51FA;&#x73B0;&#x3002;&#x4E0B;&#x56FE;&#x5C55;&#x793A;&#x4E86;&#x5728;&#x6C42;&#x89E3;<span class="math inline">\(m[1,4]\)</span>&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x51FA;&#x73B0;&#x7684;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x5176;&#x4E2D;&#x6DF1;&#x8272;&#x90E8;&#x5206;&#x4E3A;&#x5DF2;&#x7ECF;&#x51FA;&#x73B0;&#x8FC7;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x3002;</p>
+<p><img src="/IA-Chapter15-Notes/2019-11-26-11-28-09.png" alt="&#x91CD;&#x53E0;&#x5B50;&#x95EE;&#x9898;"></p>
+<p>&#x56E0;&#x4E3A;&#x4F7F;&#x7528;&#x4E86;&#x81EA;&#x5E95;&#x5411;&#x4E0A;&#x6CD5;&#x6216;&#x8005;&#x5907;&#x5FD8;&#x5F55;&#x6CD5;&#x6765;&#x89C4;&#x907F;&#x4E86;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x91CD;&#x590D;&#x8BA1;&#x7B97;&#x65F6;&#x95F4;&#xFF0C;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x624D;&#x80FD;&#x662F;&#x591A;&#x9879;&#x5F0F;&#x7EA7;&#x522B;&#x7684;&#xFF0C;&#x5426;&#x5219;&#x662F;&#x6307;&#x6570;&#x5F62;&#x5F0F;&#x3002;</p>
+<p>&#x5728;&#x5207;&#x5272;&#x94A2;&#x6761;&#x95EE;&#x9898;&#x7684;&#x4E00;&#x8282;&#x4E2D;&#xFF0C;&#x5DF2;&#x7ECF;&#x4ECE;&#x6570;&#x5B66;&#x4E0A;&#x8BC1;&#x660E;&#x4E86;&#x8FED;&#x4EE3;&#x6C42;&#x89E3;&#x5207;&#x5272;&#x94A2;&#x6761;&#x95EE;&#x9898;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(O(2^n)\)</span>&#xFF0C;&#x4E5F;&#x53EF;&#x8BC1;&#x660E;&#x77E9;&#x9635;&#x4E58;&#x6CD5;&#x95EE;&#x9898;&#xFF0C;&#x8FED;&#x4EE3;&#x6C42;&#x89E3;&#x7684;&#x590D;&#x6742;&#x5EA6;&#x4E5F;&#x4E3A;<span class="math inline">\(O(2^n)\)</span>&#x3002;&#x8FED;&#x4EE3;&#x6CD5;&#x7684;&#x4F2A;&#x4EE3;&#x7801;&#x4E3A;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">RECURSIVE-MATRIX-CHAIN(p,i,j)</span><br><span class="line">if i == j</span><br><span class="line">    return 0</span><br><span class="line"></span><br><span class="line">m[i,j] = MAX</span><br><span class="line"></span><br><span class="line">for k = i to j-1</span><br><span class="line">    q = RECURSIVE-MATRIX-CHAIN(p,i,k) + RECURSIVE-MATRIX-CHAIN(p,k+1,j) +</span><br><span class="line">        p[i-1]p[k]p[j]</span><br><span class="line">    if q &lt; m[i,j]</span><br><span class="line">        m[i,j] = q</span><br><span class="line"></span><br><span class="line">return m[i,j]</span><br></pre></td></tr></table></figure>
+<p>c++&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">RecursiveMatrixChain</span><span class="params">(<span class="keyword">int</span>* matrixSizeArray, Matrix* minMultiplications, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="keyword">if</span> (i == j)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	minMultiplications-&gt;data[i][j] = INT_MAX;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> k = i; k &lt; j; k++)</span><br><span class="line">	{</span><br><span class="line">		<span class="keyword">int</span> tempMin = RecursiveMatrixChain(matrixSizeArray, minMultiplications, i, k) +</span><br><span class="line">			RecursiveMatrixChain(matrixSizeArray, minMultiplications, k + <span class="number">1</span>, j) + matrixSizeArray[i] * matrixSizeArray[k + <span class="number">1</span>] * matrixSizeArray[j + <span class="number">1</span>];</span><br><span class="line">		<span class="keyword">if</span> (tempMin &lt; minMultiplications-&gt;data[i][j])</span><br><span class="line">			minMultiplications-&gt;data[i][j] = tempMin;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> minMultiplications-&gt;data[i][j];</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x65F6;&#x95F4;&#x590D;&#x6742;&#x4E3A;</p>
+<p><span class="math display">\[
+T(n)\geq
+\begin{cases}
+    1 &amp; n=1 \\\\
+    1 + \sum_{k=1}^{n-1}(T(k)+T(n-k)+1) &amp; n &gt; 1
+\end{cases}
+\]</span></p>
+<p>&#x53EF;&#x4EE5;&#x7528;&#x6570;&#x5B66;&#x5F52;&#x7EB3;&#x6CD5;&#x8BC1;&#x660E;<span class="math inline">\(T(n)=O(2^n)\)</span></p>
+<p>&#x5047;&#x8BBE;<span class="math inline">\(T(n)=\Omega(2^n)\)</span>&#xFF0C;&#x53EF;&#x53D6;<span class="math inline">\(T(n)\geq 2^{n-1}&#xFF0C;\)</span>&#x5F53;<span class="math inline">\(n=1\)</span>&#x65F6;&#xFF0C;<span class="math inline">\(T(n)\geq 1 = 2^0\)</span>&#xFF0C;&#x5F97;&#x8BC1;&#x3002;</p>
+<p>&#x5F53;<span class="math inline">\(n\geq 2\)</span>&#x65F6;&#xFF0C;</p>
+<p><span class="math display">\[
+T(n) \geq 1 + \sum_{k=1}^{n-1}(T(k)+T(n-k)+1) \\\\ 
+= 1 +  \sum_{k=1}^{n-1} T(k) +\sum_{k=1}^{n-1}T(n-k) +\sum_{k=1}^{n-1} 1 \\\\
+= 1 +  \sum_{k=1}^{n-1} T(k) + \sum_{i = n-1}^{1} T(i) +(n-1) \\\\
+= 2\sum_{i=1}^{n-1}2^{i-1}+n \\\\
+= 2(2^{n-1}-1)+n \\\\
+= 2^n -2 +n \\\\
+\geq 2^{n-1}
+\]</span></p>
+<p>&#x5F97;&#x8BC1;&#x3002;&#x800C;&#x4F7F;&#x7528;&#x52A8;&#x6001;&#x9012;&#x5F52;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5C06;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x53D8;&#x5473;&#x4E86;<span class="math inline">\(n^3\)</span>&#xFF0C;&#x5927;&#x5E45;&#x63D0;&#x5347;&#x4E86;&#x7B97;&#x6CD5;&#x7684;&#x6548;&#x7387;&#x3002;</p>
+<h3 id="reconstructing-an-optimal-solution">Reconstructing an optimal solution</h3>
+<p>&#x4E3A;&#x4E86;&#x91CD;&#x6784;&#x51FA;&#x6700;&#x4F73;&#x89E3;&#xFF08;&#x5728;&#x5199;&#x7B97;&#x6CD5;&#x65F6;&#xFF0C;&#x5173;&#x6CE8;&#x7684;&#x662F;&#x6700;&#x4F73;&#x89E3;&#x7684;&#x503C;&#xFF09;&#xFF0C;&#x9700;&#x8981;&#x5728;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x4E2D;&#x4FDD;&#x7559;&#x4E00;&#x4E9B;&#x5173;&#x952E;&#x6570;&#x636E;&#xFF0C;&#x5982;&#x5728;&#x77E9;&#x9635;&#x4E58;&#x6CD5;&#x95EE;&#x9898;&#x4E2D;&#x4FDD;&#x5B58;&#x6BCF;&#x4E00;&#x6B65;&#x7684;<span class="math inline">\(k\)</span>&#x503C;&#xFF0C;&#x5373;&#x77E9;&#x9635;<span class="math inline">\(s[i,j]\)</span></p>
+<h3 id="memoization">Memoization</h3>
+<p>&#x5982;&#x5728;&#x6C42;&#x89E3;&#x94A2;&#x6761;&#x5207;&#x5272;&#x95EE;&#x9898;&#x4E00;&#x6837;&#xFF0C;&#x77E9;&#x9635;&#x4E58;&#x6CD5;&#x95EE;&#x9898;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x7684;&#x5907;&#x5FD8;&#x5F55;&#x6CD5;&#x89E3;&#x51B3;&#xFF0C;&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">MEMOIZED-MATRIX-CHAIN(p)</span><br><span class="line">n = p.length - 1</span><br><span class="line">m = new matrix[1~n][1~n]</span><br><span class="line">for i = 1 to n</span><br><span class="line">    for j = i to n</span><br><span class="line">        m[i,j] = MAX</span><br><span class="line">return LOOKUP-CHAIN(m,p,1,n)</span><br><span class="line"></span><br><span class="line">LOOKUP-CHAIN(m,p,i,j)</span><br><span class="line"></span><br><span class="line">if m[i,j] &lt; MAX</span><br><span class="line">    return m[i,j]</span><br><span class="line">else</span><br><span class="line">    for k = i to j-1</span><br><span class="line">        q = LOOKUP-CHAIN(m,p,i,k) + LOOKUP-CHAIN(m,p,k+1,j)</span><br><span class="line">        + p[i-1]p[k]p[j]</span><br><span class="line">    if q &lt; m[i,j]</span><br><span class="line">        m[i,j] = q</span><br><span class="line">return m[i,j]</span><br></pre></td></tr></table></figure>
+<p>c++&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MemoizedMatrixChain</span><span class="params">(<span class="keyword">int</span>* matrixSizeArray, Matrix* minMultiplications)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; minMultiplications-&gt;row; i++)</span><br><span class="line">	{</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; minMultiplications-&gt;column; j++)</span><br><span class="line">			minMultiplications-&gt;data[i][j] = INT_MAX;</span><br><span class="line">	}</span><br><span class="line">	LookupChain(matrixSizeArray, minMultiplications, <span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LookupChain</span><span class="params">(<span class="keyword">int</span>* matrixSizeArray, Matrix* minMultiplications, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="keyword">if</span> (minMultiplications-&gt;data[i][j] &lt; INT_MAX)</span><br><span class="line">		<span class="keyword">return</span> minMultiplications-&gt;data[i][j];</span><br><span class="line">	<span class="keyword">if</span> (i == j)</span><br><span class="line">		minMultiplications-&gt;data[i][j] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	{</span><br><span class="line">		minMultiplications-&gt;data[i][j] = INT_MAX;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> k = i; k &lt; j; k++)</span><br><span class="line">		{</span><br><span class="line">			<span class="keyword">int</span> tempMin = RecursiveMatrixChain(matrixSizeArray, minMultiplications, i, k) +</span><br><span class="line">				RecursiveMatrixChain(matrixSizeArray, minMultiplications, k + <span class="number">1</span>, j) + matrixSizeArray[i] * matrixSizeArray[k + <span class="number">1</span>] * matrixSizeArray[j + <span class="number">1</span>];</span><br><span class="line">			<span class="keyword">if</span> (tempMin &lt; minMultiplications-&gt;data[i][j])</span><br><span class="line">				minMultiplications-&gt;data[i][j] = tempMin;</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">return</span> minMultiplications-&gt;data[i][j];</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8BE5;&#x7B97;&#x6CD5;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x540C;&#x6837;&#x4E3A;<span class="math inline">\(O(n^3)\)</span></p>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x7A7A;&#x95F4;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x95EE;&#x9898;&#x90FD;&#x5FC5;&#x987B;&#x88AB;&#x89E3;&#x51B3;&#xFF0C;&#x90A3;&#x4E48;&#x81EA;&#x5E95;&#x5411;&#x4E0A;&#x6CD5;&#x7684;&#x6548;&#x7387;&#x66F4;&#x9AD8;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x51CF;&#x5C11;&#x4E86;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x5806;&#x6808;&#x7684;&#x82B1;&#x9500;&#x3002;&#x4F46;&#x5982;&#x679C;&#x5B50;&#x95EE;&#x9898;&#x7A7A;&#x95F4;&#x7684;&#x95EE;&#x9898;&#x5E76;&#x4E00;&#x5B9A;&#x9700;&#x8981;&#x5168;&#x90E8;&#x88AB;&#x89E3;&#x51B3;&#xFF0C;&#x90A3;&#x4E48;&#x81EA;&#x9876;&#x5411;&#x4E0B;&#x5907;&#x5FD8;&#x6CD5;&#x53EF;&#x80FD;&#x6548;&#x7387;&#x66F4;&#x9AD8;&#xFF0C;&#x56E0;&#x4E3A;&#x4ED6;&#x53EA;&#x4F1A;&#x8BA1;&#x7B97;&#x9700;&#x8981;&#x7528;&#x5230;&#x7684;&#x5B50;&#x95EE;&#x9898;&#x3002;</p>
+<h2 id="longest-common-subsequence">Longest common subsequence</h2>
+<p>//TODO</p>
+<h2 id="optimal-binary-search-trees">Optimal binary search trees</h2>
+<p>//TODO</p>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>Introduction to Algorithms</em> 3rd Sep.2009</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/IA-Chapter15-Notes/" title="《算法导论》 第十五章笔记">https://xuejiaw.github.io/IA-Chapter15-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/数据结构与算法/" rel="tag"># 数据结构与算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/CNI-Chapter5-Notes/" rel="prev" title="《计算机网络与因特网》 第五章笔记">
+      <i class="fa fa-chevron-left"></i> 《计算机网络与因特网》 第五章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/CNI-Chapter6-Notes/" rel="next" title="《计算机网络与因特网》 第六章笔记">
+      《计算机网络与因特网》 第六章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-15.-dynamic-programming"><span class="nav-number">1.</span> <span class="nav-text">Chapter 15. Dynamic Programming</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rod-cutting"><span class="nav-number">1.1.</span> <span class="nav-text">Rod cutting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#递归解法"><span class="nav-number">1.1.1.</span> <span class="nav-text">递归解法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#using-dynamic-programming-for-optimal-rod-cutting"><span class="nav-number">1.1.2.</span> <span class="nav-text">using dynamic programming for optimal rod cutting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#subproblem-graphs"><span class="nav-number">1.1.3.</span> <span class="nav-text">Subproblem graphs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reconstructing-a-solution"><span class="nav-number">1.1.4.</span> <span class="nav-text">Reconstructing a solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#matrix-chain-multiplication"><span class="nav-number">1.2.</span> <span class="nav-text">Matrix-chain multiplication</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#counting-the-number-of-parenthesizations"><span class="nav-number">1.2.1.</span> <span class="nav-text">Counting the number of parenthesizations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#applying-dynamic-programming"><span class="nav-number">1.2.2.</span> <span class="nav-text">Applying dynamic programming</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#step-1the-structure-of-an-optimal-parethesization"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Step 1:The structure of an optimal parethesization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step2-a-recursive-solution"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">Step2: A recursive solution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-3-computing-the-optimal-costs"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">Step 3: Computing the optimal costs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#step-4-constructing-an-optimal-solution"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">Step 4: Constructing an optimal solution</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elements-of-dynamic-programming"><span class="nav-number">1.3.</span> <span class="nav-text">Elements of dynamic programming</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#optimal-substructure"><span class="nav-number">1.3.1.</span> <span class="nav-text">Optimal substructure</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#subtitles"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Subtitles</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#overlapping-subproblems"><span class="nav-number">1.3.2.</span> <span class="nav-text">Overlapping subproblems</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reconstructing-an-optimal-solution"><span class="nav-number">1.3.3.</span> <span class="nav-text">Reconstructing an optimal solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#memoization"><span class="nav-number">1.3.4.</span> <span class="nav-text">Memoization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#longest-common-subsequence"><span class="nav-number">1.4.</span> <span class="nav-text">Longest common subsequence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optimal-binary-search-trees"><span class="nav-number">1.5.</span> <span class="nav-text">Optimal binary search trees</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

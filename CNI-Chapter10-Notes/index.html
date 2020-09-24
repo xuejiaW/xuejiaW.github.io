@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;&amp;#x8BA1;&amp;#x7B97;&amp;#x673A;&amp;#x7F51;&amp;#x7EDC;&amp;#x4E0E;&amp;#x56E0;&amp;#x7279;&amp;#x7F51;&amp;#x300B; &amp;#x7B2C;&amp;#x5341;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x8C03;&amp;#x5236;&amp;#x4E0E;&amp;#x8C03;&amp;#x5236;&amp;#x5668;&amp;#x76F8;">
+<meta name="keywords" content="读书笔记,计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《计算机网络与因特网》 第十章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;&amp;#x8BA1;&amp;#x7B97;&amp;#x673A;&amp;#x7F51;&amp;#x7EDC;&amp;#x4E0E;&amp;#x56E0;&amp;#x7279;&amp;#x7F51;&amp;#x300B; &amp;#x7B2C;&amp;#x5341;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x8C03;&amp;#x5236;&amp;#x4E0E;&amp;#x8C03;&amp;#x5236;&amp;#x5668;&amp;#x76F8;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/2019-12-07-23-21-31.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/2019-12-07-23-28-45.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/2019-12-07-23-36-37.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/2019-12-08-00-05-53.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/2019-12-08-00-11-28.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/2019-12-08-00-18-17.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/2019-12-08-00-18-54.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/2019-12-08-10-04-32.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/2019-12-08-10-13-14.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/2019-12-08-10-28-37.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.057Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《计算机网络与因特网》 第十章笔记">
+<meta name="twitter:description" content="&amp;#x300A;&amp;#x8BA1;&amp;#x7B97;&amp;#x673A;&amp;#x7F51;&amp;#x7EDC;&amp;#x4E0E;&amp;#x56E0;&amp;#x7279;&amp;#x7F51;&amp;#x300B; &amp;#x7B2C;&amp;#x5341;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x8C03;&amp;#x5236;&amp;#x4E0E;&amp;#x8C03;&amp;#x5236;&amp;#x5668;&amp;#x76F8;">
+<meta name="twitter:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/2019-12-07-23-21-31.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/CNI-Chapter10-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《计算机网络与因特网》 第十章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/CNI-Chapter10-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《计算机网络与因特网》 第十章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-08 10:38:32" itemprop="dateCreated datePublished" datetime="2019-12-08T10:38:32+08:00">2019-12-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/计算机网络/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/CNI-Chapter10-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《计算机网络与因特网》 第十章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/CNI-Chapter10-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/CNI-Chapter10-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;&#x8BA1;&#x7B97;&#x673A;&#x7F51;&#x7EDC;&#x4E0E;&#x56E0;&#x7279;&#x7F51;&#x300B; &#x7B2C;&#x5341;&#x7AE0;&#x7B14;&#x8BB0;</p>
+<p>&#x8C03;&#x5236;&#x4E0E;&#x8C03;&#x5236;&#x5668;&#x76F8;&#x5173;&#x5185;&#x5BB9;&#x3002;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-10-modulation-and-modems">Chapter 10 Modulation And Modems</h1>
+<h2 id="introduction">Introduction</h2>
+<p>&#x8FD9;&#x4E00;&#x7AE0;&#x8BA8;&#x8BBA;&#x6570;&#x636E;&#x901A;&#x4FE1;&#x4E2D;&#x7684;&#x8C03;&#x5236;&#x4E0E;&#x8C03;&#x5236;&#x5668;&#x76F8;&#x5173;&#x7684;&#x5185;&#x5BB9;&#x3002;</p>
+<p>&#x8C03;&#x5236;&#x662F;&#x5229;&#x7528;&#x9AD8;&#x9891;&#x7684;&#x4FE1;&#x606F;&#x6765;&#x643A;&#x5E26;&#x539F;&#x59CB;&#x6570;&#x636E;&#xFF0C;&#x5C06;&#x5206;&#x522B;&#x8BA8;&#x8BBA;&#x5F53;&#x539F;&#x59CB;&#x6570;&#x636E;&#x662F;&#x6A21;&#x62DF;&#x4FE1;&#x53F7;&#x548C;&#x6570;&#x5B57;&#x4FE1;&#x53F7;&#x7684;&#x60C5;&#x51B5;&#x3002;</p>
+<h2 id="carriersfrequencyand-propagation">Carriers,Frequency,And Propagation</h2>
+<p>&#x8BB8;&#x591A;&#x901A;&#x4FE1;&#x7CFB;&#x7EDF;&#x4F1A;&#x5229;&#x7528;&#x4E00;&#x4E2A;&#x6301;&#x7EED;&#x9707;&#x8361;&#x7684;&#x7535;&#x78C1;&#x6CE2;&#x6765;&#x4F5C;&#x4E3A;&#x4FE1;&#x606F;&#x7684;&#x8F7D;&#x6CE2;&#xFF08;Carrier&#xFF09;&#xFF0C;&#x901A;&#x5E38;&#x8FD9;&#x4E2A;&#x4FE1;&#x53F7;&#x90FD;&#x662F;&#x4E00;&#x4E2A;&#x9AD8;&#x9891;&#x4FE1;&#x53F7;&#x3002;&#x5728;&#x7B2C;&#x4E03;&#x7AE0;&#x6709;&#x63D0;&#x5230;&#xFF0C;&#x4FE1;&#x53F7;&#x7684;&#x9891;&#x7387;&#x4F1A;&#x5F71;&#x54CD;&#x4FE1;&#x53F7;&#x7684;&#x4F20;&#x64AD;&#x7279;&#x6027;&#xFF0C;&#x5982;&#x7A7F;&#x900F;&#x6027;&#xFF0C;&#x5BF9;&#x566A;&#x58F0;&#x7684;&#x654F;&#x611F;&#x6027;&#x7B49;&#x3002;</p>
+<h2 id="analog-modulation-schemes">Analog Modulation Schemes</h2>
+<p><code>&#x8C03;&#x5236;&#xFF08;Modulation&#xFF09;</code>&#x610F;&#x4E3A;&#x6839;&#x636E;&#x539F;&#x59CB;&#x4FE1;&#x53F7;&#x6765;&#x6539;&#x53D8;&#x8F7D;&#x6CE2;&#x7684;&#x7279;&#x6027;&#x3002;&#x8C03;&#x5236;&#x6709;&#x4E24;&#x4E2A;&#x8F93;&#x5165;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x8F7D;&#x6CE2;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x539F;&#x4FE1;&#x53F7;&#xFF0C;&#x7136;&#x540E;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;&#x8C03;&#x5236;&#x540E;&#x7684;&#x8F7D;&#x6CE2;&#x4F5C;&#x4E3A;&#x8F93;&#x51FA;&#x3002;&#x8C03;&#x5236;&#x7684;&#x539F;&#x7406;&#x56FE;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/CNI-Chapter10-Notes/2019-12-07-23-21-31.png" alt="&#x8C03;&#x5236;&#x539F;&#x7406;&#x56FE;"></p>
+<p>&#x8F93;&#x5165;&#x7684;&#x539F;&#x4FE1;&#x53F7;&#x5FC5;&#x987B;&#x6539;&#x53D8;&#x8F7D;&#x6CE2;&#x7684;&#x4E00;&#x4E2A;&#x7279;&#x6027;&#xFF0C;&#x6839;&#x636E;&#x7279;&#x6027;&#x7684;&#x4E0D;&#x540C;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;<code>&#x632F;&#x5E45;&#x8C03;&#x5236;&#xFF08;Amplitude modulation&#xFF09;</code>&#xFF0C;<code>&#x9891;&#x79FB;&#x8C03;&#x5236;&#xFF08;Frequency modulation&#xFF09;</code>&#xFF0C;<code>&#x79FB;&#x76F8;&#x8C03;&#x5236;&#xFF08;Phase shift modulation&#xFF09;</code>&#x3002;&#x5176;&#x4E2D;&#x524D;&#x4E24;&#x79CD;&#x6700;&#x4E3A;&#x666E;&#x904D;&#x3002;</p>
+<h2 id="amplitude-modulation">Amplitude Modulation</h2>
+<p><code>&#x632F;&#x5E45;&#x8C03;&#x5236;&#xFF08;Amplitude modulation&#xFF09;</code>&#x662F;&#x6839;&#x636E;&#x539F;&#x4FE1;&#x53F7;&#x6539;&#x53D8;&#x8F7D;&#x6CE2;&#x7684;&#x632F;&#x5E45;&#x3002;&#x4ECE;&#x65F6;&#x57DF;&#x56FE;&#x4E0A;&#x770B;&#xFF0C;&#x8C03;&#x5236;&#x540E;&#x7684;&#x6CE2;&#x5F62;&#x7684;&#x8F6E;&#x5ED3;&#x4E0E;&#x539F;&#x4FE1;&#x53F7;&#x57FA;&#x672C;&#x76F8;&#x540C;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#xFF08;a&#xFF09;&#x662F;&#x9AD8;&#x9891;&#x8F7D;&#x6CE2;&#xFF0C;&#xFF08;b&#xFF09;&#x662F;&#x539F;&#x4FE1;&#x53F7;&#xFF0C;&#xFF08;c&#xFF09;&#x662F;&#x8C03;&#x5236;&#x540E;&#x7684;&#x4FE1;&#x53F7;&#x3002;</p>
+<p><img src="/CNI-Chapter10-Notes/2019-12-07-23-28-45.png" alt="&#x632F;&#x5E45;&#x8C03;&#x5236;"></p>
+<h2 id="frequency-modulation">Frequency Modulation</h2>
+<p><code>&#x9891;&#x79FB;&#x8C03;&#x5236;&#xFF08;Frequency modulation&#xFF09;</code>&#x662F;&#x6839;&#x636E;&#x539F;&#x4FE1;&#x53F7;&#x6539;&#x53D8;&#x8F7D;&#x6CE2;&#x7684;&#x9891;&#x7387;&#xFF0C;&#x5F53;&#x4FE1;&#x53F7;&#x5F3A;&#x662F;&#xFF0C;&#x8F7D;&#x6CE2;&#x7684;&#x9891;&#x7387;&#x589E;&#x52A0;&#xFF0C;&#x53CD;&#x4E4B;&#x51CF;&#x5C11;&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x5373;&#x4E3A;&#x9891;&#x79FB;&#x8C03;&#x5236;&#x540E;&#x7684;&#x6837;&#x5B50;&#xFF1A;</p>
+<p><img src="/CNI-Chapter10-Notes/2019-12-07-23-36-37.png" alt="&#x9891;&#x79FB;&#x8C03;&#x5236;"></p>
+<h2 id="phase-shift-modulation">Phase Shift Modulation</h2>
+<p><code>&#x79FB;&#x76F8;&#x8C03;&#x5236;&#xFF08;Phase shift modulation&#xFF09;</code>&#x662F;&#x6839;&#x636E;&#x539F;&#x4FE1;&#x53F7;&#x6539;&#x53D8;&#x8F7D;&#x6CE2;&#x7684;&#x76F8;&#x4F4D;&#x3002;&#x7ECF;&#x8FC7;&#x7406;&#x8BBA;&#x4E0A;&#x53EF;&#x884C;&#xFF0C;&#x4F46;&#x5BF9;&#x4E8E;&#x6A21;&#x62DF;&#x4FE1;&#x53F7;&#x6765;&#x8BF4;&#xFF0C;&#x5F88;&#x5C11;&#x7528;&#x79FB;&#x76F8;&#x8C03;&#x5236;&#xFF0C;&#x56E0;&#x4E3A;&#x6A21;&#x62DF;&#x4FE1;&#x53F7;&#x91C7;&#x6837;&#x70B9;&#x7684;&#x6570;&#x636E;&#x53EF;&#x80FD;&#x6BD4;&#x8F83;&#x63A5;&#x8FD1;&#xFF0C;&#x5BFC;&#x81F4;&#x79FB;&#x76F8;&#x7684;&#x5927;&#x5C0F;&#x4E0D;&#x660E;&#x663E;&#xFF0C;&#x5F88;&#x5BB9;&#x6613;&#x88AB;&#x8BEF;&#x8BA4;&#x4E3A;&#x662F;&#x9891;&#x7387;&#x7684;&#x6539;&#x53D8;&#x3002;&#x4F46;&#x5BF9;&#x4E8E;&#x6570;&#x5B57;&#x4FE1;&#x53F7;&#x6765;&#x8BF4;&#x79FB;&#x76F8;&#x8C03;&#x5236;&#x56E0;&#x4E3A;&#x53EF;&#x4EE5;&#x4E00;&#x4E2A;&#x7801;&#x5143;&#x4F20;&#x9012;&#x591A;&#x4E2A;Bit&#x7684;&#x5B57;&#x8282;&#xFF0C;&#x6240;&#x4EE5;&#x7ECF;&#x5E38;&#x88AB;&#x4F7F;&#x7528;&#x3002;</p>
+<h2 id="amplitude-modulation-and-shannons-theorem">Amplitude Modulation And Shannon&apos;s Theorem</h2>
+<p>&#x5728;&#x4E4B;&#x524D;&#x89E3;&#x91CA;&#x632F;&#x5E45;&#x8C03;&#x5236;&#x7684;&#x793A;&#x610F;&#x56FE;&#x4E2D;&#xFF0C;&#x8C03;&#x5236;&#x540E;&#x4FE1;&#x53F7;&#x53D8;&#x5316;&#x5E45;&#x5EA6;&#x8F83;&#x5927;&#xFF0C;&#x6700;&#x4F4E;&#x5904;&#x7684;&#x5F3A;&#x5EA6;&#x63A5;&#x8FD1;&#x4E8E;0&#x3002;&#x4F46;&#x5B9E;&#x9645;&#x8FD0;&#x7528;&#x65F6;&#xFF0C;&#x57FA;&#x672C;&#x4E0A;&#x632F;&#x5E45;&#x8C03;&#x5236;&#x7684;&#x5E45;&#x5EA6;&#x53D8;&#x5316;&#x5F88;&#x5C0F;&#x3002;&#x56E0;&#x4E3A;&#x8003;&#x8651;&#x5230;&#x6709;&#x566A;&#x58F0;&#x7684;&#x5B58;&#x5728;&#xFF0C;&#x5982;&#x679C;&#x4FE1;&#x53F7;&#x7684;&#x53D8;&#x5316;&#x5E45;&#x5EA6;&#x8F83;&#x5927;&#xFF0C;&#x5728;&#x4FE1;&#x53F7;&#x6700;&#x5F31;&#x65F6;&#x7684;&#x4FE1;&#x566A;&#x6BD4;&#x4F1A;&#x5F88;&#x4F4E;&#xFF0C;&#x5219;&#x51E0;&#x4E4E;&#x65E0;&#x6CD5;&#x4F20;&#x9012;&#x6709;&#x6548;&#x4FE1;&#x606F;&#x3002;</p>
+<h2 id="modulationdigital-inputand-shift-keying">Modulation,Digital Input,And Shift Keying</h2>
+<p>&#x4E3A;&#x4E86;&#x533A;&#x5206;&#x6A21;&#x62DF;&#x4FE1;&#x53F7;&#x548C;&#x6570;&#x5B57;&#x4FE1;&#x53F7;&#x7684;&#x8C03;&#x5236;&#xFF0C;&#x4F7F;&#x7528;&#x5C5E;&#x4E8E;<code>&#x79FB;&#x4F4D;&#x952E;&#x63A7;&#xFF08;Shift Keying&#xFF09;</code>&#x6765;&#x8868;&#x793A;&#x6570;&#x5B57;&#x4FE1;&#x53F7;&#x7684;&#x8C03;&#x5236;&#x3002;&#x6570;&#x5B57;&#x4FE1;&#x53F7;&#x7684;&#x8C03;&#x5236;&#x4E0E;&#x6A21;&#x62DF;&#x4FE1;&#x53F7;&#x8C03;&#x5236;&#x57FA;&#x672C;&#x539F;&#x7406;&#x7C7B;&#x4F3C;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x4F5C;&#x4E3A;&#x539F;&#x4FE1;&#x53F7;&#x7684;&#x6A21;&#x62DF;&#x4FE1;&#x53F7;&#x662F;&#x8FDE;&#x7EED;&#x7684;&#x6570;&#x503C;&#x53D8;&#x5316;&#xFF0C;&#x800C;&#x6570;&#x5B57;&#x4FE1;&#x53F7;&#x662F;&#x79BB;&#x6563;&#x7684;&#x51E0;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x6570;&#x503C;&#x3002;&#x632F;&#x5E45;&#x4E0E;&#x9891;&#x7387;&#x79FB;&#x4F4D;&#x952E;&#x63A7;&#x5982;&#x4E0B;&#x56FE;&#xFF0C;(a)&#x662F;&#x8F7D;&#x6CE2;&#xFF0C;(b)&#x662F;&#x539F;&#x4FE1;&#x53F7;&#xFF0C;(c)&#x662F;&#x632F;&#x5E45;&#x79FB;&#x4F4D;&#x952E;&#x63A7;&#xFF0C;(d)&#x662F;&#x9891;&#x7387;&#x79FB;&#x4F4D;&#x952E;&#x63A7;</p>
+<p><img src="/CNI-Chapter10-Notes/2019-12-08-00-05-53.png" alt="&#x632F;&#x5E45;&#xFF0C;&#x9891;&#x7387;&#x79FB;&#x4F4D;&#x952E;&#x63A7;"></p>
+<h2 id="phase-shift-keying">Phase Shift Keying</h2>
+<p><code>&#x76F8;&#x4F4D;&#x79FB;&#x4F4D;&#x952E;&#x63A7;(Phase Shift Keying)</code>&#x662F;&#x6839;&#x636E;&#x539F;&#x4FE1;&#x53F7;&#x7A81;&#x7136;&#x7684;&#x6539;&#x53D8;&#x8F7D;&#x6CE2;&#x7684;&#x76F8;&#x4F4D;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x5373;&#x4E3A;&#x76F8;&#x4F4D;&#x79FB;&#x4F4D;&#x952E;&#x63A7;&#x7684;&#x793A;&#x610F;&#x56FE;&#x3002;</p>
+<p><img src="/CNI-Chapter10-Notes/2019-12-08-00-11-28.png" alt="&#x76F8;&#x4F4D;&#x79FB;&#x4F4D;&#x952E;&#x63A7;"></p>
+<h2 id="phase-shift-and-a-constellation-diagram">Phase Shift And A Constellation Diagram</h2>
+<p>&#x5982;&#x4E4B;&#x524D;&#x6240;&#x793A;&#xFF0C;&#x76F8;&#x4F4D;&#x79FB;&#x4F4D;&#x952E;&#x63A7;&#x6700;&#x5927;&#x7684;&#x4F18;&#x52BF;&#x5728;&#x4E8E;&#x53EF;&#x4EE5;&#x7528;&#x4E00;&#x4E2A;&#x7801;&#x5143;&#x4F20;&#x9012;&#x591A;&#x4E2A;bit&#x3002;&#x53EF;&#x901A;&#x8FC7;<span class="math inline">\(2^n\)</span>&#x4E2A;&#x76F8;&#x4F4D;&#x6765;&#x4F7F;&#x4E00;&#x4E2A;&#x7801;&#x5143;&#x53EF;&#x643A;&#x5E26;<span class="math inline">\(n\)</span> bit&#x6570;&#x636E;&#x3002;&#x4F7F;&#x7528;&#x661F;&#x5EA7;&#x56FE;&#x6765;&#x8868;&#x793A;&#x76F8;&#x4F4D;&#x53D8;&#x5316;&#x5927;&#x5C0F;&#x4E0E;&#x8BE5;&#x5927;&#x5C0F;&#x4E0E;&#x5BF9;&#x5E94;&#x6570;&#x636E;&#x7684;&#x5173;&#x7CFB;&#x3002;&#x661F;&#x5EA7;&#x56FE;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x56FE;&#xFF08;1&#xFF09;&#x662F;&#x53EA;&#x6709;&#x4E24;&#x4E2A;&#x76F8;&#x4F4D;&#x53D8;&#x5316;&#xFF0C;&#x5373;&#x8868;&#x793A;0&#x548C;1&#xFF0C;&#x56FE;&#xFF08;2&#xFF09;&#x662F;&#x6709;&#x56DB;&#x4E2A;&#x76F8;&#x4F4D;&#x53D8;&#x5316;&#xFF0C;&#x53EF;&#x4EE3;&#x8868;&#x4E24;&#x4E2A;bit,&#x5373;00,01,10,11&#x3002;</p>
+<p><img src="/CNI-Chapter10-Notes/2019-12-08-00-18-17.png" alt="&#x4E24;&#x4E2A;&#x76F8;&#x4F4D;&#x7684;&#x76F8;&#x4F4D;&#x79FB;&#x4F4D;&#x952E;&#x63A7;"></p>
+<p><img src="/CNI-Chapter10-Notes/2019-12-08-00-18-54.png" alt="&#x56DB;&#x4E2A;&#x76F8;&#x4F4D;&#x7684;&#x76F8;&#x4F4D;&#x79FB;&#x4F4D;&#x952E;&#x63A7;"></p>
+<h2 id="quadrature-amplitude-modulation">Quadrature Amplitude Modulation</h2>
+<p>&#x5982;&#x4E0A;&#x8282;&#x6240;&#x8FF0;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x4F7F;&#x7528;&#x76F8;&#x4F4D;&#x79FB;&#x4F4D;&#x952E;&#x63A7;&#x65F6;&#x91C7;&#x7528;&#x591A;&#x4E2A;&#x76F8;&#x4F4D;&#x95F4;&#x9694;&#x4F7F;&#x4E00;&#x4E2A;&#x7801;&#x5143;&#x4F20;&#x9012;&#x591A;&#x4E2A;bit&#x3002;&#x4F46;&#x67D0;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x786C;&#x4EF6;&#x65E0;&#x6CD5;&#x68C0;&#x6D4B;&#x8FC7;&#x4E8E;&#x7CBE;&#x7EC6;&#x7684;&#x76F8;&#x4F4D;&#x53D8;&#x5316;&#x3002;&#x8FD9;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x964D;&#x76F8;&#x4F4D;&#x79FB;&#x4F4D;&#x952E;&#x63A7;&#x548C;&#x632F;&#x5E45;&#x79FB;&#x4F4D;&#x952E;&#x63A7;&#x7ED3;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x4F7F;&#x4E00;&#x4E2A;&#x7801;&#x5143;&#x53EF;&#x643A;&#x5E26;&#x66F4;&#x591A;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x65B9;&#x6CD5;&#x79F0;&#x4E3A;<code>&#x6B63;&#x4EA4;&#x632F;&#x5E45;&#x8C03;&#x5236;&#xFF08;Quadrature Amplitude Modulation&#xFF09;</code>&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter10-Notes/2019-12-08-10-04-32.png" alt="&#x6B63;&#x4EA4;&#x632F;&#x5E45;&#x8C03;&#x5236;"></p>
+<p>&#x5982;&#x4E0A;&#x56FE;&#xFF0C;&#x4E00;&#x5171;&#x6709;&#x56DB;&#x4E2A;&#x76F8;&#x4F4D;&#x533A;&#x5206;&#xFF0C;&#x6BCF;&#x4E2A;&#x70B9;&#x8DDD;&#x79BB;&#x539F;&#x70B9;&#x7684;&#x8DDD;&#x79BB;&#x4EE3;&#x8868;&#x632F;&#x5E45;&#xFF0C;&#x4E00;&#x5171;&#x6709;&#x56DB;&#x4E2A;&#x7535;&#x538B;&#xFF0C;&#x56E0;&#x6B64;&#x4E00;&#x5171;&#x6709;16&#x79CD;&#x7EC4;&#x5408;&#xFF0C;&#x4E00;&#x4E2A;&#x7801;&#x5143;&#x53EF;&#x4EE5;&#x643A;&#x5E26;4&#x4E2A;bit&#x3002;</p>
+<h2 id="modem-hardware-for-modulation-and-demodulation">Modem Hardware For Modulation And Demodulation</h2>
+<p>&#x5C06;&#x4E00;&#x7CFB;&#x5217;&#x7684;&#x6570;&#x636E;bit&#x4F5C;&#x4E3A;&#x8F93;&#x5165;&#xFF0C;&#x7136;&#x540E;&#x6839;&#x636E;&#x8FD9;&#x4E9B;&#x539F;&#x6570;&#x636E;&#x5BF9;&#x8F7D;&#x6CE2;&#x8FDB;&#x884C;&#x8C03;&#x5236;&#x7684;&#x8BBE;&#x5907;&#x79F0;&#x4E3A;<code>&#x8C03;&#x5236;&#x5668;&#xFF08;Modulator&#xFF09;</code>&#xFF0C;&#x53CD;&#x4E4B;&#x6839;&#x636E;&#x8C03;&#x5236;&#x540E;&#x7684;&#x8F7D;&#x6CE2;&#x91CD;&#x65B0;&#x89E3;&#x6790;&#x51FA;&#x539F;&#x4FE1;&#x53F7;&#x7684;&#x673A;&#x5668;&#x79F0;&#x4E3A;<code>&#x89E3;&#x8C03;&#x5668;&#xFF08;Demodulator&#xFF09;</code>&#x3002;&#x5728;&#x5B9E;&#x9645;&#x4E2D;&#xFF0C;&#x5927;&#x90E8;&#x5206;&#x7684;&#x901A;&#x4FE1;&#x8BBE;&#x5907;&#x540C;&#x65F6;&#x5305;&#x542B;&#x8C03;&#x5236;&#x5668;&#x548C;&#x89E3;&#x8C03;&#x5668;&#xFF0C;&#x8FD9;&#x79CD;&#x8BBE;&#x5907;&#x88AB;&#x79F0;&#x4E3A;<code>&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;&#xFF08;Modem&#xFF09;</code>&#x3002;&#x4E0B;&#x56FE;&#x662F;&#x4E24;&#x4E2A;&#x8BA1;&#x7B97;&#x673A;&#x7684;&#x901A;&#x4FE1;&#x7B80;&#x56FE;&#xFF0C;&#x5728;&#x4E24;&#x8005;&#x5C06;&#x6570;&#x636E;&#x4F20;&#x7ED9;&#x4E2D;&#x95F4;&#x7684;&#x7535;&#x7F06;&#x5A92;&#x4ECB;&#x524D;&#xFF0C;&#x90FD;&#x7ECF;&#x8FC7;&#x4E86;&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;</p>
+<p><img src="/CNI-Chapter10-Notes/2019-12-08-10-13-14.png" alt="&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;"></p>
+<h2 id="optical-and-radio-frequency-modems">Optical And Radio Frequency Modems</h2>
+<p>&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;&#x4E0D;&#x4EC5;&#x53EF;&#x7528;&#x4E8E;&#x7535;&#x7F06;&#x7684;&#x4F20;&#x8F93;&#xFF0C;&#x5BF9;&#x4E8E;&#x65E0;&#x7EBF;&#x7535;&#x6CE2;&#x548C;&#x5149;&#x7EA4;&#x4E5F;&#x540C;&#x6837;&#x9002;&#x7528;&#xFF0C;&#x539F;&#x7406;&#x4E5F;&#x4E00;&#x6837;&#xFF0C;&#x5728;&#x53D1;&#x9001;&#x7AEF;&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;&#x5BF9;&#x8F7D;&#x6CE2;&#x8FDB;&#x884C;&#x8C03;&#x5236;&#xFF0C;&#x5728;&#x63A5;&#x6536;&#x7AEF;&#xFF0C;&#x6570;&#x636E;&#x4ECE;&#x88AB;&#x8C03;&#x5236;&#x540E;&#x7684;&#x8F7D;&#x6CE2;&#x4E2D;&#x4F1A;&#x63D0;&#x53D6;&#x3002;</p>
+<h2 id="dialup-modems">Dialup Modems</h2>
+<p>&#x5728;&#x8BED;&#x97F3;&#x7535;&#x8BDD;&#x7CFB;&#x7EDF;&#x4E2D;&#xFF0C;&#x4F7F;&#x7528;&#x7684;&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;&#x79F0;&#x4E3A;<code>&#x62E8;&#x53F7;&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;&#xFF08;Dialup Modems&#xFF09;</code>&#xFF0C;&#x5176;&#x4E0E;&#x666E;&#x901A;&#x7684;&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;&#x6700;&#x5927;&#x7684;&#x533A;&#x522B;&#x5728;&#x4E8E;&#xFF0C;&#x524D;&#x8005;&#x7528;&#x7684;&#x662F;&#x8BED;&#x97F3;&#x4FE1;&#x53F7;&#xFF0C;&#x540E;&#x8005;&#x7528;&#x7684;&#x662F;&#x7535;&#x4FE1;&#x53F7;&#xFF0C;&#x800C;&#x4E14;&#x62E8;&#x53F7;&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;&#x5360;&#x7528;&#x7684;&#x5E26;&#x5BBD;&#x66F4;&#x5C0F;&#x3002;</p>
+<p>&#x56E0;&#x4E3A;&#x7535;&#x8BDD;&#x7CFB;&#x7EDF;&#x63A5;&#x53D7;&#x7684;&#x662F;&#x6A21;&#x62DF;&#x4FE1;&#x53F7;&#xFF0C;&#x6240;&#x4EE5;&#x62E8;&#x53F7;&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;&#x4E5F;&#x662F;&#x4E00;&#x4E2A;&#x5BF9;&#x6A21;&#x62DF;&#x4FE1;&#x53F7;&#x8FDB;&#x884C;&#x8C03;&#x5236;&#x7684;&#x8BBE;&#x5907;&#x3002;&#x4F46;&#x8BBD;&#x523A;&#x7684;&#x662F;&#x73B0;&#x4EE3;&#x7535;&#x8BDD;&#x7CFB;&#x7EDF;&#x7684;&#x4E2D;&#x95F4;&#x4F20;&#x8F93;&#x90E8;&#x5206;&#x662F;&#x6570;&#x5B57;&#x4FE1;&#x53F7;&#xFF0C;&#x4E8E;&#x662F;&#x53D1;&#x9001;&#x7AEF;&#x5728;&#x8C03;&#x5236;&#x540E;&#xFF0C;&#x9700;&#x8981;&#x5C06;&#x6A21;&#x62DF;&#x4FE1;&#x53F7;&#x8F6C;&#x6362;&#x4E3A;&#x6570;&#x5B57;&#x4FE1;&#x53F7;&#x3002;&#x800C;&#x5728;&#x63A5;&#x6536;&#x7AEF;&#xFF0C;&#x5728;&#x8FDB;&#x884C;&#x89E3;&#x8C03;&#x524D;&#x4E5F;&#x9700;&#x8981;&#x5148;&#x5C06;&#x4E2D;&#x95F4;&#x4F20;&#x8F93;&#x6765;&#x7684;&#x6570;&#x5B57;&#x4FE1;&#x53F7;&#x8F6C;&#x6362;&#x4E3A;&#x6A21;&#x62DF;&#x4FE1;&#x53F7;&#x3002;</p>
+<h2 id="qam-applied-to-dialup">QAM Applied To Dialup</h2>
+<p>&#x6B63;&#x4EA4;&#x632F;&#x5E45;&#x8C03;&#x5236;&#x4E5F;&#x540C;&#x6837;&#x53EF;&#x7528;&#x4E8E;&#x62E8;&#x53F7;&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;&#x4E2D;&#x3002;&#x56E0;&#x4E3A;&#x5927;&#x90E8;&#x5206;&#x8BED;&#x97F3;&#x9891;&#x7387;&#x672C;&#x8EAB;&#x662F;&#x4ECE;<span class="math inline">\(300HZ\sim 3300HZ\)</span>&#xFF0C;&#x4F46;&#x62E8;&#x53F7;&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;&#x53EA;&#x80FD;&#x63D0;&#x4F9B;<span class="math inline">\(600HZ\sim 3000HZ\)</span>&#xFF0C;&#x6240;&#x4EE5;&#x540C;&#x6837;&#x9700;&#x8981;&#x6B63;&#x4EA4;&#x632F;&#x5E45;&#x8C03;&#x5236;&#x6765;&#x4F7F;&#x4E00;&#x4E2A;&#x7801;&#x5143;&#x80FD;&#x643A;&#x5E26;&#x66F4;&#x591A;&#x7684;&#x6570;&#x636E;&#x3002;</p>
+<h2 id="v.32-and-v.32bis-dialup-modems">V.32 And V.32bis Dialup Modems</h2>
+<p>V.32&#x548C;V.32bis&#x662F;&#x4E24;&#x4E2A;&#x62E8;&#x53F7;&#x8C03;&#x5236;&#x89E3;&#x8C03;&#x5668;&#x7528;&#x6B63;&#x4EA4;&#x632F;&#x5E45;&#x8C03;&#x5236;&#x7684;&#x6807;&#x51C6;&#x3002;</p>
+<p>V.32&#x4F7F;&#x7528;32&#x4E2A;&#x632F;&#x5E45;&#x548C;&#x76F8;&#x4F4D;&#x7684;&#x7EC4;&#x5408;&#x6765;&#x8868;&#x793A;&#x6570;&#x636E;&#xFF0C;&#x53EF;&#x4EE5;&#x8FBE;&#x5230;&#x5355;&#x5411;&#x6BCF;&#x79D2;9600&#x4E2A;bit&#x7684;&#x6570;&#x636E;&#x901F;&#x7387;&#x3002;</p>
+<p><img src="/CNI-Chapter10-Notes/2019-12-08-10-28-37.png" alt="V.32"></p>
+<p>V.32bis&#x4F7F;&#x7528;128&#x4E2A;&#x632F;&#x5E45;&#x548C;&#x76F8;&#x4F4D;&#x7684;&#x7EC4;&#x5408;&#x6765;&#x8868;&#x6570;&#x636E;&#xFF0C;&#x53EF;&#x4EE5;&#x8FBE;&#x5230;&#x5355;&#x5411;&#x6BCF;&#x79D2;14400&#x4E2A;bit&#x7684;&#x6570;&#x636E;&#x901F;&#x7387;&#x3002;</p>
+<div class="note primary">
+            <ol type="1"><li><em>Computer Networks and Internets</em> 6th</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/CNI-Chapter10-Notes/" title="《计算机网络与因特网》 第十章笔记">https://xuejiaw.github.io/CNI-Chapter10-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/CNI-Chapter8-Notes/" rel="prev" title="《计算机网络与因特网》 第八章笔记">
+      <i class="fa fa-chevron-left"></i> 《计算机网络与因特网》 第八章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/CNI-Chapter11-Notes/" rel="next" title="《计算机网络与因特网》 第十一章笔记">
+      《计算机网络与因特网》 第十一章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-10-modulation-and-modems"><span class="nav-number">1.</span> <span class="nav-text">Chapter 10 Modulation And Modems</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#carriersfrequencyand-propagation"><span class="nav-number">1.2.</span> <span class="nav-text">Carriers,Frequency,And Propagation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#analog-modulation-schemes"><span class="nav-number">1.3.</span> <span class="nav-text">Analog Modulation Schemes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#amplitude-modulation"><span class="nav-number">1.4.</span> <span class="nav-text">Amplitude Modulation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#frequency-modulation"><span class="nav-number">1.5.</span> <span class="nav-text">Frequency Modulation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#phase-shift-modulation"><span class="nav-number">1.6.</span> <span class="nav-text">Phase Shift Modulation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#amplitude-modulation-and-shannons-theorem"><span class="nav-number">1.7.</span> <span class="nav-text">Amplitude Modulation And Shannon&#39;s Theorem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#modulationdigital-inputand-shift-keying"><span class="nav-number">1.8.</span> <span class="nav-text">Modulation,Digital Input,And Shift Keying</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#phase-shift-keying"><span class="nav-number">1.9.</span> <span class="nav-text">Phase Shift Keying</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#phase-shift-and-a-constellation-diagram"><span class="nav-number">1.10.</span> <span class="nav-text">Phase Shift And A Constellation Diagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#quadrature-amplitude-modulation"><span class="nav-number">1.11.</span> <span class="nav-text">Quadrature Amplitude Modulation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#modem-hardware-for-modulation-and-demodulation"><span class="nav-number">1.12.</span> <span class="nav-text">Modem Hardware For Modulation And Demodulation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optical-and-radio-frequency-modems"><span class="nav-number">1.13.</span> <span class="nav-text">Optical And Radio Frequency Modems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dialup-modems"><span class="nav-number">1.14.</span> <span class="nav-text">Dialup Modems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qam-applied-to-dialup"><span class="nav-number">1.15.</span> <span class="nav-text">QAM Applied To Dialup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v.32-and-v.32bis-dialup-modems"><span class="nav-number">1.16.</span> <span class="nav-text">V.32 And V.32bis Dialup Modems</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

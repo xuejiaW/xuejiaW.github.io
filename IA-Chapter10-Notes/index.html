@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;&amp;#x7B97;&amp;#x6CD5;&amp;#x5BFC;&amp;#x8BBA;&amp;#x300B;&amp;#x7B2C;&amp;#x5341;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#xFF0C;&amp;#x5305;&amp;#x62EC;&amp;#x6808;&amp;#xFF0C;&amp;#x961F;&amp;#x5217;&amp;#xFF0C;&amp;#x94FE;&amp;#x8868;&amp;#x7684;&amp;#x5B9E;&amp;#x">
+<meta name="keywords" content="读书笔记,数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《算法导论》 第十章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/IA-Chapter10-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;&amp;#x7B97;&amp;#x6CD5;&amp;#x5BFC;&amp;#x8BBA;&amp;#x300B;&amp;#x7B2C;&amp;#x5341;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#xFF0C;&amp;#x5305;&amp;#x62EC;&amp;#x6808;&amp;#xFF0C;&amp;#x961F;&amp;#x5217;&amp;#xFF0C;&amp;#x94FE;&amp;#x8868;&amp;#x7684;&amp;#x5B9E;&amp;#x">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-25-12-31-40.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-25-12-30-32.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-25-16-24-36.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-26-14-41-54.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-26-14-42-13.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-26-14-41-54.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-26-14-52-00.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-26-14-41-54.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-26-14-58-40.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-26-15-23-27.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-26-15-39-21.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-26-15-40-32.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.455Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《算法导论》 第十章笔记">
+<meta name="twitter:description" content="&amp;#x300A;&amp;#x7B97;&amp;#x6CD5;&amp;#x5BFC;&amp;#x8BBA;&amp;#x300B;&amp;#x7B2C;&amp;#x5341;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#xFF0C;&amp;#x5305;&amp;#x62EC;&amp;#x6808;&amp;#xFF0C;&amp;#x961F;&amp;#x5217;&amp;#xFF0C;&amp;#x94FE;&amp;#x8868;&amp;#x7684;&amp;#x5B9E;&amp;#x">
+<meta name="twitter:image" content="https://xuejiaw.github.io/IA-Chapter10-Notes/2019-10-25-12-31-40.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/IA-Chapter10-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《算法导论》 第十章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/IA-Chapter10-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《算法导论》 第十章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-05 14:32:10" itemprop="dateCreated datePublished" datetime="2019-11-05T14:32:10+08:00">2019-11-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/数据结构与算法/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/IA-Chapter10-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《算法导论》 第十章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/IA-Chapter10-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/IA-Chapter10-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;&#x7B97;&#x6CD5;&#x5BFC;&#x8BBA;&#x300B;&#x7B2C;&#x5341;&#x7AE0;&#x7B14;&#x8BB0;&#xFF0C;&#x5305;&#x62EC;&#x6808;&#xFF0C;&#x961F;&#x5217;&#xFF0C;&#x94FE;&#x8868;&#x7684;&#x5B9E;&#x73B0;&#x3002;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h2 id="chapter-10.-elementary-data-structures">Chapter 10. Elementary Data Structures</h2>
+<p>&#x96C6;&#x5408;<code>Set</code>&#x4F5C;&#x4E3A;&#x8BA1;&#x7B97;&#x673A;&#x79D1;&#x5B66;&#x7684;&#x57FA;&#x7840;&#xFF0C;&#x91CD;&#x8981;&#x6027;&#x4E0E;&#x6570;&#x5B66;&#x4E2D;&#x7684;&#x96C6;&#x5408;&#x76F8;&#x540C;&#x3002;&#x4F46;&#x6570;&#x5B66;&#x4E2D;&#x7684;&#x96C6;&#x5408;&#x662F;&#x4E0D;&#x53EF;&#x53D8;&#x7684;&#xFF0C;&#x8BA1;&#x7B97;&#x673A;&#x4E2D;&#x7684;&#x96C6;&#x5408;&#x53EF;&#x5728;&#x4EFB;&#x610F;&#x65F6;&#x523B;&#x6269;&#x5F20;&#xFF0C;&#x6536;&#x7F29;&#x548C;&#x66F4;&#x6539;&#xFF0C;&#x79F0;&#x4E4B;&#x4E3A;<code>&#x52A8;&#x6001;&#x96C6;&#x5408;&#xFF08;dynamic set&#xFF09;</code>&#x3002;&#x4E00;&#x822C;&#x52A8;&#x6001;&#x96C6;&#x5408;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x5982;&#x4E0B;&#x64CD;&#x4F5C;&#x4E2D;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF1A;</p>
+<p><code>Search</code>&#xFF0C;<code>Insert</code>&#xFF0C;<code>DELETE</code>&#xFF0C;<code>MINIMUM</code>&#xFF0C;<code>MAXIMUM</code>&#xFF0C;<code>SUCCESSOR</code>&#xFF0C;<code>PREDECESSOR</code></p>
+<p>&#x8FD9;&#x4E9B;&#x64CD;&#x4F5C;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;&#x4E24;&#x79CD;&#xFF0C;<code>&#x67E5;&#x8BE2;&#x64CD;&#x4F5C;(Queries)</code>&#x548C;<code>&#x4FEE;&#x6539;&#x64CD;&#x4F5C;(Modifying operations)</code>&#xFF0C;&#x5982;<code>Search</code>&#xFF0C;<code>MINIMUM</code>&#xFF0C;<code>MAXIMUM</code>&#xFF0C;<code>SUCCESSOR</code>&#xFF0C;<code>PREDECESSOR</code>&#x90FD;&#x5C5E;&#x4E8E;&#x524D;&#x8005;&#xFF0C;<code>Insert</code>&#xFF0C;<code>DELETE</code>&#x5C5E;&#x4E8E;&#x540E;&#x8005;</p>
+<h3 id="stacks-and-queues">Stacks and queues</h3>
+<p><code>&#x5806;&#x6808;(Stacks)</code>&#x662F;&#x540E;&#x8FDB;&#x5148;&#x51FA;&#xFF0C;<code>&#x961F;&#x5217;(Queues)</code>&#x662F;&#x5148;&#x8FDB;&#x5148;&#x51FA;&#x3002;</p>
+<h4 id="stacks">Stacks</h4>
+<p>&#x5728;&#x5806;&#x6808;&#x4E0A;&#x7684;&#x63D2;&#x5165;&#x64CD;&#x4F5C;&#x4E00;&#x822C;&#x6210;&#x4E3A;<code>Push</code>&#xFF0C;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#x4E00;&#x822C;&#x79F0;&#x4E3A;<code>Pop</code>&#x3002;&#x5806;&#x6808;&#x6709;&#x4E00;&#x4E2A;<code>top</code>&#x6307;&#x9488;&#x6307;&#x5411;&#x961F;&#x5217;&#x4E2D;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x5728;<code>Pop</code>&#x65F6;&#x8FD4;&#x56DE;&#x8BE5;&#x5143;&#x7D20;&#xFF0C;&#x5728;<code>Push</code>&#x65F6;top&#x6307;&#x9488;&#x5411;&#x524D;&#x79FB;&#x52A8;&#x4E00;&#x683C;&#xFF0C;&#x5E76;&#x5728;&#x65B0;&#x7684;&#x5730;&#x65B9;&#x63D2;&#x5165;&#x65B0;&#x503C;&#xFF0C;&#x5F53;<code>top</code>&#x4E3A;0&#x5219;&#x8BF4;&#x660E;&#x961F;&#x5217;&#x4E3A;&#x7A7A;&#x3002;</p>
+<p>&#x5806;&#x6808;&#x7684;&#x56FE;&#x89E3;&#x5982;&#x4E0B;&#x56FE;&#xFF0C;(a)&#x4E3A;&#x539F;&#x59CB;&#x6837;&#x5B50;&#xFF0C;(b)&#x4E3A;&#x6267;&#x884C;&#x4E86;<code>Push(17)&#x548C;Push(3)</code>&#x540E;&#x7684;&#x6837;&#x5B50;&#xFF0C;(c)&#x4E3A;&#x6267;&#x884C;&#x4E86;<code>Pop</code>&#x540E;&#x7684;&#x6837;&#x5B50;&#x3002;&#x56FE;&#x4E2D;&#x7684;<code>S.top</code>&#x8868;&#x793A;&#x5F53;&#x524D;&#x6307;&#x9488;&#x7684;&#x7D22;&#x5F15;&#x503C;&#x3002;</p>
+<p><img src="/IA-Chapter10-Notes/2019-10-25-12-31-40.png" alt="&#x5806;&#x6808;&#x56FE;&#x89E3;"></p>
+<p>&#x5806;&#x6808;&#x64CD;&#x4F5C;&#x5FAE;&#x6570;&#x636E;&#x5B9E;&#x73B0;&#xFF0C;&#x6BCF;&#x4E2A;&#x6B65;&#x9AA4;&#x7684;&#x590D;&#x6742;&#x5EA6;&#x90FD;&#x4E3A;<code>O(1)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">STACK_EMPTY(S):</span><br><span class="line"></span><br><span class="line">if s.top==0;</span><br><span class="line">    return true;</span><br><span class="line">else</span><br><span class="line">    return false;</span><br><span class="line"></span><br><span class="line">Push(S,x):</span><br><span class="line"></span><br><span class="line">S.top=S.top+1;</span><br><span class="line">S[S.top]=x;</span><br><span class="line"></span><br><span class="line">Pop(S):</span><br><span class="line"></span><br><span class="line">if STACK_EMPTY(S)</span><br><span class="line">    error&quot;underflow&quot;</span><br><span class="line">else</span><br><span class="line">    S.top=S.top-1;</span><br><span class="line">    return S[S.top+1]</span><br></pre></td></tr></table></figure>
+<p>c++&#x7684;&#x6570;&#x7EC4;&#x5B9E;&#x73B0;&#xFF0C;&#x4E0D;&#x652F;&#x6301;&#x8FD0;&#x884C;&#x65F6;&#x6269;&#x5927;&#x961F;&#x5217;&#x5927;&#x5C0F;&#x3002;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> data[MAX];</span><br><span class="line">	~Stack() {}</span><br><span class="line">	Stack() { top = <span class="number">-1</span>; }</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		<span class="keyword">if</span> (top &gt; (MAX - <span class="number">1</span>))</span><br><span class="line">		{</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Stack Overflow&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		data[++top] = value;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		<span class="keyword">if</span> (isEmpty())</span><br><span class="line">		{</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Stack is empty&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		{</span><br><span class="line">			<span class="keyword">return</span> data[top--];</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		<span class="keyword">return</span> top &lt; <span class="number">0</span>;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> top;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<h4 id="queues">Queues</h4>
+<p>&#x961F;&#x5217;&#x7684;&#x63D2;&#x5165;&#x64CD;&#x4F5C;&#x79F0;&#x4E3A;<code>ENQUEUE</code>&#xFF0C;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#x79F0;&#x4E3A;<code>DEQUEUE</code>&#x3002;&#x961F;&#x5217;&#x7684;&#x56FE;&#x89E3;&#x5982;&#x4E0B;&#x56FE;&#xFF0C;&#x961F;&#x5217;&#x5B58;&#x5728;&#x4E00;&#x4E2A;<code>head</code>&#x6307;&#x9488;&#x548C;&#x4E00;&#x4E2A;<code>tail</code>&#x6307;&#x9488;&#xFF0C;&#x4E24;&#x6307;&#x9488;&#x95F4;&#x7684;&#x6570;&#x636E;&#x4E3A;&#x961F;&#x5217;&#x4FDD;&#x5B58;&#x7684;&#x6570;&#x636E;&#x3002;&#x5F53;&#x8FDB;&#x884C;&#x63D2;&#x5165;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;<code>tail</code>&#x6307;&#x9488;&#x524D;&#x79FB;&#x5E76;&#x5728;&#x65B0;&#x5730;&#x65B9;&#x63D2;&#x5165;&#x6570;&#x636E;&#xFF0C;&#x5F53;&#x8FDB;&#x884C;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;<code>head</code>&#x6307;&#x9488;&#x8FD4;&#x56DE;&#x6307;&#x7740;&#x7684;&#x503C;&#xFF0C;&#x5E76;&#x524D;&#x79FB;&#x3002;</p>
+<p>&#x56FE;&#x89E3;&#x5982;&#x4E0B;&#x56FE;&#xFF0C;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x5927;&#x5C0F;&#x4E3A;12&#x7684;&#x6570;&#x7EC4;&#x8868;&#x793A;&#x961F;&#x5217;</p>
+<ol type="a">
+<li><p>&#x4E3A;&#x521D;&#x59CB;&#x72B6;&#x6001;&#xFF0C;&#x7D22;&#x5F15;7-11&#x4E3A;&#x539F;&#x59CB;&#x6570;&#x636E;</p></li>
+<li><p>&#x4E3A;&#x6267;&#x884C;&#x4E86;Enqueue(17),Enqueue(3),Enqueue(5)&#x540E;&#x7684;&#x6837;&#x5B50;&#xFF0C;&#x6BCF;&#x4E00;&#x6B65;&#x6267;&#x884C;&#x65F6;tail&#x6307;&#x9488;&#x5148;&#x5411;&#x524D;&#xFF0C;&#x518D;&#x63D2;&#x5165;&#x65B0;&#x503C;&#x3002;&#x5F53;&#x62B5;&#x8FBE;&#x6570;&#x7EC4;&#x8FB9;&#x754C;&#x65F6;&#xFF0C;&#x8FD4;&#x56DE;&#x6570;&#x7EC4;&#x7684;&#x5F00;&#x5934;&#x5904;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#x63D2;&#x5165;&#x64CD;&#x4F5C;</p></li>
+<li><p>&#x4E3A;&#x6267;&#x884C;&#x4E86;Dequeue&#xFF08;&#xFF09;&#x64CD;&#x4F5C;&#x7684;&#x6837;&#x5B50;</p></li>
+</ol>
+<p><img src="/IA-Chapter10-Notes/2019-10-25-12-30-32.png" alt="&#x961F;&#x5217;&#x56FE;&#x89E3;"></p>
+<p>&#x961F;&#x5217;&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ENQUEUE(Q,X):</span><br><span class="line">Q[Q..tail] = x</span><br><span class="line">if [Q.tail == Q.length]</span><br><span class="line">	Q.tail = 1;</span><br><span class="line">else</span><br><span class="line">	Q.tail = Q.tail + 1</span><br><span class="line"></span><br><span class="line">DEQUEUE(Q):</span><br><span class="line"></span><br><span class="line">x=Q[Q.head]</span><br><span class="line"></span><br><span class="line">if [Q.head == Q.length]</span><br><span class="line">	Q.head = 1;</span><br><span class="line">else</span><br><span class="line">	Q.head = Q.head + 1</span><br><span class="line">return x</span><br></pre></td></tr></table></figure>
+<p>c++&#x7684;&#x5FAA;&#x73AF;&#x6570;&#x7EC4;&#x5B9E;&#x73B0;</p>
+<p>&#x5F53;<code>top == head</code>&#x65F6;&#x8BA4;&#x4E3A;&#x961F;&#x5217;&#x4E3A;&#x7A7A;&#xFF0C;&#x5F53;<code>(top+1) % size == head</code>&#x65F6;&#xFF0C;&#x8BA4;&#x4E3A;&#x961F;&#x5217;&#x5DF2;&#x6EE1;&#x3002;&#x6240;&#x4EE5;&#x5728;&#x961F;&#x5217;&#x63D2;&#x6EE1;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x6C38;&#x8FDC;&#x4F1A;&#x6709;&#x4E00;&#x4E2A;&#x7A7A;&#x7684;&#x503C;&#xFF08;&#x56E0;&#x4E3A;top&#x4E0D;&#x7B49;&#x4E8E;head&#xFF09;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Queue</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Queue()</span><br><span class="line">	{</span><br><span class="line">		head = tail = <span class="number">0</span>;</span><br><span class="line">	}</span><br><span class="line">	~Queue()</span><br><span class="line">	{</span><br><span class="line">		head = tail = <span class="number">0</span>;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Enqueue</span><span class="params">(<span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		<span class="keyword">if</span> ((tail + <span class="number">1</span>) % QUEUESIZE == <span class="number">0</span>)</span><br><span class="line">		{</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Queue is full&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		data[tail] = value;</span><br><span class="line"></span><br><span class="line">		tail = (tail == QUEUESIZE - <span class="number">1</span>) ? <span class="number">0</span> : tail + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">Dequeue</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		<span class="keyword">if</span> (Empty())</span><br><span class="line">		{</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Queue is empty&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> value = data[head];</span><br><span class="line"></span><br><span class="line">		head = (head == QUEUESIZE - <span class="number">1</span>) ? <span class="number">0</span> : head + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> value;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">Empty</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		<span class="keyword">return</span> head == tail;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> data[QUEUESIZE];</span><br><span class="line">	<span class="keyword">int</span> head;</span><br><span class="line">	<span class="keyword">int</span> tail;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<h3 id="linked-lists">Linked lists</h3>
+<p><code>&#x94FE;&#x8868;(linked list)</code>&#x662F;&#x4E00;&#x79CD;&#x5BF9;&#x8C61;&#x7EBF;&#x6027;&#x6392;&#x5217;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;<code>&#x53CC;&#x5411;&#x94FE;&#x8868;(Doubly linked list)</code>&#x6765;&#x8BF4;&#xFF0C;&#x6BCF;&#x4E2A;&#x7ED3;&#x70B9;&#x90FD;&#x4FDD;&#x7559;&#x6709;&#x4E09;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x8868;&#x793A;&#x5C5E;&#x6027;&#x7684;<code>key</code>&#xFF0C;&#x4EE5;&#x53CA;&#x4E24;&#x4E2A;&#x6307;&#x9488;<code>next</code>&#x548C;<code>prev</code>&#x3002;&#x5982;&#x679C;&#x5BF9;&#x4E8E;&#x7ED3;&#x70B9;<code>x</code>&#x6765;&#x8BF4;,<code>x.prev==Null</code>&#xFF0C;&#x5219;&#x8BF4;&#x660E;<code>x</code>&#x662F;&#x5934;&#x7ED3;&#x70B9;&#xFF0C;&#x5982;&#x679C;<code>x.next==Null</code>&#xFF0C;&#x5219;&#x8BF4;&#x660E;<code>x</code>&#x662F;&#x5C3E;&#x7ED3;&#x70B9;&#x3002;&#x53E6;&#x5916;&#x8FD8;&#x6709;&#x5B58;&#x6709;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;<code>head</code>&#x6765;&#x6307;&#x5411;&#x5934;&#x7ED3;&#x70B9;&#xFF0C;&#x5982;&#x679C;<code>head</code>&#x4E3A;&#x7A7A;&#xFF0C;&#x5219;&#x8BF4;&#x660E;&#x5217;&#x8868;&#x4E3A;&#x7A7A;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;<code>&#x5355;&#x94FE;&#x8868;&#xFF08;Singly linked list&#xFF09;</code>&#xFF0C;&#x5220;&#x9664;<code>&#x53CC;&#x5411;&#x94FE;&#x8868;</code>&#x4E2D;&#x7684;<code>prev</code>&#x5BF9;&#x8C61;&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;<code>&#x5FAA;&#x73AF;&#x94FE;&#x8868;&#xFF08;Circular list&#xFF09;</code>&#xFF0C;&#x5C3E;&#x7ED3;&#x70B9;&#x7684;<code>next</code>&#x6307;&#x5411;&#x5934;&#x7ED3;&#x70B9;&#xFF0C;&#x5934;&#x7ED3;&#x70B9;&#x7684;<code>prev</code>&#x6307;&#x5411;&#x5C3E;&#x7ED3;&#x70B9;&#x3002;</p>
+<p>&#x4E0B;&#x56FE;&#x662F;<code>&#x975E;&#x5FAA;&#x73AF;&#x53CC;&#x5411;&#x94FE;&#x8868;</code>&#x7684;&#x56FE;&#x89E3;</p>
+<ol type="a">
+<li><p>&#x4E3A;&#x5B58;&#x6709;&#x6570;&#x636E;{1,4,9,16}&#x7684;&#x5217;&#x8868;</p></li>
+<li><p>&#x4E3A;&#x63D2;&#x5165;&#x4E86;&#x6570;&#x636E;25&#x4E4B;&#x540E;&#x7684;&#x5217;&#x8868;</p></li>
+<li><p>&#x4E3A;&#x5220;&#x9664;&#x4E86;&#x6570;&#x636E;4&#x4E4B;&#x540E;&#x7684;&#x5217;&#x8868;</p></li>
+</ol>
+<p><img src="/IA-Chapter10-Notes/2019-10-25-16-24-36.png" alt="&#x53CC;&#x5411;&#x94FE;&#x8868;"></p>
+<p>&#x94FE;&#x8868;&#x901A;&#x5E38;&#x9700;&#x8981;&#x652F;&#x6301;<code>Search</code>&#xFF0C;<code>Insert</code>&#x548C;<code>Delete</code>&#x64CD;&#x4F5C;&#xFF0C;&#x4E09;&#x8005;&#x7684;&#x4F2A;&#x4EE3;&#x7801;&#x5206;&#x522B;&#x4E3A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">SEARCH(L,k):</span><br><span class="line"></span><br><span class="line">x=L.head</span><br><span class="line">while x!=null and x.key!=k</span><br><span class="line">	x=x.next</span><br><span class="line">return x</span><br><span class="line"></span><br><span class="line">INSERT(L,k):</span><br><span class="line"></span><br><span class="line">x.next=L.head</span><br><span class="line">if L.head!=null</span><br><span class="line">	L.head.prev=x;</span><br><span class="line">x.prev=null;</span><br><span class="line">L.head=x;</span><br><span class="line"></span><br><span class="line">DELETE(L,x)</span><br><span class="line"></span><br><span class="line">if(x.prev!=Null)</span><br><span class="line">	x.prev.next=x.next</span><br><span class="line">else</span><br><span class="line">	L.head=x.next</span><br><span class="line"></span><br><span class="line">if x.next!=null</span><br><span class="line">	x.next.prev=x.prev</span><br></pre></td></tr></table></figure>
+<p><code>Search</code>&#x7684;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(\Theta(n)\)</span>&#xFF0C;<code>Insert</code>&#x7684;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(O(1)\)</span>&#xFF0C;<code>Delete</code>&#x7684;&#x590D;&#x6742;&#x5EA6;&#x672C;&#x8EAB;&#x4E3A;<span class="math inline">\(O(1)\)</span>&#xFF0C;&#x4F46;&#x662F;&#x901A;&#x5E38;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#x524D;&#x9700;&#x8981;&#x5148;&#x627E;&#x5230;&#x8BE5;&#x5143;&#x7D20;&#xFF0C;&#x6240;&#x4EE5;&#x6574;&#x4F53;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(\Theta(n)\)</span></p>
+<p>&#x5217;&#x8868;&#x7684;C++&#x5B9E;&#x73B0;&#x5982;&#x4E0B;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">	<span class="keyword">int</span> value;</span><br><span class="line">	Node* next;</span><br><span class="line">	Node* prev;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">List</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	List()</span><br><span class="line">	{</span><br><span class="line">		head = <span class="literal">nullptr</span>;</span><br><span class="line">	}</span><br><span class="line">	~List()</span><br><span class="line">	{</span><br><span class="line"></span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Insert</span><span class="params">(<span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		Node* node = (Node*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">		node-&gt;value = value;</span><br><span class="line"></span><br><span class="line">		node-&gt;next = head;</span><br><span class="line">		node-&gt;prev = <span class="literal">nullptr</span>;</span><br><span class="line">		<span class="keyword">if</span> (head != <span class="literal">nullptr</span>)</span><br><span class="line">			head-&gt;prev = node;</span><br><span class="line"></span><br><span class="line">		head = node;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Delete</span><span class="params">(<span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		Node* toDelete = Search(value);</span><br><span class="line">		<span class="keyword">if</span> (toDelete == <span class="literal">nullptr</span>)</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (toDelete-&gt;prev != <span class="literal">nullptr</span>)</span><br><span class="line">			toDelete-&gt;prev-&gt;next = toDelete-&gt;next;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			head = toDelete-&gt;next;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (toDelete-&gt;next != <span class="literal">nullptr</span>)</span><br><span class="line">			toDelete-&gt;next-&gt;prev = toDelete-&gt;prev;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">free</span>(toDelete);</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="function">Node* <span class="title">Search</span><span class="params">(<span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		Node* begin = head;</span><br><span class="line">		<span class="keyword">while</span> (begin != <span class="literal">nullptr</span> &amp;&amp; begin-&gt;next != <span class="literal">nullptr</span> &amp;&amp; begin-&gt;value != value)</span><br><span class="line">		{</span><br><span class="line">			begin = begin-&gt;next;</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (begin-&gt;value == value)</span><br><span class="line">		{</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Find the value &quot;</span> &lt;&lt; value &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span> begin;</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		{</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		Node* begin = head;</span><br><span class="line">		<span class="keyword">while</span> (begin != <span class="literal">nullptr</span>)</span><br><span class="line">		{</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;List element value is &quot;</span> &lt;&lt; begin-&gt;value &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			begin = begin-&gt;next;</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Print is over&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Node* head;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<h4 id="sentinels">Sentinels</h4>
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x54E8;&#x5175;&#x7ED3;&#x70B9;&#x6765;&#x5C06;&#x5217;&#x8868;&#x53D8;&#x4E3A;&#x5FAA;&#x73AF;&#x5217;&#x8868;&#xFF0C;&#x5C06;&#x54E8;&#x5175;&#x7ED3;&#x70B9;&#x547D;&#x540D;&#x4E3A;<code>nil</code>&#xFF0C;<code>nil.next=head</code>&#x4E14;<code>nil.prev=tail</code>&#xFF0C;&#x8FD9;&#x65F6;&#x5019;&#x5217;&#x8868;&#x4E2D;&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x5B58;&#x50A8;<code>head</code>&#x7ED3;&#x70B9;&#x4E86;&#xFF0C;&#x56E0;&#x4E3A;&#x901A;&#x8FC7;<code>nil</code>&#x5373;&#x53EF;&#x627E;&#x5230;<code>head</code>&#x3002;</p>
+<p>&#x4F7F;&#x7528;&#x4E86;&#x54E8;&#x5175;&#x7ED3;&#x70B9;&#x540E;&#xFF0C;&#x641C;&#x7D22;&#xFF0C;&#x63D2;&#x5165;&#x4EE5;&#x53CA;&#x5220;&#x9664;&#x4F2A;&#x4EE3;&#x7801;&#x53D8;&#x4E3A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">SEARCH(L,k):</span><br><span class="line"></span><br><span class="line">x=L.nil.next</span><br><span class="line">while x!=L.nil and x.key!=k</span><br><span class="line">	x=x.next</span><br><span class="line">return x</span><br><span class="line"></span><br><span class="line">INSERT(L,k):</span><br><span class="line"></span><br><span class="line">x.next=L.nil.next</span><br><span class="line">x.prev=L.nil</span><br><span class="line">L.nil.next.prev=x;</span><br><span class="line">L.nil.next=x</span><br><span class="line"></span><br><span class="line">DELETE(L,x)</span><br><span class="line">x.next.prev=x.prev;</span><br><span class="line">x.prev.next=x.next</span><br></pre></td></tr></table></figure>
+<p>&#x54E8;&#x5175;&#x5FAA;&#x73AF;&#x53CC;&#x94FE;&#x8868;&#x7684;C++&#x5B9E;&#x73B0;&#x4E3A;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">	<span class="keyword">int</span> value;</span><br><span class="line">	Node* next;</span><br><span class="line">	Node* prev;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">List_Sentinels</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	List_Sentinels()</span><br><span class="line">	{</span><br><span class="line">		sentials = (Node*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">		sentials-&gt;next = sentials;</span><br><span class="line">		sentials-&gt;prev = sentials;</span><br><span class="line">	}</span><br><span class="line">	~List_Sentinels()</span><br><span class="line">	{</span><br><span class="line">		<span class="built_in">free</span>(sentials);</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Insert</span><span class="params">(<span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		Node* node = (Node*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">		node-&gt;value = value;</span><br><span class="line"></span><br><span class="line">		node-&gt;next = sentials-&gt;next;</span><br><span class="line">		node-&gt;prev = sentials;</span><br><span class="line">		sentials-&gt;next-&gt;prev = node;</span><br><span class="line">		sentials-&gt;next = node;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Delete</span><span class="params">(<span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		Node* toDelete = Search(value);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (toDelete == <span class="literal">nullptr</span>)</span><br><span class="line">		{</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;return for value == null&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		toDelete-&gt;prev-&gt;next = toDelete-&gt;next;</span><br><span class="line">		toDelete-&gt;next-&gt;prev = toDelete-&gt;prev;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">free</span>(toDelete);</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="function">Node* <span class="title">Search</span><span class="params">(<span class="keyword">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		Node* node = sentials-&gt;next;</span><br><span class="line">		<span class="keyword">while</span> (node-&gt;value != value &amp;&amp; node-&gt;next != sentials)</span><br><span class="line">		{</span><br><span class="line">			node = node-&gt;next;</span><br><span class="line">		}</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> node-&gt;value == value ? node : <span class="literal">nullptr</span>;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>{</span><br><span class="line">		Node* node = sentials-&gt;next;</span><br><span class="line">		<span class="keyword">while</span> (node != sentials)</span><br><span class="line">		{</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; node-&gt;value &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			node = node-&gt;next;</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Node* sentials;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<h3 id="implementing-pointers-and-objects">Implementing pointers and objects</h3>
+<p>&#x5728;&#x4E0A;&#x4E00;&#x8282;&#x7684;&#x5B9E;&#x73B0;&#x7EBF;&#x6027;&#x5217;&#x8868;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x7528;&#x5230;&#x6307;&#x9488;&#x6765;&#x8868;&#x793A;&#x4E0A;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x6216;&#x4E0B;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x3002;&#x4F46;&#x5728;&#x67D0;&#x4E9B;&#x8BED;&#x8A00;&#x4E2D;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x63D0;&#x4F9B;&#x6307;&#x9488;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x5982;C#&#x548C;Java&#xFF0C;&#x8FD9;&#x4E00;&#x8282;&#x4ECB;&#x7ECD;&#x4E86;&#x5728;&#x8FD9;&#x4E9B;&#x8BED;&#x8A00;&#x4E2D;&#x5982;&#x4F55;&#x6765;&#x5B9E;&#x73B0;&#x5217;&#x8868;&#x3002;</p>
+<h4 id="a-multiple-array-representation-of-objects">A multiple-array representation of objects</h4>
+<p>&#x7B2C;&#x4E00;&#x79CD;&#x65B9;&#x6CD5;&#x662F;&#x4F7F;&#x7528;&#x4E09;&#x4E2A;&#x5927;&#x5C0F;&#x76F8;&#x540C;&#x7684;&#x6570;&#x7EC4;&#x6765;&#x5206;&#x522B;&#x8868;&#x793A;<code>next</code>&#xFF0C;<code>key</code>&#x548C;<code>prev</code>&#xFF0C;&#x5982;&#x4E0B;&#x4E24;&#x56FE;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x5B9E;&#x73B0;&#x4E86;&#x540C;&#x4E00;&#x79CD;&#x7ED3;&#x6784;&#x3002;</p>
+<p><img src="/IA-Chapter10-Notes/2019-10-26-14-41-54.png" alt="&#x6307;&#x9488;&#x5F62;&#x5F0F;&#x8868;&#x73B0;&#x5217;&#x8868;"> <img src="/IA-Chapter10-Notes/2019-10-26-14-42-13.png" alt="&#x591A;&#x6570;&#x7EC4;&#x5F62;&#x5F0F;&#x8868;&#x73B0;&#x5217;&#x8868;"></p>
+<p>&#x56FE;&#x4E8C;&#x662F;&#x5C06;&#x4E09;&#x4E2A;&#x6570;&#x7EC4;&#x5E76;&#x6392;&#x663E;&#x793A;&#x7684;&#x6548;&#x679C;&#xFF0C;&#x53E6;&#x5916;&#x6709;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;<code>L</code>&#x6765;&#x4FDD;&#x5B58;&#x5217;&#x8868;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x7684;&#x7D22;&#x5F15;&#x503C;&#xFF0C;&#x5728;&#x8FD9;&#x91CC;&#x7B2C;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x7684;<code>Key</code>&#x503C;&#x4E3A;9&#xFF0C;&#x7D22;&#x5F15;&#x503C;&#x4E3A;7&#xFF0C;&#x6240;&#x4EE5;<code>L</code>&#x4E2D;&#x4FDD;&#x5B58;&#x7684;&#x503C;&#x4E3A;7&#x3002;</p>
+<p>&#x4EE5;&#x7D22;&#x5F15;&#x503C;&#x4E3A;7&#x4E3A;&#x4F8B;&#xFF0C;<code>key</code>&#x503C;&#x4E3A;9,<code>next</code>&#x503C;&#x4E3A;5,<code>prev</code>&#x503C;&#x4E3A;/&#x3002;&#x8868;&#x793A;&#x8FD9;&#x4E2A;&#x7ED3;&#x70B9;&#x6CA1;&#x6709;&#x524D;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#xFF0C;&#x5373;&#x4E3A;&#x5934;&#x7ED3;&#x70B9;&#xFF0C;&#x4E14;&#x540E;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x7684;&#x7D22;&#x5F15;&#x503C;&#x4E3A;5&#xFF0C;&#x6570;&#x7EC4;&#x7D22;&#x5F15;&#x503C;&#x4E3A;5&#x7684;&#x5730;&#x65B9;&#xFF0C;<code>key</code>&#x503C;&#x4E3A;16,<code>next</code>&#x4E3A;2&#xFF0C;<code>prev</code>&#x4E3A;7&#x3002;&#x4EE5;&#x6B64;&#x7C7B;&#x63A8;,&#x53EF;&#x5F97;&#x5230;&#x6240;&#x6709;&#x7684;&#x7ED3;&#x70B9;&#x3002;</p>
+<h4 id="a-single-array-representation-of-objects">A single-array representation of objects</h4>
+<p>&#x7B2C;&#x4E8C;&#x79CD;&#x65B9;&#x6CD5;&#x662F;&#x53EA;&#x7528;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;&#x6765;&#x8868;&#x793A;<code>next</code>&#xFF0C;<code>key</code>&#x548C;<code>prev</code>&#x3002;&#x6BCF;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x5360;&#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x4E09;&#x4E2A;&#x4F4D;&#x7F6E;&#xFF0C;&#x5982;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x7684;Key&#x503C;&#x5728;&#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x4F4D;&#x7F6E;<code>A[i]</code>&#xFF0C;&#x5219;<code>next</code>&#x4F4D;&#x7F6E;&#x4E3A;<code>A[i+1]</code>,<code>prev</code>&#x4F4D;&#x7F6E;&#x4E3A;<code>A[i+2]</code></p>
+<p><img src="/IA-Chapter10-Notes/2019-10-26-14-41-54.png" alt="&#x6307;&#x9488;&#x5F62;&#x5F0F;&#x8868;&#x73B0;&#x5217;&#x8868;"> <img src="/IA-Chapter10-Notes/2019-10-26-14-52-00.png" alt="&#x5355;&#x6570;&#x7EC4;&#x5F62;&#x5F0F;&#x8868;&#x73B0;&#x5217;&#x8868;"></p>
+<p>&#x540C;&#x7406;&#xFF0C;&#x8FD9;&#x91CC;&#x4ECD;&#x7136;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;<code>L</code>&#x6765;&#x4FDD;&#x5B58;&#x5934;&#x7ED3;&#x70B9;&#x7684;&#x7D22;&#x5F15;&#xFF0C;&#x8FD9;&#x91CC;&#x7684;&#x5934;&#x7ED3;&#x70B9;&#x7D22;&#x5F15;&#x4E3A;19&#xFF0C;&#x6240;&#x6709;&#x5934;&#x7ED3;&#x70B9;&#x7684;<code>Key</code>&#x503C;&#x4E3A;9&#xFF0C;<code>next</code>&#x7ED3;&#x70B9;&#x4E3A;13&#xFF0C;&#x8868;&#x793A;&#x4E0B;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x7684;&#x4ECE;&#x7D22;&#x5F15;&#x503C;13&#x5F00;&#x59CB;&#xFF0C;<code>prev</code>&#x7ED3;&#x70B9;&#x4E3A;/&#xFF0C;&#x8868;&#x793A;&#x6CA1;&#x6709;&#x524D;&#x7ED3;&#x70B9;&#xFF0C;&#x8BE5;&#x7ED3;&#x70B9;&#x4E3A;&#x5934;&#x7ED3;&#x70B9;&#x3002;</p>
+<h4 id="allocating-and-freeing-objects">Allocating and freeing objects</h4>
+<p>&#x8FD9;&#x91CC;&#x4EE5;&#x591A;&#x6570;&#x7EC4;&#x8868;&#x793A;&#x6CD5;&#x8FDB;&#x884C;&#x8BF4;&#x660E;&#x3002;&#x4E3A;&#x4E86;&#x53EF;&#x4EE5;&#x91CA;&#x653E;&#x548C;&#x5206;&#x914D;&#x7ED3;&#x70B9;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x53E6;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;<code>free</code>&#x6765;&#x8BB0;&#x5F55;&#x6570;&#x7EC4;&#x7684;&#x54EA;&#x4E2A;&#x7D22;&#x5F15;&#x503C;&#x4E3A;&#x7A7A;&#x7ED3;&#x70B9;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5C06;&#x591A;&#x4E2A;&#x7A7A;&#x7ED3;&#x70B9;&#x4EEC;&#x770B;&#x4F5C;&#x4E5F;&#x662F;&#x4E00;&#x4E2A;&#x94FE;&#x8868;&#xFF0C;&#x4F46;&#x662F;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x5355;&#x94FE;&#x8868;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x77E5;&#x9053;&#x4E0B;&#x4E00;&#x4E2A;&#x7A7A;&#x7ED3;&#x70B9;&#x5728;&#x54EA;&#x5373;&#x53EF;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x591A;&#x6570;&#x7EC4;&#x65B9;&#x6CD5;&#x4E2D;&#x4E5F;&#x4EC5;&#x53EA;&#x9700;&#x8981;&#x7528;&#x5230;<code>next</code>&#x6570;&#x7EC4;&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x5206;&#x914D;&#x548C;&#x91CA;&#x653E;&#x5BF9;&#x8C61;&#x7684;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/IA-Chapter10-Notes/2019-10-26-14-41-54.png" alt="&#x6307;&#x9488;&#x5F62;&#x5F0F;&#x8868;&#x73B0;&#x5217;&#x8868;"> <img src="/IA-Chapter10-Notes/2019-10-26-14-58-40.png" alt="&#x5206;&#x914D;&#x548C;&#x91CA;&#x653E;&#x5BF9;&#x8C61;"></p>
+<p>&#x4E0B;&#x56FE;&#x4E2D;&#x7684;&#x56FE;(a)&#x5373;&#x4E3A;&#x7528;&#x591A;&#x6570;&#x7EC4;&#x65B9;&#x5F0F;&#x8868;&#x793A;&#x4E0A;&#x56FE;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x552F;&#x4E00;&#x4E0E;&#x4E4B;&#x524D;&#x8BF4;&#x660E;&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;<code>free</code>&#x6765;&#x8868;&#x793A;&#x7B2C;&#x4E00;&#x4E2A;&#x7A7A;&#x7ED3;&#x70B9;&#x5728;&#x54EA;&#xFF0C;&#x8FD9;&#x91CC;&#x663E;&#x793A;&#x7B2C;&#x4E00;&#x4E2A;&#x7A7A;&#x7ED3;&#x70B9;&#x7684;&#x7D22;&#x5F15;&#x503C;&#x4E3A;4&#xFF0C;&#x800C;&#x5728;<code>next</code>&#x6570;&#x7EC4;&#x7684;&#x7D22;&#x5F15;4&#x5904;&#xFF0C;&#x503C;&#x4E3A;8&#xFF0C;&#x8BF4;&#x660E;&#x4E0B;&#x4E00;&#x4E2A;&#x7A7A;&#x7ED3;&#x70B9;&#x5728;&#x7D22;&#x5F15;8&#x7684;&#x5730;&#x65B9;&#x3002;</p>
+<p>&#x56FE;(b)&#x662F;&#x63D2;&#x5165;&#x4E86;&#x4E00;&#x4E2A;<code>key</code>&#x503C;&#x4E3A;25&#x7684;&#x7ED3;&#x70B9;&#x3002;&#x56E0;&#x4E3A;&#x4E4B;&#x524D;&#x7B2C;&#x4E00;&#x4E2A;&#x7A7A;&#x7ED3;&#x70B9;&#x7684;&#x4F4D;&#x7F6E;&#x5728;&#x7D22;&#x5F15;&#x503C;&#x4E3A;<code>4</code>&#x7684;&#x5730;&#x65B9;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x4E2A;&#x7ED3;&#x70B9;&#x73B0;&#x5728;&#x63D2;&#x5165;&#x5728;&#x7D22;&#x5F15;&#x4E3A;4&#x7684;&#x5730;&#x65B9;&#x3002;&#x6B64;&#x65F6;&#x884C;&#x7ED3;&#x70B9;&#x6210;&#x4E3A;&#x4E86;&#x5934;&#x7ED3;&#x70B9;&#xFF0C;&#x6240;&#x4EE5;&#x53D8;&#x91CF;<code>L</code>&#x503C;&#x53D8;&#x4E3A;4,&#x4E5F;&#x56E0;&#x4E3A;&#x7D22;&#x5F15;4&#x7684;&#x5730;&#x65B9;&#x6709;&#x4E86;&#x503C;&#xFF0C;&#x6240;&#x4EE5;&#x7B2C;&#x4E00;&#x4E2A;&#x7A7A;&#x7ED3;&#x70B9;&#x53D8;&#x6210;&#x4E4B;&#x524D;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x7A7A;&#x7ED3;&#x70B9;&#x4E2D;&#x4FDD;&#x5B58;&#x7684;&#x7D22;&#x5F15;&#x503C;&#x7684;&#x5730;&#x65B9;&#xFF0C;&#x5373;&#x7D22;&#x5F15;&#x503C;&#x4E3A;8&#x7684;&#x5730;&#x65B9;&#xFF0C;&#x56E0;&#x6B64;<code>free</code>&#x53D8;&#x91CF;&#x53D8;&#x4E3A;8.</p>
+<p>&#x56FE;(c)&#x662F;&#x5220;&#x9664;&#x4E86;<code>key</code>&#x503C;&#x4E3A;16&#x7684;&#x7ED3;&#x70B9;&#xFF0C;&#x8BE5;&#x7ED3;&#x70B9;&#x5728;&#x7D22;&#x5F15;&#x503C;&#x4E3A;5&#x7684;&#x5730;&#x65B9;&#x3002;&#x5220;&#x9664;&#x540E;&#xFF0C;&#x5C06;&#x4ED6;&#x4F5C;&#x4E3A;&#x7A7A;&#x7ED3;&#x70B9;&#x63D2;&#x5165;&#x7A7A;&#x7ED3;&#x70B9;&#x94FE;&#x8868;&#xFF0C;&#x5373;&#x7B2C;&#x4E00;&#x4E2A;&#x7A7A;&#x7ED3;&#x70B9;&#x4E3A;&#x7D22;&#x5F15;&#x503C;&#x4E3A;5&#x7684;&#x5730;&#x65B9;&#xFF0C;&#x6240;&#x4EE5;&#x53D8;&#x91CF;<code>free</code>&#x503C;&#x4E3A;5&#x3002;&#x4E14;&#x7B2C;&#x4E00;&#x4E2A;&#x7A7A;&#x7ED3;&#x70B9;&#x7684;<code>next</code>&#x9700;&#x8981;&#x6307;&#x5411;&#x4E0B;&#x4E00;&#x4E2A;&#x7A7A;&#x59D0;&#x70B9;&#xFF0C;&#x5373;&#x7D22;&#x5F15;&#x503C;&#x4E3A;8&#x7684;&#x5730;&#x65B9;&#x3002;</p>
+<p>&#x591A;&#x6570;&#x7EC4;&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x5206;&#x914D;&#x548C;&#x5220;&#x9664;&#x7684;&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ALLOCATE-OBJECT()</span><br><span class="line"></span><br><span class="line">if free == NULL</span><br><span class="line">	error &quot;out of free&quot;</span><br><span class="line">else </span><br><span class="line">	x=free;</span><br><span class="line">	free=x.next</span><br><span class="line">	return x</span><br><span class="line"></span><br><span class="line">FREE-OBJECT()</span><br><span class="line"></span><br><span class="line">x.next=free;</span><br><span class="line">free=x;</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x4E24;&#x6B65;&#x64CD;&#x4F5C;&#x7684;&#x590D;&#x6742;&#x5EA6;&#x90FD;&#x4E3A;<code>O(1)</code></p>
+<p>&#x53E6;&#x5916;&#x591A;&#x4E2A;&#x94FE;&#x8868;&#x53EF;&#x4EE5;&#x5171;&#x7528;&#x540C;&#x4E09;&#x4E2A;&#x6570;&#x7EC4;&#xFF0C;&#x4E14;&#x5171;&#x7528;&#x4E00;&#x4E2A;free&#x94FE;&#x8868;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x3002;&#x5B58;&#x5728;&#x4E24;&#x4E2A;&#x94FE;&#x8868;&#xFF0C;&#x5206;&#x522B;&#x4EE5;<span class="math inline">\(L_2\)</span>&#x548C;<span class="math inline">\(L_1\)</span>&#x4F5C;&#x4E3A;&#x5934;&#x7ED3;&#x70B9;&#x3002;</p>
+<p><img src="/IA-Chapter10-Notes/2019-10-26-15-23-27.png" alt="&#x591A;&#x4E2A;&#x94FE;&#x8868;&#x5171;&#x4EAB;&#x6570;&#x7EC4;&#x548C;&#x7A7A;&#x94FE;&#x8868;"></p>
+<h3 id="representing-rooted-trees">Representing rooted trees</h3>
+<p>&#x53EF;&#x4EE5;&#x7528;&#x8868;&#x793A;&#x94FE;&#x8868;&#x7684;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x7528;&#x5728;&#x5176;&#x4ED6;&#x7684;&#x7C7B;&#x4F3C;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E2D;&#xFF0C;&#x8FD9;&#x4E00;&#x8282;&#x5C06;&#x7528;&#x5217;&#x8868;&#x7684;&#x65B9;&#x6CD5;&#x6765;&#x8868;&#x793A;&#x6709;&#x6839;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x3002;&#x6811;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x90FD;&#x4F5C;&#x4E3A;&#x5BF9;&#x8C61;&#xFF0C;&#x5982;&#x94FE;&#x8868;&#x4E00;&#x6837;&#xFF0C;&#x7ED3;&#x70B9;&#x4E2D;&#x4E5F;&#x6709;&#x4E00;&#x4E2A;&#x7C7B;&#x4F3C;&#x4E0E;<code>Key</code>&#x503C;&#x7684;&#x5B58;&#x5728;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x662F;&#x6839;&#x636E;&#x6811;&#x7684;&#x7C7B;&#x578B;&#x4E0D;&#x540C;&#xFF0C;&#x7ED3;&#x70B9;&#x4E2D;&#x7684;&#x6307;&#x9488;&#x4F1A;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x8868;&#x793A;&#x3002;</p>
+<h4 id="binary-tree">Binary Tree</h4>
+<p>&#x5728;&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#xFF0C;&#x6BCF;&#x4E2A;&#x7ED3;&#x70B9;&#x90FD;&#x6709;&#x4E09;&#x4E2A;&#x53D8;&#x91CF;<span class="math inline">\(p\)</span>&#xFF0C;<span class="math inline">\(left\)</span>&#x548C;<span class="math inline">\(right\)</span>&#xFF0C;&#x5206;&#x522B;&#x8868;&#x793A;&#x7ED3;&#x70B9;&#x7684;&#x7236;&#x7ED3;&#x70B9;&#xFF0C;&#x5DE6;&#x5B50;&#x7ED3;&#x70B9;&#x548C;&#x53F3;&#x5B50;&#x7ED3;&#x70B9;&#x3002;&#x5982;&#x6CA1;&#x6709;&#x5DE6;&#x5B50;&#x7ED3;&#x70B9;&#xFF0C;&#x5219;<code>left=null</code>&#xFF0C;&#x53F3;&#x5B50;&#x7ED3;&#x70B9;&#x540C;&#x7406;&#x3002;</p>
+<p>&#x4E8C;&#x53C9;&#x6811;&#x5B9E;&#x4F8B;&#x56FE;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/IA-Chapter10-Notes/2019-10-26-15-39-21.png" alt="&#x4E8C;&#x53C9;&#x6811;"></p>
+<h4 id="rooted-trees-with-unbounded-branching">Rooted trees with unbounded branching</h4>
+<p>&#x5BF9;&#x4E8E;&#x5206;&#x652F;&#x6CA1;&#x6709;&#x9650;&#x5236;&#x7684;&#x6709;&#x6839;&#x6811;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x53D8;&#x91CF;<span class="math inline">\(child_1\)</span>&#xFF0C;<span class="math inline">\(child_2\)</span>&#xFF0C;<span class="math inline">\(child_3\)</span>....&#x6765;&#x66FF;&#x4EE3;<span class="math inline">\(left\)</span>&#x548C;<span class="math inline">\(right\)</span>&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x5F0A;&#x7AEF;&#xFF0C;&#x9996;&#x5148;&#x5982;&#x679C;&#x5B50;&#x7ED3;&#x70B9;&#x7684;&#x4E2A;&#x6570;&#x6CA1;&#x6709;&#x9650;&#x5236;&#xFF0C;&#x90A3;&#x6211;&#x4EEC;&#x65E0;&#x6CD5;&#x9884;&#x5148;&#x76F4;&#x5230;&#x8BE5;&#x4E3A;&#x6BCF;&#x4E2A;&#x7ED3;&#x70B9;&#x5206;&#x914D;&#x591A;&#x5C11;&#x7684;&#x5B50;&#x7ED3;&#x70B9;&#x3002;&#x5176;&#x6B21;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x7528;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x5927;&#x7684;&#x6570;&#x503C;&#x6765;&#x4F5C;&#x4E3A;&#x5B50;&#x7ED3;&#x70B9;&#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x5728;&#x591A;&#x6570;&#x7ED3;&#x70B9;&#x7684;&#x5B50;&#x7ED3;&#x70B9;&#x4E2A;&#x6570;&#x90FD;&#x5C0F;&#x4E8E;&#x8FD9;&#x4E2A;&#x8BBE;&#x5B9A;&#x6570;&#x503C;&#x65F6;&#xFF0C;&#x5C31;&#x4F1A;&#x9020;&#x6210;&#x5F88;&#x4E25;&#x91CD;&#x7684;&#x5185;&#x5B58;&#x6D6A;&#x8D39;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<code>&#x5DE6;&#x5B69;&#x5B50;&#x548C;&#x53F3;&#x5144;&#x5F1F;&#x8868;&#x793A;&#x6CD5;(left-child,right-sibling representation)</code>&#x6765;&#x89E3;&#x51B3;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;<code>x.left-child</code>&#x8868;&#x793A;&#x6240;&#x6709;&#x5B50;&#x7ED3;&#x70B9;&#x4E2D;&#xFF0C;&#x6700;&#x9760;&#x5DE6;&#x7684;&#x90A3;&#x4E00;&#x4E2A;&#xFF0C;<code>x.right-sibling</code>&#x8868;&#x793A;&#x540C;&#x7EA7;&#x7684;&#x7ED3;&#x70B9;&#x4E2D;&#xFF0C;&#x6700;&#x9760;&#x8FD1;<code>x</code>&#x7ED3;&#x70B9;&#x53F3;&#x8FB9;&#x7684;&#x90A3;&#x4E00;&#x4E2A;&#x3002;</p>
+<p>&#x5206;&#x652F;&#x65E0;&#x9650;&#x5236;&#x6709;&#x6839;&#x6811;&#x5B9E;&#x4F8B;&#x56FE;&#x5982;&#x4E0B;</p>
+<p><img src="/IA-Chapter10-Notes/2019-10-26-15-40-32.png" alt="&#x5206;&#x652F;&#x65E0;&#x9650;&#x5236;&#x6709;&#x6839;&#x6811;"></p>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>Introduction to Algorithms</em> 3rd Sep.2009</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/IA-Chapter10-Notes/" title="《算法导论》 第十章笔记">https://xuejiaw.github.io/IA-Chapter10-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/数据结构与算法/" rel="tag"># 数据结构与算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IA-Chapter4-Notes/" rel="prev" title="《算法导论》 第四章笔记">
+      <i class="fa fa-chevron-left"></i> 《算法导论》 第四章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/IA-Chapter12-Notes/" rel="next" title="《算法导论》 第十二章笔记">
+      《算法导论》 第十二章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-10.-elementary-data-structures"><span class="nav-number">1.</span> <span class="nav-text">Chapter 10. Elementary Data Structures</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stacks-and-queues"><span class="nav-number">1.1.</span> <span class="nav-text">Stacks and queues</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#stacks"><span class="nav-number">1.1.1.</span> <span class="nav-text">Stacks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#queues"><span class="nav-number">1.1.2.</span> <span class="nav-text">Queues</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linked-lists"><span class="nav-number">1.2.</span> <span class="nav-text">Linked lists</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sentinels"><span class="nav-number">1.2.1.</span> <span class="nav-text">Sentinels</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#implementing-pointers-and-objects"><span class="nav-number">1.3.</span> <span class="nav-text">Implementing pointers and objects</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-multiple-array-representation-of-objects"><span class="nav-number">1.3.1.</span> <span class="nav-text">A multiple-array representation of objects</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#a-single-array-representation-of-objects"><span class="nav-number">1.3.2.</span> <span class="nav-text">A single-array representation of objects</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#allocating-and-freeing-objects"><span class="nav-number">1.3.3.</span> <span class="nav-text">Allocating and freeing objects</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#representing-rooted-trees"><span class="nav-number">1.4.</span> <span class="nav-text">Representing rooted trees</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#binary-tree"><span class="nav-number">1.4.1.</span> <span class="nav-text">Binary Tree</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rooted-trees-with-unbounded-branching"><span class="nav-number">1.4.2.</span> <span class="nav-text">Rooted trees with unbounded branching</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

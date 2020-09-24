@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x56DB;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x4E3B;&amp;#x8981;&amp;#x5173;&amp;#x4E8E;&amp;#x5BF9;&amp;#x5185;&amp;#x5EFA;&amp;#x7C7B;&amp;#x578B;&amp;#x7684;&amp;#x64CD;&amp;#x4F5C;&amp;#x3002;">
+<meta name="keywords" content="读书笔记,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《C++ Primer》 第四章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x56DB;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x4E3B;&amp;#x8981;&amp;#x5173;&amp;#x4E8E;&amp;#x5BF9;&amp;#x5185;&amp;#x5EFA;&amp;#x7C7B;&amp;#x578B;&amp;#x7684;&amp;#x64CD;&amp;#x4F5C;&amp;#x3002;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/Ch4.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/2020-02-17-23-16-54.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/2020-02-17-23-17-07.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.169Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《C++ Primer》 第四章笔记">
+<meta name="twitter:description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x56DB;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x4E3B;&amp;#x8981;&amp;#x5173;&amp;#x4E8E;&amp;#x5BF9;&amp;#x5185;&amp;#x5EFA;&amp;#x7C7B;&amp;#x578B;&amp;#x7684;&amp;#x64CD;&amp;#x4F5C;&amp;#x3002;">
+<meta name="twitter:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/Ch4.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《C++ Primer》 第四章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《C++ Primer》 第四章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-17 23:19:58" itemprop="dateCreated datePublished" datetime="2020-02-17T23:19:58+08:00">2020-02-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/计算机语言/" itemprop="url" rel="index"><span itemprop="name">计算机语言</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/CPPPrimer-Chapter4-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《C++ Primer》 第四章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/CPPPrimer-Chapter4-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/CPPPrimer-Chapter4-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>23 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;C++ Primer&#x300B; &#x7B2C;&#x56DB;&#x7AE0;&#x7B14;&#x8BB0;</p>
+<p>&#x4E3B;&#x8981;&#x5173;&#x4E8E;&#x5BF9;&#x5185;&#x5EFA;&#x7C7B;&#x578B;&#x7684;&#x64CD;&#x4F5C;&#x3002;</p>
+<p><img src="/CPPPrimer-Chapter4-Notes/Ch4.png" alt="&#x7B2C;&#x56DB;&#x7AE0;&#x5185;&#x5BB9;"></p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-4-expressions">Chapter 4 Expressions</h1>
+<h2 id="fundamentals">Fundamentals</h2>
+<h3 id="basic-concepts">Basic Concepts</h3>
+<h4 id="grouping-operators-and-operands">Grouping Operators and Operands</h4>
+<p>&#x591A;&#x4E2A;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x987A;&#x5E8F;&#x662F;&#x7531;&#x4F18;&#x5148;&#x7EA7;&#xFF08;Precedence&#xFF09;&#x548C;&#x7ED3;&#x5408;&#x6027;&#xFF08;associatively&#xFF09;&#x6709;&#x65F6;&#x8FD8;&#x6709;&#x6C42;&#x503C;&#x987A;&#x5E8F;&#xFF08;order of evaluation&#xFF09;&#x51B3;&#x5B9A;&#x7684;&#x3002;</p>
+<h4 id="overloaded-operators">Overloaded Operators</h4>
+<p>&#x64CD;&#x4F5C;&#x7B26;&#x53EF;&#x4EE5;&#x88AB;&#x91CD;&#x8F7D;&#xFF0C;&#x4F46;&#x662F;&#x64CD;&#x4F5C;&#x7B26;&#x63A5;&#x53D7;&#x7684;&#x53C2;&#x6570;&#x6570;&#x91CF;&#xFF0C;&#x4F18;&#x5148;&#x7EA7;&#x8FD8;&#x6709;&#x7ED3;&#x5408;&#x6027;&#x662F;&#x6CA1;&#x6CD5;&#x88AB;&#x6539;&#x53D8;&#x7684;&#x3002;</p>
+<h4 id="lvalues-and-rvalues">Lvalues and Rvalues</h4>
+<p>&#x5DE6;&#x53C2;&#x6570;&#xFF08;Lvalues&#xFF09;&#x662F;&#x51FA;&#x73B0;&#x5728;&#x8D4B;&#x503C;&#x5DE6;&#x4FA7;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x53F3;&#x53C2;&#x6570;(Rvalues)&#x662F;&#x51FA;&#x73B0;&#x5728;&#x8D4B;&#x503C;&#x53F3;&#x4FA7;&#x7684;&#x53C2;&#x6570;&#x3002;&#x5F53;&#x4F7F;&#x7528;&#x53F3;&#x53C2;&#x6570;&#x65F6;&#xFF0C;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x53F3;&#x53C2;&#x6570;&#x7684;&#x503C;&#xFF0C;&#x5F53;&#x4F7F;&#x7528;&#x5DE6;&#x53C2;&#x6570;&#x65F6;&#xFF0C;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x53C2;&#x6570;&#x7684;&#x5730;&#x5740;&#x3002;</p>
+<p>&#x9664;&#x4E86;&#x5728;13.6&#x8282;&#x4F1A;&#x63D0;&#x5230;&#x4E00;&#x4E2A;&#x4F8B;&#x5916;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x53F3;&#x53C2;&#x6570;&#x7684;&#x5730;&#x65B9;&#x4F7F;&#x7528;&#x5DE6;&#x53C2;&#x6570;&#x4EE3;&#x66FF;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x5DE6;&#x53C2;&#x6570;&#x7684;&#x5730;&#x65B9;&#x65E0;&#x6CD5;&#x4F7F;&#x7528;&#x53F3;&#x53C2;&#x6570;&#x4EE3;&#x66FF;&#x3002;</p>
+<blockquote>
+<p>&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x4F1A;&#x8FD4;&#x56DE;&#x5DE6;&#x53C2;&#x6570;&#xFF0C;&#x53D6;&#x5730;&#x5740;&#x64CD;&#x4F5C;&#x8FD4;&#x56DE;&#x7684;&#x6307;&#x9488;&#x662F;&#x53F3;&#x53C2;&#x6570;&#xFF0C;&#x524D;&#x7F6E;&#x7684;<code>++</code>&#x548C;<code>--</code>&#x8FD4;&#x56DE;&#x5DE6;&#x53C2;&#x6570;&#x3002;</p>
+</blockquote>
+<p>&#x5DE6;&#x53F3;&#x53C2;&#x6570;&#x5728;&#x4F7F;&#x7528;<code>decltype</code>&#x65F6;&#x4E5F;&#x4F1A;&#x4F53;&#x73B0;&#x51FA;&#x533A;&#x522B;&#xFF0C;&#x5F53;&#x4F20;&#x5165;decltype&#x7684;&#x662F;&#x8868;&#x8FBE;&#x5F0F;&#x65F6;&#xFF0C;&#x4E14;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x5DE6;&#x53C2;&#x6570;&#xFF0C;&#x90A3;&#x4E48;decltype&#x7684;&#x7ED3;&#x679C;&#x662F;&#x5F15;&#x7528;&#x3002;</p>
+<p>&#x5047;&#x8BBE;<code>p</code>&#x7684;&#x7C7B;&#x578B;&#x662F;<code>int *</code>&#xFF0C;&#x90A3;&#x4E48;<code>*p</code>&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x5DE6;&#x53C2;&#x6570;&#xFF0C;&#x56E0;&#x6B64;<code>decltype(*p)</code>&#x7ED3;&#x679C;&#x662F;int&amp;&#xFF0C;&#x800C;&#x56E0;&#x4E3A;&#x53D6;&#x5730;&#x5740;&#x7B26;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x53F3;&#x53C2;&#x6570;&#xFF0C;&#x5373;<code>(&amp;p)</code>&#x7ED3;&#x679C;&#x4E3A;&#x4E3A;&#x53F3;&#x53C2;&#x6570;&#xFF0C;&#x6240;&#x4EE5;<code>decltype(&amp;p)</code>&#x7ED3;&#x679C;&#x662F;<code>int* *</code>&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5F15;&#x7528;<code>int** &amp;</code></p>
+<h3 id="precedence-and-associativity">Precedence and Associativity</h3>
+<p>&#x4F18;&#x5148;&#x7EA7;&#xFF08;Precedence&#xFF09;&#x51B3;&#x5B9A;&#x662F;&#x64CD;&#x4F5C;&#x7B26;&#x6267;&#x884C;&#x7684;&#x5148;&#x540E;&#x987A;&#x5E8F;&#xFF0C;&#x7ED3;&#x5408;&#x6027;&#xFF08;Associativity&#xFF09;&#x51B3;&#x5B9A;&#x7684;&#x662F;&#x540C;&#x4F18;&#x5148;&#x7EA7;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x4E4B;&#x95F4;&#x6267;&#x884C;&#x7684;&#x987A;&#x5E8F;&#x3002;</p>
+<p>&#x7B97;&#x6570;&#x64CD;&#x4F5C;&#x7B26;&#x662F;&#x5DE6;&#x7ED3;&#x5408;&#xFF0C;&#x5373;&#x8BA1;&#x7B97;&#x987A;&#x5E8F;&#x662F;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x7684;&#xFF0C;&#x5982;<code>3*4/2</code>&#xFF0C;&#x4F1A;&#x5148;&#x8BA1;&#x7B97;&#x9664;&#x6CD5;&#xFF0C;&#x800C;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x662F;&#x53F3;&#x7ED3;&#x5408;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x62EC;&#x53F7;&#x6765;&#x91CD;&#x65B0;&#x51B3;&#x5B9A;&#x4F18;&#x5148;&#x7EA7;&#x548C;&#x7ED3;&#x5408;&#x6027;&#x3002;</p>
+<h3 id="order-of-evaluation">Order of Evaluation</h3>
+<p>&#x6C42;&#x503C;&#x987A;&#x5E8F;&#x51B3;&#x5B9A;&#x4E86;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x591A;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x54EA;&#x4E2A;&#x8FD8;&#x4F1A;&#x5148;&#x8FDB;&#x884C;&#x6C42;&#x503C;&#x3002;</p>
+<p>&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = f1() * f2();</span><br></pre></td></tr></table></figure>
+<p>C++&#x6807;&#x51C6;&#x53EA;&#x80FD;&#x4FDD;&#x8BC1;&#x5728;&#x6267;&#x884C;&#x4E58;&#x6CD5;&#x64CD;&#x4F5C;&#x524D;&#xFF0C;&#x51FD;&#x6570;f1&#x548C;f2&#x90FD;&#x4F1A;&#x88AB;&#x6267;&#x884C;&#x5B8C;&#x6BD5;&#xFF0C;&#x4F46;&#x662F;f1&#x548C;f2&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;&#x662F;<em>&#x672A;&#x5B9A;&#x4E49;&#x7684;</em>&#x3002;</p>
+<p>&#x540C;&#x7406;&#xFF0C;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x7684;&#x7ED3;&#x679C;&#x4E5F;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x5373;&#x4F7F;&#x5728;&#x6D4B;&#x8BD5;&#x4E2D;&#x5F97;&#x5230;&#x4E86;&#x671F;&#x5F85;&#x7B54;&#x6848;&#xFF0C;&#x4E5F;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x5728;&#x5176;&#x4ED6;&#x786C;&#x4EF6;&#x6216;&#x7F16;&#x8BD1;&#x5668;&#x4E0B;&#x80FD;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; ++i &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x6240;&#x6709;&#x51FA;&#x73B0;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x7684;&#x672A;&#x9650;&#x5B9A;&#x6C42;&#x503C;&#x987A;&#x5E8F;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;&#x90FD;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;&#x6240;&#x4EE5;&#x5C3D;&#x91CF;&#x4E0D;&#x8981;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x5F15;&#x7528;&#x6216;&#x4FEE;&#x6539;&#x540C;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x8FD9;&#x5F88;&#x53EF;&#x80FD;&#x4F1A;&#x5F15;&#x53D1;Bug&#x3002;</p>
+<p>&#x53EA;&#x6709;&#x56DB;&#x4E2A;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;&#x662F;&#x6307;&#x5B9A;&#x4E86;&#x7684;&#xFF0C;&#x903B;&#x8F91;&#x4E0E;<code>&amp;&amp;</code>&#xFF0C;&#x903B;&#x8F91;&#x6216;<code>||</code>&#xFF0C;&#x6761;&#x4EF6;&#x5224;&#x65AD;<code>?:</code>&#x548C;&#x9017;&#x53F7;<code>,</code>&#x3002;</p>
+<p>&#x53EA;&#x6709;&#x4E00;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x5F0F;&#x5B50;&#x4E2D;&#x4F7F;&#x7528;&#x672A;&#x9650;&#x5B9A;&#x6C42;&#x503C;&#x987A;&#x5E8F;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x5BF9;&#x540C;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x591A;&#x6B21;&#x64CD;&#x4F5C;&#x80FD;&#x5F97;&#x5230;&#x786E;&#x5B9A;&#x7684;&#x7B54;&#x6848;&#xFF0C;&#x5373;&#x4FEE;&#x6539;&#x4E86;&#x53D8;&#x91CF;&#x7684;&#x5B50;&#x8868;&#x8FBE;&#x5F0F;&#x672C;&#x8EAB;&#x5C31;&#x662F;&#x53E6;&#x4E00;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x5BF9;&#x8C61;&#x3002;</p>
+<p>&#x5982;<code>int*++iter</code>&#xFF0C;&#x6309;&#x4F18;&#x5148;&#x7EA7;&#x4F1A;&#x8BA1;&#x7B97;<code>++iter</code>&#xFF0C;&#x800C;&#x6539;&#x53D8;&#x540E;&#x7684;<code>iter</code>&#x672C;&#x8EAB;&#x5C31;&#x662F;<code>int*</code>&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x4F46;&#x662F;&#x5728;&#x4E4B;&#x524D;&#x7684;&#x5F0F;&#x5B50;&#x7684;<code>f1() * f2()</code>&#x4E2D;&#xFF0C;&#x4E58;&#x6CD5;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x5BF9;&#x8C61;&#x662F;&#x51FD;&#x6570;&#x8FD0;&#x884C;&#x540E;&#x7684;&#x503C;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x51FD;&#x6570;&#x672C;&#x8EAB;&#x3002;&#x540C;&#x7406;&#xFF0C;&#x5BF9;&#x4E8E;<code>cout &lt;&lt; i &lt;&lt; &quot; &quot; &lt;&lt; ++i</code>&#xFF0C;&#x524D;&#x9762;&#x7684;<code>i</code>&#x548C;<code>i++</code>&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4E0D;&#x76F8;&#x5173;&#x7684;&#xFF0C;&#x5373;<code>&lt;&lt;</code>&#x64CD;&#x4F5C;&#x7B26;&#x5E76;&#x4E0D;&#x662F;&#x5C06;&#x5B83;&#x4FE9;&#x94FE;&#x63A5;&#x5728;&#x4E00;&#x8D77;&#xFF0C;&#x6240;&#x4EE5;&#x8C01;&#x5148;&#x6267;&#x884C;&#x4E5F;&#x662F;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x7684;&#x3002;</p>
+<h4 id="order-of-evaluationprecedence-and-associativity">Order of Evaluation,Precedence and Associativity</h4>
+<p>&#x5982;&#x6709;&#x5F0F;&#x5B50;<code>f()+g()* h()+j()</code>,&#x53EF;&#x4EE5;&#x5F97;&#x51FA;&#x4EE5;&#x4E0B;&#x7ED3;&#x8BBA;&#xFF1A;</p>
+<ol type="1">
+<li>&#x4F18;&#x5148;&#x7EA7;&#x4FDD;&#x8BC1;&#x4E86;&#xFF0C;g()&#x7684;&#x7ED3;&#x679C;&#x548C;h()&#x7684;&#x7ED3;&#x679C;&#x4F1A;&#x5148;&#x76F8;&#x4E58;</li>
+<li>&#x7ED3;&#x5408;&#x6027;&#x4FDD;&#x8BC1;&#x4E86;f()&#x7684;&#x7ED3;&#x679C;&#x4F1A;&#x5148;&#x548C;g()&#x548C;h()&#x76F8;&#x4E58;&#x7684;&#x7ED3;&#x679C;&#x76F8;&#x52A0;&#xFF0C;&#x7136;&#x540E;&#x5F97;&#x5230;&#x7684;&#x7ED3;&#x679C;&#x518D;&#x4E0E;j()&#x76F8;&#x52A0;&#x3002;</li>
+<li>&#x56DB;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x3002;</li>
+</ol>
+<p>&#x5982;&#x679C;&#x8FD9;&#x56DB;&#x4E2A;&#x51FD;&#x6570;&#x662F;&#x76F8;&#x5173;&#x7684;&#xFF0C;&#x5982;&#x90FD;&#x4F1A;&#x5728;&#x5185;&#x90E8;&#x5BF9;&#x540C;&#x4E00;&#x4E2A;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#x6216;&#x8BBF;&#x95EE;&#xFF0C;&#x90A3;&#x4E48;&#x7ED3;&#x679C;&#x5C06;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;</p>
+<h3 id="arithmetic-operators">Arithmetic Operators</h3>
+<p>&#x7B97;&#x6570;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x6392;&#x5E8F;&#x5982;&#x4E0B;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x7B97;&#x6570;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x7ED3;&#x5408;&#x6027;&#x90FD;&#x662F;&#x4ECE;&#x5DE6;&#x81F3;&#x53F3;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x4F18;&#x5148;&#x7EA7;</th>
+<th>&#x64CD;&#x4F5C;&#x7B26;</th>
+<th>&#x542B;&#x4E49;</th>
+<th>&#x4F7F;&#x7528;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>+</td>
+<td>&#x6B63;&#x53F7;</td>
+<td>+ expr</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>-</td>
+<td>&#x8D1F;&#x53F7;</td>
+<td>- expr</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>*</td>
+<td>&#x76F8;&#x4E58;</td>
+<td>expr * expr</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>/</td>
+<td>&#x76F8;&#x9664;</td>
+<td>expr / expr</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>%</td>
+<td>&#x6C42;&#x4F59;</td>
+<td>expr % expr</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>+</td>
+<td>&#x76F8;&#x52A0;</td>
+<td>expr + expr</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>-</td>
+<td>&#x76F8;&#x51CF;</td>
+<td>expr - expr</td>
+</tr>
+</tbody>
+</table>
+<p>&#x7B97;&#x6570;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x7ED3;&#x679C;&#x90FD;&#x662F;&#x53F3;&#x53C2;&#x6570;&#x3002;</p>
+<h4 id="arithmetic-operation-on-boolean">Arithmetic Operation on Boolean</h4>
+<p>&#x5728;&#x5BF9;&#x5E03;&#x5C14;&#x503C;&#x8FDB;&#x884C;&#x7B97;&#x6570;&#x64CD;&#x4F5C;&#x65F6;&#x9700;&#x8981;&#x989D;&#x5916;&#x7684;&#x6CE8;&#x610F;&#xFF0C;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> b = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">bool</span> b2 = -b;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;b2 is &quot;</span> &lt;&lt; b2;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">b2 is 1</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;&#x5BF9;b&#x4F7F;&#x7528;&#x4E86;&#x8D1F;&#x53F7;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x6240;&#x4EE5;b&#x4F1A;&#x8F6C;&#x6362;&#x4E3A;int&#xFF0C;&#x56E0;&#x4E3A;b&#x503C;&#x4E3A;true&#xFF0C;&#x6240;&#x4EE5;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;1&#xFF0C;&#x5373;b2&#x7684;&#x503C;&#x4E3A;-1,&#x56E0;&#x4E3A;&#x975E;0&#xFF0C;&#x6240;&#x4EE5;b2&#x503C;&#x4E3A;true&#x3002;&#x6700;&#x540E;&#x4F7F;&#x7528;cout&#x6253;&#x5370;&#x65F6;&#xFF0C;&#x53C8;&#x8F6C;&#x6362;&#x4E3A;&#x4E86;int&#xFF0C;&#x4E3A;1&#x3002;</p>
+<h4 id="overflow">Overflow</h4>
+<p>&#x5982;&#x679C;&#x5BF9;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x4F7F;&#x7528;&#x4E86;&#x7B97;&#x6570;&#x64CD;&#x4F5C;&#x7B26;&#x4E14;&#x7ED3;&#x679C;&#x8D85;&#x8FC7;&#x4E86;&#x7C7B;&#x578B;&#x6240;&#x80FD;&#x8868;&#x8FBE;&#x7684;&#x6700;&#x5927;&#x503C;&#xFF0C;&#x90A3;&#x4E48;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x5982;&#x4F7F;&#x7528;short&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x6570;&#xFF0C;&#x4E14;&#x5728;&#x67D0;&#x8BBE;&#x5907;&#x4E0A;short&#x662F;16-bits&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x7684;&#x8868;&#x8FBE;&#x8303;&#x56F4;&#x662F;<span class="math inline">\(-32768\sim 32767\)</span>&#xFF0C;&#x5982;&#x6709;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">short</span> short_value = <span class="number">32767</span>;</span><br><span class="line">short_value++;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;short value is &quot;</span> &lt;&lt; short_value &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">b2 is 1short value is -32768</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x7ED3;&#x679C;&#x4E3A;-32768&#xFF0C;&#x662F;&#x56E0;&#x4E3A;&#x7F16;&#x8BD1;&#x5668;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x4E86;<code>wrap around</code>&#xFF0C;&#x4F46;&#x56E0;&#x4E3A;&#x7ED3;&#x679C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x5E76;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x6240;&#x6709;&#x8BBE;&#x5907;&#x4E0A;&#x90FD;&#x662F;&#x8FD9;&#x4E2A;&#x7ED3;&#x679C;&#x3002;</p>
+<h4 id="remainder-operation">remainder(%) operation</h4>
+<p>&#x53D6;&#x4F59;&#x7B26;&#x53F7;&#x7684;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x5FC5;&#x987B;&#x662F;&#x6574;&#x6570;&#x7C7B;&#x578B;&#xFF0C;&#x5BF9;&#x4E8E;<code>m % n</code>&#xFF0C;&#x7ED3;&#x679C;&#x7684;&#x6B63;&#x8D1F;&#x4E0E;m&#x4E00;&#x6837;&#x3002;&#x5373;<code>m%(-n)</code>&#x7684;&#x503C;&#x4E0E;<code>m%n</code>&#x76F8;&#x540C;&#xFF0C;<code>(-m)%n</code>&#x7684;&#x503C;&#x4E0E;<code>-(m%n)</code>&#x76F8;&#x540C;&#x3002;</p>
+<h3 id="logical-and-relational-operators">Logical and Relational Operators</h3>
+<p>&#x6240;&#x6709;&#x7684;&#x7B97;&#x6570;&#x503C;&#xFF08;&#x6574;&#x6570;&#x548C;&#x6D6E;&#x70B9;&#x6570;&#xFF09;&#x548C;&#x6307;&#x9488;&#x8F6C;&#x6362;&#x4E3A;&#x5E03;&#x5C14;&#x503C;&#x7684;&#x89C4;&#x5219;&#x76F8;&#x540C;&#xFF0C;&#x503C;&#x4E3A;0&#x4E3A;false&#xFF0C;&#x503C;&#x975E;0&#x4E3A;true&#x3002;</p>
+<p>&#x6240;&#x6709;&#x7684;&#x903B;&#x8F91;&#x548C;&#x5173;&#x7CFB;&#x8FD0;&#x7B97;&#x7B26;&#x4F18;&#x5148;&#x7EA7;&#x5982;&#x4E0B;&#x6807;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x4F18;&#x5148;&#x7EA7;</th>
+<th>&#x7ED3;&#x5408;&#x6027;</th>
+<th>&#x64CD;&#x4F5C;&#x7B26;</th>
+<th>&#x542B;&#x4E49;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Right</td>
+<td>!</td>
+<td>&#x53D6;&#x975E;</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Left</td>
+<td>&lt;</td>
+<td>&#x5C0F;&#x4E8E;</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>Left</td>
+<td>&lt;=</td>
+<td>&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Left</td>
+<td>&gt;</td>
+<td>&#x5927;&#x4E8E;</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>Left</td>
+<td>&gt;=</td>
+<td>&#x5927;&#x4E8E;&#x7B49;&#x4E8E;</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>Left</td>
+<td>==</td>
+<td>&#x76F8;&#x7B49;</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Left</td>
+<td>!=</td>
+<td>&#x4E0D;&#x7B49;</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Left</td>
+<td>&amp;&amp;</td>
+<td>&#x4E0E;</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>Left</td>
+<td>||</td>
+<td>&#x6216;</td>
+</tr>
+</tbody>
+</table>
+<p><code>&amp;&amp;</code>&#x64CD;&#x4F5C;&#x548C;<code>||</code>&#x64CD;&#x4F5C;&#x90FD;&#x662F;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x6C42;&#x503C;</p>
+<h4 id="the-relational-operators">The Relational Operators</h4>
+<p>&#x56E0;&#x4E3A;&#x5173;&#x7CFB;&#x8FD0;&#x7B97;&#x7B26;&#x7684;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x662F;bool&#x503C;&#xFF0C;&#x7EA7;&#x8054;&#x5173;&#x7CFB;&#x8FD0;&#x7B97;&#x7B26;&#x7684;&#x7ED3;&#x679C;&#x901A;&#x5E38;&#x5982;&#x671F;&#x671B;&#x7684;&#x4E0D;&#x540C;&#xFF0C;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">3</span>, j = <span class="number">2</span>, k = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">if</span> (i &lt; j &lt; k)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;enter case 1&quot;</span>;</span><br><span class="line">        </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">enter case 1</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x8FD0;&#x7B97;&#x7684;&#x5B9E;&#x9645;&#x8FC7;&#x7A0B;&#x662F;&#xFF0C;&#x5148;&#x5224;&#x65AD;<code>i&lt;j</code>&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;false&#xFF0C;&#x8FD4;&#x56DE;0&#xFF0C;&#x7136;&#x540E;&#x5224;&#x65AD;<code>o&lt;k</code>&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;true&#x3002;&#x5982;&#x679C;&#x8981;&#x5224;&#x65AD;i,j,k&#x662F;&#x5426;&#x662F;&#x9012;&#x589E;&#x7684;&#xFF0C;&#x5E94;&#x8BE5;&#x5199;&#x4E3A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(i &lt; j &amp;&amp; j &lt; k)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;enter case 1&quot;</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="equality-tests-and-the-bool-literals">Equality Tests and the bool Literals</h4>
+<p>&#x53EF;&#x4EE5;&#x5728;condition&#x4E2D;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x7B97;&#x6570;&#x503C;&#x6216;&#x8005;&#x6307;&#x9488;&#x6765;&#x5224;&#x65AD;&#x8BE5;&#x53C2;&#x6570;&#x662F;&#x5426;&#x662F;0&#xFF0C;&#x5982;&#x4E0B;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(val) {<span class="comment">/* ... */</span>}<span class="comment">//true if val is nonzero value</span></span><br></pre></td></tr></table></figure>
+<p>&#x4F46;&#x4E0A;&#x5F0F;&#x4E0D;&#x80FD;&#x6539;&#x5199;&#x4E3A; <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(val == <span class="literal">true</span>)  {<span class="comment">/* ... */</span>}</span><br></pre></td></tr></table></figure></p>
+<p>&#x5728;&#x8FD9;&#x4E2A;&#x5F0F;&#x5B50;&#x4E2D;&#xFF0C;true&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;val&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x5373;&#x53D8;&#x4E3A;1&#xFF0C;&#x56E0;&#x6B64;&#x5F0F;&#x5B50;&#x5224;&#x65AD;&#x7684;&#x662F;val&#x7684;&#x503C;&#x662F;&#x5426;&#x4E3A;1&#x3002;</p>
+<h2 id="assignment-operators">Assignment Operators</h2>
+<h4 id="assignment-is-right-associative">Assignment Is Right Associative</h4>
+<p>&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x7684;&#x7ED3;&#x5408;&#x6027;&#x662F;&#x4ECE;&#x53F3;&#x81F3;&#x5DE6;&#x7684;&#xFF0C;&#x4E14;&#x8D4B;&#x503C;&#x7684;&#x53F3;&#x53C2;&#x6570;&#x5FC5;&#x987B;&#x4E0E;&#x5DE6;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#x76F8;&#x540C;&#x6216;&#x8005;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x5230;&#x5DE6;&#x53C2;&#x6570;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">double</span> d;</span><br><span class="line">i = d = <span class="number">3.5</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;i is &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;, d is &quot;</span> &lt;&lt; d &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">d = i = <span class="number">3.5</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;i is &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;, d is &quot;</span> &lt;&lt; d &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">i is 3, d is 3.5</span></span><br><span class="line"><span class="comment">i is 3, d is 3</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h4 id="assignment-has-low-precedence">Assignment Has Low Precedence</h4>
+<p>&#x5728;C++&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;condition&#x4E2D;&#x4F7F;&#x7528;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x4E0B;&#x4E24;&#x90E8;&#x5206;&#x4EE3;&#x7801;&#x662F;&#x7B49;&#x6548;&#x7684;&#xFF0C;&#x4F46;&#x7B2C;&#x4E8C;&#x4E2A;&#x66F4;&#x7B80;&#x6D01;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = getValue();</span><br><span class="line"><span class="keyword">while</span> ( i != <span class="number">42</span> )</span><br><span class="line">{</span><br><span class="line">  <span class="comment">// do sth</span></span><br><span class="line">  i = getValue();</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">while</span>( (i = getValue()) != <span class="number">42</span>)</span><br><span class="line">  <span class="comment">// do sth</span></span><br></pre></td></tr></table></figure>
+<p>&#x6CE8;&#x610F;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x5F88;&#x4F4E;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x62EC;&#x53F7;&#x6765;&#x9650;&#x5B9A;&#x4F18;&#x5148;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x4F7F;&#x7528;&#x62EC;&#x53F7;&#xFF0C;&#x5219;i&#x7684;&#x503C;&#x4F1A;&#x53D8;&#x6210;getValue&#x8FD4;&#x56DE;&#x503C;&#x4E0E;42&#x7684;&#x6BD4;&#x8F83;&#x7ED3;&#x679C;&#xFF0C;&#x5373;&#x53EA;&#x4F1A;&#x662F;0&#x6216;1&#x3002;</p>
+<h4 id="compound-assignment-operators">Compound Assignment Operators</h4>
+<p>&#x4EE5;&#x4E0B;&#x90FD;&#x662F;&#x590D;&#x5408;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x7B26;&#xFF1A; <code>+=</code>,<code>-=</code>,<code>*=</code>,<code>/=</code>,<code>%=</code>,<code>&lt;&lt;=</code>,<code>&gt;&gt;=</code>,<code>&amp;=</code>,<code>^=</code>,<code>|=</code>&#x3002;</p>
+<p>&#x4EE5;<code>+=</code>&#x4E3A;&#x4F8B;&#xFF0C;&#x4E0B;&#x4E24;&#x4E2A;&#x5F0F;&#x5B50;&#x662F;&#x7B49;&#x6548;&#x7684;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a += <span class="number">1</span>;</span><br><span class="line">a = a+<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x4F46;&#x662F;&#x4ECE;&#x6027;&#x80FD;&#x89D2;&#x5EA6;&#x8003;&#x8651;&#xFF0C;&#x4F7F;&#x7528;&#x590D;&#x5408;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x53EA;&#x9700;&#x8981;&#x8BFB;&#x53D6;&#x4E00;&#x6B21;&#x5DE6;&#x53C2;&#x6570;&#xFF0C;&#x800C;&#x666E;&#x901A;&#x7684;&#x8D4B;&#x503C;&#x65B9;&#x6CD5;&#x5219;&#x9700;&#x8981;&#x8BFB;&#x53D6;&#x4E24;&#x6B21;&#xFF0C;&#x56E0;&#x6B64;&#x590D;&#x5408;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x6709;&#x66F4;&#x597D;&#x7684;&#x6027;&#x80FD;&#xFF0C;&#x867D;&#x7136;&#x4E4B;&#x4E2D;&#x7684;&#x5DEE;&#x8DDD;&#x4E0D;&#x662F;&#x5F88;&#x660E;&#x663E;&#x3002;</p>
+<h2 id="increment-and-decrement-operators">Increment and Decrement Operators</h2>
+<p><code>++</code>&#x548C;<code>--</code>&#x64CD;&#x4F5C;&#x90FD;&#x6709;&#x4E24;&#x4E2A;&#x5F62;&#x5F0F;&#xFF0C;&#x524D;&#x7F6E;(Prefix)&#x548C;&#x540E;&#x7F6E;&#xFF08;Postfix&#xFF09;&#xFF0C;&#x524D;&#x7F6E;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x539F;&#x503C;&#x52A0;1&#x540E;&#x7684;&#x539F;&#x5BF9;&#x8C61;&#x672C;&#x8EAB;&#xFF0C;&#x7ED3;&#x679C;&#x662F;&#x5DE6;&#x53C2;&#x6570;&#x3002;&#x540E;&#x7F6E;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x539F;&#x5BF9;&#x8C61;&#x7684;&#x539F;&#x503C;&#xFF0C;&#x7ED3;&#x679C;&#x662F;&#x53F3;&#x53C2;&#x6570;&#x3002;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>, j;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;i is &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;, j is &quot;</span> &lt;&lt; j &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">j = ++i;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;i is &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;, j is &quot;</span> &lt;&lt; j &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">j = i++;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;i is &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;, j is &quot;</span> &lt;&lt; j &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">i is 0, j is 0</span></span><br><span class="line"><span class="comment">i is 1, j is 1</span></span><br><span class="line"><span class="comment">i is 2, j is 1</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>&#x5C3D;&#x91CF;&#x4F7F;&#x7528;&#x524D;&#x7F6E;&#x64CD;&#x4F5C;&#xFF0C;&#x8FD9;&#x6837;&#x4EE3;&#x7801;&#x66F4;&#x7B80;&#x6D01;&#xFF0C;&#x4E14;&#x56E0;&#x4E3A;&#x907F;&#x514D;&#x4E86;&#x62F7;&#x8D1D;&#x4E5F;&#x6709;&#x66F4;&#x597D;&#x7684;&#x6027;&#x80FD;</p>
+</blockquote>
+<h3 id="combining-dereference-and-increment-in-a-single-expression">Combining Dereference and Increment in a Single Expression</h3>
+<p>&#x56E0;&#x4E3A;&#x7D2F;&#x52A0;&#x7B26;&#x53F7;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x4F4E;&#x4E8E;&#x89E3;&#x5F15;&#x7528;&#x7B26;&#xFF0C;&#x6240;&#x4EE5;<code>*p++</code>&#x7B49;&#x540C;&#x4E8E;<code>*(p++)</code></p>
+<h3 id="remember-that-operands-can-be-evaluated-in-any-order">Remember That Operands Can Be Evaluated in Any Order</h3>
+<p>&#x5982;&#x4E4B;&#x524D;&#x6240;&#x8FF0;&#xFF0C;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x5185;&#xFF0C;&#x5B50;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x8BA1;&#x7B97;&#x987A;&#x5E8F;&#x662F;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x7684;&#xFF08;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x51B3;&#x5B9A;&#x7684;&#x662F;&#x5B50;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x8BA1;&#x7B97;&#x7ED3;&#x679C;&#x5728;&#x603B;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x8BA1;&#x7B97;&#x7684;&#x987A;&#x5E8F;&#xFF09;&#x3002;</p>
+<p>&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#xFF0C;&#x6709;&#x5B50;&#x8868;&#x8FBE;&#x5F0F;&#x4F7F;&#x7528;&#x5BF9;&#x8C61;&#xFF0C;&#x53E6;&#x4E00;&#x4E2A;&#x5B50;&#x8868;&#x8FBE;&#x5F0F;&#x4FEE;&#x6539;&#x5BF9;&#x8C61;&#x65F6;&#xFF0C;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x5982;&#x4E0B;&#x5F0F;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line"><span class="keyword">auto</span> beg = s.begin();</span><br><span class="line"><span class="keyword">while</span> (beg != s.end() &amp;&amp; !<span class="built_in">isspace</span>(*beg))</span><br><span class="line">{</span><br><span class="line">    *beg = <span class="built_in">toupper</span>(*beg++);</span><br><span class="line">}</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">aAAAAAA </span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x7ED3;&#x679C;&#x5E76;&#x4E0D;&#x662F;&#x671F;&#x671B;&#x7684;&#x904D;&#x5386;&#x6574;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x5E76;&#x5C06;&#x6240;&#x6709;&#x5B57;&#x7B26;&#x6362;&#x4E3A;&#x5927;&#x5199;&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x8BED;&#x53E5;<code>*beg = toupper(*beg++)</code>&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x5B83;&#x53EF;&#x80FD;&#x88AB;&#x89E3;&#x91CA;&#x4E3A;&#x4EE5;&#x4E0B;&#x4EFB;&#x4F55;&#x60C5;&#x51B5;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*beg = <span class="built_in">toupper</span>(*beg)</span><br><span class="line">*(beg + <span class="number">1</span>) = <span class="built_in">toupper</span>(*beg)</span><br><span class="line"><span class="comment">//Others</span></span><br></pre></td></tr></table></figure>
+<p>&#x53F3;&#x4FA7;&#x7684;<code>*beg++</code>&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x987A;&#x5E8F;&#x662F;&#x56FA;&#x5B9A;&#x7684;&#xFF0C;&#x5373;&#x5148;&#x8FDB;&#x884C;&#x7D2F;&#x52A0;&#xFF0C;&#x5728;&#x8FDB;&#x884C;&#x89E3;&#x5F15;&#x7528;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x5DE6;&#x4FA7;&#x7684;<code>*beg</code>&#x548C;&#x53F3;&#x4FA7;&#x7684;<code>*beg++</code>&#x54EA;&#x4E2A;&#x5148;&#x8FDB;&#x884C;&#x8FD0;&#x7B97;&#x7ED3;&#x679C;&#x662F;&#x4E0D;&#x4E00;&#x5B9A;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x5148;&#x8FD0;&#x884C;&#x4E86;&#x5DE6;&#x4FA7;&#xFF0C;&#x5219;&#x7ED3;&#x679C;&#x5BF9;&#x5E94;&#x4E0A;&#x8FF0;&#x7B2C;&#x4E00;&#x79CD;&#x53EF;&#x80FD;&#xFF0C;&#x5426;&#x5219;&#x5BF9;&#x5E94;&#x4E0A;&#x8FF0;&#x7B2C;&#x4E8C;&#x79CD;&#x53EF;&#x80FD;&#x3002;</p>
+<h2 id="the-member-access-operators">The Member Access Operators</h2>
+<p><code>ptr-&gt;mem</code>&#x76F8;&#x5F53;&#x4E8E;<code>(*ptr).mem</code></p>
+<p>&#x7BAD;&#x5934;&#x64CD;&#x4F5C;&#x9700;&#x8981;&#x5BF9;&#x6307;&#x9488;&#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x4E14;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x5DE6;&#x53C2;&#x6570;&#xFF0C;&#x70B9;&#x64CD;&#x4F5C;&#x8FD4;&#x56DE;&#x7684;&#x53C2;&#x6570;&#x662F;&#x5DE6;&#x53C2;&#x6570;&#x8FD8;&#x662F;&#x53F3;&#x53C2;&#x6570;&#x7531;&#x5BF9;&#x8C61;&#x672C;&#x8EAB;&#x51B3;&#x5B9A;&#x3002;</p>
+<h2 id="the-conditional-operator">The Conditional Operator</h2>
+<p>&#x6761;&#x4EF6;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x5F62;&#x5F0F;&#x4E3A;<code>cond ? expr1 : expr2</code>&#xFF0C;&#x548C;&#x903B;&#x8F91;&#x4E0E;&#x548C;&#x903B;&#x8F91;&#x6216;&#x4E00;&#x6837;&#xFF0C;&#x6761;&#x4EF6;&#x64CD;&#x4F5C;&#x7B26;&#x540C;&#x6837;&#x4E5F;&#x662F;&#x6700;&#x77ED;&#x6C42;&#x503C;&#xFF0C;&#x6240;&#x4EE5;<code>expr1</code>&#x548C;<code>expr2</code>&#x4E2D;&#x53EA;&#x4F1A;&#x6709;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x88AB;&#x8BA1;&#x7B97;&#x3002;</p>
+<h3 id="nesting-conditional-operations">Nesting Conditional Operations</h3>
+<p>&#x5F53;&#x6709;&#x591A;&#x4E2A;&#x6761;&#x4EF6;&#x64CD;&#x4F5C;&#x7B26;&#x5D4C;&#x5957;&#x65F6;&#xFF0C;&#x7ED3;&#x5408;&#x6027;&#x662F;&#x4ECE;&#x53F3;&#x81F3;&#x5DE6;&#x7684;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestConditionalOperations</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> grade;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; grade;</span><br><span class="line">    <span class="built_in">string</span> final = (grade &gt; <span class="number">90</span>) ? <span class="string">&quot;High Pass&quot;</span> : (grade &lt; <span class="number">60</span>) ? <span class="string">&quot;fail&quot;</span> : <span class="string">&quot;pass&quot;</span>;</span><br><span class="line">    <span class="comment">//Equals to:</span></span><br><span class="line">    <span class="comment">//(grade &gt; 90) ? &quot;High Pass&quot; : ((grade &lt; 60) ? &quot;fail&quot; : &quot;pass&quot;)</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Final is &quot;</span> &lt;&lt; final &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x7ED3;&#x5408;&#x6027;&#x662F;&#x4ECE;&#x53F3;&#x81F3;&#x5DE6;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x8BA1;&#x7B97;&#x987A;&#x5E8F;&#x4ECD;&#x7136;&#x662F;&#x4ECE;&#x5DE6;&#x81F3;&#x53F3;&#xFF0C;&#x5373;&#x4F1A;&#x5148;&#x8BA1;&#x7B97;<code>grade &gt; 90</code>&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x518D;&#x8BA1;&#x7B97;<code>grade &lt;60</code>&#x3002;</p>
+<h3 id="using-a-conditional-operator-in-an-output-expression">Using a Conditional Operator in an Output Expression</h3>
+<p>&#x56E0;&#x4E3A;&#x6761;&#x4EF6;&#x64CD;&#x4F5C;&#x7B26;&#xFF08;Conditional Operator&#xFF09;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x5F88;&#x4F4E;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x8F93;&#x51FA;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x4F7F;&#x7528;&#x6761;&#x4EF6;&#x64CD;&#x4F5C;&#x7B26;&#x65F6;&#x5F80;&#x5F80;&#x90FD;&#x9700;&#x8981;&#x52A0;&#x4E0A;&#x62EC;&#x53F7;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; ((grade &lt; <span class="number">60</span>) ? <span class="string">&quot;fail&quot;</span> : <span class="string">&quot;pass&quot;</span>);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (grade &lt; <span class="number">60</span>) ? <span class="string">&quot;fail&quot;</span> : <span class="string">&quot;pass&quot;</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">// cout &lt;&lt; grade &lt; 60 ? &quot;fail&quot; : &quot;pass&quot;; //Error</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">fail</span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x7B2C;&#x4E09;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x7F16;&#x8BD1;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x8F93;&#x51FA;&#x4E86;1&#xFF0C;&#x56E0;&#x4E3A;&#x90FD;&#x662F;&#x56E0;&#x4E3A;<code>&lt;&lt;</code>&#x64CD;&#x4F5C;&#x6BD4;&#x6761;&#x4EF6;&#x64CD;&#x4F5C;&#x7B26;&#x6709;&#x66F4;&#x9AD8;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x3002;</p>
+<p>&#x7B2C;&#x4E8C;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x548C;&#x7B2C;&#x4E09;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x7B49;&#x6548;&#x4E3A;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cout &lt;&lt; (grade &lt; 60) ? &quot;fail&quot; : &quot;pass&quot;;</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (grade &lt;<span class="number">60</span>) ;</span><br><span class="line"><span class="built_in">cout</span> ? <span class="string">&quot;fail&quot;</span> : <span class="string">&quot;pass&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// cout &lt;&lt; grade &lt; 60 ? &quot;fail&quot; : &quot;pass&quot;; //Error</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; grade;</span><br><span class="line"><span class="comment">// cout &lt; 60 ? &quot;fail&quot; : &quot;pass&quot;; //Error, can not use &lt; on cout</span></span><br></pre></td></tr></table></figure>
+<h2 id="the-bitwise-operators">The Bitwise Operators</h2>
+<p>&#x4F4D;&#x64CD;&#x4F5C;&#x7B26;&#xFF08;Bitwise Operators&#xFF09;&#x4F7F;&#x7528;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x6765;&#x8868;&#x793A;&#x4E00;&#x7CFB;&#x5217;&#x7684;bits&#x3002;&#x5982;&#x679C;&#x64CD;&#x4F5C;&#x7684;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x5C0F;&#x4E8E;&#x64CD;&#x4F5C;&#x7684;&#x7ED3;&#x679C;&#x7C7B;&#x578B;&#xFF0C;&#x5219;&#x4F1A;&#x9996;&#x5148;&#x5C06;&#x64CD;&#x4F5C;&#x7684;&#x5BF9;&#x8C61;&#x8F6C;&#x6362;&#x4E3A;&#x7ED3;&#x679C;&#x7C7B;&#x578B;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x4F4D;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x53CA;&#x63CF;&#x8FF0;&#x5982;&#x4E0B;&#x8868;&#x6240;&#x793A;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x4F18;&#x5148;&#x7EA7;</th>
+<th>&#x64CD;&#x4F5C;</th>
+<th>&#x542B;&#x4E49;</th>
+<th>&#x4EE3;&#x7801;&#x5B9E;&#x4F8B;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>~</td>
+<td>&#x4F4D;&#x53D6;&#x53CD;</td>
+<td>~expr</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>&lt;&lt;</td>
+<td>&#x5DE6;&#x79FB;</td>
+<td>expr1 &lt;&lt; expr2</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>&gt;&gt;</td>
+<td>&#x53F3;&#x79FB;</td>
+<td>expr1 &gt;&gt; expr2</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>&amp;</td>
+<td>&#x4E0E;</td>
+<td>expr1 &amp; expr2</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>^</td>
+<td>&#x5F02;&#x6216;</td>
+<td>expr1 ^ expr2</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>|</td>
+<td>&#x6216;</td>
+<td>expr1 &#xA0;expr2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="bitwise-shift-operators">Bitwise Shift Operators</h3>
+<ol type="1">
+<li><p><code>&lt;&lt;</code>&#x548C;<code>&gt;&gt;</code>&#x90FD;&#x662F;&#x4F4D;&#x79FB;&#x64CD;&#x4F5C;&#xFF0C;&#x53F3;&#x4FA7;&#x7684;&#x53C2;&#x6570;&#x5FC5;&#x987B;&#x662F;&#x6B63;&#x6574;&#x6570;&#xFF0C;&#x800C;&#x4E14;&#x5FC5;&#x987B;&#x5C0F;&#x4E8E;&#x5DE6;&#x4FA7;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x7684;bit&#x6570;&#xFF0C;&#x5426;&#x5219;&#x5C06;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;</p></li>
+<li><p>&#x4F4D;&#x79FB;&#x8FD0;&#x7B97;&#x7ED3;&#x5408;&#x6027;&#x65F6;&#x4ECE;&#x5DE6;&#x81F3;&#x53F3;&#x7684;&#x3002;</p></li>
+<li><p>&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x62F7;&#x8D1D;&#x7684;&#x5DE6;&#x4FA7;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x4F4D;&#x79FB;&#x53F3;&#x4FA7;&#x53C2;&#x6570;&#x540E;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x5373;&#x4F4D;&#x79FB;&#x8FD0;&#x7B97;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x539F;&#x53D8;&#x91CF;&#x3002;</p></li>
+<li><p>&#x4F4D;&#x79FB;&#x51FA;&#x8FB9;&#x754C;&#x7684;bit&#x5C06;&#x88AB;&#x820D;&#x5F03;&#x3002;</p></li>
+<li><p>&#x5BF9;&#x4E8E;&#x5DE6;&#x79FB;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x679C;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x662F;signed&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x64CD;&#x4F5C;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x662F;unsigned&#x7684;&#xFF0C;&#x6570;&#x636E;&#x5DE6;&#x79FB;&#x540E;&#xFF0C;&#x5728;&#x53F3;&#x4FA7;&#x88C5;&#x586B;0&#x3002; &#x5BF9;&#x4E8E;&#x53F3;&#x79FB;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x679C;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x662F;signed&#x7684;&#xFF0C;&#x64CD;&#x4F5C;&#x7ED3;&#x679C;&#x662F;&#x57FA;&#x4E8E;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x4E3A;&#x64CD;&#x4F5C;&#x540E;&#x5DE6;&#x4FA7;&#x63D2;&#x5165;1&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x4E3A;&#x64CD;&#x4F5C;&#x540E;&#x5DE6;&#x4FA7;&#x62F7;&#x8D1D;sign&#x4F4D;&#xFF08;&#x5373;&#x6570;&#x636E;&#x7684;&#x7B2C;&#x4E00;&#x4F4D;&#xFF09;&#x3002;&#x5982;&#x679C;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x662F;unsigned&#x7684;&#xFF0C;&#x5219;&#x5728;&#x64CD;&#x4F5C;&#x540E;&#x5728;&#x5DE6;&#x4FA7;&#x63D2;&#x5165;0&#x3002; &gt; &#x5728;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x4E3A;signed&#x65F6;&#xFF0C;&#x5DE6;&#x79FB;&#x548C;&#x53F3;&#x79FB;&#x64CD;&#x4F5C;&#x8981;&#x4E48;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x8981;&#x4E48;&#x662F;&#x57FA;&#x4E8E;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x90FD;&#x4E0D;&#x53EF;&#x63A7;&#x3002;&#x6240;&#x4EE5;&#x5EFA;&#x8BAE;&#x53EA;&#x5BF9;unsigned&#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x4F4D;&#x79FB;&#x64CD;&#x4F5C;&#x3002;</p></li>
+</ol>
+<p>&#x4F8B;&#x5B50;1&#xFF1A;</p>
+<p>&#x5982;&#x6709;&#x4E00;&#x53F0;&#x8BBE;&#x5907;&#xFF0C;&#x5176;&#x4E2D;char&#x4E3A;8-bits&#xFF0C;int&#x4E3A;16-bits&#xFF0C;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;bits&#x7684;char&#x5BF9;&#x8C61;&#x7684;&#x503C;&#x4E3A;0233&#xFF08;&#x516B;&#x8FDB;&#x5236;&#x8868;&#x793A;&#xFF09;&#xFF0C;&#x5219;&#x5176;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x4E3A;</p>
+<p><code>10011011</code></p>
+<p>&#x9996;&#x5148;&#x5C06;&#x5176;&#xFF0C;&#x8F6C;&#x6362;&#x4E3A;int&#xFF0C;&#x62D3;&#x5C55;&#x7684;&#x4F4D;&#x90FD;&#x4E3A;0&#xFF0C;&#x5982;&#x4E0B; <code>00000000 10011011</code></p>
+<p>&#x5982;&#x679C;&#x6267;&#x884C;&#x7684;&#x51FD;&#x6570;&#x662F;<code>bits&lt;&lt;8</code>&#xFF0C;&#x5373;&#x5C06;bits&#x5DE6;&#x79FB;8&#x4F4D;&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;</p>
+<p><code>10011011 00000000</code>&#xFF0C;&#x6700;&#x5DE6;&#x4FA7;&#x7684;8&#x4F4D;&#x79FB;&#x9664;&#x4E86;&#x8303;&#x56F4;&#xFF0C;&#x6240;&#x4EE5;&#x88AB;&#x4E22;&#x5F03;&#x4E86;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x6267;&#x884C;&#x7684;&#x51FD;&#x6570;&#x662F;<code>bits &gt;&gt; 3</code>&#xFF0C;&#x5373;&#x5C06;bits&#x53F3;&#x79FB;&#x52A8;3&#x4F4D;&#xFF0C;&#x7ED3;&#x679C;&#x4E3A; <code>000000000 00010011</code>&#xFF0C;&#x6700;&#x53F3;&#x4FA7;&#x7684;&#x4E09;&#x4F4D;&#x79FB;&#x51FA;&#x4E86;&#x8303;&#x56F4;&#xFF0C;&#x6240;&#x4EE5;&#x88AB;&#x4E22;&#x5F03;&#x4E86;&#x3002;</p>
+<h3 id="bitwise-not-operator">Bitwise Not Operator</h3>
+<p>&#x540C;&#x6837;&#x5728;&#x64CD;&#x4F5C;&#x524D;&#xFF0C;&#x5982;&#x679C;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x8F83;&#x5C0F;&#xFF0C;&#x9700;&#x8981;&#x5C06;&#x5176;&#x63D0;&#x5347;&#x4E3A;&#x7ED3;&#x679C;&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#xFF0C;&#x5982;&#x7ED3;&#x679C;&#x4E3A;int&#xFF08;16-bits&#xFF09;,&#x5BF9;&#x8C61;&#x4E3A;char&#xFF0C;&#x4E14;&#x503C;&#x4E3A;<code>10010111</code>&#xFF0C;&#x5219;&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x53D6;&#x53CD;&#x64CD;&#x4F5C;&#x7684;&#x7ED3;&#x679C;&#x4E3A;&#xFF1A;</p>
+<p><code>11111111 01101000</code></p>
+<h3 id="bitwise-andor">Bitwise And,Or</h3>
+<p>&#x540C;&#x6837;&#x5728;&#x64CD;&#x4F5C;&#x524D;&#xFF0C;&#x5982;&#x679C;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x8F83;&#x5C0F;&#xFF0C;&#x9700;&#x8981;&#x5C06;&#x5176;&#x63D0;&#x5347;&#x4E3A;&#x7ED3;&#x679C;&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x5F02;&#x6216;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x679C;&#x4E24;&#x4E2A;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x4E2D;&#xFF0C;&#x6709;&#x4E14;&#x53EA;&#x6709;&#x4E00;&#x4E2A;1&#xFF0C;&#x5219;&#x7ED3;&#x679C;&#x4E3A;0&#xFF0C;&#x5426;&#x5219;&#x7ED3;&#x679C;&#x90FD;&#x4E3A;0&#x3002;</p>
+<p>&#x4F8B;&#x5B50;2&#xFF1A;</p>
+<p>&#x5728;&#x4E00;&#x53F0;int&#x4E3A;21-bits&#xFF0C;char&#x4E3A;8-bits&#x7684;&#x8BBE;&#x5907;&#x4E0A;&#x8FD0;&#x884C;<code>~&apos;q&apos; &lt;&lt; 6</code>&#xFF0C;&#x8BE5;&#x8BBE;&#x5907;&#x7528;Latin-1&#x5B57;&#x7B26;&#x96C6;&#xFF0C;q&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x4E3A;<code>01110001</code>&#x3002;</p>
+<p>&#x9996;&#x5148;&#x5C06;&#x5176;&#x8F6C;&#x6362;&#x4E3A;int&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;</p>
+<p><code>00000000 00000000 00000000 01110001</code></p>
+<p>&#x7136;&#x540E;&#x8FDB;&#x884C;&#x53D6;&#x53CD;&#x64CD;&#x4F5C;&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;</p>
+<p><code>11111111 11111111 11111111 10001110</code>&#xFF0C;</p>
+<p>&#x518D;&#x5DE6;&#x79FB;6&#x4F4D;&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;</p>
+<p><code>11111111 11111111 11100011 10000000</code></p>
+<p>&#x5982;&#x679C;&#x8981;&#x5C06;&#x8BE5;&#x7ED3;&#x679C;&#x8F6C;&#x6362;&#x4E3A;10&#x8FDB;&#x5236;&#xFF0C;&#x9996;&#x5148;&#x7B2C;&#x4E00;&#x4F4D;&#x6570;&#x636E;&#x662F;1&#xFF0C;&#x8BF4;&#x660E;&#x4E3A;&#x8D1F;&#x6570;&#xFF0C;&#x8D1F;&#x6570;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x662F;&#x8865;&#x7801;&#xFF0C;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x5C06;&#x8BE5;&#x4E8C;&#x8FDB;&#x5236;&#x8F6C;&#x6362;&#x4E3A;&#x539F;&#x7801;&#xFF0C;&#x9996;&#x5148;&#x51CF;&#x4E00;&#xFF0C;&#x5F97;&#x5230;</p>
+<p><code>11111111 11111111 11100011 01111111</code></p>
+<p>&#x518D;&#x53D6;&#x53CD;&#xFF0C;&#x5F97;&#x5230;</p>
+<p><code>00000000 00000000 00011100 10000000</code></p>
+<p>&#x8868;&#x8FBE;&#x4E3A;10&#x8FDB;&#x5236;&#x4E3A;7296,&#x6240;&#x4EE5;&#x7ED3;&#x679C;&#x4E3A;-7296&#x3002;</p>
+<h3 id="using-bitwise-operators">Using Bitwise Operators</h3>
+<p>&#x5982;&#x679C;&#x6709;&#x4E00;&#x4E2A;int&#x503C;quiz1&#xFF0C;&#x9700;&#x8981;&#x5C06;&#x5176;&#x7B2C;27&#x4F4D;&#x53D8;&#x4E3A;1&#xFF0C;&#x5219;&#x53EF;&#x4F7F;&#x7528;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quiz1 |= <span class="number">1U</span>L &lt;&lt; <span class="number">27</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x5982;&#x679C;&#x8981;&#x5C06;&#x5176;27&#x4F4D;&#x53D8;&#x4E3A;0&#xFF0C;&#x5219;&#x53EF;&#x4F7F;&#x7528;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quize1 &amp;= ~(<span class="number">1U</span>L &lt;&lt; <span class="number">27</span>);</span><br></pre></td></tr></table></figure>
+<p>&#x5982;&#x60F3;&#x8981;&#x7684;&#x5230;&#x7B2C;27&#x4F4D;&#x7684;&#x503C;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> status= quiz1 &amp; (<span class="number">1U</span>L &lt;&lt; <span class="number">27</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="shift-operators-are-left-associateive">Shift Operators Are Left Associateive</h3>
+<p>&#x4F4D;&#x79FB;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x7ED3;&#x5408;&#x6027;&#x662F;&#x4ECE;&#x5DE6;&#x81F3;&#x53F3;&#x7684;&#xFF0C;&#x800C;IO&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x662F;&#x7EE7;&#x627F;&#x81EA;&#x4F4D;&#x79FB;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#xFF0C;&#x56E0;&#x6B64;IO&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x7ED3;&#x5408;&#x6027;&#x4E5F;&#x540C;&#x6837;&#x662F;&#x4ECE;&#x5DE6;&#x81F3;&#x53F3;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x5C06;&#x4F1A;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">10</span> &lt;<span class="number">24</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;&lt;&lt;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x9AD8;&#x4E8E;&#x5173;&#x7CFB;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x56E0;&#x6B64;&#x4E0A;&#x5F0F;&#x5B9E;&#x9645;&#x4E0A;&#x7B49;&#x4E8E;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">10</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt; <span class="number">24</span></span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x6B64;&#x4F1A;&#x9020;&#x6210;&#x7F16;&#x8BD1;&#x9519;&#x8BEF;&#x3002;</p>
+<h2 id="the-sizeof-operator">The sizeof Operator</h2>
+<p>sizeof&#x64CD;&#x4F5C;&#x7B26;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x5355;&#x4F4D;&#x4E3A;byte&#xFF0C;&#x8BE5;&#x64CD;&#x4F5C;&#x7B26;&#x7ED3;&#x5408;&#x6027;&#x662F;&#x4ECE;&#x53F3;&#x81F3;&#x5DE6;&#x7684;&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;<code>type_t</code>&#x7C7B;&#x578B;&#x3002;&#x6709;&#x4EE5;&#x4E0B;&#x4E24;&#x79CD;&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sizeof</span> (type)</span><br><span class="line"><span class="keyword">sizeof</span> expr</span><br></pre></td></tr></table></figure>
+<p>sizeof&#x64CD;&#x4F5C;&#x7B26;&#x5E76;&#x4E0D;&#x4F1A;&#x5BF9;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x6C42;&#x503C;&#xFF0C;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x4E5F;&#x6CA1;&#x5173;&#x7CFB;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;sizeof&#x6709;&#x4EE5;&#x4E0B;&#x89C4;&#x5219;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5BF9;&#x4E8E;char&#x6216;&#x8005;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x4E3A;char&#x7C7B;&#x578B;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;sizeof&#x7684;&#x7ED3;&#x679C;&#x4E3A;1</li>
+<li>&#x5BF9;&#x5F15;&#x7528;&#x5BF9;&#x8C61;&#x4F7F;&#x7528;sizeof&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;&#x7ED1;&#x5B9A;&#x7684;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x5927;&#x5C0F;</li>
+<li>&#x5BF9;&#x6307;&#x9488;&#x4F7F;&#x7528;sizeof&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;&#x8BE5;&#x8BBE;&#x5907;&#x4E0A;&#x5BB9;&#x7EB3;&#x5730;&#x5740;&#x9700;&#x8981;&#x7684;&#x5B57;&#x8282;&#x6570;&#xFF08;&#x786C;&#x4EF6;&#x76F8;&#x5173;&#xFF09;&#x3002;</li>
+<li>&#x5BF9;&#x6570;&#x7EC4;&#x4F7F;&#x7528;sizeof&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x6574;&#x4E2A;&#x6570;&#x7EC4;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x56E0;&#x4E3A;&#x5B9E;&#x9645;&#x4E0A;&#x6570;&#x7EC4;&#x7684;&#x5927;&#x5C0F;&#x662F;&#x6570;&#x7EC4;&#x7C7B;&#x578B;&#x7684;&#x4E00;&#x90E8;&#x5206;</li>
+<li>&#x5BF9;string&#x548C;vector&#x4F7F;&#x7528;sizeof&#xFF0C;&#x8FD4;&#x56DE;&#x662F;&#x8FD9;&#x4E24;&#x4E2A;&#x7C7B;&#x7684;&#x56FA;&#x5B9A;&#x90E8;&#x5206;&#xFF0C;&#x5373;&#x5927;&#x5C0F;&#x662F;&#x56FA;&#x5B9A;&#x7684;&#xFF0C;&#x5E76;&#x4E0D;&#x968F;&#x5143;&#x7D20;&#x6570;&#x91CF;&#x800C;&#x53D8;&#x5316;&#x3002;</li>
+</ol>
+<p>sizeof&#x5B9E;&#x4F8B;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s = <span class="string">&quot;ABCD&quot;</span>, ss = <span class="string">&quot;&quot;</span>, *sp = &amp;s;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="built_in">string</span>) &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//32</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span> ss &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//32</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span> s &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//32</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span> sp &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//8</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span> *sp &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//32</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span> s.size() &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//8</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(<span class="keyword">size_t</span>) &lt;&lt; <span class="built_in">endl</span>;<span class="comment">// 8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> arr[<span class="number">3</span>]{<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>};</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(arr) &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//12</span></span><br><span class="line"><span class="keyword">int</span> arrr[<span class="number">4</span>]{};</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(arrr) &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//16</span></span><br></pre></td></tr></table></figure>
+<h2 id="comma-operator">Comma Operator</h2>
+<p>&#x9017;&#x53F7;&#x64CD;&#x4F5C;&#x7B26;&#xFF08;Comma Operator&#xFF09;&#x4F7F;&#x7528;&#x4E24;&#x4E2A;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#xFF0C;&#x6C42;&#x503C;&#x987A;&#x5E8F;&#x662F;&#x4ECE;&#x5DE6;&#x81F3;&#x53F3;&#x7684;&#xFF0C;&#x5373;&#x9017;&#x53F7;&#x64CD;&#x4F5C;&#x7B26;&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x6C42;&#x503C;&#x7684;&#x987A;&#x5E8F;&#x3002;</p>
+<p>&#x9017;&#x53F7;&#x64CD;&#x4F5C;&#x7B26;&#x4F1A;&#x5148;&#x5BF9;&#x5DE6;&#x624B;&#x8FB9;&#x7684;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x6C42;&#x503C;&#xFF0C;&#x7136;&#x540E;&#x4E22;&#x5F03;&#x7ED3;&#x679C;&#xFF0C;&#x518D;&#x5BF9;&#x53F3;&#x624B;&#x8FB9;&#x7684;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x6C42;&#x503C;&#xFF0C;&#x7136;&#x540E;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#xFF0C;&#x5982;&#x679C;&#x53F3;&#x624B;&#x8FB9;&#x7684;&#x5BF9;&#x8C61;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x662F;&#x5DE6;&#x53C2;&#x6570;&#xFF0C;&#x5219;&#x8FD4;&#x56DE;&#x5DE6;&#x53C2;&#x6570;&#xFF0C;&#x5426;&#x5219;&#x8FD4;&#x56DE;&#x53F3;&#x53C2;&#x6570;&#x3002;</p>
+<p>&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">1</span>, y = <span class="number">3</span>, i;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; i;</span><br><span class="line">(i &gt; <span class="number">0</span>) ? ++x, ++y : --x, --y;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;x is &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot;, y is &quot;</span> &lt;&lt; y &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">2</span></span><br><span class="line"><span class="comment">x is 2, y is 3</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">-1</span></span><br><span class="line"><span class="comment"> x is 0, y is 2</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;&#x9017;&#x53F7;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x662F;&#x6700;&#x4F4E;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x4E0A;&#x5F0F;&#x5B9E;&#x9645;&#x4E0A;&#x4E3A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">( (i &gt; <span class="number">0</span>) ? ++x, ++y : --x ), --y;</span><br></pre></td></tr></table></figure>
+<p>&#x65E0;&#x8BBA;&#x5982;&#x4F55;&#xFF0C;&#x9017;&#x53F7;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x53F3;&#x624B;&#x8FB9;&#x53C2;&#x6570;&#xFF0C;<code>--y</code>&#x90FD;&#x4F1A;&#x88AB;&#x8FD0;&#x884C;&#x3002;</p>
+<p>&#x5F53;i&gt;0&#x65F6;&#xFF0C;&#x6267;&#x884C;&#x7684;&#x662F;<code>(++x,++y)</code>&#xFF0C;&#x7136;&#x540E;&#x518D;&#x6267;&#x884C;<code>--y</code>&#xFF0C;&#x56E0;&#x6B64;&#x7ED3;&#x679C;&#x4E3A;x=2,y=3&#x3002;</p>
+<p>&#x5F53;i&lt;0&#x65F6;&#xFF0C;&#x6267;&#x884C;&#x7684;&#x662F;<code>--x</code>&#xFF0C;&#x518D;&#x6267;&#x884C;<code>--y</code>&#xFF0C;&#x6240;&#x4EE5;&#x7ED3;&#x679C;&#x4E3A;x=0,y=2</p>
+<p>&#x4E5F;&#x56E0;&#x4E3A;&#x9017;&#x53F7;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x662F;&#x6700;&#x4F4E;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x4E0B;&#x5F0F;&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x7F16;&#x8BD1;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = --x , ++y;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Equals to</span></span><br><span class="line"><span class="comment">//int a = --x;</span></span><br><span class="line"><span class="comment">//,++y</span></span><br></pre></td></tr></table></figure>
+<h2 id="type-conversions">Type Conversions</h2>
+<p>C++&#x4F1A;&#x81EA;&#x52A8;&#x8FDB;&#x884C;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#xFF0C;&#x5982;&#x8868;&#x8FBE;&#x5F0F;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ival = <span class="number">3.541</span> + <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x7684;3&#x4F1A;&#x5148;&#x8F6C;&#x6362;&#x4E3A;double&#x7C7B;&#x578B;&#xFF0C;&#x7136;&#x540E;&#x76F8;&#x52A0;&#x7684;&#x7ED3;&#x679C;&#x518D;&#x8F6C;&#x6362;&#x4E3A;int&#x7C7B;&#x578B;&#x3002;</p>
+<p>&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x4F1A;&#x5728;&#x4EE5;&#x4E0B;&#x60C5;&#x51B5;&#x4E0B;&#x53D1;&#x751F;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5728;&#x591A;&#x6570;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#xFF0C;&#x5C0F;&#x4E8E;int&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x4F1A;&#x88AB;&#x5148;&#x8F6C;&#x6362;&#x4E3A;int&#x7C7B;&#x578B;</li>
+<li>&#x5728;&#x6761;&#x4EF6;&#x4E2D;&#xFF0C;&#x975E;&#x5E03;&#x5C14;&#x503C;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x4F1A;&#x8F6C;&#x6362;&#x4E3A;&#x5E03;&#x5C14;&#x503C;</li>
+<li>&#x5728;&#x521D;&#x59CB;&#x5316;&#x4E2D;&#xFF0C;&#x521D;&#x59CB;&#x5316;&#x503C;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;&#x76EE;&#x6807;&#x7C7B;&#x578B;&#xFF1B;&#x5728;&#x8D4B;&#x503C;&#x4E2D;&#xFF0C;&#x7B49;&#x53F7;&#x53F3;&#x624B;&#x8FB9;&#x7684;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#x4F1A;&#x8F6C;&#x6362;&#x4E3A;&#x5DE6;&#x624B;&#x8FB9;&#x7684;&#x53C2;&#x6570;&#x7C7B;&#x578B;</li>
+<li>&#x5728;&#x7B97;&#x6570;&#x548C;&#x5173;&#x7CFB;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x64CD;&#x4F5C;&#x6570;&#x7684;&#x7C7B;&#x578B;&#x4E0D;&#x540C;&#xFF0C;&#x90A3;&#x4E48;&#x4F1A;&#x8F6C;&#x6362;&#x4E3A;&#x4E00;&#x4E2A;&#x901A;&#x7528;&#x7684;&#x7C7B;&#x578B;&#xFF08;&#x5728;&#x4E0B;&#x4E00;&#x8282;&#x89E3;&#x91CA;&#xFF09;</li>
+</ol>
+<h3 id="the-arithmetic-conversions">The Arithmetic Conversions</h3>
+<p>&#x8FD9;&#x8282;&#x9610;&#x8FF0;&#x7684;&#x662F;&#x7B97;&#x6570;&#x7C7B;&#x578B;&#x7684;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#xFF0C;&#x7B97;&#x6570;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x7684;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x9075;&#x5FAA;&#x4EE5;&#x4E0B;&#x89C4;&#x5219;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x7B97;&#x672F;&#x7C7B;&#x578B;&#x7684;&#x8F6C;&#x6362;&#x4F1A;&#x5C3D;&#x91CF;&#x4FDD;&#x6301;&#x7CBE;&#x5EA6;&#xFF0C;&#x5982;<code>3.541+3</code>&#x4E2D;&#x662F;3&#x8F6C;&#x6362;&#x4E3A;&#x4E86;double&#x7C7B;&#x578B;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x4FDD;&#x7559;&#x7ED3;&#x679C;&#x7684;&#x7CBE;&#x5EA6;&#x3002;</p></li>
+<li><p>&#x5C0F;&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;&#x5927;&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#xFF0C;&#x5982;<code>bool</code>, <code>short</code>, <code>unsigned short</code>, <code>char</code>, <code>unsigned char</code>&#x90FD;&#x4F1A;&#x9ED8;&#x8BA4;&#x5C1D;&#x8BD5;&#x8F6C;&#x6362;&#x4E3A;int&#xFF0C;&#x5982;&#x679C;int&#x65E0;&#x6CD5;&#x5BB9;&#x7EB3;&#x53C2;&#x6570;&#x503C;&#xFF0C;&#x5219;&#x8F6C;&#x6362;&#x4E3A;unsigned int&#x3002;</p>
+<ol type="a">
+<li>&#x5982;&#x679C;&#x4E0E;&#x8F83;&#x5C0F;&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x8FDB;&#x884C;&#x8BA1;&#x7B97;&#x7684;&#x662F;&#x6BD4;int&#x66F4;&#x5927;&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#xFF0C;&#x5219;&#x76F4;&#x63A5;&#x8F6C;&#x6362;&#x4E3A;&#x8BE5;&#x7C7B;&#x578B;&#xFF0C;&#x5982;<code>&apos;a&apos;+12L</code>&#xFF0C;&#x4F1A;&#x76F4;&#x63A5;&#x5C06;&apos;a&apos;&#x8F6C;&#x6362;&#x4E3A;long&#x7C7B;&#x578B;&#x3002;</li>
+<li>&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x5FC5;&#x987B;&#x662F;&#x4E0E;&#x8F83;&#x5C0F;&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x76F4;&#x63A5;&#x8FDE;&#x63A5;&#x7684;&#xFF0C;&#x5982;<code>12+b+12L</code>&#x4E2D;&#xFF0C;b&#x8FD8;&#x662F;&#x4F1A;&#x5148;&#x8F6C;&#x6362;&#x4E3A;int&#x3002;</li>
+<li>&#x5982;&#x679C;&#x66F4;&#x5927;&#x7684;&#x7C7B;&#x578B;&#x975E;&#x6574;&#x6570;&#x7C7B;&#x578B;&#xFF0C;&#x4ECD;&#x7136;&#x4F1A;&#x5148;&#x8F6C;&#x6362;&#x4E3A;int&#x518D;&#x8F6C;&#x6362;&#x4E3A;&#x76EE;&#x6807;&#x7C7B;&#x578B;&#xFF0C;&#x5982;<code>3.14L+&apos;a&apos;</code>&#xFF0C;&apos;a&apos;&#x4F1A;&#x5148;&#x8F6C;&#x6362;&#x4E3A;int&#x3002;</li>
+</ol></li>
+<li><p>signed&#x548C;unsigned&#x7C7B;&#x578B;&#x8F6C;&#x6362;</p>
+<ol type="a">
+<li>&#x5982;&#x679C;&#x4E24;&#x4E2A;&#x7C7B;&#x578B;&#x90FD;&#x662F;signed&#x6216;&#x90FD;&#x662F;unsigned&#xFF0C;&#x5219;&#x8F83;&#x5C0F;&#x7684;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x4E3A;&#x8F83;&#x5927;&#x7684;&#x7C7B;&#x578B;</li>
+<li>&#x5982;&#x679C;unsigned&#x7684;&#x7C7B;&#x578B;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;signed&#x7684;&#x7C7B;&#x578B;&#xFF08;&#x8FD9;&#x91CC;&#x6BD4;&#x8F83;&#x7684;&#x662F;&#x7C7B;&#x578B;&#xFF0C;&#x4E0D;&#x662F;&#x53C2;&#x6570;&#x503C;&#xFF09;&#xFF0C;&#x5219;signed&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x81F3;unsigned&#x7684;&#x76EE;&#x6807;&#x7C7B;&#x578B;&#x3002;</li>
+<li>&#x5982;&#x679C;signed&#x7C7B;&#x578B;&#x5927;&#x4E8E;unsigned&#x7C7B;&#x578B;&#xFF0C;&#x5219;&#x9996;&#x5148;&#x5C1D;&#x8BD5;&#x5C06;unsigned&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x81F3;signed&#x7684;&#x76EE;&#x6807;&#x7C7B;&#x578B;&#xFF0C;&#x5982;&#x679C;signed&#x76EE;&#x6807;&#x7C7B;&#x578B;&#x65E0;&#x6CD5;&#x5BB9;&#x7EB3;unsigned&#x7C7B;&#x578B;&#x7684;&#x53C2;&#x6570;&#x503C;&#xFF0C;&#x5219;&#x5C06;signed&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x81F3;unsigned &#x76EE;&#x6807;&#x7C7B;&#x578B;&#x3002;</li>
+</ol></li>
+</ol>
+<h3 id="other-implicit-conversions">Other Implicit Conversions</h3>
+<p>&#x9664;&#x4E86;&#x7B97;&#x6570;&#x7C7B;&#x578B;&#x7684;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#xFF0C;C++&#x8FD8;&#x6709;&#x5176;&#x4ED6;&#x7C7B;&#x578B;&#x7684;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#xFF0C;&#x5982;</p>
+<ol type="1">
+<li><p>&#x6570;&#x7EC4;&#x5230;&#x6307;&#x9488;&#x7684;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#xFF1A; &#x5982;&#x4E4B;&#x524D;&#x6240;&#x8FF0;&#xFF0C;&#x5728;&#x4F7F;&#x7528;&#x6570;&#x7EC4;&#x540D;&#x79F0;&#x65F6;&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x8F6C;&#x6362;&#x4E3A;&#x6307;&#x5411;&#x6570;&#x7EC4;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x7684;&#x6307;&#x9488;&#x3002; &#x8FD9;&#x4E2A;&#x8F6C;&#x6362;&#x5728;&#x4EE5;&#x4E0B;&#x60C5;&#x51B5;&#x4E0D;&#x9002;&#x7528;&#xFF1A;</p>
+<ol type="a">
+<li>&#x4F7F;&#x7528;decltype</li>
+<li>&#x4F7F;&#x7528;&#x53D6;&#x5730;&#x5740;&#x7B26;&amp;</li>
+<li>&#x4F7F;&#x7528;sizeof</li>
+<li>typeid&#xFF0C;&#x5728;19.2.2&#x8282;&#x4F1A;&#x8BF4;&#x660E;</li>
+</ol></li>
+<li><p>&#x6307;&#x9488;&#x8F6C;&#x6362; &#x6307;&#x9488;&#x8F6C;&#x6362;&#x5305;&#x542B;&#x4EE5;&#x4E0B;&#x51E0;&#x79CD;&#xFF1A;</p>
+<ol type="a">
+<li>&#x56FA;&#x5B9A;&#x5B57;&#x9762;&#x503C;0&#x548C;&#x5B57;&#x9762;&#x503C;nullptr&#x53EF;&#x4EE5;&#x88AB;&#x8F6C;&#x6362;&#x81F3;&#x4EFB;&#x610F;&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#xFF08;&#x7A7A;&#x6307;&#x9488;&#xFF09;</li>
+<li>&#x6307;&#x5411;&#x4EFB;&#x4F55;&#x975E;const&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x81F3;void*</li>
+<li>&#x6307;&#x5411;&#x4EFB;&#x4F55;&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#x90FD;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x81F3;const void*</li>
+</ol></li>
+<li><p>&#x5E03;&#x5C14;&#x503C;&#x8F6C;&#x6362; &#x4EFB;&#x4F55;&#x5728;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#x7684;&#x7B97;&#x6570;&#x7C7B;&#x578B;&#x548C;&#x6307;&#x9488;&#x90FD;&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x81F3;&#x5E03;&#x5C14;&#x503C;&#xFF0C;&#x5982;&#x679C;&#x53C2;&#x6570;&#x503C;&#x4E3A;0&#x4E3A;false&#xFF0C;&#x5426;&#x5219;&#x4E3A;true</p></li>
+<li><p>const&#x8F6C;&#x6362;</p>
+<ol type="a">
+<li>&#x5728;&#x521D;&#x59CB;&#x5316;&#x65F6;&#xFF0C;&#x975E;const&#x7684;&#x5BF9;&#x8C61;&#x53EF;&#x4EE5;&#x521D;&#x59CB;&#x5316;const&#x5BF9;&#x8C61;&#x3002;</li>
+<li>&#x6307;&#x5411;&#x666E;&#x901A;&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#x4E5F;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x4E3A;&#x6307;&#x5411;const&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#x3002;</li>
+<li>&#x76F8;&#x53CD;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x5373;&#x5C06;const&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x81F3;&#x975E;const&#x7684;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x4E0D;&#x5B58;&#x5728;&#x3002;</li>
+</ol></li>
+<li><p>&#x7C7B;&#x578B;&#x81EA;&#x5B9A;&#x4E49;&#x9690;&#x5F0F;&#x8F6C;&#x6362;</p>
+<ol type="a">
+<li><code>string s = &quot;abc&quot;</code>&#x5C31;&#x662F;string&#x7C7B;&#x578B;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#xFF0C;&#x5C06;C&#x7C7B;&#x578B;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x5B57;&#x9762;&#x503C;&#x8F6C;&#x6362;&#x4E3A;string&#x7C7B;&#x578B;</li>
+<li><code>while ( cin &gt;&gt; s)</code>&#x4E5F;&#x662F;cin&#x7C7B;&#x578B;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#xFF0C;&#x5C06;cin&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x4E3A;&#x5E03;&#x5C14;&#x503C;</li>
+</ol></li>
+</ol>
+<h3 id="explicit-conversions">Explicit Conversions</h3>
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;cast&#x6765;&#x8FDB;&#x884C;&#x663E;&#x793A;&#x8F6C;&#x6362;&#xFF0C;&#x663E;&#x793A;&#x8F6C;&#x6362;&#x7684;&#x683C;&#x5F0F;&#x4E3A;&#xFF1A;</p>
+<p><code>cast-name&lt;type&gt;(express)</code></p>
+<p>&#x5176;&#x4E2D;<code>cast-name</code>&#x4E3A;&#x663E;&#x793A;&#x8F6C;&#x6362;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4E00;&#x5171;&#x6709;&#x56DB;&#x79CD;&#xFF0C;&#x5176;&#x4E2D;<code>dynamic_cast</code>&#x5728;19.2&#x8282;&#x4F1A;&#x8FDB;&#x884C;&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;&#xFF0C;&#x5269;&#x4E0B;&#x4E09;&#x79CD;&#x5982;&#x4E0B;&#xFF1A;</p>
+<h4 id="static_cast">static_cast</h4>
+<p>&#x4EFB;&#x4F55;&#x5B9A;&#x4E49;&#x4E86;&#x7684;&#x8F6C;&#x6362;&#xFF08;&#x9664;&#x4E86;low-level const&#xFF09;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x9759;&#x6001;&#x8F6C;&#x6362;&#xFF08;static_cast&#xFF09;&#x6765;&#x6267;&#x884C;&#xFF0C;&#x8FD9;&#x91CC;&#x7684;<code>&#x5B9A;&#x4E49;</code>&#x6307;&#x7684;&#x662F;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x7684;&#x8F6C;&#x6362;&#x3002;&#x5982;double&#x548C;int&#x4E4B;&#x95F4;&#x5B58;&#x5728;&#x8F6C;&#x6362;&#xFF0C;&#x4F46;vector&#x548C;int&#x4E4B;&#x95F4;&#x4E0D;&#x5B58;&#x5728;&#x8F6C;&#x6362;&#xFF0C;&#x56E0;&#x6B64;&#x524D;&#x8005;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x9759;&#x6001;&#x8F6C;&#x6362;&#xFF0C;&#x540E;&#x8005;&#x4E0D;&#x884C;&#x3002;</p>
+<p>&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">10</span>, j = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">double</span> slope = i / j;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;slope is &quot;</span> &lt;&lt; slope &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">slope = <span class="keyword">static_cast</span>&lt;<span class="keyword">double</span>&gt;(i) / j;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;slope is &quot;</span> &lt;&lt; slope &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">slope is 3</span></span><br><span class="line"><span class="comment">slope is 3.33333</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x76F4;&#x63A5;&#x8FDB;&#x884C;<code>i/j</code>&#x7684;&#x8BDD;&#xFF0C;&#x56E0;&#x4E3A;&#x4E24;&#x8005;&#x90FD;&#x662F;int&#xFF0C;&#x6240;&#x4EE5;&#x7ED3;&#x679C;&#x4E5F;&#x662F;int&#xFF0C;&#x56E0;&#x6B64;&#x8F93;&#x51FA;&#x7684;&#x503C;&#x4E3A;3&#x3002;&#x800C;&#x901A;&#x8FC7;static_cast&#x5C06;i&#x7684;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x4E3A;double&#xFF0C;&#x6B64;&#x65F6;j&#x4E5F;&#x4F1A;&#x88AB;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x4E3A;double&#xFF0C;&#x56E0;&#x6B64;&#x7ED3;&#x679C;&#x4E3A;3.33&#x3002;</p>
+<p>&#x901A;&#x5E38;&#x4E5F;&#x4F1A;&#x7528;&#x9759;&#x6001;&#x8F6C;&#x6362;&#x5C06;<code>void*</code>&#x8F6C;&#x6362;&#x5230;&#x76EE;&#x6807;&#x6307;&#x9488;&#xFF0C;&#x5982;&#x4E0B;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> *p = &amp;slope;</span><br><span class="line"><span class="keyword">double</span> *dp = <span class="keyword">static_cast</span>&lt;<span class="keyword">double</span> *&gt;(p);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;slope is &quot;</span> &lt;&lt; (*dp) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">slope is 3.33333</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p><code>void*</code>&#x8F6C;&#x6362;&#x4E3A;&#x7684;&#x76EE;&#x6807;&#x6307;&#x9488;&#x5FC5;&#x987B;&#x662F;&#x539F;&#x5148;&#x7684;&#x503C;&#x5339;&#x914D;&#xFF0C;&#x5426;&#x5219;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;</p>
+<h4 id="const_cast">const_cast</h4>
+<p>low-level&#x7684;const&#x53EA;&#x80FD;&#x901A;&#x8FC7;<code>const_cast</code>&#x663E;&#x793A;&#x8F6C;&#x6362;&#xFF0C;<code>const_cast</code>&#x552F;&#x4E00;&#x80FD;&#x505A;&#x7684;&#x662F;&#x4E5F;&#x53EA;&#x662F;&#x8F6C;&#x6362;low-level&#x7684;const&#x3002;</p>
+<p>&#x5982;:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *value1 = &amp;i;</span><br><span class="line"><span class="comment">// int *valueP = value;</span></span><br><span class="line"><span class="keyword">int</span> *value2 = <span class="keyword">const_cast</span>&lt;<span class="keyword">int</span> *&gt;(value1);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value1 is &quot;</span> &lt;&lt; (*value1) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">*value2 = <span class="number">3</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value1 is &quot;</span> &lt;&lt; (*value1) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value2 is &quot;</span> &lt;&lt; (*value2) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">value1 is 10</span></span><br><span class="line"><span class="comment">value1 is 3</span></span><br><span class="line"><span class="comment">value2 is 3</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;&#x4E86;const_cast&#xFF0C;&#x4E0A;&#x5F0F;&#x5C06;<code>const int *</code>&#x8D4B;&#x503C;&#x7ED9;&#x4E86;&#x666E;&#x901A;&#x7684;<code>int*</code>&#x3002;&#x751A;&#x81F3;&#x901A;&#x8FC7;<code>int*</code>&#x4FEE;&#x6539;&#x4E86;&#x53C2;&#x6570;&#xFF0C;&#x4F46;&#x662F;C++&#x6807;&#x51C6;&#x4E2D;&#xFF0C;&#x4FEE;&#x6539;&#x901A;&#x8FC7;const_cast&#x5F97;&#x5230;&#x7684;&#x6307;&#x9488;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;</p>
+<ul>
+<li>&#x867D;&#x7136;&#x5728;&#x6D4B;&#x8BD5;&#x4E2D;&#x5F97;&#x5230;&#x4E86;&#x671F;&#x671B;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x4F46;&#x662F;&#x6781;&#x5EA6;&#x4E0D;&#x63A8;&#x8350;&#x7528;&#x8FD9;&#x6837;&#x7684;&#x65B9;&#x6CD5;&#x3002;</li>
+</ul>
+<h4 id="reinterpret_cast">reinterpret_cast</h4>
+<p>reinterpret_cast&#x53EF;&#x4EE5;&#x5728;&#x66F4;&#x4F4E;&#x7684;&#x5C42;&#x6B21;&#x8F6C;&#x6362;&#x7C7B;&#x578B;&#xFF0C;&#x56E0;&#x6B64;&#x63D0;&#x4F9B;&#x4E86;&#x66F4;&#x591A;&#x7684;&#x8F6C;&#x6362;&#x53EF;&#x80FD;&#x3002;</p>
+<p>&#x4F46;&#x5728;&#x8F6C;&#x6362;&#x540E;&#x7684;&#x7C7B;&#x578B;&#x5F88;&#x53EF;&#x80FD;&#x662F;&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x64CD;&#x4F5C;&#x7684;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *ip;</span><br><span class="line"><span class="keyword">char</span>* cstr = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">char</span>*&gt;(ip);</span><br><span class="line"><span class="built_in">string</span> str = cstr;</span><br></pre></td></tr></table></figure>
+<p>&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x5C06;<code>int*</code>&#x8F6C;&#x6362;&#x4E3A;&#x4E86;<code>char*</code>&#xFF0C;&#x5E76;&#x7528;&#x5B83;&#x6765;&#x521D;&#x59CB;&#x5316;<code>string</code>&#xFF0C;&#x5728;&#x7F16;&#x8BD1;&#x8FC7;&#x7A0B;&#x4E2D;&#x4EE3;&#x7801;&#x4E0D;&#x4F1A;&#x51FA;&#x73B0;&#x4EFB;&#x4F55;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x5B9E;&#x9645;&#x4E0A;<code>char*</code>&#x548C;<code>int*</code>&#x5728;bit&#x5C42;&#x9762;&#x7684;&#x89E3;&#x91CA;&#x65B9;&#x6CD5;&#x662F;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#x3002;</p>
+<ul>
+<li>&#x5C3D;&#x91CF;&#x907F;&#x514D;&#x4F7F;&#x7528;reinterpret_cast,&#x8BE5;&#x64CD;&#x4F5C;&#x592A;&#x5371;&#x9669;&#x4E86;</li>
+</ul>
+<h4 id="old-style-casts">Old-Style Casts</h4>
+<p>&#x5728;C&#x8BED;&#x8A00;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x663E;&#x793A;&#x8F6C;&#x6362;&#xFF1A;</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">type (expr)</span><br><span class="line">(type) expr</span><br><span class="line"></span><br><span class="line"><span class="comment">//Like,</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> *pc;</span><br><span class="line"><span class="keyword">int</span> i = <span class="keyword">int</span>(*pc);</span><br><span class="line">i = (<span class="keyword">int</span>)(*pc);</span><br></pre></td></tr></table></figure>
+<p>old-stype&#x8F6C;&#x6362;&#x4E0E;&#x4E0A;&#x8FF0;&#x7684;&#x4E09;&#x4E2A;&#x663E;&#x793A;&#x8F6C;&#x6362;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x7B49;&#x6548;&#x7684;&#xFF0C;&#x5B83;&#x4F1A;&#x9996;&#x5148;&#x5C1D;&#x8BD5;&#x8FDB;&#x884C;<code>static_cast</code>&#x548C;<code>const_cast</code>&#xFF0C;&#x5982;&#x679C;&#x662F;&#x5408;&#x6CD5;&#x7684;&#xFF0C;&#x5219;&#x8FDB;&#x884C;&#x76F8;&#x5E94;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x4E24;&#x4E2A;&#x90FD;&#x4E0D;&#x5408;&#x6CD5;&#xFF0C;&#x5219;&#x8FDB;&#x884C;<code>reinterpret_cast</code>&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x5982;&#x4EE5;&#x4E0B;&#x4E24;&#x4E2A;&#x64CD;&#x4F5C;&#x662F;&#x7B49;&#x6548;&#x7684;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> *ps;</span><br><span class="line"><span class="keyword">void</span> *pv;</span><br><span class="line">pv = <span class="keyword">static_cast</span>&lt;<span class="keyword">void</span> *&gt;(<span class="keyword">const_cast</span>&lt;<span class="built_in">string</span> *&gt;(ps));</span><br><span class="line">pv = (<span class="keyword">void</span> *)ps;</span><br></pre></td></tr></table></figure>
+<h2 id="operator-precedence-table">Operator Precedence Table</h2>
+<p>&#x4E0B;&#x56FE;&#x4E3A;C++&#x6240;&#x6709;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x542B;&#x4E49;&#xFF0C;&#x5B9E;&#x4F8B;&#x4EE3;&#x7801;&#xFF0C;&#x7ED3;&#x5408;&#x6027;&#xFF0C;&#x4F18;&#x5148;&#x7EA7;&#x4EE5;&#x53CC;&#x6A2A;&#x7EBF;&#x533A;&#x5206;&#xFF1A;</p>
+<p><img src="/CPPPrimer-Chapter4-Notes/2020-02-17-23-16-54.png" alt="&#x64CD;&#x4F5C;&#x7B26;1"></p>
+<p><img src="/CPPPrimer-Chapter4-Notes/2020-02-17-23-17-07.png" alt="&#x64CD;&#x4F5C;&#x7B26;2"></p>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>Cpp Primer</em> 5th Aug.2012</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/" title="《C++ Primer》 第四章笔记">https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/CPPPrimer-Chapter3-Notes/" rel="prev" title="《C++ Primer》 第三章笔记">
+      <i class="fa fa-chevron-left"></i> 《C++ Primer》 第三章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/CPPPrimer-Chapter5-Notes/" rel="next" title="《C++ Primer》 第五章笔记">
+      《C++ Primer》 第五章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-4-expressions"><span class="nav-number">1.</span> <span class="nav-text">Chapter 4 Expressions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fundamentals"><span class="nav-number">1.1.</span> <span class="nav-text">Fundamentals</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#basic-concepts"><span class="nav-number">1.1.1.</span> <span class="nav-text">Basic Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#grouping-operators-and-operands"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">Grouping Operators and Operands</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#overloaded-operators"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">Overloaded Operators</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lvalues-and-rvalues"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">Lvalues and Rvalues</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#precedence-and-associativity"><span class="nav-number">1.1.2.</span> <span class="nav-text">Precedence and Associativity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#order-of-evaluation"><span class="nav-number">1.1.3.</span> <span class="nav-text">Order of Evaluation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#order-of-evaluationprecedence-and-associativity"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">Order of Evaluation,Precedence and Associativity</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#arithmetic-operators"><span class="nav-number">1.1.4.</span> <span class="nav-text">Arithmetic Operators</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#arithmetic-operation-on-boolean"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">Arithmetic Operation on Boolean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#overflow"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">Overflow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#remainder-operation"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">remainder(%) operation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logical-and-relational-operators"><span class="nav-number">1.1.5.</span> <span class="nav-text">Logical and Relational Operators</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-relational-operators"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">The Relational Operators</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#equality-tests-and-the-bool-literals"><span class="nav-number">1.1.5.2.</span> <span class="nav-text">Equality Tests and the bool Literals</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#assignment-operators"><span class="nav-number">1.2.</span> <span class="nav-text">Assignment Operators</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#assignment-is-right-associative"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">Assignment Is Right Associative</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#assignment-has-low-precedence"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">Assignment Has Low Precedence</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#compound-assignment-operators"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">Compound Assignment Operators</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#increment-and-decrement-operators"><span class="nav-number">1.3.</span> <span class="nav-text">Increment and Decrement Operators</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#combining-dereference-and-increment-in-a-single-expression"><span class="nav-number">1.3.1.</span> <span class="nav-text">Combining Dereference and Increment in a Single Expression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#remember-that-operands-can-be-evaluated-in-any-order"><span class="nav-number">1.3.2.</span> <span class="nav-text">Remember That Operands Can Be Evaluated in Any Order</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-member-access-operators"><span class="nav-number">1.4.</span> <span class="nav-text">The Member Access Operators</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-conditional-operator"><span class="nav-number">1.5.</span> <span class="nav-text">The Conditional Operator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nesting-conditional-operations"><span class="nav-number">1.5.1.</span> <span class="nav-text">Nesting Conditional Operations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#using-a-conditional-operator-in-an-output-expression"><span class="nav-number">1.5.2.</span> <span class="nav-text">Using a Conditional Operator in an Output Expression</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-bitwise-operators"><span class="nav-number">1.6.</span> <span class="nav-text">The Bitwise Operators</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bitwise-shift-operators"><span class="nav-number">1.6.1.</span> <span class="nav-text">Bitwise Shift Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bitwise-not-operator"><span class="nav-number">1.6.2.</span> <span class="nav-text">Bitwise Not Operator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bitwise-andor"><span class="nav-number">1.6.3.</span> <span class="nav-text">Bitwise And,Or</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#using-bitwise-operators"><span class="nav-number">1.6.4.</span> <span class="nav-text">Using Bitwise Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shift-operators-are-left-associateive"><span class="nav-number">1.6.5.</span> <span class="nav-text">Shift Operators Are Left Associateive</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-sizeof-operator"><span class="nav-number">1.7.</span> <span class="nav-text">The sizeof Operator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#comma-operator"><span class="nav-number">1.8.</span> <span class="nav-text">Comma Operator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type-conversions"><span class="nav-number">1.9.</span> <span class="nav-text">Type Conversions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-arithmetic-conversions"><span class="nav-number">1.9.1.</span> <span class="nav-text">The Arithmetic Conversions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#other-implicit-conversions"><span class="nav-number">1.9.2.</span> <span class="nav-text">Other Implicit Conversions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#explicit-conversions"><span class="nav-number">1.9.3.</span> <span class="nav-text">Explicit Conversions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#static_cast"><span class="nav-number">1.9.3.1.</span> <span class="nav-text">static_cast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#const_cast"><span class="nav-number">1.9.3.2.</span> <span class="nav-text">const_cast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reinterpret_cast"><span class="nav-number">1.9.3.3.</span> <span class="nav-text">reinterpret_cast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#old-style-casts"><span class="nav-number">1.9.3.4.</span> <span class="nav-text">Old-Style Casts</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#operator-precedence-table"><span class="nav-number">1.10.</span> <span class="nav-text">Operator Precedence Table</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

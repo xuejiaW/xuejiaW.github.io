@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x4E09;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; 3.1&amp;#x8282;&amp;#x6CA1;&amp;#x4EC0;&amp;#x4">
+<meta name="keywords" content="读书笔记,3D数学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《3D数学基础：图形和游戏开发》第三章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x4E09;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; 3.1&amp;#x8282;&amp;#x6CA1;&amp;#x4EC0;&amp;#x4">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/2020-02-29-16-32-03.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/2020-02-29-16-33-49.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/2020-02-29-16-36-39.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:42.969Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《3D数学基础：图形和游戏开发》第三章笔记">
+<meta name="twitter:description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x4E09;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; 3.1&amp;#x8282;&amp;#x6CA1;&amp;#x4EC0;&amp;#x4">
+<meta name="twitter:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/2020-02-29-16-32-03.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《3D数学基础：图形和游戏开发》第三章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《3D数学基础：图形和游戏开发》第三章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-29 21:18:12" itemprop="dateCreated datePublished" datetime="2020-02-29T21:18:12+08:00">2020-02-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:42" itemprop="dateModified" datetime="2020-09-24T19:59:42+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/图形学/" itemprop="url" rel="index"><span itemprop="name">图形学</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《3D数学基础：图形和游戏开发》第三章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;3D&#x6570;&#x5B66;&#x57FA;&#x7840;&#xFF1A;&#x56FE;&#x5F62;&#x548C;&#x6E38;&#x620F;&#x5F00;&#x53D1;&#x300B;&#x7B2C;&#x4E09;&#x7AE0;&#x7B14;&#x8BB0;</p>
+<p>3.1&#x8282;&#x6CA1;&#x4EC0;&#x4E48;&#x5173;&#x952E;&#x4FE1;&#x606F;&#x3002; 3.2&#x8282;&#x4ECB;&#x7ECD;&#x4E86;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x6444;&#x50CF;&#x673A;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x4EE5;&#x53CA;&#x4F5C;&#x8005;&#x81EA;&#x5DF1;&#x5F15;&#x5165;&#x7684;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x3002; 3.3&#x8282;&#x4ECB;&#x7ECD;&#x4E86;&#x5750;&#x6807;&#x7CFB;&#x8F6C;&#x6362;&#x65F6;&#x4ECE;&#x79FB;&#x52A8;&#x7269;&#x4F53;&#x51FA;&#x53D1;&#x548C;&#x4ECE;&#x79FB;&#x52A8;&#x5750;&#x6807;&#x7CFB;&#x51FA;&#x53D1;&#x7684;&#x4E24;&#x79CD;&#x601D;&#x8003;&#x89D2;&#x5EA6;&#xFF0C;&#x8FD8;&#x8BA8;&#x8BBA;&#x4E86;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x7684;&#x9009;&#x62E9;&#x95EE;&#x9898;&#x3002; 3.4&#x8282;&#x8BA8;&#x8BBA;&#x4E86;&#x5D4C;&#x5957;&#x5750;&#x6807;&#x7CFB;&#x5B58;&#x5728;&#x7684;&#x76EE;&#x7684;&#x3002; 3.5&#x8282;&#x8BA8;&#x8BBA;&#x4E86;&#x4F5C;&#x8005;&#x5F15;&#x5165;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x521D;&#x8877;&#x3002;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter3-multiple-coordinate-spaces">Chapter3 Multiple Coordinate Spaces</h1>
+<h2 id="why-bother-with-multiple-coordinate-spaces">Why Bother with Multiple Coordinate Spaces?</h2>
+<p>&#x6CA1;&#x4EC0;&#x4E48;&#x5173;&#x952E;&#x4FE1;&#x606F;</p>
+<h2 id="some-useful-coordinate-spaces">Some Useful Coordinate Spaces</h2>
+<p>&#x4E4B;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x4E0D;&#x540C;&#x7684;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x662F;&#x56E0;&#x4E3A;&#x4E00;&#x4E9B;&#x4FE1;&#x606F;&#x4EC5;&#x5728;&#x67D0;&#x4E9B;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x662F;&#x6709;&#x610F;&#x4E49;&#x7684;&#xFF0C;&#x6216;&#x8005;&#x53EA;&#x80FD;&#x5728;&#x67D0;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x83B7;&#x5F97;&#xFF08;&#x6216;&#x66F4;&#x5BB9;&#x6613;&#x5F97;&#x5230;&#xFF09;&#x3002;</p>
+<h3 id="world-spaces">World Spaces</h3>
+<p>&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#xFF08;World Spaces&#xFF09;&#x662F;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x5168;&#x5C40;&#x7684;&#x5B58;&#x5728;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x5176;&#x4ED6;&#x5750;&#x6807;&#x7CFB;&#x90FD;&#x5C5E;&#x4E8E;&#x8FD9;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x3002;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x662F;&#x9700;&#x8981;&#x5173;&#x7CFB;&#x7684;&#x6700;&#x5927;&#x5750;&#x6807;&#x7CFB;&#xFF08;&#x7C7B;&#x4F3C;&#x4E8E;&#x5168;&#x96C6;&#x7684;&#x6982;&#x5FF5;&#xFF09;&#x3002;</p>
+<p>&#x5728;&#x4E0D;&#x540C;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4F1A;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x4E16;&#x754C;&#x5750;&#x6807;&#x3002;</p>
+<p>&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x4E5F;&#x88AB;&#x79F0;&#x4E3A;&#x5168;&#x5C40;&#x5750;&#x6807;&#x7CFB;(Global coordinate space)&#x6216;&#x8005;&#x7EDF;&#x4E00;&#x5750;&#x6807;&#x7CFB;&#xFF08;Universal coordinate space&#xFF09;&#x3002;</p>
+<h3 id="object-space">Object Space</h3>
+<p>&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#xFF08;Object Space&#xFF09;&#x662F;&#x5C5E;&#x4E8E;&#x6BCF;&#x4E00;&#x4E2A;&#x7269;&#x4F53;&#x7684;&#xFF0C;&#x5373;&#x6BCF;&#x4E2A;&#x7269;&#x4F53;&#x90FD;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x5F53;&#x8FD9;&#x4E2A;&#x7269;&#x4F53;&#x79FB;&#x52A8;&#x65F6;&#xFF0C;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x4E5F;&#x76F8;&#x5E94;&#x79FB;&#x52A8;&#x3002;</p>
+<p>&#x201C;&#x5411;&#x53F3;&#x8F6C;&#x201D;&#x5C31;&#x662F;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x800C;&#x201C;&#x5411;&#x4E1C;&#x8D70;&#x201D;&#x5C31;&#x662F;&#x5168;&#x5C40;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x6982;&#x5FF5;&#x3002;</p>
+<p>&#x5728;&#x56FE;&#x5F62;&#x5B66;&#x4E2D;&#xFF0C;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x4E5F;&#x88AB;&#x79F0;&#x4E3A;&#x6A21;&#x578B;&#x5750;&#x6807;&#x7CFB;&#xFF08;Model Space&#xFF09;&#xFF0C;&#x6A21;&#x578B;&#x7684;&#x9876;&#x70B9;&#x4FE1;&#x606F;&#x5C31;&#x63CF;&#x8FF0;&#x5728;&#x8BE5;&#x7269;&#x4F53;&#x7684;&#x6A21;&#x578B;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x3002;</p>
+<h3 id="camera-space">Camera Space</h3>
+<p>&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x7279;&#x4F8B;&#x5C31;&#x662F;&#x6444;&#x50CF;&#x673A;&#x5750;&#x6807;&#x7CFB;&#xFF08;Camera Space&#xFF09;&#xFF0C;&#x6444;&#x50CF;&#x673A;&#x5750;&#x6807;&#x7CFB;&#x662F;&#x5173;&#x4E8E;&#x7528;&#x4E8E;&#x6E32;&#x67D3;&#x7684;&#x89C6;&#x89D2;&#x7684;&#x5750;&#x6807;&#x7CFB;&#x3002;</p>
+<p>&#x5728;&#x6444;&#x50CF;&#x673A;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#xFF0C;<span class="math inline">\(+X\)</span>&#x8F74;&#x6307;&#x5411;&#x53F3;&#x4FA7;&#xFF0C;<span class="math inline">\(+Z\)</span>&#x8F74;&#x6307;&#x5411;&#x524D;&#x65B9;&#xFF0C;<span class="math inline">\(+Y\)</span>&#x6307;&#x5411;&#x4E0A;&#x65B9;&#xFF08;&#x6CE8;&#x610F;&#x672C;&#x4E66;&#x91C7;&#x7528;&#x7684;&#x662F;&#x5DE6;&#x624B;&#x5750;&#x6807;&#x7CFB;&#xFF0C;OpenGL&#x91C7;&#x7528;&#x7684;&#x662F;&#x53F3;&#x624B;&#x5750;&#x6807;&#x7CFB;&#xFF09;&#x3002;</p>
+<p>&#x6444;&#x50CF;&#x673A;&#x5750;&#x6807;&#x7CFB;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/2020-02-29-16-32-03.png" alt="&#x6444;&#x50CF;&#x673A;&#x5750;&#x6807;&#x7CFB;"></p>
+<h3 id="upright-space">Upright Space</h3>
+<p>&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#xFF08;Upright space&#xFF09;&#x662F;&#x8FD9;&#x672C;&#x4E66;&#x4E2D;&#x63D0;&#x51FA;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x662F;&#x4F5C;&#x4E3A;&#x4E16;&#x754C;&#x5750;&#x6807;&#x548C;&#x7269;&#x4F53;&#x5750;&#x6807;&#x8F6C;&#x5316;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x4E2D;&#x95F4;&#x53D8;&#x91CF;&#x5B58;&#x5728;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/2020-02-29-16-33-49.png" alt="&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;"></p>
+<p>&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x539F;&#x70B9;&#x4E0E;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x76F8;&#x540C;&#xFF0C;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x65B9;&#x5411;&#x4E0E;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x76F8;&#x540C;&#x3002;&#x4E0B;&#x56FE;&#x4E3A;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x4E0E;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x7ECF;&#x8FC7;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x8F6C;&#x6362;&#x7684;&#x6B65;&#x9AA4;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/2020-02-29-16-36-39.png" alt="&#x5750;&#x6807;&#x7CFB;&#x8F6C;&#x6362;"></p>
+<h2 id="basis-vectors-and-coordinate-space-transformations">Basis Vectors and Coordinate Space Transformations</h2>
+<p>&#x5C06;&#x4E00;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x5750;&#x6807;&#x8F6C;&#x6362;&#x4E3A;&#x53E6;&#x4E00;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x5750;&#x6807;&#x79F0;&#x4E3A;&#x5750;&#x6807;&#x7CFB;&#x8F6C;&#x6362;&#xFF08;coordinate space transformation&#xFF09;&#x3002;</p>
+<h3 id="dual-perspectives">Dual Perspectives</h3>
+<p>&#x5750;&#x6807;&#x7CFB;&#x8F6C;&#x6362;&#x53EF;&#x4EE5;&#x4ECE;&#x4E24;&#x4E2A;&#x89D2;&#x5EA6;&#x6765;&#x8003;&#x8651;&#xFF1A;</p>
+<ol type="1">
+<li>&#x4E3B;&#x52A8;&#x8F6C;&#x6362;&#xFF08;Active Transformation&#xFF09;&#xFF1A;&#x4E24;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x4FDD;&#x6301;&#x4E0D;&#x52A8;&#xFF0C;&#x7269;&#x4F53;&#x7684;&#x5750;&#x6807;&#x8FDB;&#x884C;&#x8F6C;&#x6362;</li>
+<li>&#x88AB;&#x52A8;&#x8F6C;&#x6362;&#xFF08;Pasison Transformation&#xFF09;&#xFF1A;&#x7269;&#x4F53;&#x4FDD;&#x6301;&#x4E0D;&#x52A8;&#xFF0C;&#x5750;&#x6807;&#x7CFB;&#x8FDB;&#x884C;&#x8F6C;&#x6362;</li>
+</ol>
+<p>&#x53EA;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x5728;&#x4ECE;&#x4E24;&#x4E2A;&#x89D2;&#x5EA6;&#x601D;&#x8003;&#x65F6;&#xFF0C;&#x4F4D;&#x79FB;&#x7684;&#x65B9;&#x5411;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x3002;&#x5982;&#x4E0A;&#x56FE;&#x4ECE;&#x4E16;&#x754C;&#x5750;&#x6807;&#x8F6C;&#x6362;&#x5230;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x5982;&#x679C;&#x601D;&#x8003;&#x89D2;&#x5EA6;&#x662F;&#x79FB;&#x52A8;&#x7269;&#x4F53;&#xFF0C;&#x90A3;&#x4E48;&#x7269;&#x4F53;&#x662F;&#x5411;&#x5DE6;&#x4E0B;&#x79FB;&#x52A8;&#xFF0C;&#x5230;&#x4E86;&#x539F;&#x70B9;&#xFF1B;&#x5982;&#x679C;&#x662F;&#x4ECE;&#x79FB;&#x52A8;&#x5750;&#x6807;&#x7CFB;&#x89D2;&#x5EA6;&#x8003;&#x8651;&#xFF0C;&#x5750;&#x6807;&#x7CFB;&#x662F;&#x5411;&#x53F3;&#x4E0A;&#x79FB;&#x52A8;&#xFF0C;&#x5230;&#x4E86;&#x539F;&#x70B9;&#x3002;</p>
+<p>&#x53E6;&#x4E00;&#x70B9;&#x662F;&#xFF0C;&#x5728;&#x8FDB;&#x884C;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;&#x8981;&#x4FDD;&#x8BC1;&#x7269;&#x4F53;&#x5904;&#x4E8E;&#x5F53;&#x524D;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x539F;&#x70B9;&#xFF0C;&#x56E0;&#x4E3A;&#x4E00;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#x90FD;&#x662F;&#x57FA;&#x4E8E;&#x8BE5;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x539F;&#x70B9;&#x7684;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x5728;&#x4E0A;&#x56FE;&#x4E2D;&#xFF0C;&#x5F53;&#x4ECE;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x8F6C;&#x6362;&#x5230;&#x672C;&#x5730;&#x5750;&#x6807;&#x7CFB;&#x65F6;&#xFF0C;&#x4F1A;&#x5148;&#x79FB;&#x52A8;&#x8F6C;&#x6362;&#x5230;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x56E0;&#x4E3A;&#x524D;&#x8005;&#x5750;&#x6807;&#x7CFB;&#x7269;&#x4F53;&#x4E0D;&#x5728;&#x539F;&#x70B9;&#xFF0C;&#x800C;&#x540E;&#x8005;&#x5728;&#x3002;&#x540C;&#x7406;&#x5728;&#x4ECE;&#x672C;&#x5730;&#x5750;&#x6807;&#x7CFB;&#x8F6C;&#x6362;&#x5230;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x65F6;&#xFF0C;&#x4F1A;&#x5148;&#x8FDB;&#x884C;&#x65CB;&#x8F6C;&#xFF0C;&#x56E0;&#x4E3A;&#x6B64;&#x65F6;&#x7269;&#x4F53;&#x5DF2;&#x7ECF;&#x5728;&#x539F;&#x70B9;&#x4E86;&#x3002;</p>
+<h3 id="specifying-coordinate-spaces">Specifying Coordinate Spaces</h3>
+<p>&#x5750;&#x6807;&#x7CFB;&#x662F;&#x7531;&#x539F;&#x70B9;&#x548C;&#x5750;&#x6807;&#x8F74;&#x4E24;&#x90E8;&#x5206;&#x51B3;&#x5B9A;&#x7684;&#xFF0C;&#x5750;&#x6807;&#x8F74;&#x662F;&#x76F8;&#x5BF9;&#x4E0E;&#x81EA;&#x5DF1;&#x539F;&#x70B9;&#x800C;&#x8A00;&#x7684;&#x201C;&#x4E0A;&#x201D;&#xFF0C;&#x201C;&#x53F3;&#x201D;&#xFF0C;&#x201C;&#x524D;&#x201D;&#x3002;</p>
+<p>&#x4E00;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x539F;&#x70B9;&#x548C;&#x5750;&#x6807;&#x8F74;&#x662F;&#x76F8;&#x5BF9;&#x4E8E;&#x53E6;&#x4E00;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x3002;</p>
+<p>&#x5982;&#x5728;&#x5C55;&#x793A;&#x4E09;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x4E0A;&#x56FE;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x8BF4;&#x673A;&#x5668;&#x4EBA;&#x7684;&#x9AD8;&#x5EA6;&#x662F;5.5&#x3002;&#x90A3;&#x4E48;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x539F;&#x70B9;&#x5728;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#x7684;&#x4F4D;&#x7F6E;&#x5927;&#x7EA6;&#x5728;<span class="math inline">\((4.5,1.5)\)</span>&#xFF0C;&#x800C;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#x7684;<span class="math inline">\((1,0)\)</span>&#x70B9;&#xFF0C;&#x5728;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x5927;&#x7EA6;&#x662F;<span class="math inline">\((0.87,0.5)\)</span>&#xFF0C;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#x7684;<span class="math inline">\((0,1)\)</span>&#x70B9;&#xFF0C;&#x5728;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x5927;&#x7EA6;&#x662F;<span class="math inline">\((-0.5,0.87)\)</span>&#x3002;&#x5728;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#xFF0C;&#x5411;&#x91CF;<span class="math inline">\((0.87,0.5)\)</span>&#x7684;&#x89D2;&#x5EA6;&#x5927;&#x7EA6;&#x662F;30&#xB0;&#xFF0C;&#x56E0;&#x6B64;&#x4E24;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x539F;&#x70B9;&#x4F4D;&#x7F6E;&#x5DEE;&#x8DDD;&#x4E3A;<span class="math inline">\((4.5,1.5)\)</span>&#xFF0C;&#x89D2;&#x5EA6;&#x5DEE;&#x8DDD;&#x5728;30&#xB0;&#x3002;</p>
+<h3 id="basis-vectors">Basis Vectors</h3>
+<p>&#x5982;&#x679C;&#x5728;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x4E00;&#x4E2A;&#x70B9;&#x7684;&#x4F4D;&#x7F6E;&#x662F;<span class="math inline">\((-1,5)\)</span>&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x5728;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x4F4D;&#x7F6E;&#x53EF;&#x4EE5;&#x6309;&#x4EE5;&#x4E0B;&#x516C;&#x5F0F;&#x8FDB;&#x884C;&#x8BA1;&#x7B97;&#xFF1A;</p>
+<p><span class="math display">\[
+w=o+b_xp+b_yq
+\]</span></p>
+<p>&#x5176;&#x4E2D;<span class="math inline">\(b\)</span>&#x4E3A;&#x70B9;&#x5728;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5373;<span class="math inline">\((-1,5)\)</span>&#xFF0C;<span class="math inline">\(w\)</span>&#x4E3A;&#x70B9;&#x5728;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;<span class="math inline">\(o\)</span>&#x4E3A;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x539F;&#x70B9;&#x5728;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5728;&#x4E0A;&#x4F8B;&#x4E2D;&#x4E3A;<span class="math inline">\((4.5,1.5)\)</span>&#xFF0C;<span class="math inline">\(p\)</span>&#x4E3A;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;X&#x8F74;&#x5728;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#x7684;&#x8868;&#x793A;&#xFF0C;&#x5728;&#x4E0A;&#x4F8B;&#x4E2D;&#x4E3A;<span class="math inline">\((0.87,0.5)\)</span>&#xFF0C;<span class="math inline">\(q\)</span>&#x4E3A;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;Y&#x8F74;&#x5728;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#x7684;&#x8868;&#x793A;&#xFF0C;&#x5728;&#x4E0A;&#x4F8B;&#x4E2D;&#x4E3A;<span class="math inline">\((-0.5,0.87)\)</span>&#x3002;</p>
+<p>&#x5C06;&#x6240;&#x6709;&#x6570;&#x636E;&#x5E26;&#x5165;&#x4E0A;&#x5F0F;&#xFF0C;&#x53EF;&#x4EE5;&#x7B97;&#x51FA;&#x8BE5;&#x70B9;&#x5728;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x5750;&#x6807;&#x4E3A;<span class="math inline">\((-1.13,5.35)\)</span>&#x3002;&#x8BA1;&#x7B97;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[
+w=(4.5,1.5)+(-1)*(0.87,0.5)+5*(-0.5,0.87)=(-1.13,5.35)
+\]</span></p>
+<p>&#x53EF;&#x4EE5;&#x5C06;&#x4E0A;&#x8FF0;&#x516C;&#x5F0F;&#x7B80;&#x5316;&#xFF0C;&#x5373;&#x4E0D;&#x518D;&#x5C06;&#x201C;&#x70B9;&#x201D;&#x4F5C;&#x4E3A;&#x8003;&#x8651;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x800C;&#x662F;&#x63CF;&#x8FF0;&#x5411;&#x91CF;&#x3002;&#x56E0;&#x4E3A;&#x662F;&#x5411;&#x91CF;&#x6240;&#x4EE5;&#x4E5F;&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x8003;&#x8651;&#x4F4D;&#x79FB;&#x3002;&#x5982;&#x679C;&#x4E0A;&#x8FF0;&#x516C;&#x5F0F;&#x4E0D;&#x8003;&#x8651;&#x4F4D;&#x79FB;&#xFF08;&#x53EF;&#x4EE5;&#x5047;&#x8C61;&#x4E3A;&#x4E24;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x539F;&#x70B9;&#x662F;&#x91CD;&#x53E0;&#x7684;&#xFF09;&#xFF0C;&#x4E14;&#x63A8;&#x5E7F;&#x81F3;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#xFF0C;&#x53EF;&#x8868;&#x793A;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[
+v=xp+yq+zr
+\]</span></p>
+<p>&#x5F0F;&#x4E2D;&#x7684;<span class="math inline">\(v\)</span>&#x662F;&#x76EE;&#x6807;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x5750;&#x6807;&#xFF0C;<span class="math inline">\(x,y,z\)</span>&#x662F;&#x5F53;&#x524D;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x9009;&#x53D6;&#x7684;&#x4E09;&#x6761;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x4E0A;&#x7684;&#x5206;&#x91CF;&#xFF0C;<span class="math inline">\(p,q,r\)</span>&#x4E3A;&#x4E09;&#x6761;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x5728;&#x76EE;&#x6807;&#x5750;&#x6807;&#x7CFB;<span class="math inline">\(v\)</span>&#x4E0A;&#x7684;&#x8868;&#x793A;&#x3002;</p>
+<p>&#x5982;&#x4E0A;&#x4F8B;&#x4E2D;&#xFF0C;&#x56E0;&#x4E3A;&#x662F;&#x4E8C;&#x7EF4;&#x7A7A;&#x95F4;&#xFF0C;&#x53EA;&#x6709;&#x4E24;&#x6761;&#x57FA;&#x672C;&#x5411;&#x91CF;&#xFF0C;&#x9009;&#x53D6;&#x7684;&#x5206;&#x522B;&#x662F;X&#x8F74;&#x548C;Y&#x8F74;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;P&#x4E3A;<span class="math inline">\((0.87,0.5)\)</span>&#xFF0C;&#x5BF9;&#x5E94;&#x7684;q&#x4E3A;<span class="math inline">\((-0.5&#xFF0C;0.87)\)</span>&#x3002;</p>
+<p>&#x5982;&#x6709;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x5411;&#x91CF;<span class="math inline">\(b=[b_x,b_y,b_z]\)</span>&#xFF0C;&#x5BF9;&#x5E94;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x5411;&#x91CF;<span class="math inline">\(u=[u_x,u_y,u_z]\)</span>&#xFF0C;<span class="math inline">\(p,q,r\)</span>&#x4E3A;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x9009;&#x53D6;&#x7684;&#x4E09;&#x6761;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x5728;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x8868;&#x793A;&#x3002;&#x5957;&#x7528;&#x4E0A;&#x8FF0;&#x7684;&#x516C;&#x5F0F;&#xFF0C;&#x53EF;&#x8868;&#x793A;&#x4E3A;</p>
+<p><span class="math display">\[
+u=b_xp+b_yq+b_zr \text{ &#x6216;&#x8005;&#x8868;&#x8FBE;&#x4E3A; } \begin{aligned}
+    u_x=b_xp_x+b_yq_x+b_zr_x\\\\
+    u_y=b_xp_y+b_yq_y+b_zr_y\\\\
+    u_z=b_xp_z+b_yq_z+b_zr_z\\\\
+\end{aligned}
+\]</span></p>
+<blockquote>
+<p>&#x6CE8;&#x610F;<span class="math inline">\(p,q,r\)</span>&#x4E09;&#x4E2A;&#x5411;&#x91CF;&#x5B9E;&#x9645;&#x4E0A;&#x90FD;&#x662F;&#x5728;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x8868;&#x793A;&#xFF0C;&#x5373;<span class="math inline">\(u,p,q,r\)</span>&#x662F;&#x5C5E;&#x4E8E;&#x4E00;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x3002;</p>
+</blockquote>
+<p>&#x5982;&#x679C;&#x77E5;&#x9053;&#x4E86;&#x5411;&#x91CF;<span class="math inline">\(b\)</span>&#xFF0C;&#x6C42;&#x5411;&#x91CF;<span class="math inline">\(u\)</span>&#x53EA;&#x9700;&#x8981;&#x5957;&#x7528;&#x516C;&#x5F0F;&#x5373;&#x53EF;&#x3002;&#x4F46;&#x5982;&#x679C;&#x77E5;&#x9053;&#x4E86;&#x5411;&#x91CF;<span class="math inline">\(u\)</span>&#x60F3;&#x6C42;&#x5411;&#x91CF;<span class="math inline">\(b\)</span>&#xFF0C;&#x5219;&#x9700;&#x8981;&#x89E3;&#x4E00;&#x4E2A;&#x4E09;&#x5143;&#x65B9;&#x7A0B;&#xFF08;<span class="math inline">\(b_x,b_y,b_z\)</span>&#x90FD;&#x662F;&#x672A;&#x77E5;&#x91CF;&#xFF09;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4E00;&#x7CFB;&#x5217;&#x5411;&#x91CF;&#x6EE1;&#x8DB3;&#xFF0C;<code>&#x5411;&#x91CF;&#x4E92;&#x76F8;&#x5782;&#x76F4;&#xFF0C;&#x5373;&#x6B63;&#x4EA4;&#xFF08;orthogonal&#xFF09;</code>&#x548C;<code>&#x5411;&#x91CF;&#x7684;&#x957F;&#x5EA6;&#x90FD;&#x4E3A;1</code>&#xFF0C;&#x5219;&#x79F0;&#x8FD9;&#x4E9B;&#x5411;&#x91CF;&#x4E3A;&#x6807;&#x51C6;&#x6B63;&#x4EA4;&#x57FA;&#xFF08;orthonormal&#xFF09;&#xFF0C;&#x5982;&#x679C;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x662F;&#x6807;&#x51C6;&#x6B63;&#x4EA4;&#x57FA;&#xFF0C;&#x5219;&#x6C42;<span class="math inline">\(b\)</span>&#x7684;&#x8FC7;&#x7A0B;&#x53EF;&#x4EE5;&#x4ECE;&#x89E3;&#x4E09;&#x5143;&#x65B9;&#x7A0B;&#x7B80;&#x5316;&#x4E3A;&#x4EE5;&#x4E0B;&#x516C;&#x5F0F;&#xFF1A;</p>
+<p><span class="math display">\[
+b_x=u\cdot p
+\\\\
+b_y=u\cdot q
+\\\\
+b_z = u\cdot r
+\]</span></p>
+<p>&#x4E4B;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x8FD9;&#x6837;&#x7B80;&#x5316;&#xFF0C;&#x662F;&#x56E0;&#x4E3A;&#xFF1A;</p>
+<ol type="1">
+<li>&#x70B9;&#x4E58;&#x7684;&#x7269;&#x7406;&#x610F;&#x4E49;&#x6709;&#x6C42;&#x5728;&#x67D0;&#x4E2A;&#x5206;&#x91CF;&#x4E0A;&#x7684;&#x957F;&#x5EA6;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x70B9;&#x4E58;&#x6765;&#x8BA1;&#x7B97;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x4E09;&#x6761;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x4E0D;&#x662F;&#x76F8;&#x4E92;&#x5782;&#x76F4;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x4E00;&#x6761;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x4E0A;&#x503C;&#x589E;&#x52A0;&#xFF0C;&#x4F1A;&#x5BFC;&#x81F4;&#x53E6;&#x4E00;&#x6761;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x4E0A;&#x7684;&#x503C;&#x4E5F;&#x589E;&#x52A0;&#x3002; &#x5982;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x9009;&#x53D6;&#x4E3A;<span class="math inline">\((1,0)\)</span>&#x548C;<span class="math inline">\((1,1)\)</span>&#xFF0C;&#x5982;&#x679C;&#x70B9;&#x4ECE;<span class="math inline">\((1,1)\)</span>&#x4F4D;&#x79FB;&#x5230;<span class="math inline">\((2,2)\)</span>&#x70B9;&#x4E0A;&#xFF0C;&#x867D;&#x7136;&#x662F;&#x5728;&#x57FA;&#x672C;&#x5411;&#x91CF;<span class="math inline">\((1,1)\)</span>&#x4E0A;&#x79FB;&#x52A8;&#x7684;&#xFF0C;&#x4F46;&#x540C;&#x6837;&#x4F1A;&#x589E;&#x52A0;&#x5728;<span class="math inline">\((1,0)\)</span>&#x4E0A;&#x7684;&#x503C;&#x3002; &#x8FD9;&#x6837;&#x7684;&#x8BDD;&#x5728;&#x4E0A;&#x8FF0;&#x516C;&#x5F0F;&#x4E2D;&#xFF0C;&#x5219;&#x4F1A;&#x51FA;&#x73B0;<span class="math inline">\(b_x\)</span>&#x7684;&#x503C;&#x4E0D;&#x4EC5;&#x4E0E;<span class="math inline">\(p\)</span>&#x6709;&#x5173;&#xFF0C;&#x8FD8;&#x53EF;&#x80FD;&#x4E0E;<span class="math inline">\(q\)</span>&#x6709;&#x5173;&#x3002;</li>
+<li><span class="math inline">\(a\cdot b\)</span>&#x7684;&#x7ED3;&#x679C;&#x8FD8;&#x4E0E;<span class="math inline">\(b\)</span>&#x7684;&#x957F;&#x5EA6;&#x6709;&#x5173;&#xFF0C;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x8FD9;&#x4E2A;&#x5F71;&#x54CD;&#xFF0C;&#x6240;&#x4EE5;&#x53D6;<span class="math inline">\(p,q,r\)</span>&#x90FD;&#x4E3A;1</li>
+</ol>
+<blockquote>
+<p>&#x9009;&#x53D6;&#x7684;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x901A;&#x5E38;&#x90FD;&#x9700;&#x8981;&#x662F;&#x7EBF;&#x6027;&#x65E0;&#x5173;&#x7684;&#xFF08;Linearly Independent&#xFF09;&#xFF0C;&#x5373;&#x4EFB;&#x610F;&#x4E00;&#x4E2A;&#x5411;&#x91CF;&#x4E0D;&#x80FD;&#x901A;&#x8FC7;&#x5176;&#x4ED6;&#x5411;&#x91CF;&#x7684;&#x7EBF;&#x6027;&#x7EC4;&#x5408;&#x8868;&#x793A;&#x51FA;&#x6765;&#x3002;&#x5426;&#x5219;&#x7684;&#x8BDD;&#xFF0C;n&#x4E2A;&#x5411;&#x91CF;&#x65E0;&#x6CD5;&#x63CF;&#x8FF0;n&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x5411;&#x91CF;&#xFF0C;&#x5728;&#x7EBF;&#x6027;&#x4EE3;&#x6570;&#x4E2D;&#xFF0C;&#x5C06;&#x901A;&#x8FC7;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x80FD;&#x8868;&#x8FF0;&#x7684;&#x7A7A;&#x95F4;&#x7EF4;&#x5EA6;&#x79F0;&#x4E3A;<code>&#x79E9;(rank)</code></p>
+</blockquote>
+<p>&#x5BF9;&#x4E8E;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x4E0D;&#x662F;&#x6807;&#x51C6;&#x6B63;&#x4EA4;&#x57FA;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x5C06;&#x5728;&#x7B2C;&#x516D;&#x7AE0;&#x4E2D;&#x8BF4;&#x660E;&#x3002;</p>
+<p>&#x901A;&#x5E38;&#x800C;&#x8A00;&#xFF0C;&#x5BF9;&#x4E8E;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x800C;&#x8A00;&#xFF0C;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x7684;&#x9009;&#x53D6;&#x90FD;&#x662F;X,Y,Z&#x8F74;&#x3002;</p>
+<h2 id="nested-coordinate-spaces">Nested Coordinate Spaces</h2>
+<p>&#x56E0;&#x4E3A;&#x901A;&#x5E38;&#x800C;&#x8A00;&#xFF0C;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x6700;&#x540E;&#x90FD;&#x8981;&#x57FA;&#x4E8E;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x8FDB;&#x884C;&#x8BA1;&#x7B97;&#xFF0C;&#x5982;&#x628A;&#x4E0D;&#x540C;&#x7684;&#x7269;&#x4F53;&#x653E;&#x5728;&#x4E16;&#x754C;&#x4E2D;&#x7684;&#x8FC7;&#x7A0B;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x79F0;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x662F;&#x7236;&#x7A7A;&#x95F4;&#xFF0C;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x662F;&#x5B50;&#x7A7A;&#x95F4;&#x3002;</p>
+<p>&#x800C;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x53EF;&#x4EE5;&#x8FDB;&#x4E00;&#x6B65;&#x5212;&#x5206;&#xFF0C;&#x5982;&#x5C06;&#x4E00;&#x53EA;&#x7F8A;&#x4F5C;&#x4E3A;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x53EF;&#x4EE5;&#x518D;&#x8FDB;&#x4E00;&#x6B65;&#x5C06;&#x5176;&#x5934;&#x4F5C;&#x4E3A;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x5B50;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x79F0;&#x4E3A;&#x5934;&#x5750;&#x6807;&#x7CFB;&#x3002;&#x540C;&#x7406;&#x5934;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x8FD8;&#x53EF;&#x4EE5;&#x8033;&#x6735;&#x5750;&#x6807;&#x7CFB;&#x7B49;&#x3002;</p>
+<p>&#x8FD9;&#x79CD;&#x5C06;&#x4E0D;&#x540C;&#x90E8;&#x5206;&#x5C42;&#x5C42;&#x5212;&#x5206;&#x7684;&#x6A21;&#x578B;&#x79F0;&#x4E3A;&#x5173;&#x8282;&#x6A21;&#x578B;&#xFF08;articulated model&#xFF09;&#x3002;</p>
+<p>&#x4E00;&#x4E9B;&#x8FD0;&#x52A8;&#x5728;&#x5404;&#x81EA;&#x7684;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x8BA1;&#x7B97;&#x662F;&#x5F88;&#x7B80;&#x5355;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x653E;&#x5728;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x5C06;&#x4F1A;&#x5F88;&#x590D;&#x6742;&#x3002;&#x5982;&#x7F8A;&#x4E00;&#x8FB9;&#x8D70;&#xFF0C;&#x4E00;&#x8FB9;&#x6447;&#x5934;&#xFF0C;&#x4E00;&#x8FB9;&#x4E0A;&#x4E0B;&#x7FFB;&#x52A8;&#x8033;&#x6735;&#x3002;&#x5BF9;&#x4E8E;&#x8033;&#x6735;&#x5750;&#x6807;&#x7CFB;&#x800C;&#x8A00;&#xFF0C;&#x8FD9;&#x53EA;&#x662F;Y&#x8F74;&#x7684;&#x53D8;&#x5316;&#xFF0C;&#x4F46;&#x662F;&#x5BF9;&#x4E8E;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x800C;&#x8A00;&#xFF0C;&#x5C31;&#x662F;&#x8033;&#x6735;&#x7684;&#x8FD0;&#x52A8;&#x8F68;&#x8FF9;&#x5C31;&#x975E;&#x5E38;&#x590D;&#x6742;&#x4E86;&#x3002;</p>
+<p>&#x5F53;&#x77E5;&#x9053;&#x4E86;&#x7269;&#x4F53;&#x5728;&#x4E00;&#x4E2A;&#x5B50;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5750;&#x6807;&#x7CFB;&#x4E4B;&#x95F4;&#x7684;&#x76F8;&#x5BF9;&#x4F4D;&#x7F6E;&#x6765;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#x3002;&#x8FD9;&#x90E8;&#x5206;&#x4F1A;&#x5728;&#x4E4B;&#x540E;&#x7AE0;&#x8282;&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;&#x3002;</p>
+<h2 id="in-defense-of-upright-space">In Defense of Upright Space</h2>
+<p>&#x5F53;&#x5C06;&#x70B9;&#x4ECE;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x8F6C;&#x6362;&#x5230;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x65F6;&#xFF0C;&#x4E0D;&#x4EC5;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#xFF0C;&#x8FD8;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x4F4D;&#x79FB;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x5F53;&#x5C06;&#x5411;&#x91CF;&#x4ECE;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x8F6C;&#x6362;&#x5230;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x65F6;&#xFF0C;&#x4EC5;&#x9700;&#x8981;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x4F46;&#x7269;&#x4F53;&#x548C;&#x70B9;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x901A;&#x5E38;&#x90FD;&#x662F;&#x7528;&#x540C;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x6765;&#x8868;&#x793A;&#x7684;&#xFF0C;&#x5982;<code>flaot3</code>&#x3002;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x6765;&#x533A;&#x5206;&#x64CD;&#x4F5C;&#x7A76;&#x7ADF;&#x662F;&#x9488;&#x5BF9;&#x70B9;&#x8FD8;&#x662F;&#x5411;&#x91CF;&#xFF0C;&#x6709;&#x7684;&#x4EBA;&#x5C06;<code>flaot3</code>&#x53D6;&#x522B;&#x540D;&#xFF0C;&#x5982;&#x53D8;&#x6210;<code>point</code>&#x548C;<code>vector</code>&#xFF0C;&#x6709;&#x7684;&#x4EBA;&#x5219;&#x662F;&#x901A;&#x8FC7;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#xFF0C;&#x5982;&#x5C06;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#x548C;&#x4F4D;&#x79FB;&#x64CD;&#x4F5C;&#x5206;&#x5F00;&#xFF0C;&#x5728;&#x5904;&#x7406;&#x70B9;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F7F;&#x7528;&#x4F4D;&#x79FB;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x4F5C;&#x8005;&#x5728;&#x8FD9;&#x91CC;&#x63D0;&#x51FA;&#x7684;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#xFF08;Upright Space&#xFF09;&#x5219;&#x662F;&#x53E6;&#x4E00;&#x79CD;&#x8868;&#x8FBE;&#xFF0C;&#x8BBE;&#x60F3;&#x662F;&#xFF0C;&#x5F53;&#x4F7F;&#x7528;&#x4E16;&#x754C;&#x5750;&#x6807;&#x7CFB;&#x65F6;&#xFF0C;&#x5219;&#x8868;&#x793A;&#x8FD9;&#x4E2A;&#x64CD;&#x4F5C;&#x662F;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x4F4D;&#x79FB;&#x7684;&#xFF0C;&#x800C;&#x4F7F;&#x7528;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x65F6;&#xFF0C;&#x5219;&#x662F;&#x4E0D;&#x9700;&#x8981;&#x4F4D;&#x79FB;&#x3002;</p>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>3D Math Primer for Graphics and Game Development</em> 2nd 2011</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/" title="《3D数学基础：图形和游戏开发》第三章笔记">https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/3D数学/" rel="tag"># 3D数学</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/CPPPrimer-Chapter7-Notes/" rel="prev" title="《C++ Primer》 第七章笔记">
+      <i class="fa fa-chevron-left"></i> 《C++ Primer》 第七章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/RulesOfPlay-Chapter7-Notes/" rel="next" title="《Rules of Play》 第七章笔记">
+      《Rules of Play》 第七章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter3-multiple-coordinate-spaces"><span class="nav-number">1.</span> <span class="nav-text">Chapter3 Multiple Coordinate Spaces</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#why-bother-with-multiple-coordinate-spaces"><span class="nav-number">1.1.</span> <span class="nav-text">Why Bother with Multiple Coordinate Spaces?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#some-useful-coordinate-spaces"><span class="nav-number">1.2.</span> <span class="nav-text">Some Useful Coordinate Spaces</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#world-spaces"><span class="nav-number">1.2.1.</span> <span class="nav-text">World Spaces</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#object-space"><span class="nav-number">1.2.2.</span> <span class="nav-text">Object Space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#camera-space"><span class="nav-number">1.2.3.</span> <span class="nav-text">Camera Space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#upright-space"><span class="nav-number">1.2.4.</span> <span class="nav-text">Upright Space</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#basis-vectors-and-coordinate-space-transformations"><span class="nav-number">1.3.</span> <span class="nav-text">Basis Vectors and Coordinate Space Transformations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dual-perspectives"><span class="nav-number">1.3.1.</span> <span class="nav-text">Dual Perspectives</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#specifying-coordinate-spaces"><span class="nav-number">1.3.2.</span> <span class="nav-text">Specifying Coordinate Spaces</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#basis-vectors"><span class="nav-number">1.3.3.</span> <span class="nav-text">Basis Vectors</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nested-coordinate-spaces"><span class="nav-number">1.4.</span> <span class="nav-text">Nested Coordinate Spaces</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#in-defense-of-upright-space"><span class="nav-number">1.5.</span> <span class="nav-text">In Defense of Upright Space</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

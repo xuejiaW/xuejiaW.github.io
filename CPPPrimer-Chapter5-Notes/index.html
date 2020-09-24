@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x4E94;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x8BA8;&amp;#x8BBA;&amp;#x4E86;&amp;#x57FA;&amp;#x7840;&amp;#x8BED;&amp;#x53E5;&amp;#xFF0C;&amp;#x5FAA;&amp;#x73AF;&amp;#x8BED;&amp;#x53E5;&amp;#x548C;&amp;#x6761;&amp;#x4EF">
+<meta name="keywords" content="读书笔记,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《C++ Primer》 第五章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/CPPPrimer-Chapter5-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x4E94;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x8BA8;&amp;#x8BBA;&amp;#x4E86;&amp;#x57FA;&amp;#x7840;&amp;#x8BED;&amp;#x53E5;&amp;#xFF0C;&amp;#x5FAA;&amp;#x73AF;&amp;#x8BED;&amp;#x53E5;&amp;#x548C;&amp;#x6761;&amp;#x4EF">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter5-Notes/Ch_5.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.177Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《C++ Primer》 第五章笔记">
+<meta name="twitter:description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x4E94;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x8BA8;&amp;#x8BBA;&amp;#x4E86;&amp;#x57FA;&amp;#x7840;&amp;#x8BED;&amp;#x53E5;&amp;#xFF0C;&amp;#x5FAA;&amp;#x73AF;&amp;#x8BED;&amp;#x53E5;&amp;#x548C;&amp;#x6761;&amp;#x4EF">
+<meta name="twitter:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter5-Notes/Ch_5.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/CPPPrimer-Chapter5-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《C++ Primer》 第五章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/CPPPrimer-Chapter5-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《C++ Primer》 第五章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-19 21:10:36" itemprop="dateCreated datePublished" datetime="2020-02-19T21:10:36+08:00">2020-02-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/计算机语言/" itemprop="url" rel="index"><span itemprop="name">计算机语言</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/CPPPrimer-Chapter5-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《C++ Primer》 第五章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/CPPPrimer-Chapter5-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/CPPPrimer-Chapter5-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>13 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;C++ Primer&#x300B; &#x7B2C;&#x4E94;&#x7AE0;&#x7B14;&#x8BB0;</p>
+<p>&#x8BA8;&#x8BBA;&#x4E86;&#x57FA;&#x7840;&#x8BED;&#x53E5;&#xFF0C;&#x5FAA;&#x73AF;&#x8BED;&#x53E5;&#x548C;&#x6761;&#x4EF6;&#x5224;&#x65AD;&#x8BED;&#x53E5;&#xFF0C;&#x4EE5;&#x53CA;&#x8BA8;&#x8BBA;&#x4E86;C++&#x7684;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x3002;</p>
+<p><img src="/CPPPrimer-Chapter5-Notes/Ch_5.png" alt="&#x7B2C;&#x4E94;&#x7AE0;&#x5185;&#x5BB9;"></p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-5-statements">Chapter 5 Statements</h1>
+<h2 id="simple-statements">Simple Statements</h2>
+<h3 id="null-statements">Null Statements</h3>
+<p>&#x4E00;&#x4E2A;&#x5355;&#x4E00;&#x7684;&#x5206;&#x53F7;&#x5373;&#x6784;&#x6210;&#x4E86;&#x4E00;&#x6761;&#x7A7A;&#x8BED;&#x53E5;&#xFF08;Null Statements&#xFF09;&#xFF0C;&#x5F53;&#x8BED;&#x8A00;&#x8BED;&#x6CD5;&#x9700;&#x8981;&#x4E00;&#x6761;&#x8BED;&#x53E5;&#xFF0C;&#x4F46;&#x662F;&#x4EE3;&#x7801;&#x903B;&#x8F91;&#x5E76;&#x4E0D;&#x9700;&#x8981;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x7A7A;&#x8BED;&#x53E5;&#x662F;&#x5F88;&#x6709;&#x7528;&#x7684;&#x3002;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="built_in">cin</span>&gt;&gt; s &amp;&amp; s != sought)</span><br><span class="line">    ;   <span class="comment">//null Statements</span></span><br></pre></td></tr></table></figure>
+<p>&#x5EFA;&#x8BAE;&#x5728;&#x6BCF;&#x4E2A;&#x7A7A;&#x8BED;&#x53E5;&#x540E;&#x90FD;&#x52A0;&#x4E0A;&#x6CE8;&#x91CA;&#xFF0C;&#x8868;&#x660E;&#x662F;&#x6545;&#x610F;&#x4F7F;&#x7528;&#x7A7A;&#x8BED;&#x53E5;&#x800C;&#x4E0D;&#x662F;&#x4E0D;&#x5C0F;&#x5FC3;&#x9057;&#x6F0F;&#x3002;</p>
+<h3 id="compound-statementsblocks">Compound Statements(Blocks)</h3>
+<p>&#x591A;&#x6761;&#x8BED;&#x53E5;&#x53EF;&#x4EE5;&#x653E;&#x5728;&#x4E00;&#x4E2A;&#x4EE3;&#x7801;&#x5757;&#x4E2D;&#xFF0C;&#x4EE3;&#x7801;&#x5757;&#x4EE5;&#x4E24;&#x4E2A;&#x5927;&#x62EC;&#x53F7;&#x6784;&#x6210;&#x3002;&#x5982;&#x679C;&#x4EE3;&#x7801;&#x5757;&#x4E2D;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x7684;&#x8BED;&#x53E5;&#xFF0C;&#x5219;&#x76F8;&#x5F53;&#x4E8E;&#x4E00;&#x4E2A;&#x7A7A;&#x8BED;&#x53E5;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="built_in">cin</span>&gt;&gt; s &amp;&amp; s != sought)</span><br><span class="line">{</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h2 id="statement-scope">Statement Scope</h2>
+<p>&#x53EF;&#x4EE5;&#x5728;<code>if</code>, <code>switch</code>,<code>while</code>&#x548C;<code>for</code>&#x7684;&#x63A7;&#x5236;&#x8BED;&#x53E5;&#x4E2D;&#x5B9A;&#x4E49;&#x53D8;&#x91CF;&#xFF0C;&#x5728;&#x63A7;&#x5236;&#x8BED;&#x53E5;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x53EA;&#x5728;&#x5176;&#x5BF9;&#x5E94;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4E0B;&#x6709;&#x7528;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="keyword">int</span> i = getNum())</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;i is &quot;</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"><span class="comment">// i = 0; //error, out of scope</span></span><br></pre></td></tr></table></figure>
+<h2 id="conditional-statements">Conditional Statements</h2>
+<h3 id="the-if-statement">The if Statement</h3>
+<p>If&#x4E0E;C&#x8BED;&#x8A00;&#x7684;If&#x8BED;&#x53E5;&#x7C7B;&#x4F3C;&#x3002;</p>
+<h4 id="dangling-else">Dangling else</h4>
+<p>&#x5F53;if&#x548C;else&#x7684;&#x6570;&#x91CF;&#x4E0D;&#x5339;&#x914D;&#x65F6;&#xFF0C;else&#x8BE5;&#x4E0E;&#x54EA;&#x4E2A;if&#x7ED3;&#x5408;&#x79F0;&#x4E3A;<code>dangling else</code>&#x95EE;&#x9898;&#xFF0C;C++&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#x662F;&#xFF0C;else&#x4E0E;&#x4E0A;&#x65B9;&#x6700;&#x8FD1;&#x7684;&#x672A;&#x5339;&#x914D;&#x5176;&#x4ED6;else&#x7684;if&#x8BED;&#x53E5;&#x7ED3;&#x5408;&#x3002;</p>
+<h3 id="the-switch-statement">The switch Statement</h3>
+<p>switch&#x8BED;&#x53E5;&#x7684;&#x6784;&#x9020;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (expression)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">case</span> caseLabel1:</span><br><span class="line">        <span class="comment">//some code</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> caseLabel2:</span><br><span class="line">        <span class="comment">//some code</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> caseLabel3:</span><br><span class="line">        <span class="comment">//some code</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="comment">//some code</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p><code>expression</code>&#x53EF;&#x4EE5;&#x662F;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x7684;&#x5B9A;&#x4E49;&#x8BED;&#x53E5;&#xFF0C;&#x6216;&#x666E;&#x901A;&#x7684;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x4F46;expression&#x5FC5;&#x987B;&#x662F;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x5230;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x7684;&#xFF0C;expression&#x7684;&#x503C;&#x4F1A;&#x4E0E;&#x6BCF;&#x4E00;&#x4E2A;<code>caseLabel</code>&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x51B3;&#x5B9A;&#x8FDB;&#x5165;&#x54EA;&#x4E2A;case&#x3002;</p>
+<p>&#x5F53;&#x8FDB;&#x5165;&#x4E00;&#x4E2A;case&#x540E;&#xFF0C;case&#x5185;&#x7684;&#x4EE3;&#x7801;&#x4F1A;&#x88AB;&#x6267;&#x884C;&#xFF0C;&#x7136;&#x540E;&#x4F1A;&#x8FDB;&#x5165;&#x987A;&#x5E94;&#x7684;&#x4E0B;&#x4E00;&#x4E2A;case&#xFF0C;&#x76F4;&#x5230;&#x9047;&#x89C1;<code>break</code>&#x8BED;&#x53E5;&#x4E3A;&#x6B62;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x5927;&#x591A;&#x6570;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;case&#x4E2D;&#x90FD;&#x4F1A;&#x6709;&#x4E00;&#x4E2A;break&#x8BED;&#x53E5;&#x3002;</p>
+<blockquote>
+<p>&#x5982;&#x679C;&#x5728;&#x67D0;&#x4E2A;case&#x4E0B;&#x6545;&#x610F;&#x7684;&#x4E0D;&#x52A0;&#x5165;break&#xFF0C;&#x8981;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#x4E0B;&#x4E00;&#x4E2A;case&#x4E2D;&#x7684;&#x4EE3;&#x7801;&#x65F6;&#xFF0C;&#x5EFA;&#x8BAE;&#x52A0;&#x4E0A;&#x6CE8;&#x91CA;&#x8868;&#x660E;&#x4E0D;&#x662F;&#x610F;&#x5916;&#x9057;&#x6F0F;&#x4E86;break&#x3002;</p>
+</blockquote>
+<p><code>caseLabel</code>&#x5FC5;&#x987B;&#x662F;&#x4E00;&#x56FA;&#x5B9A;&#x7684;&#x6574;&#x6570;&#x8868;&#x8FBE;&#x5F0F;&#x53C2;&#x6570;&#xFF08;Integral constant&#xFF09;&#xFF0C;&#x5982;<code>case 3.14:</code>&#xFF0C;<code>case ival</code>&#xFF08;ival&#x4E0D;&#x662F;const int&#xFF09;&#x7B49;&#x8BED;&#x53E5;&#x90FD;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#x3002;</p>
+<p>&#x5F53;&#x6240;&#x6709;&#x7684;case&#x90FD;&#x4E0D;&#x6EE1;&#x8DB3;&#x65F6;&#xFF0C;&#x4F1A;&#x8FDB;&#x5165;<code>default</code>&#x4E2D;&#xFF0C;&#x867D;&#x7136;default case&#x4E0D;&#x662F;&#x5F3A;&#x5236;&#x7684;&#xFF0C;&#x4F46;&#x8FD8;&#x662F;&#x5EFA;&#x8BAE;&#x6DFB;&#x52A0;default&#x3002;</p>
+<h4 id="variable-definitions-inside-the-body-of-a-switch">Variable Definitions inside the Body of a switch</h4>
+<p>&#x56E0;&#x4E3A;switch&#x4E0B;&#x6240;&#x6709;case&#x90FD;&#x662F;&#x5728;&#x4E00;&#x4E2A;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#xFF08;&#x5E76;&#x6CA1;&#x6709;&#x5927;&#x62EC;&#x53F7;&#x8FDB;&#x884C;&#x5206;&#x5272;&#xFF09;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x4E00;&#x4E2A;case&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#x662F;&#x53EF;&#x4EE5;&#x5728;&#x53E6;&#x4E00;&#x4E2A;case&#x4E2D;&#x4F7F;&#x7528;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x5B9A;&#x4E49;&#x53D8;&#x91CF;&#x65F6;&#x4E0D;&#x80FD;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x56E0;&#x4E3A;&#x521D;&#x59CB;&#x5316;&#x7684;case&#x5E76;&#x4E0D;&#x4E00;&#x5B9A;&#x4F1A;&#x88AB;&#x9009;&#x4E2D;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (val)</span><br><span class="line">{</span><br><span class="line"><span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">    <span class="comment">// string file_name; //error, default initialization, and the initialization may bebypassed</span></span><br><span class="line">    <span class="comment">// int ival = 0;//error, the initialization may be bypassed</span></span><br><span class="line">    <span class="keyword">int</span> jval; <span class="comment">//int is build-in type and this is in function so it isn&apos;t initialiazed</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">    jval = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4EE3;&#x7801;&#x4E2D;&#x7684;file_name&#x548C;ival&#x90FD;&#x4F1A;&#x9020;&#x6210;&#x7F16;&#x8BD1;&#x5931;&#x8D25;&#xFF0C;&#x4E24;&#x8005;&#x90FD;&#x6709;&#x521D;&#x59CB;&#x5316;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;file_name&#x867D;&#x7136;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#x521D;&#x59CB;&#x5316;&#x53D8;&#x91CF;&#xFF0C;&#x4F46;&#x662F;&#x56E0;&#x4E3A;&#x5B83;&#x4E0D;&#x662F;&#x5185;&#x5EFA;&#x7C7B;&#x578B;&#xFF0C;&#x6240;&#x4EE5;&#x4F1A;&#x88AB;&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x786E;&#x5B9E;&#x9700;&#x8981;&#x5728;&#x67D0;&#x4E2A;case&#x4E0B;&#x5B9A;&#x4E49;&#x53D8;&#x91CF;&#x4E14;&#x8981;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x90A3;&#x4E48;&#x53EA;&#x80FD;&#x5C06;&#x8FD9;&#x4E2A;case&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4E0E;&#x5176;&#x4ED6;case&#x5206;&#x5F00;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (val)</span><br><span class="line">{</span><br><span class="line"><span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">{</span><br><span class="line">    <span class="comment">// string file_name; //error, default initialization, and the initialization may bebypassed</span></span><br><span class="line">    <span class="comment">// int ival = 0;//error, the initialization may be bypassed</span></span><br><span class="line">    <span class="keyword">int</span> jval; <span class="comment">//int is build-in type and this is in function so it isn&apos;t initialiazed</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">    <span class="comment">// jval = 2;//error, jval is in another code scope</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h2 id="iterative-statements">Iterative Statements</h2>
+<p><code>while</code>&#x548C;<code>for</code>&#x5728;&#x6267;&#x884C;body&#x7684;&#x4EE3;&#x7801;&#x524D;&#x4F1A;&#x5148;&#x8FDB;&#x884C;&#x6761;&#x4EF6;&#x5224;&#x65AD;&#xFF0C;&#x800C;<code>do while</code>&#x4F1A;&#x5148;&#x6267;&#x884C;&#x4E00;&#x6B21;body&#x4EE3;&#x7801;&#xFF0C;&#x518D;&#x8FDB;&#x884C;&#x6761;&#x4EF6;&#x5224;&#x65AD;</p>
+<h3 id="the-while-statement">The while Statement</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (condition)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure>
+<p>&#x5728;condition&#x6216;statement&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#x4F1A;&#x5728;&#x6BCF;&#x4E00;&#x6B21;&#x7684;&#x8FED;&#x4EE3;&#x4E2D;&#x88AB;&#x521B;&#x5EFA;&#x548C;&#x6467;&#x6BC1;&#x3002;</p>
+<h3 id="traditional-for-statement">Traditional for Statement</h3>
+<p>for&#x8BED;&#x53E5;&#x7684;&#x6807;&#x51C6;&#x5F62;&#x5F0F;&#x4E3A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (initializer; condition; expression)</span><br><span class="line">    statement;</span><br></pre></td></tr></table></figure>
+<p>for&#x8BED;&#x53E5;&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;&#x662F;&#xFF1A;&#x5148;&#x6267;&#x884C;<code>initializer</code>&#xFF0C;&#x518D;&#x6267;&#x884C;<code>condition</code>&#x5224;&#x65AD;&#x6761;&#x4EF6;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x6EE1;&#x8DB3;&#x5219;&#x9000;&#x51FA;for&#x5FAA;&#x73AF;&#xFF0C;&#x5426;&#x5219;&#x6267;&#x884C;<code>statement</code>&#x518D;&#x6267;&#x884C;<code>expression</code>&#x3002;&#x7136;&#x540E;&#x518D;&#x6B21;&#x56DE;&#x5230;<code>condtion</code>&#x8FDB;&#x884C;&#x5FAA;&#x73AF;&#x3002;</p>
+<p>&#x5982;while&#x5FAA;&#x73AF;&#x4E00;&#x6837;&#xFF0C;&#x5728;<code>initialzier</code>&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x53EA;&#x5728;&#x63A7;&#x5236;&#x8BED;&#x53E5;&#x548C;statement&#x5185;&#x90E8;&#x3002;</p>
+<h4 id="multiple-definitions-in-the-for-header">Multiple Definitions in the for Header</h4>
+<p>&#x5728;<code>initializer</code>&#x4E2D;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x591A;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x4F46;&#x53EA;&#x80FD;&#x4F7F;&#x7528;&#x4E00;&#x6761;&#x5B9A;&#x4E49;&#x8BED;&#x53E5;&#xFF0C;&#x56E0;&#x6B64;&#x6240;&#x6709;&#x521D;&#x59CB;&#x5316;&#x7684;&#x53D8;&#x91CF;&#x90FD;&#x662F;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x7684;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v{<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>};</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">decltype</span>(v.size()) i = <span class="number">0</span>, sz = v.size(); i != sz; ++i)</span><br><span class="line">{</span><br><span class="line">    v.push_back(v[i]);</span><br><span class="line">}</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;val : v)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; val &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">2</span></span><br><span class="line"><span class="comment">3</span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">2</span></span><br><span class="line"><span class="comment">3</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x7B2C;&#x4E00;&#x4E2A;for&#x5FAA;&#x73AF;&#x4E2D;&#xFF0C;&#x5B9A;&#x4E49;&#x4E86;i&#x548C;sz&#x4E24;&#x4E2A;&#x53D8;&#x91CF;&#x3002;</p>
+<h4 id="omitting-parts-of-the-for-header">Omitting Parts of the for Header</h4>
+<p>for&#x63A7;&#x5236;&#x8BED;&#x53E5;&#x4E2D;&#x7684;<code>initializer</code>, <code>condition</code>, <code>expression</code>&#x90FD;&#x662F;&#x53EF;&#x4EE5;&#x88AB;&#x7701;&#x7565;&#x7684;&#x3002;</p>
+<p>&#x5982;&#x679C;<code>condition</code>&#x88AB;&#x7701;&#x7565;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x5C06;true&#x4F5C;&#x4E3A;condition&#xFF0C;&#x56E0;&#x6B64;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x6B7B;&#x5FAA;&#x73AF;&#xFF0C;&#x5FC5;&#x987B;&#x5728;&#x5FAA;&#x73AF;body&#x4E2D;&#x4F7F;&#x7528;break&#x3002;</p>
+<h3 id="range-for-statement">Range for Statement</h3>
+<p>range for&#x5FAA;&#x73AF;&#x7684;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(declaration: expression)</span><br><span class="line">    statement</span><br></pre></td></tr></table></figure>
+<p>expression&#x5FC5;&#x987B;&#x662F;&#x7528;&#x5927;&#x62EC;&#x53F7;&#x62EC;&#x8D77;&#x7684;&#x4E00;&#x7CFB;&#x5217;&#x5143;&#x7D20;&#xFF0C;&#x6216;&#x8005;&#x6570;&#x7EC4;&#xFF0C;&#x6216;&#x8005;&#x5E26;&#x6709;begin, end&#x8FED;&#x4EE3;&#x5668;&#x7684;&#x7C7B;&#x578B;&#xFF08;&#x5982;vector&#x548C;string&#xFF09;&#x3002;</p>
+<p>declaration&#x7684;&#x7C7B;&#x578B;&#x5FC5;&#x987B;&#x662F;expression&#x4E2D;&#x5143;&#x7D20;&#x7684;&#x7C7B;&#x578B;&#x5339;&#x914D;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;auto&#x6765;&#x7B80;&#x5316;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x8981;&#x4FEE;&#x6539;&#x5143;&#x7D20;&#xFF0C;&#x5FC5;&#x987B;&#x5C06;declaration&#x7684;&#x7C7B;&#x578B;&#x8BBE;&#x7F6E;&#x4E3A;&#x5F15;&#x7528;&#xFF0C;&#x4E14;&#x4F7F;&#x7528;&#x5F15;&#x7528;&#x4E5F;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x5143;&#x7D20;&#x7684;&#x62F7;&#x8D1D;&#x6765;&#x63D0;&#x5347;&#x6027;&#x80FD;&#x3002;</p>
+<p>declaration&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x4F1A;&#x5728;&#x6BCF;&#x6B21;statment&#x6267;&#x884C;&#x540E;&#x8FD0;&#x884C;&#xFF0C;&#x5E76;&#x4E14;&#x7528;&#x4E0B;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x6765;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;val : {<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>})</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; val &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;range for&#x4E2D;&#x6DFB;&#x52A0;&#x6216;&#x5220;&#x9664;&#x5143;&#x7D20;&#x53EF;&#x80FD;&#x4F1A;&#x9020;&#x6210;&#x9519;&#x8BEF;&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;range for&#x5FAA;&#x73AF;&#x7684;&#x8303;&#x56F4;&#xFF0C;&#x5373;&#x6700;&#x7EC8;&#x7ED3;&#x675F;&#x7684;end&#x662F;&#x88AB;&#x7F13;&#x5B58;&#x4E0B;&#x6765;&#x7684;&#xFF0C;&#x5728;&#x5176;&#x4E2D;&#x4FEE;&#x6539;&#x4E86;&#x5143;&#x7D20;&#x7684;&#x6570;&#x91CF;&#xFF0C;range for&#x7684;&#x8303;&#x56F4;&#x4E5F;&#x4E0D;&#x4F1A;&#x6539;&#x53D8;&#x3002;</p>
+<h3 id="the-do-while-statement">The do while Statement</h3>
+<p><code>do while</code>&#x4E0E;<code>while</code>&#x5F88;&#x7C7B;&#x4F3C;&#xFF0C;&#x53EA;&#x662F;&#x5728;statement&#x6267;&#x884C;&#x540E;&#x518D;&#x68C0;&#x67E5;condition&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">    statement</span><br><span class="line"><span class="keyword">while</span>(condition)</span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;<code>do while</code>&#x7684;condition&#x4F1A;&#x540E;&#x6267;&#x884C;&#xFF0C;&#x6240;&#x4EE5;condition&#x4E2D;&#x4E0D;&#x5141;&#x8BB8;&#x5B9A;&#x4E49;&#x53D8;&#x91CF;&#xFF0C;&#x5426;&#x5219;&#x5C06;&#x4F1A;&#x51FA;&#x73B0;statement&#x4E2D;&#x4F7F;&#x7528;&#x672A;&#x5B9A;&#x4E49;&#x53D8;&#x91CF;&#x7684;&#x60C5;&#x51B5;&#x3002;</p>
+<h2 id="jump-statements">Jump Statements</h2>
+<p>C++&#x4E2D;&#x4E00;&#x5171;&#x6709;&#x56DB;&#x79CD;&#x8DF3;&#x8F6C;&#x8BED;&#x53E5;&#xFF0C;<code>break</code>,<code>continue</code>,<code>goto</code>,<code>return</code>&#xFF0C;<code>return</code>&#x4F1A;&#x5728;6.3&#x8282;&#x4ECB;&#x7ECD;&#x3002;</p>
+<h3 id="the-break-statement">The break Statement</h3>
+<p>break&#x8BED;&#x53E5;&#x53EF;&#x4EE5;&#x51FA;&#x73B0;&#x5728;<code>while</code>&#xFF0C;<code>do while</code>&#xFF0C;<code>for</code>&#x548C;<code>switch</code>&#x8BED;&#x53E5;&#x4E2D;&#xFF0C;break&#x8BED;&#x53E5;&#x53EA;&#x5F71;&#x54CD;&#x6700;&#x8FD1;&#x7684;loop&#x6216;&#x8005;switch&#x8BED;&#x53E5;&#xFF0C;&#x4F7F;&#x7528;&#x4E86;break&#x540E;&#x4F1A;&#x7EC8;&#x6B62;&#x6574;&#x4E2A;&#x5FAA;&#x73AF;&#x3002;</p>
+<h3 id="the-continue-statement">The continue Statement</h3>
+<p>continue&#x8BED;&#x53E5;&#x4F1A;&#x7EC8;&#x6B62;&#x5F53;&#x524D;&#x7684;&#x5FAA;&#x73AF;&#x8BED;&#x53E5;&#xFF0C;&#x5E76;&#x8FDB;&#x5165;&#x4E0B;&#x4E00;&#x6B21;&#x5FAA;&#x73AF;&#x3002;continue&#x53EA;&#x51FA;&#x73B0;&#x5728;for,while&#x548C;do while&#x4E2D;&#xFF08;break&#x8FD8;&#x80FD;&#x51FA;&#x73B0;&#x5728;switch&#x4E2D;&#xFF09;&#xFF0C;continue&#x53EA;&#x6709;&#x5728;switch&#x662F;&#x5D4C;&#x5957;&#x5728;&#x5FAA;&#x73AF;&#x4E2D;&#x7684;&#x65F6;&#x5019;&#x624D;&#x80FD;&#x5199;&#x5728;switch&#x5185;&#x90E8;&#xFF0C;&#x800C;&#x4E14;&#x7EC8;&#x6B62;&#x7684;&#x4E5F;&#x662F;&#x5D4C;&#x5957;switch&#x7684;&#x5FAA;&#x73AF;&#x3002;</p>
+<p>&#x5728;while&#x548C;do while&#x4E2D;&#xFF0C;continue&#x540E;&#x6267;&#x884C;&#x7684;&#x662F;&#x5FAA;&#x73AF;&#x7684;condition&#xFF0C;&#x5728;&#x4F20;&#x7EDF;for&#x5FAA;&#x73AF;&#x4E2D;&#xFF0C;continue&#x540E;&#x6267;&#x884C;&#x7684;&#x662F;for&#x5FAA;&#x73AF;&#x63A7;&#x5236;&#x8BED;&#x53E5;&#x7684;expression&#xFF0C;&#x5728;range for&#x4E2D;&#xFF0C;continue&#x540E;&#x6267;&#x884C;&#x7684;&#x662F;&#x7528;&#x4E0B;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x521D;&#x59CB;&#x5316;declaration&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x3002;</p>
+<h3 id="the-goto-statement">The goto Statement</h3>
+<p>goto&#x8BED;&#x53E5;&#x63D0;&#x4F9B;&#x4E86;&#x65E0;&#x6761;&#x4EF6;&#x7684;&#x8DF3;&#x8F6C;&#xFF0C;goto&#x8BED;&#x53E5;&#x53EF;&#x4EE5;&#x8DF3;&#x8F6C;&#x5230;&#x540C;&#x4E00;&#x51FD;&#x6570;&#x4E2D;&#x7684;&#x53E6;&#x4E00;&#x4E2A;&#x8BED;&#x53E5;&#x4E2D;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    <span class="keyword">int</span> print1;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; val;</span><br><span class="line">    <span class="keyword">if</span> (val == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">goto</span> print0;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">goto</span> print1;</span><br><span class="line"></span><br><span class="line">print0:</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;This is 0&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">print1:</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;This is 1&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x5176;&#x4E2D;goto&#x8BED;&#x53E5;&#x540E;&#x8DDF;&#x7740;&#x7684;print0&#x548C;print1&#x79F0;&#x4E3A;label&#xFF0C;label&#x6307;&#x5B9A;&#x4E86;&#x7A0B;&#x5E8F;&#x7684;&#x8DF3;&#x8F6C;&#x70B9;&#x3002;&#x4E14;label&#x7684;&#x547D;&#x540D;&#x548C;&#x53D8;&#x91CF;&#x7684;&#x547D;&#x540D;&#x662F;&#x72EC;&#x7ACB;&#x7684;&#xFF0C;&#x5982;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x5B9A;&#x4E49;&#x4E86;&#x53D8;&#x91CF;print1&#x548C;label print1&#x3002;</p>
+<blockquote>
+<p>goto&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x662F;&#x540C;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x5373;&#x53EA;&#x80FD;&#x8DF3;&#x8F6C;&#x5230;&#x540C;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;label&#x4E2D;&#x3002;</p>
+</blockquote>
+<p>goto&#x8BED;&#x53E5;&#x8FD8;&#x53EF;&#x4EE5;&#x5411;&#x4E0A;&#x8DF3;&#x8F6C;&#xFF0C;&#x5411;&#x4E0A;&#x8DF3;&#x8F6C;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x9047;&#x5230;&#x4E86;&#x5B9A;&#x4E49;&#x53D8;&#x91CF;&#x7684;&#x8BED;&#x53E5;&#xFF0C;&#x88AB;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#x4F1A;&#x88AB;&#x9500;&#x6BC1;&#xFF0C;&#x5E76;&#x91CD;&#x65B0;&#x6784;&#x9020;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">begin:</span><br><span class="line">    <span class="keyword">int</span> sz = getNum();</span><br><span class="line">    <span class="keyword">if</span> (sz &lt;= <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">goto</span> begin;</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x6267;&#x884C;&#x4E86;<code>goto begin</code>&#xFF0C;&#x5219;&#x53D8;&#x91CF;sz&#x4F1A;&#x88AB;&#x9500;&#x6BC1;&#x5E76;&#x88AB;&#x91CD;&#x65B0;&#x5B9A;&#x4E49;&#x3002;</p>
+<h2 id="try-blocks-and-exception-handling">Try Blocks and Exception Handling</h2>
+<p>&#x5F02;&#x5E38;&#xFF08;Exceptions&#xFF09;&#x662F;runtime&#x65F6;&#x7684;&#x4E0D;&#x6B63;&#x5E38;&#x60C5;&#x51B5;&#xFF0C;&#x5982;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;&#x9519;&#x8BEF;&#xFF0C;&#x9519;&#x8BEF;&#x8F93;&#x5165;&#x7B49;&#x3002;</p>
+<p>&#x5F02;&#x5E38;&#x5904;&#x7406;&#x662F;&#x5728;&#x7A0B;&#x5E8F;&#x7684;&#x4E00;&#x90E8;&#x5206;&#x68C0;&#x6D4B;&#x5230;&#x95EE;&#x9898;&#x65F6;&#xFF0C;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x4FE1;&#x606F;&#xFF0C;&#x7531;&#x53E6;&#x4E00;&#x90E8;&#x5206;&#x7A0B;&#x5E8F;&#x6765;&#x5904;&#x7406;&#x5F02;&#x5E38;&#x4FE1;&#x606F;&#x4E14;&#x95EE;&#x9898;&#x4E4B;&#x540E;&#x7684;&#x4EE3;&#x7801;&#x5C06;&#x4E0D;&#x518D;&#x8FD0;&#x884C;&#x3002;</p>
+<p>C++&#x7684;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x7531;&#x4E09;&#x90E8;&#x5206;&#x6784;&#x6210;&#xFF1A;</p>
+<ol type="1">
+<li>throw expressions&#xFF1A;&#x5F53;&#x68C0;&#x6D4B;&#x5230;&#x9519;&#x8BEF;&#x65F6;&#xFF0C;&#x4F7F;&#x7528;throw&#x6765;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x4FE1;&#x606F;&#x3002;</li>
+<li>try blocks&#xFF0C;&#x7528;&#x6765;&#x6807;&#x8BB0;&#x9700;&#x8981;&#x68C0;&#x6D4B;&#x7684;&#x4EE3;&#x7801;&#x90E8;&#x5206;&#xFF0C;try block&#x7531;&#x8BED;&#x53E5;try&#x5F00;&#x59CB;&#xFF0C;&#x7531;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;catch&#x8BED;&#x53E5;&#x4F5C;&#x4E3A;&#x7EC8;&#x6B62;&#x3002;catch&#x8BED;&#x53E5;&#x540E;&#x7684;&#x4EE3;&#x7801;&#x5757;&#x662F;&#x5904;&#x7406;&#x5F02;&#x5E38;&#x7684;&#x4EE3;&#x7801;&#x3002;</li>
+<li>&#x4E00;&#x7CFB;&#x5217;&#x5F02;&#x5E38;&#x7C7B;&#xFF0C;&#x7528;&#x6765;&#x63D0;&#x4F9B;&#x5173;&#x4E8E;&#x5F02;&#x5E38;&#x7684;&#x4FE1;&#x606F;&#x3002;</li>
+</ol>
+<p>&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> salesNum1, salesNum2;</span><br><span class="line"><span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; salesNum1 &gt;&gt; salesNum2)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (salesNum1 &lt; <span class="number">0</span> || salesNum2 &lt; <span class="number">0</span>)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">throw</span> runtime_error(<span class="string">&quot;num can&apos;t be less than 0&quot;</span>);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">int</span> total = salesNum1 + salesNum2;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Total num is &quot;</span> &lt;&lt; total &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">catch</span> (runtime_error err)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; err.what() &lt;&lt; <span class="string">&quot;, try again?&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">char</span> c;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; c;</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="string">&apos;n&apos;</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">20 11</span></span><br><span class="line"><span class="comment">Total num is 31</span></span><br><span class="line"><span class="comment">-1 25</span></span><br><span class="line"><span class="comment">num can&apos;t be less than 0, try again?</span></span><br><span class="line"><span class="comment">y</span></span><br><span class="line"><span class="comment">22 20</span></span><br><span class="line"><span class="comment">Total num is 42</span></span><br><span class="line"><span class="comment">-2 1</span></span><br><span class="line"><span class="comment">num can&apos;t be less than 0, try again?</span></span><br><span class="line"><span class="comment">n</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x5F53;&#x8FD0;&#x884C;&#x4E86;<code>throw</code>&#x8BED;&#x53E5;&#x540E;&#xFF0C;&#x4E4B;&#x540E;&#x7684;&#x4EE3;&#x7801;&#x5C06;&#x4E0D;&#x518D;&#x8FD0;&#x884C;&#xFF0C;&#x5728;&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x629B;&#x51FA;&#x7684;&#x662F;<code>runtime_error</code>&#x5F02;&#x5E38;&#xFF0C;&#x8BE5;&#x5F02;&#x5E38;&#x5B9A;&#x4E49;&#x5728;&#x5934;&#x6587;&#x4EF6;<code>stdexcept</code>&#x4E2D;&#xFF0C;&#x4E14;&#x5FC5;&#x987B;&#x901A;&#x8FC7;string&#x6216;C&#x98CE;&#x683C;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x6765;&#x521D;&#x59CB;&#x5316;&#x3002;&#x5173;&#x4E8E;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x7684;&#x5F02;&#x5E38;&#xFF0C;&#x5C06;&#x5728;&#x4E4B;&#x540E;&#x7AE0;&#x8282;&#x4E2D;&#x8BF4;&#x660E;&#x3002;</p>
+<p>try&#x8BED;&#x53E5;&#x5757;&#x5C31;&#x662F;&#x88AB;&#x68C0;&#x6D4B;&#x7684;&#x4EE3;&#x7801;&#x90E8;&#x5206;&#xFF0C;&#x6CE8;&#x610F;&#x5176;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#x4F5C;&#x7528;&#x57DF;&#x4EC5;&#x5728;try&#x4EE3;&#x7801;&#x5757;&#x4E2D;&#xFF0C;&#x5373;&#x4F7F;&#x5728;&#x540E;&#x9762;&#x7684;catch&#x4EE3;&#x7801;&#x5757;&#x4E2D;&#x4E5F;&#x65E0;&#x6CD5;&#x8BBF;&#x95EE;&#x3002;</p>
+<p>try&#x4EE3;&#x7801;&#x5757;&#x540E;&#x8DDF;&#x7740;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;catch&#x8BED;&#x53E5;&#xFF0C;&#x6BCF;&#x4E2A;catch&#x8D1F;&#x8D23;&#x4E00;&#x4E2A;&#x9519;&#x8BEF;&#x7C7B;&#x578B;&#xFF0C;&#x5982;&#x679C;try&#x4EE3;&#x7801;&#x5757;&#x4E2D;&#x629B;&#x51FA;&#x7684;&#x9519;&#x8BEF;&#x8BED;&#x53E5;&#x4E0E;catch&#x7684;&#x9519;&#x8BEF;&#x7C7B;&#x578B;&#x5339;&#x914D;&#xFF0C;&#x5219;&#x4F1A;&#x8FDB;&#x5165;&#x76F8;&#x5E94;&#x7684;catch&#x4EE3;&#x7801;&#x5757;&#xFF0C;&#x4EE3;&#x7801;&#x5757;&#x4E2D;&#x5C31;&#x662F;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#x5176;&#x4E2D;&#x4F7F;&#x7528;&#x4E86;<code>err.what()</code>&#xFF0C;&#x8FD9;&#x91CC;&#x7684;<code>err</code>&#x5C31;&#x662F;&#x76D1;&#x542C;&#x5230;&#x7684;&#x5F02;&#x5E38;&#x4FE1;&#x606F;&#xFF0C;&#x7531;try&#x4E2D;&#x901A;&#x8FC7;throw&#x629B;&#x51FA;&#x3002;&#x6BCF;&#x4E2A;&#x5F02;&#x5E38;&#x7C7B;&#x90FD;&#x5B9A;&#x4E49;&#x4E86;<code>what</code>&#x51FD;&#x6570;&#xFF0C;&#x8BE5;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7528;&#x4E8E;&#x521D;&#x59CB;&#x5316;&#x5F02;&#x5E38;&#x5BF9;&#x8C61;&#x7684;&#x8BED;&#x53E5;&#xFF0C;&#x5728;&#x672C;&#x4F8B;&#x4E2D;&#x5373;&#x662F;<code>num can&apos;t be less than 0</code>&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x7C7B;&#x578B;&#x662F;C&#x98CE;&#x683C;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x3002;</p>
+<h4 id="functions-are-exited-during-the-search-for-a-handler">Functions Are Exited during the Search for a Handler</h4>
+<p>&#x5982;&#x679C;&#x51FA;&#x73B0;&#x4E86;try&#x4EE3;&#x7801;&#x5757;&#x7684;&#x4E2D;&#x5D4C;&#x5957;&#x4E86;&#x591A;&#x4E2A;&#x5176;&#x4ED6;&#x7684;try&#xFF0C;&#x5219;&#x5F53;&#x67D0;&#x4E2A;try&#x4EE3;&#x7801;&#x5757;&#x4E2D;&#x629B;&#x51FA;&#x4E86;&#x5F02;&#x5E38;&#x4FE1;&#x606F;&#xFF0C;&#x5219;&#x4F1A;&#x5148;&#x5728;&#x8FD9;&#x4E2A;try&#x5BF9;&#x5E94;&#x7684;catch&#x8BED;&#x53E5;&#x4E2D;&#x641C;&#x7D22;&#x5BF9;&#x5E94;&#x7684;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x3002;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5219;&#x518D;&#x66F4;&#x5916;&#x5C42;&#x7684;try&#x4EE3;&#x7801;&#x5757;&#x4E2D;&#x627E;&#x5BF9;&#x5E94;&#x7684;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x6700;&#x7EC8;&#x6CA1;&#x6709;&#x641C;&#x7D22;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x5F02;&#x5E38;&#x5904;&#x7406;&#xFF0C;&#x5C06;&#x4F1A;&#x6267;&#x884C;&#x6807;&#x51C6;&#x5E93;&#x4E2D;&#x7684;&#x51FD;&#x6570;<code>terminate</code>&#xFF0C;&#x8BE5;&#x51FD;&#x6570;&#x7684;&#x5B9E;&#x73B0;&#x662F;&#x7CFB;&#x7EDF;&#x76F8;&#x5173;&#x7684;&#xFF0C;&#x4F46;&#x65E0;&#x8BBA;&#x4EC0;&#x4E48;&#x5B9E;&#x73B0;&#x90FD;&#x4FDD;&#x8BC1;&#x7A0B;&#x5E8F;&#x4E4B;&#x540E;&#x7684;&#x90E8;&#x5206;&#x4E0D;&#x4F1A;&#x88AB;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4E00;&#x6BB5;&#x7A0B;&#x5E8F;&#x518D;&#x975E;try&#x5757;&#x4E2D;&#x53D1;&#x751F;&#x4E86;&#x5F02;&#x5E38;&#xFF0C;&#x5219;&#x4F1A;&#x662F;&#x76F4;&#x63A5;&#x8C03;&#x7528;<code>terminate</code>&#x51FD;&#x6570;&#x3002;</p>
+<h4 id="writing-exception-safe-code-is-hard">Writing Exception Safe code is hard</h4>
+<p>&#x5F53;&#x4E00;&#x4E2A;&#x5F02;&#x5E38;&#x53D1;&#x751F;&#x65F6;&#xFF0C;&#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x4E00;&#x90E8;&#x5206;&#x88AB;&#x6267;&#x884C;&#x4E86;&#xFF0C;&#x53E6;&#x4E00;&#x90E8;&#x5206;&#x6CA1;&#x6709;&#x88AB;&#x6267;&#x884C;&#x3002;&#x8FD9;&#x5C31;&#x53EF;&#x80FD;&#x9020;&#x6210;&#x7269;&#x4F53;&#x53EA;&#x521D;&#x59CB;&#x5316;&#x4E86;&#x4E00;&#x90E8;&#x5206;&#x6216;&#x8005;&#x4E00;&#x4E9B;&#x7269;&#x4F53;&#x6CA1;&#x6709;&#x88AB;&#x91CA;&#x653E;&#x7B49;&#x7B49;&#xFF0C;&#x8FD9;&#x4E9B;&#x90FD;&#x9700;&#x8981;&#x5728;&#x4EE3;&#x7801;&#x7684;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x4E2D;&#x5B8C;&#x6210;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#x7684;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x90E8;&#x5206;&#x53EF;&#x4EE5;&#x5B8C;&#x5168;&#x89E3;&#x51B3;&#x5F02;&#x5E38;&#x9057;&#x7559;&#x4E0B;&#x7684;&#x5404;&#x79CD;&#x95EE;&#x9898;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x8BF4;&#x8FD9;&#x4E2A;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x662F;&#x5B89;&#x5168;&#x7684;&#xFF08;Exception safe&#xFF09;&#x3002;&#x4F46;&#x8981;&#x5B9E;&#x73B0;&#x4E00;&#x4EFD;&#x5B89;&#x5168;&#x7684;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x662F;&#x5F88;&#x56F0;&#x96BE;&#x7684;&#xFF0C;&#x9700;&#x8981;&#x989D;&#x5916;&#x7684;&#x7EC6;&#x5FC3;&#x548C;&#x8003;&#x8651;&#x5230;&#x5404;&#x79CD;&#x53EF;&#x80FD;&#x7684;&#x60C5;&#x51B5;&#x3002;</p>
+<h3 id="standard-exceptions">Standard Exceptions</h3>
+<p>C++&#x5E93;&#x4E2D;&#x6240;&#x6709;&#x7684;&#x5F02;&#x5E38;&#x7C7B;&#x578B;&#x5B9A;&#x4E49;&#x5728;&#x56DB;&#x4E2A;&#x5934;&#x6587;&#x4EF6;&#x4E2D;&#xFF1A;</p>
+<ol type="1">
+<li><code>exception</code>&#x5934;&#x6587;&#x4EF6;&#xFF0C;&#x5B9A;&#x4E49;&#x4E86;&#x6700;&#x901A;&#x7528;&#x7684;&#x5F02;&#x5E38;&#x7C7B;&#x578B;<code>exception</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x7C7B;&#x578B;&#x53EA;&#x80FD;&#x544A;&#x77E5;&#x6709;&#x5F02;&#x5E38;&#x53D1;&#x751F;&#xFF0C;&#x4F46;&#x65E0;&#x6CD5;&#x63D0;&#x4F9B;&#x4EFB;&#x4F55;&#x989D;&#x5916;&#x7684;&#x4FE1;&#x606F;&#x3002;</li>
+<li><code>new</code>&#x5934;&#x6587;&#x4EF6;&#xFF0C;&#x5B9A;&#x4E49;&#x4E86;<code>bad_alloc</code>&#x5F02;&#x5E38;&#x7C7B;&#x578B;&#xFF0C;&#x4F1A;&#x5728;12.1.2&#x8282;&#x8FDB;&#x884C;&#x8BF4;&#x660E;</li>
+<li><code>type_info</code>&#x5934;&#x6587;&#x4EF6;&#xFF0C;&#x5B9A;&#x4E49;&#x4E86;<code>bad_cast</code>&#x5F02;&#x5E38;&#x7C7B;&#x578B;&#xFF0C;&#x4F1A;&#x5728;19.2&#x8282;&#x8BF4;&#x660E;</li>
+<li><code>stdexcept</code>&#x5934;&#x6587;&#x4EF6;&#xFF0C;&#x8BE5;&#x5934;&#x6587;&#x4EF6;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x7CFB;&#x5217;&#x5E38;&#x7528;&#x7684;&#x5F02;&#x5E38;&#x7C7B;&#x3002;&#x5982;&#x4E0B;&#x8868;&#x6240;&#x793A;&#xFF1A;</li>
+</ol>
+<table>
+<thead>
+<tr class="header">
+<th>&#x5F02;&#x5E38;&#x7C7B;</th>
+<th>&#x8BF4;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>exception</td>
+<td>&#x6700;&#x666E;&#x901A;&#x7684;&#x5F02;&#x5E38;</td>
+</tr>
+<tr class="even">
+<td>runtime_error</td>
+<td>&#x53EA;&#x80FD;&#x5728;runtime&#x68C0;&#x6D4B;&#x5230;&#x7684;&#x5F02;&#x5E38;</td>
+</tr>
+<tr class="odd">
+<td>range_error</td>
+<td>&#x8FD0;&#x884C;&#x65F6;&#x7684;&#x9519;&#x8BEF;&#xFF0C;&#x7ED3;&#x679C;&#x8D85;&#x51FA;&#x4E86;&#x6709;&#x6548;&#x8303;&#x56F4;</td>
+</tr>
+<tr class="even">
+<td>overflow_error</td>
+<td>&#x8FD0;&#x884C;&#x65F6;&#x7684;&#x9519;&#x8BEF;&#xFF0C;&#x8BA1;&#x7B97;&#x4E0A;&#x6EA2;</td>
+</tr>
+<tr class="odd">
+<td>underflow_error</td>
+<td>&#x8FD0;&#x884C;&#x65F6;&#x9519;&#x8BEF;&#xFF0C;&#x8BA1;&#x7B97;&#x4E0B;&#x6EA2;</td>
+</tr>
+<tr class="even">
+<td>logic_error</td>
+<td>&#x903B;&#x8F91;&#x9519;&#x8BEF;</td>
+</tr>
+<tr class="odd">
+<td>domain_error</td>
+<td>&#x903B;&#x8F91;&#x9519;&#x8BEF;&#xFF0C;&#x6CA1;&#x6709;&#x7ED3;&#x679C;&#x7684;&#x53C2;&#x6570;</td>
+</tr>
+<tr class="even">
+<td>invalid_error</td>
+<td>&#x903B;&#x8F91;&#x9519;&#x8BEF;&#xFF0C;&#x4E0D;&#x5408;&#x9002;&#x7684;&#x53C2;&#x6570;</td>
+</tr>
+<tr class="odd">
+<td>length_error</td>
+<td>&#x903B;&#x8F91;&#x9519;&#x8BEF;&#xFF0C;&#x5C1D;&#x8BD5;&#x521B;&#x5EFA;&#x5927;&#x4E8E;&#x7269;&#x4F53;&#x6700;&#x5927;&#x503C;&#x7684;&#x53C2;&#x6570;</td>
+</tr>
+<tr class="even">
+<td>out_of_error</td>
+<td>&#x903B;&#x8F91;&#x9519;&#x8BEF;&#xFF0C;&#x4F7F;&#x7528;&#x4E86;&#x8D85;&#x51FA;&#x5408;&#x7406;&#x8303;&#x56F4;&#x7684;&#x53C2;&#x6570;</td>
+</tr>
+</tbody>
+</table>
+<p><code>exception</code>&#xFF0C;<code>bad_accloc</code>&#x548C;<code>bad_cast</code>&#x7C7B;&#x90FD;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x65E0;&#x6CD5;&#x63D0;&#x4F9B;&#x5176;&#x4ED6;&#x7684;&#x521D;&#x59CB;&#x503C;&#x3002;<code>stdexcept</code>&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x4E00;&#x7CFB;&#x5217;&#x5F02;&#x5E38;&#x5904;&#x7406;&#x7C7B;&#xFF0C;&#x90FD;&#x5FC5;&#x987B;&#x7528;string&#x6216;&#x8005;C&#x98CE;&#x683C;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x6CA1;&#x6709;&#x9ED8;&#x8BA4;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x6240;&#x6709;&#x7684;&#x5F02;&#x5E38;&#x90FD;&#x6709;&#x4E14;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x51FD;&#x6570;<code>what</code>&#xFF0C;&#x8BE5;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x503C;&#x7C7B;&#x578B;&#x4E3A;<code>const char*</code>&#xFF0C;&#x7528;&#x6765;&#x8BF4;&#x660E;&#x5F02;&#x5E38;&#x7684;&#x4FE1;&#x606F;&#x3002;&#x5BF9;&#x4E8E;<code>stdexcept</code>&#x4E2D;&#x7684;&#x5F02;&#x5E38;&#x7C7B;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x4FE1;&#x606F;&#x5373;&#x662F;&#x5728;&#x521D;&#x59CB;&#x5316;&#x5F02;&#x5E38;&#x5BF9;&#x8C61;&#x65F6;&#x4F20;&#x5165;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5BF9;&#x4E8E;&#x5176;&#x4ED6;&#x7684;&#x5F02;&#x5E38;&#x7C7B;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x5185;&#x5BB9;&#x7531;&#x7F16;&#x8BD1;&#x5668;&#x51B3;&#x5B9A;&#x3002;</p>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>Cpp Primer</em> 5th Aug.2012</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/CPPPrimer-Chapter5-Notes/" title="《C++ Primer》 第五章笔记">https://xuejiaw.github.io/CPPPrimer-Chapter5-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/CPPPrimer-Chapter4-Notes/" rel="prev" title="《C++ Primer》 第四章笔记">
+      <i class="fa fa-chevron-left"></i> 《C++ Primer》 第四章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/CPPPrimer-Chapter6-Notes/" rel="next" title="《C++ Primer》 第六章笔记">
+      《C++ Primer》 第六章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-5-statements"><span class="nav-number">1.</span> <span class="nav-text">Chapter 5 Statements</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#simple-statements"><span class="nav-number">1.1.</span> <span class="nav-text">Simple Statements</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null-statements"><span class="nav-number">1.1.1.</span> <span class="nav-text">Null Statements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#compound-statementsblocks"><span class="nav-number">1.1.2.</span> <span class="nav-text">Compound Statements(Blocks)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#statement-scope"><span class="nav-number">1.2.</span> <span class="nav-text">Statement Scope</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conditional-statements"><span class="nav-number">1.3.</span> <span class="nav-text">Conditional Statements</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-if-statement"><span class="nav-number">1.3.1.</span> <span class="nav-text">The if Statement</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dangling-else"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Dangling else</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-switch-statement"><span class="nav-number">1.3.2.</span> <span class="nav-text">The switch Statement</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#variable-definitions-inside-the-body-of-a-switch"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">Variable Definitions inside the Body of a switch</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iterative-statements"><span class="nav-number">1.4.</span> <span class="nav-text">Iterative Statements</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-while-statement"><span class="nav-number">1.4.1.</span> <span class="nav-text">The while Statement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#traditional-for-statement"><span class="nav-number">1.4.2.</span> <span class="nav-text">Traditional for Statement</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#multiple-definitions-in-the-for-header"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">Multiple Definitions in the for Header</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#omitting-parts-of-the-for-header"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">Omitting Parts of the for Header</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#range-for-statement"><span class="nav-number">1.4.3.</span> <span class="nav-text">Range for Statement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-do-while-statement"><span class="nav-number">1.4.4.</span> <span class="nav-text">The do while Statement</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jump-statements"><span class="nav-number">1.5.</span> <span class="nav-text">Jump Statements</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-break-statement"><span class="nav-number">1.5.1.</span> <span class="nav-text">The break Statement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-continue-statement"><span class="nav-number">1.5.2.</span> <span class="nav-text">The continue Statement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-goto-statement"><span class="nav-number">1.5.3.</span> <span class="nav-text">The goto Statement</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try-blocks-and-exception-handling"><span class="nav-number">1.6.</span> <span class="nav-text">Try Blocks and Exception Handling</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#functions-are-exited-during-the-search-for-a-handler"><span class="nav-number">1.6.0.1.</span> <span class="nav-text">Functions Are Exited during the Search for a Handler</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#writing-exception-safe-code-is-hard"><span class="nav-number">1.6.0.2.</span> <span class="nav-text">Writing Exception Safe code is hard</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#standard-exceptions"><span class="nav-number">1.6.1.</span> <span class="nav-text">Standard Exceptions</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x516D;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; 6.1 &amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;&amp;#x">
+<meta name="keywords" content="读书笔记,3D数学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《3D数学基础：图形和游戏开发》第六章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x516D;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; 6.1 &amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;&amp;#x">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200307221134452.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200308224234417.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200309005931269.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200309010328675.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200309010825155.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200309011052254.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200309011528877.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:42.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《3D数学基础：图形和游戏开发》第六章笔记">
+<meta name="twitter:description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x516D;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; 6.1 &amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;&amp;#x">
+<meta name="twitter:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200307221134452.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《3D数学基础：图形和游戏开发》第六章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《3D数学基础：图形和游戏开发》第六章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-09 01:30:32" itemprop="dateCreated datePublished" datetime="2020-03-09T01:30:32+08:00">2020-03-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:42" itemprop="dateModified" datetime="2020-09-24T19:59:42+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/图形学/" itemprop="url" rel="index"><span itemprop="name">图形学</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《3D数学基础：图形和游戏开发》第六章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>20k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>36 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;3D&#x6570;&#x5B66;&#x57FA;&#x7840;&#xFF1A;&#x56FE;&#x5F62;&#x548C;&#x6E38;&#x620F;&#x5F00;&#x53D1;&#x300B;&#x7B2C;&#x516D;&#x7AE0;&#x7B14;&#x8BB0;</p>
+<p>6.1 &#x4ECB;&#x7ECD;&#x4E86;&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;&#x5F0F;</p>
+<p>6.2 &#x4ECB;&#x7ECD;&#x4E86;&#x77E9;&#x9635;&#x7684;&#x9006;</p>
+<p>6.3 &#x4ECB;&#x7ECD;&#x4E86;&#x6B63;&#x4EA4;&#x77E9;&#x9635;</p>
+<p>6.4 &#x4ECB;&#x7ECD;&#x4E86;&#x9F50;&#x6B21;&#x77E9;&#x9635;</p>
+<p>6.5 &#x4ECB;&#x7ECD;&#x4E86;&#x9F50;&#x6B21;&#x77E9;&#x9635;&#x4E0E;&#x900F;&#x89C6;&#x6295;&#x5F71;&#x7684;&#x5173;&#x7CFB;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-6-more-on-matrices">Chapter 6 More on Matrices</h1>
+<p>&#x5728;&#x7B2C;&#x56DB;&#x7AE0;&#x4E2D;&#x4ECB;&#x7ECD;&#x4E86;&#x77E9;&#x9635;&#x7684;&#x57FA;&#x672C;&#x6570;&#x5B66;&#x6027;&#x8D28;&#x548C;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#x3002;</p>
+<p>&#x5728;&#x7B2C;&#x4E94;&#x7AE0;&#x4E2D;&#x7740;&#x91CD;&#x4ECB;&#x7ECD;&#x4E86;&#x77E9;&#x9635;&#x7684;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#xFF0C;&#x5217;&#x4E3E;&#x4E86;&#x4E00;&#x7CFB;&#x5217;&#x77E9;&#x9635;&#x80FD;&#x8868;&#x793A;&#x7684;&#x5404;&#x79CD;&#x56FE;&#x5F62;&#x53D8;&#x6362;&#x3002;</p>
+<p>&#x5728;&#x8FD9;&#x4E00;&#x7AE0;&#x4E2D;&#x5C06;&#x6269;&#x5C55;&#x524D;&#x4E24;&#x7AE0;&#x7684;&#x77E5;&#x8BC6;&#xFF0C;&#x4ECB;&#x7ECD;&#x77E9;&#x9635;&#x7684;&#x53E6;&#x4E00;&#x4E9B;&#x6570;&#x5B66;&#x7279;&#x6027;&#x548C;&#x6DF1;&#x5165;&#x8BA8;&#x8BBA;&#x56FE;&#x5F62;&#x53D8;&#x6362;&#x3002;</p>
+<h2 id="determinant-of-a-matrix">Determinant of a Matrix</h2>
+<p>&#x5BF9;&#x4E8E;&#x65B9;&#x9635;&#x800C;&#x8A00;&#xFF0C;&#x6709;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x7684;&#x6807;&#x91CF;&#x6210;&#x4E3A;&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;&#x5F0F;&#xFF08;Determinant of the matrix&#xFF09;&#x3002;</p>
+<h3 id="determinants-of-2times-2-and-3times-3-matrices">Determinants of <span class="math inline">\(2\times 2\)</span> and <span class="math inline">\(3\times 3\)</span> matrices</h3>
+<p>&#x65B9;&#x9635;<span class="math inline">\(\mathbf{M}\)</span>&#x7684;&#x884C;&#x5217;&#x5F0F;&#x5199;&#x4E3A;<span class="math inline">\(|\mathbf{M}|\)</span>&#x6216;&#x8005;&#x5199;&#x4E3A;&quot;<span class="math inline">\(def \mathbf{M}\)</span>&quot;&#xFF0C;&#x975E;&#x65B9;&#x9635;&#x7684;&#x77E9;&#x9635;&#x5E76;&#x6CA1;&#x6709;&#x884C;&#x5217;&#x5F0F;&#x3002;</p>
+<p>&#x4E8C;&#x7EF4;&#x884C;&#x5217;&#x5F0F;&#x7684;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[|\mathbf{M}|=\left|\begin{array}{ll}
+m_{11} &amp; m_{12} \\\\
+m_{21} &amp; m_{22}
+\end{array}\right|=m_{11} m_{22}-m_{12} m_{21}\]</span></p>
+<p>&#x4E09;&#x7EF4;&#x884C;&#x5217;&#x5F0F;&#x7684;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[
+\begin{aligned}
+\left|\begin{array}{lll}
+m_{11} &amp; m_{12} &amp; m_{13} \\
+m_{21} &amp; m_{22} &amp; m_{23} \\
+m_{31} &amp; m_{32} &amp; m_{33}
+\end{array}\right|\\
+&amp;=\begin{array}{l}
+&amp;m_{11} m_{22} m_{33}+m_{12} m_{23} m_{31}+m_{13} m_{21} m_{32} \\
+&amp;-m_{13} m_{22} m_{31}-m_{12} m_{21} m_{33}-m_{11} m_{23} m_{32}
+\end{array} \\\\
+&amp;=\begin{array}{l}
+&amp; m_{11}\left(m_{22} m_{33}-m_{23} m_{32}\right) \\
+&amp;+m_{12}\left(m_{23} m_{31}-m_{21} m_{33}\right) \\
+&amp;+m_{13}\left(m_{21} m_{32}-m_{22} m_{31}\right)
+\end{array}
+\end{aligned}
+\]</span></p>
+<h3 id="minros-and-cofactors">Minros and Cofactors</h3>
+<p>&#x4F59;&#x5B50;&#x5F0F;&#xFF08;Minors&#xFF09;&#x548C;&#x4EE3;&#x6570;&#x4F59;&#x5B50;&#x5F0F;&#xFF08;Cofactors&#xFF09;&#x4E4B;&#x540E;&#x6C42;&#x4EFB;&#x610F;&#x7EF4;&#x5EA6;&#x7684;&#x884C;&#x5217;&#x5F0F;&#x65F6;&#x4F1A;&#x7528;&#x5230;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x77E9;&#x9635;<span class="math inline">\(\mathbf{M}\)</span>&#x6765;&#xFF0C;<span class="math inline">\(\mathbf{M}^{\{ij\}}\)</span>&#x8868;&#x793A;&#x5220;&#x9664;&#x4E86;&#x7B2C;<span class="math inline">\(i\)</span>&#x884C;&#x548C;&#x7B2C;<span class="math inline">\(j\)</span>&#x7684;&#x5B50;&#x77E9;&#x9635;&#xFF0C;&#x800C;&#x5B50;&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;&#x5F0F;&#x79F0;&#x4E3A;&#x4F59;&#x5B50;&#x5F0F;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{M}=\left[\begin{array}{ccc}
+-4 &amp; -3 &amp; 3 \\\\
+0 &amp; 2 &amp; -2 \\\\
+1 &amp; 4 &amp; -1
+\end{array}\right] \quad \Longrightarrow \quad M^{\{12\}}=\left|\begin{array}{cc}
+0 &amp; -2 \\\\
+1 &amp; -1
+\end{array}\right|=2\]</span></p>
+<p>&#x800C;&#x4EE3;&#x6570;&#x4F59;&#x5B50;&#x5F0F;&#xFF0C;&#x662F;&#x4E3A;&#x4F59;&#x5B50;&#x5F0F;&#x518D;&#x52A0;&#x4E0A;&#x4E00;&#x4E2A;&#x7CFB;&#x6570;&#xFF0C;&#x8BE5;&#x7CFB;&#x6570;&#x7531;&#x5B50;&#x77E9;&#x9635;&#x6240;&#x5220;&#x9664;&#x7684;&#x884C;&#x5217;&#x51B3;&#x5B9A;&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[C^{\{i j\}}=(-1)^{i+j} M^{\{i j\}}\]</span></p>
+<h3 id="determinants-of-arbitary-ntimes-n-matrices">Determinants of Arbitary <span class="math inline">\(n\times n\)</span> Matrices</h3>
+<p>&#x4EFB;&#x610F;<span class="math inline">\(n\times n\)</span>&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;&#x5F0F;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol type="1">
+<li>&#x4EFB;&#x610F;&#x9009;&#x53D6;&#x4E00;&#x884C;&#x6216;&#x4E00;&#x5217;</li>
+<li>&#x5BF9;&#x8FD9;&#x884C;&#x6216;&#x8FD9;&#x5217;&#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x5C06;&#x5B83;&#x548C;&#x5B83;&#x6240;&#x5728;&#x884C;&#x5217;&#x7684;&#x4EE3;&#x6570;&#x4F59;&#x5B50;&#x5F0F;&#x76F8;&#x4E58;&#x3002;</li>
+<li>&#x5C06;&#x7B2C;&#x4E8C;&#x6B65;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x7ED3;&#x679C;&#x7D2F;&#x52A0;</li>
+</ol>
+<p>&#x5373;&#xFF1A;</p>
+<p><span class="math display">\[|\mathbf{M}|=\sum_{j=1}^{n} m_{i j} C^{\{i j\}}=\sum_{j=1}^{n} m_{i j}(-1)^{i+j} M^{\{i j\}}\]</span></p>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x4E09;&#x7EF4;&#x77E9;&#x9635;&#x901A;&#x8FC7;&#x4E0A;&#x8FF0;&#x65B9;&#x6CD5;&#x8BA1;&#x7B97;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\left|\begin{array}{lll}
+m_{11} &amp; m_{12} &amp; m_{13} \\
+m_{21} &amp; m_{22} &amp; m_{23}
+\end{array}\right|=m_{11}\left|\begin{array}{cc}
+m_{22} &amp; m_{23} \\
+m_{31} &amp; m_{32} &amp; m_{33}
+\end{array}\right| &amp;-m_{12}\left|\begin{array}{cc}
+m_{21} &amp; m_{23} \\
+m_{31} &amp; m_{33}
+\end{array}\right| \\
+&amp;+m_{13}\left|\begin{array}{cc}
+m_{21} &amp; m_{22} \\
+m_{31} &amp; m_{32}
+\end{array}\right|
+\end{aligned}\]</span></p>
+<p>&#x4EE5;&#x4E0B;&#x4E3A;&#x884C;&#x5217;&#x5F0F;&#x7684;&#x4E00;&#x4E9B;&#x91CD;&#x8981;&#x7279;&#x6027;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x5982;&#x679C;&#x77E9;&#x9635;&#x662F;&#x5355;&#x4F4D;&#x77E9;&#x9635;&#xFF0C;&#x90A3;&#x4E48;&#x884C;&#x5217;&#x5F0F;&#x4E3A;1 <span class="math display">\[|\mathbf{I}|=1\]</span></p></li>
+<li><p>&#x77E9;&#x9635;&#x4E58;&#x79EF;&#x7684;&#x884C;&#x5217;&#x5F0F;&#x7B49;&#x4E8E;&#x77E9;&#x9635;&#x884C;&#x5217;&#x5F0F;&#x7684;&#x4E58;&#x79EF; <span class="math display">\[|\mathbf{A B}|=|\mathbf{A} \| \mathbf{B}|\]</span></p></li>
+<li><p>&#x77E9;&#x9635;&#x8F6C;&#x7F6E;&#x7684;&#x884C;&#x5217;&#x5F0F;&#x7B49;&#x4E8E;&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;&#x5F0F; <span class="math display">\[\left|\mathbf{M}^{\mathrm{T}}\right|=|\mathbf{M}|\]</span></p></li>
+<li><p>&#x6709;&#x4EFB;&#x610F;&#x884C;&#x6216;&#x5217;&#x5168;&#x4E3A;0&#xFF0C;&#x5219;&#x8BE5;&#x77E9;&#x9635;&#x884C;&#x5217;&#x5F0F;&#x4E3A;0</p>
+<p><span class="math display">\[\left|\begin{array}{cccc}
+? &amp; ? &amp; \cdots &amp; ? \\
+? &amp; ? &amp; \cdots &amp; ? \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+\vdots &amp; ? &amp; \cdots &amp; ?
+\end{array}\right|=\left|\begin{array}{cccccc}
+? &amp; ? &amp; \cdots &amp; 0 &amp; \cdots &amp; ? \\
+? &amp; ? &amp; \cdots &amp; 0 &amp; \cdots &amp; ? \\
+\vdots &amp; \vdots &amp; &amp; \vdots &amp; &amp; \vdots \\
+? &amp; ? &amp; \cdots &amp; 0 &amp; \cdots &amp; ?
+\end{array}\right|=0\]</span></p></li>
+<li><p>&#x4EA4;&#x6362;&#x77E9;&#x9635;&#x7684;&#x4EFB;&#x610F;&#x4E24;&#x884C;&#x6216;&#x4E24;&#x5217;&#xFF0C;&#x884C;&#x5217;&#x5F0F;&#x53D6;&#x53CD; <span class="math display">\[\left|\begin{array}{cccc}
+m_{11} &amp; m_{12} &amp; \cdots &amp; m_{1 n} \\
+m_{21} &amp; m_{22} &amp; \cdots &amp; m_{2 n} \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+m_{i 1} &amp; m_{i 2} &amp; \cdots &amp; m_{i n} \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+m_{j 1} &amp; m_{j 2} &amp; \cdots &amp; m_{j n} \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+m_{n 1} &amp; m_{n 2} &amp; \cdots &amp; m_{n n}
+\end{array}\right|=-\left|\begin{array}{cccc}
+m_{11} &amp; m_{12} &amp; \cdots &amp; m_{1 n} \\
+m_{21} &amp; m_{22} &amp; \cdots &amp; m_{2 n} \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+m_{j 1} &amp; m_{j 2} &amp; \cdots &amp; m_{j n} \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+m_{i 1} &amp; m_{i 2} &amp; \cdots &amp; m_{i n} \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+m_{n 1} &amp; m_{n 2} &amp; \cdots &amp; m_{n n}
+\end{array}\right|\]</span></p></li>
+<li><p>&#x5C06;&#x77E9;&#x9635;&#x7684;&#x4E00;&#x884C;&#x6216;&#x4E00;&#x5217;&#x4E58;&#x4EE5;&#x7CFB;&#x6570;&#x540E;&#x52A0;&#x5230;&#x96F6;&#x4E00;&#x884C;&#x6216;&#x5217;&#x4E0A;&#x4E0D;&#x6539;&#x53D8;&#x884C;&#x5217;&#x5F0F;&#x7684;&#x503C;&#xFF08;&#x56E0;&#x6B64;&#x5207;&#x53D8;&#x7684;&#x884C;&#x5217;&#x5F0F;&#x4E3A;1&#xFF09;</p>
+<p><span class="math display">\[\left|\begin{array}{cccc}
+m_{11} &amp; m_{12} &amp; \cdots &amp; m_{1 n} \\
+m_{21} &amp; m_{22} &amp; \cdots &amp; m_{2 n} \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+m_{i 1} &amp; m_{i 2} &amp; \cdots &amp; m_{i n} \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+m_{j 1} &amp; m_{j 2} &amp; \cdots &amp; m_{j n} \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+m_{n 1} &amp; m_{n 2} &amp; \cdots &amp; m_{n n}
+\end{array}\right|=\left|\begin{array}{cccc}
+m_{11} &amp; m_{12} &amp; \cdots &amp; m_{1 n} \\
+m_{21} &amp; m_{22} &amp; \cdots &amp; m_{2 n} \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+m_{i 1}+k m_{j 1} &amp; m_{i 2}+k m_{j 2} &amp; \cdots &amp; m_{i n}+k m_{j n} \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+m_{j 1} &amp; m_{j 2} &amp; \cdots &amp; m_{j n} \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+m_{n 1} &amp; m_{n 2} &amp; \cdots &amp; m_{n n}
+\end{array}\right|\]</span></p></li>
+</ol>
+<h3 id="geometric-interpretation-of-determinant">Geometric Interpretation of Determinant</h3>
+<p>&#x5728;2D&#x4E2D;&#xFF0C;&#x884C;&#x5217;&#x5F0F;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x8868;&#x8FBE;&#x4E86;&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#xFF08;&#x6BCF;&#x4E00;&#x884C;&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x5411;&#x91CF;&#xFF09;&#x6240;&#x6784;&#x6210;&#x7684;&#x5E73;&#x884C;&#x56DB;&#x8FB9;&#x5F62;&#x7684;&#x6709;&#x5411;&#x9762;&#x79EF;&#xFF0C;&#x5982;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200307221134452.png" alt="&#x884C;&#x5217;&#x5F0F;&#x8868;&#x793A;&#x9762;&#x79EF;" style="zoom:50%;"></p>
+<p>&#x540C;&#x7406;&#xFF0C;&#x5728;3D&#x4E2D;&#x5373;&#x8868;&#x793A;&#x7531;&#x4E09;&#x6761;&#x5411;&#x91CF;&#x6784;&#x6210;&#x7684;&#x5E73;&#x884C;&#x516D;&#x9762;&#x4F53;&#x4F53;&#x79EF;&#x3002;</p>
+<p>&#x884C;&#x5217;&#x5F0F;&#x7684;&#x5927;&#x5C0F;&#x8868;&#x793A;&#x4E86;&#x4E00;&#x4E2A;&#x53D8;&#x6362;&#x662F;&#x5426;&#x6539;&#x53D8;&#x4E86;&#x591A;&#x4E2A;&#x5411;&#x91CF;&#x6240;&#x6784;&#x6210;&#x7269;&#x4F53;&#x7684;&#x9762;&#x79EF;&#x6216;&#x4F53;&#x79EF;&#xFF0C;&#x884C;&#x5217;&#x5F0F;&#x7684;&#x6B63;&#x8D1F;&#x8868;&#x793A;&#x4E86;&#x53D8;&#x6362;&#x662F;&#x5426;&#x5B58;&#x5728;&#x53CD;&#x8F6C;&#xFF0C;&#x5982;&#x679C;&#x884C;&#x5217;&#x5F0F;&#x4E3A;0&#xFF0C;&#x90A3;&#x4E48;&#x8BF4;&#x660E;&#x8FD9;&#x4E2A;&#x53D8;&#x6362;&#x5B58;&#x5728;&#x6295;&#x5F71;&#x3002;</p>
+<h2 id="inverse-of-a-matrix">Inverse of a Matrix</h2>
+<p>&#x77E9;&#x9635;<span class="math inline">\(\mathbf{M}\)</span>&#x7684;&#x9006;&#x77E9;&#x9635;&#x4E3A;<span class="math inline">\(\mathbf{M^{-1}}\)</span>&#xFF0C;&#x77E9;&#x9635;&#x4E0E;&#x9006;&#x77E9;&#x9635;&#x7684;&#x4E58;&#x79EF;&#x4E3A;&#x5355;&#x4F4D;&#x77E9;&#x9635;&#xFF0C;&#x5373;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{M}\left(\mathbf{M}^{-1}\right)=\mathbf{M}^{-1} \mathbf{M}=\mathbf{I}\]</span></p>
+<p>&#x5E76;&#x4E0D;&#x662F;&#x6240;&#x6709;&#x7684;&#x77E9;&#x9635;&#x90FD;&#x6709;&#x9006;&#x77E9;&#x9635;&#xFF0C;&#x5982;&#x96F6;&#x77E9;&#x9635;&#x65E0;&#x8BBA;&#x4E0E;&#x54EA;&#x4E2A;&#x77E9;&#x9635;&#x76F8;&#x4E58;&#x90FD;&#x4E0D;&#x4F1A;&#x6210;&#x4E3A;&#x5355;&#x4F4D;&#x77E9;&#x9635;&#x3002;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x77E9;&#x9635;&#x6709;&#x9006;&#x77E9;&#x9635;&#xFF0C;&#x5C31;&#x79F0;&#x8BE5;&#x77E9;&#x9635;&#x4E3A;&#x53EF;&#x9006;&#x77E9;&#x9635;&#x6216;&#x975E;&#x5947;&#x5F02;&#x77E9;&#x9635;&#xFF08;Invertible or nonsingular&#xFF09;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x53EF;&#x9006;&#x77E9;&#x9635;&#x6709;&#x5982;&#x4E0B;&#x6027;&#x8D28;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x5BF9;&#x4E8E;&#x4EFB;&#x4F55;&#x53EF;&#x9006;&#x77E9;&#x9635;&#xFF0C;&#x5F53;&#x524D;&#x4EC5;&#x5F53;<span class="math inline">\(\mathbf{v=0}\)</span>&#x65F6;&#x6709;<span class="math inline">\(\mathbf{vM=0}\)</span>&#x3002;</p></li>
+<li><p>&#x4EFB;&#x4F55;&#x53EF;&#x9006;&#x77E9;&#x9635;&#x7684;&#x884C;&#x548C;&#x5217;&#x90FD;&#x662F;&#x7EBF;&#x6027;&#x4E0D;&#x76F8;&#x5173;&#x7684;&#x3002;</p></li>
+<li><p>&#x53EF;&#x9006;&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;&#x5F0F;&#x4E0D;&#x4E3A;0&#x3002;&#x56E0;&#x6B64;&#x68C0;&#x67E5;&#x4E00;&#x4E2A;&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;&#x5F0F;&#x662F;&#x5426;&#x4E3A;&#x96F6;&#x662F;&#x6700;&#x901A;&#x7528;&#x4E14;&#x6700;&#x5FEB;&#x7684;&#x68C0;&#x67E5;&#x77E9;&#x9635;&#x662F;&#x5426;&#x53EF;&#x9006;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p></li>
+</ol>
+<h3 id="the-classical-adjoint">The Classical Adjoint</h3>
+<p>&#x4F34;&#x968F;&#x77E9;&#x9635;&#xFF08;Classical Adjoint&#xFF09;&#x662F;&#x8BA1;&#x7B97;&#x9006;&#x77E9;&#x9635;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5C06;&#x77E9;&#x9635;<span class="math inline">\(\mathbf{M}\)</span>&#x7684;&#x4F34;&#x968F;&#x77E9;&#x9635;&#x79F0;&#x4E3A;&#x201C;adj <span class="math inline">\(\mathbf{M}\)</span>&#x201D;&#x3002;</p>
+<p>&#x4F34;&#x968F;&#x77E9;&#x9635;&#x662F;&#x539F;&#x77E9;&#x9635;&#x6240;&#x6709;&#x4EE3;&#x6570;&#x4F59;&#x5B50;&#x5F0F;&#x6784;&#x6210;&#x7684;&#x77E9;&#x9635;&#x7684;&#x8F6C;&#x7F6E;&#x3002;&#x5982;&#x4E0B;&#x4EE5;&#x4E00;&#x4E2A;<span class="math inline">\(3\times 3\)</span>&#x77E9;&#x9635;&#x4F5C;&#x4E3A;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{M}=\left[\begin{array}{ccc}
+-4 &amp; -3 &amp; 3 \\
+0 &amp; 2 &amp; -2 \\
+1 &amp; 4 &amp; -1
+\end{array}\right]\]</span></p>
+<p>&#x8981;&#x6C42;&#x4F34;&#x968F;&#x77E9;&#x9635;&#xFF0C;&#x9996;&#x5148;&#x8981;&#x6C42;&#x51FA;&#x6240;&#x6709;&#x7684;&#x4EE3;&#x6570;&#x4F59;&#x5B50;&#x5F0F;&#xFF0C;&#x5373;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;C^{\{11\}}=+\left|\begin{array}{cc}
+2 &amp; -2 \\
+4 &amp; -1
+\end{array}\right|=6, \quad C^{\{12\}}=-\left|\begin{array}{cc}
+0 &amp; -2 \\
+1 &amp; -1
+\end{array}\right|=-2, \quad C^{\{13\}}=+\left|\begin{array}{cc}
+0 &amp; 2 \\
+1 &amp; 4
+\end{array}\right|=-2\\
+&amp;C^{\{21\}}=-\left|\begin{array}{cc}
+-3 &amp; 3 \\
+4 &amp; -1
+\end{array}\right|=9, \quad C^{\{22\}}=+\left|\begin{array}{cc}
+-4 &amp; 3 \\
+1 &amp; -1
+\end{array}\right|=1, \quad C^{\{23\}}=-\left|\begin{array}{cc}
+-4 &amp; -3 \\
+1 &amp; 4
+\end{array}\right|=13\\
+&amp;C^{\{31\}}=+\left|\begin{array}{cc}
+-3 &amp; 3 \\
+2 &amp; -2
+\end{array}\right|=0, \quad C^{\{32\}}=-\left|\begin{array}{cc}
+-4 &amp; 3 \\
+0 &amp; -2
+\end{array}\right|=-8, \quad C^{\{33\}}=+\left|\begin{array}{cc}
+-4 &amp; -3 \\
+0 &amp; 2
+\end{array}\right|=-8
+\end{aligned}\]</span></p>
+<p>&#x77E9;&#x9635;&#x7684;&#x4F34;&#x968F;&#x77E9;&#x9635;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\operatorname{adj} \mathbf{M} &amp;=\left[\begin{array}{ccc}
+C^{\{11\}} &amp; C^{\{12\}} &amp; C^{\{13\}} \\
+C^{\{21\}} &amp; C^{\{22\}} &amp; C^{\{23\}} \\
+C^{\{31\}} &amp; C^{\{32\}} &amp; C^{\{33\}}
+\end{array}\right]^{\mathrm{T}} \\
+&amp;=\left[\begin{array}{ccc}
+6 &amp; -2 &amp; -2 \\
+9 &amp; 1 &amp; 13 \\
+0 &amp; -8 &amp; -8
+\end{array}\right]^{\mathrm{T}}=\left[\begin{array}{ccc}
+6 &amp; 9 &amp; 0 \\
+-2 &amp; 1 &amp; -8 \\
+-2 &amp; 13 &amp; -8
+\end{array}\right]
+\end{aligned}\]</span></p>
+<h3 id="matrix-inverse-official-linear-algebra-rules">Matrix Inverse-Official Linear Algebra Rules</h3>
+<p>&#x7528;&#x77E9;&#x9635;&#x7684;&#x4F34;&#x968F;&#x77E9;&#x9635;&#x9664;&#x4EE5;&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;&#x5F0F;&#xFF0C;&#x5373;&#x4E3A;&#x77E9;&#x9635;&#x7684;&#x9006;&#x77E9;&#x9635;&#x3002;&#x56E0;&#x4E3A;&#x8BA1;&#x7B97;&#x9006;&#x77E9;&#x9635;&#x65F6;&#x8981;&#x9664;&#x4EE5;&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;&#x5F0F;&#xFF0C;&#x6240;&#x4EE5;&#x884C;&#x5217;&#x5F0F;&#x4E3A;0&#x7684;&#x77E9;&#x9635;&#x662F;&#x4E0D;&#x5B58;&#x5728;&#x9006;&#x77E9;&#x9635;&#x7684;&#x3002;&#x516C;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{M}^{-1}=\frac{\operatorname{adj} \mathbf{M}}{|\mathbf{M}|}\]</span></p>
+<p>&#x9664;&#x4E86;&#x7528;&#x4F34;&#x968F;&#x77E9;&#x9635;&#x7684;&#x65B9;&#x6CD5;&#x6765;&#x8BA1;&#x7B97;&#x9006;&#x77E9;&#x9635;&#xFF0C;&#x8FD8;&#x6709;&#x5982;&#x9AD8;&#x65AF;&#x6D88;&#x9664;&#xFF08;Gaussian elimination&#xFF09;&#x7B49;&#x5176;&#x4ED6;&#x65B9;&#x6CD5;&#x3002;&#x9AD8;&#x65AF;&#x6D88;&#x9664;&#x6CD5;&#x7684;&#x8FD0;&#x7B97;&#x91CF;&#x4F1A;&#x66F4;&#x5C0F;&#xFF0C;&#x4F46;&#x9488;&#x5BF9;&#x56FE;&#x5F62;&#x5B66;&#x6700;&#x5E38;&#x7528;&#x7684;<span class="math inline">\(3\times 3\)</span>&#x548C;<span class="math inline">\(4 \times 4\)</span>&#x5927;&#x5C0F;&#x7684;&#x77E9;&#x9635;&#xFF0C;&#x7528;&#x4F34;&#x968F;&#x77E9;&#x9635;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x5DF2;&#x7ECF;&#x8DB3;&#x591F;&#x3002;</p>
+<p>&#x9006;&#x77E9;&#x9635;&#x6709;&#x5982;&#x4E0B;&#x6027;&#x8D28;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x9006;&#x77E9;&#x9635;&#x7684;&#x9006;&#x77E9;&#x9635;&#x7B49;&#x4E8E;&#x539F;&#x77E9;&#x9635;</p>
+<p><span class="math display">\[\left(\mathbf{M}^{-1}\right)^{-1}=\mathbf{M}\]</span></p></li>
+<li><p>&#x5355;&#x4F4D;&#x77E9;&#x9635;&#x7684;&#x9006;&#x77E9;&#x9635;&#x4E3A;&#x672C;&#x8EAB;&#x3002;</p>
+<p><span class="math display">\[\mathbf{I^{-1}=I}\]</span></p>
+<ul>
+<li>&#x5355;&#x4F4D;&#x77E9;&#x9635;&#x5E76;&#x4E0D;&#x662F;&#x552F;&#x4E00;&#x7684;&#x9006;&#x77E9;&#x9635;&#x4E3A;&#x672C;&#x8EAB;&#x7684;&#x77E9;&#x9635;&#xFF0C;&#x53CD;&#x5C04;&#x77E9;&#x9635;&#x548C;&#x65CB;&#x8F6C;180&#xB0;&#x7684;&#x77E9;&#x9635;&#x901A;&#x7528;&#x4E5F;&#x6EE1;&#x8DB3;&#x3002;</li>
+</ul></li>
+<li><p>&#x8F6C;&#x7F6E;&#x7684;&#x9006;&#x77E9;&#x9635;&#x7B49;&#x4E8E;&#x9006;&#x77E9;&#x9635;&#x7684;&#x8F6C;&#x7F6E;</p>
+<p><span class="math display">\[\left(\mathbf{M}^{\mathrm{T}}\right)^{-1}=\left(\mathbf{M}^{-1}\right)^{\mathrm{T}}\]</span></p></li>
+<li><p>&#x4E58;&#x79EF;&#x7684;&#x9006;&#x77E9;&#x9635;&#x7B49;&#x4E8E;&#x76F8;&#x53CD;&#x987A;&#x5E8F;&#x7684;&#x9006;&#x77E9;&#x9635;&#x7684;&#x4E58;&#x79EF;</p>
+<p><span class="math display">\[(\mathbf{A B})^{-1}=\mathbf{B}^{-1} \mathbf{A}^{-1}\]</span></p></li>
+<li><p>&#x9006;&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;&#x5F0F;&#x7B49;&#x4E8E;&#x539F;&#x77E9;&#x9635;&#x884C;&#x5217;&#x5F0F;&#x7684;&#x5012;&#x6570;</p>
+<p><span class="math display">\[\left|\mathbf{M}^{-1}\right|=1 /|\mathbf{M}|\]</span></p></li>
+</ol>
+<h3 id="matrix-inverse-geometric-interpretation">Matrix Inverse-Geometric Interpretation</h3>
+<p>&#x9006;&#x77E9;&#x9635;&#x7684;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#x5373;&#x662F;&#x76F8;&#x53CD;&#x7684;&#x53D8;&#x6362;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x4E00;&#x4E2A;&#x53D8;&#x6362;&#x7684;undo&#x3002;</p>
+<p><span class="math display">\[(\mathbf{v M}) \mathbf{M}^{-1}=\mathbf{v}\left(\mathbf{M M}^{-1}\right)=\mathbf{v} \mathbf{I}=\mathbf{v}\]</span></p>
+<h2 id="orthogonal-matrices">Orthogonal Matrices</h2>
+<h3 id="orthogonal-matrices-official-linear-algebra-rules">Orthogonal Matrices-Official Linear Algebra Rules</h3>
+<p>&#x4E00;&#x4E2A;&#x65B9;&#x9635;&#x5F53;&#x4E14;&#x4EC5;&#x5F53;&#x5B83;&#x548C;&#x5B83;&#x7684;&#x8F6C;&#x7F6E;&#x4E58;&#x79EF;&#x4E3A;&#x5355;&#x4F4D;&#x77E9;&#x9635;&#x65F6;&#xFF0C;&#x8FD9;&#x4E2A;&#x77E9;&#x9635;&#x4E3A;&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#xFF08;Orthogonal Matrix&#xFF09;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{M} \text { is orthogonal } \Longleftrightarrow \quad \mathbf{M M}^{\mathrm{T}}=\mathbf{I}\]</span></p>
+<p>&#x540C;&#x65F6;&#x56E0;&#x4E3A;<span class="math inline">\(\mathbf{M}^{-1} \mathbf{M}=\mathbf{I}\)</span>&#xFF0C;&#x6240;&#x4EE5;&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#x8FD8;&#x6EE1;&#x8DB3;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{M} \text { is orthogonal } \Longleftrightarrow \mathbf{M}^{\mathrm{T}}=\mathbf{M}^{-1}\]</span></p>
+<p>&#x5982;&#x679C;&#x77E5;&#x9053;&#x4E00;&#x4E2A;&#x77E9;&#x9635;&#x662F;&#x6B63;&#x4EA4;&#x7684;&#xFF08;&#x5982;&#x65CB;&#x8F6C;&#x548C;&#x53CD;&#x5C04;&#x53D8;&#x6362;&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x5F88;&#x5FEB;&#x7684;&#x901A;&#x8FC7;&#x6C42;&#x5176;&#x8F6C;&#x7F6E;&#x77E9;&#x9635;&#x6765;&#x83B7;&#x5F97;&#x9006;&#x77E9;&#x9635;&#x3002;</p>
+<h3 id="orthogonal-matrices-geometric-interpretation">Orthogonal Matrices-Geometric Interpretation</h3>
+<p>&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#x7684;&#x610F;&#x4E49;&#x5728;&#x4E8E;&#x5176;&#x9006;&#x77E9;&#x9635;&#x975E;&#x5E38;&#x5BB9;&#x6613;&#x6C42;&#x5F97;&#xFF08;&#x8F6C;&#x7F6E;&#x77E9;&#x9635;&#x5373;&#x4E3A;&#x9006;&#x77E9;&#x9635;&#xFF09;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x53D8;&#x6362;&#x4EC5;&#x5305;&#x542B;&#x4F4D;&#x79FB;&#xFF0C;&#x65CB;&#x8F6C;&#x548C;&#x53CD;&#x5C04;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x4E3A;&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x77E9;&#x9635;&#x7684;&#x6BCF;&#x4E00;&#x884C;&#xFF08;&#x6216;&#x6BCF;&#x4E00;&#x5217;&#xFF09;&#x6784;&#x6210;&#x7684;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x957F;&#x5EA6;&#x4E3A;1&#xFF0C;&#x4E14;&#x76F8;&#x4E92;&#x5782;&#x76F4;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x4E5F;&#x662F;&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#x3002;</p>
+<p>&#x8BC1;&#x660E;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p>&#x9996;&#x5148;&#x6839;&#x636E;&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#x7684;&#x5B9A;&#x4E49;&#xFF0C;&#x77E9;&#x9635;&#x4E0E;&#x77E9;&#x9635;&#x7684;&#x8F6C;&#x7F6E;&#x4E58;&#x79EF;&#x4E3A;&#x5355;&#x4F4D;&#x77E9;&#x9635;&#xFF1A;</p>
+<p>&#x5047;&#x8BBE;</p>
+<p><span class="math display">\[
+\mathbf{M}=\left[\begin{array}{lll}
+m_{11} &amp; m_{12} &amp; m_{13} \\
+m_{21} &amp; m_{22} &amp; m_{23} \\
+m_{31} &amp; m_{32} &amp; m_{33}
+\end{array}\right]
+\]</span></p>
+<p>&#x4E14;<span class="math inline">\(\mathbf{M}\)</span>&#x4E3A;&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#xFF0C;&#x5219;&#x6709;</p>
+<p><span class="math display">\[
+\left[\begin{array}{lll}
+m_{11} &amp; m_{12} &amp; m_{13} \\
+m_{21} &amp; m_{22} &amp; m_{23} \\
+m_{31} &amp; m_{32} &amp; m_{33}
+\end{array}\right]\left[\begin{array}{lll}
+m_{11} &amp; m_{21} &amp; m_{31} \\
+m_{12} &amp; m_{22} &amp; m_{32} \\
+m_{13} &amp; m_{23} &amp; m_{33}
+\end{array}\right]=\left[\begin{array}{lll}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 1
+\end{array}\right]
+\]</span></p>
+<p>&#x7528;<span class="math inline">\(\mathbf{r_1,r_2,r_3}\)</span>&#x4EE3;&#x8868;&#x77E9;&#x9635;<span class="math inline">\(\mathbf{M}\)</span>&#x7684;&#x6BCF;&#x4E2A;&#x57FA;&#x672C;&#x5411;&#x91CF;&#xFF08;&#x6BCF;&#x4E00;&#x884C;&#xFF09;&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;\mathbf{r}_{1}=\left[\begin{array}{lll}
+m_{11} &amp; m_{12} &amp; m_{13}
+\end{array}\right]\\
+&amp;\mathbf{r}_{2}=\left[\begin{array}{lll}
+m_{21} &amp; m_{22} &amp; m_{23}
+\end{array}\right]\\
+&amp;\mathbf{r}_{3}=\left[\begin{array}{lll}
+m_{31} &amp; m_{32} &amp; m_{33}
+\end{array}\right]
+\end{aligned}\]</span></p>
+<p><span class="math display">\[\mathbf{M}=\left[\begin{array}{l}
+-\mathbf{r}_{1}- \\
+-\mathbf{r}_{2}- \\
+-\mathbf{r}_{3}-
+\end{array}\right]\]</span></p>
+<p>&#x53EF;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[\begin{array}{lll}
+\mathbf{r}_{1} \cdot \mathbf{r}_{1}=1, &amp; \mathbf{r}_{1} \cdot \mathbf{r}_{2}=0, &amp; \mathbf{r}_{1} \cdot \mathbf{r}_{3}=0 \\
+\mathbf{r}_{2} \cdot \mathbf{r}_{1}=0, &amp; \mathbf{r}_{2} \cdot \mathbf{r}_{2}=1, &amp; \mathbf{r}_{2} \cdot \mathbf{r}_{3}=0 \\
+\mathbf{r}_{3} \cdot \mathbf{r}_{1}=0, &amp; \mathbf{r}_{3} \cdot \mathbf{r}_{2}=0, &amp; \mathbf{r}_{3} \cdot \mathbf{r}_{3}=1
+\end{array}\]</span></p>
+<p>&#x5373;&#x6BCF;&#x4E2A;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x4E0E;&#x81EA;&#x5DF1;&#x7684;&#x70B9;&#x4E58;&#x503C;&#x4E3A;1&#xFF0C;&#x53BB;&#x522B;&#x7684;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x70B9;&#x4E58;&#x503C;&#x4E3A;0&#x3002;&#x5373;&#x8868;&#x660E;&#x6BCF;&#x4E2A;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x7684;&#x957F;&#x5EA6;&#x4E3A;1&#xFF0C;&#x4E14;&#x4E0E;&#x5176;&#x4ED6;&#x7684;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x76F8;&#x4E92;&#x5782;&#x76F4;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x77E9;&#x9635;&#x662F;&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#xFF0C;&#x5B83;&#x7684;&#x8F6C;&#x7F6E;&#x4E5F;&#x5FC5;&#x7136;&#x662F;&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#x3002;&#x56E0;&#x6B64;&#x65E0;&#x8BBA;&#x77E9;&#x9635;&#x7684;&#x6BCF;&#x4E00;&#x884C;&#x8FD8;&#x662F;&#x6BCF;&#x4E00;&#x5217;&#x6EE1;&#x8DB3;&#x4E0A;&#x8FF0;&#x6761;&#x4EF6;&#xFF0C;&#x90FD;&#x80FD;&#x8BC1;&#x660E;&#x5B83;&#x662F;&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#x3002;</p>
+<div class="note warning">
+            <p>&#x5728;&#x82F1;&#x8BED;&#x4E2D;&#x6709;&#x4E9B;&#x672F;&#x8BED;&#x4F1A;&#x9020;&#x6210;&#x56F0;&#x6270;&#x3002;<code>orthogonal basis vectors</code>&#x662F;&#x63CF;&#x8FF0;&#x4E00;&#x7CFB;&#x5217;&#x76F8;&#x4E92;&#x5782;&#x76F4;&#x7684;&#x5411;&#x91CF;&#xFF0C;&#x4F46;&#x5E76;&#x6CA1;&#x6709;&#x9650;&#x5B9A;&#x5B83;&#x4EEC;&#x7684;&#x957F;&#x5EA6;&#x3002;&#x5982;&#x679C;&#x5B83;&#x4EEC;&#x6EE1;&#x8DB3;&#x957F;&#x5EA6;&#x4E3A;1&#xFF0C;&#x5219;&#x79F0;&#x4E3A;<code>orthnormal basis verctors</code>&#x3002;&#x4F46;&#x662F;<code>orthogonal matrices</code>&#x9700;&#x8981;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x4E0D;&#x4EC5;&#x76F8;&#x4E92;&#x5782;&#x76F4;&#xFF0C;&#x800C;&#x4E14;&#x957F;&#x5EA6;&#x4E3A;1&#x3002;&#x5373;<code>orthogonal basis vectores</code>&#x4E0D;&#x80FD;&#x6784;&#x6210;<code>orthogonal matrices</code>&#xFF0C;&#x5FC5;&#x987B;&#x662F;<code>orthonormal basis vectores</code>&#x624D;&#x884C;&#x3002;</p>
+          </div>
+<h3 id="orthogonalizing-a-matrix">Orthogonalizing a Matrix</h3>
+<p>&#x6709;&#x65F6;&#x9047;&#x5230;&#x4E00;&#x4E9B;&#x77E9;&#x9635;&#x56E0;&#x4E3A;&#x6570;&#x636E;&#x7684;&#x9519;&#x8BEF;&#x6216;&#x8005;&#x6D6E;&#x70B9;&#x8BEF;&#x5DEE;&#xFF08;Floating point error&#xFF09;&#x3002;</p>
+<p>&#x5728;&#x8FD9;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x9700;&#x8981;&#x901A;&#x8FC7;&#x4E00;&#x4E9B;&#x53D8;&#x6362;&#x5C06;&#x77E9;&#x9635;&#x7684;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x53D8;&#x4E3A;&#x4E92;&#x76F8;&#x5782;&#x76F4;&#x548C;&#x957F;&#x5EA6;&#x4E3A;&#x4E00;&#x3002;&#x901A;&#x5E38;&#x4F7F;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x4E3A;<code>Gram-Schmidt &#x6B63;&#x4EA4;&#x5316;</code>&#x3002;</p>
+<p>&#x9996;&#x5148;&#x5C06;&#x77E9;&#x9635;&#x7684;&#x6807;&#x51C6;&#x5411;&#x91CF;&#xFF08;&#x6BCF;&#x4E00;&#x884C;&#xFF09;&#x5B9A;&#x4E49;&#x4E3A;<span class="math inline">\(\mathbf{r}_{1}, \mathbf{r}_{2},\)</span> &#x548C; <span class="math inline">\(\mathbf{r}_{3}\)</span>&#xFF0C;&#x5E76;&#x5C06;&#x8F6C;&#x6362;&#x540E;&#x7684;&#x6EE1;&#x8DB3;&#x76F8;&#x4E92;&#x5782;&#x76F4;&#x7684;&#x57FA;&#x672C;&#x5411;&#x91CF;&#x5B9A;&#x4E49;&#x4E3A;<span class="math inline">\(\mathbf{r}_{1}^{\prime}, \mathbf{r}_{2}^{\prime},\)</span> &#x548C; <span class="math inline">\(\mathbf{r}_{3}^{\prime}\)</span>&#x3002;</p>
+<p>&#x5176;&#x8F6C;&#x6362;&#x65B9;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;\mathbf{r}_{1}^{\prime} \Leftarrow \mathbf{r}_{1}\\
+&amp;\begin{array}{l}
+\mathbf{r}_{2}^{\prime} \Leftarrow \mathbf{r}_{2}-\frac{\mathbf{r}_{2} \cdot \mathbf{r}_{1}^{\prime}}{\mathbf{r}_{1}^{\prime} \cdot \mathbf{r}_{1}^{\prime}} \mathbf{r}_{1}^{\prime} \\
+\mathbf{r}_{3}^{\prime} \Leftarrow \mathbf{r}_{3}-\frac{\mathbf{r}_{3} \cdot \mathbf{r}_{1}^{\prime}}{\mathbf{r}_{1}^{\prime} \cdot \mathbf{r}_{1}^{\prime}} \mathbf{r}_{1}^{\prime}-\frac{\mathbf{r}_{3} \cdot \mathbf{r}_{2}^{\prime}}{\mathbf{r}_{2}^{\prime} \cdot \mathbf{r}_{2}^{\prime}} \mathbf{r}_{2}^{\prime}
+\end{array}
+\end{aligned}\]</span></p>
+<p>&#x5176;&#x4E2D;<span class="math inline">\(\mathbf{r}_{2}^{\prime}\)</span>&#x53EA;&#x6240;&#x4EE5;&#x8FD9;&#x4E48;&#x5B9A;&#x4E49;&#xFF0C;&#x662F;&#x4E3A;&#x4E86;&#x4ECE;<span class="math inline">\(\mathbf{r2}\)</span>&#x4E2D;&#x51CF;&#x53BB;&#x5E73;&#x884C;&#x4E8E;<span class="math inline">\(\mathbf{r1}\)</span>&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x8FD9;&#x6837;&#x5269;&#x4F59;&#x90E8;&#x5206;<span class="math inline">\(\mathbf{r}_{2}^{\prime}\)</span>&#x5373;&#x4E3A;&#x5782;&#x76F4;&#x4E8E;<span class="math inline">\(\mathbf{r1}\)</span>&#x7684;&#x90E8;&#x5206;&#x3002;</p>
+<p>&#x4E14;&#x6839;&#x636E;&#x5229;&#x7528;&#x70B9;&#x4E58;&#x6C42;&#x5411;&#x91CF;&#x5206;&#x91CF;&#x7684;&#x5B9A;&#x4E49;&#x53EF;&#x5F97;&#xFF0C;</p>
+<p><span class="math display">\[\begin{aligned}
+r_{2}^{\prime} &amp;=r_{2}-\left(r_{2} \cdot \hat{r}_{1}\right) \cdot \hat{r}_{1} \\
+&amp;=r_{2}-\left(r_{2} \cdot \frac{r_{1}^{\prime}}{\left|r_{1}\right|}\right) \cdot \frac{r_{1}^{\prime}}{\left|r_{1}\right|} \\
+&amp;=r_{2}-\frac{r_{2} \cdot r_{1}^{\prime}}{\left|r_{1}\right|^{2}} \cdot r_{1}^{\prime} \\
+&amp;=r_{2}-\frac{r_{2} \cdot r_{1}^{\prime}}{r_{1}^{\prime} \cdot r_{1}^{\prime}} \cdot r_{1}^{\prime}
+\end{aligned}\]</span></p>
+<p>&#x6C42;<span class="math inline">\(\mathbf{r}_{3}^{\prime}\)</span>&#x7684;&#x8FC7;&#x7A0B;&#x540C;&#x7406;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;<span class="math inline">\(\mathbf{r}_{3}^{\prime}\)</span>&#x8FD8;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x901A;&#x8FC7;&#x6C42;&#x5F97;&#x7684;<span class="math inline">\(\mathbf{r}_{1}^{\prime}\)</span>&#x548C;<span class="math inline">\(\mathbf{r}_{2}^{\prime}\)</span>&#x83B7;&#x5F97;&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[\mathbf{r}_{3}^{\prime} \Leftarrow \mathbf{r}_{1}^{\prime} \times \mathbf{r}_{2}^{\prime}\]</span></p>
+<p>&#x5728;&#x6C42;&#x5F97;&#x76F8;&#x4E92;&#x5782;&#x76F4;&#x7684;&#x5411;&#x91CF;<span class="math inline">\(\mathbf{r}_{1}^{\prime}, \mathbf{r}_{2}^{\prime},\)</span> &#x548C; <span class="math inline">\(\mathbf{r}_{3}^{\prime}\)</span>&#x540E;&#xFF0C;&#x901A;&#x8FC7;&#x5F52;&#x4E00;&#x5316;&#x57FA;&#x672C;&#x6C42;&#x5F97;&#x957F;&#x5EA6;&#x4E3A;1&#x7684;&#x77E9;&#x9635;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;r_{1}^{\prime \prime}=\frac{r_{1}^{\prime}}{\left|r_{1}^{\prime}\right|}\\
+&amp;r_{2}^{\prime \prime}=\frac{r_{2}^{\prime}}{\left|r_{2}^{\prime}\right|}\\
+&amp;r_{3}^{\prime \prime}=\frac{r_{3}^{\prime}}{\left|r_{3}^{\prime}\right|}
+\end{aligned}\]</span></p>
+<p>&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x65B9;&#x6CD5;&#x662F;&#x5229;&#x7528;&#x8FED;&#x4EE3;&#x6765;&#x6C42;&#x5F97;&#x76F8;&#x4E92;&#x5782;&#x76F4;&#x7684;&#x5411;&#x91CF;&#xFF0C;&#x79F0;&#x4E3A;<code>Nonbiased incremental &#x6B63;&#x4EA4;&#x5316;</code>&#x3002;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;\mathbf{r}_{1}^{\prime} \Leftarrow \mathbf{r}_{1}-k \frac{\mathbf{r}_{1} \cdot \mathbf{r}_{2}}{\mathbf{r}_{2} \cdot \mathbf{r}_{2}} \mathbf{r}_{2}-k \frac{\mathbf{r}_{1} \cdot \mathbf{r}_{3}}{\mathbf{r}_{3} \cdot \mathbf{r}_{3}} \mathbf{r}_{3}\\
+&amp;\mathbf{r}_{2}^{\prime} \Leftarrow \mathbf{r}_{2}-k \frac{\mathbf{r}_{2} \cdot \mathbf{r}_{1}}{\mathbf{r}_{1} \cdot \mathbf{r}_{1}} \mathbf{r}_{1}-k \frac{\mathbf{r}_{2} \cdot \mathbf{r}_{3}}{\mathbf{r}_{3} \cdot \mathbf{r}_{3}} \mathbf{r}_{3}\\
+&amp;\mathbf{r}_{3}^{\prime} \Leftarrow \mathbf{r}_{3}-k \frac{\mathbf{r}_{3} \cdot \mathbf{r}_{1}}{\mathbf{r}_{1} \cdot \mathbf{r}_{1}} \mathbf{r}_{1}-k \frac{\mathbf{r}_{3} \cdot \mathbf{r}_{2}}{\mathbf{r}_{2} \cdot \mathbf{r}_{2}} \mathbf{r}_{2}
+\end{aligned}\]</span></p>
+<p>&#x8BE5;&#x65B9;&#x6CD5;&#x65F6;&#x901A;&#x8FC7;&#x9009;&#x53D6;&#x4E00;&#x4E2A;&#x9002;&#x5F53;&#x7684;k&#xFF0C;&#x8FDB;&#x884C;&#x53CD;&#x590D;&#x8FED;&#x4EE3;&#x83B7;&#x53D6;&#x4E00;&#x4E2A;&#x5F88;&#x8FD1;&#x4F3C;&#x6B63;&#x4EA4;&#x7684;&#x7C7B;&#x578B;&#x3002;</p>
+<h2 id="times-4-homogeneous-matrices"><span class="math inline">\(4\times 4\)</span> Homogeneous Matrices</h2>
+<p>&#x8FD9;&#x90E8;&#x5206;&#x7B2C;&#x4E00;&#x6B21;&#x63D0;&#x53CA;&#x4E86;&#x56DB;&#x7EF4;&#x5411;&#x91CF;&#xFF0C;&#x79F0;&#x4E3A;&#x9F50;&#x6B21;&#x5750;&#x6807;&#xFF08;Homogeneous coordinate&#xFF09;&#x3002;</p>
+<h3 id="d-homogeneous-space">4D Homogeneous Space</h3>
+<p>&#x5728;&#x56DB;&#x7EF4;&#x5411;&#x91CF;&#x4E2D;&#xFF0C;&#x7B2C;&#x56DB;&#x4E2A;&#x5143;&#x7D20;&#x4E3A;<span class="math inline">\(w\)</span>&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x66F4;&#x597D;&#x7684;&#x7406;&#x89E3;&#x7269;&#x7406;&#x7684;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x662F;&#x5982;&#x4F55;&#x6269;&#x5C55;&#x5230;&#x56DB;&#x7EF4;&#x7A7A;&#x95F4;&#x7684;&#x3002;&#x5148;&#x4EE5;&#x4E8C;&#x7EF4;&#x7A7A;&#x95F4;&#x4E3A;&#x4F8B;&#xFF0C;&#x60F3;&#x8C61;&#x4E8C;&#x7EF4;&#x7A7A;&#x95F4;&#x662F;&#x5B58;&#x5728;&#x4E8E;&#x4E09;&#x7EF4;&#x9F50;&#x6B21;&#x7A7A;&#x95F4;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x5E73;&#x9762;&#xFF0C;&#x4E14;&#x7B2C;&#x4E09;&#x4E2A;&#x5143;&#x7D20;&#x503C;&#x4E3A;1&#xFF0C;&#x5373;<span class="math inline">\(w=1\)</span>&#xFF0C;&#x6240;&#x6709;&#x5728;&#x8BE5;&#x5E73;&#x9762;&#x4E0A;&#x7684;&#x70B9;&#x90FD;&#x53EF;&#x8868;&#x793A;&#x4E3A;<span class="math inline">\((x,y,1)\)</span>&#x3002;&#x6240;&#x6709;&#x4E0D;&#x5728;<span class="math inline">\(w=1\)</span>&#x5E73;&#x9762;&#x4E0A;&#x7684;&#x9F50;&#x6B21;&#x5750;&#x6807;&#x70B9;<span class="math inline">\((x,y,w)\)</span>&#xFF0C;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<span class="math inline">\((x/w,y/w,1)\)</span>&#x8F6C;&#x6362;&#x5230;&#x4E8C;&#x7EF4;&#x7269;&#x7406;&#x5E73;&#x9762;&#x4E0A;&#x3002;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200308224234417.png" alt="&#x4E8C;&#x7EF4;&#x9F50;&#x6B21;&#x5750;&#x6807;" style="zoom:50%;"></p>
+<p>&#x540C;&#x6837;&#x7684;&#xFF0C;&#x5BF9;&#x4E8E;&#x4EFB;&#x4F55;&#x5728;&#x4E8C;&#x7EF4;&#x5E73;&#x9762;&#x4E0A;&#x7684;&#x70B9;<span class="math inline">\((x,y)\)</span>&#x90FD;&#x6709;&#x65E0;&#x9650;&#x591A;&#x4E2A;&#x76F8;&#x5E94;&#x7684;&#x5728;&#x9F50;&#x6B21;&#x5750;&#x6807;&#x4E2D;&#x7684;&#x70B9;<span class="math inline">\((kx,ky,k)\)</span>&#x3002;&#x8FD9;&#x4E9B;&#x70B9;&#x6784;&#x6210;&#x4E00;&#x6761;&#x7A7F;&#x8D8A;&#x539F;&#x70B9;&#x7684;&#x76F4;&#x7EBF;&#x3002;</p>
+<p>&#x5F53;<span class="math inline">\(w=0\)</span>&#x65F6;&#xFF0C;&#x9664;&#x6CD5;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x6CA1;&#x6709;&#x76F8;&#x5BF9;&#x5E94;&#x7684;&#x5728;&#x4E8C;&#x7EF4;&#x7269;&#x7406;&#x5E73;&#x9762;&#x4E0A;&#x7684;&#x70B9;&#x3002;&#x56E0;&#x6B64;&#x5C06;<span class="math inline">\(w=0\)</span>&#x7684;&#x5750;&#x6807;&#x5B9A;&#x4E49;&#x4E3A;&#x662F;&#x5728;&#x65E0;&#x9650;&#x8FDC;&#x5904;&#x7684;&#x70B9;&#xFF0C;&#x8FD9;&#x4E9B;&#x70B9;&#x662F;&#x7528;&#x6765;&#x8868;&#x793A;&#x65B9;&#x5411;&#x800C;&#x4E0D;&#x662F;&#x4F4D;&#x7F6E;&#xFF0C;&#x5373;<span class="math inline">\(w=0\)</span>&#x7684;&#x5750;&#x6807;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4F5C;&#x4E3A;&#x5411;&#x91CF;&#x6765;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;&#x800C;<span class="math inline">\(w\neq 0\)</span>&#x7684;&#x70B9;&#x624D;&#x662F;&#x4F5C;&#x4E3A;&#x8868;&#x793A;&#x4F4D;&#x7F6E;&#x7684;&#x70B9;&#x3002;</p>
+<p>&#x5C06;&#x4E8C;&#x7EF4;&#x7A7A;&#x95F4;&#x7684;&#x6982;&#x5FF5;&#x63A8;&#x5E7F;&#x5230;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#xFF0C;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x7684;&#x70B9;&#x4E5F;&#x540C;&#x6837;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x662F;&#x5728;&#x56DB;&#x7EF4;&#x9F50;&#x6B21;&#x7A7A;&#x95F4;&#x4E2D;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x7B2C;&#x56DB;&#x4E2A;&#x5143;&#x7D20;&#x503C;<span class="math inline">\(w=1\)</span>&#x3002;&#x540C;&#x6837;&#x7684;&#xFF0C;&#x4EFB;&#x610F;&#x5728;&#x56DB;&#x7EF4;&#x9F50;&#x6B21;&#x7A7A;&#x95F4;&#x4E2D;&#x7684;&#x70B9;&#xFF0C;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<span class="math inline">\((x/w,y/w,z/w,1)\)</span>&#x8F6C;&#x6362;&#x5230;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x3002;&#x5F53;<span class="math inline">\(w=0\)</span>&#x65F6;&#xFF0C;&#x5750;&#x6807;&#x540C;&#x6837;&#x662F;&#x7528;&#x6765;&#x8868;&#x793A;&#x5411;&#x91CF;&#x800C;&#x4E0D;&#x662F;&#x70B9;&#x3002;</p>
+<p>&#x5728;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x5F15;&#x5165;&#x56DB;&#x7EF4;&#x9F50;&#x6B21;&#x5750;&#x6807;&#x4E3B;&#x8981;&#x6709;&#x4E24;&#x4E2A;&#x539F;&#x56E0;&#xFF1A;</p>
+<ol type="1">
+<li>&#x4E3A;&#x4E86;&#x8BA1;&#x7B97;&#x4E0A;&#x7684;&#x4FBF;&#x6377;&#xFF0C;&#x56E0;&#x4E3A;&#x4F4D;&#x79FB;&#x9700;&#x8981;&#x7528;&#x5230;&#x56DB;&#x7EF4;&#x77E9;&#x9635;&#xFF0C;&#x800C;&#x5C06;&#x5176;&#x4ED6;&#x6240;&#x6709;&#x7684;&#x53D8;&#x5F62;&#x90FD;&#x7528;&#x56DB;&#x7EF4;&#x77E9;&#x9635;&#x8868;&#x793A;&#x53EF;&#x4EE5;&#x65B9;&#x4FBF;&#x8BA1;&#x7B97;&#x3002;</li>
+<li>&#x7B2C;&#x56DB;&#x4E2A;&#x53C2;&#x6570;<span class="math inline">\(w\)</span>&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x8868;&#x793A;&#x900F;&#x89C6;&#x6295;&#x5F71;&#xFF08;perspective projection&#xFF09;&#x3002;</li>
+</ol>
+<h3 id="times-4-translation-matrices"><span class="math inline">\(4\times 4\)</span> Translation Matrices</h3>
+<p>&#x56E0;&#x4E3A;<span class="math inline">\(n\)</span>&#x7EF4;&#x96F6;&#x5411;&#x91CF;&#x4E0E;&#x4EFB;&#x4F55;&#x7684;<span class="math inline">\(n\times n\)</span>&#x77E9;&#x9635;&#x76F8;&#x4E58;&#x7ED3;&#x679C;&#x90FD;&#x662F;<span class="math inline">\(n\)</span>&#x7EF4;&#x96F6;&#x5411;&#x91CF;&#xFF0C;&#x6240;&#x4EE5;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;<span class="math inline">\(3 \times 3\)</span>&#x7684;&#x77E9;&#x9635;&#x662F;&#x6C38;&#x8FDC;&#x65E0;&#x6CD5;&#x5C06;&#x4E00;&#x4E2A;&#x70B9;&#x4ECE;&#x539F;&#x70B9;&#x79FB;&#x52A8;&#x51FA;&#x53BB;&#x7684;&#xFF0C;&#x5373;<span class="math inline">\(n\)</span>&#x7EF4;&#x7684;&#x77E9;&#x9635;&#x65E0;&#x6CD5;&#x5728;<span class="math inline">\(n\)</span>&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x8868;&#x793A;&#x4F4D;&#x79FB;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;<span class="math inline">\(4 \times 4\)</span>&#x7684;&#x77E9;&#x9635;&#x5728;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x8868;&#x793A;&#x4F4D;&#x79FB;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><span class="math display">\[\left[\begin{array}{llll}
+x &amp; y &amp; z &amp; 1
+\end{array}\right]\left[\begin{array}{cccc}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 \\
+\Delta x &amp; \Delta y &amp; \Delta z &amp; 1
+\end{array}\right]=\left[\begin{array}{lllll}
+x+\Delta x &amp; y+\Delta y &amp; z+\Delta z &amp; 1
+\end{array}\right]\]</span></p>
+<ul>
+<li>&#x6CE8;&#x610F;&#x8FD9;&#x4E2A;&#x53D8;&#x6362;&#x5728;&#x56DB;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#xFF0C;&#x4ECD;&#x7136;&#x662F;&#x4E00;&#x4E2A;&#x7EBF;&#x6027;&#x53D8;&#x6362;&#xFF08;&#x5177;&#x4F53;&#x6765;&#x8BF4;&#x662F;&#x5207;&#x53D8;&#xFF09;&#xFF0C;&#x4F46;&#x4ECE;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x89D2;&#x5EA6;&#x6765;&#x770B;&#xFF0C;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x4EFF;&#x5C04;&#x53D8;&#x6362;&#xFF0C;&#x5BF9;&#x4E09;&#x7EF4;&#x5411;&#x91CF;&#x8FDB;&#x884C;&#x4E86;&#x4F4D;&#x79FB;&#x3002;</li>
+</ul>
+<p>&#x53E6;&#x5916;&#x4E09;&#x7EF4;&#x77E9;&#x9635;&#x53EF;&#x4EE5;&#x6269;&#x5C55;&#x6210;&#x56DB;&#x7EF4;&#x77E9;&#x9635;&#x6765;&#x8868;&#x793A;&#x666E;&#x901A;&#x7684;&#x4E09;&#x7EF4;&#x5411;&#x91CF;&#x7684;&#x53D8;&#x6362;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;\left[\begin{array}{llll}
+x &amp; y &amp; z &amp; 1
+\end{array}\right]\left[\begin{array}{cccc}
+m_{11} &amp; m_{12} &amp; m_{13} &amp; 0 \\
+m_{21} &amp; m_{22} &amp; m_{23} &amp; 0 \\
+m_{31} &amp; m_{32} &amp; m_{33} &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{array}\right]\\
+&amp;=\left[\begin{array}{llll}
+x m_{11}+y m_{21}+z m_{31} &amp; x m_{12}+y m_{22}+z m_{32} &amp; x m_{13}+y m_{23}+z m_{33} &amp; 1
+\end{array}\right]
+\end{aligned}\]</span></p>
+<p>&#x56E0;&#x6B64;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x4E09;&#x7EF4;&#x5411;&#x91CF;&#x9700;&#x8981;&#x5148;&#x8FDB;&#x884C;&#x65CB;&#x8F6C;&#x53D8;&#x6362;&#xFF08;&#x53D8;&#x6362;&#x77E9;&#x9635;&#x4E3A;<span class="math inline">\(\mathbf{R}\)</span>&#xFF09;&#xFF0C;&#x518D;&#x8FDB;&#x884C;&#x4F4D;&#x79FB;&#x53D8;&#x6362;&#xFF08;&#x53D8;&#x6362;&#x77E9;&#x9635;&#x4E3A;<span class="math inline">\(\mathbf{T}\)</span>&#xFF09;&#xFF0C;&#x5219;&#x77E9;&#x9635;&#x53CA;&#x8868;&#x8FBE;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{R}=\left[\begin{array}{cccc}
+r_{11} &amp; r_{12} &amp; r_{13} &amp; 0 \\
+r_{21} &amp; r_{22} &amp; r_{23} &amp; 0 \\
+r_{31} &amp; r_{32} &amp; r_{33} &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{array}\right], \quad \mathbf{T}=\left[\begin{array}{cccc}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 \\
+\Delta x &amp; \Delta y &amp; \Delta z &amp; 1
+\end{array}\right]\]</span></p>
+<p><span class="math display">\[\mathbf{v}^{\prime}=\mathbf{v R T}=\mathbf{v}(\mathbf{R T})=\mathbf{v M}\]</span></p>
+<p>&#x5176;&#x4E2D;<span class="math inline">\(\mathbf{M}\)</span>&#x4E3A;&#x4E24;&#x4E2A;&#x53D8;&#x6362;&#x7ED3;&#x5408;&#x7684;&#x53D8;&#x6362;&#x77E9;&#x9635;&#xFF0C;&#x8868;&#x793A;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\mathbf{M}=\mathbf{R} \mathbf{T} &amp;=\left[\begin{array}{cccc}
+r_{11} &amp; r_{12} &amp; r_{13} &amp; 0 \\
+r_{21} &amp; r_{22} &amp; r_{23} &amp; 0 \\
+r_{31} &amp; r_{32} &amp; r_{33} &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{array}\right]\left[\begin{array}{cccc}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 \\
+\Delta x &amp; \Delta y &amp; \Delta z &amp; 1
+\end{array}\right] \\
+&amp;=\left[\begin{array}{cccc}
+r_{11} &amp; r_{12} &amp; r_{13} &amp; 0 \\
+r_{21} &amp; r_{22} &amp; r_{23} &amp; 0 \\
+r_{31} &amp; r_{32} &amp; r_{33} &amp; 0 \\
+\Delta x &amp; \Delta y &amp; \Delta z &amp; 1
+\end{array}\right]
+\end{aligned}\]</span></p>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x77E9;&#x9635;<span class="math inline">\(\mathbf{M}\)</span>&#x662F;&#x5C06;<span class="math inline">\(\mathbf{R}\)</span>&#x548C;<span class="math inline">\(\mathbf{T}\)</span>&#x4E2D;&#x7684;&#x53D8;&#x6362;&#x90E8;&#x5206;&#x548C;&#x5728;&#x4E86;&#x4E00;&#x8D77;&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[\mathbf{M}=\left[\begin{array}{ll}
+\mathbf{R} &amp; \mathbf{0} \\
+\mathbf{t} &amp; 1
+\end{array}\right]\]</span></p>
+<p>&#x53E6;&#x5916;&#x5982;&#x524D;&#x6240;&#x8FF0;&#xFF0C;&#x5F53;&#x4E00;&#x4E2A;&#x9F50;&#x6B21;&#x7A7A;&#x95F4;&#x4E2D;&#x7684;&#x5411;&#x91CF;&#x5750;&#x6807;&#x7684;&#x7B2C;&#x56DB;&#x4E2A;&#x5143;&#x7D20;<span class="math inline">\(w=0\)</span>&#x65F6;&#xFF0C;&#x8FD9;&#x4E2A;&#x5750;&#x6807;&#x8868;&#x793A;&#x7684;&#x662F;&#x4F4D;&#x7F6E;&#x800C;&#x4E0D;&#x662F;&#x4F4D;&#x79FB;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF0C;&#x53D6;&#x5411;&#x91CF;&#x7684;&#x5750;&#x6807;&#x4E3A;<span class="math inline">\(\left[\begin{array}{llll}x &amp; y &amp; z &amp; 0\end{array}\right]\)</span>&#xFF0C;&#x4E0E;<span class="math inline">\(\mathbf{M}\)</span>&#x76F8;&#x4E58;&#x7684;&#x7ED3;&#x679C;&#x5C06;&#x4E0D;&#x5305;&#x542B;&#x4F4D;&#x79FB;&#x4FE1;&#x606F;&#xFF0C;&#x5982;&#xFF1A;</p>
+<p><span class="math display">\[\begin{array}{ll}
+\left[\begin{array}{llllllll}
+x &amp; y &amp; z &amp; 0
+\end{array}\right]\left[\begin{array}{llll}
+r_{11} &amp; r_{12} &amp; r_{13} &amp; 0 \\
+r_{21} &amp; r_{22} &amp; r_{23} &amp; 0 \\
+r_{31} &amp; r_{32} &amp; r_{33} &amp; 0 \\
+\Delta x &amp; \Delta y &amp; \Delta z &amp; 1
+\end{array}\right] \\
+&amp; =\left[\begin{array}{llll}
+x r_{11}+y r_{21}+z r_{31} &amp; x r_{12}+y r_{22}+z r_{32} &amp; x r_{13}+y r_{23}+z r_{33} &amp; 0
+\end{array}\right]
+\end{array}\]</span></p>
+<h3 id="general-affine-transformations">General Affine Transformations</h3>
+<p>&#x5728;&#x56DB;&#x7EF4;&#x9F50;&#x6B21;&#x7A7A;&#x95F4;&#x4E2D;&#xFF0C;&#x5C31;&#x80FD;&#x5B9E;&#x73B0;&#x4EFF;&#x5C04;&#x53D8;&#x6362;&#x800C;&#x4E0D;&#x4EC5;&#x4EC5;&#x662F;&#x7EBF;&#x6027;&#x53D8;&#x6362;&#xFF0C;&#x7ECF;&#x5E38;&#x4F7F;&#x7528;&#x7684;&#x4EFF;&#x5C04;&#x53D8;&#x6362;&#x5305;&#x62EC;&#xFF1A;</p>
+<ol type="1">
+<li>&#x7ED5;&#x7740;&#x4E0D;&#x7ECF;&#x8FC7;&#x539F;&#x70B9;&#x7684;&#x4EFB;&#x610F;&#x8F74;&#x65CB;&#x8F6C;</li>
+<li>&#x6CBF;&#x7740;&#x4E0D;&#x7ECF;&#x8FC7;&#x539F;&#x70B9;&#x7684;&#x4EFB;&#x610F;&#x8F74;&#x7F29;&#x653E;</li>
+<li>&#x6CBF;&#x7740;&#x4E0D;&#x7ECF;&#x8FC7;&#x539F;&#x70B9;&#x7684;&#x4EFB;&#x610F;&#x5E73;&#x9762;&#x53CD;&#x5C04;</li>
+<li>&#x6295;&#x5F71;&#x81F3;&#x4EFB;&#x610F;&#x4E0D;&#x5305;&#x62EC;&#x539F;&#x70B9;&#x7684;&#x5E73;&#x9762;</li>
+</ol>
+<p>&#x8FD9;&#x4E9B;&#x53D8;&#x6362;&#x7684;&#x57FA;&#x672C;&#x601D;&#x8DEF;&#x90FD;&#x662F;&#xFF0C;&#x5148;&#x5C06;&#x7EBF;&#x6027;&#x53D8;&#x6362;&#x7684;&#x4E2D;&#x5FC3;&#xFF08;&#x5982;&#x65CB;&#x8F6C;&#x8F74;&#xFF0C;&#x7F29;&#x653E;&#x8F74;&#xFF0C;&#x6295;&#x5F71;&#x5E73;&#x9762;&#x7B49;&#xFF09;&#x79FB;&#x52A8;&#x5230;&#x539F;&#x70B9;&#xFF0C;&#x518D;&#x8FDB;&#x884C;&#x7EBF;&#x6027;&#x53D8;&#x6362;&#xFF0C;&#x6700;&#x540E;&#x4F4D;&#x79FB;&#x56DE;&#x539F;&#x70B9;&#x3002;&#x5C06;&#x4F4D;&#x79FB;&#x7684;&#x77E9;&#x9635;&#x547D;&#x540D;&#x4E3A;<span class="math inline">\(\mathbf{T}\)</span>&#xFF0C;&#x5C06;&#x7EBF;&#x6027;&#x53D8;&#x6362;&#x7684;&#x77E9;&#x9635;&#x547D;&#x540D;&#x4E3A;<span class="math inline">\(\mathbf{R}\)</span>&#xFF0C;&#x5373;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{T}=\left[\begin{array}{cccc}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 \\
+-p_{x} &amp; -p_{y} &amp; -p_{z} &amp; 1
+\end{array}\right]=\left[\begin{array}{cc}
+\mathbf{I} &amp; \mathbf{0} \\
+-\mathbf{p} &amp; 1
+\end{array}\right]\]</span></p>
+<p><span class="math display">\[\mathbf{R}_{4 \times 4}=\left[\begin{array}{cccc}
+r_{11} &amp; r_{12} &amp; r_{13} &amp; 0 \\
+r_{21} &amp; r_{22} &amp; r_{23} &amp; 0 \\
+r_{31} &amp; r_{32} &amp; r_{33} &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1
+\end{array}\right]=\left[\begin{array}{cc}
+\mathbf{R}_{3 \times 3} &amp; \mathbf{0} \\
+\mathbf{0} &amp; 1
+\end{array}\right]\]</span></p>
+<p><span class="math display">\[\mathbf{T}^{-1}=\left[\begin{array}{cccc}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 \\
+p_{x} &amp; p_{y} &amp; p_{z} &amp; 1
+\end{array}\right]=\left[\begin{array}{ll}
+\mathbf{I} &amp; 0 \\
+\mathbf{p} &amp; 1
+\end{array}\right]\]</span></p>
+<p>&#x6309;&#x4E0A;&#x8FF0;&#x7684;&#xFF0C;&#x5148;&#x4F4D;&#x79FB;&#x518D;&#x7EBF;&#x6027;&#x53D8;&#x6362;&#x518D;&#x4F4D;&#x79FB;&#x56DE;&#x53BB;&#x7684;&#x64CD;&#x4F5C;&#x65B9;&#x6CD5;&#xFF0C;&#x5B9E;&#x9645;&#x53D8;&#x6362;&#x8FC7;&#x7A0B;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+T R_{4 \times 4} T^{-1} &amp;=\left[\begin{array}{ll}
+I &amp; 0 \\
+-p &amp; 1
+\end{array}\right]\left[\begin{array}{ll}
+R_{3\times 3} &amp; 0 \\
+0 &amp; 1
+\end{array}\right]\left[\begin{array}{ll}
+I &amp; 0 \\
+p &amp; 1
+\end{array}\right] \\
+&amp;=\left[\begin{array}{ll}
+R_{3\times 3} &amp; 0 \\
+-p \left(R_{3\times 3}\right) &amp; 1
+\end{array}\right]\left[\begin{array}{ll}
+I &amp; 0 \\
+p &amp; 1
+\end{array}\right] \\
+&amp;=\left[\begin{array}{ll}
+R_{3 \times 3} &amp; 0 \\
+-p\left(R_{3 \times 3}\right)+p &amp; 1
+\end{array}\right]
+\end{aligned}\]</span></p>
+<h2 id="times-4-matrices-and-perspective-projection"><span class="math inline">\(4 \times 4\)</span> Matrices and Perspective Projection</h2>
+<p>&#x5728;&#x7B2C;&#x4E94;&#x7AE0;&#x4E2D;&#x63D0;&#x5230;&#x4E86;&#x6B63;&#x4EA4;&#x6295;&#x5F71;&#xFF0C;&#x6B63;&#x4EA4;&#x6295;&#x5F71;&#x662F;&#x4E00;&#x79CD;&#x5E73;&#x884C;&#x6295;&#x5F71;&#xFF0C;&#x6BCF;&#x6761;&#x9876;&#x70B9;&#x548C;&#x5176;&#x6295;&#x5F71;&#x70B9;&#x7684;&#x8FDE;&#x7EBF;&#x662F;&#x5E73;&#x884C;&#x7684;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200309005931269.png" alt="&#x6B63;&#x4EA4;&#x6295;&#x5F71;" style="zoom:50%;"></p>
+<p>&#x5728;3D&#x4E2D;&#x7684;&#x900F;&#x89C6;&#x6295;&#x5F71;&#xFF08;Perspective projection&#xFF09;&#x6295;&#x5F71;&#x540C;&#x6837;&#x4E5F;&#x662F;&#x6295;&#x5F71;&#x5230;&#x4E8C;&#x7EF4;&#x5E73;&#x9762;&#x4E0A;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x662F;&#x6240;&#x6709;&#x7684;&#x9876;&#x70B9;&#x4E0E;&#x6295;&#x5F71;&#x70B9;&#x7684;&#x8FDE;&#x7EBF;&#x4F1A;&#x76F8;&#x4F1A;&#x5728;&#x6295;&#x5F71;&#x4E2D;&#x5FC3;&#xFF08;Center of projection&#xFF09;&#x4E0A;&#xFF0C;&#x4E14;&#x5728;&#x6295;&#x5F71;&#x5E73;&#x9762;&#x540E;&#x8FD9;&#x4E9B;&#x8FDE;&#x7EBF;&#x7684;&#x5EF6;&#x4F38;&#x4F1A;&#x5728;&#x6295;&#x5F71;&#x5E73;&#x9762;&#x4E0A;&#x6784;&#x6210;&#x4E00;&#x4E2A;&#x5012;&#x8F6C;&#x7684;&#x56FE;&#x5F62;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200309010328675.png" alt="&#x900F;&#x89C6;&#x6295;&#x5F71;" style="zoom:50%;"></p>
+<p>&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x900F;&#x89C6;&#x6295;&#x5F71;&#x6765;&#x8BF4;&#xFF0C;&#x6295;&#x5F71;&#x5E73;&#x9762;&#x662F;&#x56FA;&#x5B9A;&#x7684;&#xFF0C;&#x6295;&#x5F71;&#x4E2D;&#x5FC3;&#x8DDD;&#x79BB;&#x6295;&#x5F71;&#x5E73;&#x9762;&#x7684;&#x8DDD;&#x79BB;&#x4E5F;&#x662F;&#x56FA;&#x5B9A;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x7269;&#x4F53;&#x79BB;&#x6295;&#x5F71;&#x4E2D;&#x5FC3;&#x8D8A;&#x8FD1;&#xFF0C;&#x5176;&#x5728;&#x6295;&#x5F71;&#x5E73;&#x9762;&#x4E0A;&#x7684;&#x6784;&#x6210;&#x7684;&#x56FE;&#x50CF;&#x5927;&#x5C0F;&#x5C31;&#x8D8A;&#x5927;&#xFF0C;&#x8FD9;&#x4E2A;&#x73B0;&#x8C61;&#x79F0;&#x4E3A;&#x900F;&#x89C6;&#x6536;&#x7F29;&#xFF08;perspective forshortening&#xFF09;&#x3002;</p>
+<h3 id="a-pinhole-camera">A pinhole Camera</h3>
+<p>&#x900F;&#x89C6;&#x6295;&#x5F71;&#x4E4B;&#x6240;&#x4EE5;&#x5728;&#x56FE;&#x5F62;&#x5B66;&#x4E2D;&#x5F88;&#x91CD;&#x8981;&#xFF0C;&#x662F;&#x56E0;&#x4E3A;&#x5B83;&#x5C31;&#x662F;&#x4EBA;&#x7C7B;&#x89C6;&#x89C9;&#x7CFB;&#x7EDF;&#x5DE5;&#x4F5C;&#x7684;&#x65B9;&#x5F0F;&#x3002;&#x4EBA;&#x773C;&#x53EF;&#x4EE5;&#x7B80;&#x5316;&#x4E3A;&#x662F;&#x4E00;&#x4E2A;&#x5C0F;&#x5B54;&#x6210;&#x50CF;&#x7CFB;&#x7EDF;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200309010825155.png" alt="&#x5C0F;&#x5B54;&#x6210;&#x50CF;" style="zoom:50%;"></p>
+<p>&#x76D2;&#x5B50;&#x4E0A;&#x7684;&#x5C0F;&#x5B54;&#x5373;&#x662F;&#x6295;&#x5F71;&#x4E2D;&#x5FC3;&#xFF0C;&#x76D2;&#x5B50;&#x7684;&#x540E;&#x8868;&#x9762;&#x5C31;&#x662F;&#x6295;&#x5F71;&#x5E73;&#x9762;&#x3002;</p>
+<p>&#x5C0F;&#x53E3;&#x6210;&#x50CF;&#x53EF;&#x4EE5;&#x7528;&#x5750;&#x6807;&#x6765;&#x8868;&#x793A;&#xFF0C;&#x5C06;&#x6295;&#x5F71;&#x770B;&#x4F5C;&#x662F;&#x539F;&#x70B9;&#xFF0C;&#x5C06;&#x7269;&#x4F53;&#x7684;&#x9876;&#x70B9;&#x770B;&#x4F5C;&#x662F;<span class="math inline">\(p\)</span>&#x70B9;&#xFF0C;&#x5C06;&#x7269;&#x4F53;&#x5728;&#x6295;&#x5F71;&#x5E73;&#x9762;&#x4E0A;&#x7684;&#x6210;&#x50CF;&#x770B;&#x4F5C;&#x662F;<span class="math inline">\(p^{\prime}\)</span>&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200309011052254.png" alt="&#x5C0F;&#x5B54;&#x6210;&#x50CF;&#x5750;&#x6807;" style="zoom:50%;"></p>
+<p>&#x6839;&#x636E;&#x4E09;&#x89D2;&#x5F62;&#x76F8;&#x4F3C;&#x5B9A;&#x7406;&#xFF0C;&#x53EF;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[\frac{-p_{y}^{\prime}}{d}=\frac{p_{y}}{z} \quad \Longrightarrow \quad p_{y}^{\prime}=\frac{-d p_{y}}{z}\]</span></p>
+<p>&#x540C;&#x7406;&#x53EF;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[p_{x}^{\prime}=\frac{-d p_{x}}{z}\]</span></p>
+<p>&#x56E0;&#x6B64;&#xFF0C;&#x6574;&#x4E2A;&#x53D8;&#x6362;&#x53EF;&#x4EE5;&#x8868;&#x8FBE;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{p}=\left[\begin{array}{lll}
+x &amp; y &amp; z
+\end{array}\right] \quad \Longrightarrow \quad \mathbf{p}^{\prime}=\left[\begin{array}{lll}
+x^{\prime} &amp; y^{\prime} &amp; z^{\prime}
+\end{array}\right]=\left[\begin{array}{ccc}
+-d x / z &amp; -d y / z &amp; -d
+\end{array}\right]\]</span></p>
+<p>&#x5728;&#x8BA1;&#x7B97;&#x673A;&#x7684;&#x5B9E;&#x9645;&#x8FD0;&#x7528;&#x4E2D;&#xFF0C;&#x4E0A;&#x8FF0;&#x7ED3;&#x679C;&#x4E2D;&#x7684;&#x8D1F;&#x53F7;&#x662F;&#x5B8C;&#x5168;&#x6CA1;&#x610F;&#x4E49;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x7B49;&#x540C;&#x4E8E;&#x5C06;&#x6295;&#x5F71;&#x5E73;&#x9762;&#x79FB;&#x52A8;&#x5230;&#x6295;&#x5F71;&#x4E2D;&#x5FC3;&#x524D;&#x9762;&#xFF08;&#x8FD9;&#x6837;&#x7684;&#x4F5C;&#x6CD5;&#x5728;&#x771F;&#x5B9E;&#x7269;&#x7406;&#x4E16;&#x754C;&#x4E2D;&#x662F;&#x4E0D;&#x53EF;&#x884C;&#x7684;&#xFF09;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/image-20200309011528877.png" alt="&#x5C0F;&#x5B54;&#x6210;&#x50CF;&#x5750;&#x6807;&#x53D8;&#x5F62;" style="zoom:50%;"></p>
+<p>&#x5219;&#x53D8;&#x6362;&#x53D8;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{p}^{\prime}=\left[\begin{array}{lll}
+x^{\prime} &amp; y^{\prime} &amp; z^{\prime}
+\end{array}\right]=\left[\begin{array}{lll}
+d x / z &amp; d y / z &amp; d]
+\end{array}\right.\]</span></p>
+<h3 id="perspective-projection-matrices">Perspective Projection Matrices</h3>
+<p>&#x4E3A;&#x4E86;&#x5C06;&#x4E0A;&#x8FF0;&#x7684;<span class="math inline">\(p^{\prime}\)</span>&#x8F6C;&#x6362;&#x5230;&#x56DB;&#x7EF4;&#x9F50;&#x6B21;&#x7A7A;&#x95F4;&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x4E3A;<span class="math inline">\(xyz\)</span>&#x4E09;&#x4E2A;&#x5206;&#x91CF;&#x627E;&#x51FA;&#x4E00;&#x4E2A;&#x516C;&#x56E0;&#x6570;&#x4F5C;&#x4E3A;<span class="math inline">\(w\)</span>&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[\mathbf{p}^{\prime}=\left[\begin{array}{lll}
+d x / z &amp; d y / z &amp; d
+\end{array}\right]=\left[\begin{array}{lll}
+d x / z &amp; d y / z &amp; d z / z
+\end{array}\right]=\frac{\left[\begin{array}{lll}
+x &amp; y &amp; z
+\end{array}\right]}{z / d}\]</span></p>
+<p>&#x516C;&#x56E0;&#x6570;&#x4E3A;<span class="math inline">\(z/d\)</span>&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x4E3A;&#x9F50;&#x6B21;&#x5750;&#x6807;&#xFF1A;</p>
+<p><span class="math display">\[\left[\begin{array}{llll}
+x &amp; y &amp; z &amp; z / d
+\end{array}\right]\]</span></p>
+<p>&#x5BF9;&#x4E8E;&#x9F50;&#x6B21;&#x5411;&#x91CF;<span class="math inline">\([x,y,z,1]\)</span>&#x5982;&#x679C;&#x60F3;&#x8981;&#x8F6C;&#x6362;&#x5230;&#x4E0A;&#x8FF0;&#x7684;&#x9F50;&#x6B21;&#x5750;&#x6807;&#xFF0C;&#x9700;&#x8981;&#x7528;&#x4E0B;&#x5217;&#x77E9;&#x9635;&#xFF0C;&#x8BE5;&#x77E9;&#x9635;&#x79F0;&#x4E3A;&#x6295;&#x5F71;&#x77E9;&#x9635;&#xFF1A;</p>
+<p><span class="math display">\[\left[\begin{array}{llll}
+x &amp; y &amp; z &amp; 1
+\end{array}\right]\left[\begin{array}{llll}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 1 / d \\
+0 &amp; 0 &amp; 0 &amp; 0
+\end{array}\right]=\left[\begin{array}{llll}
+x &amp; y &amp; z &amp; z / d
+\end{array}\right]\]</span></p>
+<blockquote>
+<p>&#x901A;&#x8FC7;&#x77E9;&#x9635;&#xFF0C;&#x6C42;&#x51FA;<span class="math inline">\(\left[\begin{array}{llll} x &amp; y &amp; z &amp; z / d \end{array}\right]\)</span>&#x7684;&#x8FC7;&#x7A0B;&#x5E76;&#x4E0D;&#x662F;&#x900F;&#x89C6;&#x6295;&#x5F71;&#xFF0C;&#x5C06;<span class="math inline">\(\left[\begin{array}{llll} x &amp; y &amp; z &amp; z / d \end{array}\right]\)</span>&#x8F6C;&#x6362;&#x4E3A;<span class="math inline">\(\left[\begin{array}{llll} d x / z &amp; d y / z &amp; d &amp; 1 \end{array}\right]\)</span>&#x7684;&#x8FC7;&#x7A0B;&#x624D;&#x662F;&#x3002;</p>
+</blockquote>
+<p>&#x5728;&#x771F;&#x5B9E;&#x8FD0;&#x7528;&#x4E2D;&#xFF0C;&#x6295;&#x5F71;&#x77E9;&#x9635;&#x4F1A;&#x6BD4;&#x8FD9;&#x91CC;&#x66F4;&#x52A0;&#x590D;&#x6742;&#xFF08;&#x540C;&#x6837;&#x4E5F;&#x4F1A;&#x79F0;&#x4E3A;&#x88C1;&#x526A;&#x77E9;&#x9635;&#xFF09;&#xFF0C;&#x4E3B;&#x8981;&#x7684;&#x533A;&#x522B;&#x5728;&#x4E8E;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5728;&#x8FDC;&#x526A;&#x5207;&#x5E73;&#x9762;&#x4F1A;&#x4FDD;&#x8BC1;<span class="math inline">\(w=1\)</span>&#x3002;&#x8FD9;&#x6837;&#x505A;&#x4FDD;&#x8BC1;&#x4E86;&#x6DF1;&#x5EA6;&#x68C0;&#x6D4B;&#x7684;&#x7CBE;&#x786E;&#x6027;&#xFF08;//TODO why&#xFF1F;&#xFF09;&#x3002;</li>
+<li>&#x8FD8;&#x9700;&#x8981;&#x5BF9;<span class="math inline">\(x&#xFF0C;y\)</span>&#x8FDB;&#x884C;&#x7F29;&#x653E;&#x6765;&#x6EE1;&#x8DB3;&#x6444;&#x50CF;&#x673A;&#x7684;&#x89C6;&#x91CE;&#xFF08;Field of view&#xFF09;&#x8981;&#x6C42;&#x3002;</li>
+</ol>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>3D Math Primer for Graphics and Game Development</em> 2nd 2011</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/" title="《3D数学基础：图形和游戏开发》第六章笔记">https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter6-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/3D数学/" rel="tag"># 3D数学</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter5-Notes/" rel="prev" title="《3D数学基础：图形和游戏开发》第五章笔记">
+      <i class="fa fa-chevron-left"></i> 《3D数学基础：图形和游戏开发》第五章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/RulesOfPlay-Chapter3-Notes/" rel="next" title="《Rules of Play》 第三章笔记">
+      《Rules of Play》 第三章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-6-more-on-matrices"><span class="nav-number">1.</span> <span class="nav-text">Chapter 6 More on Matrices</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#determinant-of-a-matrix"><span class="nav-number">1.1.</span> <span class="nav-text">Determinant of a Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#determinants-of-2times-2-and-3times-3-matrices"><span class="nav-number">1.1.1.</span> <span class="nav-text">Determinants of \(2\times 2\) and \(3\times 3\) matrices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#minros-and-cofactors"><span class="nav-number">1.1.2.</span> <span class="nav-text">Minros and Cofactors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#determinants-of-arbitary-ntimes-n-matrices"><span class="nav-number">1.1.3.</span> <span class="nav-text">Determinants of Arbitary \(n\times n\) Matrices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#geometric-interpretation-of-determinant"><span class="nav-number">1.1.4.</span> <span class="nav-text">Geometric Interpretation of Determinant</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inverse-of-a-matrix"><span class="nav-number">1.2.</span> <span class="nav-text">Inverse of a Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-classical-adjoint"><span class="nav-number">1.2.1.</span> <span class="nav-text">The Classical Adjoint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#matrix-inverse-official-linear-algebra-rules"><span class="nav-number">1.2.2.</span> <span class="nav-text">Matrix Inverse-Official Linear Algebra Rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#matrix-inverse-geometric-interpretation"><span class="nav-number">1.2.3.</span> <span class="nav-text">Matrix Inverse-Geometric Interpretation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#orthogonal-matrices"><span class="nav-number">1.3.</span> <span class="nav-text">Orthogonal Matrices</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#orthogonal-matrices-official-linear-algebra-rules"><span class="nav-number">1.3.1.</span> <span class="nav-text">Orthogonal Matrices-Official Linear Algebra Rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orthogonal-matrices-geometric-interpretation"><span class="nav-number">1.3.2.</span> <span class="nav-text">Orthogonal Matrices-Geometric Interpretation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orthogonalizing-a-matrix"><span class="nav-number">1.3.3.</span> <span class="nav-text">Orthogonalizing a Matrix</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#times-4-homogeneous-matrices"><span class="nav-number">1.4.</span> <span class="nav-text">\(4\times 4\) Homogeneous Matrices</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#d-homogeneous-space"><span class="nav-number">1.4.1.</span> <span class="nav-text">4D Homogeneous Space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#times-4-translation-matrices"><span class="nav-number">1.4.2.</span> <span class="nav-text">\(4\times 4\) Translation Matrices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#general-affine-transformations"><span class="nav-number">1.4.3.</span> <span class="nav-text">General Affine Transformations</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#times-4-matrices-and-perspective-projection"><span class="nav-number">1.5.</span> <span class="nav-text">\(4 \times 4\) Matrices and Perspective Projection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-pinhole-camera"><span class="nav-number">1.5.1.</span> <span class="nav-text">A pinhole Camera</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#perspective-projection-matrices"><span class="nav-number">1.5.2.</span> <span class="nav-text">Perspective Projection Matrices</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

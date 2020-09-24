@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="keywords" content="读书笔记,OpenGL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《LearnOpenGL》 笔记 (一)">
+<meta property="og:url" content="https://xuejiaw.github.io/LearnOpenGL-Notes-1/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/LearnOpenGL-Notes-1/CreatingaWindow.png">
+<meta property="og:image" content="https://xuejiaw.github.io/LearnOpenGL-Notes-1/2020-05-25-16-02-22.png">
+<meta property="og:image" content="https://xuejiaw.github.io/LearnOpenGL-Notes-1/2020-05-25-16-09-15.png">
+<meta property="og:image" content="https://xuejiaw.github.io/LearnOpenGL-Notes-1/2020-05-25-16-10-05.png">
+<meta property="og:image" content="https://xuejiaw.github.io/LearnOpenGL-Notes-1/2020-05-25-16-13-02.png">
+<meta property="og:image" content="https://xuejiaw.github.io/LearnOpenGL-Notes-1/2020-05-25-16-14-48.png">
+<meta property="og:image" content="https://xuejiaw.github.io/LearnOpenGL-Notes-1/2020-05-25-16-27-36.png">
+<meta property="og:image" content="https://xuejiaw.github.io/LearnOpenGL-Notes-1/2020-05-25-16-43-42.png">
+<meta property="og:image" content="https://xuejiaw.github.io/LearnOpenGL-Notes-1/2020-05-25-17-17-33.png">
+<meta property="og:updated_time" content="2020-09-24T12:44:42.568Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《LearnOpenGL》 笔记 (一)">
+<meta name="twitter:image" content="https://xuejiaw.github.io/LearnOpenGL-Notes-1/CreatingaWindow.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/LearnOpenGL-Notes-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《LearnOpenGL》 笔记 (一) | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/LearnOpenGL-Notes-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《LearnOpenGL》 笔记 (一)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-25 20:41:17" itemprop="dateCreated datePublished" datetime="2020-05-25T20:41:17+08:00">2020-05-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 20:44:42" itemprop="dateModified" datetime="2020-09-24T20:44:42+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/图形学/" itemprop="url" rel="index"><span itemprop="name">图形学</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/LearnOpenGL-Notes-1/" class="post-meta-item leancloud_visitors" data-flag-title="《LearnOpenGL》 笔记 (一)" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/LearnOpenGL-Notes-1/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/LearnOpenGL-Notes-1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p><img src="/LearnOpenGL-Notes-1/CreatingaWindow.png" alt="Creating a Window" style="zoom:50%;"></p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="creating-a-window">Creating a Window</h1>
+<p>&#x5728;OpenGL&#x524D;&#xFF0C;&#x9996;&#x5148;&#x9700;&#x8981;&#x521B;&#x5EFA;OpenGL&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#x548C;&#x7528;&#x4E8E;&#x7ED8;&#x5236;&#x7684;&#x7A97;&#x53E3;&#x7B49;&#xFF0C;&#x8FD9;&#x4E9B;&#x5185;&#x5BB9;&#x662F;&#x4E0E;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x76F8;&#x5173;&#x7684;&#xFF0C;&#x800C;OpenGL&#x5219;&#x662F;&#x5E0C;&#x671B;&#x6210;&#x4E3A;&#x4E00;&#x4E2A;&#x5938;&#x5E73;&#x53F0;&#x7684;&#x5DE5;&#x5177;&#xFF0C;&#x56E0;&#x6B64;OpenGL&#x672C;&#x8EAB;&#x5E76;&#x4E0D;&#x590D;&#x6742;&#x8FD9;&#x4E9B;&#x5185;&#x5BB9;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x9700;&#x8981;&#x7528;&#x6237;&#x81EA;&#x5DF1;&#x6765;&#x8FDB;&#x884C;&#x76F8;&#x5173;&#x7684;&#x73AF;&#x5883;&#x914D;&#x7F6E;&#x3002;&#x597D;&#x5728;&#x4E00;&#x4E9B;&#x73B0;&#x6709;&#x7684;&#x5E93;&#x4EE5;&#x53CA;&#x5E2E;&#x52A9;&#x5B8C;&#x6210;&#x4E86;&#x5DE5;&#x4F5C;&#xFF0C;&#x8FD9;&#x91CC;&#x9996;&#x5148;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x7684;&#x5C31;&#x662F;&#x76F8;&#x5173;&#x5E93;&#x7684;&#x914D;&#x7F6E;&#x3002;</p>
+<h2 id="glfw">GLFW</h2>
+<p>GLFW&#x662F;&#x4E00;&#x4E2A;&#x5F00;&#x6E90;&#x7684;OpenGL&#x5E93;&#xFF0C;&#x4E3B;&#x8981;&#x4E3A;&#x521B;&#x5EFA;&#x7A97;&#x53E3;&#xFF0C;OpenGL&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x5904;&#x7406;&#x7528;&#x6237;&#x8F93;&#x5165;&#x7B49;&#x529F;&#x80FD;&#x63D0;&#x4F9B;&#x4E86;&#x7B80;&#x5355;&#x7684;API&#x3002;</p>
+<p>&#x4ECE;<a href="https://www.glfw.org/download.html" target="_blank" rel="noopener">&#x5B98;&#x7F51;</a>&#x4E2D;&#x4E0B;&#x8F7D;GLFW&#x6E90;&#x6587;&#x4EF6;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x4E0B;&#x8F7D;&#x5E76;&#x5B89;&#x88C5;<a href="https://cmake.org/download/" target="_blank" rel="noopener">CMake</a>&#x8F6F;&#x4EF6;&#x63A8;&#x8350;&#xFF0C;windows&#x5E73;&#x53F0;&#x4E0B;&#x63A8;&#x8350;&#x4E0B;&#x8F7D;msi&#x7248;&#x672C;&#x3002;</p>
+<p>&#x5B89;&#x88C5;Cmake&#x540E;&#xFF0C;&#x6309;&#x4E0B;&#x56FE;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#xFF0C;&#x4ECE;&#x4E0A;&#x5230;&#x4E0B;&#x4E09;&#x4E2A;&#x7EA2;&#x6846;&#x5206;&#x522B;&#x8868;&#x793A;&#xFF0C;GLFW&#x7684;&#x6E90;&#x4EE3;&#x7801;&#x5730;&#x5740;&#xFF0C;&#x7F16;&#x8BD1;&#x540E;&#x7ED3;&#x679C;&#x7684;&#x8F93;&#x51FA;&#x5730;&#x5740;&#x4EE5;&#x53CA;&#x7F16;&#x8BD1;&#x5BF9;&#x8C61;&#xFF0C;&#x8FD9;&#x91CC;&#x56E0;&#x4E3A;&#x60F3;&#x642D;&#x5EFA;&#x7684;&#x662F;VSCode&#x73AF;&#x5883;&#x4E0B;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x6240;&#x4EE5;&#x9009;&#x62E9;&#x4E86;<code>MinGW Makefiles</code>&#x3002;&#x5176;&#x4E2D;&#x7B2C;&#x4E09;&#x4E2A;&#x7EA2;&#x6846;&#x7684;&#x7A97;&#x53E3;&#x65F6;&#x901A;&#x8FC7;&#x6309;&#x5DE6;&#x4E0B;&#x89D2;&#x7684;<code>Configure</code>&#x6309;&#x94AE;&#x547C;&#x51FA;&#x7684;&#x3002;</p>
+<p><img src="/LearnOpenGL-Notes-1/2020-05-25-16-02-22.png" alt="Cmake&#x914D;&#x7F6E;"></p>
+<p>&#x914D;&#x7F6E;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x52FE;&#x9009;&#x4E0A;&#x6700;&#x4E0A;&#x9762;&#x7684;<code>BUILD_SHARD_LIBS</code>&#x9009;&#x9879;&#x540E;&#x70B9;&#x79EF;<code>Generate</code>&#x6309;&#x94AE;&#x3002;</p>
+<p><img src="/LearnOpenGL-Notes-1/2020-05-25-16-09-15.png" alt="&#x914D;&#x7F6E;&#x5B8C;&#x6210;&#x540E;"></p>
+<p>&#x8F93;&#x51FA;&#x540E;&#xFF0C;&#x8FDB;&#x5165;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x5E76;&#x901A;&#x8FC7;<code>mingw32-make</code>&#x547D;&#x4EE4;&#x8FDB;&#x884C;&#x7F16;&#x8BD1;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/LearnOpenGL-Notes-1/2020-05-25-16-10-05.png" alt="mingw32&#x7F16;&#x8BD1;"></p>
+<p>&#x6CE8;&#x610F;&#x8FD9;&#x4E00;&#x6B65;&#x9700;&#x8981;&#x5B89;&#x88C5;<a href="https://osdn.net/projects/mingw/releases/" target="_blank" rel="noopener">mingw</a>&#x5DE5;&#x5177;&#x3002;</p>
+<p>&#x5B8C;&#x6210;&#x540E;&#x8FDB;&#x5165;<code>src</code>&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x5176;&#x4E2D;&#x7684;<code>glfw3.dll</code>&#x548C;<code>libglfw3dll.a</code>&#x5373;&#x4E3A;&#x6240;&#x9700;&#x8981;&#x7684;&#x9759;&#x6001;&#x94FE;&#x63A5;&#x6587;&#x4EF6;&#x3002;</p>
+<p><img src="/LearnOpenGL-Notes-1/2020-05-25-16-13-02.png" alt="Lib&#x6587;&#x4EF6;"></p>
+<p>&#x800C;&#x9700;&#x8981;&#x7684;&#x5934;&#x6587;&#x4EF6;&#xFF0C;&#x5219;&#x5728;<code>glfw3</code>&#x7684;&#x6E90;&#x4EE3;&#x7801;&#x8DEF;&#x5F84;&#x4E0B;&#x7684;<code>include</code>&#x6587;&#x4EF6;&#x5939;&#x4E2D;</p>
+<p><img src="/LearnOpenGL-Notes-1/2020-05-25-16-14-48.png" alt="&#x5934;&#x6587;&#x4EF6;"></p>
+<h2 id="glad">GLAD</h2>
+<p>OpenGL&#x5B9E;&#x8D28;&#x4E0A;&#x662F;&#x4E00;&#x4E2A;&#x6807;&#x51C6;&#xFF0C;&#x56E0;&#x6B64;&#x5BF9;&#x4E8E;&#x4E0D;&#x540C;&#x7684;&#x663E;&#x5361;&#x5382;&#x5546;&#x800C;&#x8A00;&#xFF0C;&#x4F1A;&#x505A;&#x51FA;&#x4E0D;&#x540C;&#x7684;OpenGL&#x76F8;&#x5173;&#x9A71;&#x52A8;&#xFF0C;&#x4E5F;&#x56E0;&#x6B64;OpenGL&#x51FD;&#x6570;&#x7684;&#x5730;&#x5740;&#x5E76;&#x4E0D;&#x80FD;&#x5728;&#x7F16;&#x8BD1;&#x65F6;&#x523B;&#x786E;&#x5B9A;&#xFF0C;&#x53EA;&#x80FD;&#x5728;Runtime&#x65F6;&#x627E;&#x5230;&#x76F8;&#x5173;&#x7684;&#x51FD;&#x6570;&#x6307;&#x9488;&#x5730;&#x5740;&#x518D;&#x4F7F;&#x7528;&#x8BE5;&#x6307;&#x9488;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x65E0;&#x7591;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x5F88;&#x7E41;&#x7410;&#x7684;&#x529F;&#x80FD;&#x3002;</p>
+<p>&#x800C;<code>GLAD</code>&#x5E93;&#x7B80;&#x5316;&#x4E86;&#x76F8;&#x5173;&#x64CD;&#x4F5C;&#xFF0C;&#x5E76;&#x4E14;<code>GLAD</code>&#x5E93;&#x4F7F;&#x7528;&#x4E86;&#x7F51;&#x7EDC;&#x670D;&#x52A1;&#x6765;&#x7B80;&#x5316;&#x4E86;&#x7F16;&#x8BD1;&#x8FC7;&#x7A0B;&#xFF0C;&#x53EA;&#x8981;&#x5728;&#x5176;<a href="https://glad.dav1d.de/" target="_blank" rel="noopener">&#x7F51;&#x7AD9;</a>&#x4E0A;&#x9009;&#x62E9;&#x76EE;&#x6807;&#x8BED;&#x8A00;&#x548C;&#x76F8;&#x5173;OpenGL&#x7C7B;&#x578B;&#x4E4B;&#x540E;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x751F;&#x6210;&#x51FA;&#x60F3;&#x8981;&#x7684;&#x5185;&#x5BB9;&#x5E76;&#x76F4;&#x63A5;&#x4E0B;&#x8F7D;&#xFF0C;&#x7F51;&#x7AD9;&#x4E0A;&#x7684;&#x76F8;&#x5173;&#x8BBE;&#x7F6E;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/LearnOpenGL-Notes-1/2020-05-25-16-27-36.png" alt="GLAD&#x4E0B;&#x8F7D;"></p>
+<p>&#x5F53;&#x4E0B;&#x8F7D;<code>GLAD</code>&#x5185;&#x5BB9;&#x540E;&#xFF0C;&#x8FDB;&#x5165;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x5E76;&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x884C;&#x8FD0;&#x884C;&#x5982;&#x4E0B;&#x4E24;&#x4E2A;&#x547D;&#x4EE4;&#x6765;&#x751F;&#x6210;&#x9700;&#x8981;&#x7684;&#x9759;&#x6001;&#x94FE;&#x63A5;&#x6587;&#x4EF6;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc .\src\glad.c -c -I.\include\</span><br><span class="line">ar -rc libglad.a glad.o</span><br></pre></td></tr></table></figure>
+<p>&#x7B2C;&#x4E00;&#x6761;&#x547D;&#x4EE4;&#x65F6;&#x5C06;<code>.c</code>&#x6587;&#x4EF6;&#x7F16;&#x8BD1;&#x4E3A;<code>.o</code>&#x6587;&#x4EF6;&#xFF0C;&#x7B2C;&#x4E8C;&#x6761;&#x547D;&#x4EE4;&#x662F;&#x5C06;<code>.o</code>&#x6587;&#x4EF6;&#x8F6C;&#x6362;&#x4E3A;&#x9759;&#x6001;&#x94FE;&#x63A5;<code>.a</code>&#x6587;&#x4EF6;&#x3002;&#x751F;&#x6210;&#x7684;<code>libglad.a</code>&#x6587;&#x4EF6;&#x5373;&#x4E3A;&#x9700;&#x8981;&#x7684;&#x9759;&#x6001;&#x94FE;&#x63A5;&#x6587;&#x4EF6;&#x3002;</p>
+<p><code>GLAD</code>&#x9700;&#x8981;&#x7684;&#x5934;&#x6587;&#x4EF6;&#x5728;<code>include</code>&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x3002;</p>
+<h2 id="&#x914D;&#x7F6E;vs-code">&#x914D;&#x7F6E;VS Code</h2>
+<p>&#x9996;&#x5148;&#x5B89;&#x88C5;<code>C/C++ Project Generator</code>&#x63D2;&#x4EF6;&#x5E2E;&#x52A9;&#x521B;&#x5EFA;&#x76F8;&#x5173;&#x7684;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x5B89;&#x88C5;&#x63D2;&#x4EF6;&#x5E76;&#x8FD0;&#x884C;<code>Create C++ Project</code>&#x540E;&#xFF0C;&#x5C06;&#x4E4B;&#x524D;&#x751F;&#x6210;&#x7684;<code>GLFW</code>&#x548C;<code>GLAW</code>&#x7684;&#x9759;&#x6001;&#x94FE;&#x63A5;&#x6587;&#x4EF6;&#x548C;&#x5934;&#x6587;&#x4EF6;&#x5206;&#x522B;&#x62F7;&#x8D1D;&#x81F3;<code>lib</code>&#x548C;<code>include</code>&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/LearnOpenGL-Notes-1/2020-05-25-16-43-42.png" alt="VSCode&#x6587;&#x4EF6;&#x5939;&#x7ED3;&#x6784;"></p>
+<p>&#x8FD8;&#x9700;&#x8981;&#x5BF9;Makefile&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#xFF0C;&#x4FEE;&#x6539;&#x540E;&#x7684;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">CC		:= g++</span><br><span class="line">CFLAGS	:= -std=c++17 -Wall -Wextra -g</span><br><span class="line"></span><br><span class="line">BIN		:= bin</span><br><span class="line">SRC		:= src</span><br><span class="line">INCLUDE	:= <span class="keyword">include</span></span><br><span class="line">LIB		:= lib</span><br><span class="line"></span><br><span class="line">LIBRARIES	:= -lglad -lglfw3dll <span class="comment"># Add Lib file</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ifeq</span> (<span class="variable">$(OS)</span>,Windows_NT)</span><br><span class="line">EXECUTABLE	:= main.exe</span><br><span class="line">SOURCEDIRS	:= <span class="variable">$(SRC)</span></span><br><span class="line">INCLUDEDIRS	:= <span class="variable">$(INCLUDE)</span></span><br><span class="line">LIBDIRS		:= <span class="variable">$(LIB)</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">EXECUTABLE	:= main</span><br><span class="line">SOURCEDIRS	:= <span class="variable">$(<span class="built_in">shell</span> find <span class="variable">$(SRC)</span> -type d)</span></span><br><span class="line">INCLUDEDIRS	:= <span class="variable">$(<span class="built_in">shell</span> find <span class="variable">$(INCLUDE)</span> -type d)</span></span><br><span class="line">LIBDIRS		:= <span class="variable">$(<span class="built_in">shell</span> find <span class="variable">$(LIB)</span> -type d)</span></span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"></span><br><span class="line">CINCLUDES	:= <span class="variable">$(<span class="built_in">patsubst</span> %,-I%, $(INCLUDEDIRS:%/=%)</span>)</span><br><span class="line">CLIBS		:= <span class="variable">$(<span class="built_in">patsubst</span> %,-L%, $(LIBDIRS:%/=%)</span>)</span><br><span class="line"></span><br><span class="line">SOURCES		:= <span class="variable">$(<span class="built_in">wildcard</span> $(<span class="built_in">patsubst</span> %,%/*.cpp, <span class="variable">$(SOURCEDIRS)</span>)</span>)</span><br><span class="line">OBJECTS		:= $(SOURCES:.cpp=.o)</span><br><span class="line"></span><br><span class="line"><span class="section">all: <span class="variable">$(BIN)</span>/<span class="variable">$(EXECUTABLE)</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta"><span class="meta-keyword">.PHONY</span>: clean</span></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	-<span class="variable">$(RM)</span> <span class="variable">$(BIN)</span>/<span class="variable">$(EXECUTABLE)</span></span><br><span class="line">	-<span class="variable">$(RM)</span> <span class="variable">$(OBJECTS)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section">run: all</span></span><br><span class="line">	./<span class="variable">$(BIN)</span>/<span class="variable">$(EXECUTABLE)</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$(BIN)</span>/<span class="variable">$(EXECUTABLE)</span>: <span class="variable">$(SOURCES)</span> <span class="comment"># Use SOURCES instead of OBJECTS to avoid complile without include/lib</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> <span class="variable">$(CINCLUDES)</span> <span class="variable">$(CLIBS)</span> <span class="variable">$^</span> -o <span class="variable">$@</span> <span class="variable">$(LIBRARIES)</span></span><br></pre></td></tr></table></figure>
+<p>&#x4E3B;&#x8981;&#x7684;&#x4FEE;&#x6539;&#x70B9;&#x5982;&#x4E0A;&#x6CE8;&#x91CA;&#x6240;&#x793A;&#xFF0C;&#x4E00;&#x662F;&#x6DFB;&#x52A0;&#x4E86;&#x9759;&#x6001;&#x6587;&#x4EF6;&#x7684;&#x94FE;&#x63A5;&#xFF0C;&#x539F;MakeFile&#x6587;&#x4EF6;&#x53EA;&#x662F;&#x5236;&#x5B9A;&#x4E86;lib&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x4F46;&#x9700;&#x8981;&#x94FE;&#x63A5;&#x6587;&#x4EF6;&#x5939;&#x4E2D;&#x7684;&#x54EA;&#x4E9B;&#x6587;&#x4EF6;&#x5E76;&#x6CA1;&#x6709;&#x8BF4;&#x660E;&#xFF0C;&#x9700;&#x8981;&#x4FEE;&#x6539;<code>LIBRARIES</code>&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x8BF4;&#x660E;&#x3002;&#x5176;&#x4E2D;&#x7684;<code>-lglad</code>&#x8868;&#x793A;&#x94FE;&#x63A5;<code>libglad.a</code>&#x6587;&#x4EF6;&#xFF0C;<code>-lglfw3dll</code>&#x8868;&#x793A;&#x94FE;&#x63A5;<code>libglfw3dll.a</code>&#x6587;&#x4EF6;&#x3002;&#x4E8C;&#x662F;&#x5C06;&#x539F;&#x6700;&#x540E;&#x7F16;&#x8BD1;&#x6B65;&#x9AA4;&#x4E2D;&#x7684;<code>OBJECTS</code>&#x5BF9;&#x8C61;&#x6539;&#x6210;&#x4E86;<code>SOURCES</code>&#x3002;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x5982;&#x679C;&#x8BBE;&#x5B9A;&#x4E86;<code>OBJECTS</code>&#x5219;&#x4F1A;&#x9690;&#x5F0F;&#x7684;&#x8FDB;&#x884C;&#x4E00;&#x6B65;<code>cpp</code>&#x6587;&#x4EF6;&#x5230;<code>.o</code>&#x6587;&#x4EF6;&#x7684;&#x7F16;&#x8BD1;&#xFF0C;&#x800C;&#x8FD9;&#x6B21;&#x7F16;&#x8BD1;&#x5E76;&#x6CA1;&#x6709;&#x6307;&#x5B9A;include&#x548C;lib&#x76EE;&#x5F55;&#xFF0C;&#x5219;&#x4F1A;&#x9020;&#x6210;&#x7F16;&#x8BD1;&#x5931;&#x8D25;&#x3002;</p>
+<p>lib&#x6587;&#x4EF6;&#x5939;&#x4E2D;&#x7684;<code>glfw.dll</code>&#x6587;&#x4EF6;&#x9700;&#x8981;&#x624B;&#x52A8;&#x7684;&#x590D;&#x5236;&#x5230;&#x4E0E;&#x6700;&#x540E;&#x751F;&#x6210;&#x7684;<code>exe</code>&#x6587;&#x4EF6;&#x540C;&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x8FD9;&#x91CC;&#x5373;&#x662F;<code>bin</code>&#x6587;&#x4EF6;&#x5939;&#x3002;</p>
+<p>&#x53EF;&#x5C06;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x62F7;&#x8D1D;&#x81F3;<code>main.cpp</code>&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x5E76;&#x6309;&#x4E0B;F5&#x81EA;&#x52A8;&#x7F16;&#x8BD1;&#x8FD0;&#x884C;&#xFF0C;&#x6216;&#x5728;<code>Makefile</code>&#x6240;&#x5728;&#x76EE;&#x5F55;&#x4E0B;&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x884C;&#x547D;&#x4EE4;<code>mingw32-make run</code>&#x7F16;&#x8BD1;&#x8FD0;&#x884C;&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glad/glad.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;GLFW/glfw3.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> SCR_WIDTH = <span class="number">800</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> SCR_HEIGHT = <span class="number">600</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	glfwInit();</span><br><span class="line">	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>);</span><br><span class="line">	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>);</span><br><span class="line">	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</span><br><span class="line">	GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, <span class="string">&quot;LearnOpenGL&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span> (window == <span class="literal">NULL</span>)</span><br><span class="line">	{</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Failed to create GLFW window&quot;</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">		glfwTerminate();</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	}</span><br><span class="line">	glfwMakeContextCurrent(window);</span><br><span class="line">	<span class="keyword">if</span> (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))</span><br><span class="line">	{</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Failed to initialize GLAD&quot;</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">while</span> (!glfwWindowShouldClose(window))</span><br><span class="line">	{</span><br><span class="line">		glClearColor(<span class="number">0.0f</span>, <span class="number">1.f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>);</span><br><span class="line">		glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line">		glfwSwapBuffers(window);</span><br><span class="line">		glfwPollEvents();</span><br><span class="line">	}</span><br><span class="line">	glfwTerminate();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x7ED3;&#x679C;&#x5E94;&#x8BE5;&#x4E3A;&#x4E00;&#x4E2A;&#x7EFF;&#x8272;&#x7684;&#x7A97;&#x53E3;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/LearnOpenGL-Notes-1/2020-05-25-17-17-33.png" alt="&#x8FD0;&#x884C;&#x7ED3;&#x679C;"></p>
+<p>&#x81F3;&#x6B64;&#x6574;&#x4E2A;&#x5B66;&#x4E60;OpenGL&#x7684;&#x73AF;&#x5883;&#x8BBE;&#x7F6E;&#x5B8C;&#x6210;&#x3002;</p>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><a href="https://blog.csdn.net/sarono/article/details/86564726" target="_blank" rel="noopener">vscode OpenGL&#x73AF;&#x5883;&#x642D;&#x5EFA;</a></li><li><a href="https://learnopengl.com/Getting-started/Creating-a-window" target="_blank" rel="noopener">Creating a window</a></li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/LearnOpenGL-Notes-1/" title="《LearnOpenGL》 笔记 (一)">https://xuejiaw.github.io/LearnOpenGL-Notes-1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/OpenGL/" rel="tag"># OpenGL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/CPPPrimer-Chapter8-Notes/" rel="prev" title="《C++ Primer》 第八章笔记">
+      <i class="fa fa-chevron-left"></i> 《C++ Primer》 第八章笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#creating-a-window"><span class="nav-number">1.</span> <span class="nav-text">Creating a Window</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#glfw"><span class="nav-number">1.1.</span> <span class="nav-text">GLFW</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#glad"><span class="nav-number">1.2.</span> <span class="nav-text">GLAD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置vs-code"><span class="nav-number">1.3.</span> <span class="nav-text">配置VS Code</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

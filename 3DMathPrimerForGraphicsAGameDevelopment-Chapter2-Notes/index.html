@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x4E8C;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86">
+<meta name="keywords" content="读书笔记,3D数学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《3D数学基础：图形和游戏开发》第二章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x4E8C;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-24-21-57-56.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-24-22-04-20.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-24-22-05-56.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-24-22-57-15.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-25-14-01-08.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-25-14-19-01.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-25-14-26-14.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-25-14-37-40.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:42.960Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《3D数学基础：图形和游戏开发》第二章笔记">
+<meta name="twitter:description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x4E8C;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86">
+<meta name="twitter:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-24-21-57-56.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《3D数学基础：图形和游戏开发》第二章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《3D数学基础：图形和游戏开发》第二章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-26 19:22:56" itemprop="dateCreated datePublished" datetime="2020-02-26T19:22:56+08:00">2020-02-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:42" itemprop="dateModified" datetime="2020-09-24T19:59:42+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/图形学/" itemprop="url" rel="index"><span itemprop="name">图形学</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《3D数学基础：图形和游戏开发》第二章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;3D&#x6570;&#x5B66;&#x57FA;&#x7840;&#xFF1A;&#x56FE;&#x5F62;&#x548C;&#x6E38;&#x620F;&#x5F00;&#x53D1;&#x300B;&#x7B2C;&#x4E8C;&#x7AE0;&#x7B14;&#x8BB0;&#x3002;</p>
+<p>&#x4ECB;&#x7ECD;&#x4E86;&#x5411;&#x91CF;&#x7684;&#x6570;&#x5B66;&#x8BA1;&#x7B97;&#x4EE5;&#x53CA;&#x5BF9;&#x5E94;&#x7684;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#xFF0C;&#x5728;&#x6BCF;&#x4E00;&#x8282;&#x7684;&#x7B2C;&#x4E00;&#x90E8;&#x5206;&#x662F;&#x6570;&#x5B66;&#x8BA1;&#x7B97;&#xFF0C;&#x7B2C;&#x4E8C;&#x90E8;&#x5206;&#x662F;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#x3002;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-2">Chapter 2</h1>
+<h2 id="mathematical-definition-of-vector-and-other-boring-stuff">Mathematical Definition of Vector, and Other Boring Stuff</h2>
+<p>&#x4ECE;&#x6570;&#x5B66;&#x89D2;&#x5EA6;&#x770B;&#xFF0C;&#x5411;&#x91CF;&#xFF08;Vector&#xFF09;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x6570;&#x5B57;&#x7684;&#x6570;&#x7EC4;&#x3002; &#x6570;&#x5B66;&#x4E0A;&#x4F1A;&#x533A;&#x5206;&#x5411;&#x91CF;&#x548C;&#x6807;&#x91CF;&#xFF0C;&#x5E26;&#x6709;&#x65B9;&#x5411;&#x7684;&#x4E3A;&#x5411;&#x91CF;&#xFF0C;&#x4E0D;&#x5E26;&#x65B9;&#x5411;&#x7684;&#x4E3A;&#x6807;&#x91CF;&#xFF0C;&#x5982;&#x901F;&#x5EA6;&#xFF08;&#x6709;&#x671D;&#x7740;&#x67D0;&#x65B9;&#x5411;&#x7684;&#x542B;&#x4E49;&#x5728;&#xFF09;&#x662F;&#x5411;&#x91CF;&#xFF0C;&#x4F4D;&#x79FB;&#x662F;&#x5411;&#x91CF;&#xFF0C;&#x800C;&#x901F;&#x7387;&#xFF08;&#x4EC5;&#x4EC5;&#x662F;&#x4E00;&#x4E2A;&#x6570;&#x5B57;&#xFF09;&#x662F;&#x6807;&#x91CF;&#xFF0C;&#x8DDD;&#x79BB;&#x662F;&#x6807;&#x91CF;&#x3002;</p>
+<p>&#x5411;&#x91CF;&#x7684;&#x7EF4;&#x5EA6;&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x5411;&#x91CF;&#x4E2D;&#x542B;&#x6709;&#x591A;&#x5C11;&#x4E2A;&#x6570;&#x5B57;&#x3002;</p>
+<p>&#x5411;&#x91CF;&#x901A;&#x5E38;&#x901A;&#x8FC7;&#x65B9;&#x62EC;&#x53F7;&#x5305;&#x88F9;&#xFF0C;&#x5982;&#x679C;&#x5411;&#x91CF;&#x662F;&#x6C34;&#x5E73;&#x65B9;&#x5411;&#x7684;&#x5199;&#xFF0C;&#x79F0;&#x5176;&#x4E3A;&#x884C;&#x5411;&#x91CF;&#xFF0C;&#x5426;&#x5219;&#x4E3A;&#x5217;&#x5411;&#x91CF;&#xFF0C;&#x5982;&#xFF1A;</p>
+<p>&#x884C;&#x5411;&#x91CF;&#xFF1A;</p>
+<p><span class="math display">\[
+[1,2,3]
+\]</span></p>
+<p>&#x5217;&#x5411;&#x91CF;&#xFF1A; <span class="math display">\[
+\begin{bmatrix}
+1 \\\\
+2 \\\\
+3
+\end{bmatrix}
+\]</span></p>
+<div class="note info">
+            <p>&#x5728;&#x8FD9;&#x672C;&#x4E66;&#x4E2D;&#xFF1A; 1. &#x6807;&#x91CF;&#x7528;&#x5C0F;&#x5199;&#x659C;&#x4F53;&#x8868;&#x793A;&#xFF1A;<em>a,b,x,y</em> 2. &#x5411;&#x91CF;&#x7528;&#x5C0F;&#x5199;&#x7C97;&#x4F53;&#x8868;&#x793A;&#xFF1A;<strong>a,b,u,v</strong> 3. &#x77E9;&#x9635;&#x7528;&#x5927;&#x5199;&#x7C97;&#x4F53;&#x8868;&#x793A;&#xFF1A;<strong>A,B,M,R</strong></p>
+          </div>
+<p>&#x7814;&#x7A76;&#x5411;&#x91CF;&#x548C;&#x77E9;&#x9635;&#x7684;&#x6570;&#x5B66;&#x79F0;&#x4E3A;&#x7EBF;&#x6027;&#x4EE3;&#x6570;&#xFF08;linear algebra&#xFF09;&#x3002;&#x5728;&#x7EBF;&#x6027;&#x4EE3;&#x6570;&#x4E2D;&#xFF0C;<span class="math inline">\(n\)</span>&#x7EF4;&#x5EA6;&#x7684;&#x5411;&#x91CF;&#x548C;&#x77E9;&#x9635;&#x662F;&#x7528;&#x6765;&#x6C42;&#x89E3;&#x6709;<span class="math inline">\(n\)</span>&#x4E2A;&#x672A;&#x77E5;&#x6570;&#x7684;&#x65B9;&#x7A0B;&#x7684;&#x3002;&#x800C;&#x5728;&#x8FD9;&#x672C;&#x4E66;&#x4E2D;&#x89E3;&#x91CA;&#x4E86;&#x5411;&#x91CF;&#x548C;&#x4E0E;&#x77E9;&#x9635;&#x7684;&#x51E0;&#x4F55;&#x4E0E;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#x3002;</p>
+<h2 id="geometric-definition-of-vector">Geometric Definition of Vector</h2>
+<p>&#x4ECE;&#x51E0;&#x4F55;&#x89D2;&#x5EA6;&#x6765;&#x8BF4;&#xFF0C;&#x5411;&#x91CF;&#x662F;&#x4E00;&#x6761;&#x65E2;&#x6709;&#x5927;&#x5C0F;&#x53C8;&#x6709;&#x65B9;&#x5411;&#x7684;&#x7EBF;&#xFF08;&#x6709;&#x5411;&#x7EBF;&#xFF09;&#x3002;</p>
+<p>&#x5411;&#x91CF;&#x5E76;&#x6CA1;&#x6709;&#x4F4D;&#x7F6E;&#x4FE1;&#x606F;&#xFF0C;&#x5927;&#x5C0F;&#x548C;&#x65B9;&#x5411;&#x4E00;&#x81F4;&#x7684;&#x5411;&#x91CF;&#x51FA;&#x73B0;&#x5728;&#x56FE;&#x4E2D;&#x7684;&#x4EC0;&#x4E48;&#x4F4D;&#x7F6E;&#x5E76;&#x6CA1;&#x6709;&#x533A;&#x522B;&#x3002;</p>
+<h2 id="specifying-vectors-with-cartesian-coordinates">Specifying Vectors with Cartesian Coordinates</h2>
+<h3 id="vector-as-a-sequence-of-displacements">Vector as a Sequence of Displacements</h3>
+<p>&#x5F53;&#x5411;&#x91CF;&#x51FA;&#x73B0;&#x5728;&#x7B1B;&#x5361;&#x5C14;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#xFF0C;&#x5411;&#x91CF;&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x5143;&#x7D20;&#x8868;&#x793A;&#x5BF9;&#x5E94;&#x7684;&#x5750;&#x6807;&#x7684;&#x4F4D;&#x79FB;&#x3002;</p>
+<p>&#x5982;<span class="math inline">\([2,3]\)</span>&#x8868;&#x793A;X&#x8F74;&#x65B9;&#x5411;&#x79FB;&#x52A8;&#x4E86;2&#xFF0C;y&#x8F74;&#x65B9;&#x5411;&#x79FB;&#x52A8;&#x4E86;3&#xFF0C;&#x4F4D;&#x79FB;&#x7684;&#x987A;&#x5E8F;&#x5E76;&#x6CA1;&#x6709;&#x5173;&#x7CFB;&#x3002;</p>
+<h3 id="the-zero-vector">The Zero Vector</h3>
+<p>&#x96F6;&#x5411;&#x91CF;&#x662F;&#x552F;&#x4E00;&#x4E00;&#x4E2A;&#x6CA1;&#x6709;&#x65B9;&#x5411;&#x7684;&#x5411;&#x91CF;&#xFF0C;&#x5728;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#xFF0C;&#x96F6;&#x5411;&#x91CF;&#x4E0D;&#x662F;&#x4E00;&#x6839;&#x7EBF;&#xFF0C;&#x800C;&#x662F;&#x4E00;&#x4E2A;&#x70B9;&#x3002;</p>
+<p>&#x96F6;&#x5411;&#x91CF;&#x662F;&#x4F5C;&#x4E3A;&#x52A0;&#x6CD5;&#x5355;&#x4F4D;&#x5143;&#xFF08;additive identity&#xFF0C;&#x52A0;&#x5230;&#x522B;&#x7684;&#x5143;&#x7D20;&#x4E0A;&#x4E5F;&#x4E0D;&#x4F1A;&#x9020;&#x6210;&#x533A;&#x522B;&#x7684;&#x6570;&#x5B57;&#xFF09;&#x3002;</p>
+<h2 id="vectors-versus-points">Vectors versus Points</h2>
+<p>&#x70B9;&#xFF08;Points&#xFF09;&#x8868;&#x793A;&#x4F4D;&#x7F6E;&#xFF0C;&#x5411;&#x91CF;&#xFF08;Vectos&#xFF09;&#x8868;&#x793A;&#x4F4D;&#x79FB;&#x3002;</p>
+<h3 id="relative-position">Relative Position</h3>
+<p>&#x6CA1;&#x4EC0;&#x4E48;&#x5173;&#x952E;&#x4FE1;&#x606F;&#x3002;</p>
+<h3 id="the-relationship-between-points-and-vectors">The Relationship between Points and Vectors</h3>
+<ul>
+<li>&#x6240;&#x6709;&#x5173;&#x4E8E;&#x4F4D;&#x7F6E;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x90FD;&#x662F;&#x76F8;&#x5BF9;&#x7684;</li>
+</ul>
+<p>&#x5411;&#x91CF;<span class="math inline">\([x,y]\)</span>&#x8868;&#x793A;&#x4ECE;&#x539F;&#x70B9;&#x5230;&#x70B9;<span class="math inline">\((x&#xFF0C;y)\)</span>&#x7684;&#x4F4D;&#x79FB;&#x3002;</p>
+<p>&#x70B9;&#x662F;&#x4F4D;&#x7F6E;&#xFF0C;&#x56FE;&#x50CF;&#x4E0A;&#x8868;&#x793A;&#x4E3A;&#x4E00;&#x4E2A;&#x70B9;&#x3002;&#x5411;&#x91CF;&#x662F;&#x4F4D;&#x79FB;&#xFF0C;&#x56FE;&#x50CF;&#x4E0A;&#x8868;&#x793A;&#x4E3A;&#x4E00;&#x4E2A;&#x7BAD;&#x5934;&#x3002;</p>
+<h3 id="its-all-relative">It&apos;s All Relative</h3>
+<p>&#x975E;&#x56FE;&#x5F62;&#x5B66;&#x76F8;&#x5173;&#x5185;&#x5BB9;&#xFF0C;&#x4F5C;&#x8005;&#x63CF;&#x8FF0;&#x4E86;&#x4E16;&#x4E0A;&#x5176;&#x4ED6;&#x7684;&#x76F8;&#x5BF9;&#x7269;&#x4F53;&#x3002;</p>
+<h2 id="negating-a-vector">Negating a Vector</h2>
+<p>&#x5411;&#x91CF;&#x6C42;&#x53CD;&#xFF08;Vector negating&#xFF09;&#xFF1A;&#x5BF9;&#x4E8E;&#x6BCF;&#x4E2A;&#x5411;&#x91CF;&#xFF0C;&#x90FD;&#x6709;&#x4E00;&#x4E2A;&#x76F8;&#x540C;&#x7EF4;&#x5EA6;&#x7684;&#x53CD;&#x5411;&#x91CF;&#xFF0C;&#x6EE1;&#x8DB3;<span class="math inline">\(v+(-v)=0\)</span>&#x3002;</p>
+<h3 id="offical-linear-algebra-rules">Offical Linear Algebra Rules</h3>
+<p>&#x5411;&#x91CF;&#x6C42;&#x53CD;&#xFF1A;</p>
+<p><span class="math display">\[
+-\begin{bmatrix}
+    a_1 \\\\
+    a_2 \\\\
+    \vdots \\\\
+    a_{n-1} \\\\
+    a_n \\\\
+\end{bmatrix}=
+\begin{bmatrix}
+    -a_1 \\\\
+    -a_2 \\\\
+    \vdots \\\\
+    -a_{n-1} \\\\
+    -a_n \\\\
+\end{bmatrix}
+\]</span></p>
+<h3 id="geometric-interpretation">Geometric Interpretation</h3>
+<p>&#x5411;&#x91CF;&#x6C42;&#x53CD;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#xFF1A;&#x4FDD;&#x6301;&#x5411;&#x91CF;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x4F46;&#x662F;&#x65B9;&#x5411;&#x53D8;&#x53CD;&#x65B9;&#x5411;</p>
+<h3 id="vector-multiplication-by-a-scalar">Vector Multiplication by a Scalar</h3>
+<p>&#x5411;&#x91CF;&#x4E0E;&#x6807;&#x91CF;&#x76F8;&#x4E58;&#xFF1A;</p>
+<p><span class="math display">\[
+k\begin{bmatrix}
+    a_1 \\\\
+    a_2 \\\\
+    \vdots \\\\
+    a_{n-1} \\\\
+    a_n \\\\
+\end{bmatrix}=
+\begin{bmatrix}
+    a_1 \\\\
+    a_2 \\\\
+    \vdots \\\\
+    a_{n-1} \\\\
+    a_n \\\\
+\end{bmatrix}k=
+\begin{bmatrix}
+    ka_1 \\\\
+    ka_2 \\\\
+    \vdots \\\\
+    ka_{n-1} \\\\
+    ka_n \\\\
+\end{bmatrix}
+\]</span></p>
+<ul>
+<li>&#x5411;&#x91CF;&#x4E0E;&#x6807;&#x91CF;&#x76F8;&#x4E58;&#xFF0C;&#x6807;&#x91CF;&#x53EF;&#x4EE5;&#x5199;&#x5728;&#x5411;&#x91CF;&#x7684;&#x5DE6;&#x4FA7;&#x4E5F;&#x53EF;&#x4EE5;&#x5199;&#x5728;&#x53F3;&#x4FA7;&#xFF0C;&#x4F46;&#x901A;&#x5E38;&#x800C;&#x8A00;&#x4E60;&#x60EF;&#x6027;&#x5199;&#x5728;&#x53F3;&#x4FA7;</li>
+<li>&#x5411;&#x91CF;&#x4E0E;&#x6807;&#x91CF;&#x76F8;&#x4E58;&#x65F6;&#x4E0D;&#x9700;&#x8981;&#x5199;&#x4E58;&#x53F7;</li>
+<li>&#x6807;&#x91CF;&#x4E0D;&#x80FD;&#x88AB;&#x76F8;&#x4E58;&#x9664;&#xFF0C;&#x5411;&#x91CF;&#x4E0D;&#x80FD;&#x9664;&#x4EE5;&#x53E6;&#x4E00;&#x4E2A;&#x5411;&#x91CF;&#x3002;</li>
+</ul>
+<h3 id="geometric-interpretation-1">Geometric Interpretation</h3>
+<p>&#x5411;&#x91CF;&#x4E0E;&#x6807;&#x91CF;&#x76F8;&#x4E58;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#xFF1A;&#x5927;&#x5C0F;&#x4E58;&#x4EE5;<span class="math inline">\(|k|\)</span>&#xFF0C;&#x5982;&#x679C;<span class="math inline">\(k\)</span>&#x662F;&#x8D1F;&#x6570;&#xFF0C;&#x5219;&#x5411;&#x91CF;&#x7684;&#x65B9;&#x5411;&#x53D6;&#x53CD;&#xFF0C;&#x5426;&#x5219;&#x4E0D;&#x53D8;&#x3002;</p>
+<h2 id="vector-addition-and-subtraction">Vector Addition and Subtraction</h2>
+<h3 id="official-linear-algebra-rules">Official Linear Algebra Rules</h3>
+<p>&#x5411;&#x91CF;&#x76F8;&#x52A0;&#xFF1A;</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+    a_1 \\\\
+    a_2 \\\\
+    \vdots \\\\
+    a_{n-1} \\\\
+    a_n \\\\
+\end{bmatrix}+
+\begin{bmatrix}
+    b_1 \\\\
+    b_2 \\\\
+    \vdots \\\\
+    b_{n-1} \\\\
+    b_n \\\\
+\end{bmatrix}=
+\begin{bmatrix}
+    a_1+b_1 \\\\
+    a_2+b_2 \\\\
+    \vdots \\\\
+    a_{n-1}+b_{n-1} \\\\
+    a_n+b_n \\\\
+\end{bmatrix}
+\]</span></p>
+<p>&#x5411;&#x91CF;&#x76F8;&#x51CF;&#xFF1A;</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+    a_1 \\\\
+    a_2 \\\\
+    \vdots \\\\
+    a_{n-1} \\\\
+    a_n \\\\
+\end{bmatrix}-
+\begin{bmatrix}
+    b_1 \\\\
+    b_2 \\\\
+    \vdots \\\\
+    b_{n-1} \\\\
+    b_n \\\\
+\end{bmatrix}=
+\begin{bmatrix}
+    a_1-b_1 \\\\
+    a_2-b_2 \\\\
+    \vdots \\\\
+    a_{n-1}-b_{n-1} \\\\
+    a_n-b_n \\\\
+\end{bmatrix}
+\]</span></p>
+<ul>
+<li>&#x5411;&#x91CF;&#x4E0D;&#x80FD;&#x4E0E;&#x6807;&#x91CF;&#x76F8;&#x52A0;&#x6216;&#x76F8;&#x51CF;&#xFF0C;&#x4E5F;&#x4E0D;&#x80FD;&#x4E0E;&#x7EF4;&#x5EA6;&#x4E0D;&#x540C;&#x7684;&#x5411;&#x91CF;&#x76F8;&#x52A0;&#x6216;&#x76F8;&#x51CF;</li>
+</ul>
+<h3 id="geometric-interpretation-2">Geometric Interpretation</h3>
+<p>&#x5411;&#x91CF;&#x76F8;&#x52A0;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#xFF1A;&#x5982;&#x679C;&#x662F;&#x5411;&#x91CF;<span class="math inline">\(a+b\)</span>&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;a&#x7684;&#x5934;&#x90E8;&#x4E0E;b&#x7684;&#x5C3E;&#x90E8;&#x5411;&#x91CF;&#xFF0C;&#x4ECE;a&#x7684;&#x5C3E;&#x90E8;&#x6307;&#x5411;b&#x7684;&#x5934;&#x90E8;&#x7684;&#x5411;&#x91CF;&#x5373;&#x4E3A;&#x52A0;&#x6CD5;&#x7ED3;&#x679C;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-24-21-57-56.png" alt="&#x5411;&#x91CF;&#x52A0;&#x6CD5;"></p>
+<p>&#x5411;&#x91CF;&#x76F8;&#x51CF;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#xFF1A;&#x5982;&#x679C;&#x5411;&#x91CF;<span class="math inline">\(d-c\)</span>&#xFF0C;&#x5219;&#x5C06;&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x7684;&#x5C3E;&#x90E8;&#x5411;&#x91CF;&#xFF0C;&#x4ECE;c&#x5934;&#x90E8;&#x6307;&#x5411;d&#x5934;&#x90E8;&#x7684;&#x5411;&#x91CF;&#x5373;&#x4E3A;&#x51CF;&#x6CD5;&#x7ED3;&#x679C;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-24-22-04-20.png" alt="&#x5411;&#x91CF;&#x51CF;&#x6CD5;"></p>
+<h3 id="displacement-vector-from-one-point-to-another">Displacement Vector from One Point to Another</h3>
+<p>&#x5F53;&#x8981;&#x8BA1;&#x7B97;&#x4ECE;&#x70B9;a&#x5230;&#x70B9;b&#x7684;&#x4F4D;&#x79FB;&#x5411;&#x91CF;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<span class="math inline">\(b-a\)</span>&#x83B7;&#x5F97;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-24-22-05-56.png" alt="&#x5411;&#x91CF;&#x4F4D;&#x79FB;"></p>
+<h2 id="vector-magnitudelength">Vector Magnitude(Length)</h2>
+<p>&#x5411;&#x91CF;&#x7684;&#x5927;&#x5C0F;&#x4E5F;&#x5E38;&#x79F0;&#x4E3A;&#x5411;&#x91CF;&#x7684;&#x957F;&#x5EA6;&#xFF08;Length&#xFF09;&#x6216;&#x5411;&#x91CF;&#x7684;&#x6A21;&#xFF08;Norm&#xFF09;&#x3002;</p>
+<h3 id="official-linear-algebra-rules-1">Official Linear Algebra Rules</h3>
+<p>&#x6C42;&#x5411;&#x91CF;&#x7684;&#x5927;&#x5C0F;&#xFF1A;</p>
+<p><span class="math display">\[
+\Vert V \Vert = \sqrt{\sum_{i=1}^{n}{v_i}^2}
+\]</span></p>
+<p>&#x5176;&#x4E2D;&#x6BCF;&#x4E2A;<span class="math inline">\(v_i\)</span>&#x8868;&#x793A;&#x5411;&#x91CF;<span class="math inline">\(V\)</span>&#x7684;&#x4E00;&#x4E2A;&#x7EF4;&#x5EA6;&#xFF0C;&#x5982;x&#x8F74;&#xFF0C;y&#x8F74;&#x7B49;</p>
+<ul>
+<li>&#x4E00;&#x4E9B;&#x4E66;&#x7528;&#x5355;&#x6761;&#x5F62;&#x7B26;&#x53F7;&#x8868;&#x793A;&#xFF0C;&#x5982;<span class="math inline">\(|v|\)</span></li>
+</ul>
+<p>&#x5982;&#x679C;&#x6709;&#x5411;&#x91CF;a&#x548C;b&#xFF0C;&#x5219;a,b&#x6EE1;&#x8DB3;&#xFF1A;</p>
+<p><span class="math display">\[
+\Vert a \Vert^2 + \Vert b \Vert^2 = \Vert a+b \Vert^2 \\\\
+\Vert a \Vert + \Vert b \Vert\geq \Vert a+b \Vert 
+\]</span></p>
+<h3 id="geometric-interpretation-3">Geometric Interpretation</h3>
+<p>&#x6C42;&#x5411;&#x91CF;&#x5927;&#x5C0F;&#x7269;&#x7406;&#x89E3;&#x91CA;&#xFF1A;&#x6C42;&#x5411;&#x91CF;<span class="math inline">\(V\)</span>&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E;&#x6C42;&#x76F4;&#x89D2;&#x4E09;&#x89D2;&#x5F62;&#x7684;&#x7B2C;&#x4E09;&#x6761;&#x8FB9;&#x957F;&#x5EA6;&#xFF0C;&#x56E0;&#x6B64;&#x7528;&#x7C7B;&#x4F3C;&#x4E8E;&#x52FE;&#x80A1;&#x5B9A;&#x7406;&#x7684;&#x6BCF;&#x6761;&#x8FB9;&#x5E73;&#x65B9;&#x76F8;&#x52A0;&#xFF0C;&#x518D;&#x5F00;&#x65B9;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x4EFB;&#x610F;&#x6B63;&#x6570;&#x503C;&#xFF0C;&#x6709;&#x65E0;&#x6570;&#x6761;&#x5411;&#x91CF;&#x7684;&#x5927;&#x5C0F;&#x662F;&#x8BE5;&#x503C;&#x3002;</p>
+<h2 id="unit-vectors">Unit Vectors</h2>
+<p>&#x5355;&#x4F4D;&#x5411;&#x91CF;&#xFF08;Unit vector&#xFF09;&#x662F;&#x957F;&#x5EA6;&#x4E3A;1&#x7684;&#x5411;&#x91CF;&#xFF08;&#x5E76;&#x6CA1;&#x6709;&#x9650;&#x5B9A;&#x65B9;&#x5411;&#xFF09;&#xFF0C;&#x5355;&#x4F4D;&#x5411;&#x91CF;&#x4E5F;&#x88AB;&#x79F0;&#x4E3A;&#x5F52;&#x4E00;&#x5316;&#x5411;&#x91CF;&#xFF08;normalized vectors&#xFF09;&#x3002;</p>
+<ul>
+<li>normalized vector&#x8868;&#x793A;&#x662F;&#x5F52;&#x4E00;&#x5316;&#x5411;&#x91CF;&#x5373;&#x5355;&#x4F4D;&#x5411;&#x91CF;&#xFF0C;&#x957F;&#x5EA6;&#x4E3A;1&#x7684;&#x5411;&#x91CF;</li>
+<li>normal vector&#x8868;&#x793A;&#x6CD5;&#x5411;&#x91CF;&#xFF0C;&#x662F;&#x5782;&#x76F4;&#x4E8E;&#x67D0;&#x4E2A;&#x9762;&#x7684;&#x5411;&#x91CF;</li>
+</ul>
+<h3 id="official-linear-algebra-rules-2">Official Linear Algebra Rules</h3>
+<p>&#x67D0;&#x4E2A;&#x65B9;&#x5411;&#x7684;&#x5355;&#x4F4D;&#x5411;&#x91CF;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x65B9;&#x5411;&#x7684;&#x67D0;&#x5411;&#x91CF;&#x9664;&#x4EE5;&#x5B83;&#x7684;&#x5927;&#x5C0F;&#x5F97;&#x5230;&#xFF0C;&#x5982;</p>
+<p><span class="math display">\[
+\hat = \frac{v}{\Vert v \Vert}
+\]</span></p>
+<ul>
+<li>&#x96F6;&#x5411;&#x91CF;&#x4E0D;&#x80FD;&#x88AB;&#x5F52;&#x4E00;&#x5316;</li>
+</ul>
+<h3 id="geometric-interpretation-4">Geometric Interpretation</h3>
+<p>&#x5355;&#x4F4D;&#x5411;&#x91CF;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#xFF1A;&#x5728;&#x4E8C;&#x7EF4;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x5C06;&#x65E0;&#x6570;&#x7684;&#x5355;&#x4F4D;&#x5411;&#x91CF;&#x7684;&#x5C3E;&#x90E8;&#x653E;&#x5728;&#x539F;&#x70B9;&#xFF0C;&#x5219;&#x5176;&#x9876;&#x70B9;&#x53EF;&#x4EE5;&#x6784;&#x6210;&#x534A;&#x5F84;&#x4E3A;1&#x7684;&#x5706;&#x3002;&#x5728;&#x4E09;&#x7EF4;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x5C06;&#x65E0;&#x6570;&#x7684;&#x5355;&#x4F4D;&#x5411;&#x91CF;&#x7684;&#x5C3E;&#x90E8;&#x653E;&#x5728;&#x539F;&#x70B9;&#xFF0C;&#x5219;&#x5176;&#x9876;&#x70B9;&#x53EF;&#x4EE5;&#x6784;&#x6210;&#x534A;&#x5F84;&#x4E3A;1&#x7684;&#x7403;&#x3002;</p>
+<h2 id="the-distance-formula">The Distance Formula</h2>
+<p>&#x6C42;&#x4E24;&#x5411;&#x91CF;&#x7684;&#x8DDD;&#x79BB;&#xFF1A;</p>
+<p><span class="math display">\[
+distance(u,v)=\Vert v-u \Vert=\sqrt{\sum_{i=1}^{n}{v_i-u_i}}
+\]</span></p>
+<p>&#x5176;&#x4E2D;<span class="math inline">\(v_i\)</span>&#x548C;<span class="math inline">\(u_i\)</span>&#x4E3A;&#x5411;&#x91CF;<span class="math inline">\(v\)</span>&#x548C;<span class="math inline">\(u\)</span>&#x6BCF;&#x4E2A;&#x7EF4;&#x5EA6;&#x7684;&#x503C;&#x3002;</p>
+<h2 id="vector-dot-product">Vector Dot Product</h2>
+<p>&#x5411;&#x91CF;&#x70B9;&#x4E58;&#xFF08;dot product&#xFF09;&#x53C8;&#x79F0;&#x4E3A;&#x5411;&#x91CF;&#x5185;&#x79EF;&#xFF08;inner product&#xFF09;&#x3002;</p>
+<h3 id="official-linear-algebra-rules-3">Official Linear Algebra Rules</h3>
+<p>&#x5411;&#x91CF;&#x70B9;&#x4E58;&#x65F6;&#x5FC5;&#x987B;&#x7528;&#x4E00;&#x4E2A;&#x4F7F;&#x7528;&#x70B9;&#x7B26;&#x53F7;&#xFF0C;&#x5982;<span class="math inline">\(a\cdot b\)</span>&#x3002;&#x5982;&#x679C;&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x4E4B;&#x95F4;&#x6CA1;&#x6709;&#x70B9;&#x7B26;&#x53F7;&#xFF0C;&#x5219;&#x4F1A;&#x8BA4;&#x4E3A;&#x8FD9;&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x8981;&#x8FDB;&#x884C;&#x77E9;&#x9635;&#x7684;&#x4E58;&#x6CD5;&#x3002;</p>
+<p>$$ \begin{bmatrix} a_1 \\ a_2 \\ \\ a_{n-1} \\ a_n \\ \end{bmatrix} \begin{bmatrix} b_1 \\ b_2 \\ \\ b_{n-1} \\ b_n \\ \end{bmatrix}=_{i=1}^{n}{a_ib_i}</p>
+<p>$$</p>
+<p>&#x5411;&#x91CF;&#x7684;&#x70B9;&#x4E58;&#x662F;&#x76F8;&#x4E92;&#x7684;&#xFF0C;<span class="math inline">\(a\cdot b=a \cdot b\)</span></p>
+<h3 id="geometric-interpretation-5">Geometric Interpretation</h3>
+<h4 id="projection">Projection</h4>
+<p><strong>&#x70B9;&#x4E58;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#xFF1A;&#x6295;&#x5F71;</strong></p>
+<p>&#x5047;&#x8BBE;a&#x662F;&#x5355;&#x4F4D;&#x5411;&#x91CF;&#xFF0C;&#x5219;a&#x4E0E;b&#x7684;&#x70B9;&#x4E58;,<span class="math inline">\(\hat{a}\cdot b\)</span>&#x8868;&#x793A;&#x4E3A;<span class="math inline">\(b\)</span>&#x5728;<span class="math inline">\(a\)</span>&#x4E0A;&#x7684;&#x6295;&#x5F71;&#x7684;&#x6709;&#x5411;&#x957F;&#x5EA6;&#xFF08;&#x56E0;&#x4E3A;&#x70B9;&#x4E58;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x6807;&#x91CF;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x7684;&#x6709;&#x5411;&#x6307;&#x7684;&#x662F;&#x6B63;&#x8D1F;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x65B9;&#x5411;&#xFF09;&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-24-22-57-15.png" alt="&#x5411;&#x91CF;&#x6295;&#x5F71;&#x89D2;&#x5EA6;&#x4E0E;&#x5927;&#x5C0F;"></p>
+<p>&#x5411;&#x91CF;&#x7684;&#x70B9;&#x4E58;&#x53EF;&#x4EE5;&#x4E0E;&#x6807;&#x91CF;&#x7684;&#x4E58;&#x6CD5;&#x76F8;&#x7ED3;&#x5408;&#xFF1A;</p>
+<p><span class="math display">\[
+(ka)\cdot b =k(a\cdot b)=a\cdot(kb)
+\]</span></p>
+<p>&#x56E0;&#x6B64;&#xFF0C;&#x4E0A;&#x8FF0;&#x5173;&#x4E8E;&#x5355;&#x4F4D;&#x5411;&#x91CF;&#x7684;&#x70B9;&#x4E58;&#x53EF;&#x4EE5;&#x63A8;&#x5E7F;&#x5230;&#x666E;&#x901A;&#x5411;&#x91CF;&#xFF0C;&#x5373;</p>
+<blockquote>
+<p>&#x5411;&#x91CF;a&#x4E0E;&#x5411;&#x91CF;b&#x7684;&#x70B9;&#x4E58;&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;&#x5411;&#x91CF;b&#x5728;&#x5411;&#x91CF;a&#x4E0A;&#x7684;&#x6709;&#x5411;&#x6295;&#x5F71;&#x957F;&#x5EA6;(b&#x7684;&#x957F;&#x5EA6;&#x4F1A;&#x5F71;&#x54CD;&#x8BE5;&#x6295;&#x5F71;&#x957F;&#x5EA6;)&#x4E58;&#x4EE5;&#x5411;&#x91CF;a&#x7684;&#x5927;&#x5C0F;&#x3002;</p>
+</blockquote>
+<p>&#x70B9;&#x4E58;&#x6EE1;&#x8DB3;&#x52A0;&#x6CD5;&#x4E0E;&#x51CF;&#x6CD5;&#x5206;&#x914D;&#x5F8B;&#x5373;&#xFF1A;</p>
+<p><span class="math display">\[
+a\cdot(b+c)=a\cdot b+a\cdot c
+\]</span></p>
+<p><strong>&#x70B9;&#x4E58;&#x7684;&#x7B2C;&#x4E8C;&#x4E2A;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#xFF1A;&#x8BA1;&#x7B97;&#x5206;&#x91CF;</strong></p>
+<p>b&#x5728;a&#x4E0A;&#x7684;&#x6295;&#x5F71;&#x5B9E;&#x9645;&#x4E0A;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x662F;b&#x5728;a&#x65B9;&#x5411;&#x4E0A;&#x7684;&#x5206;&#x91CF;&#x3002;&#x56E0;&#x6B64;&#x8FD8;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6295;&#x5F71;&#x6765;&#x5C06;b&#x62C6;&#x5206;&#x4E3A;&#x4E24;&#x90E8;&#x5206;&#xFF0C;&#x5E73;&#x884C;&#x4E8E;a&#x7684;&#x5206;&#x91CF;&#x548C;&#x5782;&#x76F4;&#x4E0E;a&#x7684;&#x5206;&#x91CF;&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[
+b_\Vert=(\hat{a}\cdot b)\hat{a} \\\\
+b_\perp=b-(\hat{a}\cdot b)\hat{a}
+\]</span></p>
+<p><strong>&#x70B9;&#x4E58;&#x7684;&#x7B2C;&#x4E09;&#x4E2A;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#xFF1A;&#x8BA1;&#x7B97;&#x89D2;&#x5EA6;</strong></p>
+<p>&#x5C06;&#x6295;&#x5F71;&#x7684;&#x7ED3;&#x679C;&#x8868;&#x793A;&#x4E3A;&#x4E09;&#x89D2;&#x5F62;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-25-14-01-08.png" alt="&#x5411;&#x91CF;&#x8868;&#x793A;&#x4E09;&#x89D2;&#x89D2;&#x5EA6;"></p>
+<p>&#x5355;&#x4F4D;&#x5411;&#x91CF;<span class="math inline">\(\hat{a}\)</span>&#x548C;&#x5355;&#x4F4D;&#x5411;&#x91CF;<span class="math inline">\(\hat{b}\)</span>&#x7684;&#x70B9;&#x79EF;&#x4E3A;&#x5728;a&#x4E0A;&#x7684;&#x6295;&#x5F71;&#xFF0C;&#x5373;&#x4E09;&#x89D2;&#x5F62;&#x7684;&#x4E34;&#x8FB9;&#xFF0C;&#x6240;&#x4EE5;&#x89D2;&#x5EA6;<span class="math inline">\(\theta\)</span>&#x53EF;&#x8868;&#x793A;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[
+cos\theta=\frac{\hat{a}\cdot\hat{b}}{1}=\hat{a}\cdot\hat{b}
+\]</span></p>
+<p>&#x53EF;&#x4EE5;&#x5C06;&#x5176;&#x63A8;&#x5E7F;&#x5230;&#x666E;&#x901A;&#x7684;&#x5411;&#x91CF;a&#x548C;b&#xFF0C;&#x5373;</p>
+<blockquote>
+<p>&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x7684;&#x70B9;&#x79EF;&#x7B49;&#x4E8E;&#x8FD9;&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x4E4B;&#x95F4;&#x5939;&#x89D2;&#x7684;cos&#x4E58;&#x4E0A;&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x7684;&#x5927;&#x5C0F; <span class="math display">\[
+a\cdot b= \Vert a\Vert \Vert b\Vert cos\theta \\\\
+\theta=arccos(\frac{a\cdot b}{\Vert a\Vert \Vert b\Vert})
+\]</span></p>
+</blockquote>
+<p>&#x56E0;&#x6B64;&#xFF0C;&#x5982;&#x679C;&#x70B9;&#x4E58;&#x7684;&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x5939;&#x89D2;&#x8303;&#x56F4;&#x5728;<span class="math inline">\(-90^\circ \sim 90^\circ\)</span>,&#x7ED3;&#x679C;&#x4E3A;&#x6B63;&#x6570;&#x3002;&#x5982;&#x679C;&#x5939;&#x89D2;&#x4E3A;90&#xB0;&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;0&#x3002;&#x5982;&#x679C;&#x8303;&#x56F4;&#x5728;<span class="math inline">\(90^\circ \sim 270^\circ\)</span>&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;&#x8D1F;&#x6570;&#x3002;&#x5982;&#x679C;&#x662F;&#x6B63;&#x6570;&#xFF0C;&#x5219;b&#x548C;a&#x662F;&#x5728;&#x6307;&#x5411;&#x540C;&#x4E00;&#x4E2A;&#x65B9;&#x5411;&#xFF08;&#x6BD4;&#x5982;&#x90FD;&#x5F80;&#x524D;&#xFF09;&#xFF0C;&#x800C;&#x8D1F;&#x6570;&#x5219;&#x8868;&#x793A;&#x6307;&#x5411;&#x4E0D;&#x540C;&#x65B9;&#x5411;&#xFF08;&#x4E00;&#x4E2A;&#x5411;&#x524D;&#xFF0C;&#x4E00;&#x4E2A;&#x5411;&#x540E;&#xFF09;&#x3002;</p>
+<h2 id="vector-cross-product">Vector Cross Product</h2>
+<p>&#x5411;&#x91CF;&#x4E0E;&#x5411;&#x91CF;&#x8FD8;&#x6709;&#x4E2A;&#x8BA1;&#x7B97;&#x79F0;&#x4E3A;&#x53C9;&#x4E58;&#xFF08;Cross product&#xFF09;&#x3002;</p>
+<h3 id="official-linear-algebra-rules-4">Official Linear Algebra Rules</h3>
+<p>&#x4EE5;&#x4E09;&#x7EF4;&#x5411;&#x91CF;&#x7684;&#x53C9;&#x4E58;&#x4E3A;&#x4F8B;&#xFF0C;&#x8868;&#x8FBE;&#x5F0F;&#x53CA;&#x8BA1;&#x7B97;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+    x_1 \\\\
+    y_1 \\\\
+    z_1 \\\\
+\end{bmatrix} \times
+\begin{bmatrix}
+    x_2 \\\\
+    y_2 \\\\
+    z_2 \\\\
+\end{bmatrix}=
+\begin{bmatrix}
+    y_1z_2-z_1y_2 \\\\
+    z_1x_2-x_1z_2\\\\
+    x_1y_2-y_1x_2
+\end{bmatrix}
+\]</span></p>
+<p>&#x5F53;&#x5411;&#x91CF;&#x548C;&#x70B9;&#x4E58;&#x4E00;&#x8D77;&#x53D1;&#x751F;&#x65F6;&#xFF0C;&#x5148;&#x8BA1;&#x7B97;&#x53C9;&#x4E58;&#xFF0C;&#x518D;&#x8BA1;&#x7B97;&#x70B9;&#x4E58;&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[
+a\cdot b \times c = a\cdot (b\times c)
+\]</span></p>
+<p>&#x5F62;&#x5982;<span class="math inline">\(a\cdot (b\times c)\)</span>&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x79F0;&#x4E3A;&#x4E09;&#x91CD;&#x79EF;&#x3002;</p>
+<ul>
+<li>&#x53C9;&#x4E58;&#x662F;&#x53CD;&#x4EA4;&#x6362;&#x7684;&#xFF0C;&#x5373;<span class="math inline">\(a\times b = -(b\times a)\)</span></li>
+<li>&#x53C9;&#x4E58;&#x6EE1;&#x8DB3;&#x5206;&#x914D;&#x5F8B;&#xFF0C;&#x5373;<span class="math inline">\(a\times(b+c)=a\times b + a\times c\)</span></li>
+<li>&#x53C9;&#x4E58;&#x6CA1;&#x6709;&#x7ED3;&#x5408;&#x6027;&#xFF0C;&#x5373;<span class="math inline">\((a \times b)\times c \neq a\times(b\times c)\)</span></li>
+<li>&#x6807;&#x91CF;&#x4E0E;&#x53C9;&#x4E58;&#x7ED3;&#x5408;&#xFF1A;&#x5373;<span class="math inline">\(k(a\times b)=(ka)\times b = a\times(kb)\)</span></li>
+</ul>
+<h3 id="geometric-interpretation-6">Geometric Interpretation</h3>
+<p>&#x53C9;&#x4E58;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x5782;&#x76F4;&#x4E8E;&#x4E24;&#x4E2A;&#x53C9;&#x4E58;&#x5411;&#x91CF;&#x7684;&#x53E6;&#x4E00;&#x4E2A;&#x5411;&#x91CF;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-25-14-19-01.png" alt="&#x5411;&#x91CF;&#x53C9;&#x4E58;&#x7ED3;&#x679C;"></p>
+<p>&#x5176;&#x5927;&#x5C0F;&#x7B49;&#x4E8E;&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x7684;&#x5927;&#x5C0F;&#x4E58;&#x4E0A;&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x4E4B;&#x95F4;&#x5939;&#x89D2;&#x7684;sin,&#x8BE5;&#x5927;&#x5C0F;&#x4E5F;&#x7B49;&#x4E8E;&#x7531;&#x4E24;&#x4E2A;&#x5411;&#x91CF;&#x6784;&#x6210;&#x7684;&#x5E73;&#x884C;&#x56DB;&#x8FB9;&#x5F62;&#x7684;&#x9762;&#x79EF;&#x3002;&#x5373;</p>
+<p><span class="math display">\[
+\Vert a\times b \Vert = \Vert a\Vert \Vert b\Vert \sin \theta
+\]</span></p>
+<p>&#x53C9;&#x4E58;&#x7ED3;&#x679C;&#x7684;&#x65B9;&#x5411;&#x4E0E;&#x5DE6;&#x53F3;&#x624B;&#x5750;&#x6807;&#x7CFB;&#x76F8;&#x5173;&#xFF0C;&#x5982;&#x679C;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;<span class="math inline">\(a \times b\)</span>&#xFF0C;&#x5C06;b&#x7684;&#x5C3E;&#x90E8;&#x4E0E;a&#x7684;&#x5934;&#x90E8;&#x76F8;&#x8FDE;&#x3002;&#x5728;&#x5DE6;&#x624B;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x5F62;&#x6210;&#x7684;&#x65B9;&#x5411;&#x662F;&#x987A;&#x65F6;&#x9488;&#x7684;&#xFF0C;&#x5219;&#x7ED3;&#x679C;&#x65B9;&#x5411;&#x6307;&#x5411;&#x5916;&#x4FA7;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x9006;&#x65F6;&#x9488;&#xFF0C;&#x5219;&#x6307;&#x5411;&#x5185;&#x4FA7;&#x3002;&#x5728;&#x53F3;&#x624B;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#xFF0C;&#x7ED3;&#x679C;&#x76F8;&#x53CD;&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-25-14-26-14.png" alt="&#x5411;&#x91CF;&#x53C9;&#x4E58;&#x7ED3;&#x679C;&#x65B9;&#x5411;"></p>
+<p>&#x4E5F;&#x53EF;&#x4EE5;&#x7528;&#x624B;&#x6765;&#x6C42;&#x53C9;&#x4E58;&#x7ED3;&#x679C;&#x65B9;&#x5411;&#xFF0C;&#x5982;&#x679C;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;<span class="math inline">\(a \times b\)</span>&#xFF0C;&#x5C06;&#x5927;&#x62C7;&#x6307;&#x6307;&#x5411;a&#x7684;&#x65B9;&#x5411;&#xFF0C;&#x5C06;&#x98DF;&#x6307;&#x6307;&#x5411;b&#x7684;&#x65B9;&#x5411;&#xFF0C;&#x8BA9;&#x4E2D;&#x6307;&#x4E0E;&#x98DF;&#x6307;&#x548C;&#x5927;&#x62C7;&#x6307;&#x5782;&#x76F4;&#xFF08;&#x50CF;&#x5C55;&#x793A;&#x5DE6;&#x53F3;&#x624B;&#x5750;&#x6807;&#x7CFB;&#x90A3;&#x6837;&#xFF09;&#xFF0C;&#x98DF;&#x6307;&#x7684;&#x65B9;&#x5411;&#x5373;&#x4E3A;&#x53C9;&#x4E58;&#x7ED3;&#x679C;&#x65B9;&#x5411;&#x3002;</p>
+<h2 id="linear-algebra-identities">Linear Algebra Identities</h2>
+<p>&#x4E0B;&#x8868;&#x4E3A;&#x5411;&#x91CF;&#x8BA1;&#x7B97;&#x5B9A;&#x5F8B;&#xFF0C;&#x57FA;&#x672C;&#x90FD;&#x5728;&#x4E0A;&#x9762;&#x89E3;&#x91CA;&#x8FC7;&#x4E86;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-25-14-37-40.png" alt="&#x5411;&#x91CF;&#x8BA1;&#x7B97;&#x5B9A;&#x5F8B;"></p>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>3D Math Primer for Graphics and Game Development</em> 2nd 2011</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/" title="《3D数学基础：图形和游戏开发》第二章笔记">https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/3D数学/" rel="tag"># 3D数学</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/" rel="prev" title="《3D数学基础：图形和游戏开发》第一章笔记">
+      <i class="fa fa-chevron-left"></i> 《3D数学基础：图形和游戏开发》第一章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/CPPPrimer-Chapter7-Notes/" rel="next" title="《C++ Primer》 第七章笔记">
+      《C++ Primer》 第七章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-2"><span class="nav-number">1.</span> <span class="nav-text">Chapter 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mathematical-definition-of-vector-and-other-boring-stuff"><span class="nav-number">1.1.</span> <span class="nav-text">Mathematical Definition of Vector, and Other Boring Stuff</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#geometric-definition-of-vector"><span class="nav-number">1.2.</span> <span class="nav-text">Geometric Definition of Vector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#specifying-vectors-with-cartesian-coordinates"><span class="nav-number">1.3.</span> <span class="nav-text">Specifying Vectors with Cartesian Coordinates</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vector-as-a-sequence-of-displacements"><span class="nav-number">1.3.1.</span> <span class="nav-text">Vector as a Sequence of Displacements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-zero-vector"><span class="nav-number">1.3.2.</span> <span class="nav-text">The Zero Vector</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vectors-versus-points"><span class="nav-number">1.4.</span> <span class="nav-text">Vectors versus Points</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#relative-position"><span class="nav-number">1.4.1.</span> <span class="nav-text">Relative Position</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-relationship-between-points-and-vectors"><span class="nav-number">1.4.2.</span> <span class="nav-text">The Relationship between Points and Vectors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#its-all-relative"><span class="nav-number">1.4.3.</span> <span class="nav-text">It&#39;s All Relative</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#negating-a-vector"><span class="nav-number">1.5.</span> <span class="nav-text">Negating a Vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#offical-linear-algebra-rules"><span class="nav-number">1.5.1.</span> <span class="nav-text">Offical Linear Algebra Rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#geometric-interpretation"><span class="nav-number">1.5.2.</span> <span class="nav-text">Geometric Interpretation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector-multiplication-by-a-scalar"><span class="nav-number">1.5.3.</span> <span class="nav-text">Vector Multiplication by a Scalar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#geometric-interpretation-1"><span class="nav-number">1.5.4.</span> <span class="nav-text">Geometric Interpretation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector-addition-and-subtraction"><span class="nav-number">1.6.</span> <span class="nav-text">Vector Addition and Subtraction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#official-linear-algebra-rules"><span class="nav-number">1.6.1.</span> <span class="nav-text">Official Linear Algebra Rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#geometric-interpretation-2"><span class="nav-number">1.6.2.</span> <span class="nav-text">Geometric Interpretation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#displacement-vector-from-one-point-to-another"><span class="nav-number">1.6.3.</span> <span class="nav-text">Displacement Vector from One Point to Another</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector-magnitudelength"><span class="nav-number">1.7.</span> <span class="nav-text">Vector Magnitude(Length)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#official-linear-algebra-rules-1"><span class="nav-number">1.7.1.</span> <span class="nav-text">Official Linear Algebra Rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#geometric-interpretation-3"><span class="nav-number">1.7.2.</span> <span class="nav-text">Geometric Interpretation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unit-vectors"><span class="nav-number">1.8.</span> <span class="nav-text">Unit Vectors</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#official-linear-algebra-rules-2"><span class="nav-number">1.8.1.</span> <span class="nav-text">Official Linear Algebra Rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#geometric-interpretation-4"><span class="nav-number">1.8.2.</span> <span class="nav-text">Geometric Interpretation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-distance-formula"><span class="nav-number">1.9.</span> <span class="nav-text">The Distance Formula</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector-dot-product"><span class="nav-number">1.10.</span> <span class="nav-text">Vector Dot Product</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#official-linear-algebra-rules-3"><span class="nav-number">1.10.1.</span> <span class="nav-text">Official Linear Algebra Rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#geometric-interpretation-5"><span class="nav-number">1.10.2.</span> <span class="nav-text">Geometric Interpretation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#projection"><span class="nav-number">1.10.2.1.</span> <span class="nav-text">Projection</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector-cross-product"><span class="nav-number">1.11.</span> <span class="nav-text">Vector Cross Product</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#official-linear-algebra-rules-4"><span class="nav-number">1.11.1.</span> <span class="nav-text">Official Linear Algebra Rules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#geometric-interpretation-6"><span class="nav-number">1.11.2.</span> <span class="nav-text">Geometric Interpretation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linear-algebra-identities"><span class="nav-number">1.12.</span> <span class="nav-text">Linear Algebra Identities</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x4E03;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;">
+<meta name="keywords" content="读书笔记,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《C++ Primer》 第七章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/CPPPrimer-Chapter7-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x4E03;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter7-Notes/Ch_7.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.181Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《C++ Primer》 第七章笔记">
+<meta name="twitter:description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x4E03;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;">
+<meta name="twitter:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter7-Notes/Ch_7.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/CPPPrimer-Chapter7-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《C++ Primer》 第七章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/CPPPrimer-Chapter7-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《C++ Primer》 第七章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-29 15:57:33" itemprop="dateCreated datePublished" datetime="2020-02-29T15:57:33+08:00">2020-02-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/计算机语言/" itemprop="url" rel="index"><span itemprop="name">计算机语言</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/CPPPrimer-Chapter7-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《C++ Primer》 第七章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/CPPPrimer-Chapter7-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/CPPPrimer-Chapter7-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>23k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>42 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;C++ Primer&#x300B; &#x7B2C;&#x4E03;&#x7AE0;&#x7B14;&#x8BB0;</p>
+<p><img src="/CPPPrimer-Chapter7-Notes/Ch_7.png" alt="&#x7B2C;&#x4E03;&#x7AE0;&#x5185;&#x5BB9;"></p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-7-classes">Chapter 7 Classes</h1>
+<h2 id="defining-abstract-data-types">Defining Abstract Data Types</h2>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x7C7B;&#x8BA9;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x4EFB;&#x610F;&#x8BBF;&#x95EE;&#x5176;&#x4E2D;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x4E14;&#x5FC5;&#x987B;&#x81EA;&#x5DF1;&#x5B9A;&#x4E49;&#x9488;&#x5BF9;&#x76F8;&#x5173;&#x6570;&#x636E;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x5219;&#x8BE5;&#x7C7B;&#x4E0D;&#x662F;&#x62BD;&#x8C61;&#x7C7B;&#x578B;&#x3002;</p>
+<h3 id="designing-the-sales_data-class">Designing the Sales_data class</h3>
+<p>&#x5728;&#x672C;&#x7AE0;&#x4E2D;&#xFF0C;&#x4F1A;&#x9010;&#x6B65;&#x5B8C;&#x5584;&#x4E00;&#x4E2A;&#x79F0;&#x4E3A;Sales_data&#x7684;&#x7C7B;&#xFF0C;&#x5728;&#x5B8C;&#x5584;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x89E3;&#x91CA;&#x7C7B;&#x7684;&#x7279;&#x6027;&#x3002;</p>
+<h3 id="defining-the-revised-sales_data-class">Defining the Revised Sales_data Class</h3>
+<p>&#x6210;&#x5458;&#x51FD;&#x6570;&#x5FC5;&#x987B;&#x5728;&#x7C7B;&#x5185;&#x58F0;&#x660E;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x7C7B;&#x5185;&#x6216;&#x7C7B;&#x5916;&#x8FDB;&#x884C;&#x5B9A;&#x4E49;&#x3002;&#x4E14;&#x5728;&#x7C7B;&#x5185;&#x5B9A;&#x4E49;&#x7684;&#x51FD;&#x6570;&#x9ED8;&#x8BA4;&#x662F;&#x5185;&#x8054;&#xFF08;inline&#xFF09;&#x7684;&#x3002;</p>
+<p>&#x5982;&#x76EE;&#x524D;Sales_data&#x7C7B;&#x4E3A;&#xFF1A; <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::ostream;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sales_data</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    <span class="comment">//Member function</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">isbn</span><span class="params">()</span> <span class="keyword">const</span> </span>{ <span class="keyword">return</span> bookNo; }</span><br><span class="line">    <span class="function">Sales_data &amp;<span class="title">combine</span><span class="params">(<span class="keyword">const</span> Sales_data &amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">avg_Price</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Member variable</span></span><br><span class="line">    <span class="built_in">string</span> bookNo;</span><br><span class="line">    <span class="keyword">unsigned</span> units_sold = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">double</span> revenue = <span class="number">0</span>;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">//nonmember but related function</span></span><br><span class="line"></span><br><span class="line"><span class="function">Sales_data <span class="title">add</span><span class="params">(<span class="keyword">const</span> Sales_data &amp;, <span class="keyword">const</span> Sales_data &amp;)</span></span>;</span><br><span class="line"><span class="function">ostream &amp;<span class="title">print</span><span class="params">(ostream &amp;, <span class="keyword">const</span> Sales_data &amp;)</span></span>;</span><br><span class="line"><span class="function">istream &amp;<span class="title">read</span><span class="params">(istream &amp;, Sales_data &amp;)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="introducing-this">Introducing this</h4>
+<p>&#x9996;&#x5148;&#x6CE8;&#x610F;&#x6210;&#x5458;&#x51FD;&#x6570;:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">isbn</span><span class="params">()</span> <span class="keyword">const</span> </span>{ <span class="keyword">return</span> bookNo; }</span><br></pre></td></tr></table></figure>
+<p>&#x5F53;&#x7C7B;&#x7684;&#x5B9E;&#x4F8B;&#x5316;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x4F1A;&#x9690;&#x5F0F;&#x7684;&#x4F20;&#x9012;&#x4E00;&#x4E2A;this&#x6307;&#x9488;&#xFF0C;&#x6307;&#x9488;&#x6307;&#x5411;&#x8BE5;&#x5B9E;&#x4F8B;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Sales_data total;</span><br><span class="line">total.isbn();</span><br></pre></td></tr></table></figure>
+<p>&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x5C06;<code>total.isbn()</code>&#x8C03;&#x7528;&#xFF0C;&#x6539;&#x5199;&#x4E3A;&#x7C7B;&#x4F3C;&#x4E8E;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sales_data::isbn(&amp;total);</span><br></pre></td></tr></table></figure>
+<p>&#x5F53;&#x5728;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x8BBF;&#x95EE;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x65F6;&#x90FD;&#x76F8;&#x5F53;&#x4E8E;&#x7528;&#x4E86;<code>this-&gt;</code>&#x3002;&#x5982;&#x51FD;&#x6570;&#x4F53;&#x5185;&#x8BBF;&#x95EE;&#x4E86;bookNo&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x7B49;&#x540C;&#x4E8E;<code>this-&gt;bookNo</code>&#xFF0C;&#x800C;&#x8FD9;&#x4E2A;&#x8C03;&#x7528;&#x4E0B;&#xFF0C;this&#x6307;&#x5411;total&#xFF0C;&#x6240;&#x4EE5;&#x8BBF;&#x95EE;&#x7684;&#x662F;&#x5B9E;&#x4F8B;&#x5316;total&#x4E2D;&#x7684;bookNo&#x53D8;&#x91CF;&#x3002;</p>
+<p>&#x53E6;&#x5916;this&#x662F;&#x4E00;&#x4E2A;const&#x6307;&#x9488;&#xFF0C;&#x5373;&#x65E0;&#x6CD5;&#x8BA9;this&#x6307;&#x5411;&#x522B;&#x7684;&#x53D8;&#x91CF;&#x3002;</p>
+<h4 id="intruducing-const-member-functions">Intruducing const Member Functions</h4>
+<p>&#x540C;&#x6837;&#x8FD8;&#x662F;&#x6210;&#x5458;&#x51FD;&#x6570;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">isbn</span><span class="params">()</span> <span class="keyword">const</span> </span>{ <span class="keyword">return</span> bookNo; }</span><br></pre></td></tr></table></figure>
+<p>&#x8FD8;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5230;&#x5728;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x58F0;&#x660E;&#x4E2D;&#x6709;&#x5173;&#x952E;&#x5B57;<code>const</code>&#xFF0C;&#x5F53;const&#x8DDF;&#x5728;&#x53C2;&#x6570;&#x5217;&#x8868;&#x540E;&#x65F6;&#xFF0C;&#x5176;&#x76EE;&#x7684;&#x662F;&#x6539;&#x53D8;this&#x6307;&#x9488;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x8BA9;this&#x6307;&#x9488;&#x662F;&#x4E00;&#x4E2A;&#x6307;&#x5411;const&#x53D8;&#x91CF;&#x7684;&#x6307;&#x9488;&#x3002;&#x6574;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x5B9A;&#x4E49;&#x4F1A;&#x88AB;&#x7F16;&#x8BD1;&#x5668;&#x7FFB;&#x8BD1;&#x4E3A;&#x7C7B;&#x4F3C;&#x5982;&#x4E0B;&#x7684;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> Sales_data::isbn(<span class="keyword">const</span> Sales_data* <span class="keyword">const</span> <span class="keyword">this</span>)</span><br><span class="line">{ </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>-&gt;bookNo;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x79F0;&#x8FD9;&#x6837;&#x7684;&#x51FD;&#x6570;&#x4E3A;const&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x8BE5;&#x51FD;&#x6570;&#x4E0D;&#x662F;&#x5B9A;&#x4E49;&#x4E3A;const&#x7684;&#xFF0C;&#x5219;const&#x7684;Sales_data&#x5B9E;&#x4F8B;&#x5C06;&#x65E0;&#x6CD5;&#x8C03;&#x7528;isbn&#x51FD;&#x6570;&#x3002;&#x5982;&#x540C;&#x53D8;&#x91CF;&#x7684;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x89C4;&#x5F8B;&#xFF0C;&#x4E00;&#x4E2A;const&#x53D8;&#x91CF;&#x65E0;&#x6CD5;&#x8D4B;&#x503C;&#x7ED9;&#x4E00;&#x4E2A;&#x6307;&#x5411;&#x975E;const&#x53D8;&#x91CF;&#x7684;&#x6307;&#x9488;&#x3002;&#x5B9E;&#x4F8B;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//In SalesData_Struct.h, modify the declaration of isbn function</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">isbn</span><span class="params">()</span> </span>{ <span class="keyword">return</span> bookNo; }</span><br><span class="line"></span><br><span class="line"><span class="comment">//Call isbn function</span></span><br><span class="line">Sales_data total;</span><br><span class="line">total.isbn();</span><br><span class="line"><span class="keyword">const</span> Sales_data cTotal;</span><br><span class="line"><span class="comment">// cTotal.isbn();//error</span></span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x7F16;&#x8BD1;&#x5668;&#x7684;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x540E;&#xFF0C;<code>cTotal.isbn()</code>&#x4F1A;&#x53D8;&#x6210;&#x7528;&#x4E00;&#x4E2A;<code>const Sales_data* const</code>&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#x533A;&#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;<code>Sales_data* const</code>&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x5982;&#x4E4B;&#x524D;&#x7AE0;&#x8282;&#x6240;&#x8FF0;&#xFF0C;&#x8BE5;&#x64CD;&#x4F5C;&#x662F;&#x975E;&#x6CD5;&#x7684;&#x3002;</p>
+<h4 id="class-scope-and-member-functions">Class Scope and Member Functions</h4>
+<p>&#x7C7B;&#x7684;&#x7F16;&#x8BD1;&#x5206;&#x4E3A;&#x4E24;&#x6B65;&#xFF0C;&#x9996;&#x5148;&#x4F1A;&#x5148;&#x7F16;&#x8BD1;&#x6240;&#x6709;&#x7684;&#x58F0;&#x660E;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x7F16;&#x8BD1;&#x51FD;&#x6570;&#x7684;&#x5B9A;&#x4E49;&#xFF08;&#x5B9E;&#x73B0;&#xFF09;&#xFF0C;&#x56E0;&#x6B64;&#x5728;&#x51FD;&#x6570;&#x7684;&#x5B9E;&#x73B0;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x4EFB;&#x610F;&#x8C03;&#x7528;&#x5176;&#x4ED6;&#x7684;&#x6210;&#x5458;&#x53D8;&#x91CF;&#xFF0C;&#x65E0;&#x8BBA;&#x5B83;&#x5B9A;&#x4E49;&#x5728;&#x66F4;&#x524D;&#x9762;&#x8FD8;&#x662F;&#x540E;&#x9762;&#x3002;</p>
+<h4 id="defining-a-member-function-outside-the-class">Defining a Member Function outside the Class</h4>
+<p>&#x5982;&#x679C;&#x5728;&#x7C7B;&#x5916;&#x5B9A;&#x4E49;const&#x51FD;&#x6570;&#xFF0C;&#x540C;&#x6837;&#x9700;&#x8981;&#x5728;&#x53C2;&#x6570;&#x5217;&#x8868;&#x540E;&#x52A0;&#x4E0A;const&#x5173;&#x952E;&#x5B57;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> Sales_data::avg_Price() <span class="keyword">const</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">if</span> (units_sold)</span><br><span class="line">        <span class="keyword">return</span> revenue / units_sold;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h4 id="defining-a-function-to-return-this-object">Defining a Function to Return &quot;This&quot; Object</h4>
+<p>&#x5982;&#x679C;&#x6210;&#x5458;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x662F;&#x8BE5;&#x7C7B;&#x578B;&#x672C;&#x8EAB;&#x6216;&#x8005;&#x8BE5;&#x7C7B;&#x578B;&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x53EF;&#x4EE5;&#x8FD4;&#x56DE;<code>*this</code>&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Sales_data &amp;Sales_data::combine(<span class="keyword">const</span> Sales_data &amp;rhs)</span><br><span class="line">{</span><br><span class="line">    units_sold += rhs.units_sold;</span><br><span class="line">    revenue += rhs.revenue;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="defining-nonmember-class-related-functions">Defining Nonmember Class-Related Functions</h3>
+<p>&#x4E00;&#x4E9B;&#x51FD;&#x6570;&#x4ECE;&#x6982;&#x5FF5;&#x4E0A;&#x662F;&#x67D0;&#x79CD;&#x7C7B;&#x578B;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x4F46;&#x5374;&#x4E0D;&#x662F;&#x5B9A;&#x4E49;&#x5728;&#x51FD;&#x6570;&#x7684;&#x5185;&#x90E8;&#x3002;&#x8FD9;&#x6837;&#x7684;&#x51FD;&#x6570;&#x58F0;&#x660E;&#x5E94;&#x8BE5;&#x5199;&#x5728;&#x8BE5;&#x7C7B;&#x578B;&#x7684;&#x5934;&#x6587;&#x4EF6;&#xFF08;&#x51FD;&#x6570;&#x5B9A;&#x4E49;&#x53EF;&#x4EE5;&#x653E;&#x5728;&#x5934;&#x6587;&#x4EF6;&#x5BF9;&#x5E94;&#x7684;cpp&#x6587;&#x4EF6;&#x4E2D;&#xFF09;&#x3002;</p>
+<p>&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//In SalesData_struct.h</span></span><br><span class="line"><span class="comment">//nonmember but related function</span></span><br><span class="line"></span><br><span class="line"><span class="function">Sales_data <span class="title">add</span><span class="params">(<span class="keyword">const</span> Sales_data &amp;, <span class="keyword">const</span> Sales_data &amp;)</span></span>;</span><br><span class="line"><span class="function">ostream &amp;<span class="title">print</span><span class="params">(ostream &amp;, <span class="keyword">const</span> Sales_data &amp;)</span></span>;</span><br><span class="line"><span class="function">istream &amp;<span class="title">read</span><span class="params">(istream &amp;, Sales_data &amp;)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//In SalesData_struct.cpp</span></span><br><span class="line"><span class="function">Sales_data <span class="title">add</span><span class="params">(<span class="keyword">const</span> Sales_data &amp;lhs, <span class="keyword">const</span> Sales_data &amp;rhs)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    Sales_data sum = lhs;</span><br><span class="line">    sum.combine(rhs);</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function">ostream &amp;<span class="title">print</span><span class="params">(ostream &amp;os, <span class="keyword">const</span> Sales_data &amp;item)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    os &lt;&lt; item.isbn() &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; item.units_sold &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; item.revenue &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; item.avg_Price();</span><br><span class="line">    <span class="keyword">return</span> os;</span><br><span class="line">}</span><br><span class="line"><span class="function">istream &amp;<span class="title">read</span><span class="params">(istream &amp;is, Sales_data &amp;item)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">double</span> price = <span class="number">0</span>;</span><br><span class="line">    is &gt;&gt; item.bookNo &gt;&gt; item.units_sold &gt;&gt; price;</span><br><span class="line">    item.revenue = price * item.units_sold;</span><br><span class="line">    <span class="keyword">return</span> is;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6CE8;&#x610F;&#x5728;&#x51FD;&#x6570;<code>print</code>&#x548C;<code>read</code>&#x4E2D;&#x8FD4;&#x56DE;&#x7684;&#x662F;ostream&#x548C;istream&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x8FD9;&#x4E24;&#x4E2A;&#x7C7B;&#x578B;&#x4E0D;&#x652F;&#x6301;&#x62F7;&#x8D1D;&#x3002;</p>
+<p>&#x5728;<code>add</code>&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x9996;&#x5148;&#x662F;&#x4E00;&#x4E2A;&#x62F7;&#x8D1D;&#x521D;&#x59CB;&#x5316;<code>Sales_data sum = lhs</code>&#x3002;C++&#x7684;&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;&#x4E2D;&#xFF0C;&#x62F7;&#x8D1D;&#x4E00;&#x4E2A;&#x7C7B;&#x7C7B;&#x578B;&#x4F1A;&#x62F7;&#x8D1D;&#x5176;&#x4E2D;&#x6240;&#x6709;&#x7684;&#x6210;&#x5458;&#x53D8;&#x91CF;&#xFF0C;&#x56E0;&#x6B64;sum&#x548C;lhs&#x4E2D;&#x7684;&#x6240;&#x6709;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x5C06;&#x6709;&#x76F8;&#x540C;&#x7684;&#x503C;&#xFF08;&#x4F46;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x5185;&#x5B58;&#x4E2D;&#xFF09;&#x3002;</p>
+<h3 id="constructors">Constructors</h3>
+<p>&#x6784;&#x9020;&#x51FD;&#x6570;&#x7279;&#x70B9;&#xFF1A;</p>
+<ol type="1">
+<li>&#x6784;&#x9020;&#x51FD;&#x6570;&#x5728;&#x5B9E;&#x4F8B;&#x5316;&#x521B;&#x5EFA;&#x65F6;&#x88AB;&#x6267;&#x884C;&#x3002;</li>
+<li>&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E0E;&#x51FD;&#x6570;&#x7C7B;&#x578B;&#x540C;&#x540D;</li>
+<li>&#x6784;&#x9020;&#x51FD;&#x6570;&#x6CA1;&#x6709;&#x8FD4;&#x56DE;&#x503C;</li>
+<li>&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E0D;&#x5141;&#x8BB8;&#x88AB;&#x5B9A;&#x4E49;&#x6210;const&#x51FD;&#x6570;&#x3002;&#x56E0;&#x4E3A;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;const&#x4E0E;&#x5426;&#x662F;&#x5728;&#x521B;&#x5EFA;&#x540E;&#x624D;&#x51B3;&#x5B9A;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4F1A;&#x5728;&#x51B3;&#x5B9A;constness&#x524D;&#x5148;&#x6267;&#x884C;&#x3002;</li>
+</ol>
+<h4 id="the-synthesized-default-constructor">The Synthesized Default Constructor</h4>
+<p>&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF08;default constructor&#xFF09;&#x662F;&#x4E0D;&#x9700;&#x8981;&#x4EFB;&#x4F55;&#x5F62;&#x53C2;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x5F53;&#x7C7B;&#x6CA1;&#x6709;&#x5B9A;&#x4E49;&#x4EFB;&#x4F55;&#x6784;&#x9020;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x521B;&#x5EFA;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF08;synthesized default constructor&#xFF09;&#x3002;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x7684;&#x64CD;&#x4F5C;&#x4E3A;&#xFF0C;&#x5F53;&#x53C2;&#x6570;&#x6709;&#x7C7B;&#x5185;&#x521D;&#x59CB;&#x5316;&#xFF08;&#x53D8;&#x91CF;&#x5B9A;&#x4E49;&#x65F6;&#x6709;&#x521D;&#x59CB;&#x5316;&#x503C;&#xFF09;&#xFF0C;&#x5982;<code>int a = 3;</code>&#xFF0C;&#x5219;&#x4F7F;&#x7528;&#x7C7B;&#x5185;&#x521D;&#x59CB;&#x5316;&#x503C;&#x8FDB;&#x884C;&#x503C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x5426;&#x5219;&#x4F7F;&#x7528;&#x53D8;&#x91CF;&#x7684;&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<h4 id="some-classes-cannot-rely-on-the-synthesized-default-constructor">Some Classes Cannot Rely on the synthesized Default Constructor</h4>
+<p>&#x4E00;&#x4E9B;&#x7C7B;&#x65E0;&#x6CD5;&#x4F9D;&#x8D56;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x56E0;&#x4E3A;</p>
+<ol type="1">
+<li>&#x53EA;&#x6709;&#x7C7B;&#x6CA1;&#x6709;&#x5B9A;&#x4E49;&#x4EFB;&#x4F55;&#x6784;&#x9020;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x624D;&#x4F1A;&#x6709;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;</li>
+<li>&#x5F53;&#x6CA1;&#x6709;&#x7C7B;&#x5185;&#x521D;&#x59CB;&#x5316;&#x503C;&#x65F6;&#xFF0C;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4F1A;&#x4F7F;&#x7528;&#x53D8;&#x91CF;&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x4F46;&#x5185;&#x5EFA;&#x7C7B;&#x578B;&#xFF08;int&#x7B49;&#xFF09;&#x548C;&#x590D;&#x5408;&#x7C7B;&#x578B;&#xFF08;array&#xFF0C;pointer&#xFF09;&#x51FA;&#x73B0;&#x5728;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x65F6;&#x9ED8;&#x8BA4;&#x503C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;&#x6240;&#x4EE5;&#x5F53;&#x4E14;&#x4EC5;&#x5F53;&#x8FD9;&#x4E9B;&#x53C2;&#x6570;&#x6709;&#x7C7B;&#x5185;&#x521D;&#x59CB;&#x5316;&#x503C;&#x65F6;&#x624D;&#x53EF;&#x4EE5;&#x4F9D;&#x8D56;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x5426;&#x5219;&#x6784;&#x9020;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;</li>
+<li>&#x6709;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x65E0;&#x6CD5;&#x751F;&#x6210;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;&#x5982;&#x7C7B;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x5E76;&#x6CA1;&#x6709;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E5F;&#x5C31;&#x65E0;&#x6CD5;&#x53BB;&#x521D;&#x59CB;&#x5316;&#x8FD9;&#x4E2A;&#x53D8;&#x91CF;&#x3002;&#x56E0;&#x6B64;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x9700;&#x8981;&#x81EA;&#x5DF1;&#x5B9A;&#x4E49;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;</li>
+</ol>
+<h4 id="defining-the-sales_data-constructors">Defining the Sales_data Constructors</h4>
+<p>Sales_data&#x6784;&#x9020;&#x51FD;&#x6570;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Inside class body</span></span><br><span class="line">Sales_data() = <span class="keyword">default</span>;</span><br><span class="line">Sales_data(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s) : bookNo(s) {}</span><br><span class="line">Sales_data(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s, <span class="keyword">unsigned</span> n, <span class="keyword">double</span> p) : bookNo(s), units_sold(n), revenue(p * n) {}</span><br><span class="line">Sales_data(istream &amp;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Outside class body</span></span><br><span class="line">Sales_data::Sales_data(istream &amp;is)</span><br><span class="line">{</span><br><span class="line">    read(is, *<span class="keyword">this</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4E00;&#x5171;&#x5B9A;&#x4E49;&#x4E86;&#x56DB;&#x4E2A;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x5176;&#x4E2D;&#x4E09;&#x4E2A;&#x662F;&#x5728;&#x7C7B;&#x5185;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x5728;&#x7C7B;&#x5916;&#x5B9A;&#x4E49;&#x7684;&#x3002;</p>
+<p>&#x5728;&#x5B9A;&#x4E49;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x4F7F;&#x7528;&#x4E86;default&#x5173;&#x952E;&#x5B57;&#xFF0C;&#x8BE5;&#x5173;&#x952E;&#x5B57;&#x662F;C++11&#x7684;&#x7279;&#x6027;&#xFF0C;&#x8868;&#x793A;&#x5E0C;&#x671B;&#x6784;&#x9020;&#x51FD;&#x6570;&#x8868;&#x73B0;&#x7684;&#x5982;&#x540C;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E00;&#x6A21;&#x4E00;&#x6837;&#x3002;</p>
+<h4 id="constructor-initializer-list">Constructor Initializer List</h4>
+<p>&#x5728;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E2D;&#x7684;&#x5B9A;&#x4E49;&#x4E2D;&#xFF0C;&#x51FA;&#x73B0;&#x5728;&#x53C2;&#x6570;&#x5217;&#x8868;&#x540E;&#xFF0C;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#x524D;&#xFF0C;&#x4EE5;<code>:</code>&#x5F00;&#x5934;&#x7684;&#x90E8;&#x5206;&#x79F0;&#x4E3A;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#xFF08;Initializer List&#xFF09;&#x3002;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#x5FC5;&#x987B;&#x51FA;&#x73B0;&#x5728;&#x51FD;&#x6570;&#x5B9A;&#x4E49;&#x4E2D;&#xFF0C;&#x5373;&#x5FC5;&#x987B;&#x4E0E;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#x4E00;&#x8D77;&#x51FA;&#x73B0;&#x3002;</p>
+<p>&#x5F53;&#x4E00;&#x4E2A;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x6CA1;&#x6709;&#x51FA;&#x73B0;&#x5728;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#x4E2D;&#x65F6;&#xFF0C;&#x8BE5;&#x51FD;&#x6570;&#x7684;&#x521D;&#x59CB;&#x5316;&#x903B;&#x8F91;&#x4E0E;&#x5408;&#x6210;&#x6784;&#x9020;&#x51FD;&#x6570;&#x76F8;&#x540C;&#xFF0C;&#x5373;&#x6709;&#x7C7B;&#x5185;&#x521D;&#x59CB;&#x5316;&#x503C;&#x4F7F;&#x7528;&#x7C7B;&#x5185;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x5426;&#x5219;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<ul>
+<li>&#x5EFA;&#x8BAE;&#x4E3A;&#x6BCF;&#x4E2A;&#x6210;&#x5458;&#x53C2;&#x6570;&#x90FD;&#x8BBE;&#x7F6E;&#x7C7B;&#x5185;&#x521D;&#x59CB;&#x5316;&#x503C;</li>
+</ul>
+<h4 id="defining-a-constructor-outside-the-class-body">Defining a Constructor outside the Class Body</h4>
+<p>&#x5982;&#x5F62;&#x53C2;&#x4E3A;<code>istream</code>&#x7248;&#x672C;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Sales_data(istream &amp;);</span><br><span class="line"></span><br><span class="line">Sales_data::Sales_data(istream &amp;is)</span><br><span class="line">{</span><br><span class="line">    read(is, *<span class="keyword">this</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8BE5;&#x6784;&#x9020;&#x51FD;&#x6570;&#x6CA1;&#x6709;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#xFF0C;&#x6216;&#x8005;&#x4E25;&#x683C;&#x610F;&#x4E49;&#x4E0A;&#x8BF4;&#xFF0C;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#x4E3A;&#x7A7A;&#x3002;&#x5219;&#x8BE5;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4F1A;&#x5728;&#x6267;&#x884C;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#x524D;&#xFF0C;&#x5148;&#x6309;&#x7167;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x7684;&#x903B;&#x8F91;&#x521D;&#x59CB;&#x5316;&#x6240;&#x6709;&#x6210;&#x5458;&#x53D8;&#x91CF;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x6267;&#x884C;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#x3002;</p>
+<blockquote>
+<p>&#x5C3D;&#x91CF;&#x5728;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#x4E2D;&#x521D;&#x59CB;&#x5316;&#x53D8;&#x91CF;&#x3002;&#x5982;&#x679C;&#x5C06;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x7684;&#x8D4B;&#x503C;&#x5199;&#x5728;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#x5185;&#xFF0C;&#x5219;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x7ECF;&#x8FC7;&#x4E86;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x518D;&#x8FDB;&#x884C;&#x4E86;&#x4E00;&#x4E2A;&#x8D4B;&#x503C;&#x3002;</p>
+</blockquote>
+<h3 id="copy-assignment-and-destruction">Copy, Assignment, and Destruction</h3>
+<p>&#x7C7B;&#x8FD8;&#x8981;&#x63A7;&#x5236;&#x5BF9;&#x8C61;&#x662F;&#x5982;&#x4F55;&#x88AB;&#x62F7;&#x8D1D;&#xFF0C;&#x8D4B;&#x503C;&#x548C;&#x6467;&#x6BC1;&#x7684;&#x3002;</p>
+<ol type="1">
+<li>&#x62F7;&#x8D1D;&#xFF1A;&#x5F53;&#x4F7F;&#x7528;&#x5BF9;&#x8C61;&#x521D;&#x59CB;&#x5316;&#x53E6;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x6216;&#x4F5C;&#x4E3A;&#x503C;&#x7C7B;&#x578B;&#xFF08;&#x6CA1;&#x6709;&#x5F15;&#x7528;&#xFF09;&#x4F20;&#x9012;&#x8FDB;&#x51FD;&#x6570;&#x6216;&#x4ECE;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x65F6;&#xFF0C;&#x5BF9;&#x8C61;&#x90FD;&#x4F1A;&#x7ECF;&#x5386;&#x62F7;&#x8D1D;&#x3002;</li>
+<li>&#x8D4B;&#x503C;&#xFF1A;&#x5F53;&#x4F7F;&#x7528;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x7B26;&#xFF08;<code>=</code>&#xFF09;&#x65F6;&#x4F1A;&#x7ECF;&#x5386;&#x8D4B;&#x503C;</li>
+<li>&#x6467;&#x6BC1;&#xFF1A;&#x5F53;&#x5BF9;&#x8C61;&#x9000;&#x51FA;&#x4F5C;&#x7528;&#x57DF;&#x65F6;&#x4F1A;&#x88AB;&#x6467;&#x6BC1;&#x3002;&#x5728;&#x6570;&#x7EC4;&#x548C;vector&#x4E2D;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x4F1A;&#x5728;&#x5BB9;&#x5668;&#x6467;&#x6BC1;&#x65F6;&#x88AB;&#x6467;&#x6BC1;&#x3002;</li>
+</ol>
+<p>&#x5982;&#x679C;&#x7528;&#x6237;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#x62F7;&#x8D1D;&#xFF0C;&#x8D4B;&#x503C;&#x548C;&#x6467;&#x6BC1;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x90FD;&#x4F1A;&#x63D0;&#x4F9B;&#x5408;&#x6210;&#x7248;&#x672C;&#x3002;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#x5C55;&#x793A;&#x4E86;&#x7F16;&#x8BD1;&#x5668;&#x63D0;&#x4F9B;&#x7684;&#x5408;&#x6210;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">total = trans; <span class="comment">// synthesized assignment</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Equals to</span></span><br><span class="line">total.bookNo = trans.bookNo</span><br><span class="line">total.units_sold = trans.units_sold</span><br><span class="line">total.revenue = trans.revenue</span><br></pre></td></tr></table></figure>
+<h4 id="some-classes-canot-rely-on-the-synthesized-versins">Some Classes Canot Rely on the Synthesized Versins</h4>
+<p>&#x901A;&#x5E38;&#x6765;&#x8BF4;&#xFF0C;&#x6709;&#x52A8;&#x6001;&#x5185;&#x5B58;&#x5206;&#x914D;&#x7684;&#x7C7B;&#x4E0D;&#x9002;&#x5408;&#x5408;&#x6210;&#x7248;&#x672C;&#x7684;&#x62F7;&#x8D1D;&#xFF0C;&#x8D4B;&#x503C;&#x548C;&#x6467;&#x6BC1;&#xFF08;&#x7B2C;12&#x7AE0;&#x548C;13.1.4&#x8282;&#x4F1A;&#x89E3;&#x91CA;&#xFF09;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x5408;&#x6210;&#x7248;&#x672C;&#x53EF;&#x4EE5;&#x6B63;&#x786E;&#x5904;&#x7406;string&#x548C;vector&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Test firstOne;</span><br><span class="line">firstOne.value = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>};</span><br><span class="line">Test secondOne;</span><br><span class="line">secondOne = firstOne;</span><br><span class="line"></span><br><span class="line">firstOne.value[<span class="number">0</span>] = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;First one value is: &quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i : firstOne.value)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Second one value is: &quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i : secondOne.value)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// First one value is: </span></span><br><span class="line"><span class="comment">// 4 2 3</span></span><br><span class="line"><span class="comment">// Second one value is:</span></span><br><span class="line"><span class="comment">// 123</span></span><br></pre></td></tr></table></figure>
+<p>Test&#x7C7B;&#x4E2D;&#x4EC5;&#x5305;&#x542B;&#x4E00;&#x4E2A;vector&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; value;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x8D4B;&#x503C;&#x6B63;&#x786E;&#x7684;&#x62F7;&#x8D1D;&#x4E86;vector&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x5143;&#x7D20;&#x3002;</p>
+<h2 id="access-control-and-encapsulation">Access Control and Encapsulation</h2>
+<p>public&#x5173;&#x952E;&#x5B57;&#x540E;&#x7684;&#x53D8;&#x91CF;&#x53EF;&#x4EE5;&#x88AB;&#x7A0B;&#x5E8F;&#x7684;&#x5176;&#x4ED6;&#x90E8;&#x5206;&#x8BBF;&#x95EE;&#xFF0C;private&#x5173;&#x952E;&#x5B57;&#x540E;&#x53D8;&#x91CF;&#x4EC5;&#x80FD;&#x88AB;&#x7C7B;&#x4E2D;&#x7684;&#x6210;&#x5458;&#x51FD;&#x6570;&#x8BBF;&#x95EE;&#x3002;</p>
+<p>public&#x548C;private&#x5173;&#x952E;&#x5B57;&#x53EF;&#x4EE5;&#x51FA;&#x73B0;&#x5728;&#x7C7B;&#x4E2D;&#x51FA;&#x73B0;&#x4EFB;&#x610F;&#x591A;&#x6B21;&#x3002;</p>
+<h4 id="using-the-class-or-struct-keyboard">Using the class or struct keyboard</h4>
+<p>struct&#x548C;class&#x7684;<strong>&#x552F;&#x4E00;</strong>&#x533A;&#x522B;&#x5728;&#x4E8E;&#xFF0C;class&#x4E2D;&#x6CA1;&#x6709;&#x5199;&#x5728;public&#x548C;private&#x540E;&#x7684;&#x6210;&#x5458;&#x9ED8;&#x8BA4;&#x662F;private&#x7684;&#xFF0C;&#x800C;struct&#x4E2D;&#x5219;&#x9ED8;&#x8BA4;&#x662F;public&#x7684;&#xFF08;struct&#x4E2D;&#x540C;&#x6837;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;public&#x548C;private&#xFF09;&#x3002;</p>
+<h3 id="friends">Friends</h3>
+<p>&#x4E00;&#x4E2A;&#x7C7B;&#x53EF;&#x4EE5;&#x5141;&#x8BB8;&#x5176;&#x4ED6;&#x7684;&#x7C7B;&#x6216;&#x8005;&#x51FD;&#x6570;&#x8BBF;&#x95EE;&#x5176;&#x4E2D;&#x7684;&#x975E;public&#x53D8;&#x91CF;&#xFF0C;&#x6B64;&#x65F6;&#x5176;&#x4ED6;&#x7684;&#x51FD;&#x6570;&#x6216;&#x8005;&#x7C7B;&#x88AB;&#x79F0;&#x4E3A;&#x53CB;&#x7C7B;&#xFF08;&#x51FD;&#x6570;&#xFF09;&#xFF08;Friends&#xFF09;&#x3002;</p>
+<p>&#x8981;&#x58F0;&#x660E;&#x51FD;&#x6570;&#x662F;&#x53CB;&#x51FD;&#x6570;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5728;&#x7C7B;&#x4E2D;&#x52A0;&#x4E0A;&#x51FD;&#x6570;&#x7684;&#x58F0;&#x660E;&#xFF0C;&#x5E76;&#x4E14;&#x6700;&#x524D;&#x65B9;&#x52A0;&#x5165;<code>friend</code>&#x5173;&#x952E;&#x5B57;&#x5373;&#x53EF;&#x3002;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sales_data</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">friend</span> Sales_data <span class="title">add</span><span class="params">(<span class="keyword">const</span> Sales_data &amp;, <span class="keyword">const</span> Sales_data &amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> ostream &amp;<span class="title">print</span><span class="params">(ostream &amp;, <span class="keyword">const</span> Sales_data &amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> istream &amp;<span class="title">read</span><span class="params">(istream &amp;, Sales_data &amp;)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Sales_data() = <span class="keyword">default</span>;</span><br><span class="line">    Sales_data(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s);</span><br><span class="line">    Sales_data(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s, <span class="keyword">unsigned</span> n, <span class="keyword">double</span> p) : bookNo(s), units_sold(n), revenue(p * n) {}</span><br><span class="line">    Sales_data(istream &amp;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//Member function</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">isbn</span><span class="params">()</span> <span class="keyword">const</span> </span>{ <span class="keyword">return</span> bookNo; }</span><br><span class="line">    <span class="comment">// string isbn() { return bookNo; } // should be const</span></span><br><span class="line">    <span class="function">Sales_data &amp;<span class="title">combine</span><span class="params">(<span class="keyword">const</span> Sales_data &amp;)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">avg_Price</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">    <span class="comment">//Member variable</span></span><br><span class="line">    <span class="built_in">string</span> bookNo;</span><br><span class="line">    <span class="keyword">unsigned</span> units_sold = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">double</span> revenue = <span class="number">0</span>;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<p><code>friend</code>&#x5173;&#x952E;&#x5B57;&#x53EA;&#x53EF;&#x4EE5;&#x51FA;&#x73B0;&#x5728;&#x7C7B;&#x7684;&#x5B9A;&#x4E49;&#x4E2D;&#xFF0C;&#x800C;&#x4E14;&#x56E0;&#x4E3A;&#x4E25;&#x683C;&#x610F;&#x4E49;&#x4E0A;&#x5B83;&#x5E76;&#x4E0D;&#x662F;&#x7C7B;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x51FA;&#x73B0;&#x5728;&#x7C7B;&#x4E2D;&#x7684;&#x4EFB;&#x610F;&#x5730;&#x65B9;&#xFF0C;&#x4E0D;&#x53D7;public&#x548C;private&#x5F71;&#x54CD;&#x3002;</p>
+<h4 id="declarations-for-friends">Declarations for Friends</h4>
+<p>&#x5728;&#x7C7B;&#x5185;&#x90E8;&#x5173;&#x4E8E;friends&#x7684;&#x58F0;&#x660E;&#x5E76;&#x4E0D;&#x662F;&#x51FD;&#x6570;&#x58F0;&#x660E;&#xFF0C;&#x56E0;&#x6B64;&#x5E94;&#x8BE5;&#x5728;&#x7C7B;&#x5916;&#x90E8;&#x518D;&#x6B21;&#x58F0;&#x660E;&#x51FD;&#x6570;&#x3002;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sales_data</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    <span class="function"><span class="keyword">friend</span> Sales_data <span class="title">add</span><span class="params">(<span class="keyword">const</span> Sales_data &amp;, <span class="keyword">const</span> Sales_data &amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> ostream &amp;<span class="title">print</span><span class="params">(ostream &amp;, <span class="keyword">const</span> Sales_data &amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> istream &amp;<span class="title">read</span><span class="params">(istream &amp;, Sales_data &amp;)</span></span>; </span><br><span class="line"></span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// Sales_data returnAddResult(const Sales_data &amp;lhs, const Sales_data &amp;rhs)</span></span><br><span class="line"><span class="comment">// {</span></span><br><span class="line"><span class="comment">//     return add(lhs, rhs);</span></span><br><span class="line"><span class="comment">// } //Error</span></span><br><span class="line"></span><br><span class="line"><span class="function">Sales_data <span class="title">add</span><span class="params">(<span class="keyword">const</span> Sales_data &amp;, <span class="keyword">const</span> Sales_data &amp;)</span></span>;</span><br><span class="line"><span class="function">ostream &amp;<span class="title">print</span><span class="params">(ostream &amp;, <span class="keyword">const</span> Sales_data &amp;)</span></span>;</span><br><span class="line"><span class="function">istream &amp;<span class="title">read</span><span class="params">(istream &amp;, Sales_data &amp;)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#x4E2D;&#x7684;<code>returnAddResult</code>&#x5C1D;&#x8BD5;&#x8FD4;&#x56DE;<code>add</code>&#x51FD;&#x6570;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x4F46;&#x56E0;&#x4E3A;<code>add</code>&#x51FD;&#x6570;&#x4EC5;&#x88AB;&#x58F0;&#x660E;&#x4E3A;&#x4E86;&#x53CB;&#x51FD;&#x6570;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x771F;&#x6B63;&#x7684;&#x8FDB;&#x884C;&#x58F0;&#x660E;&#xFF0C;&#x6240;&#x4EE5;&#x65E0;&#x6CD5;&#x8BBF;&#x95EE;&#x3002;</p>
+<ul>
+<li>&#x867D;&#x7136;&#x5373;&#x4F7F;&#x4E0D;&#x5728;&#x7C7B;&#x5916;&#x90E8;&#x518D;&#x6B21;&#x58F0;&#x660E;&#x51FD;&#x6570;&#xFF0C;&#x5927;&#x90E8;&#x5206;&#x7684;&#x7F16;&#x8BD1;&#x5668;&#x4E5F;&#x90FD;&#x80FD;&#x6B63;&#x786E;&#x7F16;&#x8BD1;&#x3002;&#x4F46;&#x662F;C++&#x6807;&#x51C6;&#x662F;&#x8981;&#x6C42;&#x5728;&#x7C7B;&#x5916;&#x518D;&#x6B21;&#x58F0;&#x660E;&#x7684;&#xFF0C;&#x5373;&#x4F7F;&#x7A0B;&#x5E8F;&#x5728;&#x6CA1;&#x6709;&#x518D;&#x6B21;&#x58F0;&#x660E;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x4E86;&#xFF0C;&#x4E5F;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x8BE5;&#x4EE3;&#x7801;&#x6362;&#x4E00;&#x4E2A;&#x7F16;&#x8BD1;&#x5668;&#x4ECD;&#x7136;&#x80FD;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;&#x3002;</li>
+</ul>
+<h2 id="additional-class-features">Additional Class Features</h2>
+<p>7.1-7.2&#x4EE5;<code>Sales_data</code>&#x8FD9;&#x4E2A;&#x7C7B;&#x4F5C;&#x4E3A;&#x4F8B;&#x5B50;&#x8BF4;&#x660E;&#x4E86;&#x7C7B;&#x7684;&#x4E00;&#x4E9B;&#x7279;&#x6027;&#x3002;&#x5728;&#x8FD9;&#x4E00;&#x8282;&#x4E2D;&#x4F1A;&#x7EE7;&#x7EED;&#x6DF1;&#x5165;&#x63A2;&#x8BA8;&#x8FD9;&#x4E9B;&#x7279;&#x6027;&#x3002;</p>
+<h3 id="class-members-revisited">Class Members Revisited</h3>
+<h4 id="defining-a-type-member">Defining a Type Member</h4>
+<p>&#x5728;&#x7C7B;&#x5185;&#x90E8;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;Type&#x6210;&#x5458;&#x3002;&#x8BE5;&#x6210;&#x5458;&#x4E0E;&#x5176;&#x4ED6;&#x7684;&#x6210;&#x5458;&#x7C7B;&#x578B;&#x4E00;&#x6837;&#xFF0C;&#x662F;&#x53D7;public&#x548C;private&#x5173;&#x952E;&#x5B57;&#x5F71;&#x54CD;&#x7684;&#x3002;&#x4F46;&#x4E0E;&#x5176;&#x4ED6;&#x6210;&#x5458;&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x5728;&#x4F7F;&#x7528;&#x8BE5;&#x7C7B;&#x578B;&#x524D;&#xFF0C;&#x5FC5;&#x987B;&#x5DF2;&#x7ECF;&#x51FA;&#x73B0;&#x4E86;&#x8BE5;&#x7C7B;&#x578B;&#x7684;&#x5B9A;&#x4E49;&#xFF08;&#x5BF9;&#x5176;&#x4ED6;&#x6210;&#x5458;&#xFF0C;&#x4F1A;&#x5148;&#x7F16;&#x8BD1;&#x58F0;&#x660E;&#xFF0C;&#x518D;&#x7F16;&#x8BD1;&#x5B9A;&#x4E49;&#xFF0C;&#x56E0;&#x6B64;&#x6210;&#x5458;&#x7684;&#x4F4D;&#x7F6E;&#x4E0D;&#x9020;&#x6210;&#x4EFB;&#x4F55;&#x5F71;&#x54CD;&#xFF09;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Screen</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// pos i = 0; //error, the pos hasn&apos;t been </span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">string</span>::size_type pos;</span><br><span class="line">    <span class="comment">// using pos = string::size_type; // same with above</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    pos cursor = <span class="number">0</span>, height = <span class="number">0</span>, width = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">string</span> content;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<p>&#x5F53;&#x5728;&#x7C7B;&#x5916;&#x8BBF;&#x95EE;&#x8BE5;&#x522B;&#x540D;&#x65F6;&#xFF0C;&#x4E5F;&#x9700;&#x8981;&#x50CF;&#x8BBF;&#x95EE;&#x666E;&#x901A;&#x53D8;&#x91CF;&#x4E00;&#x6837;&#xFF0C;&#x5982;<code>Screen::pos</code></p>
+<h4 id="making-members-inline">Making Members inline</h4>
+<p>&#x5982;&#x4E4B;&#x524D;&#x6240;&#x8FF0;&#xFF0C;&#x5B9A;&#x4E49;&#x5728;&#x7C7B;&#x5185;&#x90E8;&#x7684;&#x51FD;&#x6570;&#x4F1A;&#x9690;&#x5F0F;&#x7684;&#x8BA4;&#x4E3A;&#x4E3A;inline&#x7684;&#x3002;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x663E;&#x793A;&#x7684;&#x5728;&#x51FD;&#x6570;&#x7C7B;&#x5185;&#x58F0;&#x660E;&#x6216;&#x7C7B;&#x5916;&#x5B9A;&#x4E49;&#x524D;&#x52A0;&#x4E0A;inline&#x6765;&#x5C06;&#x51FD;&#x6570;&#x53D8;&#x4E3A;&#x5185;&#x8054;&#x51FD;&#x6570;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Screen</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">char</span> <span class="title">get</span><span class="params">()</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="keyword">return</span> content[cursor];</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">char</span> <span class="title">get</span><span class="params">(pos ht, pos wd)</span> <span class="keyword">const</span></span>;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">char</span> Screen::get(pos ht, pos wd) <span class="keyword">const</span></span><br><span class="line">{</span><br><span class="line">    </span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;<code>get()</code>&#x662F;&#x9690;&#x5F0F;&#x7684;&#x88AB;&#x5B9A;&#x4E49;&#x4E3A;&#x5185;&#x8054;&#xFF0C;<code>get(pos ht, pos wd)</code>&#x662F;&#x663E;&#x793A;&#x7684;&#x88AB;&#x5B9A;&#x4E49;&#x4E3A;&#x5185;&#x8054;&#xFF0C;&#x4EE3;&#x7801;&#x4E2D;<code>get(pos ht, pos wd)</code>&#x7684;&#x58F0;&#x660E;&#x548C;&#x5B9A;&#x4E49;&#x5904;&#x90FD;&#x52A0;&#x4E0A;&#x4E86;&#x5173;&#x952E;&#x5B57;inline&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x53EA;&#x9700;&#x8981;&#x5728;&#x4EFB;&#x610F;&#x4E00;&#x5904;&#x5B9A;&#x4E49;&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#x5982;&#x5728;&#x7B2C;&#x516D;&#x7AE0;&#x4E2D;&#x6240;&#x8FF0;&#xFF0C;&#x5185;&#x8054;&#x51FD;&#x6570;&#x7684;&#x5B9A;&#x4E49;&#x5EFA;&#x8BAE;&#x4E0E;&#x58F0;&#x660E;&#x653E;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x5934;&#x6587;&#x4EF6;&#x4E2D;</p>
+<h4 id="mutable-data-members">mutable Data Members</h4>
+<p>mutable&#x6570;&#x636E;&#x6210;&#x5458;&#x6C38;&#x8FDC;&#x4E0D;&#x4F1A;&#x662F;const&#x7684;&#xFF0C;&#x5373;&#x4F7F;&#x5728;const&#x51FD;&#x6570;&#x4E2D;&#xFF08;this&#x6307;&#x9488;&#x662F;&#x6307;&#x5411;const&#x7684;&#x6307;&#x9488;&#xFF09;&#x4ECD;&#x7136;&#x80FD;&#x88AB;&#x4FEE;&#x6539;&#x3002;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Screen</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ChangeAccessCtr</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">mutable</span> <span class="keyword">size_t</span> accessCtr = <span class="number">0</span>;</span><br><span class="line">    ...</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Screen::ChangeAccessCtr() <span class="keyword">const</span></span><br><span class="line">{</span><br><span class="line">    ++accessCtr;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;,<code>ChangeAccessCtr</code>&#x662F;const&#x51FD;&#x6570;&#xFF0C;&#x4F46;&#x56E0;&#x4E3A;accessCtr&#x53D8;&#x91CF;&#x662F;mutable&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x4ECD;&#x7136;&#x80FD;&#x591F;&#x4FEE;&#x6539;accessCtr&#x3002;</p>
+<h3 id="functions-that-return-this">Functions That Return *this</h3>
+<p>&#x5982;&#x679C;&#x67D0;&#x6210;&#x5458;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7684;&#x7C7B;&#x578B;&#x4E3A;&#x7C7B;&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x5219;&#x8BE5;&#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x88AB;&#x6B63;&#x786E;&#x7684;&#x7EA7;&#x8054;&#x8D77;&#x6765;&#xFF0C;&#x5426;&#x5219;&#x867D;&#x7136;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#xFF0C;&#x4F46;&#x4E4B;&#x540E;&#x7684;&#x64CD;&#x4F5C;&#x662F;&#x57FA;&#x4E8E;&#x4E34;&#x65F6;&#x53D8;&#x91CF;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Define class function outside class</span></span><br><span class="line">Screen &amp;Screen::move(pos ht, pos wd)</span><br><span class="line">{</span><br><span class="line">    pos row = ht * width;</span><br><span class="line">    cursor = row + wd;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Screen &amp;Screen::<span class="built_in">set</span>(<span class="keyword">char</span> c)</span><br><span class="line">{</span><br><span class="line">    content[cursor] = c;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Screen Screen::move_copy(pos ht, pos wd)</span><br><span class="line">{</span><br><span class="line">    pos row = ht * width;</span><br><span class="line">    cursor = row + wd;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//Test code</span></span><br><span class="line"></span><br><span class="line"><span class="function">Screen <span class="title">sc</span><span class="params">(<span class="number">20</span>, <span class="number">20</span>, <span class="string">&apos; &apos;</span>)</span></span>;</span><br><span class="line">sc.move(<span class="number">4</span>, <span class="number">0</span>).<span class="built_in">set</span>(<span class="string">&apos;a&apos;</span>);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;content is &quot;</span> &lt;&lt; sc.get() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">sc.move_copy(<span class="number">4</span>,<span class="number">0</span>).<span class="built_in">set</span>(<span class="string">&apos;b&apos;</span>);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;content is &quot;</span> &lt;&lt; sc.get() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">content is a</span></span><br><span class="line"><span class="comment">content is a</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x5982;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x6240;&#x793A;&#xFF0C;<code>move</code>&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x7C7B;&#x578B;&#x7684;&#x5F15;&#x7528;&#xFF0C;<code>move_copy</code>&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x7C7B;&#x578B;&#x672C;&#x8EAB;&#xFF0C;&#x56E0;&#x6B64;&#x5B9E;&#x9645;&#x4E0A;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x4E00;&#x4E2A;&#x7ECF;&#x8FC7;&#x62F7;&#x8D1D;&#x521D;&#x59CB;&#x5316;&#x4E34;&#x65F6;&#x53D8;&#x91CF;&#x3002;&#x5F53;&#x5BF9;<code>move</code>&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x8C03;&#x7528;<code>set</code>&#x65F6;&#xFF0C;&#x539F;&#x5148;&#x7684;&#x503C;&#x88AB;&#x4FEE;&#x6539;&#x4E86;&#xFF0C;&#x800C;&#x5BF9;<code>move_copy</code>&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x8C03;&#x7528;<code>set</code>&#x65F6;&#xFF0C;&#x88AB;&#x4FEE;&#x6539;&#x7684;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x8FD4;&#x56DE;&#x7684;&#x4E34;&#x65F6;&#x53D8;&#x91CF;&#x3002;</p>
+<h4 id="returning-this-from-a-const-member-function">Returning *this from a const Member Function</h4>
+<p>&#x5982;&#x679C;&#x6210;&#x5458;&#x51FD;&#x6570;&#x662F;const&#x51FD;&#x6570;&#xFF0C;&#x4E14;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x662F;&#x8BE5;&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#x6216;&#x5F15;&#x7528;&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;&#x6307;&#x9488;&#x6216;&#x5F15;&#x7528;&#x662F;&#x6307;&#x5411;const&#x53D8;&#x91CF;&#x7684;&#x3002;&#x4E5F;&#x56E0;&#x6B64;&#x65E0;&#x6CD5;&#x7EA7;&#x8054;&#x8C03;&#x7528;&#x5176;&#x4ED6;&#x975E;const&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//In Screen.h</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Screen</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">const</span> Screen &amp;<span class="title">Display</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">    ...</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Screen &amp;Screen::Display() <span class="keyword">const</span></span><br><span class="line">{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; content;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//In Chapter7_Classes.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// sc.Display().set(&apos;a&apos;); //error when there is no nonconst overload</span></span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x56E0;&#x4E3A;<code>Display</code>&#x51FD;&#x6570;&#x662F;const&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x4F20;&#x5165;&#x7684;this&#x6307;&#x9488;&#x662F;<code>const Screen * const</code>&#x7C7B;&#x578B;&#xFF0C;&#x4E5F;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x8FD4;&#x56DE;&#x7684;&#x662F;<code>*this</code>&#xFF0C;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;<code>const Screen&amp;</code>&#x3002;</p>
+<p>&#x8C03;&#x7528;&#x8BED;&#x53E5;<code>sc.Display().set(&apos;a&apos;)</code>&#x5931;&#x8D25;&#xFF0C;&#x662F;&#x56E0;&#x4E3A;set&#x4E0D;&#x662F;const&#x51FD;&#x6570;&#xFF0C;&#x6240;&#x4EE5;&#x5176;this&#x6307;&#x9488;&#x7C7B;&#x578B;&#x4E3A;<code>Screen * const</code>&#xFF0C;&#x800C;&#x4F20;&#x5165;&#x7684;&#x662F;Display&#x8FD4;&#x56DE;&#x7684;&#x53D8;&#x91CF;&#x6307;&#x9488;&#xFF0C;&#x7C7B;&#x578B;&#x4E3A;<code>const Screen * const</code>&#xFF0C;&#x6240;&#x4EE5;&#x65E0;&#x6CD5;&#x8FDB;&#x884C;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x3002;</p>
+<h4 id="overloading-based-on-const">Overloading Based on const</h4>
+<p>&#x89E3;&#x51B3;&#x4E0A;&#x8FF0;&#x95EE;&#x9898;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#xFF0C;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x975E;const&#x7684;&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x91CD;&#x8F7D;&#xFF0C;&#x56E0;&#x4E3A;&#x51FD;&#x6570;&#x7684;const&#x4E0E;&#x5426;&#x5B9E;&#x9645;&#x662F;&#x51B3;&#x5B9A;&#x4F20;&#x5165;&#x7684;this&#x6307;&#x9488;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x800C;&#x4E14;&#x662F;low level&#x7684;const&#x533A;&#x522B;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x91CD;&#x8F7D;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//In Screen.h</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Screen</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">const</span> Screen &amp;<span class="title">Display</span><span class="params">(ostream &amp;)</span> <span class="keyword">const</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> Screen &amp;<span class="title">Display</span><span class="params">(ostream &amp;)</span></span>;</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">do_display</span><span class="params">(ostream &amp;os)</span> <span class="keyword">const</span></span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Screen &amp;Screen::Display(ostream &amp;os) <span class="keyword">const</span></span><br><span class="line">{</span><br><span class="line">    do_display(os);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//In Screen.cpp</span></span><br><span class="line">Screen &amp;Screen::Display(ostream &amp;os)</span><br><span class="line">{</span><br><span class="line">    do_display(os);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Screen::do_display(ostream &amp;os) <span class="keyword">const</span></span><br><span class="line">{</span><br><span class="line">    os &lt;&lt; content;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//In Chapter7_Classes.cpp</span></span><br><span class="line">sc.Display(<span class="built_in">cout</span>).<span class="built_in">set</span>(<span class="string">&apos;a&apos;</span>); <span class="comment">// correct,when there is nonconst overwrite</span></span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;<code>sc.Display(cout).set(&apos;a&apos;)</code>&#x53EF;&#x4EE5;&#x6210;&#x529F;&#x8FD0;&#x884C;&#xFF0C;&#x56E0;&#x4E3A;&#x7C7B;&#x4E2D;&#x5B9A;&#x4E49;&#x4E86;const&#x548C;&#x975E;const&#x4E24;&#x4E2A;&#x7248;&#x672C;&#x7684;Display&#x51FD;&#x6570;&#x3002;&#x8BE5;&#x8BED;&#x53E5;&#x5B9E;&#x9645;&#x8C03;&#x7528;&#x7684;&#x662F;&#x975E;const&#x7248;&#x672C;&#x7684;Display&#xFF0C;&#x5176;&#x4E2D;&#x4F1A;&#x8C03;&#x7528;const&#x51FD;&#x6570;<code>do_display</code>&#xFF0C;&#x8C03;&#x7528;&#x4E2D;&#x5B58;&#x5728;&#x5C06;&#x6307;&#x5411;&#x975E;const&#x5BF9;&#x8C61;&#x7684;&#x6307;&#x9488;&#xFF08;this&#x6307;&#x9488;&#xFF09;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x4E3A;&#x6307;&#x5411;const&#x5BF9;&#x8C61;&#x7684;&#x6307;&#x9488;&#x7684;&#x8FC7;&#x7A0B;&#x3002;</p>
+<h3 id="class-type">Class Type</h3>
+<p>&#x6BCF;&#x4E2A;&#x7C7B;&#x90FD;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A;&#x72EC;&#x7279;&#x7684;&#x7C7B;&#x578B;&#x3002;&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x7C7B;&#x5373;&#x4F7F;&#x5176;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x6210;&#x5458;&#x90FD;&#x4E00;&#x6A21;&#x4E00;&#x6837;&#xFF0C;&#x4E5F;&#x65E0;&#x6CD5;&#x76F8;&#x4E92;&#x8D4B;&#x503C;&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6307;&#x9488;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#x3002;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//In Test.h</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">First</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    <span class="keyword">int</span> memi = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> getMem = <span class="number">0</span>;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Second</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    <span class="keyword">int</span> memi = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> getMem = <span class="number">0</span>;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">//In Chapter7_Classes.cpp</span></span><br><span class="line"></span><br><span class="line">First first;</span><br><span class="line">Second sec;</span><br><span class="line">first.memi = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// sec = first; //Error</span></span><br><span class="line"></span><br><span class="line">Second *sp = <span class="keyword">reinterpret_cast</span>&lt;Second *&gt;(&amp;first);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;sp value is &quot;</span> &lt;&lt; sp-&gt;memi &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">sp value is 2</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h4 id="class-declarations">Class Declarations</h4>
+<p>&#x53EF;&#x4EE5;&#x5728;&#x6CA1;&#x6709;&#x5B9A;&#x4E49;&#x7C7B;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x58F0;&#x660E;&#x7C7B;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">NotDefined</span>;</span></span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x79CD;&#x58F0;&#x660E;&#x79F0;&#x4E3A;&#x524D;&#x5411;&#x58F0;&#x660E;(forward declaration)&#x3002;&#x5728;&#x6267;&#x884C;&#x5B8C;&#x58F0;&#x660E;&#xFF0C;&#x4F46;&#x8FD8;&#x6CA1;&#x6709;&#x6267;&#x884C;&#x5B8C;&#x5B9A;&#x4E49;&#x524D;&#xFF0C;&#x7C7B;<code>NotDefined</code>&#x662F;&#x4E0D;&#x5B8C;&#x6574;&#x7C7B;&#x578B;&#xFF08;incomplete type&#xFF09;&#x3002;&#x7F16;&#x8BD1;&#x5668;&#x77E5;&#x9053;&#x4E86;&#x8BE5;&#x7C7B;&#x578B;&#x662F;&#x7C7B;&#xFF0C;&#x4F46;&#x8FD8;&#x4E0D;&#x77E5;&#x9053;&#x5176;&#x4E2D;&#x5305;&#x542B;&#x6709;&#x4EC0;&#x4E48;&#x6210;&#x5458;&#x3002;</p>
+<p>&#x5F53;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x7684;&#x5B9E;&#x4F8B;&#x5316;&#x65F6;&#xFF0C;&#x8BE5;&#x7C7B;&#x578B;&#x5FC5;&#x987B;&#x7ECF;&#x8FC7;&#x4E86;&#x5B9A;&#x4E49;&#x3002;&#x5426;&#x5219;&#x7F16;&#x8BD1;&#x5668;&#x4E0D;&#x77E5;&#x9053;&#x9700;&#x8981;&#x4E3A;&#x4ED6;&#x5206;&#x914D;&#x591A;&#x5C11;&#x7684;&#x5185;&#x5B58;&#x3002;</p>
+<p>&#x4E0D;&#x5B8C;&#x6574;&#x7C7B;&#x578B;&#x53EA;&#x80FD;&#x7528;&#x4E8E;&#x4E09;&#x4E2A;&#x5730;&#x65B9;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5B9A;&#x4E49;&#x8BE5;&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#x6216;&#x5F15;&#x7528;</li>
+<li>&#x4F5C;&#x4E3A;&#x51FD;&#x6570;&#x58F0;&#x660E;&#x4E2D;&#x7684;&#x53C2;&#x6570;&#x6216;&#x8005;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x3002;&#x6CE8;&#x610F;&#x662F;&#x58F0;&#x660E;&#xFF0C;&#x4E0D;&#x662F;&#x5B9A;&#x4E49;</li>
+<li>&#x4F5C;&#x4E3A;&#x9759;&#x6001;&#x7C7B;&#x578B;&#x6210;&#x4E3A;&#x7C7B;&#x7684;&#x6210;&#x5458;</li>
+</ol>
+<p>&#x5728;&#x7C7B;&#x7684;&#x5B9A;&#x4E49;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x7C7B;&#x8FD8;&#x662F;&#x4E0D;&#x5B8C;&#x6574;&#x7684;&#x3002;&#x56E0;&#x4E3A;&#x4E0D;&#x5B8C;&#x6574;&#x7C7B;&#x578B;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x4EE5;&#x4E0A;&#x4E09;&#x4E2A;&#x5730;&#x65B9;&#xFF0C;&#x6240;&#x4EE5;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x53EF;&#x4EE5;&#x5C06;&#x672C;&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#x6216;&#x5F15;&#x7528;&#x4F5C;&#x4E3A;&#x6210;&#x5458;&#x53C2;&#x6570;&#xFF0C;&#x6216;&#x4F5C;&#x4E3A;&#x9759;&#x6001;&#x6210;&#x5458;&#x3002;&#x4E5F;&#x53EF;&#x4EE5;&#x7528;&#x672C;&#x7C7B;&#x578B;&#x4F5C;&#x4E3A;&#x6210;&#x5458;&#x51FD;&#x6570;&#x7684;&#x5F62;&#x53C2;&#x548C;&#x8FD4;&#x56DE;&#x503C;&#x3002;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TestNotDefined</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    NotDefined *np;</span><br><span class="line">    <span class="keyword">static</span> NotDefined ns;</span><br><span class="line">    <span class="function">NotDefined <span class="title">functionAboutNotDefine</span><span class="params">(NotDefined)</span></span>;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<h3 id="friendship-revisited">Friendship Revisited</h3>
+<p>&#x4E00;&#x4E2A;&#x7C7B;&#x53EF;&#x4EE5;&#x5C06;&#x53E6;&#x4E00;&#x4E2A;&#x7C7B;&#x6216;&#x8005;&#x67D0;&#x4E2A;&#x7C7B;&#x4E2D;&#x7279;&#x5B9A;&#x7684;&#x6210;&#x5458;&#x51FD;&#x6570;&#x4F5C;&#x4E3A;&#x53CB;&#x7C7B;&#x6216;&#x53CB;&#x51FD;&#x6570;&#x3002;</p>
+<h4 id="friendship-between-classes">Friendship between Classes</h4>
+<p>&#x5728;&#x7C7B;&#x4E2D;&#x5B9A;&#x4E49;&#x53E6;&#x4E00;&#x4E2A;&#x7C7B;&#x4E3A;&#x53CB;&#x7C7B;&#xFF0C;&#x540C;&#x6837;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x5173;&#x952E;&#x5B57;<code>friend</code>&#xFF0C;&#x53E6;&#x5916;&#x8FD8;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x7C7B;&#x578B;&#x4E3A;class&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//In Screen.h</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Screen</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">Window_mgr</span>;</span></span><br><span class="line">    ....</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E0E;&#x5B9A;&#x4E49;&#x666E;&#x901A;&#x7684;&#x53CB;&#x51FD;&#x6570;&#x4E00;&#x6837;&#xFF0C;&#x5B9A;&#x4E49;&#x53CB;&#x7C7B;&#x7684;&#x8BED;&#x53E5;&#x53EF;&#x4EE5;&#x51FA;&#x73B0;&#x5728;&#x7C7B;&#x5B9A;&#x4E49;&#x5185;&#x90E8;&#x7684;&#x4EFB;&#x4F55;&#x5730;&#x65B9;&#x3002;&#x6B64;&#x65F6;&#xFF0C;&#x867D;&#x7136;&#x51FA;&#x73B0;&#x4E86;<code>Window_mgr</code>&#x7C7B;&#x540D;&#xFF0C;&#x4F46;&#x5E76;&#x4E0D;&#x9700;&#x8981;<code>Window_mgr</code>&#x7C7B;&#x88AB;&#x5B9A;&#x4E49;&#xFF0C;&#x751A;&#x81F3;&#x4E0D;&#x9700;&#x8981;&#x5176;&#x88AB;&#x58F0;&#x660E;&#x3002;</p>
+<p>&#x5B9A;&#x4E49;<code>Window_mgr</code>&#x7C7B;&#x7684;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//In Window_mgr.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;Screen.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Window_mgr</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> ScreenIndex = <span class="built_in">vector</span>&lt;Screen&gt;::size_type;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Clear</span><span class="params">(ScreenIndex index)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;Screen&gt; screens{Screen(<span class="number">5</span>, <span class="number">5</span>, <span class="string">&apos;a&apos;</span>)};</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">//In Window_mgr.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;Window_mgr.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Window_mgr::Clear(ScreenIndex index)</span><br><span class="line">{</span><br><span class="line">    Screen &amp;s = screens[index];</span><br><span class="line">    s.content = <span class="built_in">string</span>(s.height * s.width, <span class="string">&apos; &apos;</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x56E0;&#x4E3A;&#x9700;&#x8981;&#x771F;&#x5207;&#x7684;&#x7528;&#x5230;Screen&#x7C7B;&#x578B;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x5F15;&#x5165;<code>Screen.h</code>&#x6587;&#x4EF6;&#x3002;&#x6CE8;&#x610F;&#x5728;&#x51FD;&#x6570;Clear&#x7684;&#x5B9E;&#x73B0;&#x4E2D;&#xFF0C;&#x8BBF;&#x95EE;&#x4E86;Screen&#x4E2D;&#x7684;private&#x6210;&#x5458;&#xFF0C;&#x5982;height&#x548C;width&#x3002;</p>
+<blockquote>
+<p>&#x53CB;&#x7C7B;&#x6216;&#x53CB;&#x51FD;&#x6570;&#x6027;&#x8D28;&#x4E0D;&#x80FD;&#x4F20;&#x9012;&#xFF0C;&#x5373;A&#x5C06;B&#x5B9A;&#x4E49;&#x4E3A;&#x670B;&#x53CB;&#xFF0C;B&#x5C06;C&#x5B9A;&#x4E49;&#x4E3A;&#x670B;&#x53CB;&#x3002;&#x4F46;C&#x5E76;&#x4E0D;&#x662F;A&#x7684;&#x670B;&#x53CB;&#xFF0C;&#x56E0;&#x6B64;&#x4E0D;&#x80FD;&#x8BBF;&#x95EE;A&#x4E2D;&#x53D8;&#x91CF;&#x3002;</p>
+</blockquote>
+<h4 id="making-a-member-function-a-friend">Making A member Function a Friend</h4>
+<p>&#x4E0A;&#x4F8B;&#x4E2D;&#x662F;&#x5C06;&#x5B8C;&#x6574;&#x7684;Window_mgr&#x5B9A;&#x4E49;&#x4E3A;&#x53CB;&#x7C7B;&#xFF0C;&#x6240;&#x4EE5;&#x7C7B;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x51FD;&#x6570;&#x90FD;&#x53EF;&#x4EE5;&#x8BBF;&#x95EE;Screen&#x7684;&#x79C1;&#x6709;&#x6210;&#x5458;&#xFF0C;&#x5B58;&#x5728;&#x4E00;&#x5B9A;&#x7684;&#x98CE;&#x9669;&#x6027;&#x3002;Screen&#x53EF;&#x4EE5;&#x4EC5;&#x5C06;Window_mgr&#x4E2D;&#x7684;Clear&#x51FD;&#x6570;&#x5B9A;&#x4E49;&#x4E3A;&#x53CB;&#x51FD;&#x6570;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//In Screen.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;Window_mgr.h&quot;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Screen</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">void</span> Window_mgr::Clear(ScreenIndex);</span><br><span class="line">    ....</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//In Window_mgr.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span>  <span class="title">Screen</span>;</span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Window_mgr</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> ScreenIndex = <span class="built_in">vector</span>&lt;Screen&gt;::size_type;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Clear</span><span class="params">(ScreenIndex index)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;Screen&gt; screens;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//In Window_mgr.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;Window_mgr.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;Screen.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Window_mgr::Clear(Window_mgr::ScreenIndex index)</span><br><span class="line">{</span><br><span class="line">    Screen &amp;s = screens[index];</span><br><span class="line">    s.content = <span class="built_in">string</span>(s.height * s.width, <span class="string">&apos; &apos;</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6CE8;&#x610F;&#x5F53;&#x8BBE;&#x7F6E;&#x67D0;&#x7C7B;&#x4E2D;&#x7684;&#x6210;&#x5458;&#x51FD;&#x6570;&#x4F5C;&#x4E3A;&#x53E6;&#x4E00;&#x4E2A;&#x7C7B;&#x7684;&#x53CB;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x8981;&#x989D;&#x5916;&#x6CE8;&#x610F;&#x5F15;&#x7528;&#x4F9D;&#x8D56;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x5728;&#x672C;&#x4F8B;&#x4E2D;&#xFF0C;&#x56E0;&#x4E3A;&#x5728;Screen&#x7C7B;&#x91CC;&#x8981;&#x8BBF;&#x95EE;Window_mgr&#x4E2D;&#x7684;clear&#x51FD;&#x6570;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x65F6;&#x5C31;&#x5FC5;&#x987B;&#x5F15;&#x5165;&#xFF08;include&#xFF09;<code>Window_mgr.h</code>&#x3002;&#x4F46;&#x8FD9;&#x5C31;&#x4F1A;&#x9020;&#x6210;<code>Screen.h</code>&#x4E2D;<code>include &quot;Window_mgr.h&quot;</code>&#xFF0C;<code>Window_mgr.h</code>&#x4E2D;<code>include &quot;Screen.h&quot;</code>&#x7684;&#x76F8;&#x4E92;&#x4F9D;&#x8D56;&#x3002;</p>
+<p>&#x5B9E;&#x9645;&#x4E0A;&#x5728;<code>Window_mgr.h</code>&#x4E2D;&#x6839;&#x672C;&#x4E0D;&#x9700;&#x8981;&#x8BBF;&#x95EE;<code>Screen</code>&#x7C7B;&#x4E2D;&#x7684;&#x6210;&#x5458;&#xFF0C;&#x800C;&#x4EC5;&#x4EC5;&#x662F;&#x5C06;<code>Screen</code>&#x7C7B;&#x4F5C;&#x4E3A;&#x5F62;&#x53C2;&#x7C7B;&#x578B;&#x548C;Vector&#x4E2D;&#x5143;&#x7D20;&#x7C7B;&#x578B;&#xFF0C;&#x56E0;&#x6B64;&#x5B8C;&#x5168;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E0D;&#x5B8C;&#x6574;&#x7C7B;&#x578B;&#xFF0C;&#x5373;&#x4EC5;&#x4EC5;&#x58F0;&#x660E;Screen&#x7C7B;&#xFF0C;&#x4EE3;&#x7801;&#x4E2D;&#x5199;&#x4E3A;<code>class Screen;</code>&#x3002;&#x800C;&#x5728;<code>Window_mgr.cpp</code>&#x4E2D;&#x56E0;&#x4E3A;&#x9700;&#x8981;&#x8BBF;&#x95EE;&#x4E86;<code>Screen</code>&#x7C7B;&#x4E2D;&#x7684;&#x6210;&#x5458;&#xFF0C;&#x6240;&#x4EE5;&#x5FC5;&#x987B;&#x5F15;&#x5165;<code>Screen.h</code>&#x3002;</p>
+<p>&#x603B;&#x7ED3;&#x5B9A;&#x4E49;&#x548C;&#x58F0;&#x660E;&#x987A;&#x5E8F;&#x5E94;&#x8BE5;&#x4E3A;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5B9A;&#x4E49;<code>Window_mgr</code>&#x7C7B;&#xFF0C;&#x5176;&#x4E2D;&#x53EA;&#x80FD;&#x58F0;&#x660E;<code>Clear</code>&#x51FD;&#x6570;&#xFF0C;&#x4E0D;&#x80FD;&#x5B9A;&#x4E49;<code>Clear</code>&#x51FD;&#x6570;&#xFF0C;&#x5426;&#x5219;&#x5C31;&#x9700;&#x8981;&#x8BBF;&#x95EE;&#x5230;<code>Screen</code>&#x4E2D;&#x7684;&#x6210;&#x5458;&#xFF0C;&#x5219;&#x5FC5;&#x987B;&#x5F15;&#x7528;<code>Screen.h</code>&#xFF0C;&#x8FD9;&#x91CC;&#x8981;&#x907F;&#x514D;&#x5F15;&#x7528;&#x3002;&#x5F53;&#x9700;&#x8981;&#x7528;&#x5230;<code>Screen</code>&#x7C7B;&#x578B;&#x672C;&#x8EAB;&#x65F6;&#xFF0C;&#x58F0;&#x660E;<code>Screen</code>&#x7C7B;&#x3002;</li>
+<li>&#x5B9A;&#x4E49;<code>Screen</code>&#x7C7B;&#xFF0C;&#x5176;&#x4E2D;&#x58F0;&#x660E;<code>Window::mgr</code>&#x4E3A;&#x53CB;&#x51FD;&#x6570;&#x3002;&#x6B64;&#x6B65;&#x9AA4;&#x9700;&#x8981;&#x5F15;&#x5165;<code>Window_mgr</code>&#x7684;&#x5B9A;&#x4E49;&#x3002;</li>
+<li>&#x5B9A;&#x4E49;<code>clear</code>&#x51FD;&#x6570;&#xFF0C;&#x6B64;&#x6B65;&#x9AA4;&#x9700;&#x8981;&#x5F15;&#x5165;<code>Screen</code>&#x7C7B;&#x5B9A;&#x4E49;</li>
+</ol>
+<h4 id="overloaded-functions-and-friendship">Overloaded Functions and Friendship</h4>
+<p>&#x5728;&#x58F0;&#x660E;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x4E3A;&#x53CB;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x5E26;&#x4E0A;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x548C;&#x53C2;&#x6570;&#x3002;&#x56E0;&#x6B64;&#x5F53;&#x53CB;&#x51FD;&#x6570;&#x6709;&#x91CD;&#x8F7D;&#x7C7B;&#x578B;&#x65F6;&#xFF0C;&#x4EC5;&#x4F1A;&#x5C06;&#x6EE1;&#x8DB3;&#x53CB;&#x51FD;&#x6570;&#x5B9A;&#x4E49;&#x7684;&#x90A3;&#x4E2A;&#x7248;&#x672C;&#x4F5C;&#x4E3A;&#x53CB;&#x51FD;&#x6570;&#x3002;</p>
+<h4 id="friend-declarations-and-scope">Friend Declarations and Scope</h4>
+<p>&#x5982;&#x4E4B;&#x524D;&#x6240;&#x8FF0;&#xFF0C;&#x53CB;&#x7C7B;&#x548C;&#x53CB;&#x51FD;&#x6570;&#x7684;&#x58F0;&#x660E;&#xFF0C;&#x5E76;&#x975E;&#x662F;&#x8BE5;&#x51FD;&#x6570;&#x7684;&#x771F;&#x6B63;&#x58F0;&#x660E;&#x3002;&#x8BE5;&#x51FD;&#x6570;&#x672A;&#x8FDB;&#x884C;&#x5916;&#x90E8;&#x58F0;&#x660E;&#x65F6;&#xFF0C;&#x4ECD;&#x7136;&#x662F;&#x65E0;&#x6CD5;&#x88AB;&#x5176;&#x4ED6;&#x7684;&#x51FD;&#x6570;&#x4F7F;&#x7528;&#x7684;&#xFF0C;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">X</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// X() { f(); } //error</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">g</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">h</span><span class="params">()</span></span>;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">// void X::g() { return f(); } //error</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>{}</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> X::h() { <span class="keyword">return</span> f(); }</span><br></pre></td></tr></table></figure>
+<p>&#x867D;&#x7136;&#x4EE3;&#x7801;&#x4E2D;&#x58F0;&#x660E;&#x4E86;<code>f()</code>&#x4E3A;&#x53CB;&#x51FD;&#x6570;&#xFF0C;&#x4F46;&#x6784;&#x9020;&#x51FD;&#x6570;&#x548C;&#x51FD;&#x6570;<code>g()</code>&#x90FD;&#x662F;&#x5728;&#x5916;&#x90E8;&#x58F0;&#x660E;&#x524D;&#x60F3;&#x8BBF;&#x95EE;&#x51FD;&#x6570;<code>f()</code>&#xFF0C;&#x6240;&#x4EE5;&#x90FD;&#x4F1A;&#x9020;&#x6210;&#x7F16;&#x8BD1;&#x9519;&#x8BEF;&#xFF0C;&#x800C;<code>h()</code>&#x5728;&#x5916;&#x90E8;&#x58F0;&#x660E;&#x540E;&#x518D;&#x8FDB;&#x884C;&#x5B9A;&#x4E49;&#xFF0C;&#x56E0;&#x6B64;&#x5C31;&#x80FD;&#x6B63;&#x5E38;&#x8BBF;&#x95EE;&#x3002;</p>
+<h2 id="class-scope">Class Scope</h2>
+<h4 id="scope-and-members-defined-outside-the-class">Scope and Members Defined outside the Class</h4>
+<p>&#x7C7B;&#x7684;&#x5B9A;&#x4E49;&#x672C;&#x8EAB;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x4F5C;&#x7528;&#x57DF;&#xFF0C;&#x56E0;&#x6B64;&#x5728;&#x7C7B;&#x5916;&#x5B9A;&#x4E49;&#x6210;&#x5458;&#x51FD;&#x6570;&#x65F6;&#x9700;&#x8981;&#x52A0;&#x4E0A;<code>::</code>&#x64CD;&#x4F5C;&#x7B26;&#x3002;</p>
+<p>&#x5F53;&#x6210;&#x5458;&#x51FD;&#x6570;&#x7684;&#x540D;&#x5B57;&#x51FA;&#x73B0;&#x540E;&#xFF0C;&#x5B83;&#x7684;&#x53C2;&#x6570;&#x5217;&#x8868;&#x548C;&#x5B9A;&#x4E49;&#x4E3B;&#x4F53;&#x5C31;&#x662F;&#x5728;&#x4F5C;&#x7528;&#x57DF;&#x91CC;&#x9762;&#x7684;&#x4E86;&#x3002;&#x56E0;&#x6B64;&#x5728;&#x53C2;&#x6570;&#x5217;&#x8868;&#x548C;&#x5B9A;&#x4E49;&#x4E3B;&#x4F53;&#x4E2D;&#x8BBF;&#x95EE;&#x7C7B;&#x4E2D;&#x6210;&#x5458;&#x65F6;&#x4E0D;&#x9700;&#x8981;&#x52A0;&#x4E0A;<code>::</code>&#x64CD;&#x4F5C;&#x7B26;&#x3002;&#x4F46;&#x662F;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x662F;&#x5728;&#x4F5C;&#x7528;&#x57DF;&#x5916;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x662F;&#x7C7B;&#x4E2D;&#x7684;&#x6210;&#x5458;&#x7C7B;&#x578B;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x52A0;&#x4E0A;<code>::</code>&#x64CD;&#x4F5C;&#x7B26;&#x3002;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//In Window_mgr.h</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Window_mgr</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ....</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Clear</span><span class="params">(ScreenIndex index)</span></span>;</span><br><span class="line">    <span class="function">ScreenIndex <span class="title">addScreen</span><span class="params">(<span class="keyword">const</span> Screen &amp;s)</span></span>;</span><br><span class="line">    ...</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//In Window_mgr.cpp</span></span><br><span class="line"><span class="keyword">void</span> Window_mgr::Clear(ScreenIndex index)</span><br><span class="line">{</span><br><span class="line">    Screen &amp;s = screens[index];</span><br><span class="line">    s.content = <span class="built_in">string</span>(s.height * s.width, <span class="string">&apos; &apos;</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">Window_mgr::ScreenIndex Window_mgr::addScreen(<span class="keyword">const</span> Screen &amp;s)</span><br><span class="line">{</span><br><span class="line">    screens.push_back(s);</span><br><span class="line">    <span class="keyword">return</span> screens.size() - <span class="number">1</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x5F53;<code>ScreenIndex</code>&#x51FA;&#x73B0;&#x5728;&#x4E86;&#x53C2;&#x6570;&#x5217;&#x8868;&#x4E2D;&#x65F6;&#x4E0D;&#x9700;&#x8981;&#x52A0;&#x4E0A;<code>Window_mgr::</code>&#x4FEE;&#x9970;&#x4F5C;&#x7528;&#x57DF;&#xFF0C;&#x4F46;&#x662F;&#x5F53;<code>ScreenIndex</code>&#x4F5C;&#x4E3A;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x65F6;&#x5219;&#x5FC5;&#x987B;&#x52A0;&#x4E0A;&#x3002;</p>
+<h3 id="name-lookup-and-class-scope">Name Lookup and Class Scope</h3>
+<p>C++&#x627E;&#x5BFB;&#x4E00;&#x4E2A;&#x540D;&#x5B57;&#x7684;&#x542B;&#x4E49;&#x65F6;&#x6B65;&#x9AA4;&#x662F;&#xFF1A; 1. &#x73B0;&#x5728;&#x4F7F;&#x7528;&#x8BE5;&#x540D;&#x5B57;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x91CC;&#x641C;&#x7D22;&#x8BE5;&#x540D;&#x5B57;&#x7684;&#x58F0;&#x660E;&#xFF0C;&#x58F0;&#x660E;&#x5FC5;&#x987B;&#x51FA;&#x73B0;&#x5728;&#x4F7F;&#x7528;&#x4E4B;&#x524D; 2. &#x5982;&#x679C;&#x540D;&#x5B57;&#x5728;&#x5F53;&#x524D;&#x4F5C;&#x7528;&#x57DF;&#x6CA1;&#x6709;&#x627E;&#x5230;&#xFF0C;&#x5728;&#x5176;&#x5D4C;&#x5957;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x5BFB;&#x627E;&#xFF08;&#x540C;&#x6837;&#x9700;&#x8981;&#x51FA;&#x73B0;&#x5728;&#x4F7F;&#x7528;&#x4E4B;&#x524D;&#xFF09; 3. &#x5982;&#x679C;&#x627E;&#x4E0D;&#x5230;&#x58F0;&#x660E;&#xFF0C;&#x5219;&#x62A5;&#x9519;</p>
+<p>&#x7C7B;&#x7F16;&#x8BD1;&#x7684;&#x987A;&#x5E8F;&#x4E3A;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5148;&#x7F16;&#x8BD1;&#x6240;&#x6709;&#x7684;&#x58F0;&#x660E;</li>
+<li>&#x6240;&#x6709;&#x58F0;&#x660E;&#x7F16;&#x8BD1;&#x5B8C;&#xFF0C;&#x6574;&#x4E2A;&#x7C7B;&#x7684;&#x6210;&#x5458;&#x90FD;&#x662F;&#x53EF;&#x89C1;&#x540E;&#xFF0C;&#x518D;&#x7F16;&#x8BD1;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#x7B49;&#x5B9A;&#x4E49;&#x90E8;&#x5206;&#x3002;</li>
+</ol>
+<h4 id="name-lookup-for-class-member-declarations">Name Lookup for Class Member Declarations</h4>
+<p>C++&#x627E;&#x5BFB;&#x540D;&#x5B57;&#x7684;&#x7B56;&#x7565;&#x548C;&#x7C7B;&#x7F16;&#x8BD1;&#x987A;&#x5E8F;&#x5171;&#x540C;&#x51B3;&#x5B9A;&#x4E86;&#x4EE5;&#x4E0B;&#x7ED3;&#x679C;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5F53;&#x540D;&#x5B57;&#x51FA;&#x73B0;&#x5728;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x6216;&#x8005;&#x53C2;&#x6570;&#x5217;&#x8868;&#x4E2D;&#x65F6;&#xFF0C;&#x8BE5;&#x540D;&#x5B57;&#x5FC5;&#x987B;&#x5728;&#x4F7F;&#x7528;&#x524D;&#x5DF2;&#x7ECF;&#x58F0;&#x660E;&#x8FC7;</li>
+<li>&#x5F53;&#x540D;&#x5B57;&#x51FA;&#x73B0;&#x5728;&#x6210;&#x5458;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#x4E2D;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x4F7F;&#x7528;&#x8BE5;&#x540D;&#x5B57;&#x524D;&#x65E0;&#x6CD5;&#x5728;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x627E;&#x5230;&#x8BE5;&#x540D;&#x5B57;&#x7684;&#x58F0;&#x660E;&#xFF0C;&#x5219;&#x5728;&#x7C7B;&#x5185;&#x90E8;&#x641C;&#x7D22;&#x8BE5;&#x540D;&#x5B57;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x7C7B;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x90FD;&#x4F1A;&#x88AB;&#x641C;&#x7D22;&#xFF0C;&#x65E0;&#x8BBA;&#x5B83;&#x7684;&#x51FA;&#x73B0;&#x987A;&#x5E8F;&#x3002;</li>
+</ol>
+<p>&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> Money;</span><br><span class="line"><span class="built_in">string</span> bal;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Account</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">Money <span class="title">balnce</span><span class="params">()</span> </span>{ <span class="keyword">return</span> bal; }</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Money bal;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x51FD;&#x6570;<code>balance</code>&#x8FD4;&#x56DE;&#x7684;bal&#x662F;&#x6210;&#x5458;&#x53D8;&#x91CF;<code>Money bal</code>&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5168;&#x5C40;&#x53D8;&#x91CF;string&#xFF0C;&#x5373;&#x4F7F;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x7684;&#x58F0;&#x660E;&#x5728;&#x5168;&#x5C40;&#x53D8;&#x91CF;<code>bal</code>&#x4F7F;&#x7528;&#x540E;&#x9762;&#x3002;</p>
+<h4 id="type-names-are-special">Type Names Are Special</h4>
+<p>&#x901A;&#x5E38;&#x800C;&#x8A00;&#xFF0C;Type&#x58F0;&#x660E;&#x53EF;&#x4EE5;&#x5728;&#x5D4C;&#x5957;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x91CD;&#x65B0;&#x4FEE;&#x6539;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> Money;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testTypedef</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    Money i;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">int</span> Money;<span class="comment">//correct</span></span><br><span class="line">    Money j;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>i&#x7684;&#x7C7B;&#x578B;&#x4E3A;double&#xFF0C;j&#x7684;&#x7C7B;&#x578B;&#x4E3A;int&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x5728;&#x7C7B;&#x4E2D;&#x4E0D;&#x5141;&#x8BB8;&#x91CD;&#x65B0;&#x5B9A;&#x4E49;&#xFF0C;&#x5373;&#x4F7F;&#x662F;&#x4E00;&#x6837;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> Money;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Account</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">Money <span class="title">balnce</span><span class="params">()</span> </span>{ <span class="keyword">return</span> bal; }</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// typedef double Money; //error, class not allow redefine</span></span><br><span class="line">    Money bal;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>&#x5F88;&#x591A;&#x7684;&#x7F16;&#x8BD1;&#x5668;&#x4ECD;&#x7136;&#x4F1A;&#x5141;&#x8BB8;&#x7C7B;&#x5185;&#x8FDB;&#x884C;type&#x91CD;&#x5B9A;&#x4E49;&#xFF0C;&#x4F46;&#x8FD9;&#x6837;&#x7684;&#x884C;&#x4E3A;&#x662F;&#x4E0D;&#x7B26;&#x5408;&#x6807;&#x51C6;&#x7684;&#xFF0C;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x5728;&#x66F4;&#x6362;&#x4E86;&#x7F16;&#x8BD1;&#x5668;&#x540E;&#x4ECD;&#x7136;&#x80FD;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;&#x3002;</p>
+</blockquote>
+<h4 id="normal-block-scope-name-lookup-inside-member-definitions">Normal Block-Scope Name Lookup inside Member Definitions</h4>
+<h4 id="after-class-scope-look-in-the-surrounding-scope">After Class Scope, Look in the Surrounding Scope</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//In Screen.cpp</span></span><br><span class="line"><span class="keyword">int</span> height = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">void</span> Screen::dummyFcn(pos height)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;height is &quot;</span> &lt;&lt; height &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Screen height is &quot;</span> &lt;&lt; <span class="keyword">this</span>-&gt;height &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Global height is &quot;</span> &lt;&lt; ::height &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//In Chapter7_Classes.cpp</span></span><br><span class="line"><span class="function">Screen <span class="title">s</span><span class="params">(<span class="number">10</span>, <span class="number">2</span>, <span class="string">&apos; &apos;</span>)</span></span>;</span><br><span class="line">s.dummyFcn(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">height is 3</span></span><br><span class="line"><span class="comment">Screen height is 10</span></span><br><span class="line"><span class="comment">Global height is 5</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="constructors-revisited">Constructors Revisited</h2>
+<h3 id="constructor-initializer-list-1">Constructor Initializer List</h3>
+<h4 id="constructor-initializers-are-sometimes-required">Constructor Initializers Are Sometimes Required</h4>
+<p>const&#x6210;&#x5458;&#x53D8;&#x91CF;&#x5FC5;&#x987B;&#x901A;&#x8FC7;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x56E0;&#x4E3A;&#x5728;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4F53;&#x5185;&#x90E8;&#x7684;&#x64CD;&#x4F5C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x8D4B;&#x503C;&#x4E0D;&#x662F;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConstRef</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    ConstRef(<span class="keyword">int</span> ii) : ci(ii), ri(ii)</span><br><span class="line">    {</span><br><span class="line">        i = ii;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ConstRef(int ii) //error</span></span><br><span class="line">    <span class="comment">// {</span></span><br><span class="line">    <span class="comment">//     ri = i;</span></span><br><span class="line">    <span class="comment">//     ci = i;</span></span><br><span class="line">    <span class="comment">//     i = ii;</span></span><br><span class="line">    <span class="comment">// }</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> ci;</span><br><span class="line">    <span class="keyword">int</span> &amp;ri;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;<code>ci</code>&#x548C;<code>ri</code>&#x5FC5;&#x987B;&#x901A;&#x8FC7;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x800C;i&#x53EF;&#x4EE5;&#x51FA;&#x73B0;&#x5728;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#x4E2D;&#xFF08;&#x521D;&#x59CB;&#x5316;&#xFF09;&#xFF0C;&#x6216;&#x8005;&#x5728;&#x51FA;&#x73B0;&#x5728;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4F53;&#x5185;&#xFF08;&#x5148;&#x88AB;&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x56E0;&#x4E3A;&#x662F;&#x5185;&#x7F6E;&#x7C7B;&#x578B;&#xFF0C;&#x6240;&#x4EE5;&#x7ED3;&#x679C;&#x4E3A;&#x672A;&#x5B9A;&#x4E49;&#xFF0C;&#x518D;&#x5C06;ii&#x8D4B;&#x503C;&#x7ED9;&#x5B83;&#xFF09;</p>
+<h4 id="order-of-member-initialization">Order of Member Initialization</h4>
+<p>&#x6210;&#x5458;&#x53C2;&#x6570;&#x7684;&#x521D;&#x59CB;&#x5316;&#x987A;&#x5E8F;&#x662F;&#x7531;&#x5176;&#x5728;&#x58F0;&#x660E;&#x4E2D;&#x51FA;&#x73B0;&#x7684;&#x987A;&#x5E8F;&#x51B3;&#x5B9A;&#x7684;&#xFF0C;&#x548C;&#x5728;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#x4E2D;&#x7684;&#x987A;&#x5E8F;&#x65E0;&#x5173;&#x3002;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Num</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Num(<span class="keyword">int</span> val) : j(val), i(j) {}</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;i value is: &quot;</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;j value is: &quot;</span> &lt;&lt; j &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">int</span> j;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">Num <span class="title">n</span><span class="params">(<span class="number">2</span>)</span></span>;</span><br><span class="line">n.Print();</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">i value is: 0</span></span><br><span class="line"><span class="comment">j value is: 2</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4E0A;&#x4F8B;&#x4E2D;&#xFF0C;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#x4E2D;&#x662F;&#x5148;&#x51FA;&#x73B0;&#x7528;<code>val</code>&#x503C;&#x521D;&#x59CB;&#x5316;<code>j</code>&#xFF0C;&#x518D;&#x901A;&#x8FC7;<code>j</code>&#x521D;&#x59CB;&#x5316;<code>i</code>&#x3002;&#x4F46;&#x56E0;&#x4E3A;&#x7C7B;&#x7684;&#x58F0;&#x660E;&#x987A;&#x5E8F;&#x4E2D;&#xFF0C;&#x662F;&#x5148;&#x58F0;&#x660E;&#x4E86;<code>i</code>&#x518D;&#x58F0;&#x660E;<code>j</code>&#x3002;&#x6240;&#x4EE5;&#x5B9E;&#x9645;&#x4E0A;&#x7684;&#x8FD0;&#x884C;&#x903B;&#x8F91;&#x4E3A;&#xFF0C;&#x7528;&#x672A;&#x5B9A;&#x4E49;&#x7684;<code>j</code>&#x521D;&#x59CB;&#x5316;&#x4E86;<code>i</code>&#xFF0C;&#x518D;&#x901A;&#x8FC7;<code>val</code>&#x503C;&#x521D;&#x59CB;&#x5316;&#x4E86;<code>j</code>&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x4E3A;<code>i</code>&#x4E3A;0&#xFF0C;<code>j</code>&#x4E3A;2&#xFF0C;<code>i</code>&#x7684;&#x503C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;</p>
+<h3 id="delegating-constructors">Delegating Constructors</h3>
+<p>&#x4EE3;&#x7406;&#x6784;&#x9020;&#x51FD;&#x6570;&#x65F6;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8BE5;&#x7C7B;&#x4E2D;&#x7684;&#x53E6;&#x4E00;&#x4E2A;&#x6784;&#x9020;&#x51FD;&#x6570;&#x6765;&#x5B8C;&#x6210;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> Sales_data::Sales_data(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s, <span class="keyword">unsigned</span> n, <span class="keyword">double</span> p) : bookNo(s), units_sold(n), revenue(p * n)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Constructor with 3 parameters&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> Sales_data::Sales_data() : Sales_data(<span class="string">&quot;&quot;</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Constructor with no Parameters&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">inline</span> Sales_data::Sales_data(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s) : Sales_data(s, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">{</span><br><span class="line">}</span><br><span class="line"><span class="comment">// inline Sales_data::Sales_data(istream &amp;is) : Sales_data(),revenue(0) { read(is, *this); }</span></span><br><span class="line"><span class="keyword">inline</span> Sales_data::Sales_data(istream &amp;is) : Sales_data()</span><br><span class="line">{</span><br><span class="line">    read(is, *<span class="keyword">this</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6CE8;&#x610F;&#xFF0C;&#x5F53;&#x4F7F;&#x7528;&#x4E86;&#x4EE3;&#x7406;&#x6784;&#x9020;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#x4E2D;&#x5C31;&#x4E0D;&#x80FD;&#x51FA;&#x73B0;&#x5176;&#x4ED6;&#x7684;&#x53D8;&#x91CF;&#x521D;&#x59CB;&#x5316;&#x4E86;&#xFF0C;&#x5982;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x5C1D;&#x8BD5;&#x540C;&#x65F6;&#x4F7F;&#x7528;&#x4EE3;&#x7406;&#x6784;&#x9020;&#x51FD;&#x6570;&#x548C;&#x521D;&#x59CB;&#x5316;revenue&#x5C31;&#x5931;&#x8D25;&#x4E86;&#x3002;</p>
+<p>&#x5F53;&#x4E00;&#x4E2A;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4F7F;&#x7528;&#x53E6;&#x4E00;&#x4E2A;&#x4EE3;&#x7406;&#x6784;&#x9020;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x4EE3;&#x7406;&#x6784;&#x9020;&#x51FD;&#x6570;&#x7684;&#x5217;&#x8868;&#x521D;&#x59CB;&#x5316;&#x4F1A;&#x5148;&#x8FD0;&#x884C;&#xFF0C;&#x7136;&#x540E;&#x5B83;&#x7684;&#x51FD;&#x6570;&#x4F53;&#x4F1A;&#x6267;&#x884C;&#xFF0C;&#x6700;&#x540E;&#x6267;&#x884C;&#x672C;&#x6784;&#x9020;&#x51FD;&#x6570;&#x7684;&#x51FD;&#x6570;&#x4F53;&#xFF0C;&#x5982;&#x4F7F;&#x7528;&#x8BED;&#x53E5;<code>Sales_data s</code>&#x8C03;&#x7528;&#x65E0;&#x53C2;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x5B83;&#x4F1A;&#x8C03;&#x7528;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x4EE3;&#x7406;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x8F93;&#x5165;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Constructor with 3 parameters</span></span><br><span class="line"><span class="comment">Constructor with no Parameters</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x4EE3;&#x7406;&#x6784;&#x9020;&#x51FD;&#x6570;&#x5148;&#x8FD0;&#x884C;&#x4E86;&#xFF0C;&#x7136;&#x540E;&#x8FD0;&#x884C;&#x7684;&#x662F;&#x65E0;&#x53C2;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;</p>
+<h3 id="the-role-of-the-default-constructor">The Role of the Default Constructor</h3>
+<p>&#x65E0;&#x8BBA;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x662F;&#x88AB;&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;&#x8FD8;&#x662F;&#x503C;&#x521D;&#x59CB;&#x5316;&#xFF08;&#x76F8;&#x5173;&#x6982;&#x5FF5;&#x5728;3.3.1&#x8282;&#x4E2D;&#xFF09;&#xFF0C;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x90FD;&#x4F1A;&#x88AB;&#x6267;&#x884C;&#x3002;</p>
+<p>&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;&#x5728;&#x4EE5;&#x4E0B;&#x60C5;&#x51B5;&#x4F1A;&#x53D1;&#x751F;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5F53;&#x5728;&#x4EE3;&#x7801;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x5B9A;&#x4E49;&#x4E86;&#x975E;static&#x7684;&#x53D8;&#x91CF;&#x6216;&#x8005;&#x6570;&#x7EC4;&#xFF0C;&#x4E14;&#x6570;&#x7EC4;&#x6CA1;&#x6709;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#xFF08;<code>{}</code>&#xFF09;</li>
+<li>&#x5F53;&#x4E00;&#x4E2A;&#x7C7B;&#x6709;&#x4F7F;&#x7528;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x7684;&#x7C7B;&#x6210;&#x5458;&#x3002;</li>
+<li>&#x5F53;&#x7C7B;&#x4E2D;&#x7684;&#x6210;&#x5458;&#x5728;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E2D;&#x5E76;&#x6CA1;&#x6709;&#x901A;&#x8FC7;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x8FD9;&#x4E9B;&#x6210;&#x5458;&#x4F1A;&#x88AB;&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;&#x3002;</li>
+</ol>
+<p>&#x503C;&#x521D;&#x59CB;&#x5316;&#x5728;&#x4EE5;&#x4E0B;&#x60C5;&#x51B5;&#x53D1;&#x751F;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5B9A;&#x4E49;&#x6570;&#x7EC4;&#x65F6;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#xFF0C;&#x4F46;&#x662F;&#x5217;&#x8868;&#x5927;&#x5C0F;&#x5C0F;&#x4E8E;&#x6570;&#x7EC4;&#x5927;&#x5C0F;&#xFF0C;&#x5269;&#x4F59;&#x5143;&#x7D20;&#x88AB;&#x503C;&#x521D;&#x59CB;&#x5316;&#x3002;</li>
+<li>&#x5F53;&#x5B9A;&#x4E49;&#x5C40;&#x90E8;static&#x53D8;&#x91CF;</li>
+<li>&#x5BF9;&#x4E8E;&#x7C7B;&#x7C7B;&#x578B;&#xFF0C;&#x4F7F;&#x7528;<code>T()</code>&#x5F62;&#x5F0F;&#x8FDB;&#x884C;&#x58F0;&#x660E;&#xFF0C;&#x6240;&#x4EE5;Vector(n)&#xFF0C;&#x91CC;&#x9762;&#x7684;&#x5143;&#x7D20;&#x90FD;&#x8FDB;&#x884C;&#x7684;&#x662F;&#x503C;&#x521D;&#x59CB;&#x5316;&#x3002;</li>
+</ol>
+<h3 id="using-the-default-constructor">Using the Default Constructor</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NoDefault</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    NoDefault(<span class="keyword">const</span> <span class="built_in">string</span>);</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    NoDefault my_mem;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="comment">// A a;</span></span><br><span class="line"><span class="comment">// A a = A();</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">B</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    <span class="comment">// B(){}; //error</span></span><br><span class="line">    B() : b_member(<span class="string">&quot;&quot;</span>){};</span><br><span class="line">    NoDefault b_member;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;<code>NoDefault</code>&#x6CA1;&#x6709;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;&#x5F53;<code>A</code>&#x5305;&#x542B;&#x6709;<code>NoDefault</code>&#x7C7B;&#x578B;&#x7684;&#x6210;&#x5458;&#xFF0C;A&#x7684;&#x5408;&#x6210;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x5C31;&#x65E0;&#x6CD5;&#x4F7F;&#x7528;&#xFF0C;&#x56E0;&#x4E3A;&#x5176;&#x65E0;&#x6CD5;&#x8C03;&#x7528;<code>NonDefault</code>&#x53D8;&#x91CF;&#x7684;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x8BED;&#x53E5;<code>A a;</code>&#x4F7F;&#x7528;&#x7684;&#x662F;&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;&#xFF0C;<code>A a=A()</code>&#x4F7F;&#x7528;&#x7684;&#x662F;&#x503C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x4F46;&#x4E24;&#x8005;&#x90FD;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#x3002;</p>
+<p>&#x540C;&#x7406;&#xFF0C;&#x5728;<code>B</code>&#x4E2D;&#x5FC5;&#x987B;&#x624B;&#x52A8;&#x7684;&#x5728;&#x521D;&#x59CB;&#x5316;&#x5217;&#x8868;&#x4E2D;&#x4E3A;<code>NonDefault</code>&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x5426;&#x5219;&#x5728;&#x5C1D;&#x8BD5;&#x8C03;&#x7528;&#x5176;&#x9ED8;&#x8BA4;&#x6784;&#x9020;&#x51FD;&#x6570;&#x65F6;&#x4F1A;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x3002;</p>
+<h3 id="implicit-class-type-conversions">Implicit Class-Type Conversions</h3>
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<strong>&#x4E00;&#x4E2A;&#x53C2;&#x6570;</strong>&#x88AB;&#x8C03;&#x7528;&#x7684;&#x7C7B;&#x6784;&#x9020;&#x5668;&#x63D0;&#x4F9B;&#x4E86;&#x9690;&#x5F0F;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#xFF0C;&#x4ECE;&#x8C03;&#x7528;&#x53C2;&#x6570;&#x8F6C;&#x6362;&#x4E3A;&#x8BE5;&#x7C7B;&#x578B;&#x3002;</p>
+<p>&#x5982;<code>Sales_data</code>&#x7C7B;&#x63D0;&#x4F9B;&#x4E86;&#x53EA;&#x9700;&#x8981;&#x4E00;&#x4E2A;const string&#x5F15;&#x7528;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> Sales_data::Sales_data(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s) : Sales_data(s, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">{</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x4ECE;const string&#x7C7B;&#x578B;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x4E3A;Sales_data&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Sales_data &amp;Sales_data::combine(<span class="keyword">const</span> Sales_data &amp;rhs)</span><br><span class="line">{</span><br><span class="line">    units_sold += rhs.units_sold;</span><br><span class="line">    revenue += rhs.revenue;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> null_book = <span class="string">&quot;9999&quot;</span>;</span><br><span class="line">Sales_data item;</span><br><span class="line">item.combine(null_book);</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;<code>null_book</code>&#x4F1A;&#x9690;&#x5F0F;&#x8F6C;&#x5316;&#x6210;<code>Sales_data</code>&#x5BF9;&#x8C61;&#xFF0C;&#x7136;&#x540E;&#x4F20;&#x9012;&#x7ED9;<code>combine</code>&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#x8FD9;&#x4E00;&#x6B65;&#x4E2D;&#xFF0C;<code>null_book</code>&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x6210;&#x7684;&#x5BF9;&#x8C61;&#x662F;&#x4E00;&#x4E2A;&#x4E34;&#x65F6;&#x53D8;&#x91CF;&#xFF0C;&#x5F53;combine&#x51FD;&#x6570;&#x6267;&#x884C;&#x5B8C;&#x540E;&#x5C31;&#x4F1A;&#x88AB;&#x629B;&#x5F03;&#x3002;</p>
+<h4 id="only-one-class-type-conversions-is-allowed">Only One Class-Type Conversions Is Allowed</h4>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#xFF0C;&#x8BED;&#x53E5;<code>item.combine(&quot;9999&quot;)</code>&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#x3002;</p>
+<p>&#x56E0;&#x4E3A;<code>&quot;9999&quot;</code>&#x7C7B;&#x578B;&#x662F;C&#x7C7B;&#x578B;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x5B83;&#x8981;&#x5148;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x4E3A;<code>string</code>&#xFF0C;<code>string</code>&#x518D;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x4E3A;<code>Sales_data</code>&#xFF0C;&#x8BE5;&#x8FC7;&#x7A0B;&#x5305;&#x542B;&#x4E86;&#x4E24;&#x6B21;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#xFF0C;&#x800C;C++&#x7684;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x4EC5;&#x652F;&#x6301;&#x4E00;&#x6B21;&#xFF0C;&#x6240;&#x4EE5;&#x7F16;&#x8BD1;&#x5668;&#x65E0;&#x6CD5;&#x6267;&#x884C;&#x3002;</p>
+<h4 id="suppressing-implicit-conversions-defined-by-constructors">Suppressing Implicit Conversions Defined by Constructors</h4>
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<code>explicit</code>&#x5173;&#x952E;&#x5B57;&#x7981;&#x6B62;&#x6784;&#x9020;&#x51FD;&#x6570;&#x7684;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#xFF0C;<code>explicit</code>&#x5173;&#x952E;&#x5B57;&#x4EC5;&#x80FD;&#x51FA;&#x73B0;&#x5728;&#x7C7B;&#x5185;&#x7684;&#x6210;&#x5458;&#x51FD;&#x6570;&#x58F0;&#x660E;&#x4E2D;&#x3002;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sales_data</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Sales_data</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span></span>;</span><br><span class="line">    ....</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> null_book = <span class="string">&quot;9999&quot;</span>;</span><br><span class="line">Sales_data item;</span><br><span class="line"><span class="comment">// item.combine(null_book);// error, when constructor isexplicit</span></span><br><span class="line">item.combine(Sales_data(null_book));<span class="comment">//Direct Initialization</span></span><br><span class="line">item.combine(<span class="keyword">static_cast</span>&lt;Sales_data&gt;(null_book));<span class="comment">//static_cast</span></span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;Sales_data&#x6784;&#x9020;&#x51FD;&#x6570;&#x88AB;&#x5B9A;&#x4E49;&#x4E3A;&#x4E86;explicit&#xFF0C;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x4E0D;&#x518D;&#x80FD;&#x6267;&#x884C;&#xFF0C;&#x4F46;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x76F4;&#x63A5;&#x521D;&#x59CB;&#x5316;&#x548C;<code>static_cast</code>&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#x3002;</p>
+<p>&#x6807;&#x51C6;&#x5E93;&#x4E2D;&#xFF1A; 1. string&#x7C7B;&#x578B;&#x6709;&#x901A;&#x8FC7;const char*&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x5982;<code>string(&quot;abc&quot;)</code>&#xFF0C;&#x8BE5;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4E0D;&#x662F;explicit&#x7684; 2. vector&#x7C7B;&#x578B;&#x4E2D;&#x6709;&#x901A;&#x8FC7;int&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x5982;<code>vector(2)</code>&#xFF0C;&#x8BE5;&#x6784;&#x9020;&#x51FD;&#x6570;&#x662F;explicit&#x7684;</p>
+<h3 id="aggregate-classes">Aggregate Classes</h3>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x7C7B;&#x6EE1;&#x8DB3;&#x4EE5;&#x4E0B;&#x6761;&#x4EF6;&#xFF0C;&#x5219;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x805A;&#x5408;&#x7C7B;&#xFF08;Aggregate Classes&#xFF09;&#xFF1A;</p>
+<ol type="1">
+<li>&#x6240;&#x6709;&#x7684;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x90FD;&#x662F;public&#x7684;</li>
+<li>&#x6CA1;&#x6709;&#x5B9A;&#x4E49;&#x4EFB;&#x4F55;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;</li>
+<li>&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x7684;&#x7C7B;&#x5185;&#x521D;&#x59CB;&#x503C;&#xFF08;&#x5982;<code>int a = 1</code>&#xFF09;</li>
+<li>&#x6CA1;&#x6709;&#x57FA;&#x7C7B;&#xFF0C;&#x6CA1;&#x6709;&#x865A;&#x51FD;&#x6570;&#x3002;</li>
+</ol>
+<p>&#x5982;&#x4E0B;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x805A;&#x5408;&#x7C7B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    <span class="keyword">int</span> ival;</span><br><span class="line">    <span class="built_in">string</span> s;</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<p>&#x5BF9;&#x4E8E;&#x805A;&#x5408;&#x7C7B;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5927;&#x62EC;&#x53F7;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x5927;&#x62EC;&#x53F7;&#x4E2D;&#x7684;&#x53C2;&#x6570;&#x6309;&#x987A;&#x5E8F;&#x4E0E;&#x805A;&#x5408;&#x7C7B;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#x4E00;&#x4E00;&#x521D;&#x59CB;&#x5316;&#x3002;&#x5982;&#x679C;&#x5927;&#x62EC;&#x53F7;&#x4E2D;&#x7684;&#x53C2;&#x6570;&#x6570;&#x91CF;&#x5C0F;&#x4E8E;&#x805A;&#x5408;&#x7C7B;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x6570;&#x91CF;&#xFF0C;&#x540E;&#x9762;&#x7684;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x503C;&#x521D;&#x59CB;&#x5316;&#x3002;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Data val1{<span class="number">0</span>, <span class="string">&quot;Anna&quot;</span>};</span><br><span class="line">Data val2{<span class="number">0</span>};</span><br></pre></td></tr></table></figure>
+<h3 id="literal-classes">Literal Classes</h3>
+<p>//TODO,after read 2.4.4</p>
+<h2 id="static-class-members">static Class Members</h2>
+<p>&#x5F53;&#x7ED9;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x52A0;&#x4E0A;<code>static</code>&#x5173;&#x952E;&#x5B57;&#x540E;&#xFF0C;&#x8BE5;&#x53D8;&#x91CF;&#x5C31;&#x53D8;&#x6210;&#x4E86;&#x9759;&#x6001;&#x6210;&#x5458;&#x53D8;&#x91CF;&#xFF0C;&#x9759;&#x6001;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x4E5F;&#x53D7;&#x5230;public&#xFF0C;private&#x7B49;&#x5173;&#x952E;&#x5B57;&#x7684;&#x5F71;&#x54CD;&#x3002;</p>
+<p>&#x9759;&#x6001;&#x6210;&#x5458;&#x53EF;&#x4EE5;&#x662F;const&#x7684;&#xFF0C;&#x4F46;&#x9759;&#x6001;&#x51FD;&#x6570;&#x4E0D;&#x5141;&#x8BB8;&#x662F;const&#x7684;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Account_S</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">calculate</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        amount += amount * interestRate;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">double</span> <span class="title">rate</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="keyword">return</span> interestRate;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">rate</span><span class="params">(<span class="keyword">double</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">string</span> owner;</span><br><span class="line">    <span class="keyword">double</span> amount;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">double</span> interestRate;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">double</span> cRate;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">double</span> <span class="title">InitRate</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// static double CInitRate() const; //error static member function can&apos;t be const</span></span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<p>&#x4E00;&#x4E2A;&#x7C7B;&#x7684;&#x5BF9;&#x8C61;&#x5B9E;&#x9645;&#x4E0A;&#x5E76;&#x4E0D;&#x5305;&#x542B;&#x5176;&#x4E2D;&#x7684;&#x9759;&#x6001;&#x6210;&#x5458;&#xFF0C;&#x56E0;&#x6B64;&#x9759;&#x6001;&#x51FD;&#x6570;&#x4E5F;&#x6CA1;&#x6709;this&#x6307;&#x9488;&#xFF0C;&#x6240;&#x4EE5;&#x5B9A;&#x4E49;&#x4E3A;&#x51FD;&#x6570;&#x5B9A;&#x4E49;&#x4E3A;const&#x4E0E;&#x5426;&#x5E76;&#x6CA1;&#x6709;&#x610F;&#x4E49;&#x3002;</p>
+<h4 id="using-a-class-static-member">Using a Class static Member</h4>
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F5C;&#x7528;&#x57DF;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x5BF9;&#x8C61;&#x672C;&#x8EAB;&#xFF0C;&#x5BF9;&#x8C61;&#x5F15;&#x7528;&#xFF0C;&#x5BF9;&#x8C61;&#x6307;&#x9488;&#x7B49;&#x6765;&#x8BBF;&#x95EE;&#x9759;&#x6001;&#x6210;&#x5458;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> r = Account_S::rate();</span><br><span class="line">Account_S ac1;</span><br><span class="line">Account_S *ac2 = &amp;ac1;</span><br><span class="line">r = ac1.rate();</span><br><span class="line">r = ac2-&gt;rate();</span><br></pre></td></tr></table></figure>
+<p>&#x5BF9;&#x4E8E;&#x666E;&#x901A;&#x6210;&#x5458;&#x51FD;&#x6570;&#x800C;&#x8A00;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x901A;&#x8FC7;&#x8BBF;&#x95EE;&#x9759;&#x6001;&#x6210;&#x5458;&#xFF0C;&#x5982;<code>Account_S</code>&#x4E2D;&#x7684;&#x65B9;&#x6CD5;<code>calculate</code>&#xFF0C;&#x5176;&#x4E2D;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x4E86;&#x9759;&#x6001;&#x6210;&#x5458;<code>interestRata</code>&#x3002;</p>
+<h4 id="defining-static-members">Defining static Members</h4>
+<p>&#x5F53;&#x5728;&#x7C7B;&#x5916;&#x5B9A;&#x4E49;&#x9759;&#x6001;&#x6210;&#x5458;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x518D;&#x6B21;&#x5199;&#x660E;<code>static</code>&#x5173;&#x952E;&#x5B57;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> Account_S::rate(<span class="keyword">double</span> rate)</span><br><span class="line">{</span><br><span class="line">    interestRate = rate;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;&#x9759;&#x6001;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x4E0D;&#x662F;&#x7C7B;&#x5BF9;&#x8C61;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x56E0;&#x6B64;&#x4E0D;&#x80FD;&#x4F7F;&#x7528;&#x7C7B;&#x5185;&#x521D;&#x59CB;&#x503C;&#xFF0C;&#x4E5F;&#x4E0D;&#x4F1A;&#x88AB;&#x6784;&#x9020;&#x51FD;&#x6570;&#x521D;&#x59CB;&#x5316;&#xFF08;&#x4F46;&#x53EF;&#x4EE5;&#x5728;&#x6784;&#x9020;&#x51FD;&#x6570;&#x51FD;&#x6570;&#x4F53;&#x5185;&#x8D4B;&#x503C;&#xFF09;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Account_S</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    <span class="comment">// Account_S() : interestRate(0) //error</span></span><br><span class="line">    <span class="comment">// {</span></span><br><span class="line">    <span class="comment">// }</span></span><br><span class="line"></span><br><span class="line">    Account_S()</span><br><span class="line">    {</span><br><span class="line">        interestRate = <span class="number">0</span>;</span><br><span class="line">    }</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// static double interestRate = 2;//error</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">double</span> interestRate;</span><br><span class="line">    &#xB7;&#xB7;&#xB7;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5F53;&#x5C1D;&#x8BD5;&#x4F7F;&#x7528;&#x7C7B;&#x5185;&#x521D;&#x59CB;&#x503C;&#x65F6;&#x5C31;&#x4F1A;&#x53D1;&#x751F;&#x7F16;&#x8BD1;&#x9519;&#x8BEF;&#xFF0C;&#x9759;&#x6001;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x7684;&#x521D;&#x59CB;&#x5316;&#x8FC7;&#x7A0B;&#x4E0E;&#x9759;&#x6001;&#x6210;&#x5458;&#x51FD;&#x6570;&#x5B9A;&#x4E49;&#x8FC7;&#x7A0B;&#x76F8;&#x540C;&#xFF0C;&#x5982;&#x4E0B;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//inside class</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Account_S</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">double</span> RateD;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">static</span> RateD interestRate;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">double</span> interest;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">double</span> <span class="title">InitRate</span><span class="params">()</span> </span>{ <span class="keyword">return</span> <span class="number">0</span>; }</span><br><span class="line">...</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//outside class</span></span><br><span class="line">Account_S::RateD Account_S::interestRate = InitRate();</span><br><span class="line"><span class="keyword">double</span> Account_S::interest = <span class="number">2.0</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x5982;&#x540C;&#x5728;&#x5B9A;&#x4E49;&#x6210;&#x5458;&#x51FD;&#x6570;&#x65F6;&#x4E00;&#x6837;&#xFF0C;&#x5F53;&#x6210;&#x5458;&#x51FD;&#x6570;&#x7684;&#x540D;&#x5B57;&#x51FA;&#x73B0;&#x540E;&#xFF0C;&#x53C2;&#x6570;&#x5217;&#x8868;&#x548C;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#x5C31;&#x5DF2;&#x7ECF;&#x5728;&#x4F5C;&#x7528;&#x57DF;&#x5185;&#x90E8;&#x4E86;&#x3002;&#x540C;&#x7406;&#x5728;&#x4E0A;&#x8FF0;&#x5B9A;&#x4E49;&#x4E2D;&#xFF0C;&#x5F53;&#x6210;&#x5458;&#x53D8;&#x91CF;<code>interestRate</code>&#x540D;&#x5B57;&#x51FA;&#x73B0;&#x540E;&#xFF0C;&#x5176;&#x4F59;&#x7684;&#x90E8;&#x5206;&#x5C31;&#x5DF2;&#x7ECF;&#x5728;&#x4F5C;&#x7528;&#x57DF;&#x91CC;&#x4E86;&#xFF08;&#x53D8;&#x91CF;&#x7684;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#x5728;&#x540D;&#x5B57;&#x51FA;&#x73B0;&#x524D;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x5728;&#x4F5C;&#x7528;&#x57DF;&#x91CC;&#xFF09;&#xFF0C;&#x56E0;&#x6B64;<code>InitRate</code>&#x4E0D;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x4F5C;&#x7528;&#x57DF;&#x64CD;&#x4F5C;&#x7B26;&#x6765;&#x8BBF;&#x95EE;&#x3002;</p>
+<h4 id="in-class-initialization-of-static-data-members">In-Class Initialization of static Data Members</h4>
+<p>//TODO&#xFF0C;&#x5173;&#x4E8E; costexpr</p>
+<h4 id="static-members-can-be-used-in-ways-ordinary-members-cant">static Members Can be Used in Ways Ordinary Members Can&apos;t</h4>
+<ol type="1">
+<li>&#x5F53;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x662F;&#x4E0D;&#x5B8C;&#x6574;&#x7C7B;&#x578B;&#x65F6;&#xFF0C;&#x65E0;&#x6CD5;&#x4F7F;&#x7528;&#x8BE5;&#x7C7B;&#x578B;&#x4F5C;&#x4E3A;&#x7C7B;&#x4E2D;&#x666E;&#x901A;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x4F5C;&#x4E3A;&#x7C7B;&#x4E2D;&#x9759;&#x6001;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x5982;</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">static</span> Bar mem1;</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>&#x53EF;&#x4EE5;&#x5728;&#x7C7B;&#x4E2D;&#x4F7F;&#x7528;&#x9759;&#x6001;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x4F5C;&#x4E3A;&#x6210;&#x5458;&#x51FD;&#x6570;&#x7684;&#x521D;&#x59CB;&#x503C;&#xFF0C;&#x800C;&#x666E;&#x901A;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x4E0D;&#x884C;&#xFF0C;&#x5982;</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Account_S</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// void TestDefaultValue(double a = amount)</span></span><br><span class="line">    <span class="comment">// {</span></span><br><span class="line">    <span class="comment">// }//can not use member variable as default parameters</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">TestDefaultValue</span><span class="params">(<span class="keyword">double</span> a = interest)</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">    }<span class="comment">//can use member variable as default parameters</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">double</span> amount;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">double</span> interest;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>Cpp Primer</em> 5th Aug.2012</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/CPPPrimer-Chapter7-Notes/" title="《C++ Primer》 第七章笔记">https://xuejiaw.github.io/CPPPrimer-Chapter7-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/" rel="prev" title="《3D数学基础：图形和游戏开发》第二章笔记">
+      <i class="fa fa-chevron-left"></i> 《3D数学基础：图形和游戏开发》第二章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter3-Notes/" rel="next" title="《3D数学基础：图形和游戏开发》第三章笔记">
+      《3D数学基础：图形和游戏开发》第三章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-7-classes"><span class="nav-number">1.</span> <span class="nav-text">Chapter 7 Classes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#defining-abstract-data-types"><span class="nav-number">1.1.</span> <span class="nav-text">Defining Abstract Data Types</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#designing-the-sales_data-class"><span class="nav-number">1.1.1.</span> <span class="nav-text">Designing the Sales_data class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#defining-the-revised-sales_data-class"><span class="nav-number">1.1.2.</span> <span class="nav-text">Defining the Revised Sales_data Class</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#introducing-this"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Introducing this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#intruducing-const-member-functions"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">Intruducing const Member Functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#class-scope-and-member-functions"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">Class Scope and Member Functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#defining-a-member-function-outside-the-class"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">Defining a Member Function outside the Class</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#defining-a-function-to-return-this-object"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">Defining a Function to Return &quot;This&quot; Object</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#defining-nonmember-class-related-functions"><span class="nav-number">1.1.3.</span> <span class="nav-text">Defining Nonmember Class-Related Functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constructors"><span class="nav-number">1.1.4.</span> <span class="nav-text">Constructors</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-synthesized-default-constructor"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">The Synthesized Default Constructor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#some-classes-cannot-rely-on-the-synthesized-default-constructor"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">Some Classes Cannot Rely on the synthesized Default Constructor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#defining-the-sales_data-constructors"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">Defining the Sales_data Constructors</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#constructor-initializer-list"><span class="nav-number">1.1.4.4.</span> <span class="nav-text">Constructor Initializer List</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#defining-a-constructor-outside-the-class-body"><span class="nav-number">1.1.4.5.</span> <span class="nav-text">Defining a Constructor outside the Class Body</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#copy-assignment-and-destruction"><span class="nav-number">1.1.5.</span> <span class="nav-text">Copy, Assignment, and Destruction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#some-classes-canot-rely-on-the-synthesized-versins"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">Some Classes Canot Rely on the Synthesized Versins</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#access-control-and-encapsulation"><span class="nav-number">1.2.</span> <span class="nav-text">Access Control and Encapsulation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#using-the-class-or-struct-keyboard"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">Using the class or struct keyboard</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#friends"><span class="nav-number">1.2.1.</span> <span class="nav-text">Friends</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#declarations-for-friends"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Declarations for Friends</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#additional-class-features"><span class="nav-number">1.3.</span> <span class="nav-text">Additional Class Features</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#class-members-revisited"><span class="nav-number">1.3.1.</span> <span class="nav-text">Class Members Revisited</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#defining-a-type-member"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Defining a Type Member</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#making-members-inline"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">Making Members inline</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mutable-data-members"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">mutable Data Members</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#functions-that-return-this"><span class="nav-number">1.3.2.</span> <span class="nav-text">Functions That Return *this</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#returning-this-from-a-const-member-function"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">Returning *this from a const Member Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#overloading-based-on-const"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">Overloading Based on const</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#class-type"><span class="nav-number">1.3.3.</span> <span class="nav-text">Class Type</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#class-declarations"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">Class Declarations</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#friendship-revisited"><span class="nav-number">1.3.4.</span> <span class="nav-text">Friendship Revisited</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#friendship-between-classes"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">Friendship between Classes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#making-a-member-function-a-friend"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">Making A member Function a Friend</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#overloaded-functions-and-friendship"><span class="nav-number">1.3.4.3.</span> <span class="nav-text">Overloaded Functions and Friendship</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#friend-declarations-and-scope"><span class="nav-number">1.3.4.4.</span> <span class="nav-text">Friend Declarations and Scope</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class-scope"><span class="nav-number">1.4.</span> <span class="nav-text">Class Scope</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#scope-and-members-defined-outside-the-class"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">Scope and Members Defined outside the Class</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#name-lookup-and-class-scope"><span class="nav-number">1.4.1.</span> <span class="nav-text">Name Lookup and Class Scope</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#name-lookup-for-class-member-declarations"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">Name Lookup for Class Member Declarations</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#type-names-are-special"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">Type Names Are Special</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#normal-block-scope-name-lookup-inside-member-definitions"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">Normal Block-Scope Name Lookup inside Member Definitions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#after-class-scope-look-in-the-surrounding-scope"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">After Class Scope, Look in the Surrounding Scope</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#constructors-revisited"><span class="nav-number">1.5.</span> <span class="nav-text">Constructors Revisited</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#constructor-initializer-list-1"><span class="nav-number">1.5.1.</span> <span class="nav-text">Constructor Initializer List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#constructor-initializers-are-sometimes-required"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">Constructor Initializers Are Sometimes Required</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#order-of-member-initialization"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">Order of Member Initialization</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delegating-constructors"><span class="nav-number">1.5.2.</span> <span class="nav-text">Delegating Constructors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-role-of-the-default-constructor"><span class="nav-number">1.5.3.</span> <span class="nav-text">The Role of the Default Constructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#using-the-default-constructor"><span class="nav-number">1.5.4.</span> <span class="nav-text">Using the Default Constructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#implicit-class-type-conversions"><span class="nav-number">1.5.5.</span> <span class="nav-text">Implicit Class-Type Conversions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#only-one-class-type-conversions-is-allowed"><span class="nav-number">1.5.5.1.</span> <span class="nav-text">Only One Class-Type Conversions Is Allowed</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#suppressing-implicit-conversions-defined-by-constructors"><span class="nav-number">1.5.5.2.</span> <span class="nav-text">Suppressing Implicit Conversions Defined by Constructors</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#aggregate-classes"><span class="nav-number">1.5.6.</span> <span class="nav-text">Aggregate Classes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#literal-classes"><span class="nav-number">1.5.7.</span> <span class="nav-text">Literal Classes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#static-class-members"><span class="nav-number">1.6.</span> <span class="nav-text">static Class Members</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#using-a-class-static-member"><span class="nav-number">1.6.0.1.</span> <span class="nav-text">Using a Class static Member</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#defining-static-members"><span class="nav-number">1.6.0.2.</span> <span class="nav-text">Defining static Members</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#in-class-initialization-of-static-data-members"><span class="nav-number">1.6.0.3.</span> <span class="nav-text">In-Class Initialization of static Data Members</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#static-members-can-be-used-in-ways-ordinary-members-cant"><span class="nav-number">1.6.0.4.</span> <span class="nav-text">static Members Can be Used in Ways Ordinary Members Can&#39;t</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

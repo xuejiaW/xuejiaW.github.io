@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;&amp;#x7B97;&amp;#x6CD5;&amp;#x5BFC;&amp;#x8BBA;&amp;#x300B;&amp;#x4E2D;&amp;#x7B2C;&amp;#x4E00;&amp;#x7AE0;&amp;#x4E0E;&amp;#x7B2C;&amp;#x4E8C;&amp;#x7AE0;&amp;#x9605;&amp;#x8BFB;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;&amp;#x63D2;&amp;">
+<meta name="keywords" content="读书笔记,数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《算法导论》 第一、二章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/IA-Chapter1-Chapter2-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;&amp;#x7B97;&amp;#x6CD5;&amp;#x5BFC;&amp;#x8BBA;&amp;#x300B;&amp;#x4E2D;&amp;#x7B2C;&amp;#x4E00;&amp;#x7AE0;&amp;#x4E0E;&amp;#x7B2C;&amp;#x4E8C;&amp;#x7AE0;&amp;#x9605;&amp;#x8BFB;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;&amp;#x63D2;&amp;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter1-Chapter2-Notes/2019-10-15-09-32-30.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter1-Chapter2-Notes/2019-10-15-23-14-44.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter1-Chapter2-Notes/2019-10-15-15-16-31.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter1-Chapter2-Notes/2019-10-16-00-45-05.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter1-Chapter2-Notes/2019-10-16-00-46-41.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.451Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《算法导论》 第一、二章笔记">
+<meta name="twitter:description" content="&amp;#x300A;&amp;#x7B97;&amp;#x6CD5;&amp;#x5BFC;&amp;#x8BBA;&amp;#x300B;&amp;#x4E2D;&amp;#x7B2C;&amp;#x4E00;&amp;#x7AE0;&amp;#x4E0E;&amp;#x7B2C;&amp;#x4E8C;&amp;#x7AE0;&amp;#x9605;&amp;#x8BFB;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;&amp;#x63D2;&amp;">
+<meta name="twitter:image" content="https://xuejiaw.github.io/IA-Chapter1-Chapter2-Notes/2019-10-15-09-32-30.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/IA-Chapter1-Chapter2-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《算法导论》 第一、二章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/IA-Chapter1-Chapter2-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《算法导论》 第一、二章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-05 13:49:34" itemprop="dateCreated datePublished" datetime="2019-11-05T13:49:34+08:00">2019-11-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/数据结构与算法/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/IA-Chapter1-Chapter2-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《算法导论》 第一、二章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/IA-Chapter1-Chapter2-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/IA-Chapter1-Chapter2-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>13 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;&#x7B97;&#x6CD5;&#x5BFC;&#x8BBA;&#x300B;&#x4E2D;&#x7B2C;&#x4E00;&#x7AE0;&#x4E0E;&#x7B2C;&#x4E8C;&#x7AE0;&#x9605;&#x8BFB;&#x7B14;&#x8BB0;&#x3002;</p>
+<p>&#x4ECB;&#x7ECD;&#x4E86;&#x63D2;&#x5165;&#x6392;&#x5E8F;&#x5373;&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#x7684;&#x7B97;&#x6CD5;&#x53CA;&#x590D;&#x6742;&#x5EA6;&#x3002;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h2 id="chapter-1.-the-role-of-algorithms-in-computing">Chapter 1. The Role of Algorithms in Computing</h2>
+<h3 id="algorithms">Algorithms</h3>
+<ol type="1">
+<li>&#x7B97;&#x6CD5;&#x662F;&#x4E00;&#x7CFB;&#x5217;&#x5C06;&#x8F93;&#x5165;&#x8F6C;&#x6362;&#x4E3A;&#x8F93;&#x51FA;&#x7684;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;&#x3002;</li>
+<li>&#x6570;&#x636E;&#x7ED3;&#x6784;&#x662F;&#x5B58;&#x50A8;&#x548C;&#x7BA1;&#x7406;&#x6570;&#x636E;&#x7684;&#x4E00;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x8981;&#x8003;&#x8651;&#x5230;&#x65B9;&#x4FBF;&#x8BBE;&#x5907;&#x8BBF;&#x95EE;&#x548C;&#x4FEE;&#x6539;&#x6570;&#x636E;&#x3002;</li>
+<li>&#x8FD9;&#x672C;&#x4E66;&#x4E5F;&#x4ECB;&#x7ECD;&#x4E86;&#x4E00;&#x4E9B;&#x8BBE;&#x8BA1;&#x548C;&#x5206;&#x6790;&#x7B97;&#x6CD5;&#x7684;&#x6280;&#x672F;&#x3002;&#x5982;&#x8BBE;&#x8BA1;&#x7B97;&#x6CD5;&#x65F6;&#x9700;&#x8981;&#x7684;&#x5206;&#x6CBB;&#x6CD5;&#xFF0C;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x548C;&#x5982;&#x4F55;&#x5206;&#x6790;&#x7B97;&#x6CD5;&#x662F;&#x5426;&#x51C6;&#x786E;&#x662F;&#x5426;&#x9AD8;&#x6548;&#x7B49;&#x3002;</li>
+<li>&#x7B97;&#x6CD5;&#x5728;&#x5927;&#x591A;&#x6570;&#x60C5;&#x51B5;&#x4E0B;&#x662F;&#x627E;&#x5BFB;&#x9AD8;&#x6548;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4F46;&#x5728;&#x67D0;&#x4E9B;&#x95EE;&#x9898;&#x65E0;&#x6CD5;&#x627E;&#x5230;&#x9AD8;&#x6548;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#xFF0C;&#x5982;NP&#x95EE;&#x9898;&#x3002;&#x76EE;&#x524D;&#x65E0;&#x4EBA;&#x77E5;&#x9053;&#x5BF9;&#x4E8E;NP&#x7A76;&#x7ADF;&#x662F;&#x5426;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x9AD8;&#x6548;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x800C;&#x4E14;NP&#x95EE;&#x9898;&#x6709;&#x4E2A;&#x7279;&#x6027;&#xFF0C;&#x4E00;&#x65E6;&#x627E;&#x5230;&#x4E86;&#x4E00;&#x4E2A;NP&#x95EE;&#x9898;&#x7684;&#x9AD8;&#x6548;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#xFF0C;&#x5269;&#x4E0B;&#x7684;&#x4E5F;&#x5C31;&#x540C;&#x6837;&#x627E;&#x5230;&#x4E86;&#x3002;</li>
+<li>&#x73B0;&#x4EE3;&#x82AF;&#x7247;&#x7684;&#x8BBE;&#x8BA1;&#x5DF2;&#x7ECF;&#x4ECE;&#x63D0;&#x9AD8;&#x65F6;&#x949F;&#x9891;&#x7387;&#x5230;&#x4E86;&#x63D0;&#x9AD8;&#x5E76;&#x884C;&#x6548;&#x7387;&#xFF0C;&#x56E0;&#x4E3A;&#x82AF;&#x7247;&#x7684;&#x529F;&#x7387;&#x63D0;&#x5347;&#x4E0E;&#x65F6;&#x949F;&#x9891;&#x7387;&#x7684;&#x63D0;&#x5347;&#x662F;&#x4E00;&#x4E2A;&#x8D85;&#x7EBF;&#x6027;&#x5173;&#x7CFB;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x5473;&#x7684;&#x589E;&#x9AD8;&#x9891;&#x7387;&#xFF0C;&#x5F88;&#x53EF;&#x80FD;&#x82AF;&#x7247;&#x5C31;&#x4F1A;&#x8FC7;&#x70ED;&#x3002;&#x4E3A;&#x4E86;&#x63D0;&#x5347;&#x8BA1;&#x7B97;&#x6548;&#x7387;&#xFF0C;&#x73B0;&#x5728;&#x8003;&#x8651;&#x7684;&#x5C31;&#x662F;&#x4F7F;&#x7528;&#x591A;&#x6838;&#x82AF;&#x7247;&#x8FDB;&#x884C;&#x5E76;&#x884C;&#x8FD0;&#x7B97;&#xFF0C;&#x4E66;&#x4E2D;&#x4E5F;&#x4F1A;&#x5F15;&#x5165;&#x4E00;&#x4E9B;&#x591A;&#x7EBF;&#x7A0B;&#x7684;&#x7B97;&#x6CD5;&#x3002;</li>
+</ol>
+<h3 id="algorithms-as-a-technology">Algorithms as a technology</h3>
+<p>&#x4E0D;&#x540C;&#x7684;&#x7B97;&#x6CD5;&#x4E00;&#x822C;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x6548;&#x7387;&#xFF0C;&#x5982;&#x63D2;&#x5165;&#x6392;&#x5E8F;&#x548C;&#x5408;&#x5E76;&#x6392;&#x5E8F;&#xFF0C;&#x63D2;&#x5165;&#x6392;&#x5E8F;&#x7684;&#x6548;&#x7387;&#x4E3A;<span class="math inline">\(C_1 n^2\)</span>,&#x800C;&#x5408;&#x5E76;&#x6392;&#x5E8F;&#x7684;&#x6548;&#x7387;&#x4E3A;<span class="math inline">\(C_2 n \log n\)</span>&#xFF0C;&#x867D;&#x7136;<span class="math inline">\(C_1&lt;C_2\)</span>&#xFF0C;&#x4F46;&#x662F;&#x5728;n&#x8F83;&#x5927;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;<span class="math inline">\(\log &#x2061;n\)</span> &#x8FDC;&#x5C0F;&#x4E8E;<span class="math inline">\(n^2\)</span>&#xFF0C;&#x6240;&#x4EE5;&#x5BF9;&#x4E8E;&#x5927;&#x6570;&#x636E;&#x6765;&#x8BF4;&#x5408;&#x5E76;&#x6392;&#x5E8F;&#x66F4;&#x4E3A;&#x9AD8;&#x6548;&#x3002;</p>
+<h2 id="chapter-2.-getting-started">Chapter 2. Getting Started</h2>
+<h3 id="insertion-sort">Insertion Sort</h3>
+<ol type="1">
+<li><p>&#x63D2;&#x5165;&#x6392;&#x5E8F;&#xFF0C;&#x5728;&#x5BF9;&#x6570;&#x91CF;&#x8F83;&#x5C0F;&#x7684;&#x5143;&#x7D20;&#x6392;&#x5E8F;&#x65F6;&#x662F;&#x4E00;&#x4E2A;&#x5F88;&#x9AD8;&#x6548;&#x7684;&#x7B97;&#x6CD5;&#x3002;</p></li>
+<li><p>&#x63D2;&#x5165;&#x6392;&#x5E8F;&#x7C7B;&#x4F3C;&#x4E8E;&#x6253;&#x724C;&#x6574;&#x7406;&#x624B;&#x724C;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x4E0B;&#x4E3A;&#x56FE;&#x89E3; <img src="/IA-Chapter1-Chapter2-Notes/2019-10-15-09-32-30.png" alt="&#x63D2;&#x5165;&#x6392;&#x5E8F;&#x6392;&#x5217;"></p>
+<ol type="1">
+<li><p>&#x9996;&#x5148;&#x5C06;&#x6570;&#x7EC4;&#x7684;&#x67D0;&#x4E00;&#x9879;&#x4F5C;&#x4E3A;Key&#x503C;&#xFF0C;&#x7136;&#x540E;Key&#x503C;&#x4ECE;&#x53F3;&#x81F3;&#x5DE6;&#x7684;&#x4E0E;&#x6BCF;&#x4E00;&#x9879;&#x6BD4;&#x8F83;&#xFF0C;&#x5982;&#x679C;&#x8BE5;&#x9879;&#x7684;&#x6570;&#x503C;&#x6BD4;Key&#x503C;&#x5927;&#xFF0C;&#x5219;&#x5C06;&#x8BE5;&#x503C;&#x50CF;&#x53F3;&#x4FA7;&#x62F7;&#x8D1D; A[i+1]=A[i] &#xFF0C;&#x8FD9;&#x76F8;&#x5F53;&#x4E8E;&#x724C;&#x5411;&#x53F3;&#x79FB;&#x7684;&#x8FC7;&#x7A0B;&#x3002;</p></li>
+<li><p>&#x5982;&#x679C;&#x67D0;&#x4E00;&#x9879;&#x6BD4;Key&#x503C;&#x5C0F;&#xFF0C;&#x5219;&#x5C06;Key&#x503C;&#x63D2;&#x5165;&#x5728;&#x4ED6;&#x540E;&#x65B9;&#xFF0C;A[i+1]=key</p></li>
+<li><p>&#x4ECE;&#x6570;&#x7EC4;&#x7684;&#x7B2C;&#x4E8C;&#x9879;&#x5F00;&#x59CB;&#x4ECE;&#x5DE6;&#x81F3;&#x53F3;&#x7684;&#x4F5C;&#x4E3A;Key&#x503C;&#xFF0C;&#x91CD;&#x590D;a,b&#x7684;&#x64CD;&#x4F5C;</p></li>
+</ol></li>
+<li><p>&#x4F2A;&#x4EE3;&#x7801;&#x5B9E;&#x73B0;</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for j=2 to A.length</span><br><span class="line"> key=A[j]</span><br><span class="line"> i=j-1</span><br><span class="line"> while i&gt;0 &amp;&amp; A[i]&gt;key</span><br><span class="line">  A[i+1]=A[i]</span><br><span class="line">  i--;</span><br><span class="line">    A[i+1]=key</span><br></pre></td></tr></table></figure></p></li>
+<li><p>C++&#x5B9E;&#x73B0;</p>
+<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InsertationSort</span><span class="params">(<span class="keyword">int</span>* <span class="built_in">array</span>, <span class="keyword">int</span> arraySize)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arraySize; i++)</span><br><span class="line"> {</span><br><span class="line">  <span class="keyword">int</span> key = <span class="built_in">array</span>[i];</span><br><span class="line">  <span class="keyword">int</span> startIndex = i - <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> (startIndex &gt;= <span class="number">0</span> &amp;&amp; <span class="built_in">array</span>[startIndex] &gt; key)</span><br><span class="line">  {</span><br><span class="line">   <span class="built_in">array</span>[startIndex + <span class="number">1</span>] = <span class="built_in">array</span>[startIndex];</span><br><span class="line">   startIndex--;</span><br><span class="line">  }</span><br><span class="line">  <span class="built_in">array</span>[++startIndex] = key;</span><br><span class="line"> }</span><br><span class="line">}</span><br></pre></td></tr></table></figure></p></li>
+<li><p>&#x4E00;&#x4E9B;&#x4E66;&#x4E2D;&#x4F2A;&#x4EE3;&#x7801;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x70B9;</p>
+<ol type="1">
+<li><p>for&#x5FAA;&#x73AF;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x5728;&#x9000;&#x51FA;&#x5FAA;&#x73AF;&#x540E;&#xFF0C;&#x4FDD;&#x6301;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x8D85;&#x8D8A;&#x5FAA;&#x73AF;&#x8FB9;&#x754C;&#x7684;&#x503C;</p>
+<p>&#x5982; for j=2 to A.length&#xFF0C;&#x5728;&#x9000;&#x51FA;&#x5FAA;&#x73AF;&#x540E;&#xFF0C;j = A.length +1</p></li>
+<li><p>A[ 1&#x2026;..j] &#x8868;&#x793A;A[1]&#x3001;A[2]&#x2026;A[j]</p></li>
+<li><p>&#x51FD;&#x6570;&#x7684;&#x5F62;&#x53C2;&#x662F;&#x503C;&#x4F20;&#x9012;&#x7684;</p></li>
+</ol></li>
+</ol>
+<h3 id="analyzing-algorithms">Analyzing algorithms</h3>
+<ol type="1">
+<li><p>&#x5206;&#x6790;&#x7B97;&#x6CD5;&#x4E3B;&#x8981;&#x662F;&#x9884;&#x6D4B;&#x7B97;&#x6CD5;&#x9700;&#x8981;&#x82B1;&#x8D39;&#x7684;&#x8D44;&#x6E90;&#xFF0C;&#x8D44;&#x6E90;&#x901A;&#x5E38;&#x5305;&#x62EC;&#x5185;&#x5B58;&#x3001;&#x5E26;&#x5BBD;&#x3001;&#x4F46;&#x6211;&#x4EEC;&#x6700;&#x5173;&#x5FC3;&#x7684;&#x8FD8;&#x662F;&#x65F6;&#x95F4;&#x3002;</p></li>
+<li><p>&#x4E66;&#x4E2D;&#x7684;&#x5206;&#x6790;&#x90FD;&#x662F;&#x57FA;&#x4E8E;&#x5355;&#x6838;&#x7684;&#x968F;&#x673A;&#x8BBF;&#x95EE;&#x673A;&#x5668;(random-access machine)&#x3002;&#x5728;&#x8FD9;&#x4E2A;&#x6A21;&#x578B;&#x4E2D;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x64CD;&#x4F5C;&#x90FD;&#x770B;&#x4F5C;&#x82B1;&#x8D39;&#x4E00;&#x4E2A;&#x56FA;&#x5B9A;&#x65F6;&#x957F;&#xFF0C;&#x800C;&#x4E14;&#x6211;&#x4EEC;&#x4E0D;&#x8003;&#x8651;&#x5185;&#x5B58;&#x64CD;&#x4F5C;&#xFF08;&#x5982;&#x5206;&#x914D;&#x5185;&#x5B58;&#xFF09;&#x6240;&#x5360;&#x7528;&#x7684;&#x65F6;&#x95F4;&#x3002;</p></li>
+</ol>
+<h4 id="analysis-of-insertion-sort">Analysis of insertion sort</h4>
+<ol type="1">
+<li><p>&#x901A;&#x5E38;&#x63CF;&#x8FF0;&#x4E00;&#x4E2A;&#x7B97;&#x6CD5;&#x7684;&#x8FD0;&#x884C;&#x65F6;&#x95F4;&#x90FD;&#x662F;&#x4E00;&#x4E2A;&#x5173;&#x4E8E;&#x8F93;&#x5165;&#x6570;&#x636E;&#x5927;&#x5C0F;&#x7684;&#x51FD;&#x6570;&#x3002;</p>
+<ol type="1">
+<li><p>&#x5173;&#x4E8E;&#x8F93;&#x5165;&#x6570;&#x636E;&#x5927;&#x5C0F;&#x7684;&#x5B9A;&#x4E49;&#x6839;&#x636E;&#x95EE;&#x9898;&#x7684;&#x4E0D;&#x540C;&#x4F1A;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x3002;</p>
+<ol type="a">
+<li><p>&#x5BF9;&#x4E8E;&#x6392;&#x5E8F;&#x95EE;&#x9898;&#xFF0C;&#x6570;&#x636E;&#x7684;&#x5927;&#x5C0F;&#x901A;&#x5E38;&#x5C31;&#x662F;&#x9700;&#x8981;&#x6392;&#x5217;&#x7684;&#x6570;&#x7684;&#x5927;&#x5C0F;</p></li>
+<li><p>&#x5BF9;&#x4E8E;&#x4E24;&#x4E2A;&#x6574;&#x6570;&#x76F8;&#x4E58;&#x95EE;&#x9898;&#xFF0C;&#x6570;&#x636E;&#x5927;&#x5C0F;&#x5C31;&#x662F;&#x8FD9;&#x4E24;&#x4E2A;&#x6574;&#x6570;&#x9700;&#x8981;&#x5360;&#x636E;&#x7684;bit&#x6570;</p></li>
+<li><p>&#x6709;&#x4E9B;&#x65F6;&#x5019;&#x8FD8;&#x9700;&#x8981;&#x4E24;&#x4E2A;&#x6570;&#x5B57;&#x6765;&#x63CF;&#x8FF0;&#x95EE;&#x9898;&#xFF0C;&#x5982;&#x5173;&#x4E8E;&#x56FE;&#x7684;&#x95EE;&#x9898;&#x5C31;&#x9700;&#x8981;&#x9876;&#x70B9;&#x6570;&#x548C;&#x8FB9;&#x6570;&#x3002;</p></li>
+</ol></li>
+<li><p>&#x5173;&#x4E8E;&#x7B97;&#x6CD5;&#x7684;&#x8FD0;&#x884C;&#x65F6;&#x95F4;&#x901A;&#x5E38;&#x662F;&#x5173;&#x4E8E;&#x7B97;&#x6CD5;&#x7A76;&#x7ADF;&#x6709;&#x591A;&#x5C11;&#x6B65;&#x9AA4;&#x9700;&#x8981;&#x6267;&#x884C;&#x3002;&#x5728;RAM&#x6A21;&#x578B;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x7B80;&#x5316;&#x6BCF;&#x4E00;&#x6B65;&#x6240;&#x82B1;&#x8D39;&#x7684;&#x65F6;&#x95F4;&#x90FD;&#x662F;&#x540C;&#x6837;&#x957F;&#x4E14;&#x90FD;&#x4E3A;&#x4E00;&#x4E2A;&#x56FA;&#x5B9A;&#x503C;&#x3002;</p></li>
+<li><p>&#x5FAA;&#x73AF;&#x8BED;&#x53E5;&#x672C;&#x8EAB;&#x6BD4;&#x5FAA;&#x73AF;&#x4F53;&#x8981;&#x591A;&#x4E00;&#x6B21;&#x6267;&#x884C;&#xFF0C;&#x56E0;&#x4E3A;&#x5FAA;&#x73AF;&#x8BED;&#x53E5;&#x672C;&#x8EAB;&#x5728;&#x8D8A;&#x754C;&#x7684;&#x65F6;&#x5019;&#x4ECD;&#x7136;&#x4F1A;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x5224;&#x65AD;&#x3002;</p></li>
+</ol></li>
+<li><p>&#x63D2;&#x5165;&#x7B97;&#x6CD5;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x5206;&#x6790;</p>
+<table>
+<colgroup>
+<col style="width: 17%">
+<col style="width: 4%">
+<col style="width: 10%">
+<col style="width: 67%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>&#x63D2;&#x5165;&#x6392;&#x5E8F;&#x6B65;&#x9AA4;</th>
+<th>&#x65F6;&#x95F4;&#x82B1;&#x8D39;</th>
+<th>&#x8FD0;&#x884C;&#x6B21;&#x6570;</th>
+<th>&#x8BF4;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>for j=2 to A.length</td>
+<td><span class="math inline">\(c_1\)</span></td>
+<td><span class="math inline">\(n\)</span></td>
+<td>&#x5C06;A.Length&#x770B;&#x4F5C;n&#xFF0C;&#x56E0;&#x4E3A;&#x5FAA;&#x73AF;&#x8BED;&#x53E5;&#x672C;&#x8EAB;&#x591A;&#x6267;&#x884C;&#x4E00;&#x6B21;&#xFF0C;&#x6240;&#x4EE5;&#x603B;&#x8FD0;&#x884C;&#x6B21;&#x6570;&#x4E3A;<span class="math inline">\(n\)</span></td>
+</tr>
+<tr class="even">
+<td>&#x2003;&#x2003;key=A[j]</td>
+<td><span class="math inline">\(c_2\)</span></td>
+<td><span class="math inline">\(n-1\)</span></td>
+<td>2-&gt;n&#xFF0C;&#x8FD0;&#x884C;<span class="math inline">\(n-1\)</span>&#x6B21;</td>
+</tr>
+<tr class="odd">
+<td>&#x2003;&#x2003;i=j-1</td>
+<td><span class="math inline">\(c_3\)</span></td>
+<td><span class="math inline">\(n-1\)</span></td>
+<td>2-&gt;n&#xFF0C;&#x8FD0;&#x884C;<span class="math inline">\(n-1\)</span>&#x6B21;</td>
+</tr>
+<tr class="even">
+<td>&#x2003;&#x2003;while i&gt;0 &amp;&amp; A[i]&gt;key</td>
+<td><span class="math inline">\(c_4\)</span></td>
+<td><span class="math inline">\(\sum_{j=2}^nt_j\)</span></td>
+<td>&#x56E0;&#x4E3A;&#x8FD0;&#x884C;&#x6B21;&#x6570;&#x6536;&#x5230;while&#x5224;&#x65AD;&#x5F71;&#x54CD;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x5B9A;&#x4E3A;<span class="math inline">\(t_j\)</span><br>&#x6700;&#x597D;&#x60C5;&#x51B5;&#x4E0B;&#x76F4;&#x63A5;&#x6EE1;&#x8DB3;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5224;&#x65AD;&#x4E00;&#x6B21;&#xFF0C;<span class="math inline">\(t_j=1\)</span><br>&#x6700;&#x574F;&#x60C5;&#x51B5;&#x8FD0;&#x884C;&#x5230;i=0&#xFF0C;&#x8FD0;&#x884C;j&#x6B21;&#xFF0C;<span class="math inline">\(t_j=j\)</span></td>
+</tr>
+<tr class="odd">
+<td>&#x2003;&#x2003;&#x2003;&#x2003;A[i+1]=A[i]</td>
+<td><span class="math inline">\(c_5\)</span></td>
+<td><span class="math inline">\(\sum_{j=2}^n(t_j-1)\)</span></td>
+<td>&#x6BD4;&#x5FAA;&#x73AF;&#x5224;&#x65AD;&#x5C11;&#x8FD0;&#x884C;&#x4E00;&#x6B21;&#xFF0C;&#x8FD0;&#x884C;&#x6B21;&#x6570;&#x4E3A;<span class="math inline">\(t_j-1\)</span></td>
+</tr>
+<tr class="even">
+<td>&#x2003;&#x2003;&#x2003;&#x2003;i--;</td>
+<td><span class="math inline">\(c_6\)</span></td>
+<td><span class="math inline">\(\sum_{j=2}^n(t_j-1)\)</span></td>
+<td>&#x6BD4;&#x5FAA;&#x73AF;&#x5224;&#x65AD;&#x5C11;&#x8FD0;&#x884C;&#x4E00;&#x6B21;,&#x8FD0;&#x884C;&#x6B21;&#x6570;&#x4E3A;<span class="math inline">\(t_j-1\)</span></td>
+</tr>
+<tr class="odd">
+<td>&#x2003;&#x2003;A[i+1]=key</td>
+<td><span class="math inline">\(c_7\)</span></td>
+<td><span class="math inline">\(n-1\)</span></td>
+<td>2-&gt;n&#xFF0C;&#x8FD0;&#x884C;<span class="math inline">\(n-1\)</span>&#x6B21;</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<p>&#x5982;&#x8868;&#x4E2D;&#x6240;&#x793A;&#xFF0C;&#x5728;&#x6700;&#x597D;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;<span class="math inline">\(t_j=1\)</span>&#xFF0C;&#x6700;&#x574F;&#x60C5;&#x51B5;&#x4E0B;&#x8FD0;&#x884C;<span class="math inline">\(j\)</span>&#x6B21;&#x3002;&#x901A;&#x5E38;&#x8BA1;&#x7B97;&#x7B97;&#x6CD5;&#x7684;&#x590D;&#x6742;&#x5EA6;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x8003;&#x8651;&#x7B97;&#x6CD5;&#x7684;&#x6700;&#x574F;&#x60C5;&#x51B5;&#xFF0C;&#x56E0;&#x4E3A;&#x5F80;&#x5F80;&#x5728;&#x5B9E;&#x9645;&#x8FD0;&#x7B97;&#x4E2D;&#xFF0C;&#x6700;&#x574F;&#x60C5;&#x51B5;&#x5C31;&#x662F;&#x6700;&#x591A;&#x7684;&#x60C5;&#x51B5;&#xFF08;&#x5982;&#x641C;&#x7D22;&#x7B97;&#x6CD5;&#xFF0C;&#x5E38;&#x5E38;&#x641C;&#x7D22;&#x7684;&#x5185;&#x5BB9;&#x4E0D;&#x5728;&#x5217;&#x8868;&#x4E2D;&#xFF0C;&#x90A3;&#x5C31;&#x8981;&#x641C;&#x7D22;&#x6574;&#x4E2A;&#x5217;&#x8868;&#xFF0C;&#x5373;&#x6700;&#x574F;&#x60C5;&#x51B5;&#xFF09;&#x3002;&#x800C;&#x4E14;&#x7EB5;&#x4F7F;&#x6211;&#x4EEC;&#x53D6;&#x5E73;&#x5747;&#x503C;&#xFF0C;&#x5728;&#x672C;&#x4F8B;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x53D6;&#x8FD0;&#x884C;&#x6B21;&#x6570;&#x4E3A;<span class="math inline">\(j/2\)</span>&#xFF0C;&#x6700;&#x7EC8;&#x4EE3;&#x5165;&#x5F0F;&#x5B50;&#x4E2D;&#x8BA1;&#x7B97;&#xFF0C;&#x7ED3;&#x679C;&#x7684;&#x6700;&#x9AD8;&#x6B21;&#x5E42;&#x5E76;&#x4E0D;&#x4F1A;&#x6539;&#x53D8;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x4EE5;&#x6700;&#x574F;&#x60C5;&#x51B5;&#x8BA1;&#x7B97;&#x6574;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x65F6;&#x95F4;</p>
+<p><span class="math display">\[
+T(n)=c_1n+c_2(n-1)+c_3(n-1)+c_4\sum_{j=2}^nj+c_5\sum_{j=2}^n(j-1)\\\\+c_6\sum_{j=2}^n(j-1)+c_7(n-1)
+\]</span> &#x53C8;&#x6709;</p>
+<p><span class="math display">\[
+\sum_{j=2}^nj=\frac{(2+n)(n-1)}{2}=\frac{n(n+1)}{2}-1 \\\\
+\sum_{j=2}^nj-1=\frac{(1+n-1)(n-1)}{2}=\frac{n(n-1)}{2}
+\]</span> &#x4EE3;&#x5165;&#x4E0A;&#x5F0F;&#x5F97;</p>
+<p><span class="math display">\[
+T(n)=c_1n+c_2(n-1)+c_3(n-1)+c_4\frac{n(n+1)}{2}-c_4+\\\\
+c_5\frac{n(n-1)}{2}+c_6\frac{n(n-1)}{2}+c_7(n-1)
+\\\\
+=\frac{c_4+c_5+c_6}{2}n^2+(c_1+c_2+c_3+\frac{c_4}{2}
+-\frac{c_5}{2}-\frac{c_6}{2}+c_7)n-(c_2+c_3+c_4+c_7)\\\\
+=an^2+bn+c
+\]</span></p>
+<p>&#x6240;&#x4EE5;&#x6700;&#x574F;&#x7684;&#x8FD0;&#x884C;&#x65F6;&#x95F4;&#x53EF;&#x4EE5;&#x8868;&#x8FBE;&#x4E3A;<span class="math inline">\(an^2+bn+c\)</span>&#xFF0C;&#x8FD9;&#x662F;&#x4E2A;&#x4E8C;&#x6B21;&#x5E42;&#x65B9;&#x7A0B;.</p>
+<h4 id="order-of-growth">Order of growth</h4>
+<p>&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x589E;&#x957F;&#x6781;&#x53D7;&#x6700;&#x9AD8;&#x6B21;&#x5E42;&#x7684;&#x5F71;&#x54CD;&#x6700;&#x5927;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x6211;&#x4EEC;&#x4E5F;&#x53EA;&#x5173;&#x6CE8;&#x8FD0;&#x7B97;&#x65F6;&#x95F4;&#x7684;&#x6700;&#x9AD8;&#x6B21;&#x5E42;&#xFF0C;&#x5728;&#x4E0A;&#x4F8B;&#x4E2D;&#x5373;&#x4E3A;<span class="math inline">\(n_2\)</span>&#x3002;&#x6211;&#x4EEC;&#x5C06;&#x6700;&#x574F;&#x60C5;&#x51B5;&#x8FD0;&#x884C;&#x65F6;&#x95F4;&#x6210;&#x4E3A;<span class="math inline">\(\Theta(n_2)\)</span></p>
+<h3 id="designing-algorithms">Designing algorithms</h3>
+<p>&#x8FD9;&#x8282;&#x4E2D;&#x7B80;&#x7565;&#x4ECB;&#x7ECD;&#x4E86;&#x5206;&#x6CBB;&#x6CD5;&#xFF08;divide-and-conquer&#xFF09;&#xFF0C;&#x5206;&#x6CBB;&#x6CD5;&#x7684;&#x4E00;&#x5927;&#x597D;&#x5904;&#x662F;&#x8FD0;&#x7B97;&#x65F6;&#x95F4;&#x6BD4;&#x8F83;&#x597D;&#x4F30;&#x8BA1;&#x3002;</p>
+<h4 id="the-divide-and-conquer-approach">The divide-and-conquer approach</h4>
+<ol type="1">
+<li><p>&#x8BB8;&#x591A;&#x7B97;&#x6CD5;&#x90FD;&#x4F7F;&#x7528;&#x4E86;&#x9012;&#x5F52;&#xFF0C;&#x9012;&#x5F52;&#x7B97;&#x6CD5;&#x5C31;&#x662F;&#x5178;&#x578B;&#x7684;&#x5206;&#x6CBB;&#x6CD5;&#x3002;&#x5C06;&#x4E00;&#x4E2A;&#x5927;&#x95EE;&#x9898;&#x5206;&#x89E3;&#x4E3A;&#x51E0;&#x4E2A;&#x7C7B;&#x4F3C;&#x7684;&#x5C0F;&#x95EE;&#x9898;&#xFF0C;&#x7136;&#x540E;&#x9012;&#x5F52;&#x7684;&#x89E3;&#x51B3;&#x5404;&#x4E2A;&#x5C0F;&#x95EE;&#x9898;&#xFF0C;&#x7136;&#x540E;&#x628A;&#x7ED3;&#x679C;&#x5408;&#x5E76;&#x5728;&#x4E00;&#x8D77;&#x5C31;&#x5F97;&#x5230;&#x4E86;&#x6700;&#x7EC8;&#x7684;&#x7B54;&#x6848;&#x3002;</p></li>
+<li><p>&#x5206;&#x6CBB;&#x6CD5;&#x7684;&#x89E3;&#x51B3;&#x5206;&#x4E3A;&#x4E09;&#x4E2A;&#x6B65;&#x9AA4;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5206;&#x89E3;&#xFF1A;&#x5C06;&#x5927;&#x95EE;&#x9898;&#x5206;&#x89E3;&#x4E3A;&#x51E0;&#x4E2A;&#x5C0F;&#x95EE;&#x9898;</li>
+<li>&#x89E3;&#x51B3;&#xFF1A;&#x8FED;&#x4EE3;&#x89E3;&#x51B3;&#x5C0F;&#x95EE;&#x9898;</li>
+<li>&#x5408;&#x5E76;&#xFF1A;&#x5C06;&#x5C0F;&#x95EE;&#x9898;&#x7684;&#x7B54;&#x6848;&#x7ED3;&#x5408;&#x6210;&#x4E3A;&#x539F;&#x59CB;&#x95EE;&#x9898;&#x7684;&#x7B54;&#x6848;&#x3002;</li>
+</ol></li>
+<li><p>&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#xFF08;Merge sort algorithms&#xFF09;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x5178;&#x578B;&#x7684;&#x5206;&#x6CBB;&#x6CD5;&#x7B97;&#x6CD5;&#x3002;&#x6392;&#x5E8F;&#x7B97;&#x6CD5;&#x7684;&#x601D;&#x60F3;&#x662F;&#x5C06;&#x9700;&#x8981;&#x6392;&#x5E8F;&#x7684;&#x6570;&#x7EC4;&#x4E8C;&#x5206;&#xFF0C;&#x5148;&#x5BF9;&#x5DE6;&#x534A;&#x90E8;&#x5206;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#xFF0C;&#x518D;&#x5BF9;&#x53F3;&#x534A;&#x90E8;&#x5206;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#xFF0C;&#x6700;&#x6709;&#x628A;&#x5DE6;&#x53F3;&#x534A;&#x90E8;&#x5206;&#x5408;&#x5E76;&#x5728;&#x4E00;&#x8D77;&#x83B7;&#x5F97;&#x5B8C;&#x6574;&#x7684;&#x6392;&#x5E8F;&#x597D;&#x7684;&#x6570;&#x7EC4;&#x3002;</p></li>
+<li><p>&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#x7B97;&#x6CD5;&#x7684;&#x4F2A;&#x4EE3;&#x7801;</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Merge-sort(A,p,r)</span><br><span class="line"></span><br><span class="line">//A-&gt;&#x9700;&#x8981;&#x6392;&#x5E8F;&#x7684;&#x6570;&#x7EC4;&#xFF0C;p-&gt;&#x9700;&#x8981;&#x6392;&#x5E8F;&#x90E8;&#x5206;&#x7684;&#x5DE6;&#x8D77;&#x70B9;&#xFF0C;r-&gt;&#x9700;&#x8981;&#x6392;&#x5E8F;&#x90E8;&#x5206;&#x7684;&#x53F3;&#x7EC8;&#x70B9;</span><br><span class="line"></span><br><span class="line">&#x5982;&#x679C;&#x51FA;&#x73B0;&#x4E86;p=r&#xFF0C;&#x8BF4;&#x660E;&#x88AB;&#x62C6;&#x5206;&#x51FA;&#x7684;&#x5B50;&#x6570;&#x7EC4;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x5219;&#x4E0D;&#x9700;&#x8981;&#x8BA1;&#x7B97;&#x3002;&#x53EA;&#x8BA1;&#x7B97;p &lt; r&#x7684;&#x60C5;&#x51B5;</span><br><span class="line"></span><br><span class="line">if p &lt; r </span><br><span class="line">    q = [(p+r)/2] //&#x9664;&#x4E0D;&#x5C3D;&#x7684;&#x8BDD;&#x5411;&#x4E0B;&#x53D6;&#x6574;</span><br><span class="line"></span><br><span class="line">    //&#x5C06;&#x9700;&#x8981;&#x6392;&#x5E8F;&#x7684;&#x90E8;&#x5206;&#x7B49;&#x5206;&#x4E3A;&#x4E24;&#x90E8;&#x5206;&#xFF0C;&#x5404;&#x81EA;&#x8FDB;&#x884C;&#x6392;&#x5E8F;</span><br><span class="line"></span><br><span class="line">    Merge-sort(A,p,q)</span><br><span class="line">    Merge-sort(A,q+1,r)</span><br><span class="line">    Merge(A,p,q,r)</span><br></pre></td></tr></table></figure></p>
+<p>&#x4E0B;&#x56FE;&#x4E3A;&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#x56FE;&#x89E3;&#xFF0C;&#x5148;&#x5C06;&#x5E8F;&#x5217;&#x9010;&#x6E10;&#x4E8C;&#x5206;&#x76F4;&#x5230;&#x6700;&#x540E;&#x6210;&#x4E3A;&#x5355;&#x4E2A;&#x5143;&#x7D20;&#xFF08;&#x5355;&#x4E2A;&#x5143;&#x7D20;&#x4E0D;&#x9700;&#x8981;&#x5408;&#x5E76;&#xFF09;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x8FDB;&#x884C;&#x5408;&#x5E76;&#x64CD;&#x4F5C;&#x3002;</p>
+<p><img src="/IA-Chapter1-Chapter2-Notes/2019-10-15-23-14-44.png" alt="&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#x56FE;&#x89E3;"></p></li>
+<li><p>&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#x4E2D;&#xFF0C;&#x6700;&#x91CD;&#x8981;&#x7684;&#x5C31;&#x662F;&#x6700;&#x7EC8;&#x5408;&#x5E76;&#x7684;&#x90E8;&#x5206;&#x3002;&#x5728;&#x4E4B;&#x524D;&#x5408;&#x5E76;&#x51FD;&#x6570;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x5047;&#x5B9A;&#x4E24;&#x4E2A;&#x9700;&#x8981;&#x88AB;&#x5408;&#x5E76;&#x7684;&#x6570;&#x7EC4;&#x5DF2;&#x7ECF;&#x6392;&#x5E8F;&#x5B8C;&#x6BD5;&#x3002;&#x5408;&#x5E76;&#x90E8;&#x5206;&#x7684;&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Merge(A,p,q,r)</span><br><span class="line"></span><br><span class="line">// A-&gt; &#x9700;&#x8981;&#x6392;&#x5E8F;&#x7684;&#x6570;&#x7EC4;</span><br><span class="line">//p,q,r-&gt;&#x6570;&#x7EC4;&#x4E2D;&#x7684;Index&#xFF0C;p&lt;q&lt;r&#xFF0C;A[p,q]&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x5B50;&#x6570;&#x7EC4;&#xFF08;&#x4E0B;&#x79F0;&#x4E3A;&#x5DE6;&#x534A;&#x90E8;&#x5206;&#xFF09;&#xFF0C;A[q+1,r]&#x8868;&#x793A;&#x53E6;&#x4E00;&#x4E2A;&#x5B50;&#x6570;&#x7EC4;&#xFF08;&#x4E0B;&#x79F0;&#x4E3A;&#x53F3;&#x534A;&#x90E8;&#x5206;&#xFF09;&#xFF0C;&#x5DE6;&#x53F3;&#x90E8;&#x5206;&#x90FD;&#x5DF2;&#x7ECF;&#x6392;&#x5E8F;&#x5B8C;&#x6BD5;&#x3002;</span><br><span class="line"></span><br><span class="line">n1=q-p+1 //&#x5DE6;&#x534A;&#x90E8;&#x5206;&#x957F;&#x5EA6;</span><br><span class="line">n2=r-q //&#x53F3;&#x534A;&#x90E8;&#x5206;&#x957F;&#x5EA6;</span><br><span class="line"></span><br><span class="line">Make L[1...n1+1],R[1...n2+1] //&#x521B;&#x5EFA;&#x4E24;&#x4E2A;&#x65B0;&#x7684;&#x6570;&#x7EC4;&#xFF0C;&#x957F;&#x5EA6;&#x4E0E;&#x5DE6;&#x53F3;&#x90E8;&#x5206;&#x957F;&#x5EA6;+1&#xFF0C;&#x9632;&#x6B62;&#x4E4B;&#x540E;&#x904D;&#x5386;&#x65F6;&#x8D8A;&#x754C;&#x3002;</span><br><span class="line"></span><br><span class="line">for i=1 to n1</span><br><span class="line">    L[i]=A[p+i-1] //&#x5C06;&#x5DE6;&#x534A;&#x90E8;&#x5206;&#x5185;&#x5BB9;&#x5BF9;&#x5E94;&#x62F7;&#x8D1D;&#x5230;&#x65B0;&#x5EFA;&#x7ACB;&#x7684;&#x5DE6;&#x6570;&#x7EC4;&#x4E2D;</span><br><span class="line"></span><br><span class="line">for j-1 to n2</span><br><span class="line">    R[i]=A[q+j]  //&#x5C06;&#x53F3;&#x534A;&#x90E8;&#x5206;&#x5185;&#x5BB9;&#x5BF9;&#x5E94;&#x62F7;&#x8D1D;&#x5230;&#x65B0;&#x5EFA;&#x7ACB;&#x7684;&#x53F3;&#x6570;&#x7EC4;&#x4E2D;</span><br><span class="line"></span><br><span class="line">//&#x5C06;&#x5DE6;&#x53F3;&#x6570;&#x7EC4;&#x7684;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x6570;&#x503C;&#x90FD;&#x8BBE;&#x4E3A;&#x65E0;&#x9650;&#x5927;&#xFF0C;&#x5982;&#x679C;&#x904D;&#x5386;&#x65F6;&#x8FBE;&#x5230;&#x4E86;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x6570;&#x503C;&#xFF0C;&#x8BF4;&#x660E;&#x8FD9;&#x4E2A;&#x6570;&#x7EC4;&#x5DF2;&#x7ECF;&#x5B8C;&#x5168;&#x88C5;&#x586B;&#x56DE;&#x4E86;&#x539F;&#x6570;&#x7EC4;&#x3002;&#x56E0;&#x4E3A;&#x6700;&#x540E;&#x7684;&#x6570;&#x503C;&#x4E3A;&#x65E0;&#x9650;&#x5927;&#xFF0C;&#x6240;&#x4EE5;&#x53E6;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;&#x7684;&#x6570;&#x503C;&#x59CB;&#x7EC8;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;&#x8FD9;&#x4E2A;&#x6570;&#x503C;&#xFF0C;&#x56E0;&#x6B64;&#x4F1A;&#x4E00;&#x76F4;&#x88C5;&#x586B;&#x53E6;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;&#x3002;</span><br><span class="line"></span><br><span class="line">L[n1+1]=Max </span><br><span class="line">R[n2+1]=Max</span><br><span class="line"></span><br><span class="line">i,j=1</span><br><span class="line"></span><br><span class="line">for k=p to r</span><br><span class="line">    if(L[i]&lt;= R[j]&gt;)</span><br><span class="line">        A[k]=L[i]</span><br><span class="line">        i++</span><br><span class="line">    else</span><br><span class="line">        A[k]=R[j]</span><br><span class="line">        j++</span><br></pre></td></tr></table></figure></p>
+<p>&#x5408;&#x5E76;&#x90E8;&#x5206;&#x7B97;&#x6CD5;&#x7684;&#x56FE;&#x89E3;</p>
+<p><img src="/IA-Chapter1-Chapter2-Notes/2019-10-15-15-16-31.png" alt="&#x5408;&#x5E76;&#x90E8;&#x5206;&#x7B97;&#x6CD5;&#x56FE;&#x89E3;"></p></li>
+<li><p>C++&#x5B9E;&#x73B0;</p>
+<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MergeSort</span><span class="params">(<span class="keyword">int</span>* <span class="built_in">array</span>, <span class="keyword">int</span> leftStartIndex, <span class="keyword">int</span> rightEndIndex)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">if</span> (leftStartIndex == rightEndIndex)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> centerIndex = (leftStartIndex + rightEndIndex) / <span class="number">2</span>;</span><br><span class="line">    MergeSort(<span class="built_in">array</span>, leftStartIndex, centerIndex);</span><br><span class="line">    MergeSort(<span class="built_in">array</span>, centerIndex + <span class="number">1</span>, rightEndIndex);</span><br><span class="line">    Merge(<span class="built_in">array</span>, leftStartIndex, centerIndex, rightEndIndex);</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Merge</span><span class="params">(<span class="keyword">int</span>* <span class="built_in">array</span>, <span class="keyword">int</span> leftStartIndex, <span class="keyword">int</span> middleIndex, <span class="keyword">int</span> rightEndIndex)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> leftPartLength = middleIndex - leftStartIndex + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> rightPartLength = rightEndIndex - middleIndex;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span>* leftArray = <span class="keyword">new</span> <span class="keyword">int</span>[leftPartLength + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">int</span>* rightArray = <span class="keyword">new</span> <span class="keyword">int</span>[rightPartLength + <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; leftPartLength; i++)</span><br><span class="line">        leftArray[i] = <span class="built_in">array</span>[leftStartIndex + i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rightPartLength; i++)</span><br><span class="line">        rightArray[i] = <span class="built_in">array</span>[middleIndex + <span class="number">1</span> + i];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//Make the last index to be max</span></span><br><span class="line">    leftArray[leftPartLength] = INT_MAX;</span><br><span class="line">    rightArray[rightPartLength] = INT_MAX;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> leftArrayIndex = <span class="number">0</span>, rightArrayIndex = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = leftStartIndex; i &lt;= rightEndIndex; i++)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">if</span> (leftArray[leftArrayIndex] &lt; rightArray[rightArrayIndex])</span><br><span class="line">            <span class="built_in">array</span>[i] = leftArray[leftArrayIndex++];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">array</span>[i] = rightArray[rightArrayIndex++];</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">delete</span>[] leftArray;</span><br><span class="line">    <span class="keyword">delete</span>[] rightArray;</span><br><span class="line">}</span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<h4 id="analyzing-divide-and-conquer-algorithms">Analyzing divide-and-conquer algorithms</h4>
+<p>&#x5F53;&#x8BA1;&#x7B97;&#x4E00;&#x4E2A;&#x8FED;&#x4EE3;&#x95EE;&#x9898;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x5E38;&#x7528;&#x8FED;&#x4EE3;&#x8868;&#x8FBE;&#x5F0F;&#x6765;&#x8868;&#x793A;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x5047;&#x5B9A;&#x5C06;&#x539F;&#x95EE;&#x9898;&#x62C6;&#x5206;&#x4E3A;<span class="math inline">\(a\)</span>&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x6BCF;&#x4E2A;&#x5B50;&#x95EE;&#x9898;&#x6709;<span class="math inline">\(\frac{1}{b}\)</span>&#x4E2A;&#x6570;&#x636E;&#xFF0C;&#x90A3;&#x4E48;&#x6240;&#x6709;&#x8FD9;&#x4E9B;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x82B1;&#x8D39;&#x65F6;&#x95F4;&#x4E3A;<span class="math inline">\(aT(\frac{1}{b})\)</span>&#x3002;&#x5E76;&#x4E14;&#x62C6;&#x5206;&#x5B50;&#x95EE;&#x9898;&#x9700;&#x8981;<span class="math inline">\(D(n)\)</span>&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x5408;&#x5E76;&#x5B50;&#x95EE;&#x9898;&#x9700;&#x8981;<span class="math inline">\(C(n)\)</span>&#x65F6;&#x95F4;&#x3002;&#x53E6;&#x5916;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x8003;&#x8651;&#x5230;&#x5982;&#x679C;&#x5B50;&#x95EE;&#x9898;&#x7684;&#x8F93;&#x5165;&#x6570;&#x636E;&#x8DB3;&#x591F;&#x5C0F;&#xFF0C;&#x53EF;&#x80FD;&#x5728;&#x56FA;&#x5B9A;&#x65F6;&#x95F4;&#x5185;&#x5B50;&#x95EE;&#x9898;&#x5C31;&#x80FD;&#x89E3;&#x51B3;&#xFF0C;&#x4F8B;&#x5982;&#x6392;&#x5E8F;&#x7684;&#x5B50;&#x95EE;&#x9898;&#xFF0C;&#x5982;&#x679C;&#x5B50;&#x6570;&#x7EC4;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x90A3;&#x4E48;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x5373;&#x53EF;&#xFF08;&#x56FA;&#x5B9A;&#x65F6;&#x95F4;&#xFF09;&#x3002;&#x6240;&#x4EE5;&#x6574;&#x4F53;&#x7684;&#x65F6;&#x95F4;&#x82B1;&#x8D39;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[
+T(n)=\begin{cases}
+    \Theta(1) &amp; \text{if } n \leq c\\\\
+    aT(\frac{1}{b})+D(n)+C(n) &amp; &#x5176;&#x4ED6;&#x60C5;&#x51B5;&#x6761;&#x4EF6;
+\end{cases}
+\]</span></p>
+<h4 id="analysis-of-merge-sort">Analysis of merge sort</h4>
+<p>&#x8FD9;&#x91CC;&#x7740;&#x91CD;&#x8BA8;&#x8BBA;&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x3002;</p>
+<p><strong>&#x5206;&#x89E3;&#x65F6;&#x95F4;</strong>&#xFF1A;&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#x5C06;&#x6570;&#x7EC4;&#x5206;&#x4E3A;&#x4E24;&#x90E8;&#x5206;&#xFF0C;&#x8FD9;&#x4E00;&#x64CD;&#x4F5C;&#x53EA;&#x662F;&#x5355;&#x7EAF;&#x7684;&#x4E8C;&#x5206;&#xFF0C;&#x6240;&#x4EE5;&#x82B1;&#x8D39;&#x65F6;&#x95F4;&#x4E3A;&#x56FA;&#x5B9A;&#x503C;&#xFF0C;&#x5373;<span class="math inline">\(D(n)=\Theta(1)\)</span></p>
+<p><strong>&#x89E3;&#x51B3;&#x65F6;&#x95F4;</strong>&#xFF1A;&#x5C06;&#x6570;&#x7EC4;&#x5E73;&#x5206;&#x4E3A;&#x4E24;&#x4E2A;&#x90E8;&#x5206;&#xFF0C;&#x6240;&#x4EE5;&#x6BCF;&#x4E00;&#x4EFD;&#x7684;&#x6570;&#x636E;&#x4E3A;<span class="math inline">\(n/2\)</span>&#x4E14;&#x6709;&#x4E24;&#x90E8;&#x5206;&#xFF0C;&#x6240;&#x4EE5;&#x5B50;&#x95EE;&#x9898;&#x89E3;&#x51B3;&#x65F6;&#x95F4;&#x4E3A;<span class="math inline">\(2T(\frac{n}{2})\)</span></p>
+<p><strong>&#x5408;&#x5E76;&#x65F6;&#x95F4;</strong>&#xFF1A; &#x7531;&#x5408;&#x5E76;&#x7B97;&#x6CD5;&#x7684;&#x4F2A;&#x4EE3;&#x7801;&#x53EF;&#x77E5;&#xFF0C;&#x6574;&#x4E2A;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x53EA;&#x6709;&#x5355;&#x5C42;&#x5FAA;&#x73AF;&#xFF0C;&#x6240;&#x4EE5;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;<span class="math inline">\(C(n)=\Theta(n)\)</span></p>
+<p>&#x7EFC;&#x4E0A;&#xFF0C;&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;</p>
+<p><span class="math display">\[
+T(n)=\begin{cases}
+    \Theta(1) &amp; \text{if } n=1\\\\
+    2T(\frac{n}{2})+\Theta(n) &amp; \text{if } n\geq 1
+\end{cases}
+\]</span></p>
+<p>&#x76EE;&#x524D;<span class="math inline">\(T(n)\)</span>&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x662F;&#x4E00;&#x4E2A;&#x9012;&#x5F52;&#x8868;&#x8FBE;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x6839;&#x636E;&#x8FD9;&#x4E2A;&#x89E3;&#x51FA;<span class="math inline">\(n\geq 1\)</span>&#x60C5;&#x51B5;&#x4E0B;&#x7684;<span class="math inline">\(T(n)\)</span>&#x5355;&#x7EAF;&#x5BF9;&#x4E8E;<span class="math inline">\(n\)</span>&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x5C06;<span class="math inline">\(T(n)\)</span>&#x7528;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x8868;&#x793A;&#xFF0C;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x90FD;&#x4EE3;&#x8868;&#x4E00;&#x90E8;&#x5206;&#x65F6;&#x95F4;&#xFF0C;&#x6240;&#x6709;&#x8282;&#x70B9;&#x7684;&#x65F6;&#x95F4;&#x7D2F;&#x8BA1;&#x5373;&#x4E3A;<span class="math inline">\(T(n)\)</span></p>
+<p>&#x4F8B;&#x5982;&#x5F0F;&#x5B50;<span class="math inline">\(T(n)=2T(\frac{n}{2})+\Theta(n)\)</span>&#xFF0C;&#x4F7F;&#x7528;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x8868;&#x8FBE;&#x5373;&#x4E3A;&#x4ECE;&#x4E0B;&#x56FE;&#x7684;(a)&#x6811;&#x8F6C;&#x6362;&#x4E3A;(b)&#x6811;&#xFF0C;(b)&#x6811;&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x5373;&#x4EE3;&#x8868;&#x7B49;&#x5F0F;&#x53F3;&#x8FB9;&#x7684;&#x6BCF;&#x5C0F;&#x90E8;&#x5206;&#x3002;&#x800C;<span class="math inline">\(T(\frac{n}{2})\)</span>&#x53C8;&#x53EF;&#x8FDB;&#x4E00;&#x6B65;&#x8868;&#x8FBE;&#x4E3A;<span class="math inline">\(2T(\frac{n}{4})+\Theta(\frac{n}{2})\)</span>&#xFF0C;&#x5373;&#x4E3A;&#x4E0B;&#x56FE;&#x4E2D;(b)&#x56FE;&#x7684;&#x53F6;&#x5B50;&#x8FDB;&#x4E00;&#x6B65;&#x8F6C;&#x6362;&#xFF0C;&#x53D8;&#x6210;(c)&#x56FE;&#x7684;&#x6837;&#x5B50;&#x3002;</p>
+<p><img src="/IA-Chapter1-Chapter2-Notes/2019-10-16-00-45-05.png" alt="&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x5206;&#x6790;1"></p>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x91CD;&#x590D;&#x9012;&#x5F52;&#x8FD9;&#x6837;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x76F4;&#x5230;&#x5C5E;&#x6027;&#x7ED3;&#x6784;&#x53D8;&#x6210;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/IA-Chapter1-Chapter2-Notes/2019-10-16-00-46-41.png" alt="&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x5206;&#x6790;2"></p>
+<p>&#x6574;&#x68F5;&#x6811;&#x6240;&#x6709;&#x53F6;&#x5B50;&#x6240;&#x4EE3;&#x8868;&#x7684;&#x65F6;&#x95F4;&#x603B;&#x548C;&#x5373;&#x4E3A;<span class="math inline">\(T(n)\)</span>&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6BCF;&#x4E00;&#x5C42;&#x53F6;&#x5B50;&#x7684;&#x603B;&#x548C;&#x90FD;&#x4E3A;<span class="math inline">\(cn\)</span>&#x3002;&#x6700;&#x4E0B;&#x4E00;&#x5C42;&#x4E00;&#x5171;&#x6709;<span class="math inline">\(n\)</span>&#x4E2A;&#x8282;&#x70B9;&#xFF0C;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x65F6;&#x95F4;&#x82B1;&#x8D39;&#x4E3A;<span class="math inline">\(c\)</span>&#xFF0C;&#x5373;&#x4EE3;&#x8868;&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#x4E2D;&#x5206;&#x89E3;&#x5B50;&#x6570;&#x7EC4;&#x5230;&#x6570;&#x7EC4;&#x7684;&#x5143;&#x7D20;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x8FD9;&#x65F6;&#x5019;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#xFF08;&#x82B1;&#x8D39;&#x65F6;&#x95F4;&#x56FA;&#x5B9A;&#xFF09;&#x3002;</p>
+<p>&#x73B0;&#x5728;&#x95EE;&#x9898;&#x7684;&#x89E3;&#x51B3;&#x5230;&#x4E86;&#x6C42;&#x6811;&#x4E00;&#x5171;&#x6709;&#x591A;&#x5C11;&#x5C42;&#xFF0C;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x6700;&#x4E0B;&#x9762;&#x4E00;&#x5C42;&#x6709;<span class="math inline">\(n\)</span>&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x6BCF;&#x5C42;&#x7684;&#x6570;&#x91CF;&#x90FD;&#x662F;2&#x7684;&#x6B21;&#x5E42;&#xFF0C;&#x4E14;&#x7B2C;&#x4E00;&#x5C42;&#x4E3A;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x8BBE;&#x5C42;&#x6570;&#x4E3A;<span class="math inline">\(x\)</span>&#xFF0C;&#x8BA1;&#x7B97;&#x8868;&#x8FBE;&#x5F0F;&#x5E94;&#x8BE5;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[
+2^(x-1)=n \\\\
+x=\lg n+1
+\]</span></p>
+<p>&#x90A3;&#x4E48;&#x6574;&#x68F5;&#x6811;&#x6240;&#x6709;&#x53F6;&#x5B50;&#x7684;&#x65F6;&#x95F4;&#x82B1;&#x8D39;&#x603B;&#x548C;&#x5373;&#x4E3A;&#xFF0C;&#x6BCF;&#x5C42;&#x7684;&#x65F6;&#x95F4;&#xFF08;<span class="math inline">\(cn\)</span>&#xFF09;&#x4E58;&#x4EE5;&#x5C42;&#x6570;(<span class="math inline">\(\lg n+1\)</span>)&#xFF0C;&#x5373;<span class="math inline">\(T(n)=cn\lg n+cn\)</span>&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x5F52;&#x5E76;&#x6392;&#x5E8F;&#x6700;&#x5DEE;&#x60C5;&#x51B5;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x6807;&#x8BC6;&#x4E3A;<span class="math inline">\(\Theta(n\lg n)\)</span></p>
+<ul>
+<li>&#x4E66;&#x4E2D;&#x7684;<span class="math inline">\(\lg n\)</span>&#x8868;&#x793A;<span class="math inline">\(\log_2n\)</span>&#xFF0C;&#x800C;&#x975E;&#x4E00;&#x822C;&#x6570;&#x5B66;&#x4E66;&#x4E2D;&#x7684;<span class="math inline">\(\log_{10}n\)</span>&#xFF0C;&#x56E0;&#x4E3A;&#x8BA1;&#x7B97;&#x673A;&#x8BA8;&#x8BBA;&#x7684;&#x662F;&#x4E8C;&#x8FDB;&#x5236;&#x800C;&#x975E;&#x73B0;&#x5B9E;&#x751F;&#x6D3B;&#x4E2D;&#x5E38;&#x7528;&#x7684;&#x5341;&#x8FDB;&#x5236;&#x3002;</li>
+</ul>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>Introduction to Algorithms</em> 3rd Sep.2009</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/IA-Chapter1-Chapter2-Notes/" title="《算法导论》 第一、二章笔记">https://xuejiaw.github.io/IA-Chapter1-Chapter2-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/数据结构与算法/" rel="tag"># 数据结构与算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/TheMangaGuideToDatabasesNotes-2/" rel="prev" title="《漫画数据库》 笔记 （二）">
+      <i class="fa fa-chevron-left"></i> 《漫画数据库》 笔记 （二）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/IA-Chapter3-Notes/" rel="next" title="《算法导论》 第三章笔记">
+      《算法导论》 第三章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-1.-the-role-of-algorithms-in-computing"><span class="nav-number">1.</span> <span class="nav-text">Chapter 1. The Role of Algorithms in Computing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#algorithms"><span class="nav-number">1.1.</span> <span class="nav-text">Algorithms</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#algorithms-as-a-technology"><span class="nav-number">1.2.</span> <span class="nav-text">Algorithms as a technology</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-2.-getting-started"><span class="nav-number">2.</span> <span class="nav-text">Chapter 2. Getting Started</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#insertion-sort"><span class="nav-number">2.1.</span> <span class="nav-text">Insertion Sort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#analyzing-algorithms"><span class="nav-number">2.2.</span> <span class="nav-text">Analyzing algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#analysis-of-insertion-sort"><span class="nav-number">2.2.1.</span> <span class="nav-text">Analysis of insertion sort</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#order-of-growth"><span class="nav-number">2.2.2.</span> <span class="nav-text">Order of growth</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#designing-algorithms"><span class="nav-number">2.3.</span> <span class="nav-text">Designing algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-divide-and-conquer-approach"><span class="nav-number">2.3.1.</span> <span class="nav-text">The divide-and-conquer approach</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#analyzing-divide-and-conquer-algorithms"><span class="nav-number">2.3.2.</span> <span class="nav-text">Analyzing divide-and-conquer algorithms</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#analysis-of-merge-sort"><span class="nav-number">2.3.3.</span> <span class="nav-text">Analysis of merge sort</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

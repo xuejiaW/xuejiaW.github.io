@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Google I/O 2017&amp;#xFF0C;DayDream&amp;#x56E2;&amp;#x961F;&amp;#x63D0;&amp;#x51FA;&amp;#x7684;UI&amp;#x8BBE;&amp;#x8BA1;&amp;#x89C4;&amp;#x8303;&amp;#x3002;">
+<meta name="keywords" content="虚拟现实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VR UI设计规范">
+<meta property="og:url" content="https://xuejiaw.github.io/VRUIDesignGuideLine/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="Google I/O 2017&amp;#xFF0C;DayDream&amp;#x56E2;&amp;#x961F;&amp;#x63D0;&amp;#x51FA;&amp;#x7684;UI&amp;#x8BBE;&amp;#x8BA1;&amp;#x89C4;&amp;#x8303;&amp;#x3002;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/VRUIDesignGuideLine/2019-02-17-17-08-33.png">
+<meta property="og:image" content="https://xuejiaw.github.io/VRUIDesignGuideLine/2019-02-17-17-19-57.png">
+<meta property="og:image" content="https://xuejiaw.github.io/VRUIDesignGuideLine/2019-02-17-20-24-38.png">
+<meta property="og:image" content="https://xuejiaw.github.io/VRUIDesignGuideLine/2019-02-17-20-26-58.png">
+<meta property="og:image" content="https://xuejiaw.github.io/VRUIDesignGuideLine/2019-02-17-20-28-56.png">
+<meta property="og:image" content="https://xuejiaw.github.io/VRUIDesignGuideLine/2019-02-17-20-49-44.png">
+<meta property="og:image" content="https://xuejiaw.github.io/VRUIDesignGuideLine/2019-02-17-20-50-16.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.560Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VR UI设计规范">
+<meta name="twitter:description" content="Google I/O 2017&amp;#xFF0C;DayDream&amp;#x56E2;&amp;#x961F;&amp;#x63D0;&amp;#x51FA;&amp;#x7684;UI&amp;#x8BBE;&amp;#x8BA1;&amp;#x89C4;&amp;#x8303;&amp;#x3002;">
+<meta name="twitter:image" content="https://xuejiaw.github.io/VRUIDesignGuideLine/2019-02-17-17-08-33.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/VRUIDesignGuideLine/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>VR UI设计规范 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/VRUIDesignGuideLine/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VR UI设计规范
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-02-17 20:53:20" itemprop="dateCreated datePublished" datetime="2019-02-17T20:53:20+08:00">2019-02-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+
+          
+            <span id="/VRUIDesignGuideLine/" class="post-meta-item leancloud_visitors" data-flag-title="VR UI设计规范" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/VRUIDesignGuideLine/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/VRUIDesignGuideLine/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>Google I/O 2017&#xFF0C;DayDream&#x56E2;&#x961F;&#x63D0;&#x51FA;&#x7684;UI&#x8BBE;&#x8BA1;&#x89C4;&#x8303;&#x3002;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="dmm&#x6982;&#x5FF5;">dmm&#x6982;&#x5FF5;</h1>
+<p>&#x5728;VR&#x7684;&#x8BBE;&#x8BA1;&#x4E2D;&#xFF0C;UI&#x7269;&#x4F53;&#x4F1A;&#x56E0;&#x4E3A;&#x8DDD;&#x79BB;&#x7528;&#x6237;&#x7684;&#x8FDC;&#x8FD1;&#x8DDD;&#x79BB;&#x4E0D;&#x540C;&#x5BFC;&#x81F4;&#x89C6;&#x89C9;&#x4E0A;&#x5927;&#x5C0F;&#x7684;&#x53D8;&#x5316;&#x3002;&#x5BF9;&#x4E8E;&#x8BBE;&#x8BA1;&#x5E08;&#x800C;&#x8A00;&#xFF0C;&#x4ED6;&#x4EEC;&#x53EA;&#x80FD;&#x9488;&#x5BF9;2D&#x753B;&#x9762;&#x8FDB;&#x884C;&#x8BBE;&#x8BA1;&#xFF0C;&#x800C;&#x65E0;&#x6CD5;&#x7ED9;&#x51FA;UI&#x8DDD;&#x79BB;&#x7528;&#x6237;&#x7684;&#x8DDD;&#x79BB;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x6E38;&#x620F;&#x5F15;&#x64CE;&#x4E2D;&#x5F88;&#x96BE;&#x5C06;UI&#x8C03;&#x81F3;&#x8BBE;&#x8BA1;&#x5E08;&#x5E0C;&#x671B;&#x7684;&#x6837;&#x5B50;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7528;&#x89D2;&#x5EA6;&#x6765;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x4E0D;&#x540C;&#x8DDD;&#x79BB;&#x4E0D;&#x540C;&#x5927;&#x5C0F;&#x7684;&#x7269;&#x4F53;&#xFF0C;&#x53EA;&#x8981;&#x4ED6;&#x4EEC;&#x5728;&#x89C6;&#x7EBF;&#x5185;&#x6240;&#x5360;&#x7684;&#x89D2;&#x5EA6;&#x662F;&#x76F8;&#x540C;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x5BF9;&#x4E8E;&#x4EBA;&#x773C;&#x6765;&#x8BF4;&#xFF0C;&#x4ED6;&#x4EEC;&#x770B;&#x8D77;&#x6765;&#x5C31;&#x662F;&#x76F8;&#x540C;&#x7684;&#x5927;&#x5C0F;&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/VRUIDesignGuideLine/2019-02-17-17-08-33.png" alt="&#x4E0D;&#x540C;&#x8DDD;&#x79BB;&#x770B;&#x4E0D;&#x540C;&#x5927;&#x5C0F;&#x7269;&#x4F53;"></p>
+<p>&#x4E0A;&#x56FE;&#x5DE6;&#x4E0A;&#x89D2;&#x7684;<code>dmm</code>&#x5355;&#x4F4D;&#x5C31;&#x662F;DayDream&#x56E2;&#x961F;&#x63D0;&#x51FA;&#x7684;&#x7528;&#x4EE5;&#x89E3;&#x51B3;&#x8FD9;&#x95EE;&#x9898;&#x7684;&#x5355;&#x4F4D;&#xFF0C;<code>dmm</code>(distance-independent millimeter&#xFF0C;&#x8DDD;&#x79BB;&#x4E0D;&#x76F8;&#x5173;&#x6BEB;&#x7C73;)&#xFF0C;&#x6211;&#x4EEC;&#x5C06;1&#x7C73;&#x5916;&#x770B;&#x8D77;&#x6765;&#x957F;&#x4E3A;1&#x6BEB;&#x7C73;&#x7684;&#x957F;&#x5EA6;&#x5B9A;&#x4E49;&#x4E3A;1dmm&#xFF0C;&#x6309;&#x5B9A;&#x4E49;&#x53EF;&#x77E5;2m&#x5916;&#x770B;&#x8D77;&#x6765;&#x4E3A;2mm&#x7684;&#x957F;&#x5EA6;&#x4E5F;&#x4E3A;1dmm&#x3002;&#x5728;2D&#x8BBE;&#x8BA1;&#x8F6F;&#x4EF6;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x8F6F;&#x4EF6;&#x4E2D;&#x7684;1px&#x770B;&#x4F5C;&#x4E3A;1mm&#x3002;&#x8FD9;&#x6837;&#x5F53;&#x8BBE;&#x8BA1;&#x5E08;&#x7ED9;&#x51FA;&#x4E00;&#x5F20;480*320&#x50CF;&#x7D20;&#x7684;&#x56FE;&#x7247;&#xFF0C;&#x8FD9;&#x5F20;&#x56FE;&#x7684;&#x542B;&#x4E49;&#x5373;&#x4E3A;&#x5728;1&#x7C73;&#x5916;&#x770B;&#x8D77;&#x6765;&#x957F;480&#x6BEB;&#x7C73;&#xFF0C;&#x9AD8;320&#x6BEB;&#x7C73;&#x7684;&#x56FE;&#x7247;&#x3002;</p>
+<h1 id="&#x6587;&#x5B57;&#x6700;&#x5C0F;&#x5C3A;&#x5BF8;">&#x6587;&#x5B57;&#x6700;&#x5C0F;&#x5C3A;&#x5BF8;</h1>
+<p>&#x4E00;&#x4E2A;&#x6587;&#x5B57;&#x770B;&#x7684;&#x662F;&#x5426;&#x6E05;&#x695A;&#x53D6;&#x51B3;&#x4E8E;&#x7528;&#x4E86;&#x591A;&#x5C11;&#x50CF;&#x7D20;&#x7684;&#x53BB;&#x6E32;&#x67D3;&#x8FD9;&#x4E2A;&#x6587;&#x5B57;&#x3002;&#x5728;&#x8FD9;&#x91CC;&#x9996;&#x5148;&#x89E3;&#x91CA;&#x4E0B;<code>PPD</code>&#xFF08;Pixel Per Degree&#xFF09;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x5728;VR&#x8BBE;&#x5907;&#x4E2D;&#x6211;&#x4EEC;&#x7528;&#x4E00;&#x5757;&#x5C4F;&#x5E55;&#x6765;&#x663E;&#x793A;&#x4E00;&#x5B9A;&#x5BBD;&#x5EA6;&#x89C6;&#x573A;&#x89D2;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x5982;HTV Vive&#x7684;&#x53CC;&#x773C;&#x5206;&#x8FA8;&#x7387;&#x4E3A;2160*1200&#xFF0C;&#x5355;&#x773C;&#x5206;&#x8FA8;&#x7387;&#x4E3A;1080*1200&#xFF0C;&#x89C6;&#x573A;&#x89D2;&#x4E3A;110&#xB0;&#xFF0C;&#x5219;HTV vive&#x7684;PPD&#x4E3A;<code>1080/110</code>&#x7EA6;&#x4E3A;9.8&#x5373;1&#xB0;&#x7684;&#x753B;&#x9762;&#x5E73;&#x5747;&#x542B;&#x6709;9.8&#x4E2A;&#x50CF;&#x7D20;&#x3002;&#x5728;PPD&#x8D8A;&#x4F4E;&#x7684;&#x8BBE;&#x5907;&#x4E0A;&#xFF0C;&#x6211;&#x4EEC;&#x8981;&#x4FDD;&#x8BC1;&#x4E00;&#x4E2A;&#x6587;&#x5B57;&#x8DB3;&#x591F;&#x6E05;&#x6670;&#x5C31;&#x9700;&#x8981;&#x6269;&#x5927;&#x6587;&#x5B57;&#x5728;&#x8BBE;&#x5907;&#x4E2D;&#x6240;&#x5360;&#x7684;&#x89D2;&#x5EA6;&#x6765;&#x786E;&#x4FDD;&#x5B83;&#x6709;&#x8DB3;&#x591F;&#x7684;&#x50CF;&#x7D20;&#x3002;DayDream&#x56E2;&#x961F;&#x7ED9;&#x51FA;&#x7684;&#x6587;&#x5B57;&#x6240;&#x5360;&#x89D2;&#x5EA6;&#x4E0E;&#x8BBE;&#x5907;PPD&#x5173;&#x7CFB;&#x7684;&#x56FE;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/VRUIDesignGuideLine/2019-02-17-17-19-57.png" alt="&#x6587;&#x5B57;&#x5927;&#x5C0F;&#x4E0E;&#x8BBE;&#x5907;PPD"></p>
+<p>&#x4EE5;&#x8BBE;&#x5907;PPD&#x4E3A;12.6&#x8FDB;&#x884C;&#x8BA1;&#x7B97;&#xFF0C; &#x5219;&#x6587;&#x5B57;&#x9700;&#x8981;&#x6709;1.6&#xB0;&#x7684;&#x9AD8;&#x5EA6;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6587;&#x5B57;&#x9700;&#x8981;&#x6709;12.6*1.6=20.16&#x4E2A;&#x5C4F;&#x5E55;&#x4E0A;&#x7684;&#x50CF;&#x7D20;&#x8FDB;&#x884C;&#x6E32;&#x67D3;&#x3002;&#x5982;&#x679C;&#x4F7F;&#x7528;dmm&#x800C;&#x975E;&#x50CF;&#x7D20;&#x6765;&#x8FDB;&#x884C;&#x7EDF;&#x8BA1;&#x7684;&#x8BDD;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x516C;&#x5F0F; <span class="math inline">\(2\tan(\frac{angle}{2})\*1000\)</span> &#x6765;&#x8FDB;&#x884C;&#x8BA1;&#x7B97;&#x3002;&#x5982;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x89D2;&#x5EA6;&#x4E3A;1.6&#xB0;&#xFF0C;&#x5219;&#x7ED3;&#x679C;&#x4E3A; <span class="math inline">\(2\tan(\frac{1.6}{2})\*1000=27.9\)</span> dmm&#xFF0C;&#x5373;&#x5728;2D&#x8BBE;&#x8BA1;&#x8F6F;&#x4EF6;&#x4E2D;&#x9700;&#x8981;&#x7528;28&#x4E2A;&#x50CF;&#x7D20;&#x6765;&#x8868;&#x793A;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;28&#x53F7;&#x5B57;&#x4F53;&#xFF0C;&#x5BF9;&#x4E8E;3D&#x573A;&#x666F;&#x6765;&#x8BF4;&#x5219;&#x662F;28&#x6BEB;&#x7C73;&#x3002;</p>
+<h1 id="unity&#x4E2D;&#x4F7F;&#x7528;">Unity&#x4E2D;&#x4F7F;&#x7528;</h1>
+<div class="note info">
+            <p>Unity&#x4E2D;Scale&#x4E3A;1&#x8868;&#x793A;&#x4E3A;1&#x7C73;</p>
+          </div>
+<p>&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;Demo&#x573A;&#x666F;&#xFF0C;&#x9996;&#x5148;&#x5B58;&#x5728;&#x6839;&#x7269;&#x4F53;<code>ParentUI</code>&#xFF0C;Z&#x8F74;&#x503C;&#x4E3A;1&#xFF0C;&#x8868;&#x793A;&#x8DDD;&#x79BB;&#x6211;&#x4EEC;1&#x7C73;&#x8FDC;&#xFF0C;Scale&#x4E3A;1</p>
+<p><img src="/VRUIDesignGuideLine/2019-02-17-20-24-38.png" alt="&#x6839;&#x7269;&#x4F53;ParentUI"></p>
+<p>&#x5728;<code>ParentUI</code>&#x4E0B;&#x6709;&#x4E2A;&#x5E26;&#x6709;<code>Canvas</code>&#x7EC4;&#x4EF6;&#x7684;&#x7269;&#x4F53;<code>Canvas Menu</code>,&#x5B83;&#x7684;Scale&#x4E3A;0.001&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x5728;dmm&#x6982;&#x5FF5;&#x4E2D;&#x6240;&#x6709;&#x7684;&#x8BA1;&#x7B97;&#x5355;&#x4F4D;&#x90FD;&#x662F;&#x6BEB;&#x7C73;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C06;&#x7C73;&#x8F6C;&#x6362;&#x4E3A;&#x6BEB;&#x7C73;&#x3002;</p>
+<p><img src="/VRUIDesignGuideLine/2019-02-17-20-26-58.png" alt="CanvasMenu"></p>
+<p>&#x8FD9;&#x6837;&#x5728;<code>Canvas Menu</code>&#x4E0B;&#x7684;&#x6240;&#x6709;UI&#x7EC4;&#x4EF6;&#x90FD;&#x53EF;&#x4EE5;&#x6309;&#x8BBE;&#x8BA1;&#x56FE;&#x7ED9;&#x7684;&#x5C3A;&#x5BF8;&#x8C03;&#x6574;&#x5927;&#x5C0F;&#xFF0C;&#x5982;&#x4E00;&#x5F20;&#x56FE;&#x7247;&#x5927;&#x5C0F;&#x4E3A;400*320&#xFF0C;&#x5728;Unity&#x4E2D;&#x6211;&#x4EEC;&#x5C31;&#x5C06;&#x5176;Width,Height&#x8BBE;&#x4E3A;400,320&#x3002;</p>
+<p>&#x5F53;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C06;UI&#x653E;&#x7684;&#x66F4;&#x8FDC;&#xFF0C;&#x800C;&#x4FDD;&#x6301;UI&#x5927;&#x5C0F;&#x4E0D;&#x53D8;&#x7684;&#x8BDD;&#xFF0C;&#x6574;&#x4F53;&#x8C03;&#x6574;<code>ParentUI</code>&#x7684;Scale&#x5373;&#x53EF;&#xFF0C;&#x5982;</p>
+<p><img src="/VRUIDesignGuideLine/2019-02-17-20-28-56.png" alt="&#x8C03;&#x6574;UI&#x5C3A;&#x5BF8;"></p>
+<h1 id="&#x5176;&#x4ED6;">&#x5176;&#x4ED6;</h1>
+<ol type="1">
+<li><p>UI&#x7684;&#x4E2D;&#x5FC3;&#x6C34;&#x5E73;&#x5E94;&#x8BE5;&#x5728;&#x6C34;&#x5E73;&#x7EBF;&#x4E0B;6&#xB0;&#x5DE6;&#x53F3;</p>
+<p><img src="/VRUIDesignGuideLine/2019-02-17-20-49-44.png" alt="&#x6C34;&#x5E73;&#x7EBF;&#x4E0B;6&#xB0;"></p></li>
+<li><p>&#x4EBA;&#x4FDD;&#x6301;&#x5934;&#x4E0D;&#x52A8;&#x65F6;&#xFF0C;&#x7406;&#x60F3;&#x7684;&#x89C6;&#x7EBF;&#x8303;&#x56F4;&#x662F;&#x5DE6;&#x53F3;30&#xB0;&#x4EE5;&#x5185;&#xFF0C;&#x5E26;&#x4E0A;&#x9888;&#x90E8;&#x65CB;&#x8F6C;&#x7684;&#x8BDD;&#xFF0C;&#x7406;&#x6027;&#x8303;&#x56F4;&#x662F;&#x5DE6;&#x53F3;60&#xB0;&#x4EE5;&#x5185;</p>
+<p><img src="/VRUIDesignGuideLine/2019-02-17-20-50-16.png" alt="&#x8212;&#x9002;&#x8303;&#x56F4;"></p></li>
+</ol>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A; 1. <a href="https://www.youtube.com/watch?v=ES9jArHRFHQ" target="_blank" rel="noopener">Google I/O &#x89C6;&#x9891;</a> 2. <a href="https://developers.google.com/vr/design/sticker-sheet" target="_blank" rel="noopener">Google Design Sticker Sheet</a> 3. <a href="https://www.jianshu.com/p/c21addac9b0e" target="_blank" rel="noopener">&#x5982;&#x4F55; VR &#x754C;&#x9762;&#x8BBE;&#x8BA1;&#x89C4;&#x8303;&#x4E0E;&#x5B9E;&#x64CD;</a></p>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/VRUIDesignGuideLine/" title="VR UI设计规范">https://xuejiaw.github.io/VRUIDesignGuideLine/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/虚拟现实/" rel="tag"># 虚拟现实</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/HowToReadABookNotes/" rel="prev" title="《如何阅读一本书》 笔记">
+      <i class="fa fa-chevron-left"></i> 《如何阅读一本书》 笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/ShadowsocksRTutorial/" rel="next" title="ShadowsocksR 翻墙教程">
+      ShadowsocksR 翻墙教程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dmm概念"><span class="nav-number">1.</span> <span class="nav-text">dmm概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文字最小尺寸"><span class="nav-number">2.</span> <span class="nav-text">文字最小尺寸</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unity中使用"><span class="nav-number">3.</span> <span class="nav-text">Unity中使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

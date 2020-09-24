@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x4ECB;&amp;#x7ECD;git submodule&amp;#x7684;&amp;#x4F7F;&amp;#x7528;&amp;#x4E0E;&amp;#x53EF;&amp;#x80FD;&amp;#x9047;&amp;#x5230;&amp;#x7684;&amp;#x95EE;&amp;#x9898;&amp;#x3002;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 子模块 Submodule 教程">
+<meta property="og:url" content="https://xuejiaw.github.io/gitSubmoduleTutorial/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x4ECB;&amp;#x7ECD;git submodule&amp;#x7684;&amp;#x4F7F;&amp;#x7528;&amp;#x4E0E;&amp;#x53EF;&amp;#x80FD;&amp;#x9047;&amp;#x5230;&amp;#x7684;&amp;#x95EE;&amp;#x9898;&amp;#x3002;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.568Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git 子模块 Submodule 教程">
+<meta name="twitter:description" content="&amp;#x4ECB;&amp;#x7ECD;git submodule&amp;#x7684;&amp;#x4F7F;&amp;#x7528;&amp;#x4E0E;&amp;#x53EF;&amp;#x80FD;&amp;#x9047;&amp;#x5230;&amp;#x7684;&amp;#x95EE;&amp;#x9898;&amp;#x3002;">
+
+<link rel="canonical" href="https://xuejiaw.github.io/gitSubmoduleTutorial/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>Git 子模块 Submodule 教程 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/gitSubmoduleTutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git 子模块 Submodule 教程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-11 21:40:41" itemprop="dateCreated datePublished" datetime="2019-09-11T21:40:41+08:00">2019-09-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/教程/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/gitSubmoduleTutorial/" class="post-meta-item leancloud_visitors" data-flag-title="Git 子模块 Submodule 教程" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/gitSubmoduleTutorial/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/gitSubmoduleTutorial/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x4ECB;&#x7ECD;git submodule&#x7684;&#x4F7F;&#x7528;&#x4E0E;&#x53EF;&#x80FD;&#x9047;&#x5230;&#x7684;&#x95EE;&#x9898;&#x3002;</p>
+
+          </blockquote>
+<a id="more"></a>
+<p>&#x5F88;&#x4E45;&#x6CA1;&#x6709;&#x66F4;&#x65B0;&#x535A;&#x5BA2;&#xFF0C;&#x6253;&#x5F00;&#x4E00;&#x770B;&#x53D1;&#x73B0;awesome&#x7684;&#x56FE;&#x6807;&#x90FD;&#x65E0;&#x6CD5;&#x663E;&#x793A;&#x4E86;&#xFF0C;&#x7248;&#x672C;&#x56DE;&#x6EDA;&#x540E;&#x4ECD;&#x7136;&#x65E0;&#x6CD5;&#x663E;&#x793A;&#xFF0C;&#x4F30;&#x8BA1;&#x662F;nexT&#x66F4;&#x65B0;&#x5BFC;&#x81F4;&#x7684;&#xFF0C;&#x67E5;&#x770B;&#x540E;&#x53D1;&#x73B0;&#x7684;&#x786E;nexT&#x66F4;&#x65B0;&#x4E86;&#x5927;&#x7248;&#x672C;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x539F;&#x59CB;&#x5DE5;&#x7A0B;&#x5728;&#x5BB6;&#x91CC;&#x7684;&#x53F0;&#x5F0F;&#x673A;&#x4E0A;&#xFF0C;&#x53D1;&#x73B0;&#x7B14;&#x8BB0;&#x672C;&#x4ECE;github&#x4E0A;&#x62C9;&#x4E0B;&#x7684;&#x5DE5;&#x7A0B;&#x5E76;&#x6CA1;&#x6709;&#x5C06;nexT&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;git&#x4ED3;&#x5E93;&#xFF0C;&#x4E8E;&#x662F;&#x53EA;&#x80FD;&#x5C06;&#x6574;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#x5220;&#x9664;&#x540E;&#x8FDB;&#x884C;&#x8986;&#x76D6;&#x66F4;&#x65B0;&#x3002;</p>
+<p>&#x4F46;&#x8FD9;&#x6837;&#x7684;&#x65B9;&#x5F0F;&#x80AF;&#x5B9A;&#x662F;&#x4E0D;&#x80FD;&#x957F;&#x4E45;&#x7EF4;&#x62A4;&#x7684;&#xFF0C;&#x4E8E;&#x662F;&#x60F3;&#x5C06;nexT&#x4F5C;&#x4E3A;&#x9879;&#x76EE;&#x7684;&#x5B50;&#x6A21;&#x5757;&#x8FDB;&#x884C;&#x7BA1;&#x7406;&#x3002;&#x5728;&#x8FD9;&#x91CC;&#x6211;&#x6574;&#x7406;&#x4E86;&#x4F7F;&#x7528;git submodule&#x5BF9;&#x9879;&#x76EE;&#x8FDB;&#x884C;&#x5B50;&#x6A21;&#x5757;&#x7BA1;&#x7406;&#x7684;&#x65B9;&#x6CD5;&#x548C;&#x5E38;&#x89C1;&#x95EE;&#x9898;&#x3002;</p>
+<h2 id="git&#x547D;&#x4EE4;">git&#x547D;&#x4EE4;</h2>
+<h3 id="&#x6DFB;&#x52A0;&#x5B50;&#x6A21;&#x5757;">&#x6DFB;&#x52A0;&#x5B50;&#x6A21;&#x5757;</h3>
+<p>&#x5982;&#x9700;&#x8981;&#x5C06;&#x8FDC;&#x7A0B;&#x9879;&#x76EE;<code>xuejiaW/hexo-theme-next</code>&#x4F5C;&#x4E3A;&#x5B50;&#x6A21;&#x5757;&#xFF0C;&#x5E76;&#x4E14;&#x4E0B;&#x8F7D;&#x5230;&#x76EE;&#x5F55;themes/next&#x4E0B;&#xFF0C;&#x5219;&#x8FD0;&#x884C;&#x547D;&#x4EE4;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule add git@github.com:xuejiaW/hexo-theme-next.git themes/next</span><br></pre></td></tr></table></figure>
+<p>&#x7136;&#x540E;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x76EE;&#x5F55;&#x4E0B;&#x51FA;&#x73B0;&#x4E86;<code>.gitmodules</code>&#x6587;&#x4EF6;&#xFF0C;&#x5176;&#x4E2D;&#x8BB0;&#x5F55;&#x4E86;&#x5B50;&#x6A21;&#x5757;&#x4FDD;&#x6301;&#x5730;&#x5740;&#x53CA;Url</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[submodule &quot;themes/next&quot;]</span><br><span class="line">	path = themes/next</span><br><span class="line">	url = git@github.com:xuejiaW/hexo-theme-next.git</span><br></pre></td></tr></table></figure>
+<h3 id="&#x67E5;&#x770B;&#x5B50;&#x6A21;&#x5757;">&#x67E5;&#x770B;&#x5B50;&#x6A21;&#x5757;</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git submodule</span><br><span class="line"></span><br><span class="line">//&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x7C7B;&#x4F3C;&#x7ED3;&#x679C;</span><br><span class="line">//733d8e492aafe21abc971f853aa9e7b8b6196425 themes/next (v7.4.0-13-g733d8e4)</span><br><span class="line">//&#x8868;&#x793A;&#x5B50;&#x6A21;&#x5757;&#x6700;&#x65B0;&#x7684;patch&#x53CA;&#x5B50;&#x6A21;&#x5757;&#x4FDD;&#x5B58;&#x5730;&#x5740;</span><br></pre></td></tr></table></figure>
+<h3 id="&#x521D;&#x59CB;&#x5316;&#x53CA;&#x66F4;&#x65B0;&#x5B50;&#x6A21;&#x5757;">&#x521D;&#x59CB;&#x5316;&#x53CA;&#x66F4;&#x65B0;&#x5B50;&#x6A21;&#x5757;</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git submodule init</span><br><span class="line">//&#x521D;&#x59CB;&#x5316;&#x672C;&#x5730;&#x7684;&#x5B50;&#x6A21;&#x5757;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x5728;&#x62C9;&#x53D6;&#x4E86;&#x4E00;&#x4E2A;&#x5E26;&#x6709;&#x5B50;&#x6A21;&#x5757;&#x7684;&#x5DE5;&#x7A0B;&#x540E;&#xFF0C;&#x9700;&#x8981;&#x5148;&#x6267;&#x884C;init</span><br><span class="line"></span><br><span class="line">git submodule update</span><br><span class="line">//&#x66F4;&#x65B0;&#x5B50;&#x6A21;&#x5757;&#xFF08;&#x5982;&#x5B50;&#x6A21;&#x5757;&#x6587;&#x4EF6;&#x5939;&#x4E3A;&#x7A7A;&#xFF0C;&#x5219;&#x4F1A;&#x4E0B;&#x8F7D;&#x5B50;&#x6A21;&#x5757;&#xFF09;</span><br></pre></td></tr></table></figure>
+<h3 id="&#x63D0;&#x4EA4;&#x5B50;&#x6A21;&#x5757;&#x4FEE;&#x6539;">&#x63D0;&#x4EA4;&#x5B50;&#x6A21;&#x5757;&#x4FEE;&#x6539;</h3>
+<p>&#x5F53;&#x5B50;&#x6A21;&#x5757;&#x6709;&#x4FEE;&#x6539;&#x65F6;&#xFF0C;&#x5728;&#x4E3B;&#x9879;&#x76EE;&#x4E0A;<code>git status</code>&#x5E76;&#x4E0D;&#x4F1A;&#x5B8C;&#x5168;&#x663E;&#x793A;&#x4FEE;&#x6539;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x53EA;&#x4F1A;&#x663E;&#x793A;&#x88AB;&#x4FEE;&#x6539;&#x7684;&#x5B50;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x5982;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">modified:   themes/next (modified content)</span><br></pre></td></tr></table></figure>
+<p>&#x7136;&#x540E;&#x9700;&#x8981;&#x8FDB;&#x5165;&#x5B50;&#x6A21;&#x5757;&#x8FDB;&#x884C;&#x5E38;&#x89C4;&#x7684;<code>add</code>&#xFF0C;<code>commit</code>&#x7B49;&#x64CD;&#x4F5C;&#xFF0C;&#x5C06;&#x5B50;&#x6A21;&#x5757;&#x7684;&#x6539;&#x52A8;&#x63D0;&#x4EA4;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd themes/next</span><br><span class="line">git add --a</span><br><span class="line">git commit -s -m&quot;Modify submodule&quot;</span><br></pre></td></tr></table></figure>
+<div class="note danger">
+            <p>&#x5728;&#x5B50;&#x6A21;&#x5757;&#x63D0;&#x4EA4;&#x65F6;&#xFF0C;&#x8BF7;&#x786E;&#x8BA4;&#x5206;&#x652F;&#x662F;&#x5426;&#x6B63;&#x786E;&#xFF0C;&#x5426;&#x5219;&#x53EF;&#x80FD;&#x4F1A;&#x9020;&#x6210;&#x63D0;&#x4EA4;&#x5230;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;&#x7684;commit ID&#x4E0D;&#x7B26;&#xFF0C;&#x5BFC;&#x81F4;&#x5176;&#x4ED6;&#x5DE5;&#x7A0B;&#x5F00;&#x53D1;&#x8005;&#x5728;&#x8FD0;&#x884C;<code>git submodule update</code>&#x65F6;&#x51FA;&#x9519;</p>
+          </div>
+<p>&#x6B64;&#x65F6;&#x56DE;&#x5230;&#x4E3B;&#x5DE5;&#x7A0B;&#xFF0C;&#x518D;&#x6B21;status&#x67E5;&#x770B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd ../../</span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">modified:   themes/next (new commits)</span><br></pre></td></tr></table></figure>
+<p>&#x7528;<code>diff</code>&#x8BED;&#x53E5;&#x67E5;&#x770B;&#x6539;&#x52A8;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6539;&#x52A8;&#x7684;&#x662F;&#x5B50;&#x6A21;&#x5757;&#x6700;&#x65B0;&#x7684;<code>commit ID</code>&#xFF0C;&#x8FD9;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x4E3B;&#x5DE5;&#x7A0B;&#x4FDD;&#x7559;&#x4E86;&#x6BCF;&#x4E2A;&#x5B50;&#x6A21;&#x5757;&#x6700;&#x65B0;&#x7684;<code>commit ID</code>&#x6307;&#x9488;&#xFF0C;&#x5F53;&#x8FD0;&#x884C;<code>git submodule update</code>&#x65F6;&#xFF0C;&#x5C31;&#x662F;&#x5C06;&#x6BCF;&#x4E2A;&#x5B50;&#x6A21;&#x5757;&#x66F4;&#x65B0;&#x81F3;&#x5404;&#x81EA;&#x6700;&#x65B0;&#x7684;<code>commit ID</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git diff themes/next</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">-Subproject commit 733d8e492aafe21abc971f853aa9e7b8b6196425</span><br><span class="line">+Subproject commit 1da46ea43f2084eb2be519162b8d9ccb8d45e660</span><br></pre></td></tr></table></figure>
+<p>&#x5C06;&#x8FD9;&#x4E2A;&#x6539;&#x52A8;&#x63D0;&#x4EA4;&#xFF0C;&#x90A3;&#x4E48;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;&#x4E5F;&#x5C31;&#x66F4;&#x65B0;&#x4E86;&#x5B50;&#x6A21;&#x5757;&#x7684;&#x6700;&#x65B0;&#x6307;&#x9488;&#x3002;</p>
+<h3 id="&#x5220;&#x9664;&#x5B50;&#x6A21;&#x5757;">&#x5220;&#x9664;&#x5B50;&#x6A21;&#x5757;</h3>
+<p>&#x5220;&#x9664;&#x5B50;&#x6A21;&#x5757;&#x76F8;&#x6BD4;&#x4E8E;&#x4E4B;&#x524D;&#x7684;&#x64CD;&#x4F5C;&#x8981;&#x590D;&#x6742;&#x4E9B;</p>
+<ol type="1">
+<li>&#x5220;&#x9664;<code>.gitmodules</code>&#x4E2D;&#x7684;&#x5B50;&#x6A21;&#x5757;&#x5185;&#x5BB9;</li>
+<li>&#x5220;&#x9664;<code>.git/config</code>&#x4E2D;&#x7684;&#x5B50;&#x6A21;&#x5757;&#x5185;&#x5BB9;</li>
+<li>&#x5220;&#x9664;<code>.git/modules</code>&#x4E2D;&#x7684;&#x5B50;&#x6A21;&#x5757;&#x5BF9;&#x5E94;&#x6587;&#x4EF6;&#x5939;</li>
+<li>&#x8FD0;&#x884C;<code>git rm --cached -r themes/next</code>&#x5220;&#x9664;&#x5BF9;&#x5E94;&#x5B50;&#x6A21;&#x5757;&#x6587;&#x4EF6;&#x5939;&#x7684;&#x7D22;&#x5F15;</li>
+<li>&#x5220;&#x9664;&#x5B50;&#x6A21;&#x5757;&#x6587;&#x4EF6;&#x5939;</li>
+</ol>
+<h2 id="&#x5E38;&#x89C1;&#x95EE;&#x9898;">&#x5E38;&#x89C1;&#x95EE;&#x9898;</h2>
+<h3 id="xxx-already-exists-in-the-index">xxx already exists in the index</h3>
+<p>&#x51FA;&#x73B0;&#x5728;<code>git submodule add</code>&#x65F6;&#xFF0C;&#x8BF4;&#x660E;&#x540C;&#x4E00;&#x6587;&#x4EF6;&#x5939;&#x8DEF;&#x5F84;&#x4E0B;&#x6709;&#x5176;&#x4ED6;&#x5B50;&#x6A21;&#x5757;&#x3002;&#x5982;&#x679C;&#x5DF2;&#x7ECF;&#x624B;&#x52A8;&#x5220;&#x9664;&#xFF0C;&#x9519;&#x8BEF;&#x4ECD;&#x7136;&#x5B58;&#x5728;&#xFF0C;&#x53EF;&#x80FD;&#x662F;&#x8DEF;&#x5F84;&#x7D22;&#x5F15;&#x5BFC;&#x81F4;&#xFF0C;&#x9700;&#x8981;&#x5B8C;&#x6574;&#x6267;&#x884C;&#x5220;&#x9664;&#x5B50;&#x6A21;&#x5757;&#x64CD;&#x4F5C;&#x3002;</p>
+<h3 id="server-does-not-allow-request-for-unadvertised-object">server does not allow request for unadvertised object</h3>
+<p>&#x51FA;&#x73B0;&#x5728;<code>git submodule update</code>&#x65F6;&#xFF0C;&#x8BF4;&#x660E;&#x4E3B;&#x5DE5;&#x7A0B;&#x4E2D;&#x4FDD;&#x6301;&#x7684;&#x6700;&#x65B0;&#x7684;&#x5B50;&#x6A21;&#x5757;<code>commit id</code>&#xFF0C;&#x65E0;&#x6CD5;&#x5728;&#x670D;&#x52A1;&#x5668;&#x5B50;&#x6A21;&#x5757;&#x5DE5;&#x7A0B;&#x4E2D;&#x627E;&#x5230;&#xFF0C;&#x53EF;&#x80FD;&#x662F;&#x56E0;&#x4E3A;&#x5B50;&#x6A21;&#x5757;&#x6539;&#x52A8;&#x672A;&#x63D0;&#x4EA4;&#xFF0C;&#x6216;&#x8005;&#x63D0;&#x4EA4;&#x5206;&#x652F;&#x9519;&#x8BEF;&#x5BFC;&#x81F4;<code>commit id</code>&#x6539;&#x53D8;&#x3002;</p>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A; 1. Git &#x5DE5;&#x5177; - &#x5B50;&#x6A21;&#x5757; https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97 2. Git submodule &#x5B50;&#x6A21;&#x5757;&#x7684;&#x7BA1;&#x7406;&#x548C;&#x4F7F;&#x7528; https://www.jianshu.com/p/9000cd49822c</p>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/gitSubmoduleTutorial/" title="Git 子模块 Submodule 教程">https://xuejiaw.github.io/gitSubmoduleTutorial/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/TheArtOfTravelNotes/" rel="prev" title="《旅行的艺术》 笔记">
+      <i class="fa fa-chevron-left"></i> 《旅行的艺术》 笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/RegularExpressionTutorial/" rel="next" title="正则表达式教程">
+      正则表达式教程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git命令"><span class="nav-number">1.</span> <span class="nav-text">git命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加子模块"><span class="nav-number">1.1.</span> <span class="nav-text">添加子模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看子模块"><span class="nav-number">1.2.</span> <span class="nav-text">查看子模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化及更新子模块"><span class="nav-number">1.3.</span> <span class="nav-text">初始化及更新子模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交子模块修改"><span class="nav-number">1.4.</span> <span class="nav-text">提交子模块修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除子模块"><span class="nav-number">1.5.</span> <span class="nav-text">删除子模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题"><span class="nav-number">2.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xxx-already-exists-in-the-index"><span class="nav-number">2.1.</span> <span class="nav-text">xxx already exists in the index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#server-does-not-allow-request-for-unadvertised-object"><span class="nav-number">2.2.</span> <span class="nav-text">server does not allow request for unadvertised object</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

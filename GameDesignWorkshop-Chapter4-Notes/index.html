@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;Game Design Workshop&amp;#x300B; &amp;#x7B2C;&amp;#x56DB;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x8FD9;&amp;#x4E00;&amp;#x7AE0;&amp;#x4E3B;&amp;#x8981;&amp;#x5173;&amp;#x4E8E;&amp;#x6E38;&amp;#x620F;&amp;#x7684;&amp;#x620F;&amp;#x5267;&amp;#x5143;&amp;#x7">
+<meta name="keywords" content="读书笔记,游戏设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Game Design Workshop》 第四章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;Game Design Workshop&amp;#x300B; &amp;#x7B2C;&amp;#x56DB;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x8FD9;&amp;#x4E00;&amp;#x7AE0;&amp;#x4E3B;&amp;#x8981;&amp;#x5173;&amp;#x4E8E;&amp;#x6E38;&amp;#x620F;&amp;#x7684;&amp;#x620F;&amp;#x5267;&amp;#x5143;&amp;#x7">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/image-20200311212101483.png">
+<meta property="og:image" content="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/image-20200312112050925.png">
+<meta property="og:image" content="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/image-20200312115742695.png">
+<meta property="og:image" content="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/image-20200312121637342.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.247Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《Game Design Workshop》 第四章笔记">
+<meta name="twitter:description" content="&amp;#x300A;Game Design Workshop&amp;#x300B; &amp;#x7B2C;&amp;#x56DB;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x8FD9;&amp;#x4E00;&amp;#x7AE0;&amp;#x4E3B;&amp;#x8981;&amp;#x5173;&amp;#x4E8E;&amp;#x6E38;&amp;#x620F;&amp;#x7684;&amp;#x620F;&amp;#x5267;&amp;#x5143;&amp;#x7">
+<meta name="twitter:image" content="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/image-20200311212101483.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《Game Design Workshop》 第四章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《Game Design Workshop》 第四章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-12 12:24:37" itemprop="dateCreated datePublished" datetime="2020-03-12T12:24:37+08:00">2020-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/游戏设计/" itemprop="url" rel="index"><span itemprop="name">游戏设计</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/GameDesignWorkshop-Chapter4-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《Game Design Workshop》 第四章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/GameDesignWorkshop-Chapter4-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/GameDesignWorkshop-Chapter4-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>13 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;Game Design Workshop&#x300B; &#x7B2C;&#x56DB;&#x7AE0;&#x7B14;&#x8BB0;</p>
+<p>&#x8FD9;&#x4E00;&#x7AE0;&#x4E3B;&#x8981;&#x5173;&#x4E8E;&#x6E38;&#x620F;&#x7684;&#x620F;&#x5267;&#x5143;&#x7D20;&#x7684;&#x8BBE;&#x8BA1;&#x3002;</p>
+<p>&#x4F5C;&#x8005;&#x9996;&#x5148;&#x4ECB;&#x7ECD;&#x7684;&#x5E38;&#x89C4;&#x7684;&#x4E0E;&#x6E38;&#x620F;&#x6982;&#x5FF5;&#x7ED3;&#x5408;&#x6BD4;&#x8F83;&#x6DF1;&#x7684;&#x4E24;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x6311;&#x6218;&#x548C;&#x73A9;&#x800D;&#x3002;</p>
+<p>&#x4E4B;&#x540E;&#x4ECB;&#x7ECD;&#x4E86;&#x4E09;&#x4E2A;&#x5728;&#x620F;&#x5267;&#x4E0A;&#x66F4;&#x4E3A;&#x590D;&#x6742;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x524D;&#x63D0;&#xFF0C;&#x89D2;&#x8272;&#xFF0C;&#x6545;&#x4E8B;&#x3002;</p>
+<p>&#x4E4B;&#x540E;&#x662F;&#x4E24;&#x4E2A;&#x66F4;&#x4E3A;&#x590D;&#x6742;&#x548C;&#x9AD8;&#x7EA7;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x4E16;&#x754C;&#x521B;&#x5EFA;&#x548C;&#x620F;&#x5267;&#x5316;&#x66F2;&#x7EBF;&#x3002;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-4-working-with-dramatic-elements">Chapter 4 Working with Dramatic Elements</h1>
+<p>&#x7B2C;&#x4E09;&#x7AE0;&#x4E2D;&#x63D0;&#x5230;&#x7684;&#x5E38;&#x89C4;&#x5143;&#x7D20;&#x6784;&#x521B;&#x9020;&#x4E86;&#x73A9;&#x5BB6;&#x4F53;&#x9A8C;&#xFF0C;&#x6B63;&#x662F;&#x5E38;&#x89C4;&#x5143;&#x7D20;&#x6784;&#x6210;&#x4E86;&#x6E38;&#x620F;&#x3002;&#x620F;&#x5267;&#x5143;&#x7D20;&#xFF08;Dramatic Elements&#xFF09;&#x5B9A;&#x4E49;&#x4E86;&#x6E38;&#x620F;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x5B83;&#x5C06;&#x5E38;&#x89C4;&#x5143;&#x7D20;&#x878D;&#x5408;&#x5728;&#x7CFB;&#x7EDF;&#x4E2D;&#x5E76;&#x4EA7;&#x751F;&#x4E86;&#x4E00;&#x4E2A;&#x66F4;&#x6709;&#x610F;&#x4E49;&#x7684;&#x4F53;&#x9A8C;&#xFF0C;&#x8BA9;&#x73A9;&#x5BB6;&#x6709;&#x4E86;&#x60C5;&#x611F;&#x4E0A;&#x7684;&#x4F53;&#x9A8C;&#x3002;</p>
+<p>&#x5E38;&#x89C4;&#x7684;&#x620F;&#x5267;&#x5143;&#x7D20;&#x6709;&#x6311;&#x6218;&#xFF08;Challenge&#xFF09;&#x548C;&#x73A9;&#x800D;&#xFF08;Play&#xFF09;&#xFF0C;&#x66F4;&#x590D;&#x6742;&#x7684;&#x620F;&#x5267;&#x5316;&#x5143;&#x7D20;&#x5305;&#x62EC;&#x524D;&#x63D0;&#xFF08;Premise&#xFF09;&#x3001;&#x89D2;&#x8272;&#xFF08;Character&#xFF09;&#x3001;&#x6545;&#x4E8B;&#xFF08;Story&#xFF09;&#x3002;</p>
+<h2 id="challenge">Challenge</h2>
+<p>&#x8BB8;&#x591A;&#x4EBA;&#x90FD;&#x4F1A;&#x540C;&#x610F;&#x6E38;&#x620F;&#x5438;&#x5F15;&#x4ED6;&#x4EEC;&#x7684;&#x90E8;&#x5206;&#x5C31;&#x662F;&#x6311;&#x6218;&#x3002;</p>
+<p>&#x5F53;&#x73A9;&#x5BB6;&#x8C08;&#x53CA;&#x6311;&#x6218;&#x65F6;&#xFF0C;&#x4ED6;&#x4EEC;&#x8C08;&#x53CA;&#x7684;&#x662F;&#x90A3;&#x4E9B;&#x4ED6;&#x4EEC;&#x4E50;&#x4E8E;&#x5B8C;&#x6210;&#x7684;&#x4EFB;&#x52A1;&#xFF0C;&#x8FD9;&#x4E9B;&#x4EFB;&#x52A1;&#x9700;&#x8981;&#x4E00;&#x5B9A;&#x7684;&#x5DE5;&#x4F5C;&#xFF0C;&#x800C;&#x4E14;&#x80FD;&#x7ED9;&#x4ED6;&#x4EEC;&#x5E26;&#x6765;&#x6EE1;&#x8DB3;&#x611F;&#x548C;&#x6109;&#x60A6;&#x611F;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x6311;&#x6218;&#x662F;&#x4E00;&#x4E2A;&#x5F88;&#x4E2A;&#x4EBA;&#x5316;&#x7684;&#x56E0;&#x7D20;&#xFF0C;&#x5E74;&#x8F7B;&#x4EBA;&#x89C9;&#x5F97;&#x662F;&#x6311;&#x6218;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x8001;&#x5E74;&#x4EBA;&#x5E76;&#x4E00;&#x5B9A;&#x89C9;&#x5F97;&#x3002;</p>
+<p>&#x540C;&#x6837;&#x6311;&#x6218;&#x4E5F;&#x662F;&#x4E00;&#x4E2A;&#x52A8;&#x6001;&#x7684;&#x56E0;&#x7D20;&#xFF0C;&#x4E00;&#x4E2A;&#x4E8B;&#x60C5;&#x5728;&#x521A;&#x5F00;&#x59CB;&#x53EF;&#x80FD;&#x5F88;&#x6709;&#x6311;&#x6218;&#x6027;&#xFF0C;&#x4F46;&#x968F;&#x7740;&#x719F;&#x7EC3;&#x5EA6;&#x63D0;&#x5347;&#x5C31;&#x9010;&#x6E10;&#x5931;&#x53BB;&#x4E86;&#x96BE;&#x5EA6;&#x3002;&#x6240;&#x4EE5;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x8005;&#x5FC5;&#x987B;&#x8981;&#x4FDD;&#x6301;&#x6E38;&#x620F;&#x7684;&#x6311;&#x6218;&#x6027;&#xFF0C;&#x7528;&#x6B64;&#x6765;&#x5438;&#x5F15;&#x73A9;&#x5BB6;&#x7684;&#x6CE8;&#x610F;&#x3002;</p>
+<p>&#x5F53;&#x8BBE;&#x8BA1;&#x6E38;&#x620F;&#x65F6;&#xFF0C;&#x8BBE;&#x8BA1;&#x5E08;&#x8003;&#x8651;&#x7684;&#x662F;&#x5982;&#x4F55;&#x8BA9;&#x73A9;&#x5BB6;&#x66F4;&#x6109;&#x60A6;&#xFF0C;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x662F;&#x4E0E;&#x6311;&#x6218;&#x6027;&#x76F8;&#x5173;&#x7684;&#x3002;&#x867D;&#x7136;&#x6311;&#x6218;&#x6027;&#x662F;&#x4E2A;&#x4EBA;&#x5316;&#x7684;&#x56E0;&#x7D20;&#xFF0C;&#x4F46;&#x662F;&#x6109;&#x60A6;&#x611F;&#x5374;&#x6709;&#x76F8;&#x540C;&#x70B9;&#x3002;&#x6839;&#x636E;&#x5FC3;&#x7406;&#x5B66;&#x5BB6;Mihaly Crikszentmihalyi&#x7684;&#x7814;&#x7A76;&#xFF0C;&#x65E0;&#x8BBA;&#x5E74;&#x7EAA;&#xFF0C;&#x6027;&#x522B;&#xFF0C;&#x793E;&#x4F1A;&#x9636;&#x5C42;&#x7B49;&#x7B49;&#x533A;&#x522B;&#xFF0C;&#x8BA9;&#x4EBA;&#x4EEC;&#x9884;&#x7EA6;&#x7684;&#x6D3B;&#x52A8;&#x90FD;&#x6709;&#x4EE5;&#x4E0B;&#x7279;&#x70B9;</p>
+<ol type="1">
+<li>&#x5F53;&#x89E3;&#x51B3;&#x4EBA;&#x4EEC;&#x6709;&#x80FD;&#x529B;&#x89E3;&#x51B3;&#x7684;&#x95EE;&#x9898;&#x65F6;</li>
+<li>&#x4EBA;&#x4EEC;&#x5FC5;&#x987B;&#x96C6;&#x4E2D;&#x4E8E;&#x6B63;&#x5728;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x4E0A;</li>
+<li><ol start="4" type="1">
+<li>&#x56E0;&#x4E3A;&#x4EFB;&#x52A1;&#x6709;&#x6E05;&#x6670;&#x7684;&#x76EE;&#x6807;&#x548C;&#x53CA;&#x65F6;&#x7684;&#x53CD;&#x9988;&#xFF0C;&#x6240;&#x4EE5;&#x4EBA;&#x4EEC;&#x53EF;&#x4EE5;&#x96C6;&#x4E2D;&#x5728;&#x8FD9;&#x4EF6;&#x4E8B;&#x4E0A;&#x3002;</li>
+</ol></li>
+<li>&#x4E8B;&#x7269;&#x6709;&#x4E00;&#x4E2A;&#x6DF1;&#x5165;&#x4F46;&#x8F7B;&#x677E;&#x7684;&#x53C2;&#x4E0E;&#x611F;&#xFF0C;&#x8BA9;&#x4EBA;&#x4EEC;&#x5FD8;&#x8BB0;&#x65E5;&#x5E38;&#x751F;&#x6D3B;&#x4E2D;&#x7684;&#x62C5;&#x5FE7;&#x548C;&#x56F0;&#x6270;</li>
+<li>&#x8BA9;&#x4EBA;&#x4EEC;&#x5BF9;&#x6B63;&#x5728;&#x53D1;&#x751F;&#x7684;&#x4E8B;&#x7269;&#x6709;&#x53EF;&#x63A7;&#x611F;</li>
+<li>&#x5728;&#x4E8B;&#x7269;&#x8FDB;&#x884C;&#x65F6;&#x6709;&#x65E0;&#x6211;&#x7684;&#x611F;&#x89C9;&#xFF0C;&#x4F46;&#x662F;&#x5F53;&#x4E8B;&#x7269;&#x7ED3;&#x675F;&#x540E;&#x53C8;&#x80FD;&#x66F4;&#x52A0;&#x5145;&#x5206;&#x7684;&#x611F;&#x89C9;&#x5230;&#x81EA;&#x5DF1;&#x7684;&#x5B58;&#x5728;</li>
+<li>&#x611F;&#x5230;&#x65F6;&#x95F4;&#x7684;&#x901F;&#x5EA6;&#x53D1;&#x751F;&#x4E86;&#x53D8;&#x5316;&#xFF0C;&#x6570;&#x5C0F;&#x65F6;&#x53EF;&#x80FD;&#x53D8;&#x5F97;&#x50CF;&#x51E0;&#x5206;&#x949F;&#x4E00;&#x6837;&#xFF0C;&#x51E0;&#x5206;&#x949F;&#x53C8;&#x53EF;&#x80FD;&#x53D8;&#x5F97;&#x50CF;&#x6570;&#x5C0F;&#x65F6;&#x4E00;&#x6837;&#x3002;</li>
+</ol>
+<p>Crikszentmihalyi&#x6839;&#x636E;&#x53D1;&#x73B0;&#xFF0C;&#x53D1;&#x660E;&#x4E86;&#x4E00;&#x4E2A;&#x7406;&#x8BBA;&#x53EB;&#x505A;&#x5FC3;&#x6D41;&#xFF08;Flow&#xFF09;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/GameDesignWorkshop-Chapter4-Notes/image-20200311212101483.png" alt="&#x5FC3;&#x6D41;" style="zoom:50%;"></p>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x6D3B;&#x52A8;&#x7684;&#x6311;&#x6218;&#x8FDC;&#x4F4E;&#x4E8E;&#x4EBA;&#x7684;&#x80FD;&#x529B;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4F1A;&#x89C9;&#x5F97;&#x65E0;&#x804A;&#xFF0C;&#x800C;&#x5982;&#x679C;&#x6311;&#x6218;&#x8FDC;&#x9AD8;&#x4E8E;&#x4EBA;&#x7684;&#x80FD;&#x529B;&#xFF0C;&#x5219;&#x4F1A;&#x611F;&#x5230;&#x56F0;&#x6270;&#x3002;&#x5728;&#x5FC3;&#x6D41;&#x4E2D;&#xFF0C;&#x4E00;&#x4E2A;&#x6D3B;&#x52A8;&#x662F;&#x5728;&#x6311;&#x6218;&#x548C;&#x80FD;&#x529B;&#x4E4B;&#x95F4;&#x5E73;&#x8861;&#x5730;&#x5E26;&#xFF0C;&#x7ED9;&#x4EBA;&#x5E26;&#x6765;&#x6109;&#x60A6;&#x611F;&#x548C;&#x6EE1;&#x8DB3;&#x611F;&#x3002;</p>
+<p>&#x5728;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x4E2D;&#x671F;&#x671B;&#x8FBE;&#x5230;&#x7684;&#x5C31;&#x662F;&#x5FC3;&#x6D41;&#x7684;&#x533A;&#x57DF;&#x3002;&#x4EE5;&#x4E0B;&#x662F;&#x4E00;&#x4E9B;&#x80FD;&#x5E2E;&#x52A9;&#x8FBE;&#x5230;&#x5FC3;&#x6D41;&#x7684;&#x5143;&#x7D20;</p>
+<h3 id="a-challenging-activity-that-requires-skill">A Challenging Activity That Requires Skill</h3>
+<p>&#x6839;&#x636E;Crikszentmihalyi&#x7684;&#x63CF;&#x8FF0;&#xFF0C;&#x5FC3;&#x6D41;&#x53D1;&#x751F;&#x7684;&#x60C5;&#x51B5;&#x901A;&#x5E38;&#x662F;&#x4E00;&#x4E2A;&#x6D3B;&#x52A8;&#x662F;&#x76EE;&#x6807;&#x5BFC;&#x5411;&#x7684;&#xFF0C;&#x800C;&#x4E14;&#x88AB;&#x89C4;&#x5219;&#x6240;&#x7EA6;&#x675F;&#x540C;&#x65F6;&#x5B8C;&#x6210;&#x5B83;&#x9700;&#x8981;&#x6709;&#x5408;&#x9002;&#x7684;&#x6280;&#x80FD;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x4EBA;&#x6CA1;&#x6709;&#x4EFB;&#x52A1;&#x6240;&#x8981;&#x6C42;&#x7684;&#x4EFB;&#x4F55;&#x80FD;&#x529B;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x4EFB;&#x52A1;&#x5BF9;&#x4E8E;&#x4ED6;&#x6765;&#x8BF4;&#x662F;&#x6CA1;&#x6709;&#x610F;&#x4E49;&#x7684;&#xFF0C;&#x53EA;&#x6709;&#x8FD9;&#x4E2A;&#x4EBA;&#x62E5;&#x6709;&#x90E8;&#x5206;&#x80FD;&#x529B;&#xFF0C;&#x4F46;&#x53C8;&#x4E0D;&#x8DB3;&#x4EE5;&#x5B8C;&#x6210;&#x8FD9;&#x4E2A;&#x4EBA;&#x4EFB;&#x52A1;&#x65F6;&#xFF0C;&#x8FD9;&#x4E2A;&#x4EFB;&#x52A1;&#x624D;&#x80FD;&#x79F0;&#x4E3A;&#x662F;&#x6709;&#x6311;&#x6218;&#x6027;&#x7684;&#x3002;</p>
+<h3 id="the-merging-of-action-and-awareness">The Merging of Action and Awareness</h3>
+<p>Crikszentmihalyi&#x8BF4;&#xFF0C;&#x5F53;&#x5FC3;&#x6D41;&#x53D1;&#x751F;&#x65F6;&#xFF0C;&#x4EBA;&#x4EEC;&#x662F;&#x975E;&#x5E38;&#x6C89;&#x6D78;&#x5165;&#x4ED6;&#x4EEC;&#x6B63;&#x5728;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#x4E2D;&#xFF0C;&#x56E0;&#x6B64;&#x53D8;&#x5F97;&#x975E;&#x5E38;&#x4E3B;&#x52A8;&#xFF0C;&#x4ED6;&#x4EEC;&#x4E5F;&#x4E0D;&#x4F1A;&#x610F;&#x8BC6;&#x5230;&#x81EA;&#x5DF1;&#x662F;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x4E2A;&#x4F53;&#x6B63;&#x5728;&#x201C;&#x505A;&#x8FD9;&#x4EF6;&#x4E8B;&#x201D;&#xFF0C;&#x5373;&#x884C;&#x4E3A;&#x548C;&#x611F;&#x77E5;&#x7ED3;&#x5408;&#x5728;&#x4E86;&#x4E00;&#x8D77;&#xFF0C;&#x53D8;&#x6210;&#x4E86;&#x65E0;&#x6211;&#x7684;&#x72B6;&#x6001;&#x3002;</p>
+<h3 id="clear-goals-and-feedback">Clear Goals and Feedback</h3>
+<p>&#x5728;&#x5FC3;&#x6D41;&#x7684;&#x4F53;&#x9A8C;&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x77E5;&#x9053;&#x8981;&#x8FBE;&#x6210;&#x4EC0;&#x4E48;&#xFF0C;&#x4E14;&#x8981;&#x53CA;&#x65F6;&#x7684;&#x5F97;&#x5230;&#x8BE5;&#x5982;&#x4F55;&#x8FBE;&#x6210;&#x76EE;&#x6807;&#x7684;&#x53CD;&#x9988;&#x3002;</p>
+<p>&#x5F53;&#x4E00;&#x4E2A;&#x6E38;&#x620F;&#x6709;&#x660E;&#x786E;&#x7684;&#x76EE;&#x6807;&#x65F6;&#xFF0C;&#x73A9;&#x5BB6;&#x77E5;&#x9053;&#x4ED6;&#x4EEC;&#x8981;&#x505A;&#x4E9B;&#x4EC0;&#x4E48;&#x624D;&#x80FD;&#x8D62;&#xFF0C;&#x624D;&#x80FD;&#x524D;&#x5F80;&#x4E0B;&#x4E00;&#x5173;&#x7B49;&#x7B49;&#xFF0C;&#x800C;&#x4E14;&#x4ED6;&#x4EEC;&#x4E5F;&#x6536;&#x5230;&#x4E86;&#x660E;&#x786E;&#x7684;&#x5173;&#x4E8E;&#x4ED6;&#x4EEC;&#x884C;&#x52A8;&#x8BA9;&#x4ED6;&#x4EEC;&#x79BB;&#x76EE;&#x6807;&#x66F4;&#x8FD1;&#x8FD8;&#x662F;&#x66F4;&#x8FDC;&#x7684;&#x53CD;&#x9988;&#x3002;</p>
+<h3 id="concentration-on-the-task-at-hand">Concentration on the Task at Hand</h3>
+<p>&#x53E6;&#x4E00;&#x4E2A;&#x5FC3;&#x6D41;&#x7684;&#x5143;&#x7D20;&#x662F;&#xFF0C;&#x4EBA;&#x4EEC;&#x53EA;&#x610F;&#x8BC6;&#x5230;&#x6B64;&#x65F6;&#x6B64;&#x523B;&#x53D1;&#x751F;&#x7684;&#x4E8B;&#x3002;&#x4ED6;&#x4EEC;&#x4E0D;&#x4F1A;&#x518D;&#x610F;&#x8BC6;&#x5230;&#x5176;&#x4ED6;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x51FA;&#x73B0;&#x4E86;&#x53E6;&#x4E00;&#x4E2A;&#x4E16;&#x754C;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x4E16;&#x754C;&#x4E2D;&#x53EA;&#x6709;&#x5F53;&#x4E0B;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x53EA;&#x6709;&#x53C2;&#x4E0E;&#x8005;&#x5728;&#x5176;&#x4E2D;&#x3002;</p>
+<h3 id="the-paradox-of-control">The Paradox of Control</h3>
+<p>&#x4EBA;&#x4EEC;&#x4EAB;&#x53D7;&#x5728;&#x56F0;&#x96BE;&#x60C5;&#x51B5;&#x65F6;&#x5019;&#x7684;&#x638C;&#x63A7;&#x611F;&#xFF0C;&#x4F46;&#x662F;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x4E8B;&#x60C5;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x77E5;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x624D;&#x4F1A;&#x6709;&#x638C;&#x63A7;&#x611F;&#x3002;&#x8FD9;&#x6709;&#x4E00;&#x5B9A;&#x77DB;&#x76FE;&#x7684;&#x611F;&#x89C9;&#xFF1A;&#x4EBA;&#x4EEC;&#x53EA;&#x6709;&#x5728;&#x5B8C;&#x5168;&#x63A7;&#x5236;&#x60C5;&#x51B5;&#x7684;&#x4E0B;&#x624D;&#x4F1A;&#x6709;&#x638C;&#x63A7;&#x611F;&#x3002; Crikszentmihalyi&#x8BF4;&#xFF1A;&#x5F53;&#x4E00;&#x4E2A;&#x60C5;&#x51B5;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x77E5;&#x65F6;&#xFF0C;&#x53EA;&#x6709;&#x8FD9;&#x4E2A;&#x4EBA;<code>&#x6709;&#x80FD;&#x529B;</code>&#x53BB;&#x638C;&#x63A7;&#x7ED3;&#x679C;&#xFF0C;&#x4ED6;&#x624D;&#x4F1A;&#x6709;&#x638C;&#x63A7;&#x611F;&#x3002;</p>
+<h3 id="the-loss-of-self-consciousness">The Loss of Self-Consciousness</h3>
+<p>&#x5728;&#x5FC3;&#x6D41;&#x4E2D;&#xFF0C;&#x4EBA;&#x4EEC;&#x4F1A;&#x8FC7;&#x5EA6;&#x7684;&#x5173;&#x6CE8;&#x4E8E;&#x6B63;&#x5728;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x5FD8;&#x8BB0;&#x4E86;&#x81EA;&#x5DF1;&#x7684;&#x5B58;&#x5728;&#x3002;&#x4F46;&#x662F;&#x5728;&#x5FC3;&#x6D41;&#x7ED3;&#x675F;&#x65F6;&#xFF0C;&#x4EBA;&#x4EEC;&#x53C8;&#x4F1A;&#x6709;&#x66F4;&#x5F3A;&#x7684;&#x81EA;&#x6211;&#x610F;&#x8BC6;&#xFF0C;&#x5982;&#x97F3;&#x4E50;&#x5BB6;&#x611F;&#x53D7;&#x5230;&#x4E86;&#x81EA;&#x5DF1;&#x97F3;&#x4E50;&#x7684;&#x548C;&#x8C10;&#xFF0C;&#x6E38;&#x620F;&#x73A9;&#x5BB6;&#x5BF9;&#x81EA;&#x5DF1;&#x7B56;&#x7565;&#x6216;&#x6280;&#x80FD;&#x7684;&#x6EE1;&#x8DB3;&#x3002;</p>
+<p>&#x8FD9;&#x4E00;&#x70B9;&#x540C;&#x6837;&#x4E4D;&#x4E00;&#x770B;&#x540C;&#x6837;&#x6709;&#x70B9;&#x77DB;&#x76FE;&#xFF0C;&#x81EA;&#x6211;&#x611F;&#x89C9;&#x7684;&#x5F3A;&#x5316;&#x6765;&#x81EA;&#x4E8E;&#x81EA;&#x6211;&#x611F;&#x89C9;&#x7684;&#x4E22;&#x5931;&#x3002;</p>
+<h3 id="the-transformation-of-time">The Transformation of Time</h3>
+<p>&#x5728;&#x5FC3;&#x6D41;&#x4E2D;&#xFF0C;&#x4E00;&#x4E2A;&#x5E38;&#x53D1;&#x751F;&#x7684;&#x73B0;&#x8C61;&#x5C31;&#x662F;&#x611F;&#x89C9;&#x65F6;&#x95F4;&#x6D41;&#x52A8;&#x7684;&#x901F;&#x5EA6;&#x53D1;&#x751F;&#x4E86;&#x53D8;&#x5316;&#x3002;&#x5982;&#x4EBA;&#x4EEC;&#x771F;&#x6B63;&#x6C89;&#x6D78;&#x5728;&#x67D0;&#x4E2A;&#x65F6;&#x671F;&#x65F6;&#xFF0C;&#x4F1A;&#x89C9;&#x5F97;&#x65F6;&#x95F4;&#x8FC7;&#x5F97;&#x5F88;&#x5FEB;&#xFF0C;&#x540C;&#x6837;&#x6709;&#x7684;&#x65F6;&#x5019;&#x53C8;&#x4F1A;&#x89C9;&#x5F97;&#x65F6;&#x95F4;&#x5F88;&#x6162;&#xFF0C;&#x5982;&#x82AD;&#x857E;&#x821E;&#x8005;&#x5728;&#x505A;&#x4E00;&#x4E9B;&#x9AD8;&#x96BE;&#x5EA6;&#x52A8;&#x4F5C;&#x65F6;&#xFF0C;&#x4F1A;&#x89C9;&#x5F97;&#x51E0;&#x79D2;&#x949F;&#x7684;&#x4E8B;&#x60C5;&#x4EFF;&#x4F5B;&#x53D1;&#x751F;&#x4E86;&#x51E0;&#x5206;&#x949F;&#x3002;</p>
+<h3 id="experience-becomes-an-end-in-itself">Experience Becomes an End in Itself</h3>
+<p>&#x5728;&#x5FC3;&#x6D41;&#x4E2D;&#xFF0C;&#x505A;&#x8FD9;&#x4EF6;&#x4E8B;&#x53D8;&#x5F97;&#x662F;&#x5185;&#x5728;&#x7684;&#xFF0C;&#x4E3B;&#x52A8;&#x7684;&#x3002;</p>
+<p>&#x751F;&#x6D3B;&#x4E2D;&#x7684;&#x5927;&#x90E8;&#x5206;&#x4E8B;&#x60C5;&#x90FD;&#x662F;&#x5916;&#x5728;&#x7684;&#xFF0C;&#x505A;&#x90A3;&#x4E9B;&#x4E8B;&#x7684;&#x539F;&#x56E0;&#x662F;&#x56E0;&#x4E3A;&#x80FD;&#x6EE1;&#x8DB3;&#x67D0;&#x4E9B;&#x76EE;&#x6807;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x50CF;&#x97F3;&#x4E50;&#xFF0C;&#x4F53;&#x80B2;&#x548C;&#x6E38;&#x620F;&#x90FD;&#x662F;&#x5185;&#x5728;&#x7684;&#xFF0C;&#x4ED6;&#x4EEC;&#x672C;&#x8EAB;&#x5C31;&#x662F;&#x5B58;&#x5728;&#x7684;&#x610F;&#x4E49;&#x3002;</p>
+<p>&#x603B;&#x4E4B;&#x5728;&#x8BBE;&#x8BA1;&#x6E38;&#x620F;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x8003;&#x8651;&#x4EE5;&#x4E0B;&#x51E0;&#x4E2A;&#x95EE;&#x9898;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5E0C;&#x671B;&#x73A9;&#x5BB6;&#x8981;&#x638C;&#x63E1;&#x4EC0;&#x4E48;&#x6280;&#x80FD;&#x3002;</li>
+<li>&#x5E0C;&#x671B;&#x73A9;&#x5BB6;&#x8981;&#x638C;&#x63E1;&#x8FD9;&#x4E2A;&#x6280;&#x80FD;&#x5230;&#x4EC0;&#x4E48;&#x7A0B;&#x5EA6;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x7ED9;&#x73A9;&#x5BB6;&#x6E05;&#x6670;&#x7684;&#xFF0C;&#x91CD;&#x8981;&#x7684;&#x76EE;&#x6807;&#xFF0C;&#x6709;&#x610F;&#x4E49;&#x7684;&#x9009;&#x62E9;&#x548C;&#x6E05;&#x6670;&#x7684;&#x53CD;&#x9988;&#xFF1F;</li>
+<li>&#x5982;&#x4F55;&#x5C06;&#x73A9;&#x5BB6;&#x9700;&#x8981;&#x505A;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x548C;&#x4ED6;&#x4EEC;&#x9700;&#x8981;&#x601D;&#x8003;&#x7684;&#x4E8B;&#x60C5;&#x7ED3;&#x5408;&#x5728;&#x4E00;&#x8D77;&#xFF1F;</li>
+<li>&#x5982;&#x4F55;&#x6D88;&#x9664;&#x73A9;&#x5BB6;&#x7684;&#x4E0D;&#x4E13;&#x5FC3;&#xFF0C;&#x5BF9;&#x5931;&#x8D25;&#x7684;&#x6050;&#x60E7;&#x3002;&#x5373;&#x5982;&#x4F55;&#x7ED9;&#x73A9;&#x5BB6;&#x4E00;&#x4E2A;&#x8DB3;&#x591F;&#x5B89;&#x5168;&#x7684;&#x73AF;&#x5883;&#xFF0C;&#x8BA9;&#x4ED6;&#x4EEC;&#x53EF;&#x80FD;&#x8FBE;&#x5230;&#x65E0;&#x6211;&#x7684;&#x5883;&#x754C;&#x3002;</li>
+<li>&#x5982;&#x4F55;&#x8BA9;&#x6E38;&#x620F;&#x6709;&#x8DA3;&#x5230;&#x5176;&#x672C;&#x8EAB;&#x5C31;&#x662F;&#x610F;&#x4E49;</li>
+</ol>
+<h2 id="play">Play</h2>
+<p>&#x73A9;&#x662F;&#x5728;&#x4E00;&#x4E2A;&#x9650;&#x5B9A;&#x7684;&#x6846;&#x67B6;&#x5185;&#x505A;&#x81EA;&#x7531;&#x7684;&#x6D3B;&#x52A8;&#xFF0C;&#x5BF9;&#x4E8E;&#x6E38;&#x620F;&#x800C;&#x8A00;&#x8FD9;&#x4E2A;&#x6846;&#x67B6;&#x5C31;&#x662F;&#x89C4;&#x5219;&#x548C;&#x6D41;&#x7A0B;&#x6240;&#x9650;&#x5B9A;&#x7684;&#x3002;</p>
+<h3 id="the-nature-of-play">The Nature of Play</h3>
+<p>&#x9700;&#x8981;&#x77E5;&#x9053;&#x73A9;&#x800D;&#x6709;&#x5F88;&#x591A;&#x9762;&#xFF1A; &#x5B83;&#x5E2E;&#x52A9;&#x4EBA;&#x4EEC;&#x5B66;&#x4E60;&#x6280;&#x80FD;&#x548C;&#x83B7;&#x53D6;&#x77E5;&#x8BC6;&#xFF0C;&#x8BA9;&#x4EBA;&#x66F4;&#x793E;&#x4EA4;&#x5316;&#xFF0C;&#x5E2E;&#x52A9;&#x4EBA;&#x4EEC;&#x89E3;&#x51B3;&#x95EE;&#x9898;&#xFF0C;&#x8BA9;&#x4EBA;&#x4EEC;&#x653E;&#x677E;&#xFF0C;&#x8BA9;&#x4EBA;&#x4ECE;&#x4E0D;&#x540C;&#x7684;&#x89D2;&#x5EA6;&#x53BB;&#x601D;&#x8003;&#x95EE;&#x9898;&#x3002;&#x73A9;&#x53EF;&#x4EE5;&#x662F;&#x4E0D;&#x4E25;&#x8083;&#x7684;&#xFF0C;&#x8BA9;&#x4EBA;&#x5F00;&#x6000;&#x5927;&#x5C0F;&#xFF0C;&#x73A9;&#x4E5F;&#x53EF;&#x80FD;&#x662F;&#x4E25;&#x8083;&#x7684;&#xFF0C;&#x8BA9;&#x5176;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x5B9E;&#x9A8C;&#x7684;&#x5B58;&#x5728;&#xFF0C;&#x53BB;&#x5C1D;&#x8BD5;&#x65B0;&#x9C9C;&#x4E8B;&#x7269;&#xFF0C;&#x53BB;&#x63A2;&#x7D22;&#x4E00;&#x4E2A;&#x4E8B;&#x7269;&#x7684;&#x8FB9;&#x754C;&#x3002;&#x73A9;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x5F15;&#x5BFC;&#x6539;&#x9769;&#x548C;&#x521B;&#x9020;&#x529B;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x4F46;&#x6700;&#x91CD;&#x8981;&#x7684;&#x4E00;&#x70B9;&#xFF0C;&#x73A9;&#x662F;&#x4E00;&#x79CD;&#x7CBE;&#x795E;&#x5C42;&#x9762;&#x7684;&#x4E1C;&#x897F;&#x3002;&#x5373;&#x4F7F;&#x5BF9;&#x4E8E;&#x6700;&#x4E25;&#x8083;&#x548C;&#x6700;&#x96BE;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x4E5F;&#x80FD;&#x7528;&#x4E00;&#x79CD;&#x73A9;&#x7B11;&#x7684;&#x65B9;&#x6CD5;&#x53BB;&#x9762;&#x5BF9;&#x3002;</p>
+<p>&#x8FD9;&#x91CC;&#x540C;&#x6837;&#x4F5C;&#x8005;&#x540C;&#x6837;&#x63D0;&#x5230;&#x4E86;&#x5173;&#x4E8E;&#x73A9;&#x7684;&#x5206;&#x7C7B;&#xFF0C;&#x5373;&#x5728;Roger Caillois&#x7684;<em>Man,Play,and Games</em>&#x4E2D;&#x63D0;&#x5230;&#x7684;<span class="math inline">\(Ag\hat{o}n\)</span>,<span class="math inline">\(Alea\)</span>,<span class="math inline">\(Mimicry\)</span>,<span class="math inline">\(Ilinx\)</span>&#x3002;</p>
+<p>&#x8FD9;&#x90E8;&#x5206;&#x5728;<code>Rules Of Play</code>&#x7684;&#x7B2C;22&#x7AE0;&#x6709;&#x8BE6;&#x7EC6;&#x63CF;&#x8FF0;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x518D;&#x8D58;&#x8FF0;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x8005;&#x800C;&#x8A00;&#xFF0C;&#x77E5;&#x9053;&#x5BF9;&#x4E8E;&#x73A9;&#x7684;&#x5206;&#x7C7B;&#x662F;&#x4E3A;&#x4E86;&#x5E2E;&#x52A9;&#x4ED6;&#x4EEC;&#x4E86;&#x89E3;&#x5BF9;&#x4E8E;&#x67D0;&#x4E00;&#x79CD;&#x7684;&#x73A9;&#x800D;&#x65B9;&#x5F0F;&#x4EC0;&#x4E48;&#x624D;&#x662F;&#x6838;&#x5FC3;&#x7684;&#x6109;&#x60A6;&#x611F;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x5E2E;&#x52A9;&#x4ED6;&#x4EEC;&#x51B3;&#x5B9A;&#x5728;&#x7279;&#x5B9A;&#x7684;&#x7CFB;&#x7EDF;&#x4E2D;&#x5BF9;&#x73A9;&#x5BB6;&#x7684;&#x4F53;&#x9A8C;&#x8BE5;&#x8BBE;&#x5B9A;&#x600E;&#x6837;&#x7684;&#x76EE;&#x6807;&#x3002;</p>
+<h3 id="types-of-players">Types of Players</h3>
+<p>&#x5982;&#x540C;&#x80FD;&#x533A;&#x5206;&#x73A9;&#x800D;&#x7684;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#xFF0C;&#x4E5F;&#x80FD;&#x4ECE;&#x4EBA;&#x7684;&#x89D2;&#x5EA6;&#x5BF9;&#x73A9;&#x5BB6;&#x7684;&#x7C7B;&#x578B;&#x8FDB;&#x884C;&#x533A;&#x5206;&#xFF1A;</p>
+<ol type="1">
+<li>The Competitor&#xFF1A; &#x7ADE;&#x4E89;&#x8005;&#x662F;&#x65E0;&#x8BBA;&#x6E38;&#x620F;&#x7C7B;&#x578B;&#x662F;&#x4EC0;&#x4E48;&#xFF0C;&#x4ED6;&#x4EEC;&#x7684;&#x76EE;&#x6807;&#x90FD;&#x662F;&#x505A;&#x6700;&#x51FA;&#x8272;&#x7684;&#x73A9;&#x5BB6;</li>
+<li>The Explorer: &#x63A2;&#x7D22;&#x8005;&#x662F;&#x5BF9;&#x6E38;&#x620F;&#x4E16;&#x754C;&#x611F;&#x5230;&#x597D;&#x5947;&#xFF0C;&#x559C;&#x6B22;&#x5192;&#x9669;&#xFF0C;&#x56DE;&#x53BB;&#x63A2;&#x7D22;&#x6E38;&#x620F;&#x4E16;&#x754C;&#x7684;&#x8FB9;&#x754C;&#xFF08;&#x65E0;&#x8BBA;&#x662F;&#x7CBE;&#x795E;&#x5C42;&#x9762;&#x8FD8;&#x662F;&#x7269;&#x7406;&#x5C42;&#x9762;&#x7684;&#x8FB9;&#x754C;&#xFF09;&#x3002;</li>
+<li>The Collector: &#x6536;&#x96C6;&#x8005;&#x4F1A;&#x559C;&#x6B22;&#x6536;&#x96C6;&#x6E38;&#x620F;&#x4E16;&#x754C;&#x5185;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x6216;&#x8005;&#x77E5;&#x8BC6;&#xFF0C;&#x5982;&#x8BBE;&#x5B9A;&#xFF0C;&#x5386;&#x53F2;&#x7B49;&#x3002;</li>
+<li>The Achiever: &#x6210;&#x5C31;&#x8005;&#x5173;&#x5FC3;&#x6E38;&#x620F;&#x4E2D;&#x7684;&#x6210;&#x5C31;&#x548C;&#x5929;&#x68AF;&#x7B49;&#x6210;&#x5C31;&#x7CFB;&#x7EDF;&#x3002;</li>
+<li>The Joker: &#x73A9;&#x7B11;&#x8005;&#x5BF9;&#x6E38;&#x620F;&#x4E0D;&#x4F1A;&#x592A;&#x4E25;&#x8083;&#xFF0C;&#x73A9;&#x6E38;&#x620F;&#x53EA;&#x662F;&#x4E3A;&#x4E86;&#x5355;&#x7EAF;&#x7684;&#x5FEB;&#x4E50;&#x3002;&#x786C;&#x6838;&#x73A9;&#x5BB6;&#x53EF;&#x80FD;&#x4F1A;&#x88AB;&#x73A9;&#x7B11;&#x8005;&#x60F9;&#x6012;&#xFF0C;&#x4F46;&#x662F;&#x73A9;&#x7B11;&#x8005;&#x53EF;&#x4EE5;&#x8BA9;&#x6E38;&#x620F;&#x66F4;&#x52A0;&#x7684;&#x6709;&#x793E;&#x4F1A;&#x6027;&#xFF0C;&#x4F1A;&#x63A8;&#x52A8;&#x6E38;&#x620F;&#x7684;&#x6D41;&#x884C;&#x3002;</li>
+<li>The Artist: &#x827A;&#x672F;&#x5BB6;&#x662F;&#x88AB;&#x6E38;&#x620F;&#x7684;&#x8BBE;&#x8BA1;&#x548C;&#x521B;&#x610F;&#x6240;&#x5438;&#x5F15;&#x3002;</li>
+<li>The Director: &#x5F15;&#x9886;&#x8005;&#x559C;&#x6B22;&#x5728;&#x6E38;&#x620F;&#x4E2D;&#x5E26;&#x9886;&#x6E38;&#x620F;&#x6545;&#x4E8B;&#x7684;&#x63A8;&#x52A8;&#xFF0C;&#x6216;&#x79F0;&#x4E3A;&#x522B;&#x7684;&#x73A9;&#x5BB6;&#x7684;&#x9886;&#x8896;&#x3002;</li>
+<li>The Storyteller: &#x6545;&#x4E8B;&#x8005;&#x4F1A;&#x88AB;&#x6E38;&#x620F;&#x7684;&#x6545;&#x4E8B;&#x6240;&#x5438;&#x5F15;&#x3002;</li>
+<li>The Performer: &#x8868;&#x73B0;&#x8005;&#x559C;&#x6B22;&#x5728;&#x522B;&#x4EBA;&#x73A9;&#x5BB6;&#x524D;&#x8868;&#x6F14;&#xFF0C;&#x4F8B;&#x5982;&#x5404;&#x79CD;&#x6E38;&#x620F;&#x4E3B;&#x64AD;&#x3002;</li>
+<li>The Craftsman: &#x5DE5;&#x5320;&#x559C;&#x6B22;&#x5728;&#x6E38;&#x620F;&#x4E2D;&#x5EFA;&#x9020;&#xFF0C;&#x5236;&#x4F5C;&#x4E1C;&#x897F;&#xFF0C;&#x6216;&#x8005;&#x89E3;&#x51B3;&#x6E38;&#x620F;&#x5185;&#x7684;&#x96BE;&#x9898;&#x3002;</li>
+</ol>
+<p>&#x5BF9;&#x4E8E;&#x6E38;&#x620F;&#x73A9;&#x5BB6;&#x7684;&#x5206;&#x7C7B;&#x53EF;&#x4EE5;&#x5E2E;&#x52A9;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x5E08;&#x4ECE;&#x4E0D;&#x540C;&#x7684;&#x89D2;&#x5EA6;&#x53BB;&#x601D;&#x8003;&#x8BE5;&#x5982;&#x4F55;&#x4ECE;&#x60C5;&#x611F;&#x4E0A;&#x5438;&#x5F15;&#x73A9;&#x5BB6;&#x3002;</p>
+<h3 id="levels-of-engagement">Levels of Engagement</h3>
+<p>&#x9664;&#x4E86;&#x4ECE;&#x73A9;&#x800D;&#x672C;&#x8EAB;&#x548C;&#x73A9;&#x5BB6;&#x89D2;&#x5EA6;&#x8003;&#x8651;&#xFF0C;&#x4E0D;&#x540C;&#x73A9;&#x5BB6;&#x5BF9;&#x4E8E;&#x6E38;&#x620F;&#x7684;&#x53C2;&#x4E0E;&#x5EA6;&#x4E5F;&#x662F;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x4E00;&#x4E9B;&#x73A9;&#x5BB6;&#x76F8;&#x6BD4;&#x4E8E;&#x81EA;&#x5DF1;&#x73A9;&#x6E38;&#x620F;&#xFF0C;&#x66F4;&#x559C;&#x6B22;&#x770B;&#x522B;&#x4EBA;&#x73A9;&#x6E38;&#x620F;&#x3002;&#x901A;&#x5E38;&#x6765;&#x8BF4;&#xFF0C;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x5E08;&#x5E76;&#x4E0D;&#x4F1A;&#x4ECE;&#x6E38;&#x620F;&#x7684;&#x89C2;&#x770B;&#x8005;&#x89D2;&#x5EA6;&#x51FA;&#x53D1;&#x53BB;&#x8BBE;&#x8BA1;&#x6E38;&#x620F;&#x3002;&#x4F46;&#x662F;&#x4E0D;&#x53EF;&#x5426;&#x8BA4;&#x7684;&#x662F;&#x6709;&#x975E;&#x5E38;&#x7684;&#x591A;&#x4EBA;&#x90FD;&#x559C;&#x6B22;&#x79F0;&#x4E3A;&#x6E38;&#x620F;&#x7684;&#x89C2;&#x4F17;&#xFF0C;&#x800C;&#x4E14;&#x8FD9;&#x4E2A;&#x5BF9;&#x4E8E;&#x6E38;&#x620F;&#x7684;&#x6D41;&#x884C;&#x4F1A;&#x4EA7;&#x751F;&#x5F88;&#x5927;&#x7684;&#x5F71;&#x54CD;&#xFF0C;&#x6240;&#x6709;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x8005;&#x6216;&#x8BB8;&#x4E5F;&#x5E94;&#x8BE5;&#x5C06;&#x89C2;&#x5BDF;&#x8005;&#x7EB3;&#x5165;&#x8003;&#x91CF;&#x7684;&#x8303;&#x56F4;&#x3002;</p>
+<p>&#x771F;&#x6B63;&#x7684;&#x6E38;&#x620F;&#x53C2;&#x4E0E;&#x8005;&#x65E0;&#x7591;&#x662F;&#x8BBE;&#x8BA1;&#x5E08;&#x4EEC;&#x6700;&#x5E94;&#x8BE5;&#x8003;&#x8651;&#x7684;&#x76EE;&#x6807;&#x3002;&#x67D0;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6E38;&#x620F;&#x53C2;&#x4E0E;&#x8005;&#x4F1A;&#x4F53;&#x9A8C;&#x8F6C;&#x578B;&#x6E38;&#x73A9;&#xFF08;Transformational play&#xFF09;&#xFF0C;&#x5373;&#x73A9;&#x6E38;&#x620F;&#x7684;&#x8FC7;&#x7A0B;&#x4E00;&#x5B9A;&#x7A0B;&#x5EA6;&#x4E0A;&#x5F71;&#x54CD;&#x4E86;&#x73A9;&#x5BB6;&#x7684;&#x4EBA;&#x751F;&#x3002;&#x4E00;&#x4E9B;&#x6E38;&#x620F;&#x7684;&#x8BBE;&#x8BA1;&#x5E08;&#x4E5F;&#x4F1A;&#x4ECE;&#x5E0C;&#x671B;&#x73A9;&#x5BB6;&#x4F53;&#x9A8C;&#x8F6C;&#x578B;&#x6E38;&#x73A9;&#x7684;&#x89D2;&#x5EA6;&#x53BB;&#x8BBE;&#x8BA1;&#x6E38;&#x620F;&#xFF0C;&#x8BA9;&#x6E38;&#x620F;&#x6709;&#x66F4;&#x6DF1;&#x5C42;&#x7684;&#x610F;&#x4E49;&#xFF0C;&#x5982;&#x901A;&#x8FC7;&#x8BA9;&#x73A9;&#x5BB6;&#x4F53;&#x9A8C;&#x5230;&#x73B0;&#x5B9E;&#x4E16;&#x754C;&#x4E2D;&#x6218;&#x4E89;&#x7684;&#x6B8B;&#x9177;&#x6765;&#x53CD;&#x6218;&#x7B49;&#x3002;</p>
+<h2 id="premise">Premise</h2>
+<p>&#x9664;&#x4E86;&#x6311;&#x6218;&#x548C;&#x73A9;&#x800D;&#xFF0C;&#x6E38;&#x620F;&#x4E5F;&#x6709;&#x4E00;&#x4E9B;&#x4F20;&#x7EDF;&#x620F;&#x5267;&#x4E2D;&#x5305;&#x542B;&#x7684;&#x5143;&#x7D20;&#x3002;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x8FD9;&#x4E9B;&#x620F;&#x5267;&#x5143;&#x7D20;&#xFF0C;&#x6E38;&#x620F;&#x5BF9;&#x73A9;&#x5BB6;&#x800C;&#x8A00;&#x4F1A;&#x53D8;&#x5F97;&#x8FC7;&#x4E8E;&#x62BD;&#x8C61;&#xFF0C;&#x8BA9;&#x73A9;&#x5BB6;&#x65E0;&#x6CD5;&#x4ECE;&#x60C5;&#x611F;&#x4E0A;&#x878D;&#x5165;&#x6E38;&#x620F;&#x3002;</p>
+<p>&#x5982;&#x7ADE;&#x8D5B;&#x6E38;&#x620F;&#xFF0C;&#x4ECE;&#x5E38;&#x89C4;&#x5143;&#x7D20;&#x89D2;&#x5EA6;&#x4E0A;&#x6765;&#x8BF4;&#x5C31;&#x662F;&#x6570;&#x503C;&#x7684;&#x6BD4;&#x8F83;&#xFF0C;&#x8C01;&#x6570;&#x503C;&#x66F4;&#x5927;&#x8C01;&#x5C31;&#x83B7;&#x80DC;&#x3002;&#x4E3A;&#x4E86;&#x8BA9;&#x73A9;&#x5BB6;&#x5728;&#x60C5;&#x611F;&#x4E0A;&#x80FD;&#x878D;&#x5165;&#x6E38;&#x620F;&#xFF0C;&#x901A;&#x5E38;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x60C5;&#x611F;&#x5143;&#x7D20;&#x6765;&#x5305;&#x88C5;&#x5E38;&#x89C4;&#x5143;&#x7D20;&#x3002;</p>
+<p>&#x5728;&#x4F20;&#x7EDF;&#x7684;&#x620F;&#x5267;&#x4E2D;&#xFF0C;&#x524D;&#x63D0;&#x662F;&#x7528;&#x6765;&#x89E3;&#x91CA;&#x4E00;&#x4E2A;&#x6545;&#x4E8B;&#x7684;&#xFF0C;&#x5305;&#x62EC;&#x6545;&#x4E8B;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x5730;&#x70B9;&#xFF0C;&#x4EBA;&#x7269;&#xFF0C;&#x5173;&#x7CFB;&#xFF0C;&#x73B0;&#x72B6;&#x7B49;&#xFF0C;&#x8FD8;&#x6709;&#x4E24;&#x4E2A;&#x683C;&#x5916;&#x91CD;&#x8981;&#x7684;&#x5143;&#x7D20;&#xFF0C;<code>&#x95EE;&#x9898;&#xFF08;Problem&#xFF09;</code>&#x548C;<code>&#x653B;&#x51FB;&#x70B9;&#xFF08;Point of attack&#xFF09;</code>&#x3002;&#x95EE;&#x9898;&#x662F;&#x8BA9;&#x73B0;&#x72B6;&#x4E0D;&#x518D;&#x7A33;&#x5B9A;&#x7684;&#x4E8B;&#x4EF6;&#xFF0C;&#x5E76;&#x4E14;&#x95EE;&#x9898;&#x521B;&#x9020;&#x4E86;&#x77DB;&#x76FE;&#x3002;&#x653B;&#x51FB;&#x70B9;&#x662F;&#x95EE;&#x9898;&#x88AB;&#x5F15;&#x51FA;&#x7684;&#x65F6;&#x523B;&#xFF0C;&#x4E5F;&#x662F;&#x4E00;&#x573A;&#x620F;&#x5267;&#x771F;&#x6B63;&#x5F00;&#x59CB;&#x7684;&#x65F6;&#x523B;&#x3002;</p>
+<p>&#x5728;&#x6E38;&#x620F;&#x4E2D;&#xFF0C;&#x95EE;&#x9898;&#x548C;&#x653B;&#x51FB;&#x70B9;&#x5BF9;&#x5E94;&#x5E38;&#x89C4;&#x5143;&#x7D20;&#x4E2D;&#x7684;&#x76EE;&#x6807;&#xFF08;objective&#xFF09;&#x548C;&#x6D41;&#x7A0B;&#x4E2D;&#x7684;&#x5F00;&#x59CB;&#x65F6;&#x523B;&#xFF08;starting action&#xFF09;&#x3002;</p>
+<p>&#x5728;&#x6E38;&#x620F;&#x4E2D;&#xFF0C;&#x524D;&#x63D0;&#x53EF;&#x4EE5;&#x662F;&#x50CF;&#x4F20;&#x7EDF;&#x620F;&#x5267;&#x4E2D;&#x90A3;&#x6837;&#x590D;&#x6742;&#xFF0C;&#x5982;&#x9B54;&#x517D;&#x4E16;&#x754C;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x975E;&#x5E38;&#x7B80;&#x5355;&#xFF0C;&#x53EA;&#x662F;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x6BD4;&#x55BB;&#x6765;&#x5305;&#x88C5;&#x62BD;&#x8C61;&#x7684;&#x5E38;&#x89C4;&#x7CFB;&#x7EDF;&#xFF0C;&#x4F8B;&#x5982;&#x96F7;&#x7535;&#xFF0C;&#x4EC5;&#x4EC5;&#x662F;&#x6218;&#x673A;&#x653B;&#x51FB;&#x5916;&#x661F;&#x98DE;&#x8239;&#x3002;</p>
+<p>&#x524D;&#x63D0;&#x7684;&#x9996;&#x8981;&#x4EFB;&#x52A1;&#x5C31;&#x662F;&#x8BA9;&#x6E38;&#x620F;&#x7684;&#x5E38;&#x89C4;&#x7CFB;&#x7EDF;&#x5BF9;&#x4E8E;&#x73A9;&#x5BB6;&#x800C;&#x8A00;&#x662F;&#x53EF;&#x73A9;&#x7684;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5B8C;&#x5168;&#x5BF9;&#x62BD;&#x8C61;&#x6982;&#x5FF5;&#x7684;&#x64CD;&#x4F5C;&#xFF08;&#x73A9;&#x5BB6;&#x4E0D;&#x662F;&#x53D1;&#x51FA;&#x4E00;&#x4E2A;&#x65E0;&#x610F;&#x4E49;&#x7684;&#x5C04;&#x7EBF;&#xFF0C;&#x800C;&#x662F;&#x5BF9;&#x5916;&#x661F;&#x98DE;&#x8239;&#x7684;&#x5F00;&#x706B;&#xFF09;&#x3002;</p>
+<p>&#x524D;&#x63D0;&#x66F4;&#x590D;&#x6742;&#x7684;&#x4EFB;&#x52A1;&#x5C31;&#x662F;&#x8BA9;&#x6E38;&#x620F;&#x80FD;&#x4ECE;&#x60C5;&#x611F;&#x4E0A;&#x5438;&#x5F15;&#x73A9;&#x5BB6;&#x3002;&#x901A;&#x8FC7;&#x7528;&#x524D;&#x63D0;&#x6765;&#x5C06;&#x6E38;&#x620F;&#x7684;&#x5E38;&#x89C4;&#x7CFB;&#x7EDF;&#x548C;&#x620F;&#x5267;&#x7CFB;&#x7EDF;&#x7ED3;&#x5408;&#x5728;&#x4E00;&#x8D77;&#xFF0C;&#x662F;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x5E08;&#x63D0;&#x5347;&#x73A9;&#x5BB6;&#x4F53;&#x9A8C;&#x7684;&#x4E00;&#x4E2A;&#x673A;&#x4F1A;&#x3002;</p>
+<h2 id="character">Character</h2>
+<p>&#x89D2;&#x8272;&#x662F;&#x620F;&#x5267;&#x4E2D;&#x91C7;&#x53D6;&#x884C;&#x52A8;&#x7684;&#x4EBA;&#x3002;&#x901A;&#x8FC7;&#x5B9A;&#x4E49;&#x89D2;&#x8272;&#x548C;&#x4ED6;&#x7684;&#x76EE;&#x6807;&#xFF0C;&#x89C2;&#x4F17;&#x53EF;&#x4EE5;&#x5185;&#x5316;&#x6545;&#x4E8B;&#x7684;&#x4E8B;&#x4EF6;&#xFF0C;&#x5BF9;&#x6545;&#x4E8B;&#x7684;&#x53D1;&#x5C55;&#x611F;&#x540C;&#x8EAB;&#x53D7;&#x3002;</p>
+<p>&#x89D2;&#x8272;&#x53EF;&#x4EE5;&#x4ECE;&#x5F88;&#x591A;&#x89D2;&#x5EA6;&#x53BB;&#x89E3;&#x91CA;&#x3002;&#x6700;&#x5E38;&#x89C1;&#x7684;&#x662F;&#x89D2;&#x8272;&#x662F;&#x5FC3;&#x7406;&#x7684;&#x8868;&#x73B0;&#xFF0C;&#x5982;&#x4E3A;&#x4E86;&#x4F53;&#x73B0;&#x89C2;&#x4F17;&#x7684;&#x6050;&#x60E7;&#x6216;&#x6E34;&#x671B;&#x3002;&#x66F4;&#x6DF1;&#x4E00;&#x5C42;&#xFF0C;&#x89D2;&#x8272;&#x53EF;&#x4EE5;&#x662F;&#x6709;&#x8C61;&#x5F81;&#x610F;&#x4E49;&#x7684;&#xFF0C;&#x4EE3;&#x8868;&#x4E00;&#x4E2A;&#x8FDC;&#x5927;&#x7684;&#x60F3;&#x6CD5;&#xFF0C;&#x4F8B;&#x5982;&#x7F8E;&#x56FD;&#x68A6;&#xFF0C;&#x6C11;&#x4E3B;&#x7B49;&#x3002;&#x89D2;&#x8272;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x6709;&#x5386;&#x53F2;&#x542B;&#x4E49;&#x7684;&#xFF0C;&#x6216;&#x8005;&#x63CF;&#x8FF0;&#x771F;&#x5B9E;&#x4E16;&#x754C;&#x7684;&#x73B0;&#x8C61;&#x3002;&#x4E00;&#x4E2A;&#x89D2;&#x8272;&#x8BE5;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x662F;&#x7531;&#x6545;&#x4E8B;&#x672C;&#x8EAB;&#x51B3;&#x5B9A;&#x7684;&#xFF0C;&#x4F8B;&#x5982;&#x6CA1;&#x5FC5;&#x8981;&#x5728;&#x4E00;&#x4E2A;&#x4F4E;&#x4FD7;&#x620F;&#x5267;&#x4E2D;&#xFF0C;&#x8BA9;&#x4E00;&#x4E2A;&#x89D2;&#x8272;&#x4EE3;&#x8868;&#x4E25;&#x8083;&#x6DF1;&#x523B;&#x7684;&#x542B;&#x4E49;&#x3002;</p>
+<p>&#x89D2;&#x8272;&#x662F;&#x7531;&#x4ED6;&#x6240;&#x8BF4;&#x7684;&#x8BDD;&#xFF0C;&#x4ED6;&#x505A;&#x7684;&#x4E8B;&#xFF0C;&#x4ED6;&#x7684;&#x5916;&#x8C8C;&#x548C;&#x522B;&#x4EBA;&#x773C;&#x4E2D;&#x7684;&#x4ED6;&#x6765;&#x51B3;&#x5B9A;&#x7684;&#x3002;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x89D2;&#x8272;&#x6709;&#x660E;&#x663E;&#x7684;&#x7279;&#x5F81;&#xFF0C;&#x6709;&#x771F;&#x5B9E;&#x7684;&#x4EBA;&#x683C;&#xFF0C;&#x800C;&#x4E14;&#x5728;&#x6545;&#x4E8B;&#x7684;&#x53D1;&#x5C55;&#x4E2D;&#x4EBA;&#x683C;&#x4F1A;&#x53D1;&#x751F;&#x53D8;&#x6362;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x5C31;&#x662F;&#x4E2A;&#x4E30;&#x6EE1;&#x7684;&#x4EBA;&#x7269;&#xFF08;round character&#xFF09;&#x3002;&#x76F8;&#x53CD;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x4EBA;&#x53EA;&#x6709;&#x5F88;&#x5C11;&#x7684;&#x7279;&#x5F81;&#x548C;&#x4EBA;&#x683C;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4F1A;&#x8BA4;&#x4E3A;&#x8FD9;&#x4E2A;&#x4EBA;&#x7269;&#x662F;&#x6241;&#x5E73;&#x7684;&#xFF08;Flat&#xFF09;&#x3002;&#x4E00;&#x4E2A;&#x6241;&#x5E73;&#x5316;&#x7684;&#x4EBA;&#x7269;&#x901A;&#x5E38;&#x4E0D;&#x4F1A;&#x5728;&#x6545;&#x4E8B;&#x4E2D;&#x6709;&#x4EBA;&#x683C;&#x4E0A;&#x7684;&#x53D8;&#x5316;&#xFF0C;&#x4ED6;&#x4EEC;&#x53EA;&#x662F;&#x7528;&#x6765;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x8C61;&#x5F81;&#x542B;&#x4E49;&#xFF0C;&#x5982;&#x61D2;&#x60F0;&#x7684;&#x4EBA;&#xFF0C;&#x90AA;&#x6076;&#x7684;&#x4EBA;&#x3002;</p>
+<p>&#x65E0;&#x8BBA;&#x4E00;&#x4E2A;&#x89D2;&#x8272;&#x590D;&#x6742;&#x4E0E;&#x5426;&#xFF0C;&#x5728;&#x8BBE;&#x8BA1;&#x4E00;&#x4E2A;&#x89D2;&#x8272;&#x65F6;&#x90FD;&#x9700;&#x8981;&#x8003;&#x8651;&#x4EE5;&#x4E0B;&#x51E0;&#x4E2A;&#x95EE;&#x9898;&#xFF1A;</p>
+<ol type="1">
+<li>&#x89D2;&#x8272;&#x60F3;&#x8981;&#x4EC0;&#x4E48;&#xFF1F;</li>
+<li>&#x89D2;&#x8272;&#x9700;&#x8981;&#x4EC0;&#x4E48;&#xFF1F;</li>
+<li>&#x89C2;&#x4F17;&#x5E0C;&#x671B;&#x770B;&#x5230;&#x4EC0;&#x4E48;?</li>
+<li>&#x89C2;&#x4F17;&#x5BB3;&#x6015;&#x770B;&#x5230;&#x4EC0;&#x4E48;&#xFF1F;</li>
+</ol>
+<p>&#x5728;&#x6E38;&#x620F;&#x4E2D;&#x7279;&#x6B8A;&#x7684;&#x4E00;&#x70B9;&#x662F;&#xFF0C;&#x6E38;&#x620F;&#x89D2;&#x8272;&#x7684;&#x8BBE;&#x8BA1;&#x8981;&#x8003;&#x8651;&#x5728;&#x4EE3;&#x7406;&#xFF08;Agency&#xFF09;&#x548C;&#x540C;&#x60C5;&#xFF08;Empathy&#xFF09;&#x95F4;&#x7684;&#x5E73;&#x8861;&#x3002;&#x4EE3;&#x7406;&#x6307;&#x7684;&#x662F;&#x6E38;&#x620F;&#x89D2;&#x8272;&#x5B8C;&#x5168;&#x662F;&#x73A9;&#x5BB6;&#x7684;&#x4F53;&#x73B0;&#xFF0C;&#x6E38;&#x620F;&#x89D2;&#x8272;&#x53EA;&#x662F;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x547D;&#x4EE4;&#x7684;&#x6267;&#x884C;&#x8005;&#x3002;&#x800C;&#x540C;&#x60C5;&#x6307;&#x7684;&#x662F;&#x73A9;&#x5BB6;&#x5C06;&#x81EA;&#x5DF1;&#x7684;&#x60C5;&#x611F;&#x6295;&#x5C04;&#x5165;&#x89D2;&#x8272;&#x4E2D;&#xFF0C;&#x8BA9;&#x89D2;&#x8272;&#x7684;&#x76EE;&#x6807;&#x6210;&#x4E3A;&#x4E86;&#x81EA;&#x5DF1;&#x7684;&#x76EE;&#x6807;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x65E9;&#x671F;&#x7684;&#x6E38;&#x620F;&#x89D2;&#x8272;&#x800C;&#x8A00;&#xFF0C;&#x4ED6;&#x4EEC;&#x90FD;&#x662F;&#x6241;&#x5E73;&#x7684;&#xFF0C;&#x4E3B;&#x8981;&#x533A;&#x522B;&#x5728;&#x4E8E;&#x89D2;&#x8272;&#x7684;&#x5916;&#x89C2;&#x3002;&#x4ED6;&#x4EEC;&#x7684;&#x5B58;&#x5728;&#x540C;&#x6837;&#x662F;&#x4E3A;&#x4E86;&#x5305;&#x88C5;&#x5E38;&#x89C4;&#x7CFB;&#x7EDF;&#xFF0C;&#x8BA9;&#x4E00;&#x4E2A;&#x620F;&#x5267;&#x5316;&#x7684;&#x76EE;&#x6807;&#x4EE3;&#x66FF;&#x6E38;&#x620F;&#x7684;&#x5E38;&#x89C4;&#x5143;&#x7D20;&#xFF0C;&#x5982;&#x5728;&#x9A6C;&#x91CC;&#x5965;&#x4E2D;&#xFF0C;&#x7528;&#x62EF;&#x6551;&#x516C;&#x4E3B;&#x8FD9;&#x4E2A;&#x5177;&#x4F53;&#x7684;&#x76EE;&#x6807;&#x4EE3;&#x66FF;&#x62BD;&#x8C61;&#x7684;&#x201C;&#x8425;&#x6551;&#x76EE;&#x6807;&#x201D;&#x8FD9;&#x4E00;&#x5E38;&#x89C4;&#x6E38;&#x620F;&#x76EE;&#x6807;&#x3002;&#x4F46;&#x662F;&#x8FD9;&#x4E9B;&#x89D2;&#x8272;&#x5B8C;&#x5168;&#x662F;&#x53D7;&#x73A9;&#x5BB6;&#x63A7;&#x5236;&#x7684;&#xFF0C;&#x4ED6;&#x4EEC;&#x4E0D;&#x4F1A;&#x6709;&#x4EBA;&#x683C;&#x4E0A;&#x7684;&#x53D8;&#x5316;&#x3002;</p>
+<p>&#x800C;&#x73B0;&#x5728;&#x8BB8;&#x591A;&#x7684;&#x6E38;&#x620F;&#x89D2;&#x8272;&#x6709;&#x4E86;&#x66F4;&#x6DF1;&#x7684;&#x80CC;&#x666F;&#x6545;&#x4E8B;&#x548C;&#x66F4;&#x4E30;&#x5BCC;&#x7684;&#x4EBA;&#x683C;&#x7279;&#x5F81;&#xFF0C;&#x8FD9;&#x4E9B;&#x90FD;&#x4F1A;&#x5F71;&#x54CD;&#x73A9;&#x5BB6;&#x7684;&#x6E38;&#x620F;&#x4F53;&#x9A8C;&#x3002;&#x5982;&#x6218;&#x80DC;&#x4E2D;&#x7684;&#x594E;&#x6258;&#x65AF;&#xFF0C;&#x5728;&#x6E38;&#x620F;&#x8FDB;&#x5EA6;&#x63A8;&#x8FDB;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x89D2;&#x8272;&#x7684;&#x60C5;&#x611F;&#x53D1;&#x751F;&#x4E86;&#x53D8;&#x5316;&#xFF0C;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x4EBA;&#x683C;&#x53D8;&#x5316;&#x548C;&#x53D1;&#x5C55;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5355;&#x7EAF;&#x7684;&#x4F5C;&#x4E3A;&#x73A9;&#x5BB6;&#x63A7;&#x5236;&#x7684;&#x4F53;&#x73B0;&#x3002;</p>
+<p>&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x89D2;&#x8272;&#x662F;&#x5316;&#x8EAB;&#xFF08;Avatar&#xFF09;&#xFF0C;&#x5982;&#x9B54;&#x517D;&#x4E16;&#x754C;&#x4E2D;&#x73A9;&#x5BB6;&#x521B;&#x5EFA;&#x7684;&#x89D2;&#x8272;&#x3002;&#x73A9;&#x5BB6;&#x5BF9;&#x4E8E;&#x8FD9;&#x79CD;&#x89D2;&#x8272;&#x4E5F;&#x540C;&#x6837;&#x6709;&#x975E;&#x5E38;&#x6DF1;&#x5F97;&#x5171;&#x9E23;&#x3002;</p>
+<p>&#x5728;&#x6E38;&#x620F;&#x4E2D;&#x8FD8;&#x9700;&#x8981;&#x8BBE;&#x8BA1;&#x5E08;&#x8003;&#x8651;&#x7684;&#x4E00;&#x70B9;&#x662F;&#xFF0C;&#x81EA;&#x7531;&#x610F;&#x5FD7;&#x548C;&#x73A9;&#x5BB6;&#x63A7;&#x5236;&#x4E4B;&#x95F4;&#x7684;&#x5E73;&#x8861;&#xFF08;Free will vs. Player control&#xFF09;&#x3002;</p>
+<p>&#x6E38;&#x620F;&#x89D2;&#x8272;&#x662F;&#x4EE3;&#x7406;&#x73A9;&#x5BB6;&#x7684;&#x4F53;&#x73B0;&#xFF0C;&#x8FD9;&#x9650;&#x5B9A;&#x4E86;&#x6E38;&#x620F;&#x89D2;&#x8272;&#x5C55;&#x793A;&#x81EA;&#x5DF1;&#x7684;&#x4E2A;&#x6027;&#x548C;&#x601D;&#x8003;&#x3002;&#x4F46;&#x662F;&#x5728;&#x6E38;&#x620F;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5E76;&#x975E;&#x6BCF;&#x5206;&#x6BCF;&#x79D2;&#x73A9;&#x5BB6;&#x90FD;&#x5BF9;&#x89D2;&#x8272;&#x6709;&#x7740;&#x63A7;&#x5236;&#x3002;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;AI&#x63A7;&#x5236;&#x7684;&#x89D2;&#x8272;&#x5728;&#x73A9;&#x5BB6;&#x7684;&#x610F;&#x5FD7;&#x548C;&#x6E38;&#x620F;&#x89D2;&#x8272;&#x81EA;&#x5DF1;&#x7684;&#x610F;&#x5FD7;&#x4E2D;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;&#x7070;&#x8272;&#x5730;&#x5E26;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x5728;&#x65E9;&#x671F;&#x6E38;&#x620F;&#x4E2D;&#xFF0C;&#x4E16;&#x5609;&#x7684;&#x6E38;&#x620F;&#x89D2;&#x8272;&#x7D22;&#x5C3C;&#x514B;&#xFF0C;&#x5728;&#x73A9;&#x5BB6;&#x4E0D;&#x63A7;&#x5236;&#x4ED6;&#x65F6;&#xFF0C;&#x4ED6;&#x4F1A;&#x4E0D;&#x8010;&#x5FC3;&#x7684;&#x7528;&#x811A;&#x70B9;&#x5730;&#x3002;&#x8FD9;&#x79CD;&#x81EA;&#x7531;&#x884C;&#x4E3A;&#x4E0E;&#x7D22;&#x5C3C;&#x514B;&#x6293;&#x7D27;&#x6BCF;&#x5206;&#x6BCF;&#x79D2;&#xFF0C;&#x9AD8;&#x901F;&#x79FB;&#x52A8;&#x7684;&#x89D2;&#x8272;&#x7684;&#x8BBE;&#x5B9A;&#x662F;&#x7B26;&#x5408;&#x7684;&#x3002;</p>
+<p>&#x540C;&#x65F6;AI&#x7684;&#x63A7;&#x5236;&#x4E5F;&#x80FD;&#x8FD0;&#x7528;&#x5230;&#x975E;&#x73A9;&#x5BB6;&#x63A7;&#x5236;&#x7684;&#x89D2;&#x8272;&#x4E2D;&#xFF0C;&#x5982;NPC&#x548C;&#x654C;&#x4EBA;&#xFF0C;&#x8FD9;&#x4E9B;&#x90FD;&#x53EF;&#x4EE5;&#x8BA9;&#x6E38;&#x620F;&#x53D8;&#x5F97;&#x66F4;&#x52A0;&#x7684;&#x6709;&#x8DA3;&#x548C;&#x53EF;&#x4FE1;&#x3002;</p>
+<p>&#x73B0;&#x5728;&#x7684;&#x53D1;&#x5C55;&#x8D8B;&#x52BF;&#x662F;&#x6E38;&#x620F;&#x89D2;&#x8272;&#x53D8;&#x5F97;&#x8D8A;&#x6765;&#x8D8A;&#x4E30;&#x6EE1;&#xFF0C;&#x5982;&#x4F55;&#x5408;&#x7406;&#x6709;&#x6548;&#x7684;&#x8FD0;&#x7528;&#x4F20;&#x7EDF;&#x620F;&#x5267;&#x5143;&#x7D20;&#x548C;AI&#x8BA9;&#x6E38;&#x620F;&#x89D2;&#x8272;&#x53D8;&#x5F97;&#x66F4;&#x52A0;&#x771F;&#x5B9E;&#xFF0C;&#x662F;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x5E08;&#x9700;&#x8981;&#x8003;&#x8651;&#x7684;&#x5DE5;&#x4F5C;&#x3002;</p>
+<h2 id="story">Story</h2>
+<p>&#x5982;&#x5728;&#x7B2C;&#x4E09;&#x7AE0;&#x4E2D;&#x6240;&#x8FF0;&#xFF0C;&#x6E38;&#x620F;&#x7684;&#x7ED3;&#x679C;&#x5FC5;&#x987B;&#x662F;&#x4E0D;&#x786E;&#x5B9A;&#x7684;&#x3002;&#x4E00;&#x4E2A;&#x6545;&#x4E8B;&#x7684;&#x7ED3;&#x5C40;&#x540C;&#x6837;&#x662F;&#x4E0D;&#x786E;&#x5B9A;&#x7684;&#xFF0C;&#x6700;&#x8D77;&#x7801;&#x5728;&#x7B2C;&#x4E00;&#x904D;&#x9605;&#x8BFB;&#x65F6;&#x65F6;&#x8FD9;&#x6837;&#x7684;&#x3002;&#x5728;&#x7535;&#x5F71;&#x548C;&#x620F;&#x5267;&#x4E2D;&#xFF0C;&#x6545;&#x4E8B;&#x7684;&#x4E0D;&#x786E;&#x5B9A;&#x6027;&#x662F;&#x7531;&#x4F5C;&#x8005;&#x6216;&#x8005;&#x6F14;&#x5458;&#x6765;&#x9010;&#x6E10;&#x6D88;&#x9664;&#x7684;&#xFF0C;&#x5728;&#x6E38;&#x620F;&#x4E2D;&#x5219;&#x9700;&#x8981;&#x901A;&#x8FC7;&#x73A9;&#x5BB6;&#x9010;&#x6E10;&#x6D88;&#x9664;&#x3002;</p>
+<p>&#x5728;&#x8BB8;&#x591A;&#x6E38;&#x620F;&#x4E2D;&#xFF0C;&#x6545;&#x4E8B;&#x662F;&#x7531;&#x80CC;&#x666F;&#x6545;&#x4E8B;&#x9650;&#x5236;&#x7684;&#x3002;&#x80CC;&#x666F;&#x6545;&#x4E8B;&#x7ED9;&#x4E86;&#x6E38;&#x620F;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#x4E86;&#x51B2;&#x7A81;&#xFF0C;&#x5B83;&#x521B;&#x9020;&#x4E86;&#x6E38;&#x620F;&#x89D2;&#x8272;&#x7684;&#x52A8;&#x673A;&#x3002;&#x4F46;&#x662F;&#x6545;&#x4E8B;&#x7684;&#x63A8;&#x8FDB;&#x5E76;&#x4E0D;&#x662F;&#x7531;&#x73A9;&#x5BB6;&#x6765;&#x51B3;&#x5B9A;&#x7684;&#xFF0C;&#x73A9;&#x5BB6;&#x7684;&#x884C;&#x4E3A;&#x53EA;&#x662F;&#x89E6;&#x53D1;&#x8981;&#x8FDB;&#x5165;&#x6545;&#x4E8B;&#x4E0B;&#x4E00;&#x4E2A;&#x7247;&#x6BB5;&#x7684;&#x56E0;&#x7D20;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x6545;&#x4E8B;&#x7684;&#x8D70;&#x5411;&#x5DF2;&#x7ECF;&#x662F;&#x786E;&#x5B9A;&#x4E86;&#x7684;&#x3002;</p>
+<p>&#x4F46;&#x4E5F;&#x6709;&#x4E00;&#x4E9B;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x5E08;&#x5E0C;&#x671B;&#x73A9;&#x5BB6;&#x7684;&#x884C;&#x4E3A;&#x80FD;&#x6539;&#x53D8;&#x6545;&#x4E8B;&#x7684;&#x8D70;&#x5411;&#x3002;&#x6700;&#x7B80;&#x5355;&#x7684;&#x5B9E;&#x73B0;&#x5C31;&#x662F;&#x6545;&#x4E8B;&#x6811;&#xFF0C;&#x73A9;&#x5BB6;&#x7684;&#x9009;&#x62E9;&#x5C31;&#x8BA9;&#x6545;&#x4E8B;&#x7684;&#x8D70;&#x5411;&#x8D70;&#x8FDB;&#x9884;&#x5148;&#x8BBE;&#x5B9A;&#x7684;&#x67D0;&#x4E00;&#x79CD;&#x53EF;&#x80FD;&#x4E2D;&#x3002;&#x6545;&#x4E8B;&#x6811;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/GameDesignWorkshop-Chapter4-Notes/image-20200312112050925.png" alt="&#x6545;&#x4E8B;&#x6811;" style="zoom:50%;"></p>
+<p>&#x4F46;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x4E0B;&#xFF0C;&#x6545;&#x4E8B;&#x4ECD;&#x7136;&#x662F;&#x88AB;&#x9884;&#x5148;&#x51B3;&#x5B9A;&#x7684;&#xFF0C;&#x540C;&#x6837;&#x5B83;&#x4E5F;&#x9650;&#x5B9A;&#x4E86;&#x73A9;&#x5BB6;&#x53EF;&#x505A;&#x7684;&#x9009;&#x62E9;&#x3002;&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x5B9E;&#x73B0;&#x5C31;&#x662F;&#x50CF;&#x6A21;&#x62DF;&#x4EBA;&#x751F;&#x4E00;&#x6837;&#xFF0C;&#x73A9;&#x5BB6;&#x53EF;&#x4EE5;&#x7528;&#x5E38;&#x89C4;&#x7CFB;&#x7EDF;&#x63D0;&#x4F9B;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x6765;&#x81EA;&#x5DF1;&#x521B;&#x9020;&#x51FA;&#x65E0;&#x9650;&#x53EF;&#x80FD;&#x7684;&#x6545;&#x4E8B;&#x3002;</p>
+<p>&#x6545;&#x4E8B;&#x5728;&#x6E38;&#x620F;&#x4E2D;&#xFF0C;&#x6700;&#x5E38;&#x89C1;&#x7684;&#x7528;&#x6CD5;&#x5C31;&#x662F;&#x7528;&#x6765;&#x5728;&#x5355;&#x673A;&#x6E38;&#x620F;&#x4E2D;&#x63A8;&#x52A8;&#x73A9;&#x5BB6;&#x7684;&#x5192;&#x9669;&#xFF0C;&#x5982;<em>&#x6700;&#x540E;&#x7684;&#x751F;&#x8FD8;&#x8005;</em>&#x548C;<em>&#x884C;&#x5C38;&#x8D70;&#x8089;</em>&#x3002;&#x4E24;&#x8005;&#x90FD;&#x662F;&#x7528;&#x6545;&#x4E8B;&#x6765;&#x63A8;&#x52A8;&#x73A9;&#x5BB6;&#x7684;&#x6E38;&#x620F;&#xFF0C;&#x6545;&#x4E8B;&#x4E2D;&#x7684;&#x4EBA;&#x7269;&#x4E5F;&#x540C;&#x6837;&#x90FD;&#x662F;&#x9971;&#x6EE1;&#x7684;&#xFF0C;&#x4F1A;&#x968F;&#x7740;&#x6545;&#x4E8B;&#x7684;&#x53D1;&#x5C55;&#x548C;&#x53D1;&#x751F;&#x60C5;&#x611F;&#x7684;&#x53D8;&#x5316;&#xFF0C;&#x540C;&#x6837;&#x80FD;&#x5728;&#x60C5;&#x611F;&#x4E0A;&#x5438;&#x5F15;&#x73A9;&#x5BB6;&#x3002;&#x4F46;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x6700;&#x540E;&#x7684;&#x751F;&#x8FD8;&#x8005;&#x4E2D;&#x6545;&#x4E8B;&#x7684;&#x53D1;&#x5C55;&#x662F;&#x5B8C;&#x5168;&#x9650;&#x5B9A;&#x4E86;&#x7684;&#xFF0C;&#x800C;&#x884C;&#x5C38;&#x8D70;&#x8089;&#x4E2D;&#x73A9;&#x5BB6;&#x7684;&#x5BF9;&#x8BDD;&#x548C;&#x884C;&#x4E3A;&#x4F1A;&#x6539;&#x53D8;&#x6545;&#x4E8B;&#x7684;&#x7ED3;&#x5C40;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x5E08;&#xFF0C;&#x8981;&#x8003;&#x8651;&#x7684;&#x5C31;&#x662F;&#x5728;&#x4E0D;&#x727A;&#x7272;&#x73A9;&#x5BB6;&#x4F53;&#x9A8C;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8BA9;&#x6E38;&#x620F;&#x4E2D;&#x7684;&#x6545;&#x4E8B;&#x66F4;&#x597D;&#x7684;&#x4E0E;&#x6E38;&#x620F;&#x7ED3;&#x5408;&#xFF0C;&#x8BA9;&#x6545;&#x4E8B;&#x66F4;&#x6709;&#x6DF1;&#x5EA6;&#x3002;</p>
+<h2 id="world-building">World Building</h2>
+<p>&#x4E16;&#x754C;&#x6784;&#x5EFA;&#xFF08;World building&#xFF09;&#x662F;&#x4E00;&#x4E2A;&#x590D;&#x6742;&#x4E14;&#x6DF1;&#x5165;&#x7684;&#x865A;&#x62DF;&#x4E16;&#x754C;&#x521B;&#x9020;&#x8FC7;&#x7A0B;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x7531;&#x521B;&#x5EFA;&#x5730;&#x56FE;&#x548C;&#x5386;&#x53F2;&#x5F00;&#x59CB;&#xFF0C;&#x4F46;&#x4E5F;&#x53EF;&#x4EE5;&#x53D8;&#x5F97;&#x66F4;&#x52A0;&#x590D;&#x6742;&#xFF0C;&#x5982;&#x5305;&#x542B;&#x8BED;&#x8A00;&#xFF0C;&#x6587;&#x5316;&#xFF0C;&#x5B97;&#x6559;&#xFF0C;&#x653F;&#x6CBB;&#xFF0C;&#x7ECF;&#x6D4E;&#x7B49;&#x3002;</p>
+<p>&#x76EE;&#x524D;&#x6700;&#x6210;&#x529F;&#x7684;&#x4E16;&#x754C;&#x6784;&#x5EFA;&#x53EF;&#x80FD;&#x662F;J.R.R Tolkien&#x521B;&#x9020;&#x7684;&#x4E2D;&#x4E16;&#x7EAA;&#x8FD9;&#x4E00;&#x6982;&#x5FF5;&#x3002;&#x9B54;&#x517D;&#x4E16;&#x754C;&#x4E00;&#x5B9A;&#x7A0B;&#x5EA6;&#x4E0A;&#x5C31;&#x662F;&#x57FA;&#x4E8E;&#x8FD9;&#x4E2A;&#x6982;&#x5FF5;&#x521B;&#x5EFA;&#x7684;&#x3002;</p>
+<p>&#x5A92;&#x4F53;&#x7406;&#x8BBA;&#x5B66;&#x5BB6;Henry Jenkins&#x63D0;&#x5230;&#xFF0C;&#x201C;&#x9650;&#x5236;&#x8D8A;&#x6765;&#x8D8A;&#x591A;&#x7684;&#x6545;&#x4E8B;&#x53D8;&#x6210;&#x4E16;&#x754C;&#x6784;&#x5EFA;&#xFF0C;&#x827A;&#x672F;&#x5BB6;&#x4EEC;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;&#x590D;&#x6742;&#x7684;&#x4E16;&#x754C;&#xFF0C;&#x590D;&#x6742;&#x5230;&#x65E0;&#x6CD5;&#x7528;&#x5355;&#x4E00;&#x7684;&#x5A92;&#x4F53;&#x6765;&#x5B8C;&#x5168;&#x7684;&#x5C55;&#x73B0;&#x51FA;&#x6765;&#x3002;&#x201D;</p>
+<p>&#x800C;&#x5BF9;&#x4E8E;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x6765;&#x8BF4;&#xFF0C;&#x6700;&#x91CD;&#x8981;&#x7684;&#x662F;&#x8BA9;&#x6E38;&#x620F;&#x7684;&#x89C4;&#x5219;&#x4E0E;&#x865A;&#x62DF;&#x4E16;&#x754C;&#x7684;&#x89C4;&#x5219;&#x662F;&#x5339;&#x914D;&#x7684;&#xFF0C;&#x65E0;&#x8BBA;&#x662F;&#x4ECE;&#x4EA4;&#x4E92;&#x5C42;&#x9762;&#x8FD8;&#x662F;&#x4ECE;&#x6545;&#x4E8B;&#x5C42;&#x9762;&#x3002;</p>
+<h2 id="the-dramatic-arc">The Dramatic Arc</h2>
+<p>&#x5BF9;&#x4E8E;&#x6240;&#x6709;&#x7684;&#x620F;&#x5267;&#x5143;&#x7D20;&#x4E2D;&#xFF0C;&#x6700;&#x91CD;&#x8981;&#x7684;&#x5C31;&#x662F;&#x51B2;&#x7A81;&#xFF0C;&#x8FD9;&#x4E00;&#x6982;&#x5FF5;&#x5728;&#x5E38;&#x89C4;&#x5143;&#x7D20;&#x4E2D;&#x540C;&#x6837;&#x6709;&#x51FA;&#x73B0;&#x3002;</p>
+<p>&#x51B2;&#x7A81;&#x662F;&#x4E00;&#x4E2A;&#x4F18;&#x79C0;&#x7684;&#x5267;&#x60C5;&#x7684;&#x6838;&#x5FC3;&#xFF0C;&#x540C;&#x6837;&#x4E5F;&#x662F;&#x4E00;&#x4E2A;&#x6E38;&#x620F;&#x7CFB;&#x7EDF;&#x7684;&#x6838;&#x5FC3;&#x3002;</p>
+<p>&#x4E00;&#x4E2A;&#x6709;&#x610F;&#x4E49;&#x7684;&#x51B2;&#x7A81;&#x4E0D;&#x4EC5;&#x4EC5;&#x662F;&#x9632;&#x6B62;&#x73A9;&#x5BB6;&#x592A;&#x5BB9;&#x6613;&#x7684;&#x8FBE;&#x6210;&#x76EE;&#x6807;&#xFF0C;&#x8FD8;&#x8981;&#x8BA9;&#x73A9;&#x5BB6;&#x5BF9;&#x6E38;&#x620F;&#x7684;&#x7ED3;&#x679C;&#x4EA7;&#x751F;&#x7D27;&#x5F20;&#x611F;&#xFF0C;&#x8BA9;&#x73A9;&#x5BB6;&#x80FD;&#x88AB;&#x6E38;&#x620F;&#x6240;&#x5438;&#x5F15;&#x3002;</p>
+<p>&#x5F53;&#x4ECE;&#x53D8;&#x6362;&#x7684;&#x89D2;&#x5EA6;&#x6765;&#x601D;&#x8003;&#x51B2;&#x7A81;&#x65F6;&#xFF0C;&#x51B2;&#x7A81;&#x901A;&#x5E38;&#x662F;&#x901A;&#x8FC7;&#x9010;&#x6E10;&#x6269;&#x5927;&#x6765;&#x521B;&#x9020;&#x7D27;&#x5F20;&#x611F;&#x3002;&#x5728;&#x5927;&#x90E8;&#x5206;&#x7684;&#x620F;&#x5267;&#x4E2D;&#xFF0C;&#x7D27;&#x5F20;&#x611F;&#x4F1A;&#x5148;&#x9010;&#x6E10;&#x52A0;&#x5267;&#x7136;&#x540E;&#x9010;&#x6E10;&#x653E;&#x7F13;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x7ECF;&#x5178;&#x7684;&#x620F;&#x5267;&#x6027;&#x5F27;&#x7EBF;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/GameDesignWorkshop-Chapter4-Notes/image-20200312115742695.png" alt="&#x620F;&#x5267;&#x6027;&#x5F27;&#x7EBF;" style="zoom:50%;"></p>
+<p>&#x5982;&#x4E4B;&#x524D;&#x7AE0;&#x8282;&#x4E2D;&#x6240;&#x8FF0;&#xFF0C;&#x5728;&#x89E3;&#x91CA;&#xFF08;Exposition&#xFF09;&#x90E8;&#x5206;&#x4F1A;&#x4ECB;&#x7ECD;&#x6545;&#x4E8B;&#x7684;&#x89D2;&#x8272;&#xFF0C;&#x80CC;&#x666F;&#x4EE5;&#x53CA;&#x51B2;&#x7A81;&#x7B49;&#x5404;&#x79CD;&#x91CD;&#x8981;&#x6982;&#x5FF5;&#x3002;&#x800C;&#x4E3B;&#x89D2;&#x5C1D;&#x8BD5;&#x53BB;&#x89E3;&#x51B3;&#x51B2;&#x7A81;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x6784;&#x6210;&#x4E86;&#x6545;&#x4E8B;&#x94FA;&#x9648;&#xFF08;Rising Action&#xFF09;&#x3002;&#x5728;&#x94FA;&#x9648;&#x7684;&#x91CD;&#x70B9;&#x662F;&#x6545;&#x4E8B;&#x7684;&#x9AD8;&#x6F6E;&#xFF08;Climax&#xFF09;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x65F6;&#x523B;&#x4F1A;&#x6709;&#x67D0;&#x4E9B;&#x51B3;&#x5B9A;&#x6027;&#x7684;&#x56E0;&#x7D20;&#x6216;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#xFF0C;&#x6545;&#x4E8B;&#x7684;&#x9AD8;&#x6F6E;&#x51B3;&#x5B9A;&#x4E86;&#x6545;&#x4E8B;&#x7684;&#x6700;&#x7EC8;&#x7ED3;&#x5C40;&#x3002;&#x9AD8;&#x6F6E;&#x8FC7;&#x540E;&#x5373;&#x662F;&#x6536;&#x5C3E;&#x9636;&#x6BB5;&#xFF08;Falling Action&#xFF09;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x9636;&#x6BB5;&#x51B2;&#x7A81;&#x9010;&#x6E10;&#x88AB;&#x89E3;&#x51B3;&#x3002;&#x76F4;&#x5230;&#x7ED3;&#x5C3E;&#xFF08;Resolution&#xFF09;&#xFF0C;&#x51B2;&#x7A81;&#x6700;&#x7EC8;&#x88AB;&#x89E3;&#x51B3;&#x3002;</p>
+<p>&#x5728;&#x6E38;&#x620F;&#x4E2D;&#xFF0C;&#x6545;&#x4E8B;&#x94FA;&#x9648;&#x7684;&#x9636;&#x6BB5;&#x4F1A;&#x4E0E;&#x5E38;&#x89C4;&#x7CFB;&#x7EDF;&#x548C;&#x620F;&#x5267;&#x7CFB;&#x7EDF;&#x8054;&#x7CFB;&#x5728;&#x4E00;&#x8D77;&#x3002;&#x6E38;&#x620F;&#x901A;&#x5E38;&#x4F1A;&#x88AB;&#x8BBE;&#x8BA1;&#x6210;&#x6311;&#x6218;&#x9010;&#x6E10;&#x589E;&#x52A0;&#xFF08;&#x5E38;&#x89C4;&#x7CFB;&#x7EDF;&#xFF09;&#xFF0C;&#x8FD9;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x4E0E;&#x6545;&#x4E8B;&#x7684;&#x51B2;&#x7A81;&#xFF08;&#x620F;&#x5267;&#x7CFB;&#x7EDF;&#xFF09;&#x9010;&#x6E10;&#x52A0;&#x5267;&#x7ED3;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x3002;</p>
+<p>&#x4E00;&#x4E2A;&#x53CD;&#x9762;&#x4F8B;&#x5B50;&#x662F;&#x9A6C;&#x91CC;&#x5965;&#xFF0C;&#x5728;&#x9A6C;&#x91CC;&#x5965;&#x7684;&#x5E38;&#x89C4;&#x7CFB;&#x7EDF;&#x4E2D;&#xFF0C;&#x6BCF;&#x4E00;&#x5173;&#x7684;&#x96BE;&#x5EA6;&#x9010;&#x6E10;&#x589E;&#x52A0;&#xFF0C;&#x4F46;&#x662F;&#x4ECE;&#x620F;&#x5267;&#x89D2;&#x5EA6;&#x6765;&#x770B;&#xFF0C;&#x9A6C;&#x91CC;&#x5965;&#x7684;&#x76EE;&#x6807;&#x4ECE;&#x672A;&#x52A8;&#x6447;&#x8FC7;&#xFF0C;&#x4ED6;&#x4E5F;&#x6CA1;&#x6709;&#x5BF9;&#x6551;&#x51FA;&#x516C;&#x4E3B;&#x6709;&#x4EFB;&#x4F55;&#x7684;&#x5185;&#x5FC3;&#x51B2;&#x7A81;&#x3002;&#x5373;&#x620F;&#x5267;&#x7CFB;&#x7EDF;&#x548C;&#x5E38;&#x89C4;&#x7CFB;&#x7EDF;&#x53D1;&#x751F;&#x4E86;&#x53D1;&#x751F;&#x4E86;&#x5272;&#x88C2;&#x3002;</p>
+<p>&#x6E38;&#x620F;&#x76F8;&#x5BF9;&#x4E8E;&#x620F;&#x5267;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x533A;&#x522B;&#x5728;&#x4E8E;&#xFF0C;&#x63A8;&#x52A8;&#x51B2;&#x7A81;&#x89E3;&#x51B3;&#x7684;&#x662F;&#x73A9;&#x5BB6;&#x81EA;&#x5DF1;&#x3002;&#x5982;&#x9A6C;&#x91CC;&#x5965;&#x4E2D;&#xFF0C;&#x73A9;&#x5BB6;&#x76F4;&#x5230;&#x9700;&#x8981;&#x6551;&#x51FA;&#x516C;&#x4E3B;&#xFF0C;&#x4E8E;&#x662F;&#x73A9;&#x5BB6;&#x7684;&#x5E38;&#x89C4;&#x76EE;&#x6807;&#x2014;&#x2014;&#x8FC7;&#x5173;&#x4F1A;&#x4E3A;&#x4E86;&#x8FD9;&#x4E2A;&#x620F;&#x5267;&#x793E;&#x7684;&#x76EE;&#x6807;&#x7ED3;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x3002;&#x5F53;&#x51B2;&#x7A81;&#x89E3;&#x51B3;&#x540E;&#xFF0C;&#x4E0D;&#x4EC5;&#x6709;&#x51B2;&#x7A81;&#x89E3;&#x51B3;&#x540E;&#x60C5;&#x7EEA;&#x4E0A;&#x7D27;&#x5F20;&#x611F;&#x7684;&#x91CA;&#x653E;&#xFF0C;&#x8FD8;&#x6709;&#x4E2A;&#x4EBA;&#x6210;&#x5C31;&#x611F;&#x7684;&#x63D0;&#x5347;&#x3002;</p>
+<p>&#x5728;&#x73B0;&#x4EE3;&#x6E38;&#x620F;&#x4E2D;&#xFF0C;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x5E08;&#x4F1A;&#x4ECE;&#x66F4;&#x6DF1;&#x523B;&#x7684;&#x89D2;&#x5EA6;&#x53BB;&#x601D;&#x8003;&#x73A9;&#x5BB6;&#x5728;&#x6E38;&#x620F;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x60C5;&#x7EEA;&#x53D8;&#x5316;&#x3002;&#x5982;&#x98CE;&#x4E4B;&#x65C5;&#x4EBA;&#xFF0C;&#x662F;&#x53C2;&#x8003;&#x4E86;Joseph Campbell&#x7684;&#x82F1;&#x96C4;&#x4E4B;&#x65C5;&#xFF08;Hero&#x2018;s Journey&#xFF09;&#xFF0C;&#x5176;&#x4F5C;&#x8005;&#x9648;&#x661F;&#x6C49;&#x6839;&#x636E;&#x82F1;&#x96C4;&#x4E4B;&#x65C5;&#x7684;&#x7075;&#x9B42;&#x521B;&#x9020;&#x4E86;&#x4E00;&#x79CD;&#x60C5;&#x7EEA;&#x4E0A;&#x7684;&#x53D8;&#x6362;&#x5F27;&#x7EBF;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/GameDesignWorkshop-Chapter4-Notes/image-20200312121637342.png" alt="&#x98CE;&#x4E4B;&#x65C5;&#x4EBA;" style="zoom:50%;"></p>
+<p>//TODO &#x73A9;&#x98CE;&#x4E4B;&#x65C5;&#x4EBA;</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>&#x6240;&#x6709;&#x7684;&#x620F;&#x5267;&#x5143;&#x7D20;&#x90FD;&#x662F;&#x4E3A;&#x4E86;&#x5F15;&#x51FA;&#x73A9;&#x5BB6;&#x60C5;&#x7EEA;&#x4E0A;&#x7684;&#x53CD;&#x5E94;&#x3002;</p>
+<p>&#x76EE;&#x524D;&#x6E38;&#x620F;&#x5728;&#x60C5;&#x7EEA;&#x4E0A;&#x7684;&#x5F71;&#x54CD;&#x8FD8;&#x4E0D;&#x591F;&#x6DF1;&#x523B;&#xFF0C;&#x56E0;&#x6B64;&#x65E0;&#x6CD5;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x53E6;&#x4E00;&#x79CD;&#x620F;&#x5267;&#x827A;&#x672F;&#x5F62;&#x5F0F;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x6E38;&#x620F;&#x8BBE;&#x8BA1;&#x5E08;&#x800C;&#x8A00;&#xFF0C;&#x8981;&#x66F4;&#x597D;&#x7684;&#x8BBE;&#x8BA1;&#x620F;&#x5267;&#x7CFB;&#x7EDF;&#xFF0C;&#x540C;&#x65F6;&#x9700;&#x8981;&#x5BF9;&#x4F20;&#x7EDF;&#x620F;&#x5267;&#x7684;&#x7406;&#x89E3;&#x548C;&#x5BF9;&#x6E38;&#x620F;&#x672C;&#x8EAB;&#x7684;&#x7406;&#x89E3;&#x3002;</p>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><p>1.<strong>Game Design Workshop</strong> 4th 2019 by Tracy Fullerton</p>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/" title="《Game Design Workshop》 第四章笔记">https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/游戏设计/" rel="tag"># 游戏设计</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/GameDesignWorkshop-Chapter3-Notes/" rel="prev" title="《Game Design Workshop》 第三章笔记">
+      <i class="fa fa-chevron-left"></i> 《Game Design Workshop》 第三章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/FormalAbstractDesignTools-Notes/" rel="next" title="《Formal ABstract Design Tools》 笔记">
+      《Formal ABstract Design Tools》 笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-4-working-with-dramatic-elements"><span class="nav-number">1.</span> <span class="nav-text">Chapter 4 Working with Dramatic Elements</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#challenge"><span class="nav-number">1.1.</span> <span class="nav-text">Challenge</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-challenging-activity-that-requires-skill"><span class="nav-number">1.1.1.</span> <span class="nav-text">A Challenging Activity That Requires Skill</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-merging-of-action-and-awareness"><span class="nav-number">1.1.2.</span> <span class="nav-text">The Merging of Action and Awareness</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clear-goals-and-feedback"><span class="nav-number">1.1.3.</span> <span class="nav-text">Clear Goals and Feedback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#concentration-on-the-task-at-hand"><span class="nav-number">1.1.4.</span> <span class="nav-text">Concentration on the Task at Hand</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-paradox-of-control"><span class="nav-number">1.1.5.</span> <span class="nav-text">The Paradox of Control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-loss-of-self-consciousness"><span class="nav-number">1.1.6.</span> <span class="nav-text">The Loss of Self-Consciousness</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-transformation-of-time"><span class="nav-number">1.1.7.</span> <span class="nav-text">The Transformation of Time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#experience-becomes-an-end-in-itself"><span class="nav-number">1.1.8.</span> <span class="nav-text">Experience Becomes an End in Itself</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#play"><span class="nav-number">1.2.</span> <span class="nav-text">Play</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-nature-of-play"><span class="nav-number">1.2.1.</span> <span class="nav-text">The Nature of Play</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#types-of-players"><span class="nav-number">1.2.2.</span> <span class="nav-text">Types of Players</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#levels-of-engagement"><span class="nav-number">1.2.3.</span> <span class="nav-text">Levels of Engagement</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#premise"><span class="nav-number">1.3.</span> <span class="nav-text">Premise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#character"><span class="nav-number">1.4.</span> <span class="nav-text">Character</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#story"><span class="nav-number">1.5.</span> <span class="nav-text">Story</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#world-building"><span class="nav-number">1.6.</span> <span class="nav-text">World Building</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-dramatic-arc"><span class="nav-number">1.7.</span> <span class="nav-text">The Dramatic Arc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conclusion"><span class="nav-number">1.8.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

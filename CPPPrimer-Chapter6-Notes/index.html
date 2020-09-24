@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x516D;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x5173;&amp;#x4E8E;&amp;#x51FD;&amp;#x6570;&amp;#x7684;&amp;#x5B9A;&amp;#x4E49;&amp;#xFF0C;&amp;#x51FD;&amp;#x6570;&amp;#x53C2;&amp;#x6570;&amp;#x7684;&amp;#x4F2">
+<meta name="keywords" content="读书笔记,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《C++ Primer》 第六章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/CPPPrimer-Chapter6-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x516D;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x5173;&amp;#x4E8E;&amp;#x51FD;&amp;#x6570;&amp;#x7684;&amp;#x5B9A;&amp;#x4E49;&amp;#xFF0C;&amp;#x51FD;&amp;#x6570;&amp;#x53C2;&amp;#x6570;&amp;#x7684;&amp;#x4F2">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter6-Notes/Ch_6.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.179Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《C++ Primer》 第六章笔记">
+<meta name="twitter:description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x516D;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x5173;&amp;#x4E8E;&amp;#x51FD;&amp;#x6570;&amp;#x7684;&amp;#x5B9A;&amp;#x4E49;&amp;#xFF0C;&amp;#x51FD;&amp;#x6570;&amp;#x53C2;&amp;#x6570;&amp;#x7684;&amp;#x4F2">
+<meta name="twitter:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter6-Notes/Ch_6.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/CPPPrimer-Chapter6-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《C++ Primer》 第六章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/CPPPrimer-Chapter6-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《C++ Primer》 第六章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-22 18:10:29" itemprop="dateCreated datePublished" datetime="2020-02-22T18:10:29+08:00">2020-02-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/计算机语言/" itemprop="url" rel="index"><span itemprop="name">计算机语言</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/CPPPrimer-Chapter6-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《C++ Primer》 第六章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/CPPPrimer-Chapter6-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/CPPPrimer-Chapter6-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>21k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>38 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;C++ Primer&#x300B; &#x7B2C;&#x516D;&#x7AE0;&#x7B14;&#x8BB0;&#x3002;</p>
+<p>&#x5173;&#x4E8E;&#x51FD;&#x6570;&#x7684;&#x5B9A;&#x4E49;&#xFF0C;&#x51FD;&#x6570;&#x53C2;&#x6570;&#x7684;&#x4F20;&#x9012;&#x65B9;&#x5F0F;&#xFF0C;&#x51FD;&#x6570;&#x91CD;&#x8F7D;&#xFF0C;&#x51FD;&#x6570;&#x6307;&#x9488;&#x3002;</p>
+<p><img src="/CPPPrimer-Chapter6-Notes/Ch_6.png" alt="&#x7B2C;&#x516D;&#x7AE0;&#x5185;&#x5BB9;"></p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-6-functions">Chapter 6 Functions</h1>
+<h2 id="function-basics">Function Basics</h2>
+<h4 id="parameters-and-arguments">Parameters and Arguments</h4>
+<p>&#x51FD;&#x6570;&#x7684;&#x5F62;&#x53C2;&#xFF08;Parameters&#xFF09;&#x548C;&#x5B9E;&#x53C2;&#xFF08;Arguments&#xFF09;&#x662F;&#x4E00;&#x4E00;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;&#xFF0C;&#x4F46;&#x662F;&#x7F16;&#x8BD1;&#x5668;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x5F62;&#x53C2;&#x88AB;&#x521D;&#x59CB;&#x5316;&#x7684;&#x987A;&#x5E8F;&#x3002;</p>
+<h4 id="function-parameter-list">Function Parameter List</h4>
+<p>&#x4E3A;&#x4E86;&#x4E0E;C&#x8BED;&#x8A00;&#x517C;&#x5BB9;&#xFF0C;C++&#x540C;&#x6837;&#x5141;&#x8BB8;&#x7528;void&#x6765;&#x4F5C;&#x4E3A;&#x5F62;&#x53C2;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x5982;&#x4E0B;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x53C2;&#x6570;&#x7684;&#x540D;&#x5B57;&#x662F;&#x53EF;&#x9009;&#x7684;&#x3002;&#x4F46;&#x662F;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x8BBE;&#x7F6E;&#x53C2;&#x6570;&#x540D;&#x5B57;&#xFF0C;&#x4F46;&#x56E0;&#x4E3A;&#x53C2;&#x6570;&#x6CA1;&#x6709;&#x540D;&#x5B57;&#x6240;&#x4EE5;&#x65E0;&#x6CD5;&#x5728;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x5F15;&#x7528;&#x3002;&#x4F46;&#x662F;&#x672A;&#x547D;&#x540D;&#x7684;&#x53C2;&#x6570;&#x8FD8;&#x662F;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x5B9E;&#x53C2;&#x7684;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pareNoName</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">float</span> fval)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// pareNoName(0.1f);//Although int doesn&apos;t have name, we still must assign it</span></span><br><span class="line">pareNoName(<span class="number">3</span>, <span class="number">0.1f</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="function-return-type">Function Return Type</h4>
+<p>&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7684;&#x7C7B;&#x578B;&#x4E0D;&#x80FD;&#x662F;&#x6570;&#x7EC4;&#x7C7B;&#x578B;&#xFF0C;&#x4E5F;&#x4E0D;&#x80FD;&#x662F;&#x51FD;&#x6570;&#x7C7B;&#x578B;&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x8FD4;&#x56DE;&#x51FD;&#x6570;&#x548C;&#x6570;&#x7EC4;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x4EE5;&#x53CA;&#x51FD;&#x6570;&#x7684;&#x8C03;&#x7528;&#xFF08;&#x76F8;&#x5F53;&#x4E8E;&#x8FD4;&#x56DE;&#x8C03;&#x7528;&#x7684;&#x51FD;&#x6570;&#x7684;&#x7ED3;&#x679C;&#xFF09;&#x3002;</p>
+<h3 id="local-objects">Local Objects</h3>
+<p>&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x800C;&#x8A00;&#xFF0C;&#x9700;&#x8981;&#x5173;&#x6CE8;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4EE5;&#x53CA;&#x751F;&#x547D;&#x5468;&#x671F;&#x3002;</p>
+<p>&#x5728;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#x79F0;&#x4E3A;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#xFF0C;&#x5982;&#x679C;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x4E0E;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x6709;&#x76F8;&#x540C;&#x7684;&#x540D;&#x79F0;&#xFF0C;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x4F1A;&#x9690;&#x85CF;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x7684;&#x5B9A;&#x4E49;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x8981;&#x8C03;&#x7528;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#xFF0C;&#x9700;&#x8981;&#x7528;&#x5230;&#x4F5C;&#x7528;&#x57DF;&#x7B26;&#x53F7;<code>::</code>&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">int</span> val = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestLocalObject</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> val = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;local val is &quot;</span> &lt;&lt; val &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;global val is &quot;</span> &lt;&lt; ::val &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    local val is 3</span></span><br><span class="line"><span class="comment">    global val is 2</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x662F;&#x4ECE;&#x5B9A;&#x4E49;&#x5230;&#x7A0B;&#x5E8F;&#x7EC8;&#x6B62;&#xFF0C;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x662F;&#x5F53;&#x9000;&#x51FA;&#x4E86;&#x4F5C;&#x7528;&#x57DF;&#x3002;</p>
+<h4 id="automatic-objects">Automatic Objects</h4>
+<p>&#x51FD;&#x6570;&#x7684;&#x5F62;&#x53C2;&#x5C31;&#x662F;&#x81EA;&#x52A8;&#x7269;&#x4F53;&#xFF08;Automatic Objects&#xFF09;&#xFF0C;&#x5B83;&#x4EEC;&#x5728;&#x51FD;&#x6570;&#x5F00;&#x59CB;&#x65F6;&#x88AB;&#x5206;&#x914D;&#x521B;&#x5EFA;&#xFF0C; &#x5728;&#x51FD;&#x6570;&#x7EC8;&#x7ED3;&#x65F6;&#x88AB;&#x91CA;&#x653E;&#x3002;</p>
+<h4 id="local-static-objects">Local static Objects</h4>
+<p>&#x5C40;&#x90E8;&#x9759;&#x6001;&#x7269;&#x4F53;&#x662F;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x88AB;&#x8C03;&#x7528;&#x65F6;&#x521B;&#x5EFA;&#xFF0C;&#x5728;&#x7A0B;&#x5E8F;&#x7EC8;&#x6B62;&#x65F6;&#x88AB;&#x6467;&#x6BC1;&#xFF0C;&#x4F5C;&#x7528;&#x57DF;&#x5728;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x3002;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">count_calls</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> ctr = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> ++ctr;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestStaticObjects</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i != <span class="number">10</span>; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; count_calls() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    1</span></span><br><span class="line"><span class="comment">    2</span></span><br><span class="line"><span class="comment">    3</span></span><br><span class="line"><span class="comment">    4</span></span><br><span class="line"><span class="comment">    5</span></span><br><span class="line"><span class="comment">    6</span></span><br><span class="line"><span class="comment">    7</span></span><br><span class="line"><span class="comment">    8</span></span><br><span class="line"><span class="comment">    9</span></span><br><span class="line"><span class="comment">    10</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x9759;&#x6001;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x6267;&#x884C;&#x7684;&#x662F;&#x503C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x56E0;&#x6B64;&#x5373;&#x4F7F;&#x662F;&#x5185;&#x5EFA;&#x7C7B;&#x578B;&#xFF0C;&#x5B83;&#x4E5F;&#x4F1A;&#x9ED8;&#x8BA4;&#x503C;&#xFF0C;&#x4E0D;&#x4F1A;&#x50CF;&#x666E;&#x901A;&#x7684;&#x5185;&#x5EFA;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x4E00;&#x6837;&#x53D8;&#x6210;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;</p>
+<h3 id="function-declarations">Function Declarations</h3>
+<p>&#x5982;&#x540C;&#x53D8;&#x91CF;&#x4E00;&#x6837;&#xFF0C;&#x51FD;&#x6570;&#x4E5F;&#x53EA;&#x80FD;&#x88AB;&#x5B9A;&#x4E49;&#x4E00;&#x6B21;&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x591A;&#x6B21;&#x58F0;&#x660E;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x662F;&#x51FD;&#x6570;&#x58F0;&#x660E;&#xFF0C;&#x5219;&#x4F7F;&#x7528;&#x5206;&#x53F7;&#x53D6;&#x4EE3;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#xFF0C;&#x4E5F;&#x56E0;&#x4E3A;&#x58F0;&#x660E;&#x5E76;&#x6CA1;&#x6709;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#xFF0C;&#x6240;&#x4EE5;&#x6240;&#x6709;&#x7684;&#x5F62;&#x53C2;&#x6709;&#x6CA1;&#x6709;&#x540D;&#x5B57;&#x90FD;&#x6CA1;&#x6709;&#x533A;&#x522B;&#x3002;</p>
+<p>&#x5982; <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pareName</span><span class="params">(<span class="keyword">int</span> val, <span class="keyword">float</span> fval)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pareName</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">float</span>)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x7C7B;&#x578B;&#x7531;&#x51FD;&#x6570;&#x540D;&#x5B57;&#xFF0C;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4EE5;&#x53CA;&#x5F62;&#x53C2;&#x7C7B;&#x578B;&#x51B3;&#x5B9A;&#xFF0C;&#x51FD;&#x6570;&#x7684;&#x7C7B;&#x578B;&#x4E5F;&#x6210;&#x4E3A;&#x51FD;&#x6570;&#x539F;&#x578B;(function prototype)&#x3002;</p>
+<h4 id="function-declarations-go-in-header-files">Function Declarations Go in Header Files</h4>
+<p>&#x51FD;&#x6570;&#x7684;&#x58F0;&#x660E;&#x5E94;&#x8BE5;&#x5728;&#x5934;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x51FD;&#x6570;&#x7684;&#x5B9A;&#x4E49;&#x5728;&#x6E90;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x8FD9;&#x6837;&#x5982;&#x679C;&#x540E;&#x7EED;&#x8981;&#x4FEE;&#x6539;&#x51FD;&#x6570;&#x7684;&#x58F0;&#x660E;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x6539;&#x52A8;&#x4E00;&#x5904;&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x5728;&#x5B9A;&#x4E49;&#x51FD;&#x6570;&#x7684;&#x6E90;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x9700;&#x8981;&#x5F15;&#x5165;&#x58F0;&#x660E;&#x7684;&#x5934;&#x6587;&#x4EF6;&#x3002;</p>
+<h3 id="separate-compilation">Separate Compilation</h3>
+<h4 id="compiling-and-linking-multiple-source-files">Compiling and Linking Multiple Source Files</h4>
+<p>&#x5982;&#x6211;&#x4EEC;&#x5C06;&#x51FD;&#x6570;<code>GetNum</code>&#x58F0;&#x660E;&#x5728;&#x5934;&#x6587;&#x4EF6;<code>GetNum.h</code>&#x4E2D;&#xFF0C;&#x5C06;&#x51FD;&#x6570;&#x7684;&#x5B9A;&#x4E49;&#x5199;&#x5728;&#x6E90;&#x6587;&#x4EF6;<code>GetNum.cpp</code>&#x4E2D;&#xFF0C;&#x5C06;&#x8C03;&#x7528;<code>GetNum</code>&#x7684;&#x8BED;&#x53E5;&#x5199;&#x5728;&#x6E90;&#x6587;&#x4EF6;<code>Chapter6_Functions.cpp</code>&#x4E2D;&#xFF0C;&#x5219;&#x6240;&#x6709;&#x7684;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//GetNum.h</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetNum</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//GetNum.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;GetNum.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetNum</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="number">10</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//Chapter6_Functions.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;GetNum.h&quot;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; GetNum() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">10</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x5BF9;&#x4E8E;&#x6709;&#x591A;&#x4E2A;&#x6E90;&#x6587;&#x4EF6;&#xFF08;CPP&#xFF09;&#x6587;&#x4EF6;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x7F16;&#x8BD1;&#x65F6;&#x8981;&#x628A;&#x6240;&#x6709;&#x7684;&#x6E90;&#x6587;&#x4EF6;&#x90FD;&#x5E26;&#x4E0A;&#xFF0C;&#x6E90;&#x6587;&#x4EF6;&#x7684;&#x987A;&#x5E8F;&#x5E76;&#x4E0D;&#x9020;&#x6210;&#x5F71;&#x54CD;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ Chapter6_Functions.cpp GetNum.cpp</span><br></pre></td></tr></table></figure>
+<p>&#x4E5F;&#x53EF;&#x4EE5;&#x5355;&#x72EC;&#x7F16;&#x8BD1;&#xFF08;&#x5E26;&#x4E0A;-c flag&#xFF09;&#x67D0;&#x4E2A;&#x6E90;&#x6587;&#x4EF6;&#xFF08;&#x5FC5;&#x987B;&#x662F;&#x4E0E;&#x5176;&#x4ED6;&#x6E90;&#x6587;&#x4EF6;&#x4E0D;&#x4F9D;&#x8D56;&#x7684;&#xFF09;&#xFF0C;&#x5C06;&#x5176;&#x7F16;&#x8BD1;&#x4E3A;.o&#x6587;&#x4EF6;&#xFF0C;&#x4E4B;&#x540E;&#x518D;&#x7F16;&#x8BD1;&#x5176;&#x4ED6;&#x4F9D;&#x8D56;&#x8BE5;&#x6E90;&#x6587;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x53EA;&#x8981;&#x5E26;&#x4E0A;.o&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x4E0D;&#x9700;&#x8981;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x8BE5;&#x6587;&#x4EF6;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g++ -c GetNum.cpp</span><br><span class="line">g++ Chapter6_Functions.cpp GetNum.o</span><br></pre></td></tr></table></figure>
+<h2 id="argument-passing">Argument Passing</h2>
+<p>&#x5F53;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x7528;&#x5B9E;&#x53C2;&#x521D;&#x59CB;&#x5316;&#x4E86;&#x5F62;&#x53C2;&#xFF0C;&#x521D;&#x59CB;&#x5316;&#x7684;&#x8FC7;&#x7A0B;&#x4E0E;&#x4E00;&#x822C;&#x7684;&#x53C2;&#x6570;&#x521D;&#x59CB;&#x5316;&#x4E00;&#x6837;&#x3002;&#x800C;&#x5982;&#x679C;&#x5F62;&#x53C2;&#x7684;&#x7C7B;&#x578B;&#x662F;&#x5F15;&#x7528;&#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;&#x4F1A;&#x76F4;&#x63A5;&#x7ED1;&#x5B9A;&#x81F3;&#x5B9E;&#x53C2;&#xFF0C;&#x5426;&#x5219;&#x7684;&#x8BDD;&#x521D;&#x59CB;&#x5316;&#x65F6;&#x4F1A;&#x62F7;&#x8D1D;&#x5B9E;&#x53C2;&#x7684;&#x503C;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x5F62;&#x53C2;&#x7684;&#x53C2;&#x6570;&#x662F;&#x5F15;&#x7528;&#xFF0C;&#x79F0;&#x5B9E;&#x53C2;&#x662F;&#x5F15;&#x7528;&#x4F20;&#x9012;&#xFF08;Paseed by reference&#x6216;called by reference&#xFF09;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x5F62;&#x53C2;&#x7684;&#x7C7B;&#x578B;&#x4E0D;&#x662F;&#x5F15;&#x7528;&#xFF0C;&#x90A3;&#x4E48;&#x5B9E;&#x53C2;&#x4F1A;&#x8FDB;&#x884C;&#x62F7;&#x8D1D;&#xFF0C;&#x79F0;&#x5B9E;&#x53C2;&#x662F;&#x503C;&#x4F20;&#x9012;&#xFF08;Passed by value&#x6216;called by value&#xFF09;&#x3002;</p>
+<h3 id="passing-arguments-by-value">Passing Arguments by Value</h3>
+<p>&#x5F53;&#x5F62;&#x53C2;&#x662F;&#x503C;&#x4F20;&#x9012;&#x65F6;&#xFF0C;&#x4FEE;&#x6539;&#x51FD;&#x6570;&#x4E2D;&#x7684;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x5E76;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x5B9E;&#x53C2;&#x3002;</p>
+<h4 id="pointer-parameters">Pointer Parameters</h4>
+<p>&#x6307;&#x9488;&#x4E0E;&#x5176;&#x4ED6;&#x975E;&#x5F15;&#x7528;&#x7684;&#x53D8;&#x91CF;&#x4E00;&#x6837;&#xFF0C;&#x5F62;&#x53C2;&#x4F1A;&#x901A;&#x8FC7;&#x62F7;&#x8D1D;&#x5B9E;&#x53C2;&#x7684;&#x503C;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#x3002;&#x4F46;&#x662F;&#x6307;&#x9488;&#x7684;&#x503C;&#x5373;&#x662F;&#x6307;&#x5411;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x56E0;&#x6B64;&#x62F7;&#x8D1D;&#x751F;&#x6210;&#x7684;&#x5F62;&#x53C2;&#x4E0E;&#x5B9E;&#x53C2;&#x6307;&#x5411;&#x7684;&#x662F;&#x540C;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x4E5F;&#x56E0;&#x6B64;&#x901A;&#x8FC7;&#x5F62;&#x53C2;&#x4FEE;&#x6539;&#x5BF9;&#x8C61;&#x4E5F;&#x540C;&#x6837;&#x4F1A;&#x5F71;&#x54CD;&#x5B9E;&#x53C2;&#x6307;&#x5411;&#x7684;&#x5BF9;&#x8C61;&#x3002;</p>
+<p>&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(<span class="keyword">int</span> *val1, <span class="keyword">int</span> *val2)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> temp = (*val1);</span><br><span class="line">    *val1 = *val2;</span><br><span class="line">    *val2 = temp;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Exercise6_10</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> val1 = <span class="number">10</span>, val2 = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Val 1 is &quot;</span> &lt;&lt; val1 &lt;&lt; <span class="string">&quot;, Val2 is &quot;</span> &lt;&lt; val2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    Swap(&amp;val1, &amp;val2);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Val 1 is &quot;</span> &lt;&lt; val1 &lt;&lt; <span class="string">&quot;, Val2 is &quot;</span> &lt;&lt; val2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="passing-argument-by-reference">Passing Argument by Reference</h3>
+<p>&#x4F7F;&#x7528;&#x5F15;&#x7528;&#x4F20;&#x9012;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x4FEE;&#x6539;&#x5B9E;&#x53C2;&#x7684;&#x503C;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestCallByReference</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> val1 = <span class="number">10</span>, val2 = <span class="number">5</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Val 1 is &quot;</span> &lt;&lt; val1 &lt;&lt; <span class="string">&quot;, Val2 is &quot;</span> &lt;&lt; val2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    Swap(val1, val2);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Val 1 is &quot;</span> &lt;&lt; val1 &lt;&lt; <span class="string">&quot;, Val2 is &quot;</span> &lt;&lt; val2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">(<span class="keyword">int</span> &amp;val1, <span class="keyword">int</span> &amp;val2)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> temp = val1;</span><br><span class="line">    val1 = val2;</span><br><span class="line">    val2 = temp;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h4 id="using-reference-to-avoid-copies">Using Reference to Avoid Copies</h4>
+<p>&#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5C06;&#x5F62;&#x53C2;&#x8BBE;&#x7F6E;&#x4E3A;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x6765;&#x907F;&#x514D;&#x62F7;&#x8D1D;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x8FDB;&#x800C;&#x53EF;&#x4EE5;&#x63D0;&#x5347;&#x6027;&#x80FD;&#x3002;</p>
+<p>&#x4E14;&#x5C3D;&#x91CF;&#x4F7F;&#x7528;const reference&#xFF0C;&#x672C;&#x7AE0;&#x7684;&#x540E;&#x5C0F;&#x8282;&#x4F1A;&#x8FDB;&#x884C;&#x8BF4;&#x660E;&#x3002;</p>
+<h4 id="using-reference-parameters-to-return-additional-information">Using Reference Parameters to Return Additional Information</h4>
+<p>&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x53EA;&#x53EF;&#x4EE5;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x503C;&#xFF0C;&#x5728;&#x9700;&#x8981;&#x8FD4;&#x56DE;&#x591A;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5F15;&#x7528;&#xFF0C;&#x5C06;&#x8981;&#x8FD4;&#x56DE;&#x7684;&#x53C2;&#x6570;&#x4F5C;&#x4E3A;&#x5F62;&#x53C2;&#x7684;&#x4E00;&#x90E8;&#x5206;&#x4F20;&#x9012;&#x8FDB;&#x51FD;&#x6570;&#xFF0C;&#x5E76;&#x5728;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x4FEE;&#x6539;&#x6210;&#x7ED3;&#x679C;&#x7684;&#x503C;&#x3002;</p>
+<h3 id="const-parameters-and-arguments">const Parameters and Arguments</h3>
+<p>&#x5982;&#x666E;&#x901A;&#x7684;&#x53C2;&#x6570;&#x521D;&#x59CB;&#x5316;&#x4E00;&#x6837;&#xFF0C;&#x5F53;&#x4F7F;&#x7528;&#x5B9E;&#x53C2;&#x6765;&#x521D;&#x59CB;&#x5316;&#x5F62;&#x53C2;&#x65F6;&#xFF0C;top-level&#x7684;const&#x4F1A;&#x88AB;&#x65E0;&#x89C6;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestConstParametersAndArguments</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> ci = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">2</span>;</span><br><span class="line">    func(ci);</span><br><span class="line">    func(i);</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    value is 3</span></span><br><span class="line"><span class="comment">    value is 2</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> i)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// void func(int i) {}//Error,redefines</span></span><br></pre></td></tr></table></figure>
+<p>&#x51FD;&#x6570;func&#x7684;&#x5F62;&#x53C2;&#x7C7B;&#x578B;&#x4E3A;const int&#xFF0C;&#x4F46;&#x662F;&#x53EF;&#x4EE5;&#x7528;int&#x7684;&#x6765;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x91CC;&#x662F;top-level&#x7684;const&#x3002;&#x4E5F;&#x56E0;&#x6B64;&#x51FD;&#x6570;<code>func(int)</code>&#x548C;&#x51FD;&#x6570;<code>func(const int)</code>&#x662F;&#x65E0;&#x6CD5;&#x540C;&#x65F6;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x4E0D;&#x7136;&#x5F53;&#x4F7F;&#x7528;int&#x8C03;&#x7528;&#x53C2;&#x6570;&#x65F6;&#xFF0C;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x90FD;&#x53EF;&#x5339;&#x914D;&#x3002;</p>
+<h4 id="use-reference-to-const-when-possible">Use Reference to const When Possible</h4>
+<p>&#x5F53;&#x53EF;&#x80FD;&#x7684;&#x65F6;&#x5019;&#x5C3D;&#x91CF;&#x4F7F;&#x7528;const referencce&#xFF0C;&#x56E0;&#x4E3A;</p>
+<ol type="1">
+<li>const reference&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x51FD;&#x6570;&#x4E2D;&#x610F;&#x5916;&#x7684;&#x4FEE;&#x6539;&#x5B9E;&#x53C2;&#x503C;</li>
+<li>&#x666E;&#x901A;reference&#x5F62;&#x53C2;&#xFF0C;&#x4E0D;&#x80FD;&#x901A;&#x8FC7;&#x5B57;&#x9762;&#x503C;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;</li>
+<li>&#x666E;&#x901A;reference&#x5F62;&#x53C2;&#xFF0C;&#x4E0D;&#x80FD;&#x901A;&#x8FC7;&#x975E;const&#x5B9E;&#x53C2;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;</li>
+</ol>
+<p>&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> ss = <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="comment">// funs(&quot;&quot;);//error,can not use literal to initialize string reference</span></span><br><span class="line"><span class="comment">// funs(ss);//error,can not use const string to initialize stringreference</span></span><br><span class="line">funss(<span class="string">&quot;&quot;</span>);</span><br><span class="line">funss(ss);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">funs</span><span class="params">(<span class="built_in">string</span> &amp;s)</span> </span>{}</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">funss</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> </span>{}</span><br></pre></td></tr></table></figure>
+<h3 id="array-parameters">Array Parameters</h3>
+<p>&#x867D;&#x7136;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x6570;&#x7EC4;&#x4F5C;&#x4E3A;&#x5F62;&#x53C2;&#xFF0C;&#x4F46;&#x5F53;&#x6570;&#x7EC4;&#x4F5C;&#x4E3A;&#x5F62;&#x53C2;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x662F;&#x65E0;&#x6CD5;&#x8FDB;&#x884C;&#x6709;&#x6548;&#x7684;&#x503C;&#x62F7;&#x8D1D;&#x7684;&#x3002;&#x56E0;&#x4E3A;&#x6570;&#x7EC4;&#x65E0;&#x6CD5;&#x8FDB;&#x884C;&#x62F7;&#x8D1D;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x4E14;&#x5F53;&#x8C03;&#x7528;&#x6570;&#x7EC4;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x7684;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x6307;&#x5411;&#x6570;&#x7EC4;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x7684;&#x6307;&#x9488;&#x3002;</p>
+<p>&#x4EE5;&#x4E0B;&#x4E09;&#x4E2A;&#x51FD;&#x6570;&#x5B9A;&#x4E49;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x5B8C;&#x5168;&#x7B49;&#x6548;&#x7684;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> *)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>[])</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>[<span class="number">10</span>])</span></span>;</span><br></pre></td></tr></table></figure>
+<p>&#x5373;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5176;&#x4E2D;&#x4EFB;&#x610F;&#x4E00;&#x4E2A;&#x4F5C;&#x4E3A;&#x58F0;&#x660E;&#xFF0C;&#x518D;&#x7528;&#x53E6;&#x4E00;&#x4E2A;&#x4F5C;&#x6765;&#x8FDB;&#x884C;&#x5B9A;&#x4E49;&#xFF0C;&#x800C;&#x60F3;&#x58F0;&#x660E;&#x5176;&#x4E2D;&#x4E24;&#x4E2A;&#x5219;&#x662F;&#x4E0D;&#x884C;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x4F1A;&#x5F62;&#x6210;&#x91CD;&#x590D;&#x5B9A;&#x4E49;&#xFF0C;&#x540E;&#x4E24;&#x4E2A;&#x5728;&#x7F16;&#x8BD1;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F1A;&#x53D8;&#x6362;&#x4E3A;&#x7B2C;&#x4E00;&#x79CD;&#x7684;&#x5199;&#x6CD5;&#x3002;&#x4E5F;&#x56E0;&#x6B64;&#xFF0C;&#x5373;&#x4F7F;&#x5B9A;&#x4E49;&#x7684;&#x662F;&#x6700;&#x540E;&#x4E00;&#x79CD;&#x5199;&#x6CD5;&#xFF0C;&#x770B;&#x8D77;&#x6765;&#x662F;&#x8981;&#x6C42;&#x4E00;&#x4E2A;&#x5927;&#x5C0F;&#x4E3A;10&#x7684;const int&#x6570;&#x7EC4;&#xFF0C;&#x4F46;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x4F20;&#x9012;&#x666E;&#x901A;&#x7684;int&#x6307;&#x9488;&#x8FDB;&#x53BB;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>, j[<span class="number">2</span>] = {<span class="number">0</span>, <span class="number">1</span>};</span><br><span class="line">print(&amp;i);</span><br><span class="line">print(j);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>[<span class="number">10</span>])</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;&#x5373;&#x4F7F;&#x5F62;&#x53C2;&#x4F7F;&#x7528;&#x6570;&#x7EC4;&#xFF0C;&#x4E5F;&#x4F1A;&#x5728;&#x7F16;&#x8BD1;&#x65F6;&#x8F6C;&#x6362;&#x4E3A;&#x6307;&#x9488;&#xFF0C;&#x6240;&#x4EE5;&#x51FD;&#x6570;&#x662F;&#x4E0D;&#x77E5;&#x9053;&#x4F20;&#x8FDB;&#x6765;&#x7684;&#x6570;&#x7EC4;&#x5927;&#x5C0F;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x989D;&#x5916;&#x7684;&#x4FE1;&#x606F;&#x6765;&#x6307;&#x5B9A;&#x6570;&#x7EC4;&#x5927;&#x5C0F;&#xFF0C;&#x4EE5;&#x4E0B;&#x4E3A;&#x4E09;&#x79CD;&#x666E;&#x904D;&#x7684;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<h4 id="using-a-marker-to-specify-the-extent-of-an-array">Using a Marker to Specify the Extent of an Array</h4>
+<p>&#x5982;&#x4E4B;&#x524D;&#x6240;&#x793A;&#xFF0C;C&#x98CE;&#x683C;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x5B9E;&#x9645;&#x4E0A;&#x662F;const char[]&#xFF0C;&#x800C;C&#x98CE;&#x683C;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x7528;&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x662F;&#x6570;&#x7EC4;&#x7ED3;&#x5C3E;&#x5C31;&#x662F;&#x7528;&#x4E00;&#x4E2A;&#x7A7A;&#x767D;&#x7684;&#x5B57;&#x7B26;&#x4F5C;&#x4E3A;&#x6570;&#x7EC4;&#x7ED3;&#x675F;&#x7684;&#x6807;&#x8BB0;&#x4F4D;&#xFF08;Marker&#xFF09;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">&quot;abcd&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> cp[])</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">if</span> (cp)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">while</span> (*cp)</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; *cp++;</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">abcd</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x4F46;&#x662F;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x9700;&#x8981;&#x627E;&#x5230;&#x4E00;&#x4E2A;&#x51E0;&#x4E4E;&#x4E0D;&#x4F1A;&#x4F5C;&#x4E3A;&#x6B63;&#x5E38;&#x6570;&#x636E;&#x7684;&#x503C;&#xFF0C;&#x5426;&#x5219;&#x5C31;&#x4F1A;&#x4E0E;&#x6B63;&#x5E38;&#x6570;&#x636E;&#x4EA7;&#x751F;&#x5E72;&#x6270;&#x3002;</p>
+<h4 id="using-the-standard-liberary-conventions">Using the Standard Liberary Conventions</h4>
+<p>&#x7B2C;&#x4E8C;&#x79CD;&#x65B9;&#x6CD5;&#x662F;&#x901A;&#x8FC7;&#x6807;&#x51C6;&#x5E93;&#x4E2D;&#x7684;<code>begin</code>&#x548C;<code>end</code>&#x65B9;&#x6CD5;&#x6765;&#x4F20;&#x9012;&#x6570;&#x7EC4;&#x7684;&#x5F00;&#x59CB;&#x4E0E;&#x7ED3;&#x675F;&#x6307;&#x9488;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> j[<span class="number">2</span>] = {<span class="number">0</span>, <span class="number">1</span>};</span><br><span class="line">print(begin(j), end(j));</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> *beg, <span class="keyword">const</span> <span class="keyword">int</span> *end)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">while</span> (beg != end)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *beg++ &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">0</span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h4 id="explicitly-passing-a-size-parameter">Explicitly Passing a Size Parameter</h4>
+<p>&#x51FD;&#x6570;&#x4E2D;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x5F62;&#x53C2;&#x6765;&#x6307;&#x5B9A;&#x6570;&#x7EC4;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">print(j, end(j) - begin(j));</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> *beg, <span class="keyword">size_t</span> size)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i != size; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *beg++ &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">0</span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h4 id="array-parameters-and-const">Array Parameters and const</h4>
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5728;&#x5F62;&#x53C2;&#x4F7F;&#x7528;&#x6570;&#x7EC4;&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x9650;&#x5B9A;&#x4F20;&#x9012;&#x7684;&#x6570;&#x7EC4;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> valList[] = {<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>};</span><br><span class="line">print(valList);</span><br><span class="line"><span class="comment">//print(j); // j is int array with size 2,so can&apos;t pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> (&amp;arr)[<span class="number">5</span>])</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> val : arr)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; val &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x6CE8;&#x610F;&#x6570;&#x7EC4;&#x7684;&#x5927;&#x5C0F;&#x4E5F;&#x662F;&#x6570;&#x7EC4;&#x7C7B;&#x578B;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x6240;&#x4EE5;&#x5BF9;&#x6570;&#x7EC4;&#x8FDB;&#x884C;&#x5F15;&#x7528;&#x9650;&#x5B9A;&#x4E86;&#x6570;&#x7EC4;&#x5927;&#x5C0F;&#xFF0C;&#x4F8B;&#x5B50;&#x4E2D;&#x53EA;&#x6709;&#x6570;&#x7EC4;&#x5927;&#x5C0F;&#x662F;5&#x7684;&#x6570;&#x7EC4;&#x53EF;&#x4EE5;&#x4F20;&#x9012;&#x3002;</p>
+<h4 id="passing-a-multidimensional-array">Passing a Multidimensional Array</h4>
+<p>&#x5BF9;&#x4E8E;&#x591A;&#x7EF4;&#x6570;&#x7EC4;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;&#x7684;&#x6307;&#x9488;&#x8FDB;&#x884C;&#x4F20;&#x9012;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> mat[<span class="number">3</span>][<span class="number">2</span>] = {{<span class="number">1</span>, <span class="number">2</span>}, {<span class="number">3</span>, <span class="number">4</span>}, {<span class="number">5</span>, <span class="number">6</span>}};</span><br><span class="line">print(mat, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> (*matrix)[<span class="number">2</span>], <span class="keyword">int</span> rowSize)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i != rowSize; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j != <span class="number">2</span>; ++j)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; matrix[i][j] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">2</span></span><br><span class="line"><span class="comment">3</span></span><br><span class="line"><span class="comment">4</span></span><br><span class="line"><span class="comment">5</span></span><br><span class="line"><span class="comment">6</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x5176;&#x4E2D;&#x56E0;&#x4E3A;&#x4F20;&#x5165;&#x7684;&#x662F;&#x957F;&#x5EA6;&#x4E3A;2&#x7684;&#x6570;&#x7EC4;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x5FAA;&#x73AF;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x786E;&#x8BA4;&#x5185;&#x90E8;&#x5FAA;&#x73AF;&#x7684;&#x6700;&#x5927;&#x503C;&#x4E3A;2&#x3002;<code>matrix[i]</code>&#x5B9E;&#x9645;&#x4E0A;&#x83B7;&#x53D6;&#x7684;&#x662F;&#x957F;&#x5EA6;&#x4E3A;2&#x7684;&#x6570;&#x7EC4;&#xFF0C;&#x4F46;&#x662F;&#x4F1A;&#x81EA;&#x52A8;&#x8F6C;&#x4E3A;int<em>&#xFF0C;&#x6240;&#x4EE5;<code>matrix[i][i]</code>&#x5B9E;&#x9645;&#x4E0A;&#x5BF9;&#x4E00;&#x4E2A;int</em>&#x4F7F;&#x7528;<code>[j]</code>&#x3002;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x89E3;&#x5F15;&#x7528;&#x7B26;&#x8FDB;&#x884C;&#x8BBF;&#x95EE;&#xFF0C;&#x5373;&#x5199;&#x6210;<code>*((*(matrix + i)) + j)</code></p>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x901A;&#x8FC7;&#x6307;&#x9488;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x5982;<code>int**</code>&#x6765;&#x8FDB;&#x884C;&#x4F20;&#x9012;&#x7684;&#x3002;&#x56E0;&#x4E3A;&#x6570;&#x7EC4;&#x7684;&#x5927;&#x5C0F;&#x662F;&#x7C7B;&#x578B;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x5728;&#x4E0A;&#x4F8B;&#x4E2D;&#xFF0C;<code>mat</code>&#x7684;&#x4F1A;&#x81EA;&#x52A8;&#x8F6C;&#x6362;&#x4E3A;<code>int*[2]</code>&#x800C;&#x4E0D;&#x662F;<code>int*</code>&#x3002;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x51FD;&#x6570;&#x7684;&#x5F62;&#x53C2;&#x4E3A;<code>int**</code>&#xFF0C;&#x5C06;&#x65E0;&#x6CD5;&#x5339;&#x914D;&#x3002;&#x5982;&#x679C;&#x8981;&#x4F7F;&#x7528;&#x6307;&#x9488;&#x7684;&#x6307;&#x9488;&#x6765;&#x4F20;&#x9012;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x5FC5;&#x987B;&#x7528;&#x6307;&#x9488;&#x6765;&#x8868;&#x793A;&#x591A;&#x7EF4;&#x6570;&#x7EC4;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Initial array</span></span><br><span class="line"><span class="keyword">int</span> **matrix = <span class="keyword">new</span> <span class="keyword">int</span> *[<span class="number">3</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i != <span class="number">3</span>; ++i)</span><br><span class="line">{</span><br><span class="line">    matrix[i] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line">    matrix[i][<span class="number">0</span>] = <span class="number">2</span> * i;</span><br><span class="line">    matrix[i][<span class="number">1</span>] = <span class="number">2</span> * i + <span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line">print(matrix, <span class="number">3</span>, <span class="number">2</span>);</span><br><span class="line"><span class="comment">//release data</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i != <span class="number">3</span>; ++i)</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">delete</span>[] matrix[i];</span><br><span class="line">}</span><br><span class="line"><span class="keyword">delete</span>[] matrix;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> **matrix, <span class="keyword">int</span> rowSize, <span class="keyword">int</span> columnSize)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i != rowSize; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j != columnSize; ++j)</span><br><span class="line">        {</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; matrix[i][j] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">0</span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">2</span></span><br><span class="line"><span class="comment">3</span></span><br><span class="line"><span class="comment">4</span></span><br><span class="line"><span class="comment">5</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h3 id="main-handling-command-line-options">main: Handling Command-Line Options</h3>
+<p>c++&#x7684;main&#x51FD;&#x6570;&#x5165;&#x53E3;&#xFF0C;&#x53EF;&#x4EE5;&#x662F;&#x65E0;&#x53C2;&#x7684;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x4EE5;&#x4E0B;&#x7684;&#x683C;&#x5F0F;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span>{}</span><br><span class="line"></span><br><span class="line"><span class="comment">//&#x6216;&#x8005;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>* argv[])</span></span>{}</span><br></pre></td></tr></table></figure>
+<p>&#x7B2C;&#x4E00;&#x4E2A;int&#x53C2;&#x6570;&#x8868;&#x793A;&#x4F20;&#x5165;&#x7684;&#x53C2;&#x6570;&#x6570;&#x91CF;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x662F;C&#x98CE;&#x683C;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x7C7B;&#x578B;&#x8868;&#x793A;&#x4F20;&#x5165;&#x7684;&#x53C2;&#x6570;&#x3002;&#x901A;&#x5E38;&#x6700;&#x5C11;&#x6709;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x8BE5;&#x53C2;&#x6570;&#x662F;&#x8FD0;&#x884C;&#x7684;exe&#x6587;&#x4EF6;&#x7684;&#x8DEF;&#x5F84;&#xFF0C;&#x5982;&#x5B9A;&#x4E49;main&#x51FD;&#x6570;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;argc count is &quot;</span> &lt;&lt; argc &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i != argc; ++i)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;arg is &quot;</span> &lt;&lt; argv[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5F53;&#x76F4;&#x63A5;&#x542F;&#x52A8;&#x7F16;&#x8BD1;&#x5B8C;&#x7684;exe&#x6587;&#x4EF6;&#xFF0C;<code>./a.exe</code>&#xFF0C;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x4E3A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">argc count is 1</span><br><span class="line">arg is D:\Study-Notes\C++Primer\Chapter6_Functions\a.exe</span><br></pre></td></tr></table></figure>
+<p>&#x5F53;&#x542F;&#x52A8;exe&#x5E76;&#x4F20;&#x5165;&#x53C2;&#x6570;&#x65F6;&#xFF0C;<code>./a.exe 1 2 3</code>&#xFF0C;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x4E3A;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">argc count is 4</span><br><span class="line">arg is D:\Study-Notes\C++Primer\Chapter6_Functions\a.exe</span><br><span class="line">arg is 1</span><br><span class="line">arg is 2</span><br><span class="line">arg is 3</span><br></pre></td></tr></table></figure>
+<h3 id="functions-with-varying-parameters">Functions with Varying Parameters</h3>
+<p>&#x6709;&#x7684;&#x65F6;&#x5019;&#x5E76;&#x4E0D;&#x4E86;&#x89E3;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7A76;&#x7ADF;&#x9700;&#x8981;&#x591A;&#x5C11;&#x4E2A;&#x5F62;&#x53C2;&#xFF0C;&#x5982;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x9700;&#x8981;&#x6765;&#x5904;&#x7406;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#xFF0C;&#x4F46;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#x7684;&#x6570;&#x91CF;&#x662F;&#x4E0D;&#x56FA;&#x5B9A;&#x7684;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x5904;&#x7406;&#x8FD9;&#x6837;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x5728;C++11&#x7684;&#x7279;&#x6027;&#x4E2D;&#xFF0C;&#x6709;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x7B2C;&#x4E00;&#x79CD;&#x662F;&#x901A;&#x8FC7;<code>initializer_list</code>&#xFF0C;&#x7B2C;&#x4E8C;&#x79CD;&#x662F;&#x901A;&#x8FC7;<code>variadic</code>&#x6A21;&#x677F;&#x3002;&#x7B2C;&#x4E8C;&#x79CD;&#x65B9;&#x6CD5;&#x5C06;&#x5728;16.4&#x4E2D;&#x8FDB;&#x884C;&#x8BF4;&#x660E;&#x3002;</p>
+<p>C++&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x540D;&#x4E3A;<code>elipsis</code>&#x7684;&#x53C2;&#x6570;&#x7C7B;&#x578B;&#xFF0C;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x4F20;&#x9012;&#x4E0D;&#x540C;&#x6570;&#x91CF;&#x7684;&#x5B9E;&#x53C2;&#xFF0C;&#x4F46;&#x662F;&#x8BE5;&#x65B9;&#x6CD5;&#x5E94;&#x8BE5;&#x4EC5;&#x5728;&#x4E0E;C&#x63A5;&#x53E3;&#x8FDB;&#x884C;&#x901A;&#x4FE1;&#x65F6;&#x4F7F;&#x7528;&#x3002;</p>
+<h4 id="initializer_list-parameters">initializer_list Parameters</h4>
+<p>initializer_list&#x662F;&#x4E00;&#x79CD;&#x8868;&#x793A;&#x6570;&#x7EC4;&#x7684;&#x6807;&#x51C6;&#x5E93;&#x4E2D;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x652F;&#x6301;&#x7684;&#x64CD;&#x4F5C;&#x5982;&#x4E0B;&#x8868;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x4EE3;&#x7801;</th>
+<th>&#x542B;&#x4E49;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>initializer_list<t> lst;</t></td>
+<td>&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;</td>
+</tr>
+<tr class="even">
+<td>initializer_list<t> lst{a,b,c}</t></td>
+<td>&#x53C2;&#x6570;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x5143;&#x7D20;&#x662F;&#x521D;&#x59CB;&#x503C;&#x7684;&#x62F7;&#x8D1D;&#xFF0C;&#x4E14;list&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x90FD;&#x662F;const&#x7684;</td>
+</tr>
+<tr class="odd">
+<td>lst2(lst)</td>
+<td>initializer_list&#x7684;&#x62F7;&#x8D1D;&#x6216;&#x8D4B;&#x503C;</td>
+</tr>
+<tr class="even">
+<td>lst2 = lst</td>
+<td>&#x540C;&#x4E0A;</td>
+</tr>
+<tr class="odd">
+<td>lst.size()</td>
+<td>&#x8FD4;&#x56DE;initializer_list&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x6570;&#x91CF;</td>
+</tr>
+<tr class="even">
+<td>lst.begin()</td>
+<td>&#x8FD4;&#x56DE;&#x7B2C;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x7684;&#x6307;&#x9488;</td>
+</tr>
+<tr class="odd">
+<td>lst.end()</td>
+<td>&#x8FD4;&#x56DE;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x540E;&#x9762;&#x7684;&#x6307;&#x9488;</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>initializer_list&#x7684;&#x62F7;&#x8D1D;&#x64CD;&#x4F5C;&#x5B9E;&#x9645;&#x4E0A;&#x5E76;&#x6CA1;&#x6709;&#x62F7;&#x8D1D;&#xFF0C;&#x800C;&#x662F;&#x5171;&#x4EAB;&#x88AB;&#x62F7;&#x8D1D;&#x5BF9;&#x8C61;&#x7684;&#x5143;&#x7D20;</li>
+</ul>
+<p>&#x5982;&#x540C;vector&#xFF0C;initializer_list&#x4E5F;&#x662F;&#x6A21;&#x677F;&#x7C7B;&#xFF0C;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x5143;&#x7D20;&#x7684;&#x7C7B;&#x578B;&#x3002;</p>
+<p>&#x5982;&#x8868;&#x683C;&#x4E2D;&#x6240;&#x8FF0;&#xFF0C;initializer_list&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x90FD;&#x662F;const&#x7684;&#xFF0C;&#x65E0;&#x6CD5;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#x3002;</p>
+<p>&#x5F53;&#x8C03;&#x7528;initializer_list&#x4F5C;&#x4E3A;&#x53C2;&#x6570;&#x7684;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x4F20;&#x9012;&#x4E00;&#x7CFB;&#x5217;&#x7684;&#x503C;&#x6765;&#x76F4;&#x63A5;&#x521D;&#x59CB;&#x5316;initializer_list&#xFF0C;&#x5219;&#x8FD9;&#x4E9B;&#x503C;&#x5FC5;&#x987B;&#x653E;&#x5728;&#x5927;&#x62EC;&#x53F7;&#x5185;&#x3002;</p>
+<p>&#x4F7F;&#x7528;&#x4F8B;&#x5B50;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestVaryingParameters</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    error_msg({<span class="string">&quot;functionX&quot;</span>, <span class="string">&quot;abc&quot;</span>, <span class="string">&quot;def&quot;</span>});</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">error_msg</span><span class="params">(<span class="built_in">initializer_list</span>&lt;<span class="built_in">string</span>&gt; il)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> beg = il.begin(); beg != il.end(); ++beg)</span><br><span class="line">    {</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; *beg &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">functionX abc def </span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h4 id="ellipsis-parameters">Ellipsis Parameters</h4>
+<p>Elipsis&#x662F;C++&#x7528;&#x6765;&#x8BBF;&#x95EE;C&#x4E2D;&#x7684;&#x5E93;&#x7684;&#xFF0C;&#x4E66;&#x4E2D;&#x4E5F;&#x672A;&#x8FDB;&#x884C;&#x8BE6;&#x7EC6;&#x8BF4;&#x660E;&#x3002;&#x4F46;&#x65E5;&#x540E;&#x4F7F;&#x7528;&#x5230;&#x65F6;&#x518D;&#x8FDB;&#x884C;&#x67E5;&#x8BE2;&#x3002;</p>
+<h2 id="return-types-and-the-return-statement">Return Types and the return Statement</h2>
+<h3 id="functions-with-no-return-value">Functions with No Return Value</h3>
+<p>&#x5728;&#x65E0;&#x8FD4;&#x56DE;&#x503C;&#x7684;&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x5728;&#x51FD;&#x6570;&#x5C3E;&#x90E8;&#x9690;&#x5F0F;&#x7684;&#x52A0;&#x5165;&#x4E00;&#x4E2A;return&#x8BED;&#x53E5;&#x3002;</p>
+<h4 id="functions-that-return-a-value">Functions That Return a value</h4>
+<p>&#x5982;&#x679C;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x4E0D;&#x4E3A;&#x7A7A;&#xFF0C;&#x5219;&#x5FC5;&#x987B;&#x5199;&#x660E;&#x6709;return&#x8BED;&#x53E5;&#x8FD4;&#x56DE;&#x8BE5;&#x7C7B;&#x578B;&#x7684;&#x503C;&#xFF0C;&#x6216;&#x8005;&#x662F;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x4E3A;&#x8BE5;&#x7C7B;&#x578B;&#x7684;&#x503C;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x51FD;&#x6570;&#x4E2D;&#x6709;&#x5224;&#x65AD;&#x8BED;&#x53E5;&#xFF0C;&#x4E14;&#x5728;&#x67D0;&#x4E9B;case&#x4E0B;&#x6CA1;&#x6709;&#x8FD4;&#x56DE;&#x503C;&#xFF0C;&#x90A3;&#x4E48;&#x7F16;&#x8BD1;&#x5668;&#x6709;&#x53EF;&#x80FD;&#x53EF;&#x4EE5;&#x68C0;&#x6D4B;&#x51FA;&#x8BE5;&#x9519;&#x8BEF;&#xFF0C;&#x4E5F;&#x6709;&#x53EF;&#x80FD;&#x68C0;&#x6D4B;&#x4E0D;&#x51FA;&#x6765;&#xFF0C;&#x5F53;&#x68C0;&#x6D4B;&#x4E0D;&#x51FA;&#x6765;&#x65F6;&#xFF0C;&#x51FD;&#x6570;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;</p>
+<h4 id="how-values-are-returned">How Values Are returned</h4>
+<p>&#x51FD;&#x6570;&#x4E2D;&#x8FD4;&#x56DE;&#x7684;&#x503C;&#xFF0C;&#x4F1A;&#x7528;&#x6765;&#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A;&#x4E34;&#x65F6;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x8BE5;&#x4E34;&#x65F6;&#x7684;&#x53D8;&#x91CF;&#x4F1A;&#x4F5C;&#x4E3A;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x3002;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">ReturnThePluralVersionOfWord</span><span class="params">(<span class="keyword">size_t</span> ctr, <span class="keyword">const</span> <span class="built_in">string</span> &amp;word, <span class="keyword">const</span> <span class="built_in">string</span> &amp;ending)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">return</span> (ctr &lt;= <span class="number">1</span>) ? word : word + ending;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5F53;ctr &lt;= 1&#x65F6;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x662F;word&#x7684;&#x62F7;&#x8D1D;&#xFF0C;&#x5F53;ctr &gt; 1&#x65F6;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x4E00;&#x4E2A;&#x672A;&#x547D;&#x540D;&#x7684;&#x4E34;&#x65F6;string&#xFF0C;&#x5176;&#x4E2D;&#x7684;&#x503C;&#x4E3A;word + ending&#x3002;</p>
+<h4 id="nerver-return-a-reference-or-pointer-to-a-local-object">Nerver Return a Reference or Pointer to a Local Object</h4>
+<p>&#x5982;&#x679C;&#x8981;&#x907F;&#x514D;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x53C2;&#x6570;&#x7684;&#x65F6;&#x7684;&#x62F7;&#x8D1D;&#xFF0C;&#x53EF;&#x4EE5;&#x5C06;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x8BBE;&#x7F6E;&#x4E3A;&#x5F15;&#x7528;&#x3002;&#x4F46;&#x8981;&#x6CE8;&#x610F;&#x5343;&#x4E07;&#x4E0D;&#x8981;&#x8FD4;&#x56DE;&#x672C;&#x5730;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x7684;&#x5F15;&#x7528;&#x6216;&#x6307;&#x9488;&#x3002;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">const</span> <span class="built_in">string</span> &amp;<span class="title">manip</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="built_in">string</span> ret;</span><br><span class="line">    <span class="keyword">if</span> (!ret.empty())</span><br><span class="line">        <span class="keyword">return</span> ret; <span class="comment">//error,return reference of local variable</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;empty&quot;</span>;<span class="comment">//error, return reference of a temporary string</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x8FD4;&#x56DE;&#x7684;&#x662F;ret&#xFF0C;&#x90A3;&#x4E48;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x4E00;&#x4E2A;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x5F53;&#x9000;&#x51FA;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x8BE5;&#x53D8;&#x91CF;&#x4F1A;&#x88AB;&#x91CA;&#x653E;&#xFF0C;&#x4E8E;&#x662F;&#x5F15;&#x7528;&#x7684;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x7A7A;&#x53C2;&#x6570;&#x3002;&#x5982;&#x679C;&#x8FD4;&#x56DE;&#x7684;&#x662F;&quot;empty&quot;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x503C;&#x4E3A;empty&#x7684;&#x4E34;&#x65F6;&#x53D8;&#x91CF;&#x7684;&#x5F15;&#x7528;&#x3002;</p>
+<p>&#x8FD9;&#x4E24;&#x79CD;&#x8FD4;&#x56DE;&#x65B9;&#x5F0F;&#x7684;&#x7ED3;&#x679C;&#x90FD;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;</p>
+<h4 id="reference-returns-are-lvalues">Reference Returns Are Lvalues</h4>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x7C7B;&#x578B;&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x53F3;&#x53C2;&#x6570;&#x3002;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x7C7B;&#x578B;&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x5DE6;&#x53C2;&#x6570;&#x3002;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x5C06;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x4E3A;&#x5F15;&#x7528;&#x7684;&#x51FD;&#x6570;&#x653E;&#x5728;&#x7B49;&#x5F0F;&#x7684;&#x5DE6;&#x8FB9;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> &amp;<span class="title">Get_Val</span><span class="params">(<span class="built_in">string</span> &amp;str, <span class="built_in">string</span>::size_type ix)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">return</span> str[ix];</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">&quot;abc&quot;</span>)</span></span>;</span><br><span class="line">Get_Val(s,<span class="number">0</span>) = <span class="string">&apos;A&apos;</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="list-initializing-the-return-value">List Initializing the Return Value</h4>
+<p>&#x5728;C++11&#x7279;&#x6027;&#x4E0B;&#xFF0C;&#x51FD;&#x6570;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5927;&#x62EC;&#x53F7;&#x62EC;&#x5176;&#x4E00;&#x7CFB;&#x5217;&#x8FD4;&#x56DE;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; process()</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">return</span> {<span class="string">&quot;A&quot;</span>, <span class="string">&quot;Bb&quot;</span>, <span class="string">&quot;c&quot;</span>};</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8BE5;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x4E34;&#x65F6;&#x7684;vector<string>&#x53D8;&#x91CF;&#xFF0C;&#x53D8;&#x91CF;&#x4E2D;&#x6709;&#x4E09;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x7531;&#x8FD4;&#x56DE;&#x503C;&#x6765;&#x5145;&#x586B;&#x3002;</string></p>
+<h4 id="return-from-main">Return from main</h4>
+<p>main&#x51FD;&#x6570;&#x867D;&#x7136;&#x6307;&#x5B9A;&#x4E86;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;int&#xFF0C;&#x4F46;&#x5374;&#x53EF;&#x4EE5;&#x4E0D;&#x5199;&#x8FD4;&#x56DE;&#x8BED;&#x53E5;&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x5F53;&#x6CA1;&#x6709;&#x8FD4;&#x56DE;&#x8BED;&#x53E5;&#x65F6;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x8865;&#x4E0A;return 0&#x3002;</p>
+<p>main&#x51FD;&#x6570;&#x8FD4;&#x56DE;0&#x8868;&#x793A;&#x6267;&#x884C;&#x6210;&#x529F;&#xFF0C;&#x8FD4;&#x56DE;&#x5176;&#x4ED6;&#x6570;&#x503C;&#x901A;&#x5E38;&#x8868;&#x793A;&#x6267;&#x884C;&#x4E0D;&#x6210;&#x529F;&#xFF0C;&#x5177;&#x4F53;&#x7684;&#x5B9A;&#x4E49;&#x662F;&#x7CFB;&#x7EDF;&#x76F8;&#x5173;&#x7684;&#xFF0C;&#x8981;&#x8FD4;&#x56DE;&#x7CFB;&#x7EDF;&#x4E0D;&#x76F8;&#x5173;&#x7684;&#x503C;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5934;&#x6587;&#x4EF6;<code>cstdlib</code>&#x3002;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">if</span>(someFailure)</span><br><span class="line">        <span class="keyword">return</span> EXIST_FAILURE;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> EXIST_SUCCESS;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x4E24;&#x8005;&#x90FD;&#x662F;&#x9884;&#x5904;&#x7406;&#x5668;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x4F5C;&#x7528;&#x57DF;&#x6216;using&#x8BED;&#x53E5;&#x3002;</p>
+<h4 id="recursion">Recursion</h4>
+<p>&#x5728;&#x51FD;&#x6570;&#x4E2D;&#x53EF;&#x4EE5;&#x518D;&#x8C03;&#x7528;&#x81EA;&#x5DF1;&#xFF0C;&#x8FD9;&#x79CD;&#x79F0;&#x4E3A;&#x9012;&#x5F52;&#x3002;</p>
+<p>main&#x51FD;&#x6570;&#x4E2D;&#x4E0D;&#x80FD;&#x518D;&#x8C03;&#x7528;&#x81EA;&#x5DF1;&#x3002;</p>
+<h3 id="returning-a-pointer-to-an-array">Returning a Pointer to an Array</h3>
+<p>&#x540C;&#x6837;&#x56E0;&#x4E3A;&#x6570;&#x7EC4;&#x65E0;&#x6CD5;&#x88AB;&#x62F7;&#x8D1D;&#xFF0C;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x65E0;&#x6CD5;&#x8FD4;&#x56DE;&#x6570;&#x7EC4;&#x7C7B;&#x578B;&#xFF0C;&#x4F46;&#x662F;&#x8FD4;&#x56DE;&#x6570;&#x7EC4;&#x7684;&#x6307;&#x9488;&#x3002;&#x5173;&#x4E8E;&#x5B9A;&#x4E49;&#x8FD4;&#x56DE;&#x6570;&#x7EC4;&#x6307;&#x9488;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x6709;&#x4EE5;&#x4E0B;&#x51E0;&#x79CD;&#x65B9;&#x6CD5;</p>
+<h4 id="typedef-using">Typedef / Using</h4>
+<h4 id="functions-that-return-class-types-and-the-call-operator">Functions That Return Class Types and the Call Operator</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> arrt[<span class="number">10</span>];</span><br><span class="line"><span class="comment">// using arrt = int[10];// equally</span></span><br><span class="line"></span><br><span class="line"><span class="function">arrt *<span class="title">funcArray</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="declaring-a-function-that-returns-a-pointer-to-an-array">Declaring a Function That Returns a Pointer to an Array</h4>
+<p>&#x50CF;&#x58F0;&#x660E;&#x6307;&#x5411;&#x6570;&#x7EC4;&#x7684;&#x53D8;&#x91CF;&#x90A3;&#x6837;&#x76F4;&#x63A5;&#x5B9A;&#x4E49;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*funcArray())[<span class="number">10</span>];</span><br></pre></td></tr></table></figure>
+<p>funcArray()&#x8868;&#x660E;&#x5F62;&#x53C2;&#x4E3A;&#x7A7A;&#xFF0C;(*funcArray())&#x8868;&#x660E;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x4E00;&#x4E2A;&#x6307;&#x9488;&#x7C7B;&#x578B;&#x3002;</p>
+<h4 id="using-a-trailing-return-type">Using a Trailing Return Type</h4>
+<p>&#x8BE5;&#x65B9;&#x6CD5;&#x662F;C++11&#x7684;&#x7279;&#x6027;&#xFF0C;Trailing Return&#x53EF;&#x4EE5;&#x9488;&#x5BF9;&#x4EFB;&#x4F55;&#x7684;&#x7C7B;&#x578B;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x4F46;&#x9488;&#x5BF9;&#x8FD4;&#x56DE;&#x503C;&#x4E3A;&#x6570;&#x7EC4;&#x7684;&#x6307;&#x9488;&#x7684;&#x51FD;&#x6570;&#x65F6;&#x5C24;&#x4E3A;&#x6709;&#x6548;&#x3002;&#x5982;</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto funcArray() -&gt; int (*)[];</span><br></pre></td></tr></table></figure>
+<p>&#x8BE5;&#x65B9;&#x6CD5;&#x4E0B;&#xFF0C;&#x7528;auto&#x66FF;&#x4EE3;&#x539F;&#x5148;&#x5B9A;&#x4E49;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x7684;&#x5730;&#x65B9;&#x3002;</p>
+<h4 id="using-decltype">Using decltype</h4>
+<p>&#x56E0;&#x4E3A;&#x5BF9;&#x6570;&#x7EC4;&#x4F7F;&#x7528;decltype&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x6570;&#x7EC4;&#x7C7B;&#x578B;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x6307;&#x9488;&#x7C7B;&#x578B;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> odd[] = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};</span><br><span class="line"><span class="keyword">int</span> even[] = {<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>};</span><br><span class="line"><span class="keyword">decltype</span>(odd) *funcArray()</span><br><span class="line">{</span><br><span class="line">    <span class="keyword">return</span> &amp;odd;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h2 id="overloaded-functions">Overloaded Functions</h2>
+<p>main&#x51FD;&#x6570;&#x65E0;&#x6CD5;&#x88AB;&#x91CD;&#x8F7D;</p>
+<h4 id="defining-overloaded-functions">Defining Overloaded Functions</h4>
+<p>&#x91CD;&#x8F7D;&#x51FD;&#x6570;&#x5FC5;&#x987B;&#x5728;&#x5F62;&#x53C2;&#x7684;&#x7C7B;&#x578B;&#x6216;&#x8005;&#x5F62;&#x53C2;&#x7684;&#x6570;&#x91CF;&#x4E0A;&#x6709;&#x533A;&#x5206;&#x3002;&#x65E0;&#x6CD5;&#x4EC5;&#x4EC5;&#x901A;&#x8FC7;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x6765;&#x8FDB;&#x884C;&#x91CD;&#x8F7D;&#x3002;</p>
+<h4 id="overloading-and-const-parameters">Overloading and const Parameters</h4>
+<p>&#x65E0;&#x6CD5;&#x4EC5;&#x901A;&#x8FC7;&#x5F62;&#x53C2;&#x7684;top-level&#x7684;const&#x5C5E;&#x6027;&#x8FDB;&#x884C;&#x51FD;&#x6570;&#x91CD;&#x8F7D;&#xFF0C;&#x5982;&#x4E0B;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x867D;&#x7136;&#x4E0D;&#x540C;&#xFF0C;&#x4F46;&#x5374;&#x4F1A;&#x9020;&#x6210;&#x91CD;&#x590D;&#x5B9A;&#x4E49;&#x3002;&#x56E0;&#x4E3A;&#x5F53;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x65F6;&#xFF0C;top-level&#x7684;const&#x5C5E;&#x6027;&#x4F1A;&#x88AB;&#x65E0;&#x89C6;&#xFF0C;&#x56E0;&#x6B64;&#x5BF9;&#x4E8E;&#x8C03;&#x7528;&#x8005;&#x800C;&#x8BF4;&#xFF0C;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x662F;&#x6CA1;&#x6709;&#x533A;&#x522B;&#x7684;&#xFF0C;&#x5B83;&#x4EEC;&#x5B9E;&#x9645;&#x5DEE;&#x5F02;&#x662F;&#x4F53;&#x73B0;&#x5728;&#x51FD;&#x6570;body&#x4E2D;&#x5BF9;&#x5F62;&#x53C2;&#x7684;&#x5904;&#x7406;&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Record <span class="title">lookup</span><span class="params">(Phone)</span></span>;</span><br><span class="line">Record lookup[(<span class="keyword">const</span> Phone);</span><br></pre></td></tr></table></figure>
+<p>&#x4F46;&#x5982;&#x679C;const&#x7684;&#x533A;&#x522B;&#x662F;low-level&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x662F;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x91CD;&#x8F7D;&#x7684;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Record <span class="title">loopup</span><span class="params">(Account&amp;)</span></span>;</span><br><span class="line"><span class="function">Record <span class="title">loopup</span><span class="params">(<span class="keyword">const</span> Account&amp;)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>&#x5BF9;&#x4E8E;&#x8C03;&#x7528;&#x8005;&#x800C;&#x8A00;&#xFF0C;&#x4E0A;&#x9762;&#x7684;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x3002;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x7684;&#x5B9E;&#x53C2;&#x662F;const&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x5C06;&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x7B2C;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x3002;&#x5F53;&#x4F7F;&#x7528;&#x7684;&#x5F62;&#x53C2;&#x662F;&#x975E;const&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x4F1A;&#x4F18;&#x5148;&#x8C03;&#x7528;&#x7B2C;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x5173;&#x4E8E;&#x91CD;&#x8F7D;&#x51FD;&#x6570;&#x7684;&#x8C03;&#x7528;&#x9009;&#x62E9;&#x89C4;&#x5219;&#x4F1A;&#x5728;&#x4E4B;&#x540E;&#x7684;&#x5C0F;&#x8282;&#x4E2D;&#x8FDB;&#x884C;&#x8BF4;&#x660E;&#x3002;</p>
+<h4 id="const_cast-and-overloading">const_cast and Overloading</h4>
+<p>&#x5982;&#x6709;&#x4EE5;&#x4E0B;&#x51FD;&#x6570;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">const</span> <span class="built_in">string</span> &amp;<span class="title">shorterString</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s1, <span class="keyword">const</span> <span class="built_in">string</span> &amp;s2)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">return</span> s1.size() &lt; s2.size() ? s1 : s2;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x51FD;&#x6570;&#x7684;&#x5F62;&#x53C2;&#x662F;low level&#x7684;const&#x5F15;&#x7528;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x7C7B;&#x578B;&#x4E5F;&#x4E3A;low level&#x7684;const&#x5F15;&#x7528;&#x3002;&#x5982;&#x679C;&#x8C03;&#x7528;&#x7684;&#x5B9E;&#x53C2;&#x4E3A;&#x975E;const&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x4F1A;&#x8FDB;&#x884C;&#x9690;&#x5F0F;&#x7684;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#xFF0C;&#x6B64;&#x65F6;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x5C06;&#x4ECD;&#x7136;&#x662F;const&#x7684;&#x5F15;&#x7528;&#x3002;</p>
+<p>&#x800C;&#x5982;&#x679C;&#x60F3;&#x8981;&#x5B9E;&#x73B0;&#xFF0C;&#x4F20;&#x5165;&#x7684;&#x5B9E;&#x53C2;&#x662F;const&#x7684;&#xFF0C;&#x8FD4;&#x56DE;&#x4E3A;const&#x7C7B;&#x578B;&#xFF1B;&#x4F20;&#x5165;&#x7684;&#x5B9E;&#x53C2;&#x662F;non-const&#x7C7B;&#x578B;&#xFF0C;&#x8FD4;&#x56DE;&#x4E5F;&#x4F1A;non-const&#x7C7B;&#x578B;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x51FD;&#x6570;&#x91CD;&#x8F7D;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> &amp;<span class="title">shorterString</span><span class="params">(<span class="built_in">string</span> &amp;s1, <span class="built_in">string</span> &amp;s2)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">string</span> &amp;r = shorterString(<span class="keyword">const_cast</span>&lt;<span class="keyword">const</span> <span class="built_in">string</span> &amp;&gt;(s1), <span class="keyword">const_cast</span>&lt;<span class="keyword">const</span> <span class="built_in">string</span> &amp;&gt;(s2));</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">const_cast</span>&lt;<span class="built_in">string</span> &amp;&gt;(r);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x901A;&#x8FC7;&#x8C03;&#x7528;&#x5F62;&#x53C2;&#x4E3A;const&#x5F15;&#x7528;&#x7684;&#x7248;&#x672C;&#x6765;&#x83B7;&#x53D6;&#x7ED3;&#x679C;&#xFF0C;&#x6CE8;&#x610F;&#x5728;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x5C06;&#x5F62;&#x53C2;&#x8F6C;&#x6362;&#x4E3A;const&#x7C7B;&#x578B;&#xFF0C;&#x5426;&#x5219;&#x8C03;&#x7528;&#x7684;&#x5C06;&#x8FD8;&#x662F;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x672C;&#x8EAB;&#xFF0C;&#x5373;&#x5F62;&#x6210;&#x4E86;&#x65E0;&#x6B62;&#x5883;&#x7684;&#x9012;&#x5F52;&#x3002;&#x5728;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x65F6;&#x5C06;const&#x5F15;&#x7528;&#x7684;&#x7248;&#x672C;&#x8FD4;&#x56DE;&#x7684;const string&amp;&#x8F6C;&#x6362;&#x4E3A;string&amp;&#x3002;</p>
+<h4 id="calling-an-overloaded-function">Calling an Overloaded Function</h4>
+<p>&#x4ECE;&#x4E00;&#x7CFB;&#x5217;&#x91CD;&#x8F7D;&#x51FD;&#x6570;&#x4E2D;&#x627E;&#x5230;&#x6B63;&#x786E;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;&#x53EB;&#x505A;&#x51FD;&#x6570;&#x5339;&#x914D;&#xFF08;Function matching&#xFF09;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x8C03;&#x7528;&#x91CD;&#x8F7D;&#x51FD;&#x6570;&#xFF0C;&#x4E00;&#x5171;&#x6709;&#x4E09;&#x79CD;&#x53EF;&#x80FD;&#x7684;&#x7ED3;&#x679C;&#xFF1A;</p>
+<ol type="1">
+<li>&#x7F16;&#x8BD1;&#x5668;&#x627E;&#x5230;&#x4E86;&#x6700;&#x4F73;&#x7684;&#x5339;&#x914D;&#x51FD;&#x6570;&#xFF08;Best match&#xFF09;&#xFF0C;&#x6700;&#x7EC8;&#x5C06;&#x8C03;&#x7528;&#x8BE5;&#x51FD;&#x6570;&#x3002;</li>
+<li>&#x7F16;&#x8BD1;&#x5668;&#x6CA1;&#x6709;&#x627E;&#x5230;&#x4EFB;&#x4F55;&#x53EF;&#x4EE5;&#x5339;&#x914D;&#x7684;&#x51FD;&#x6570;&#xFF08;No match&#xFF09;&#xFF0C;&#x6700;&#x7EC8;&#x7F16;&#x8BD1;&#x5668;&#x5C06;&#x62A5;&#x9519;&#x3002;</li>
+<li>&#x7F16;&#x8BD1;&#x5668;&#x627E;&#x5230;&#x4E86;&#x591A;&#x4E2A;&#x5339;&#x914D;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x4E14;&#x65E0;&#x6CD5;&#x4ECE;&#x4E2D;&#x5224;&#x65AD;&#x51FA;&#x8C01;&#x5339;&#x914D;&#x5EA6;&#x66F4;&#x9AD8;&#xFF0C;&#x4E3A;&#x6B67;&#x4E49;&#x8C03;&#x7528;&#xFF08;Ambiguous call&#xFF09;&#xFF0C;&#x6700;&#x7EC8;&#x7F16;&#x8BD1;&#x5668;&#x5C06;&#x62A5;&#x9519;&#x3002;</li>
+</ol>
+<h3 id="overloading-and-scope">Overloading and Scope</h3>
+<p>&#x5982;&#x679C;&#x5728;&#x5185;&#x5C42;&#x7684;&#x4EE3;&#x7801;&#x8303;&#x56F4;&#x5185;&#x58F0;&#x660E;&#x6216;&#x8005;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x540D;&#x5B57;&#xFF0C;&#x5219;&#x5728;&#x5916;&#x5C42;&#x4EE3;&#x7801;&#x5757;&#x8303;&#x56F4;&#x4E2D;&#x540C;&#x6837;&#x540D;&#x5B57;&#x7684;&#x5BF9;&#x8C61;&#x5C06;&#x88AB;&#x9690;&#x85CF;&#x3002;&#x8FD9;&#x4E2A;&#x89C4;&#x5219;&#x540C;&#x65F6;&#x9002;&#x7528;&#x4E8E;&#x53D8;&#x91CF;&#x548C;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF0C;&#x5728;&#x5185;&#x5C42;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#x548C;&#x51FD;&#x6570;&#x5C06;&#x9690;&#x85CF;&#x5916;&#x5C42;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x7684;&#x540C;&#x540D;&#x53D8;&#x91CF;&#x4E0E;&#x51FD;&#x6570;&#xFF0C;&#x5982;&#x679C;&#x8981;&#x8C03;&#x7528;&#x5916;&#x5C42;&#x4F5C;&#x7528;&#x57DF;&#x7684;&#x8BDD;&#x9700;&#x8981;<code>::</code>&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">read</span><span class="params">()</span> </span>{ <span class="keyword">return</span> <span class="string">&quot;readed&quot;</span>; }</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> </span>{ <span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>; }</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">double</span> d)</span> </span>{ <span class="built_in">cout</span> &lt;&lt; d &lt;&lt; <span class="built_in">endl</span>; }</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fooBar</span><span class="params">(<span class="keyword">int</span> ival)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">bool</span> read = <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">// string s = read();//error, read() is hidden, in this scope read is a bool variable</span></span><br><span class="line">    <span class="built_in">string</span> s = ::read(); <span class="comment">//ok,use :: to indicate search name is global scope</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Decalare a function in the inner scope.This action is rare in practice.</span></span><br><span class="line">    <span class="comment">//Here we only use this to illustrate scope hidding</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line">    <span class="comment">// print(&quot;value :&quot;);//error, print(const string &amp;s) is hidden.</span></span><br><span class="line">    print(ival);</span><br><span class="line">    print(<span class="number">3.14</span>);<span class="comment">//ok, but it will call print(int)</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;C++&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x8C03;&#x7528;&#x4E86;&#x4E00;&#x4E2A;&#x540D;&#x5B57;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x5728;&#x5F53;&#x524D;&#x4F5C;&#x7528;&#x57DF;&#x9996;&#x5148;&#x627E;&#x8BE5;&#x540D;&#x5B57;&#x7684;&#x5BF9;&#x8C61;&#xFF08;&#x53EF;&#x80FD;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x53EF;&#x80FD;&#x4E00;&#x4E2A;&#xFF0C;&#x53EF;&#x80FD;&#x591A;&#x4E2A;&#xFF09;&#x3002;&#x5982;&#x679C;&#x5BF9;&#x8C61;&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x8BDD;&#xFF0C;&#x624D;&#x4F1A;&#x53BB;&#x5916;&#x90E8;&#x4F5C;&#x7528;&#x57DF;&#x67E5;&#x627E;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x5728;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x8C03;&#x7528;<code>print</code>&#x51FD;&#x6570;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x5728;&#x5F53;&#x524D;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x627E;&#x5230;&#x4E86;<code>print(int)</code>&#xFF0C;&#x5C31;&#x4E0D;&#x4F1A;&#x5728;&#x5916;&#x5C42;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x67E5;&#x627E;&#x4E86;&#xFF0C;&#x4E8E;&#x662F;<code>print(double)</code>&#x4E0E;<code>print(const string&amp;)</code>&#x90FD;&#x4E0D;&#x4F1A;&#x88AB;&#x4F5C;&#x4E3A;&#x91CD;&#x8F7D;&#x7684;&#x5019;&#x9009;&#x4EBA;&#xFF0C;&#x66F4;&#x4E0D;&#x4F1A;&#x8FDB;&#x884C;&#x51FD;&#x6570;&#x5339;&#x914D;&#x3002;</p>
+<h2 id="features-for-specialized-uses">Features for Specialized Uses</h2>
+<h3 id="default-arguments">Default Arguments</h3>
+<p>&#x53EF;&#x4EE5;&#x4E3A;&#x5F62;&#x53C2;&#x8BBE;&#x5B9A;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#x3002;&#x4F46;&#x5982;&#x679C;&#x4E3A;&#x4E00;&#x4E2A;&#x5F62;&#x53C2;&#x8BBE;&#x5B9A;&#x4E86;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#xFF0C;&#x8BE5;&#x5F62;&#x53C2;&#x540E;&#x9762;&#x7684;&#x6240;&#x6709;&#x5F62;&#x53C2;&#x90FD;&#x5FC5;&#x987B;&#x6307;&#x660E;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#x3002;</p>
+<p>&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">screen</span><span class="params">(<span class="keyword">int</span> ht = <span class="number">24</span>, <span class="keyword">int</span> wid = <span class="number">80</span>,<span class="keyword">char</span> background = <span class="string">&apos; &apos;</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>&#x5982;&#x679C;&#x4EC5;&#x60F3;&#x8981;&#x4FEE;&#x6539;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x5176;&#x4ED6;&#x7684;&#x53D8;&#x91CF;&#x4ECD;&#x7136;&#x6309;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#xFF0C;&#x4E5F;&#x4ECD;&#x7136;&#x5FC5;&#x987B;&#x5199;&#x660E;&#x524D;&#x9762;&#x7684;&#x53C2;&#x6570;&#x3002;</p>
+<p>&#x5982;&#x8C03;&#x7528;<code>screen(&apos;?&apos;)</code>&#xFF0C;&#x770B;&#x8D77;&#x6765;&#x5B9E;&#x53C2;&#x7C7B;&#x578B;&#x4E3A;<code>char</code>&#xFF0C;&#x4E0E;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x76F8;&#x5339;&#x914D;&#xFF0C;&#x4F46;&#x5728;&#x8C03;&#x7528;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5F62;&#x53C2;&#x4E0E;&#x5B9E;&#x53C2;&#x662F;&#x4E00;&#x4E00;&#x5BF9;&#x5E94;&#x7684;&#xFF0C;&#x8BE5;&#x8868;&#x8FBE;&#x5F0F;&#x7B49;&#x540C;&#x4E8E;<code>screen(&apos;?&apos;, 80, &apos; &apos;</code>&#xFF0C;&#x5373;<code>&apos;?&apos;</code>&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;int&#x4F5C;&#x4E3A;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x3002;</p>
+<h4 id="default-argument-declarations">Default Argument Declarations</h4>
+<p>C++&#x4E2D;&#xFF0C;&#x53EA;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x591A;&#x6B21;&#x58F0;&#x660E;&#x53D8;&#x91CF;&#x3002;&#x4F46;&#x662F;&#x5BF9;&#x4E8E;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#x800C;&#x8A00;&#xFF0C;&#x6BCF;&#x4E2A;&#x5F62;&#x53C2;&#x7684;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#x90FD;&#x6700;&#x591A;&#x88AB;&#x58F0;&#x660E;&#x4E00;&#x6B21;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">screen</span><span class="params">(<span class="keyword">int</span>,<span class="keyword">int</span>,<span class="keyword">char</span> = <span class="string">&apos; &apos;</span>)</span></span>;</span><br><span class="line"><span class="comment">// string screen(int,int,char = &apos;*&apos;);</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">screen</span><span class="params">(<span class="keyword">int</span>=<span class="number">24</span>,<span class="keyword">int</span>=<span class="number">80</span>,<span class="keyword">char</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x7B2C;&#x4E00;&#x6761;&#x8BED;&#x53E5;&#x6267;&#x884C;&#x540E;&#xFF0C;&#x7B2C;&#x4E8C;&#x6761;&#x8BED;&#x53E5;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x91CD;&#x65B0;&#x58F0;&#x660E;&#x4E86;char&#x7C7B;&#x578B;&#x7684;&#x5F62;&#x53C2;&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#xFF0C;&#x9020;&#x6210;&#x4E86;&#x91CD;&#x590D;&#x5B9A;&#x4E49;&#x3002;&#x800C;&#x7B2C;&#x4E09;&#x6761;&#x8BED;&#x53E5;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x6267;&#x884C;&#xFF0C;&#x4E14;&#x7B2C;&#x4E09;&#x6761;&#x8BED;&#x53E5;&#x6267;&#x884C;&#x540E;&#xFF0C;&#x51FD;&#x6570;<code>screen</code>&#x7684;&#x4E09;&#x4E2A;&#x5F62;&#x53C2;&#x90FD;&#x6709;&#x4E86;&#x9ED8;&#x8BA4;&#x503C;&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">screen</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">char</span> = <span class="string">&apos;*&apos;</span>)</span></span>;</span><br><span class="line"><span class="comment">// string screen(int, int, char = &apos; &apos;);</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">screen</span><span class="params">(<span class="keyword">int</span> = <span class="number">24</span>, <span class="keyword">int</span> = <span class="number">80</span>, <span class="keyword">char</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">screen</span><span class="params">(<span class="keyword">int</span> width, <span class="keyword">int</span> height, <span class="keyword">char</span> c)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;width is &quot;</span> &lt;&lt; width &lt;&lt; <span class="string">&quot;, height is &quot;</span> &lt;&lt; height &lt;&lt; <span class="string">&quot;, c is &quot;</span> &lt;&lt; c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">screen();</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">width is 24, height is 80, c is *</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h4 id="default-argument-initializers">Default Argument Initializers</h4>
+<p>&#x51FD;&#x6570;&#x7684;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#x53EF;&#x4EE5;&#x662F;&#x4EFB;&#x4F55;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x4E3A;&#x5F62;&#x53C2;&#x7C7B;&#x578B;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> vall = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">char</span> cc = <span class="string">&apos;a&apos;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printDefaultArgument</span><span class="params">(<span class="keyword">int</span> ran = rand(), <span class="keyword">int</span> w = vall, <span class="keyword">char</span> c = cc)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;random is &quot;</span> &lt;&lt; ran &lt;&lt; <span class="string">&quot;, w is &quot;</span> &lt;&lt; w &lt;&lt; <span class="string">&quot;, c is &quot;</span> &lt;&lt; c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestDefaultArgument</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    printDefaultArgument();</span><br><span class="line">    vall = <span class="number">30</span>;</span><br><span class="line">    <span class="keyword">char</span> cc = <span class="string">&apos;b&apos;</span>;</span><br><span class="line">    printDefaultArgument();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">random is 41, w is 20, c is a</span></span><br><span class="line"><span class="comment">random is 18467, w is 30, c is a</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;<code>printDefaultArgument</code>&#x51FD;&#x6570;&#x7B2C;&#x4E00;&#x4E2A;&#x5F62;&#x53C2;<code>ran</code>&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x662F;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x51FD;&#x6570;&#x4F1A;&#x968F;&#x673A;&#x53D6;&#x4E00;&#x4E2A;int&#x503C;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x548C;&#x7B2C;&#x4E09;&#x4E2A;&#x5F62;&#x53C2;&#x90FD;&#x662F;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x3002;</p>
+<p>&#x5728;&#x51FD;&#x6570;<code>TestDefaultArgument</code>&#x4E2D;&#x8C03;&#x7528;<code>printDefaultArgument</code>&#x51FD;&#x6570;&#xFF0C;&#x7B2C;&#x4E8C;&#x6B21;&#x8C03;&#x7528;&#x524D;&#x5148;&#x6539;&#x53D8;&#x4E86;&#x5168;&#x5C40;&#x53D8;&#x91CF;<code>vall</code>&#x7684;&#x503C;&#xFF0C;&#x7136;&#x540E;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A;&#x540C;&#x540D;&#x65B0;&#x5C40;&#x90E8;&#x53D8;&#x91CF;<code>cc</code>&#x3002;&#x4F46;&#x662F;&#x56E0;&#x4E3A;<code>printDefaultArgument</code>&#x51FD;&#x6570;&#x7684;&#x7B2C;&#x4E09;&#x4E2A;&#x5F62;&#x53C2;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x4E2D;&#x7684;<code>cc</code>&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x7B2C;&#x4E8C;&#x6B21;&#x8C03;&#x7528;<code>printDefaultArgument</code>&#x65F6;&#xFF0C;&#x7B2C;&#x4E09;&#x4E2A;&#x5F62;&#x53C2;&#x7684;&#x6570;&#x503C;&#x5E76;&#x6CA1;&#x6709;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x3002;</p>
+<h3 id="inline-and-constexpr-functions">Inline and constexpr Functions</h3>
+<p>&#x5728;&#x5927;&#x591A;&#x6570;&#x7684;&#x8BBE;&#x5907;&#x4E0B;&#xFF0C;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x662F;&#x4E00;&#x4E2A;&#x82B1;&#x8D39;&#x8F83;&#x5927;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x9700;&#x8981;&#x62F7;&#x8D1D;&#x5B9E;&#x53C2;&#xFF0C;&#x8BB0;&#x5F55;&#x548C;&#x56DE;&#x590D;&#x8C03;&#x7528;&#x65F6;&#x7684;&#x72B6;&#x6001;&#x7B49;&#x3002;<code>inline</code>&#x5173;&#x952E;&#x5B57;&#x53EF;&#x4EE5;&#x51CF;&#x5C11;&#x51FD;&#x6570;&#x7684;&#x8C03;&#x7528;&#x3002;</p>
+<h4 id="inline-functions-avoid-function-call-overhead">inline Functions Avoid Function Call Overhead</h4>
+<p>&#x5982;&#x679C;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x4E3A;<code>inline</code>&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x5728;&#x7F16;&#x8BD1;&#x9636;&#x6BB5;&#xFF0C;&#x5C06;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x7684;&#x5730;&#x65B9;&#x6362;&#x6210;&#x51FD;&#x6570;&#x4E3B;&#x4F53;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x907F;&#x514D;&#x4E86;&#x51FD;&#x6570;&#x7684;&#x8C03;&#x7528;&#x3002;&#x8FD9;&#x6837;&#x7684;&#x51FD;&#x6570;&#x79F0;&#x4E3A;&#x5185;&#x8054;&#x51FD;&#x6570;&#xFF08;inline Function&#xFF09;&#x3002;</p>
+<p>&#x5982; <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">const</span> <span class="built_in">string</span> &amp;<span class="title">shorterString</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s1, <span class="keyword">const</span> <span class="built_in">string</span> &amp;s2)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">return</span> s1.size() &lt; s2.size() ? s1 : s2;</span><br><span class="line">}</span><br></pre></td></tr></table></figure></p>
+<p>&#x6CE8;&#x610F;&#x5E76;&#x4E0D;&#x662F;&#x51FD;&#x6570;&#x52A0;&#x4E0A;&#x4E86;<code>inline</code>&#x5173;&#x952E;&#x5B57;&#x5C31;&#x4E00;&#x5B9A;&#x4F1A;&#x53D8;&#x6210;&#x5185;&#x8054;&#x51FD;&#x6570;&#xFF0C;<code>inline</code>&#x5173;&#x952E;&#x5B57;&#x5982;&#x540C;&#x4E00;&#x4E2A;&#x7533;&#x8BF7;&#xFF0C;&#x81F3;&#x4E8E;&#x51FD;&#x6570;&#x6700;&#x7EC8;&#x662F;&#x5426;&#x4F1A;&#x53D8;&#x6210;&#x5185;&#x8054;&#x7531;&#x7F16;&#x8BD1;&#x5668;&#x51B3;&#x5B9A;&#x3002;&#x901A;&#x5E38;&#x800C;&#x8A00;&#xFF0C;&#x9012;&#x5F52;&#x51FD;&#x6570;&#x548C;&#x884C;&#x6570;&#x5927;&#x4E8E;75&#x884C;&#x7684;&#x51FD;&#x6570;&#x662F;&#x4E0D;&#x4F1A;&#x53D8;&#x6210;&#x5185;&#x8054;&#x51FD;&#x6570;&#x7684;&#x3002;</p>
+<h4 id="constexpr-functions">constexpr Functions</h4>
+<p>//TODO</p>
+<h4 id="put-inline-and-constexpr-functions-in-header-files">Put inline and constexpr Functions in Header Files</h4>
+<p>&#x548C;&#x5176;&#x4ED6;&#x7684;&#x51FD;&#x6570;&#x4E0D;&#x540C;&#xFF0C;&#x5185;&#x8054;&#x51FD;&#x6570;&#x5728;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#x4E2D;&#x662F;&#x53EF;&#x4EE5;&#x88AB;&#x591A;&#x6B21;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x5982;:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GetNum.h</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetNum</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">double</span> <span class="title">GetDoubleNum</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// GetNum.cpp</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetNum</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="number">10</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">double</span> <span class="title">GetDoubleNum</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="number">3.14</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//Chapter6_Functions.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// int GetNum()</span></span><br><span class="line"><span class="comment">// {</span></span><br><span class="line"><span class="comment">//     return 10;</span></span><br><span class="line"><span class="comment">// }</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">double</span> <span class="title">GetDoubleNum</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="number">4.15</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; GetDoubleNum();</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">4.15</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5728;<code>Chapter6_Functions.cpp</code>&#x548C;<code>GetNum.cpp</code>&#x4E24;&#x4E2A;&#x6E90;&#x6587;&#x4EF6;&#x4E2D;&#x90FD;&#x5BF9;<code>GetDoubleNum</code>&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x4E86;&#x5B9A;&#x4E49;&#xFF0C;&#x4E14;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x3002;&#x800C;&#x5982;&#x679C;&#x5C1D;&#x8BD5;&#x5728;<code>Chapter6_Functions.cpp</code>&#x4E2D;&#x518D;&#x6B21;&#x5B9A;&#x4E49;<code>GetNum</code>&#x51FD;&#x6570;&#xFF0C;&#x5219;&#x4F1A;&#x53D1;&#x751F;&#x7F16;&#x8BD1;&#x9519;&#x8BEF;&#x3002;</p>
+<p>&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x5BF9;&#x4E8E;&#x5185;&#x8054;&#x51FD;&#x6570;&#x800C;&#x8A00;&#xFF0C;&#x662F;&#x5728;&#x672C;&#x6E90;&#x6587;&#x4EF6;&#x4E2D;&#x641C;&#x7D22;&#x5185;&#x8054;&#x51FD;&#x6570;&#x7684;&#x5B9A;&#x4E49;&#x7136;&#x540E;&#x8FDB;&#x884C;&#x66FF;&#x4EE3;&#x3002;</p>
+<p>&#x6700;&#x5408;&#x7406;&#x7684;&#x65B9;&#x5F0F;&#x662F;&#x5C06;&#x5185;&#x8054;&#x51FD;&#x6570;&#x7684;&#x5B9A;&#x4E49;&#x653E;&#x5728;&#x5934;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x8FD9;&#x6837;&#x5728;&#x4F7F;&#x7528;include&#x65F6;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x5C31;&#x5C06;&#x5185;&#x8054;&#x51FD;&#x6570;&#x7684;&#x5B9A;&#x4E49;&#x62F7;&#x8D1D;&#x5230;&#x4E86;&#x6E90;&#x6587;&#x4EF6;&#x4E2D;&#x3002;</p>
+<h3 id="aids-for-debugging">Aids for Debugging</h3>
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x9884;&#x5904;&#x7406;&#x5668;&#x6765;&#x5E2E;&#x52A9;C++&#x8FDB;&#x884C;&#x8C03;&#x8BD5;&#x5DE5;&#x4F5C;&#xFF0C;&#x5373;&#x5B9E;&#x73B0;&#x5728;&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x6253;&#x51FA;&#x8C03;&#x8BD5;log&#xFF0C;&#x800C;&#x5728;&#x5B9E;&#x9645;&#x7A0B;&#x5E8F;&#x4E2D;log&#x5219;&#x4E0D;&#x4E88;&#x663E;&#x793A;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<h4 id="the-assert-preprocessor-macro">The assert Preprocessor Macro</h4>
+<p>&#x9884;&#x5904;&#x7406;&#x5B8F;&#xFF08;Preprocessor Macro&#xFF09;&#x662F;&#x4E00;&#x79CD;&#x9884;&#x5904;&#x7406;&#x5668;&#x53D8;&#x91CF;&#xFF0C;&#x8FD0;&#x884C;&#x8D77;&#x6765;&#x6709;&#x70B9;&#x50CF;&#x5185;&#x8054;&#x51FD;&#x6570;&#x3002;</p>
+<p><code>assert</code>&#x9884;&#x5904;&#x7406;&#x5668;&#x5B8F;&#x53EF;&#x4EE5;&#x63A5;&#x7EB3;&#x4E00;&#x4E2A;&#x8868;&#x793A;condition&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x5B9A;&#x4E49;&#x5728;&#x5934;&#x6587;&#x4EF6;<code>cassert</code>&#x4E2D;&#xFF0C;&#x4E14;&#x56E0;&#x4E3A;&#x662F;&#x9884;&#x5904;&#x7406;&#x5668;&#x53D8;&#x91CF;&#xFF0C;&#x56E0;&#x6B64;&#x4E0D;&#x9700;&#x8981;&#x8BBE;&#x5B9A;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#x3002;&#x5F53;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x7ED3;&#x679C;&#x4E3A;false&#x65F6;&#xFF0C;&#x5C06;&#x6253;&#x51FA;&#x4FE1;&#x606F;&#x5E76;&#x4E14;&#x7EC8;&#x6B62;&#x7A0B;&#x5E8F;&#x7684;&#x8FD0;&#x884C;&#x3002;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">3</span>, b = <span class="number">2</span>;</span><br><span class="line">assert(a &lt; b);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Assertion failed!</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Program: D:\Study-Notes\C++Primer\Chapter6_Functions\a.exe</span></span><br><span class="line"><span class="comment">File: Chapter6_Functions.cpp, Line 50</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Expression: a &lt; b</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p><code>assert</code>&#x901A;&#x5E38;&#x662F;&#x7528;&#x6765;&#x5224;&#x65AD;&#x90A3;&#x4E9B;&#x4E0D;&#x53EF;&#x80FD;&#x53D1;&#x751F;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x5982;&#x5F53;&#x67D0;&#x4E2A;&#x6570;&#x503C;&#x8D85;&#x8FC7;&#x4E86;&#x9608;&#x503C;&#x7B49;&#x3002;</p>
+<h4 id="the-ndebug-preprocessor-variable">The NDEBUG Preprocessor Variable</h4>
+<p><code>assert</code>&#x7684;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#x9884;&#x5904;&#x7406;&#x53D8;&#x91CF;<code>NDEBUG</code>&#x51B3;&#x5B9A;&#xFF0C;&#x5982;&#x679C;&#x8BE5;&#x53D8;&#x91CF;&#x88AB;&#x5B9A;&#x4E49;&#x4E86;&#xFF0C;&#x5219;<code>assert</code>&#x4E0D;&#x4F1A;&#x88AB;&#x6267;&#x884C;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x52A0;&#x5165;<code>#define NDEBUG</code>&#x6765;&#x5173;&#x95ED;<code>assert</code>&#x7684;&#x8C03;&#x8BD5;&#x3002;&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5728;&#x7F16;&#x8BD1;&#x65F6;&#x901A;&#x8FC7;flag -D&#x6765;&#x52A0;&#x5165;&#x8FD9;&#x53E5;&#x8BDD;&#xFF0C;&#x5982;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">g++ Chapter6_Functions.cpp </span><br><span class="line"></span><br><span class="line">$ ./a.exe </span><br><span class="line"></span><br><span class="line">Assertion failed!</span><br><span class="line"></span><br><span class="line">Program: D:\Study-Notes\C++Primer\Chapter6_Functions\a.exe</span><br><span class="line">File: Chapter6_Functions.cpp, Line 50</span><br><span class="line"></span><br><span class="line">Expression: a &lt; b</span><br><span class="line"></span><br><span class="line">g++ Chapter6_Functions.cpp -D NDEBUG</span><br><span class="line"></span><br><span class="line">$ ./a.exe </span><br><span class="line">4.15</span><br></pre></td></tr></table></figure>
+<p>&#x4E5F;&#x53EF;&#x4EE5;&#x8FDB;&#x4E00;&#x6B65;&#x5229;&#x7528;NDEBUG&#x6765;&#x5B9A;&#x4E49;&#x81EA;&#x5DF1;&#x7684;&#x8C03;&#x8BD5;&#x51FD;&#x6570;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Debug</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;msg)</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> NDEBUG</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; msg &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>C++&#x8FD8;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E9B;&#x5E2E;&#x52A9;&#x8C03;&#x8BD5;&#x7684;&#x9884;&#x5904;&#x7406;&#x5668;&#x53D8;&#x91CF;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x53D8;&#x91CF;</th>
+<th>&#x542B;&#x4E49;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>func</strong></td>
+<td>&#x5F53;&#x524D;&#x7684;&#x51FD;&#x6570;&#x540D;</td>
+</tr>
+<tr class="even">
+<td><strong>FILE</strong></td>
+<td>&#x5F53;&#x524D;&#x6587;&#x4EF6;&#x540D;</td>
+</tr>
+<tr class="odd">
+<td><strong>LINE</strong></td>
+<td>&#x5F53;&#x524D;&#x884C;&#x53F7;</td>
+</tr>
+<tr class="even">
+<td><strong>TIME</strong></td>
+<td>&#x8BE5;&#x6587;&#x4EF6;&#x88AB;&#x7F16;&#x8BD1;&#x7684;&#x65F6;&#x95F4;</td>
+</tr>
+<tr class="odd">
+<td><strong>DATE</strong></td>
+<td>&#x8BE5;&#x6587;&#x4EF6;&#x88AB;&#x7F16;&#x8BD1;&#x7684;&#x65E5;&#x671F;</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TestPreprocessorVariable</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Function is &quot;</span> &lt;&lt; __func__ &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;File is &quot;</span> &lt;&lt; __FILE__ &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Line is &quot;</span> &lt;&lt; __LINE__ &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Time is &quot;</span> &lt;&lt; __TIME__ &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Dateis &quot;</span> &lt;&lt; __DATE__ &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Function is TestPreprocessorVariable</span></span><br><span class="line"><span class="comment">File is Chapter6_Functions.cpp</span></span><br><span class="line"><span class="comment">Line is 78</span></span><br><span class="line"><span class="comment">Time is 16:49:12</span></span><br><span class="line"><span class="comment">Dateis Feb 22 2020</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="function-matching">Function Matching</h2>
+<p>&#x51FD;&#x6570;&#x5339;&#x914D;&#x8FC7;&#x7A0B;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;&#x4E09;&#x6B65;&#xFF1A;</p>
+<ol type="1">
+<li>&#x627E;&#x51FA;&#x5019;&#x9009;&#x51FD;&#x6570;&#xFF08;candidate functions&#xFF09;&#xFF0C;&#x901A;&#x8FC7;&#x51FD;&#x6570;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x627E;&#x5230;&#x6240;&#x6709;&#x53EF;&#x80FD;&#x7684;&#x91CD;&#x8F7D;&#x51FD;&#x6570;&#xFF08;&#x6CE8;&#x610F;&#x4F5C;&#x7528;&#x57DF;&#x9690;&#x85CF;&#xFF09;&#x3002;</li>
+<li>&#x627E;&#x51FA;&#x53EF;&#x9009;&#x51FD;&#x6570;&#xFF08;viable functions&#xFF09;&#xFF0C;&#x5728;&#x5019;&#x9009;&#x51FD;&#x6570;&#x4E2D;&#x901A;&#x8FC7;&#x5F62;&#x53C2;&#x6570;&#x91CF;&#x548C;&#x7C7B;&#x578B;&#x627E;&#x51FA;&#x53EF;&#x4EE5;&#x88AB;&#x8C03;&#x7528;&#x7684;&#x51FD;&#x6570;</li>
+<li>&#x627E;&#x51FA;&#x6700;&#x4F73;&#x5339;&#x914D;&#xFF0C;&#x5728;&#x6240;&#x6709;&#x7684;&#x53EF;&#x9009;&#x51FD;&#x6570;&#x4E2D;&#x6839;&#x636E;&#x89C4;&#x5219;&#x627E;&#x51FA;&#x6700;&#x4F73;&#x5339;&#x914D;&#x51FD;&#x6570;&#x3002;</li>
+</ol>
+<p>&#x4EE5;&#x4E0B;&#x662F;&#x627E;&#x6700;&#x4F73;&#x5339;&#x914D;&#x51FD;&#x6570;&#x7684;&#x89C4;&#x5219;&#xFF0C;&#x6392;&#x540D;&#x8D8A;&#x9760;&#x524D;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x4F1A;&#x8D8A;&#x4F18;&#x5148;&#x88AB;&#x9009;&#x53D6;</p>
+<ol type="1">
+<li><p>&#x5B9E;&#x53C2;&#x7C7B;&#x578B;&#x4E0E;&#x5F62;&#x53C2;&#x7C7B;&#x578B;&#x5B8C;&#x5168;&#x5339;&#x914D;&#xFF0C;&#x5305;&#x62EC;</p>
+<ol type="a">
+<li>&#x5B9E;&#x53C2;&#x7C7B;&#x578B;&#x4E0E;&#x5F62;&#x53C2;&#x7C7B;&#x578B;&#x76F8;&#x540C;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x4EFB;&#x4F55;&#x8F6C;&#x6362;</li>
+<li>&#x5B9E;&#x53C2;&#x662F;&#x6570;&#x7EC4;&#x6216;&#x51FD;&#x6570;&#xFF0C;&#x5F62;&#x53C2;&#x662F;&#x5BF9;&#x5E94;&#x7684;&#x6307;&#x9488;&#x7C7B;&#x578B;</li>
+<li>&#x5B9E;&#x53C2;&#x548C;&#x5F62;&#x53C2;&#x7684;&#x5DEE;&#x8DDD;&#x662F;&#x53EF;&#x4EE5;&#x65E0;&#x89C6;&#x7684;top-level const</li>
+</ol></li>
+<li><p>&#x9700;&#x8981;&#x8FDB;&#x884C;const&#x8F6C;&#x6362; low level&#x7684;const&#x8F6C;&#x6362;&#xFF0C;&#x5982;&#x5B9E;&#x53C2;&#x662F;nonconst&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x5F62;&#x53C2;&#x662F;const&#x7684;&#x5F15;&#x7528;&#x3002;</p></li>
+<li><p>&#x9700;&#x8981;&#x8FDB;&#x884C;&#x6570;&#x503C;&#x63D0;&#x5347;&#xFF08;promotion&#xFF09; &#x8F83;&#x5C0F;&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x4F1A;&#x81EA;&#x52A8;&#x8F6C;&#x6362;&#x6210;int&#x6216;&#x66F4;&#x9AD8;&#x7C7B;&#x578B;&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x3002;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ff</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ff</span><span class="params">(<span class="keyword">short</span>)</span></span>;</span><br><span class="line">ff(<span class="string">&apos;a&apos;</span>);<span class="comment">//Call ff(int)</span></span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;&#x5341;&#x8FDB;&#x5236;&#x7684;&#x5B57;&#x9762;&#x503C;&#x4F1A;&#x81EA;&#x52A8;&#x8F6C;&#x6362;&#x4E3A;&#x6700;&#x5C0F;&#x4E3A;<code>int</code>&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x6240;&#x4EE5;<code>a</code>&#x7684;&#x6700;&#x7EC8;&#x7C7B;&#x578B;&#x4E3A;int&#x3002;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x4E0E;<code>ff(int)</code>&#x5B8C;&#x5168;&#x5339;&#x914D;&#xFF0C;&#x4F46;&#x662F;&#x4E0E;<code>ff(short)</code>&#x9700;&#x8981;&#x8FDB;&#x884C;&#x4E00;&#x6B21;&#x8F6C;&#x6362;&#x3002;</p></li>
+<li><p>&#x9700;&#x8981;&#x8FDB;&#x884C;&#x7B97;&#x6570;&#x8F6C;&#x6362;&#x6216;&#x8005;&#x6307;&#x9488;&#x8F6C;&#x6362; &#x7B97;&#x6570;&#x7C7B;&#x578B;&#x7684;&#x8F6C;&#x6362;&#xFF0C;&#x5982;int&#x8F6C;float,int&#x8F6C;double&#x3002;&#x6CE8;&#x610F;&#x53EA;&#x8981;&#x90FD;&#x662F;&#x7B97;&#x6570;&#x8F6C;&#x6362;&#xFF0C;&#x5219;&#x5B83;&#x4EEC;&#x7684;&#x6392;&#x540D;&#x5C31;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x65E0;&#x8BBA;&#x6B63;&#x5728;&#x8FDB;&#x884C;&#x7684;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x662F;&#x4EC0;&#x4E48;&#x3002;</p>
+<p>&#x6307;&#x9488;&#x8F6C;&#x6362;&#x6307;&#x7684;&#x662F;&#xFF0C;0&#x8F6C;&#x6362;&#x4E3A;&#x7A7A;&#x6307;&#x9488;&#xFF0C;non const&#x7684;&#x6307;&#x9488;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x4E3A;void*&#xFF0C;&#x4EFB;&#x4F55;&#x6307;&#x9488;&#x90FD;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x4E3A;<code>const void*</code>&#x3002;</p></li>
+<li><p>&#x9700;&#x8981;&#x8FDB;&#x884C;&#x7C7B;&#x8F6C;&#x6362;&#xFF08;14.9&#x8282;&#x4E2D;&#x8FDB;&#x884C;&#x8BF4;&#x660E;&#xFF09;</p></li>
+</ol>
+<p>&#x5982;&#x679C;&#x51FA;&#x73B0;&#x4E86;&#x591A;&#x4E2A;&#x53EF;&#x9009;&#x51FD;&#x6570;&#x7531;&#x76F8;&#x540C;&#x7684;&#x6392;&#x540D;&#xFF0C;&#x5219;&#x4F1A;&#x51FA;&#x73B0;&#x6B67;&#x4E49;&#x8C03;&#x7528;&#xFF08;Ambiguous call&#xFF09;&#x3002;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f(<span class="keyword">int</span>,<span class="keyword">int</span>);</span><br><span class="line">f(<span class="keyword">double</span>,<span class="keyword">double</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// f(42,2.56); // ambiguous call</span></span><br></pre></td></tr></table></figure>
+<p>&#x5BF9;&#x4E8E;&#x8C03;&#x7528;<code>f(42,2.56)</code>&#x65E0;&#x8BBA;&#x662F;&#x8BBF;&#x95EE;<code>f(int,int)</code>&#x548C;<code>f(double,double)</code>&#x90FD;&#x662F;&#x8FDB;&#x884C;&#x4E86;&#x4E00;&#x6B21;&#x7B97;&#x6570;&#x8F6C;&#x6362;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x4E3A;&#x6B67;&#x4E49;&#x8C03;&#x7528;&#x3002;</p>
+<p>&#x8FD8;&#x6709;&#x7C7B;&#x4F3C;&#x4E8E;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">manip</span><span class="params">(<span class="keyword">long</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">manip</span><span class="params">(<span class="keyword">float</span>)</span></span>;</span><br><span class="line"><span class="comment">// manip(3.14); // ambiguous call</span></span><br></pre></td></tr></table></figure>
+<p>&#x65E0;&#x8BBA;&#x8C03;&#x7528;&#x54EA;&#x4E2A;&#x51FD;&#x6570;&#x90FD;&#x4F1A;&#x8FDB;&#x884C;&#x7B97;&#x6570;&#x8F6C;&#x6362;&#xFF0C;&#x5373;&#x4F7F;&#x8F6C;&#x6362;&#x7684;&#x76EE;&#x6807;&#x7C7B;&#x578B;&#x4E0D;&#x540C;&#xFF0C;&#x4F46;&#x662F;&#x51FD;&#x6570;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x4ECD;&#x7136;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x4E3A;&#x6B67;&#x4E49;&#x8C03;&#x7528;&#x3002;</p>
+<h2 id="pointers-to-functions">Pointers to Functions</h2>
+<p>&#x51FD;&#x6570;&#x6307;&#x9488;&#x5C31;&#x662F;&#x6307;&#x5411;&#x51FD;&#x6570;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x6307;&#x9488;&#x7684;&#x7C7B;&#x578B;&#x9700;&#x8981;&#x5339;&#x914D;&#x8981;&#x6307;&#x5411;&#x7684;&#x51FD;&#x6570;&#x7684;&#x5F62;&#x53C2;&#x6570;&#x91CF;&#xFF0C;&#x5F62;&#x53C2;&#x7C7B;&#x578B;&#x548C;&#x8FD4;&#x56DE;&#x503C;&#x7C7B;&#x578B;&#x3002;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> (*pf)(<span class="keyword">const</span> <span class="built_in">string</span> &amp;, <span class="keyword">const</span> <span class="built_in">string</span> &amp;); <span class="comment">// uninitialized</span></span><br></pre></td></tr></table></figure>
+<p>pf&#x4E3A;&#x6307;&#x5411;&#x4E24;&#x4E2A;&#x5F62;&#x53C2;&#x90FD;&#x662F;<code>const string&amp;</code>&#xFF0C;&#x8FD4;&#x56DE;&#x503C;&#x4E3A;bool&#x7684;&#x51FD;&#x6570;&#x7684;&#x6307;&#x9488;&#x3002;&#x5982;&#x53EF;&#x4EE5;&#x6307;&#x5411;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">lengthCompare</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;, <span class="keyword">const</span> <span class="built_in">string</span> &amp;)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>&#x4F46;&#x662F;&#x5E76;&#x4E0D;&#x80FD;&#x6307;&#x5411;&#x7C7B;&#x5185;&#x6210;&#x5458;&#x51FD;&#x6570;&#xFF0C;&#x5373;&#x4F7F;&#x5F62;&#x53C2;&#x548C;&#x8FD4;&#x56DE;&#x503C;&#x7C7B;&#x578B;&#x4E00;&#x6837;&#xFF0C;&#x56E0;&#x4E3A;&#x7C7B;&#x5185;&#x51FD;&#x6570;&#x5B9E;&#x9645;&#x4E0A;&#x6709;&#x4E00;&#x4E2A;this&#x6307;&#x9488;&#x7684;&#x4F20;&#x9012;</p>
+<p>&#x6CE8;&#x610F;&#xFF0C;&#x5B9A;&#x4E49;pf&#x65F6;&#xFF0C;&#x5916;&#x9762;&#x7684;&#x62EC;&#x53F7;&#x4E0D;&#x80FD;&#x7F3A;&#x5C11;&#xFF0C;&#x4E0D;&#x7136;&#x53D8;&#x6210;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> *<span class="title">pf</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;, <span class="keyword">const</span> <span class="built_in">string</span> &amp;)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x610F;&#x601D;&#x4E3A;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;pf&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x4E3A;bool*&#x7684;&#x51FD;&#x6570;&#x7684;&#x58F0;&#x660E;&#x3002;</p>
+<h4 id="using-function-pointers">Using Function Pointers</h4>
+<p>&#x5728;&#x8D4B;&#x503C;&#x548C;&#x4F7F;&#x7528;&#x51FD;&#x6570;&#x6307;&#x9488;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53D6;&#x5730;&#x5740;&#x7B26;(&amp;)&#x4EE5;&#x53CA;&#x89E3;&#x5F15;&#x7528;&#x7B26;(*)&#x90FD;&#x53EF;&#x4EE5;&#x88AB;&#x7701;&#x7565;&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> (*fp)(<span class="keyword">const</span> <span class="built_in">string</span> &amp;, <span class="keyword">const</span> <span class="built_in">string</span> &amp;) = lengthCompare;</span><br><span class="line"><span class="comment">// bool (*fp)(const string &amp;, const string &amp;) = &amp;lengthCompare;//equal to above</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> b1 = fp(<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;goodbyte&quot;</span>);</span><br><span class="line"><span class="keyword">bool</span> b2 = (*fp)(<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;goodbyte&quot;</span>);<span class="comment">// equal to above</span></span><br><span class="line"><span class="keyword">bool</span> b3 = lengthCompare(<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;goodby&quot;</span>);<span class="comment">//equal ro above</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;b1: &quot;</span> &lt;&lt; b1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;b2: &quot;</span> &lt;&lt; b2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;b3: &quot;</span> &lt;&lt; b3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">b1: 0</span></span><br><span class="line"><span class="comment">b2: 0</span></span><br><span class="line"><span class="comment">b3: 0</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x5F53;&#x4F7F;&#x7528;&#x51FD;&#x6570;&#x6307;&#x9488;&#x65F6;&#xFF0C;&#x8D4B;&#x503C;&#x7ED9;&#x51FD;&#x6570;&#x6307;&#x9488;&#x7684;&#x51FD;&#x6570;&#x7684;&#x7C7B;&#x578B;&#x5FC5;&#x987B;&#x4E0E;&#x51FD;&#x6570;&#x6307;&#x9488;&#x7684;&#x7C7B;&#x578B;&#x5B8C;&#x5168;&#x4E00;&#x81F4;&#x3002;</span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ff</span><span class="params">(<span class="keyword">int</span> val)</span></span>;</span><br><span class="line"><span class="keyword">void</span> (*p1)(<span class="keyword">unsigned</span> <span class="keyword">int</span>) = ff;</span><br><span class="line"><span class="comment">// void (*p2)(int) = ff; //error, can&apos;t convert unsigned int to int</span></span><br></pre></td></tr></table></figure>
+<h4 id="function-pointer-parameters">Function Pointer Parameters</h4>
+<p>&#x65E0;&#x6CD5;&#x5C06;&#x51FD;&#x6570;&#x7C7B;&#x578B;&#x4F5C;&#x4E3A;&#x51FD;&#x6570;&#x7684;&#x5F62;&#x53C2;&#x7C7B;&#x578B;&#xFF0C;&#x4F46;&#x662F;&#x53EF;&#x4EE5;&#x5C06;&#x51FD;&#x6570;&#x6307;&#x9488;&#x4F5C;&#x4E3A;&#x5F62;&#x53C2;&#x7684;&#x51FD;&#x6570;&#x7C7B;&#x578B;&#x3002;&#x5982;&#x540C;&#x6570;&#x7EC4;&#x4E00;&#x6837;&#xFF0C;&#x5982;&#x679C;&#x5C06;&#x51FD;&#x6570;&#x7684;&#x5F62;&#x53C2;&#x7C7B;&#x578B;&#x8BBE;&#x7F6E;&#x4E3A;&#x67D0;&#x4E2A;&#x51FD;&#x6570;&#x7C7B;&#x578B;&#xFF0C;&#x90A3;&#x4E48;&#x4F1A;&#x5F62;&#x53C2;&#x7C7B;&#x578B;&#x4F1A;&#x81EA;&#x52A8;&#x8F6C;&#x6362;&#x4E3A;&#x8BE5;&#x51FD;&#x6570;&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> *)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>[])</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">useBigger</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s1,<span class="keyword">const</span> <span class="built_in">string</span> &amp;s2,<span class="keyword">bool</span> pf(<span class="keyword">const</span> <span class="built_in">string</span>&amp;,<span class="keyword">const</span> <span class="built_in">string</span>&amp;))</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">useBigger</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s1,<span class="keyword">const</span> <span class="built_in">string</span> &amp;s2,<span class="keyword">bool</span> (*pf)(<span class="keyword">const</span> <span class="built_in">string</span>&amp;,<span class="keyword">const</span> <span class="built_in">string</span>&amp;))</span></span>;</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#xFF0C;&#x6BCF;&#x4E00;&#x7EC4;&#x662F;&#x5B8C;&#x5168;&#x76F8;&#x540C;&#x7684;&#x3002;</p>
+<p>&#x8C03;&#x7528;&#x5F62;&#x53C2;&#x4E3A;&#x51FD;&#x6570;&#x6307;&#x9488;&#x7684;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x7701;&#x7565;&#x53D6;&#x5730;&#x5740;&#x7B26;&#xFF0C;&#x5982;&#x4EE5;&#x4E0B;&#x4E24;&#x4E2A;&#x8BED;&#x53E5;&#x662F;&#x5B8C;&#x5168;&#x76F8;&#x540C;&#x7684;&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useBigger(s1, s2, lengthCompare);</span><br><span class="line">useBigger(s1, s2, &amp;lengthCompare);</span><br></pre></td></tr></table></figure>
+<p>&#x4F46;&#x5F53;&#x4F7F;&#x7528;<code>decltype</code>&#x65F6;&#xFF0C;&#x4F7F;&#x7528;&#x51FD;&#x6570;&#x7C7B;&#x578B;&#x4EE5;&#x53CA;&#x51FD;&#x6570;&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x4E0D;&#x540C;&#x7684;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Func and Func2 are function type</span></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="keyword">bool</span> <span class="title">Func</span> <span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;,<span class="keyword">const</span> <span class="built_in">string</span> &amp;)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">decltype</span><span class="params">(lengthCompare)</span> Func2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//FuncP and FuncP2 are pointer to function type</span></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">bool</span> <span class="params">(*FuncP)</span> <span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;,<span class="keyword">const</span> <span class="built_in">string</span> &amp;)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">decltype</span><span class="params">(lengthCompare)</span> *FuncP2</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#xFF0C;&#x6BCF;&#x7EC4;&#x7B49;&#x6548;&#xFF0C;&#x4F46;&#x662F;&#x7B2C;&#x4E00;&#x7EC4;&#x5B9A;&#x4E49;&#x7684;&#x662F;&#x51FD;&#x6570;&#x7C7B;&#x578B;&#x7684;&#x522B;&#x540D;&#xFF0C;&#x7B2C;&#x4E8C;&#x7EC4;&#x5B9A;&#x4E49;&#x7684;&#x662F;&#x51FD;&#x6570;&#x6307;&#x9488;&#x7684;&#x522B;&#x540D;&#x3002;</p>
+<p>&#x4F46;&#x4F7F;&#x7528;&#x51FD;&#x6570;&#x7C7B;&#x578B;&#x548C;&#x51FD;&#x6570;&#x6307;&#x9488;&#x7684;&#x522B;&#x540D;&#x6765;&#x5B9A;&#x4E49;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x53C8;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#xFF0C;&#x5982;&#x4E0B;&#x4E24;&#x53E5;&#xFF0C;&#x5B8C;&#x5168;&#x7B49;&#x6548;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">useBigger</span><span class="params">(s1, s2, Func)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">useBigger</span><span class="params">(s1, s2, FuncP)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="returning-a-pointer-to-function">Returning a Pointer to Function</h4>
+<p>&#x5982;&#x540C;&#x6570;&#x7EC4;&#x4E00;&#x6837;&#xFF0C;&#x65E0;&#x6CD5;&#x5C06;&#x51FD;&#x6570;&#x7C7B;&#x578B;&#x4F5C;&#x4E3A;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x8FD4;&#x56DE;&#x51FD;&#x6570;&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#x3002;&#x5982;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x51FD;&#x6570;<code>f1</code>&#xFF0C;&#x5F62;&#x53C2;&#x4E3A;int&#xFF0C;&#x8FD4;&#x56DE;&#x503C;&#x7C7B;&#x578B;&#x4E3A;&#x6307;&#x5411;&#x5F62;&#x53C2;&#x4E3A;(int*,int)&#xFF0C;&#x8FD4;&#x56DE;&#x503C;&#x4E3A;int&#x7684;&#x51FD;&#x6570;&#x7684;&#x6307;&#x9488;&#x3002;</p>
+<p>&#x4EE5;&#x4E0B;&#x662F;&#x56DB;&#x79CD;&#x5B9A;&#x4E49;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x4E3A;&#x51FD;&#x6570;&#x6307;&#x9488;&#x7684;&#x51FD;&#x6570;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5206;&#x522B;&#x662F;&#x4F7F;&#x7528;&#x522B;&#x540D;&#xFF0C;&#x76F4;&#x63A5;&#x5B9A;&#x4E49;&#xFF0C;&#x4F7F;&#x7528;trailing&#x65B9;&#x6CD5;&#xFF0C;&#x4F7F;&#x7528;decltype</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Method1: use alias</span></span><br><span class="line"><span class="keyword">using</span> F = <span class="keyword">int</span>(<span class="keyword">int</span> *, <span class="keyword">int</span>);      <span class="comment">//F is Function type,retun type is int</span></span><br><span class="line"><span class="keyword">using</span> FF = <span class="keyword">int</span> *(<span class="keyword">int</span> *, <span class="keyword">int</span>);   <span class="comment">//F is Function type,retun type is pointe to int</span></span><br><span class="line"><span class="keyword">using</span> PF = <span class="keyword">int</span> (*)(<span class="keyword">int</span> *, <span class="keyword">int</span>); <span class="comment">//FP is pointer to Function type</span></span><br><span class="line"><span class="function">PF <span class="title">f1</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="comment">// F f1(int); //error, function type can not be return type</span></span><br><span class="line"><span class="function">F *<span class="title">f1</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Method 2: directly</span></span><br><span class="line"><span class="comment">//like directly define return is pointer to array, which looks like</span></span><br><span class="line"><span class="comment">//int (*f1(int)) [10];</span></span><br><span class="line"><span class="keyword">int</span> (*f1(<span class="keyword">int</span>))(<span class="keyword">int</span>*,<span class="keyword">int</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Method 3: use trailing return</span></span><br><span class="line">auto f1(int) -&gt; int (*)(int *, int);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Method4: use decltype</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">func1</span><span class="params">(<span class="keyword">int</span>*,<span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="keyword">decltype</span>(func1)* f1(<span class="keyword">int</span>);</span><br></pre></td></tr></table></figure>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>Cpp Primer</em> 5th Aug.2012</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/CPPPrimer-Chapter6-Notes/" title="《C++ Primer》 第六章笔记">https://xuejiaw.github.io/CPPPrimer-Chapter6-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/CPPPrimer-Chapter5-Notes/" rel="prev" title="《C++ Primer》 第五章笔记">
+      <i class="fa fa-chevron-left"></i> 《C++ Primer》 第五章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/" rel="next" title="《3D数学基础：图形和游戏开发》第一章笔记">
+      《3D数学基础：图形和游戏开发》第一章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-6-functions"><span class="nav-number">1.</span> <span class="nav-text">Chapter 6 Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#function-basics"><span class="nav-number">1.1.</span> <span class="nav-text">Function Basics</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#parameters-and-arguments"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Parameters and Arguments</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#function-parameter-list"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">Function Parameter List</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#function-return-type"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">Function Return Type</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#local-objects"><span class="nav-number">1.1.1.</span> <span class="nav-text">Local Objects</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#automatic-objects"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">Automatic Objects</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#local-static-objects"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">Local static Objects</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#function-declarations"><span class="nav-number">1.1.2.</span> <span class="nav-text">Function Declarations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#function-declarations-go-in-header-files"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Function Declarations Go in Header Files</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#separate-compilation"><span class="nav-number">1.1.3.</span> <span class="nav-text">Separate Compilation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#compiling-and-linking-multiple-source-files"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">Compiling and Linking Multiple Source Files</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#argument-passing"><span class="nav-number">1.2.</span> <span class="nav-text">Argument Passing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#passing-arguments-by-value"><span class="nav-number">1.2.1.</span> <span class="nav-text">Passing Arguments by Value</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pointer-parameters"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Pointer Parameters</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#passing-argument-by-reference"><span class="nav-number">1.2.2.</span> <span class="nav-text">Passing Argument by Reference</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#using-reference-to-avoid-copies"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Using Reference to Avoid Copies</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#using-reference-parameters-to-return-additional-information"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">Using Reference Parameters to Return Additional Information</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const-parameters-and-arguments"><span class="nav-number">1.2.3.</span> <span class="nav-text">const Parameters and Arguments</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#use-reference-to-const-when-possible"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Use Reference to const When Possible</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array-parameters"><span class="nav-number">1.2.4.</span> <span class="nav-text">Array Parameters</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#using-a-marker-to-specify-the-extent-of-an-array"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">Using a Marker to Specify the Extent of an Array</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#using-the-standard-liberary-conventions"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">Using the Standard Liberary Conventions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#explicitly-passing-a-size-parameter"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">Explicitly Passing a Size Parameter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#array-parameters-and-const"><span class="nav-number">1.2.4.4.</span> <span class="nav-text">Array Parameters and const</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#passing-a-multidimensional-array"><span class="nav-number">1.2.4.5.</span> <span class="nav-text">Passing a Multidimensional Array</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main-handling-command-line-options"><span class="nav-number">1.2.5.</span> <span class="nav-text">main: Handling Command-Line Options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#functions-with-varying-parameters"><span class="nav-number">1.2.6.</span> <span class="nav-text">Functions with Varying Parameters</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#initializer_list-parameters"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">initializer_list Parameters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ellipsis-parameters"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">Ellipsis Parameters</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#return-types-and-the-return-statement"><span class="nav-number">1.3.</span> <span class="nav-text">Return Types and the return Statement</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#functions-with-no-return-value"><span class="nav-number">1.3.1.</span> <span class="nav-text">Functions with No Return Value</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#functions-that-return-a-value"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Functions That Return a value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#how-values-are-returned"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">How Values Are returned</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nerver-return-a-reference-or-pointer-to-a-local-object"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">Nerver Return a Reference or Pointer to a Local Object</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reference-returns-are-lvalues"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">Reference Returns Are Lvalues</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#list-initializing-the-return-value"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">List Initializing the Return Value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#return-from-main"><span class="nav-number">1.3.1.6.</span> <span class="nav-text">Return from main</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#recursion"><span class="nav-number">1.3.1.7.</span> <span class="nav-text">Recursion</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#returning-a-pointer-to-an-array"><span class="nav-number">1.3.2.</span> <span class="nav-text">Returning a Pointer to an Array</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#typedef-using"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">Typedef / Using</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#functions-that-return-class-types-and-the-call-operator"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">Functions That Return Class Types and the Call Operator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#declaring-a-function-that-returns-a-pointer-to-an-array"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">Declaring a Function That Returns a Pointer to an Array</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#using-a-trailing-return-type"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">Using a Trailing Return Type</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#using-decltype"><span class="nav-number">1.3.2.5.</span> <span class="nav-text">Using decltype</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#overloaded-functions"><span class="nav-number">1.4.</span> <span class="nav-text">Overloaded Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#defining-overloaded-functions"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">Defining Overloaded Functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#overloading-and-const-parameters"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">Overloading and const Parameters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#const_cast-and-overloading"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">const_cast and Overloading</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#calling-an-overloaded-function"><span class="nav-number">1.4.0.4.</span> <span class="nav-text">Calling an Overloaded Function</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#overloading-and-scope"><span class="nav-number">1.4.1.</span> <span class="nav-text">Overloading and Scope</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#features-for-specialized-uses"><span class="nav-number">1.5.</span> <span class="nav-text">Features for Specialized Uses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#default-arguments"><span class="nav-number">1.5.1.</span> <span class="nav-text">Default Arguments</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#default-argument-declarations"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">Default Argument Declarations</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#default-argument-initializers"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">Default Argument Initializers</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inline-and-constexpr-functions"><span class="nav-number">1.5.2.</span> <span class="nav-text">Inline and constexpr Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#inline-functions-avoid-function-call-overhead"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">inline Functions Avoid Function Call Overhead</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#constexpr-functions"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">constexpr Functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#put-inline-and-constexpr-functions-in-header-files"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">Put inline and constexpr Functions in Header Files</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#aids-for-debugging"><span class="nav-number">1.5.3.</span> <span class="nav-text">Aids for Debugging</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-assert-preprocessor-macro"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">The assert Preprocessor Macro</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-ndebug-preprocessor-variable"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">The NDEBUG Preprocessor Variable</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#function-matching"><span class="nav-number">1.6.</span> <span class="nav-text">Function Matching</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pointers-to-functions"><span class="nav-number">1.7.</span> <span class="nav-text">Pointers to Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#using-function-pointers"><span class="nav-number">1.7.0.1.</span> <span class="nav-text">Using Function Pointers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#function-pointer-parameters"><span class="nav-number">1.7.0.2.</span> <span class="nav-text">Function Pointer Parameters</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#returning-a-pointer-to-function"><span class="nav-number">1.7.0.3.</span> <span class="nav-text">Returning a Pointer to Function</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

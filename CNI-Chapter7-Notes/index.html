@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;&amp;#x8BA1;&amp;#x7B97;&amp;#x673A;&amp;#x7F51;&amp;#x7EDC;&amp;#x4E0E;&amp;#x56E0;&amp;#x7279;&amp;#x7F51;&amp;#x300B; &amp;#x7B2C;&amp;#x4E03;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x8FD9;&amp;#x4E00;&amp;#x7AE0;&amp;#x662F;&amp;#x5173;&amp;#x4E8E;">
+<meta name="keywords" content="读书笔记,计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《计算机网络与因特网》 第七章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;&amp;#x8BA1;&amp;#x7B97;&amp;#x673A;&amp;#x7F51;&amp;#x7EDC;&amp;#x4E0E;&amp;#x56E0;&amp;#x7279;&amp;#x7F51;&amp;#x300B; &amp;#x7B2C;&amp;#x4E03;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x8FD9;&amp;#x4E00;&amp;#x7AE0;&amp;#x662F;&amp;#x5173;&amp;#x4E8E;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-01-15-46-54.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-01-15-06-05.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-01-15-19-14.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-01-15-45-39.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-03-08-31-03.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-03-08-36-42.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-03-09-54-25.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-03-14-44-01.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-03-15-52-33.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-03-16-17-36.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-03-16-23-46.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-03-17-06-01.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-03-17-07-06.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.147Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《计算机网络与因特网》 第七章笔记">
+<meta name="twitter:description" content="&amp;#x300A;&amp;#x8BA1;&amp;#x7B97;&amp;#x673A;&amp;#x7F51;&amp;#x7EDC;&amp;#x4E0E;&amp;#x56E0;&amp;#x7279;&amp;#x7F51;&amp;#x300B; &amp;#x7B2C;&amp;#x4E03;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x8FD9;&amp;#x4E00;&amp;#x7AE0;&amp;#x662F;&amp;#x5173;&amp;#x4E8E;">
+<meta name="twitter:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/2019-12-01-15-46-54.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/CNI-Chapter7-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《计算机网络与因特网》 第七章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/CNI-Chapter7-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《计算机网络与因特网》 第七章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-03 17:24:21" itemprop="dateCreated datePublished" datetime="2019-12-03T17:24:21+08:00">2019-12-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/计算机网络/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/CNI-Chapter7-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《计算机网络与因特网》 第七章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/CNI-Chapter7-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/CNI-Chapter7-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>13 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;&#x8BA1;&#x7B97;&#x673A;&#x7F51;&#x7EDC;&#x4E0E;&#x56E0;&#x7279;&#x7F51;&#x300B; &#x7B2C;&#x4E03;&#x7AE0;&#x7B14;&#x8BB0;&#x3002;</p>
+<p>&#x8FD9;&#x4E00;&#x7AE0;&#x662F;&#x5173;&#x4E8E;&#x4F20;&#x64AD;&#x5A92;&#x4ECB;&#x7684;&#xFF0C;&#x9996;&#x5148;&#x7ED9;&#x51FA;&#x4E86;&#x4F20;&#x64AD;&#x5A92;&#x4ECB;&#x7684;&#x5206;&#x7C7B;&#x3002;</p>
+<p>&#x7136;&#x540E;&#x4F9D;&#x6B21;&#x4ECB;&#x7ECD;&#x5404;&#x79CD;&#x5A92;&#x4ECB;&#xFF0C;&#x5305;&#x62EC;&#x7EBF;&#xFF0C;&#x5149;&#x7EA4;&#xFF0C;&#x7EA2;&#x5916;&#x7EBF;&#x7B49;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x4ECB;&#x7ECD;&#x4E86;&#x4FE1;&#x9053;&#x5BB9;&#x91CF;&#x7684;&#x6982;&#x5FF5;&#x3002;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-7-transmission-media">Chapter 7 Transmission Media</h1>
+<h2 id="introduction">Introduction</h2>
+<p>&#x8FD9;&#x4E00;&#x7AE0;&#x5C06;&#x4F1A;&#x7ED9;&#x51FA;&#x4F20;&#x64AD;&#x5A92;&#x4ECB;&#x7684;&#x5206;&#x7C7B;&#xFF0C;&#x4ECB;&#x7ECD;&#x7535;&#x78C1;&#x4F20;&#x64AD;&#x7684;&#x57FA;&#x672C;&#x6982;&#x5FF5;&#x4EE5;&#x53CA;&#x5C55;&#x793A;&#x5E72;&#x6270;&#x548C;&#x566A;&#x97F3;&#x662F;&#x5982;&#x4F55;&#x88AB;&#x5C4F;&#x853D;&#x7684;&#xFF0C;&#x6700;&#x540E;&#x4F1A;&#x89E3;&#x91CA;&#x5BB9;&#x91CF;&#x7684;&#x6982;&#x5FF5;&#x3002;</p>
+<h2 id="guided-and-unguided-transmission">Guided And Unguided Transmission</h2>
+<p>&#x6709;&#x4E24;&#x79CD;&#x91CD;&#x8981;&#x7684;&#x5C06;&#x4F20;&#x8F93;&#x5A92;&#x4ECB;&#x5206;&#x7C7B;&#x7684;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x6309;&#x4F20;&#x64AD;&#x8DEF;&#x5F84;&#xFF1A;&#x4F7F;&#x7528;<code>&#x6709;&#x5411;&#xFF08;Guided&#xFF09;</code>&#x548C;<code>&#x65E0;&#x5411;&#xFF08;Unguided&#xFF09;</code>&#x6765;&#x63CF;&#x8FF0;&#x4F20;&#x64AD;&#x8DEF;&#x5F84;&#x3002;&#x50CF;&#x94DC;&#x7EBF;&#x548C;&#x5149;&#x7EA4;&#x8FD9;&#x79CD;&#x63D0;&#x4F9B;&#x7279;&#x5B9A;&#x8DEF;&#x5F84;&#x7684;&#x65B9;&#x5F0F;&#x79F0;&#x4E3A;&#x6709;&#x5411;&#x3002;&#x800C;&#x50CF;&#x65E0;&#x7EBF;&#x7535;&#x8FD9;&#x6837;&#x7684;&#x4F20;&#x8F93;&#x79F0;&#x4E3A;&#x65E0;&#x5411;&#x3002;&#x5DE5;&#x7A0B;&#x5E08;&#x4F1A;&#x901A;&#x4FD7;&#x7684;&#x5C06;&#x8FD9;&#x4E24;&#x79CD;&#x79F0;&#x4E3A;<code>&#x6709;&#x7EBF;(wired)</code>&#x548C;<code>&#x65E0;&#x7EBF;(wireless)</code>&#xFF0C;&#x56E0;&#x6B64;&#x5149;&#x7EA4;&#x4E5F;&#x7B97;&#x5728;&#x6709;&#x7EBF;&#x7684;&#x8303;&#x7574;&#x3002;</p></li>
+<li><p>&#x6309;&#x80FD;&#x7684;&#x5F62;&#x5F0F;&#xFF1A;&#x5206;&#x4E3A;&#x4E09;&#x79CD;&#x7C7B;&#x578B;&#xFF0C;&#x5728;&#x7EBF;&#x7F06;&#x4E0A;&#x7684;<code>&#x7535;&#x4FE1;&#x53F7;&#xFF08;Electrical Energy&#xFF09;</code>&#xFF0C;&#x65E0;&#x7EBF;&#x4E0A;&#x4F7F;&#x7528;&#x7684;<code>&#x65E0;&#x7EBF;&#x7535;&#xFF08;Radio&#xFF09;</code>&#x548C;&#x5149;&#x7EA4;&#x4E2D;&#x4F7F;&#x7528;&#x7684;<code>&#x5149;&#xFF08;Light&#xFF09;</code>&#x3002;</p></li>
+</ol>
+<h2 id="taxonomy-by-forms-of-energy">Taxonomy By Forms Of Energy</h2>
+<p>&#x4E0B;&#x56FE;&#x5C55;&#x793A;&#x4E86;&#x6309;&#x80FD;&#x7684;&#x5F62;&#x5F0F;&#x5206;&#x7C7B;&#x7684;&#x56FE;&#xFF0C;&#x8FD9;&#x4E2A;&#x5206;&#x7C7B;&#x56FE;&#x4E5F;&#x4E0D;&#x662F;&#x5B8C;&#x7F8E;&#x7684;&#xFF0C;&#x4F8B;&#x5982;&#x5728;&#x65E0;&#x7EBF;&#x7535;&#x90E8;&#x5206;&#x5206;&#x4E3A;<code>&#x9646;&#x5730;&#x65E0;&#x7EBF;&#x7535;&#xFF08;Terrestrial Radio&#xFF09;</code>&#x548C;<code>&#x536B;&#x661F;&#x65E0;&#x7EBF;&#x7535;&#xFF08;Satellite&#xFF09;</code>&#xFF0C;&#x4F46;&#x5B9E;&#x9645;&#x4E0A;&#x592A;&#x7A7A;&#x7A7A;&#x95F4;&#x7AD9;&#x7684;&#x65E0;&#x7EBF;&#x7535;&#x90E8;&#x5206;&#x4E24;&#x8005;&#x90FD;&#x4E0D;&#x7B26;&#x5408;&#x3002;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-01-15-46-54.png" alt="&#x80FD;&#x529B;&#x5F62;&#x5F0F;&#x5206;&#x7C7B;"></p>
+<h2 id="background-radiation-and-electrical-noise">Background Radiation And Electrical Noise</h2>
+<p>&#x6240;&#x6709;&#x7528;&#x7535;&#x4FE1;&#x53F7;&#x4F20;&#x8F93;&#x7684;&#x7535;&#x8DEF;&#x90FD;&#x9700;&#x8981;&#x4E24;&#x6839;&#x7EBF;&#xFF0C;&#x4E00;&#x6839;&#x7528;&#x6765;&#x5C06;&#x4FE1;&#x53F7;&#x4F20;&#x9012;&#x7ED9;&#x63A5;&#x6536;&#x65B9;&#xFF0C;&#x4E00;&#x6839;&#x7528;&#x6765;&#x5C06;&#x53CD;&#x9988;&#x8FD8;&#x7ED9;&#x53D1;&#x9001;&#x65B9;&#x3002;&#x6700;&#x7B80;&#x5355;&#x7684;&#x7535;&#x4F20;&#x8F93;&#x65B9;&#x5F0F;&#x5C31;&#x662F;&#x4F7F;&#x7528;&#x4E24;&#x6839;&#x94DC;&#x7EBF;&#xFF0C;&#x6BCF;&#x6839;&#x7EBF;&#x90FD;&#x7528;&#x5851;&#x6599;&#x5305;&#x88F9;&#x4F4F;&#xFF0C;&#x6765;&#x9632;&#x6B62;&#x76F8;&#x4E92;&#x4E4B;&#x95F4;&#x7684;&#x7535;&#x5E72;&#x6270;&#xFF0C;&#x5728;&#x4E24;&#x6839;&#x7EBF;&#x5916;&#x8FD8;&#x6709;&#x4E00;&#x5C42;&#x6574;&#x4E2A;&#x5305;&#x88F9;&#x8D77;&#x6765;&#xFF0C;&#x4E3A;&#x4E86;&#x4EBA;&#x65B9;&#x4FBF;&#x4F7F;&#x7528;&#x3002;</p>
+<p>&#x4F46;&#x5728;&#x7EBF;&#x7F06;&#x5F62;&#x5F0F;&#x4E0B;&#x6709;&#x8BB8;&#x591A;&#x6539;&#x8FDB;&#xFF0C;&#x8FD9;&#x4E3B;&#x8981;&#x662F;&#x56E0;&#x4E3A;&#x7535;&#x4FE1;&#x53F7;&#x6709;&#x4EE5;&#x4E0B;&#x7279;&#x5F81;&#xFF1A;</p>
+<ol type="1">
+<li>&#x73AF;&#x5883;&#x4E2D;&#x6709;&#x968F;&#x673A;&#x7684;&#x7535;&#x78C1;&#x8F90;&#x5C04;&#xFF0C;&#x79F0;&#x4E3A;<code>&#x566A;&#x97F3;&#xFF08;Noise&#xFF09;</code>&#xFF0C;&#x5982;&#x9713;&#x8679;&#x706F;&#x548C;&#x7535;&#x673A;&#x5C31;&#x4F1A;&#x53D1;&#x51FA;&#x968F;&#x673A;&#x7684;&#x8F90;&#x5C04;&#x3002;&#x4E00;&#x822C;&#x6765;&#x8BF4;&#x901A;&#x4FE1;&#x7CFB;&#x7EDF;&#x5728;&#x6B63;&#x5E38;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#x4E0B;&#x5C31;&#x4F1A;&#x4EA7;&#x751F;&#x5C11;&#x91CF;&#x7684;&#x566A;&#x97F3;&#x3002;</li>
+<li>&#x5F53;&#x7535;&#x78C1;&#x8F90;&#x5C04;&#x9047;&#x5230;&#x91D1;&#x5C5E;&#x4F1A;&#x88AB;&#x5438;&#x6536;&#x8FDB;&#x800C;&#x4EA7;&#x751F;&#x7EC6;&#x5FAE;&#x7684;&#x4FE1;&#x53F7;&#xFF0C;&#x8FD9;&#x4E9B;&#x4FE1;&#x53F7;&#x4F1A;&#x5BF9;&#x6B63;&#x5E38;&#x7684;&#x4FE1;&#x53F7;&#x9020;&#x6210;&#x5E72;&#x6270;&#x3002;</li>
+<li>&#x6B63;&#x56E0;&#x4E3A;&#x91D1;&#x5C5E;&#x80FD;&#x5438;&#x6536;&#x7535;&#x78C1;&#x8F90;&#x5C04;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x7528;&#x8DB3;&#x591F;&#x7684;&#x91D1;&#x5C5E;&#x653E;&#x5728;&#x566A;&#x58F0;&#x6E90;&#x548C;&#x901A;&#x4FE1;&#x7CFB;&#x7EDF;&#x95F4;&#xFF0C;&#x5C06;&#x5176;&#x4F5C;&#x4E3A;<code>&#x9632;&#x62A4;&#xFF08;Shield&#xFF09;</code>&#x3002;</li>
+</ol>
+<h2 id="twisted-pair-coppter-wiring">Twisted Pair Coppter Wiring</h2>
+<p>&#x6709;&#x4E09;&#x79CD;&#x5F62;&#x5F0F;&#x7684;&#x7535;&#x7F06;&#x53EF;&#x4EE5;&#x51CF;&#x5C11;&#x7535;&#x78C1;&#x566A;&#x97F3;&#x7684;&#x5E72;&#x6270;&#xFF1A;</p>
+<ol type="1">
+<li>&#x975E;&#x5C4F;&#x853D;&#x53CC;&#x7EDE;&#x7EBF;&#xFF08;Unshielded Twisted Pair,UTP&#xFF09;</li>
+<li>&#x540C;&#x8F74;&#x7535;&#x7F06;&#xFF08;Coaxial cable&#xFF09;</li>
+<li>&#x5C4F;&#x853D;&#x53CC;&#x7EDE;&#x7EBF;&#xFF08;Shielded Twisted Pair,STP&#xFF09;</li>
+</ol>
+<p>&#x7B2C;&#x4E00;&#x4E2A;&#x5F62;&#x5F0F;&#xFF0C;&#x975E;&#x5C4F;&#x853D;&#x53CC;&#x7EDE;&#x7EBF;&#x5728;&#x901A;&#x4FE1;&#x4E2D;&#x88AB;&#x5E7F;&#x6CDB;&#x5E94;&#x7528;&#x3002;&#x5982;&#x540D;&#x5B57;&#x4E00;&#x6837;&#xFF0C;&#x53CC;&#x7EDE;&#x7EBF;&#x662F;&#x5C06;&#x4E24;&#x6839;&#x94DC;&#x7EBF;&#x7F20;&#x7ED5;&#x5728;&#x4E00;&#x8D77;&#x7684;&#x5F62;&#x5F0F;&#xFF0C;&#x8FD9;&#x79CD;&#x76F8;&#x4E92;&#x7F20;&#x7ED5;&#x7684;&#x5F62;&#x5F0F;&#x6BD4;&#x4E24;&#x6839;&#x7EBF;&#x5E73;&#x884C;&#x6392;&#x5E03;&#x6709;&#x66F4;&#x597D;&#x7684;&#x6297;&#x5E72;&#x6270;&#x6027;&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#xFF08;a&#xFF09;&#x4E3A;&#x5E73;&#x884C;&#x6392;&#x5217;&#xFF0C;&#x84DD;&#x7EBF;&#x66F4;&#x63A5;&#x8FD1;&#x8F90;&#x5C04;&#x6E90;&#xFF0C;&#x4E8E;&#x662F;&#x5B83;&#x76F8;&#x5BF9;&#x4E8E;&#x7070;&#x7EBF;&#x5438;&#x6536;&#x4E86;&#x66F4;&#x591A;&#x7684;&#x80FD;&#x91CF;&#xFF0C;&#x800C;&#x5728;&#xFF08;b&#xFF09;&#x56FE;&#x7684;&#x7F20;&#x7ED5;&#x5F62;&#x5F0F;&#x4E2D;&#xFF0C;&#x4E24;&#x6839;&#x7EBF;&#x90FD;&#x5404;&#x6709;&#x4E00;&#x90E8;&#x5206;&#x66F4;&#x9760;&#x8FD1;&#x8F90;&#x5C04;&#x6E90;&#xFF0C;&#x6240;&#x4EE5;&#x6574;&#x4F53;&#x6765;&#x8BF4;&#xFF0C;&#x4E24;&#x8005;&#x6536;&#x5230;&#x7684;&#x80FD;&#x91CF;&#x662F;&#x76F8;&#x540C;&#x7684;&#x3002;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-01-15-06-05.png" alt="&#x53CC;&#x7EDE;&#x7EBF;"></p>
+<h2 id="shieldingcoaxial-cable-and-shielded-twisted-pair">Shielding&#xFF1A;Coaxial Cable And Shielded Twisted Pair</h2>
+<p>&#x56E0;&#x4E3A;&#x975E;&#x5C4F;&#x853D;&#x53CC;&#x7EDE;&#x7EBF;&#x53EA;&#x662F;&#x8BA9;&#x4E24;&#x6839;&#x7EBF;&#x5438;&#x6536;&#x4E86;&#x76F8;&#x540C;&#x7684;&#x80FD;&#x91CF;&#xFF0C;&#x4F46;&#x566A;&#x97F3;&#x8FD8;&#x662F;&#x88AB;&#x5438;&#x6536;&#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x4E00;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x975E;&#x5C4F;&#x853D;&#x53CC;&#x7EDE;&#x7EBF;&#x4ECD;&#x7136;&#x4F1A;&#x4EA7;&#x751F;&#x95EE;&#x9898;&#xFF0C;&#x5982;&#x6709;&#x7279;&#x522B;&#x5F3A;&#x7684;&#x7535;&#x566A;&#x97F3;&#x73AF;&#x5883;&#xFF0C;&#x6216;&#x8005;&#x7279;&#x522B;&#x63A5;&#x8FD1;&#x566A;&#x58F0;&#x6E90;&#xFF0C;&#x6216;&#x8005;&#x901A;&#x4FE1;&#x7CFB;&#x7EDF;&#x4E2D;&#x7684;&#x4FE1;&#x53F7;&#x9891;&#x7387;&#x5F88;&#x9AD8;&#xFF08;&#x9891;&#x7387;&#x8D8A;&#x9AD8;&#x5BF9;&#x566A;&#x97F3;&#x8D8A;&#x654F;&#x611F;&#xFF09;&#x3002;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x8FD9;&#x4E9B;&#x95EE;&#x9898;&#xFF0C;&#x53EA;&#x80FD;&#x5C3D;&#x91CF;&#x7684;&#x5C4F;&#x853D;&#x566A;&#x58F0;&#x3002;</p>
+<p>&#x4E00;&#x79CD;&#x65B9;&#x6CD5;&#x5C31;&#x662F;<code>&#x540C;&#x8F74;&#x7535;&#x7F06;&#xFF08;Coaxial Cable&#xFF09;</code>&#xFF0C;&#x5B83;&#x5728;&#x7EBF;&#x6750;&#x7684;&#x5916;&#x5C42;&#x589E;&#x52A0;&#x4E86;&#x4E00;&#x5C42;<code>&#x7F16;&#x7EC7;&#x91D1;&#x5C5E;&#x5C4F;&#x853D;(Braided metal shield)</code>&#xFF08;&#x5982;&#x7F51;&#x72B6;&#xFF09;&#x3002;&#x4F7F;&#x7528;&#x7F16;&#x7EC7;&#x6837;&#x7684;&#x91D1;&#x5C5E;&#x5C42;&#x800C;&#x975E;&#x4E00;&#x6574;&#x5757;&#x91D1;&#x5C5E;&#x5C42;&#x4E3B;&#x8981;&#x662F;&#x5904;&#x4E8E;&#x4FBF;&#x643A;&#x6027;&#x7684;&#x8003;&#x8651;&#xFF08;&#x540E;&#x8005;&#x7684;&#x5C4F;&#x853D;&#x6027;&#x66F4;&#x597D;&#xFF09;&#xFF0C;&#x4F46;&#x76F8;&#x5BF9;&#x4E8E;&#x975E;&#x5C4F;&#x853D;&#x53CC;&#x7EDE;&#x7EBF;&#xFF0C;&#x540C;&#x8F74;&#x7535;&#x7F06;&#x7684;&#x4FBF;&#x643A;&#x6027;&#x8FD8;&#x662F;&#x5DEE;&#x7684;&#x3002;&#x5982;&#x7535;&#x89C6;&#x7684;&#x4FE1;&#x53F7;&#x7EBF;&#xFF0C;&#x4E00;&#x822C;&#x90FD;&#x662F;&#x540C;&#x8F74;&#x7535;&#x7F06;&#xFF0C;&#x540C;&#x8F74;&#x7535;&#x7F06;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-01-15-19-14.png" alt="&#x540C;&#x8F74;&#x7535;&#x7F06;"></p>
+<p>&#x5C4F;&#x853D;&#x53CC;&#x7EDE;&#x7EBF;&#x5219;&#x662F;&#x975E;&#x5C4F;&#x853D;&#x53CC;&#x7EDE;&#x7EBF;&#x548C;&#x540C;&#x8F74;&#x7535;&#x7F06;&#x7684;&#x6DF7;&#x5408;&#xFF0C;&#x662F;&#x4E24;&#x8005;&#x5F62;&#x5F0F;&#x7684;&#x6298;&#x4E2D;&#xFF0C;&#x4ED6;&#x5728;&#x4E00;&#x5BF9;&#x6216;&#x591A;&#x5BF9;&#x53CC;&#x7EDE;&#x7EBF;&#x7684;&#x5916;&#x5C42;&#x4F7F;&#x7528;&#x4E86;&#x66F4;&#x8584;&#x7684;&#x91D1;&#x5C5E;&#x5C4F;&#x853D;&#x5C42;&#xFF0C;&#x5F88;&#x591A;&#x60C5;&#x51B5;&#x4E0B;&#x7528;&#x94DD;&#x6765;&#x4F5C;&#x4E3A;&#x91D1;&#x5C5E;&#x5C4F;&#x853D;&#x5C42;&#xFF08;&#x94DD;&#x66F4;&#x8F6F;&#xFF09;&#x3002;</p>
+<p>&#x5982;&#x4E4B;&#x524D;&#x8282;&#x6240;&#x8FF0;&#xFF0C;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x94DC;&#x7EBF;&#x95F4;&#x7684;&#x7535;&#x5E72;&#x6270;&#xFF0C;&#x94DC;&#x7EBF;&#x5916;&#x5C42;&#x4F1A;&#x5305;&#x88F9;&#x4E00;&#x5C42;&#x5851;&#x6599;&#x3002;&#x53CC;&#x7EDE;&#x7EBF;&#x662F;&#x5C06;&#x4E24;&#x4E2A;&#x4E24;&#x4E2A;&#x5305;&#x88F9;&#x7740;&#x5851;&#x6599;&#x7684;&#x94DC;&#x7EBF;&#x7EDE;&#x5728;&#x4E00;&#x8D77;&#xFF0C;&#x540C;&#x8F74;&#x7535;&#x7F06;&#x5219;&#x662F;&#x5728;&#x4E00;&#x6839;&#x5305;&#x88F9;&#x4F4F;&#x5851;&#x6599;&#x7684;&#x5BFC;&#x7EBF;&#x5916;&#x5305;&#x88F9;&#x91D1;&#x5C5E;&#x5C4F;&#x853D;&#x5C42;&#xFF0C;&#x5C4F;&#x853D;&#x53CC;&#x7EDE;&#x7EBF;&#x662F;&#x5728;&#x4E24;&#x6839;&#x5305;&#x88F9;&#x7740;&#x5851;&#x6599;&#x7684;&#x94DC;&#x7EBF;&#x7EDE;&#x5728;&#x4E00;&#x8D77;&#x540E;&#x518D;&#x5305;&#x88F9;&#x91D1;&#x5C5E;&#x5C42;&#x3002;</p>
+<h2 id="categories-of-twisted-pair-cable">Categories Of Twisted Pair Cable</h2>
+<p>&#x4E00;&#x4E9B;&#x6807;&#x51C6;&#x673A;&#x6784;&#x4E3A;&#x7528;&#x4E8E;&#x8BA1;&#x7B97;&#x673A;&#x7F51;&#x7EDC;&#x7684;&#x53CC;&#x7EDE;&#x7EBF;&#x5B9A;&#x4E49;&#x4E86;&#x6807;&#x51C6;&#xFF0C;&#x8FD9;&#x4E9B;&#x673A;&#x6784;&#x5305;&#x62EC;<code>&#x7F8E;&#x56FD;&#x56FD;&#x5BB6;&#x6807;&#x51C6;&#x7EC4;&#x7EC7;&#xFF08;American National Standards Institute&#xFF0C;ANSI&#xFF09;</code>&#xFF0C;<code>&#x901A;&#x4FE1;&#x4EA7;&#x4E1A;&#x8054;&#x5408;&#xFF08;Telecommunications Industry Association&#xFF0C;TIA&#xFF09;</code>&#xFF0C;<code>&#x7535;&#x5B50;&#x4EA7;&#x4E1A;&#x8054;&#x5408;&#xFF08;Electronic Industries Alliance&#xFF0C;EIA&#xFF09;</code>&#xFF0C;&#x4E0B;&#x56FE;&#x4E3A;&#x4E3B;&#x8981;&#x5206;&#x7C7B;&#xFF1A;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-01-15-45-39.png" alt="&#x53CC;&#x7EDE;&#x7EBF;&#x5206;&#x7C7B;"></p>
+<h2 id="media-using-light-energy-and-optical-fibers">Media Using Light Energy And Optical Fibers</h2>
+<p>&#x6709;&#x4E09;&#x79CD;&#x5F62;&#x5F0F;&#x7684;&#x5A92;&#x4ECB;&#x662F;&#x7528;&#x5149;&#x80FD;&#x643A;&#x5E26;&#x6570;&#x636E;&#x7684;&#xFF1A;<code>&#x5149;&#x7EA4;&#xFF08;Optical Fibers&#xFF09;</code>&#xFF0C;<code>&#x7EA2;&#x5916;&#x7EBF;&#x4F20;&#x8F93;&#xFF08;Infrared transmission&#xFF09;</code>&#xFF0C;<code>&#x70B9;&#x5BF9;&#x70B9;&#x6FC0;&#x5149;&#xFF08;Point to Point lasers&#xFF09;</code>&#x3002;</p>
+<p>&#x5176;&#x4E2D;&#x6700;&#x91CD;&#x8981;&#x7684;&#x7C7B;&#x578B;&#x662F;&#x5149;&#x7EA4;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x6BCF;&#x6839;&#x5149;&#x7EA4;&#x90FD;&#x662F;&#x4E00;&#x6839;&#x5305;&#x88F9;&#x5728;&#x5851;&#x6599;&#x5916;&#x5C42;&#x4E2D;&#x7684;&#x7EC6;&#x73BB;&#x7483;&#x7EBF;&#x6216;&#x8005;&#x900F;&#x660E;&#x5851;&#x6599;&#x3002;</p></li>
+<li><p>&#x5149;&#x7EA4;&#x662F;&#x7528;&#x4E8E;&#x5355;&#x9879;&#x4F20;&#x64AD;&#x7684;&#x3002;&#x5728;&#x5149;&#x7EA4;&#x7684;&#x4E00;&#x6BB5;&#x662F;&#x4E00;&#x4E2A;&#x6FC0;&#x5149;&#x6216;&#x8005;LED&#xFF0C;&#x7528;&#x6765;&#x53D1;&#x5C04;&#x5149;&#xFF0C;&#x53E6;&#x4E00;&#x7AEF;&#x662F;&#x8FDE;&#x63A5;&#x4E00;&#x4E2A;&#x611F;&#x5149;&#x8BBE;&#x5907;&#x7528;&#x6765;&#x68C0;&#x6D4B;&#x5149;&#x3002;&#x5982;&#x679C;&#x6570;&#x636E;&#x9700;&#x8981;&#x53CC;&#x5411;&#x4F20;&#x64AD;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x7528;&#x5230;&#x4E24;&#x6839;&#x5149;&#x7EA4;&#x3002;&#x591A;&#x6839;&#x5149;&#x7EA4;&#x7528;&#x5851;&#x6599;&#x5C01;&#x58F3;&#x5305;&#x88F9;&#x5728;&#x4E00;&#x8D77;&#x751F;&#x6210;&#x5149;&#x7EA4;&#x7535;&#x7F06;&#x3002;</p></li>
+</ol>
+<p>&#x5149;&#x7EA4;&#x65E0;&#x6CD5;&#x88AB;&#x5F2F;&#x6298;&#x6210;&#x76F4;&#x89D2;&#xFF0C;&#x4F46;&#x5149;&#x7EA4;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x5F2F;&#x66F2;&#xFF0C;&#x751A;&#x81F3;&#x53EF;&#x4EE5;&#x5F2F;&#x66F2;&#x6210;&#x4E00;&#x4E2A;&#x76F4;&#x5F84;&#x5C0F;&#x4E8E;2&#x82F1;&#x5BF8;&#x7684;&#x5706;&#xFF0C;&#x8BA9;&#x5149;&#x7EA4;&#x5728;&#x5F2F;&#x6298;&#x72B6;&#x6001;&#x4E0B;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x56E0;&#x4E3A;&#x5149;&#x7684;&#x4F20;&#x64AD;&#x7279;&#x6027;&#x3002;</p>
+<p>&#x5149;&#x4ECE;&#x4E00;&#x4E2A;&#x4F4E;&#x5BC6;&#x5EA6;&#x7269;&#x8D28;&#x7167;&#x5C04;&#x5165;&#x53E6;&#x4E00;&#x4E2A;&#x9AD8;&#x5BC6;&#x5EA6;&#x7269;&#x8D28;&#xFF0C;&#x968F;&#x7740;&#x5165;&#x5C04;&#x7684;&#x89D2;&#x5EA6;&#x4E0D;&#x540C;&#xFF0C;&#x5149;&#x7684;&#x53CD;&#x5E94;&#x4E5F;&#x4F1A;&#x4E0D;&#x540C;&#x3002;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x89D2;&#x5EA6;&#xFF0C;&#x5F53;&#x5149;&#x4EE5;&#x8FD9;&#x4E2A;&#x89D2;&#x5EA6;&#x5165;&#x5C04;&#x65F6;&#xFF0C;&#x5149;&#x4F1A;&#x968F;&#x7740;&#x4E24;&#x4E2A;&#x7269;&#x8D28;&#x7684;&#x4EA4;&#x754C;&#x5904;&#x4F20;&#x64AD;&#x3002;&#x5F53;&#x5149;&#x7684;&#x5165;&#x5C04;&#x89D2;&#x5927;&#x4E8E;&#x8FD9;&#x4E2A;&#x89D2;&#x5EA6;&#x65F6;&#xFF0C;&#x5149;&#x4F1A;&#x88AB;&#x53CD;&#x5C04;&#x3002;&#x5F53;&#x5149;&#x7684;&#x5165;&#x5C04;&#x89D2;&#x5C0F;&#x4E8E;&#x8FD9;&#x4E2A;&#x89D2;&#x5EA6;&#x65F6;&#xFF0C;&#x5149;&#x4F1A;&#x53D1;&#x751F;&#x6298;&#x5C04;&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-03-08-31-03.png" alt="&#x5149;&#x7684;&#x53CD;&#x5C04;"></p>
+<p>&#x5149;&#x7EA4;&#x8FD0;&#x7528;&#x7684;&#x662F;&#x5149;&#x7684;&#x53CD;&#x5C04;&#xFF0C;&#x6709;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684;&#x9540;&#x5C42;&#xFF08;Cladding&#xFF09;&#x4E0E;&#x5149;&#x7EA4;&#x5171;&#x540C;&#x5F62;&#x6210;&#x4E00;&#x4E2A;&#x8FB9;&#x754C;&#xFF0C;&#x5728;&#x4F20;&#x8F93;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5149;&#x4F1A;&#x5728;&#x4E0A;&#x4E0B;&#x4E24;&#x4E2A;&#x8FB9;&#x754C;&#x5185;&#x53CD;&#x5C04;&#x524D;&#x8FDB;&#x3002;</p>
+<p>&#x4F46;&#x53CD;&#x5C04;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x662F;&#x5B58;&#x5728;&#x80FD;&#x91CF;&#x635F;&#x8017;&#x7684;&#xFF0C;&#x800C;&#x4E14;&#x56E0;&#x4E3A;&#x5149;&#x7684;&#x53CD;&#x5C04;&#xFF0C;&#x5149;&#x4F20;&#x64AD;&#x7684;&#x8DEF;&#x5F84;&#x662F;&#x6BD4;&#x5149;&#x7684;&#x76F4;&#x7EBF;&#x4F20;&#x64AD;&#x8981;&#x957F;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x5149;&#x5728;&#x5149;&#x7EA4;&#x4E00;&#x6BB5;&#x53D1;&#x5C04;&#x540E;&#xFF0C;&#x62B5;&#x8FBE;&#x53E6;&#x4E00;&#x7AEF;&#x65F6;&#x80FD;&#x91CF;&#x4F1A;&#x66F4;&#x4F4E;&#xFF0C;&#x800C;&#x4E14;&#x4F1A;&#x66F4;&#x5206;&#x6563;&#xFF08;Dispersed&#xFF09;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-03-08-36-42.png" alt="&#x5149;&#x5206;&#x6563;"></p>
+<p>&#x4E0A;&#x56FE;&#x4E2D;&#xFF0C;&#x56E0;&#x4E3A;&#x63A5;&#x53D7;&#x65F6;&#x7684;&#x80FD;&#x91CF;&#x66F4;&#x4F4E;&#xFF0C;&#x6240;&#x4EE5;Y&#x8F74;&#x503C;&#x66F4;&#x4F4E;&#xFF0C;&#x4E14;&#x56E0;&#x4E3A;&#x80FD;&#x91CF;&#x66F4;&#x5206;&#x6563;&#xFF0C;&#x6240;&#x4EE5;&#x63A5;&#x53D7;&#x7684;&#x65F6;&#x95F4;&#x4E5F;&#x4F1A;&#x62D6;&#x957F;&#xFF0C;&#x56E0;&#x6B64;&#x5728;X&#x8F74;&#x4E0A;&#x5982;&#x540C;&#x88AB;&#x62C9;&#x4F38;&#x3002;</p>
+<h2 id="types-of-fiber-and-light-transmission">Types Of Fiber And Light Transmission</h2>
+<p>&#x56E0;&#x4E3A;&#x5149;&#x5728;&#x4F20;&#x8F93;&#x4E2D;&#x7684;&#x53CD;&#x5C04;&#x5BFC;&#x81F4;&#x7684;&#x5206;&#x6563;&#x5728;&#x957F;&#x8DDD;&#x79BB;&#x4F7F;&#x7528;&#x5149;&#x7EA4;&#x65F6;&#x4F1A;&#x6210;&#x4E3A;&#x4E25;&#x91CD;&#x95EE;&#x9898;&#xFF0C;&#x56E0;&#x6B64;&#x6709;&#x4E09;&#x4E2A;&#x79CD;&#x7C7B;&#x7684;&#x5149;&#x7EA4;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x5728;&#x6027;&#x80FD;&#x4E0E;&#x4EF7;&#x683C;&#x4E0A;&#x6743;&#x8861;&#xFF0C;</p>
+<ol type="1">
+<li><p>&#x8DC3;&#x53D8;&#x578B;&#x591A;&#x6A21;&#x5149;&#x7EA4;&#xFF08;Multimode&#xFF0C;step index fiber&#xFF09;&#xFF1A;&#x8FD9;&#x79CD;&#x7C7B;&#x578B;&#x7684;&#x5149;&#x7EA4;&#xFF0C;&#x5149;&#x7EA4;&#x4E0E;&#x9540;&#x5C42;&#x4E2D;&#x7684;&#x8FB9;&#x754C;&#x5F88;&#x9661;&#x5CED;&#xFF0C;&#x56E0;&#x6B64;&#x5149;&#x4F1A;&#x5728;&#x8FB9;&#x754C;&#x5185;&#x9891;&#x7E41;&#x7684;&#x53CD;&#x5C04;&#xFF0C;&#x9020;&#x6210;&#x5927;&#x91CF;&#x7684;&#x80FD;&#x91CF;&#x5206;&#x6563;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x79CD;&#x5149;&#x7EA4;&#x4EF7;&#x683C;&#x6700;&#x4FBF;&#x5B9C;&#x3002;</p></li>
+<li><p>&#x6E10;&#x53D8;&#x578B;&#x591A;&#x6A21;&#x5149;&#x7EA4;&#xFF08;Multimode&#xFF0C;graded index fiber&#xFF09;&#xFF1A;&#x8FD9;&#x79CD;&#x7C7B;&#x578B;&#x6BD4;&#x8DC3;&#x53D8;&#x578B;&#x591A;&#x6A21;&#x7A0D;&#x8D35;&#xFF0C;&#x4F46;&#x662F;&#x80FD;&#x51CF;&#x5C11;&#x53CD;&#x5C04;&#x8FDB;&#x800C;&#x6709;&#x66F4;&#x5C11;&#x7684;&#x80FD;&#x91CF;&#x5206;&#x6563;&#x3002;</p></li>
+<li><p>&#x5355;&#x6A21;&#x5149;&#x7EA4;&#xFF08;Single mode fiber&#xFF09;&#xFF1A;&#x8FD9;&#x79CD;&#x7C7B;&#x578B;&#x7684;&#x5149;&#x7EA4;&#x6700;&#x8D35;&#xFF0C;&#x4F46;&#x4E5F;&#x6709;&#x6700;&#x4F4E;&#x80FD;&#x91CF;&#x5206;&#x6563;&#x3002;&#x901A;&#x5E38;&#x7528;&#x4E8E;&#x957F;&#x8DDD;&#x79BB;&#x4F20;&#x8F93;&#x548C;&#x9AD8;&#x6BD4;&#x7279;&#x7387;&#x7684;&#x4F20;&#x8F93;&#x3002;</p></li>
+</ol>
+<p>&#x5982;&#x4E4B;&#x524D;&#x8282;&#x6240;&#x8FF0;&#x5149;&#x7EA4;&#x7684;&#x4E00;&#x7AEF;&#x4F1A;&#x7528;&#x6765;&#x53D1;&#x5C04;&#x5149;&#xFF0C;&#x53E6;&#x4E00;&#x7AEF;&#x4F1A;&#x7528;&#x6765;&#x63A5;&#x6536;&#x5149;&#x3002;&#x5728;&#x53D1;&#x5C04;&#x7AEF;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<code>&#x53D1;&#x5149;&#x4E8C;&#x6781;&#x7BA1;&#xFF08;Light Emitting Diode&#xFF0C;LED&#xFF09;</code>&#xFF0C;&#x6216;&#x8005;<code>&#x6FC0;&#x5149;&#x4E8C;&#x6781;&#x7BA1;&#xFF08;Injection Laser Diode&#xFF0C;ILD&#xFF09;</code>&#x3002;&#x5728; &#x63A5;&#x6536;&#x7AEF;&#x53EF;&#x4EE5;&#x7528;<code>&#x611F;&#x5149;&#x7EC6;&#x80DE;&#xFF08;Phote-sensitive&#xFF09;</code>&#x6216;&#x8005;<code>&#x5149;&#x654F;&#x4E8C;&#x6781;&#x7BA1;&#xFF08;Photodiode&#xFF09;</code>&#x3002;</p>
+<h2 id="optical-fiber-compared-to-copper-wiring">Optical Fiber Compared To Copper Wiring</h2>
+<p>&#x5149;&#x7EA4;&#x7684;&#x4F18;&#x52BF;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5BF9;&#x7535;&#x566A;&#x97F3;&#x514D;&#x75AB;</li>
+<li>&#x66F4;&#x5C11;&#x7684;&#x8870;&#x51CF;&#xFF08;&#x76F8;&#x5BF9;&#x4E8E;&#x94DC;&#x7EBF;&#x800C;&#x8A00;&#xFF09;</li>
+<li>&#x66F4;&#x9AD8;&#x7684;&#x5E26;&#x5BBD;</li>
+</ol>
+<p>&#x94DC;&#x7EBF;&#x7684;&#x4F18;&#x52BF;&#xFF1A;</p>
+<ol type="1">
+<li>&#x66F4;&#x4F4E;&#x7684;&#x4EF7;&#x683C;</li>
+<li>&#x66F4;&#x5C11;&#x7684;&#x8BBE;&#x5907;&#x8981;&#x6C42;&#xFF08;&#x5149;&#x7EA4;&#x7684;&#x63A5;&#x6536;&#x7AEF;&#x5FC5;&#x987B;&#x88AB;&#x6709;&#x6548;&#x7684;&#x629B;&#x5149;&#xFF09;</li>
+<li>&#x66F4;&#x4E0D;&#x6613;&#x88AB;&#x635F;&#x574F;</li>
+</ol>
+<h2 id="infrared-communication-technologies">Infrared Communication Technologies</h2>
+<p><code>&#x7EA2;&#x5916;&#x7EBF;&#x901A;&#x4FE1;&#xFF08;Infrared Communication&#xFF09;</code>&#x4E5F;&#x662F;&#x5149;&#x80FD;&#x901A;&#x4FE1;&#x7684;&#x4E00;&#x79CD;&#xFF0C;&#x4E5F;&#x662F;&#x70B9;&#x5BF9;&#x70B9;&#x6280;&#x672F;&#x7684;&#x4E00;&#x79CD;,&#x7535;&#x89C6;&#x9065;&#x63A7;&#x673A;&#x5C31;&#x662F;&#x7EA2;&#x5916;&#x7EBF;&#x901A;&#x4FE1;&#x7684;&#x5E94;&#x7528;&#x3002;&#x7EA2;&#x5916;&#x7EBF;&#x7684;&#x9891;&#x7387;&#x5728;&#x4EBA;&#x773C;&#x53EF;&#x89C1;&#x5149;&#x7684;&#x8303;&#x56F4;&#x5916;&#xFF0C;&#x4F46;&#x662F;&#x7EA2;&#x5916;&#x7EBF;&#x4ECD;&#x7136;&#x8868;&#x73B0;&#x7684;&#x5982;&#x540C;&#x53EF;&#x89C1;&#x5149;&#xFF0C;&#x5B83;&#x4F1A;&#x5F88;&#x5FEB;&#x7684;&#x6D88;&#x6563;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x575A;&#x786C;&#x5149;&#x6ED1;&#x8868;&#x9762;&#x53CD;&#x5C04;&#xFF0C;&#x4F1A;&#x88AB;&#x4E0D;&#x900F;&#x660E;&#x7269;&#x4F53;&#x963B;&#x6321;&#xFF0C;&#x8584;&#x5982;&#x7EB8;&#x7247;&#x7684;&#x7269;&#x4F53;&#x4F1A;&#x963B;&#x6321;&#x4FE1;&#x53F7;&#xFF0C;&#x751A;&#x81F3;&#x5927;&#x6C14;&#x4E2D;&#x7684;&#x6C34;&#x6C14;&#x90FD;&#x4F1A;&#x963B;&#x788D;&#x4FE1;&#x53F7;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x7EA2;&#x5916;&#x7EBF;&#x901A;&#x4FE1;&#x9002;&#x7528;&#x4E8E;&#x5BA4;&#x5185;&#x4F7F;&#x7528;&#xFF0C;&#x9002;&#x7528;&#x4E8E;&#x8DDD;&#x79BB;&#x77ED;&#x4E14;&#x65E0;&#x963B;&#x6321;&#x7684;&#x901A;&#x4FE1;&#x3002;</p>
+<p>&#x4E0B;&#x56FE;&#x662F;&#x4E09;&#x79CD;&#x7EA2;&#x5916;&#x7EBF;&#x901A;&#x4FE1;&#x7684;&#x5E38;&#x89C1;&#x6280;&#x672F;&#xFF1A;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-03-09-54-25.png" alt="&#x7EA2;&#x5916;&#x7EBF;&#x901A;&#x4FE1;&#x6280;&#x672F;"></p>
+<h2 id="point-to-point-laser-communication">Point-To-Point Laser Communication</h2>
+<p><code>&#x6FC0;&#x5149;&#x901A;&#x4FE1;&#xFF08;Laser Communication&#xFF09;</code>&#x662F;&#x53E6;&#x4E00;&#x79CD;&#x70B9;&#x5BF9;&#x70B9;&#x901A;&#x4FE1;&#xFF0C;&#x5982;&#x7EA2;&#x5916;&#x7EBF;&#x901A;&#x4FE1;&#x4E00;&#x6837;&#xFF0C;&#x6FC0;&#x5149;&#x901A;&#x4FE1;&#x4E5F;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x65E0;&#x963B;&#x6321;&#x7684;&#x8DEF;&#x5F84;&#x3002;</p>
+<p>&#x4F46;&#x4E0E;&#x7EA2;&#x5916;&#x7EBF;&#x901A;&#x4FE1;&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x6FC0;&#x5149;&#x901A;&#x4FE1;&#x53EA;&#x80FD;&#x8986;&#x76D6;&#x5F88;&#x5C0F;&#x7684;&#x4E00;&#x7247;&#x533A;&#x57DF;&#xFF0C;&#x6FC0;&#x5149;&#x7684;&#x5BBD;&#x5EA6;&#x901A;&#x5E38;&#x53EA;&#x6709;&#x51E0;&#x5398;&#x7C73;&#xFF08;&#x8FD9;&#x91CC;&#x662F;&#x5BBD;&#x5EA6;&#xFF0C;&#x5E76;&#x4E0D;&#x662F;&#x6307;&#x957F;&#x5EA6;&#xFF09;&#xFF0C;&#x4E5F;&#x6B63;&#x662F;&#x56E0;&#x4E3A;&#x6FC0;&#x5149;&#x7684;&#x5BBD;&#x5EA6;&#x5F88;&#x7A84;&#xFF0C;&#x6240;&#x4EE5;&#x6FC0;&#x5149;&#x4F20;&#x8F93;&#x7684;&#x63A5;&#x6536;&#x6761;&#x4EF6;&#x662F;&#x6BD4;&#x8F83;&#x82DB;&#x523B;&#x7684;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x88AB;&#x6C38;&#x4E45;&#x7684;&#x56FA;&#x5B9A;&#x5B89;&#x88C5;&#x3002;</p>
+<p>&#x6FC0;&#x5149;&#x901A;&#x4FE1;&#x7684;&#x5178;&#x578B;&#x5E94;&#x7528;&#x662F;&#x697C;&#x4E0E;&#x697C;&#x4E4B;&#x95F4;&#x7684;&#x4FE1;&#x53F7;&#x4F20;&#x8F93;&#xFF0C;&#x901A;&#x5E38;&#x5728;&#x76F8;&#x90BB;&#x5927;&#x697C;&#x7684;&#x5916;&#x5899;&#x6216;&#x8005;&#x9876;&#x697C;&#x5B89;&#x88C5;&#x90E8;&#x7F72;&#x7528;&#x4E8E;&#x6FC0;&#x5149;&#x901A;&#x4FE1;&#x7684;&#x53D1;&#x5C04;&#x548C;&#x63A5;&#x6536;&#x88C5;&#x7F6E;&#x3002;</p>
+<h2 id="electronmagneticradio-communication">Electronmagnetic(Radio) Communication</h2>
+<p>&#x5E38;&#x7528;<code>&#x65E0;&#x5411;&#x6027;&#xFF08;unguided&#xFF09;</code>&#x6765;&#x63CF;&#x8FF0;&#x4E0D;&#x9700;&#x8981;&#x4EFB;&#x4F55;&#x4ECB;&#x8D28;&#x6765;&#x4F20;&#x64AD;&#x80FD;&#x91CF;&#x7684;&#x901A;&#x4FE1;&#x65B9;&#x5F0F;&#x3002;&#x5728;&#x8BA1;&#x7B97;&#x673A;&#x7F51;&#x7EDC;&#x4E2D;&#x6700;&#x5E38;&#x7528;&#x7684;&#x4F9D;&#x8D56;&#x4E8E;&#x7535;&#x78C1;&#x80FD;&#x7684;&#x65E0;&#x5411;&#x6027;&#x6280;&#x672F;&#x662F;&#x65E0;&#x7EBF;&#x7535;&#x4F20;&#x64AD;&#xFF08;Radio Frequency Transmission&#xFF09;&#x3002;&#x65E0;&#x7EBF;&#x7535;&#x4F20;&#x64AD;&#x76F8;&#x8F83;&#x4E8E;&#x5149;&#x4F20;&#x64AD;&#x6709;&#x4E2A;&#x663E;&#x8457;&#x7684;&#x4F18;&#x52BF;&#xFF0C;&#x5373;&#x53EF;&#x4EE5;&#x957F;&#x8DDD;&#x79BB;&#x4F20;&#x64AD;&#x4E14;&#x53EF;&#x7A7F;&#x900F;&#x963B;&#x788D;&#x7269;&#x3002;</p>
+<p>&#x7535;&#x78C1;&#x80FD;&#x7684;&#x4F7F;&#x7528;&#x4F9D;&#x8D56;&#x4E8E;&#x4ED6;&#x7684;&#x9891;&#x7387;&#x5C5E;&#x6027;&#xFF0C;&#x5E38;&#x7528;<code>&#x6CE2;&#x8C31;&#xFF08;Spectrum&#xFF09;</code>&#x6765;&#x63CF;&#x8FF0;&#x53EF;&#x80FD;&#x7684;&#x9891;&#x7387;&#x8303;&#x56F4;&#x3002;&#x5168;&#x7403;&#x7684;&#x5404;&#x653F;&#x5E9C;&#x5206;&#x914D;&#x4E0D;&#x540C;&#x9891;&#x7387;&#x7684;&#x4F7F;&#x7528;&#x6743;&#xFF0C;&#x4F8B;&#x5982;&#x5728;&#x7F8E;&#x56FD;&#x662F;<code>&#x8054;&#x90A6;&#x901A;&#x4FE1;&#x59D4;&#x5458;&#x4F1A;&#xFF08;Federal Communications Commission&#xFF09;</code>&#x3002;&#x4E0B;&#x56FE;&#x662F;&#x4E3B;&#x8981;&#x7684;&#x80FD;&#x91CF;&#x9891;&#x7387;&#x6CE2;&#x8C31;&#xFF0C;&#x5176;&#x4E2D;&#x65E0;&#x7EBF;&#x7535;&#x7684;&#x8303;&#x56F4;&#x57FA;&#x672C;&#x662F;<span class="math inline">\(3KHZ\)</span>&#x5230;<span class="math inline">\(300GHZ\)</span>&#x3002;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-03-14-44-01.png" alt="&#x6CE2;&#x8C31;"></p>
+<h2 id="signal-progagation">Signal Progagation</h2>
+<p>&#x7535;&#x78C1;&#x6CE2;&#x7684;&#x9891;&#x7387;&#x4E5F;&#x51B3;&#x5B9A;&#x5B83;&#x4F20;&#x64AD;&#x65F6;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x4E0B;&#x8868;&#x662F;&#x6CE2;&#x4F20;&#x64AD;&#x7684;&#x4E09;&#x5927;&#x7C7B;&#x578B;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x5206;&#x7C7B;</th>
+<th>&#x9891;&#x7387;&#x8303;&#x56F4;</th>
+<th>&#x4F20;&#x64AD;&#x7C7B;&#x578B;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&#x4F4E;&#x9891;</td>
+<td>&lt; 2 MHZ</td>
+<td>&#x6CBF;&#x5730;&#x7403;&#x8868;&#x9762;&#x4F20;&#x8F93;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x88AB;&#x5730;&#x5F62;&#x963B;&#x6321;</td>
+</tr>
+<tr class="even">
+<td>&#x4E2D;&#x9891;</td>
+<td>2 &#x5230; 30 MHZ</td>
+<td>&#x5728;&#x5927;&#x6C14;&#x5C42;&#x4E2D;&#x53CD;&#x5C04;&#x4F20;&#x64AD;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x5728;&#x7535;&#x79BB;&#x5C42;</td>
+</tr>
+<tr class="odd">
+<td>&#x9AD8;&#x9891;</td>
+<td>&gt;30 MHZ</td>
+<td>&#x76F4;&#x7EBF;&#x4F20;&#x64AD;&#xFF0C;&#x4F1A;&#x88AB;&#x969C;&#x788D;&#x7269;&#x963B;&#x6321;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x65E0;&#x7EBF;&#x6280;&#x672F;&#x4E5F;&#x53EF;&#x88AB;&#x5206;&#x4E3A;&#x4EE5;&#x4E0B;&#x4E24;&#x7C7B;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5730;&#x8868;&#xFF08;Terrestrial&#xFF09;&#xFF1A;&#x4F9D;&#x8D56;&#x76F8;&#x5BF9;&#x8D34;&#x8FD1;&#x5730;&#x8868;&#x7684;&#x8BBE;&#x5907;&#x901A;&#x4FE1;&#xFF0C;&#x4F8B;&#x5982;&#x65E0;&#x7EBF;&#x7535;&#x53D1;&#x5C04;&#x5668;&#x548C;&#x5FAE;&#x535A;&#x53D1;&#x5C04;&#x5668;&#x3002;&#x8FD9;&#x4E9B;&#x8BBE;&#x5907;&#x4E00;&#x822C;&#x5B89;&#x88C5;&#x5728;&#x5C71;&#x9876;&#xFF0C;&#x4EBA;&#x9020;&#x5854;&#x6216;&#x5EFA;&#x7B51;&#x4E0A;&#x3002;</li>
+<li>&#x975E;&#x5730;&#x8868;&#xFF08;Nonterrestrial&#xFF09;&#xFF1A;&#x4F9D;&#x8D56;&#x4E8E;&#x5927;&#x6C14;&#x5C42;&#x5916;&#x7684;&#x8BBE;&#x5907;&#xFF0C;&#x4F8B;&#x5982;&#x8F68;&#x9053;&#x536B;&#x661F;</li>
+</ol>
+<h2 id="types-of-satellites">Types Of Satellites</h2>
+<p>&#x901A;&#x4FE1;&#x536B;&#x661F;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x8DDD;&#x79BB;&#x5730;&#x8868;&#x7684;&#x8DDD;&#x79BB;&#x5206;&#x4E3A;&#x4E09;&#x7C7B;&#xFF1A;</p>
+<ol type="1">
+<li><code>&#x8FD1;&#x5730;&#x8F68;&#x9053;&#x536B;&#x661F;&#xFF08;Low Earth Orbit,LEO&#xFF09;</code>&#xFF1A;</li>
+</ol>
+<p>&#x6709;&#x4F4E;&#x5EF6;&#x8FDF;&#x7684;&#x4F18;&#x70B9;&#xFF0C;&#x4F46;&#x662F;&#x4E0E;&#x5730;&#x7403;&#x7684;&#x76F8;&#x5BF9;&#x4F4D;&#x7F6E;&#x53D8;&#x5316;&#x7684;&#x8F83;&#x5FEB;&#xFF0C;&#x63A5;&#x6536;&#x7AEF;&#x9700;&#x8981;&#x8FFD;&#x8E2A;&#x536B;&#x661F;&#x3002;</p>
+<ol start="2" type="1">
+<li><code>&#x4E2D;&#x5730;&#x7403;&#x8F68;&#x9053;&#x536B;&#x661F;&#xFF08;Medium Earth Orbit,MEO&#xFF09;</code>&#xFF1A;</li>
+</ol>
+<p>&#x4E3A;&#x5730;&#x7403;&#x5357;&#x5317;&#x6781;&#x63D0;&#x4F9B;&#x4FE1;&#x53F7;&#x7684;&#x692D;&#x5706;&#x8F68;&#x9053;&#x536B;&#x661F;&#x3002;</p>
+<ol start="3" type="1">
+<li><code>&#x5BF9;&#x5730;&#x9759;&#x6B62;&#x8F68;&#x9053;&#x536B;&#x661F;&#xFF08;Geostationary Earth Orbit,GEO&#xFF09;</code>&#xFF1A;</li>
+</ol>
+<p>&#x4E0E;&#x5730;&#x9762;&#x53EF;&#x4EE5;&#x4FDD;&#x6301;&#x56FA;&#x5B9A;&#x89D2;&#x5EA6;&#xFF0C;&#x7F3A;&#x70B9;&#x662F;&#x79BB;&#x5730;&#x7403;&#x8F83;&#x8FDC;&#xFF0C;&#x5EF6;&#x8FDF;&#x5927;&#x3002;</p>
+<h2 id="geostationary-earth-orbitgeo-satellites">Geostationary Earth Orbit(GEO) Satellites</h2>
+<p>&#x4ECE;&#x4E0A;&#x8282;&#x5BF9;&#x4E8E;&#x901A;&#x4FE1;&#x536B;&#x661F;&#x7684;&#x63CF;&#x8FF0;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x901A;&#x4FE1;&#x536B;&#x661F;&#x7684;&#x6743;&#x8861;&#x4E3B;&#x8981;&#x662F;&#x5728;&#x5EF6;&#x8FDF;&#x548C;&#x4E0E;&#x8F68;&#x9053;&#x5468;&#x671F;&#x7684;&#x6743;&#x8861;&#xFF08;&#x8F68;&#x9053;&#x5468;&#x671F;&#x4E0E;&#x5730;&#x7403;&#x81EA;&#x8F6C;&#x76F8;&#x5DEE;&#x8D8A;&#x8FDC;&#xFF0C;&#x8FFD;&#x8E2A;&#x536B;&#x661F;&#x8D8A;&#x96BE;&#xFF09;&#x3002;</p>
+<p>&#x8FD9;&#x91CC;&#x4EE5;<code>&#x5BF9;&#x5730;&#x9759;&#x6B62;&#x8F68;&#x9053;&#x536B;&#x661F;&#xFF08;Geostationary Earth Orbit,GEO&#xFF09;</code>&#x4E3A;&#x4F8B;&#xFF0C;&#x5BF9;&#x5730;&#x9759;&#x6B62;&#x8F68;&#x9053;&#x536B;&#x661F;&#x7684;&#x8DDD;&#x79BB;&#x5730;&#x8868;&#x8DDD;&#x79BB;&#x7EA6;&#x4E3A;35805&#x5343;&#x7C73;&#xFF0C;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p>&#x56E0;&#x4E3A;&#x536B;&#x661F;&#x4FDD;&#x6301;&#x5728;&#x8F68;&#x9053;&#x4E0A;&#xFF0C;&#x6240;&#x4EE5;&#x79BB;&#x5FC3;&#x529B;&#x4E0E;&#x4E07;&#x6709;&#x5F15;&#x529B;&#x76F8;&#x7B49;&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[
+{\omega}^2mr=\frac{GMm}{r^2} \\\\
+&#x5316;&#x7B80;&#x4E3A;&#xFF1A;\\\\
+r^3=\frac{GM}{w^2}\\\\
+&#x5176;&#x4E2D;&#xFF0C;G&#x662F;&#x4E07;&#x6709;&#x5F15;&#x529B;&#x5E38;&#x6570;&#x4E3A;6.67\times 10^-20 {km}^3/kg\cdot {s^2}&#xFF0C;M&#x662F;&#x5730;&#x7403;&#x8D28;&#x91CF;&#x4E3A;5.976\times 10^{24} kg\\\\
+\omega &#x4E3A;&#x89D2;&#x901F;&#x5EA6;&#xFF0C;&#x5982;&#x679C;&#x8981;&#x6C42;&#x5BF9;&#x5730;&#x9759;&#x6B62;&#xFF0C;&#x5373;&#x89D2;&#x901F;&#x5EA6;&#x4E0E;&#x5730;&#x7403;&#x81EA;&#x8F6C;&#x76F8;&#x540C;&#xFF0C;&#x5373;\\\\
+\omega = \frac{2\pi}{3600*24}=7.29\times10^{-5} rad/s\\\\
+&#x90FD;&#x4EE3;&#x5165;&#x4E0A;&#x5F0F;&#xFF0C;&#x6C42;&#x5F97;r=42172 km&#xFF0C;&#x51CF;&#x53BB;&#x5730;&#x7403;&#x534A;&#x5F84;6376km&#xFF0C;&#x5F97;&#x5BF9;&#x5730;&#x9759;&#x6B62;&#x8F68;&#x9053;&#x536B;&#x661F;&#x7684;&#x8DDD;&#x79BB;&#x5730;&#x8868;&#x8DDD;&#x79BB;&#x7EA6;&#x4E3A;35805&#x5343;&#x7C73;&#x3002;
+\]</span></p>
+<p>&#x536B;&#x661F;&#x8DDD;&#x79BB;&#x5982;&#x679C;&#x4E0D;&#x8DB3;&#x8FD9;&#x4E2A;&#x6570;&#x503C;&#xFF0C;&#x5176;&#x65CB;&#x8F6C;&#x901F;&#x5EA6;&#x5C31;&#x4F1A;&#x6BD4;&#x5730;&#x7403;&#x5FEB;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x8DDD;&#x79BB;&#x4E0B;&#xFF0C;&#x536B;&#x661F;&#x4E0E;&#x5730;&#x8868;&#x4EE5;&#x76F8;&#x540C;&#x7684;&#x901F;&#x5EA6;&#x8F6C;&#x52A8;&#xFF0C;&#x6240;&#x4EE5;&#x5730;&#x8868;&#x4E0A;&#x7684;&#x536B;&#x661F;&#x8FFD;&#x8E2A;&#x88C5;&#x7F6E;&#x5728;&#x8FFD;&#x8E2A;&#x5230;&#x536B;&#x661F;&#x540E;&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x518D;&#x6B21;&#x8FD0;&#x52A8;&#xFF0C;&#x56E0;&#x4E3A;&#x4E24;&#x8005;&#x7684;&#x89D2;&#x5EA6;&#x4E0D;&#x4F1A;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x3002;&#x4F46;&#x5BF9;&#x5730;&#x9759;&#x6B62;&#x8F68;&#x9053;&#x536B;&#x661F;&#x7684;&#x6700;&#x5927;&#x7F3A;&#x9677;&#x662F;&#x4FE1;&#x53F7;&#x7684;&#x5EF6;&#x8FDF;&#xFF0C;&#x4FE1;&#x53F7;&#x7684;&#x901F;&#x5EA6;&#x4EE5;&#x5149;&#x901F;&#x8BA1;&#x7B97;&#xFF0C;&#x4FE1;&#x53F7;&#x7684;&#x4E00;&#x6B21;&#x6765;&#x56DE;&#x9700;&#x8981;&#xFF1A;</p>
+<p><span class="math display">\[
+2\times \frac{35.8\times 10^6 \text{ meters}}{3\times 10^8 \text{meters/sec}}=0.238 sec
+\]</span></p>
+<p>0.2&#x79D2;&#x7684;&#x5EF6;&#x8FDF;&#x5728;&#x8BB8;&#x591A;&#x9886;&#x57DF;&#x4E0A;&#x662F;&#x65E0;&#x6CD5;&#x88AB;&#x63A5;&#x53D7;&#x7684;&#x3002;</p>
+<h2 id="geo-coverage-of-the-earth">GEO Coverage Of The Earth</h2>
+<p>&#x5728;&#x5BF9;&#x5730;&#x9759;&#x6B62;&#x8F68;&#x9053;&#x4E0A;&#x7684;&#x536B;&#x661F;&#x6570;&#x91CF;&#x662F;&#x7531;&#x9650;&#x5236;&#x7684;&#x3002;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x661F;&#x53F7;&#x952E;&#x7684;&#x76F8;&#x4E92;&#x5E72;&#x6270;&#xFF0C;&#x536B;&#x661F;&#x4E0E;&#x536B;&#x661F;&#x95F4;&#x5FC5;&#x987B;&#x6709;&#x95F4;&#x9694;&#xFF0C;&#x95F4;&#x9694;&#x7684;&#x5927;&#x5C0F;&#x4E0E;&#x4FE1;&#x53F7;&#x7684;&#x5F3A;&#x5EA6;&#x76F8;&#x5173;&#xFF0C;&#x4F46;&#x901A;&#x5E38;&#x800C;&#x8A00;&#x662F;4-8&#x5EA6;&#xFF0C;&#x56E0;&#x4E3A;&#x6574;&#x4E2A;&#x8F68;&#x9053;&#x662F;360&#x5EA6;&#xFF0C;&#x6240;&#x4EE5;&#x5BF9;&#x5730;&#x9759;&#x6B62;&#x8F68;&#x9053;&#x4E0A;&#x6700;&#x591A;&#x6709;45-90&#x9897;&#x536B;&#x661F;&#x3002;</p>
+<p>&#x6700;&#x5C11;&#x5219;&#x9700;&#x8981;&#x4E09;&#x9897;&#x536B;&#x661F;&#x6765;&#x8986;&#x76D6;&#x6574;&#x4E2A;&#x5730;&#x7403;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-03-15-52-33.png" alt="&#x6700;&#x5C11;&#x4E09;&#x9897;&#x536B;&#x661F;"></p>
+<p>&#x8BC1;&#x660E;&#x5982;&#x4E0B;&#xFF0C;&#x9996;&#x5148;&#x6839;&#x636E;&#x900F;&#x89C6;&#x539F;&#x7406;&#xFF0C;&#x8DDD;&#x79BB;&#x4E00;&#x4E2A;&#x7403;&#x4F53;&#x8D8A;&#x8FD1;&#xFF0C;&#x80FD;&#x770B;&#x5230;&#x7403;&#x4F53;&#x7684;&#x90E8;&#x5206;&#x8D8A;&#x5C11;&#x3002;&#x5728;&#x8DDD;&#x79BB;&#x7403;&#x4F53;&#x65E0;&#x9650;&#x8FDC;&#x7684;&#x8DDD;&#x79BB;&#xFF0C;&#x6700;&#x591A;&#x4E5F;&#x53EA;&#x80FD;&#x770B;&#x5230;&#x7403;&#x4F53;&#x7684;50%&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-03-16-17-36.png" alt="&#x900F;&#x89C6;&#x539F;&#x7406;"></p>
+<p>&#x5C06;&#x80FD;&#x770B;&#x5230;&#x7403;&#x4F53;&#x7684;&#x767E;&#x5206;&#x6BD4;&#x8BBE;&#x4E3A;X&#xFF0C;&#x79BB;&#x7403;&#x4F53;&#x7684;&#x8DDD;&#x79BB;&#x8BBE;&#x4E3A;d&#xFF0C;&#x6C42;&#x7684;&#x534A;&#x5F84;&#x8BBE;&#x4E3A;R&#xFF0C;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[
+X=\frac{50\%}{1+\frac{R}{d}}
+\]</span></p>
+<p>&#x5F0F;&#x5B50;&#x662F;&#x7531;&#x7B49;&#x6BD4;&#x4E09;&#x89D2;&#x5F62;&#x5F97;&#x51FA;&#x7684;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#xFF1A;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-03-16-23-46.png" alt="&#x7B49;&#x6BD4;&#x8BC1;&#x660E;"></p>
+<p>&#x5C06;&#x5730;&#x7403;&#x534A;&#x5F84;6376KM&#x53CA;&#x5BF9;&#x5730;&#x9759;&#x6B62;&#x8F68;&#x9053;&#x8DDD;&#x79BB;35805KM&#x4EE3;&#x5165;&#xFF0C;&#x5F97;&#x80FD;&#x770B;&#x5230;&#x7684;&#x8303;&#x56F4;&#x662F;&#x7EA6;&#x4E3A;42.45%&#xFF0C;&#x6240;&#x4EE5;&#x6700;&#x5C11;&#x9700;&#x8981;&#x4E09;&#x9897;&#x536B;&#x661F;&#x624D;&#x80FD;&#x8986;&#x76D6;&#x5730;&#x7403;&#x3002;</p>
+<h2 id="low-earch-orbitleo-satellites-and-clusters">Low Earch Orbit(LEO) Satellites And Clusters</h2>
+<p>&#x8FD1;&#x5730;&#x8F68;&#x9053;&#x536B;&#x661F;&#x7684;&#x9AD8;&#x5EA6;&#x6700;&#x591A;&#x4E3A;2000&#x5343;&#x7C73;&#xFF0C;&#x5176;&#x4E3B;&#x8981;&#x7684;&#x7F3A;&#x70B9;&#x5728;&#x4E8E;&#x65E0;&#x6CD5;&#x4E0E;&#x5730;&#x9762;&#x4FDD;&#x6301;&#x76F8;&#x540C;&#x901F;&#x5EA6;&#xFF0C;&#x56E0;&#x6B64;&#x5730;&#x9762;&#x4E0A;&#x7684;&#x5929;&#x7EBF;&#x5FC5;&#x987B;&#x65CB;&#x8F6C;&#x6765;&#x8FFD;&#x8E2A;&#x536B;&#x661F;&#x3002;&#x6700;&#x4F4E;&#x7684;&#x8FD1;&#x5730;&#x8F68;&#x9053;&#x536B;&#x661F;&#x5728;&#x5927;&#x7EA6;90&#x5206;&#x949F;&#x5C31;&#x53EF;&#x4EE5;&#x73AF;&#x7ED5;&#x4E00;&#x904D;&#x5730;&#x7403;&#xFF0C;&#x79FB;&#x52A8;&#x901F;&#x5EA6;&#x8FD8;&#x662F;&#x5C06;&#x5BF9;&#x8F83;&#x5FEB;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x5BF9;&#x4E8E;&#x5730;&#x9762;&#x5929;&#x7EBF;&#x6765;&#x8BF4;&#x8FFD;&#x8E2A;&#x6709;&#x4E00;&#x5B9A;&#x96BE;&#x5EA6;&#x3002;</p>
+<p>&#x901A;&#x5E38;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x5F0F;&#x662F;&#x7528;&#x536B;&#x661F;&#x7FA4;&#xFF08;Clustering&#xFF09;&#x6216;&#x8005;&#x9635;&#x5217;&#x90E8;&#x7F72;&#xFF08;Array Deployment&#xFF09;&#x7684;&#x536B;&#x661F;&#x6765;&#x89E3;&#x51B3;&#x8FFD;&#x8E2A;&#x95EE;&#x9898;&#x3002;&#x4E00;&#x7CFB;&#x5217;&#x536B;&#x661F;&#x4E00;&#x540C;&#x5DE5;&#x4F5C;&#x6765;&#x8986;&#x76D6;&#x8F83;&#x5927;&#x7684;&#x533A;&#x57DF;&#x3002;</p>
+<p>&#x5982;&#x4E00;&#x6761;&#x4FE1;&#x606F;&#x9700;&#x8981;&#x4ECE;&#x6B27;&#x6D32;&#x4F20;&#x5230;&#x5317;&#x7F8E;&#xFF0C;&#x6B27;&#x6D32;&#x7684;&#x5730;&#x9762;&#x57FA;&#x7AD9;&#x5411;&#x6B64;&#x65F6;&#x4ED6;&#x4E0A;&#x65B9;&#x7684;&#x536B;&#x661F;&#x53D1;&#x9001;&#x6570;&#x636E;&#xFF0C;&#x4E0A;&#x65B9;&#x7684;&#x536B;&#x661F;&#x5C06;&#x4FE1;&#x606F;&#x5728;&#x536B;&#x661F;&#x7FA4;&#x4E4B;&#x95F4;&#x4F20;&#x64AD;&#xFF0C;&#x4E00;&#x76F4;&#x4F20;&#x9001;&#x5230;&#x5317;&#x7F8E;&#x4E0A;&#x65B9;&#x7684;&#x536B;&#x661F;&#xFF0C;&#x5317;&#x7F8E;&#x4E0A;&#x65B9;&#x7684;&#x536B;&#x661F;&#x518D;&#x5C06;&#x4FE1;&#x606F;&#x4F20;&#x9001;&#x7ED9;&#x5317;&#x7F8E;&#x7684;&#x5730;&#x9762;&#x57FA;&#x7AD9;&#x3002;</p>
+<h2 id="tradeoffs-among-media-types">Tradeoffs Among Media Types</h2>
+<p>&#x901A;&#x4FE1;&#x5A92;&#x4ECB;&#x7684;&#x9009;&#x62E9;&#x662F;&#x590D;&#x6742;&#x7684;&#xFF0C;&#x901A;&#x5E38;&#x9700;&#x8981;&#x4ECE;&#x4EE5;&#x4E0B;&#x51E0;&#x4E2A;&#x65B9;&#x9762;&#x6743;&#x8861;&#xFF1A;</p>
+<ol type="1">
+<li>&#x82B1;&#x8D39;&#xFF08;Cost&#xFF09;&#xFF1A;&#x6750;&#x6599;&#xFF0C;&#x5B89;&#x88C5;&#xFF0C;&#x64CD;&#x4F5C;&#xFF0C;&#x7EF4;&#x62A4;&#x7B49;&#x7684;&#x5F00;&#x9500;</li>
+<li>&#x6570;&#x636E;&#x901F;&#x7387;&#xFF08;Data rate&#xFF09;&#xFF1A;&#x6BCF;&#x79D2;&#x53EF;&#x4EE5;&#x4F20;&#x9001;&#x591A;&#x5C11;&#x6570;&#x636E;</li>
+<li>&#x5EF6;&#x8FDF;&#xFF08;Delay&#xFF09;&#xFF1A;&#x6570;&#x636E;&#x4F20;&#x64AD;&#x548C;&#x5904;&#x7406;&#x7684;&#x5EF6;&#x8FDF;</li>
+<li>&#x4FE1;&#x53F7;&#x5F71;&#x54CD;&#xFF08;Affect on signal&#xFF09;&#xFF1A;&#x4FE1;&#x53F7;&#x662F;&#x5426;&#x4F1A;&#x8870;&#x51CF;&#x548C;&#x5931;&#x771F;</li>
+<li>&#x73AF;&#x5883;&#xFF08;Environment&#xFF09;&#xFF1A;&#x5BF9;&#x5E72;&#x6270;&#x7684;&#x654F;&#x611F;&#x6027;&#x548C;&#x7535;&#x5B50;&#x566A;&#x97F3;</li>
+<li>&#x5B89;&#x5168;&#x6027;&#xFF08;Security&#xFF09;&#xFF1A;&#x662F;&#x5426;&#x5BB9;&#x6613;&#x88AB;&#x7A83;&#x542C;</li>
+</ol>
+<h2 id="measuring-transmission-media">Measuring Transmission Media</h2>
+<p>&#x53EF;&#x4EE5;&#x4ECE;&#x4E24;&#x4E2A;&#x65B9;&#x9762;&#x6765;&#x8BC4;&#x5224;&#x4F20;&#x8F93;&#x5A92;&#x4ECB;&#xFF1A;<code>&#x4F20;&#x64AD;&#x5EF6;&#x8FDF;&#xFF08;Progagation Delay&#xFF09;</code>&#x548C;<code>&#x4FE1;&#x9053;&#x5BB9;&#x91CF;&#xFF08;Channel Capacity&#xFF09;</code>&#x3002;</p>
+<p><code>&#x5948;&#x594E;&#x65AF;&#x7279;&#x7B2C;&#x4E00;&#x51C6;&#x5219;&#xFF08;Nyquist Theorem&#xFF09;</code>&#x8868;&#x660E;&#x5728;&#x7406;&#x60F3;&#x4F4E;&#x901A;&#x4FE1;&#x9053;&#x4E0B;&#x7684;&#x6700;&#x9AD8;&#x7801;&#x5143;&#x901F;&#x7387;&#x901F;&#x7387;&#x662F;&#x5E26;&#x5BBD;&#x7684;2&#x500D;&#x3002;&#x5047;&#x8BBE;&#x6709;K&#x4E2A;&#x7535;&#x5E73;&#xFF0C;&#x5219;&#x4E00;&#x4E2A;&#x7801;&#x5143;&#x80FD;&#x4F20;&#x8F93;&#x7684;bit&#x6570;&#x4E3A;<span class="math inline">\(log_2K\)</span>&#xFF0C;B&#x8868;&#x793A;&#x4FE1;&#x9053;&#x7684;&#x5E26;&#x5BBD;&#xFF0C;&#x56E0;&#x6B64;&#x6570;&#x636E;&#x901F;&#x7387;&#x53EF;&#x4EE5;&#x8868;&#x8FBE;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[
+D=2Blog_2K \text{ bits /s} 
+\]</span></p>
+<p>&#x4E0B;&#x9762;&#x8BC1;&#x660E;&#x5948;&#x594E;&#x65AF;&#x7279;&#x51C6;&#x5219;&#xFF1A;</p>
+<p>&#x4E00;&#x4E2A;&#x6709;&#x9650;&#x5E26;&#x5BBD;&#x7684;&#x4F4E;&#x901A;&#x6EE4;&#x6CE2;&#x5668;&#xFF0C;&#x5982;&#x679C;&#x5176;&#x622A;&#x81F3;&#x9891;&#x7387;&#x4E3A;<span class="math inline">\(\omega_g\)</span>&#x5176;&#x9891;&#x57DF;&#x56FE;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-03-17-06-01.png" alt="&#x4F4E;&#x901A;&#x6EE4;&#x6CE2;&#x5668;&#x9891;&#x57DF;"></p>
+<p>&#x8BE5;&#x6EE4;&#x6CE2;&#x5668;&#x7684;&#x65F6;&#x57DF;&#x76F8;&#x5E94;&#x56FE;&#x4E3A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter7-Notes/2019-12-03-17-07-06.png" alt="&#x4F4E;&#x901A;&#x6EE4;&#x6CE2;&#x5668;&#x65F6;&#x57DF;"></p>
+<p>&#x65F6;&#x57DF;&#x7684;&#x76F8;&#x5E94;&#x6CE2;&#x5F62;&#x65F6;&#x4E00;&#x4E2A;&#x62D6;&#x5C3E;&#x7684;&#x8FDE;&#x7EED;&#x4FE1;&#x53F7;&#xFF0C;&#x8FD9;&#x4E2A;&#x62D6;&#x5C3E;&#x4F1A;&#x5E72;&#x6270;&#x540E;&#x7EED;&#x4FE1;&#x53F7;&#x3002;&#x4F46;&#x662F;&#x4ECE;&#x6CE2;&#x5F62;&#x4E0A;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x5728;<span class="math inline">\(t=\frac{\pi}{\omega_s},\frac{2pi}{\omega_s}...\)</span>&#x5904;&#x662F;0&#xFF0C;&#x6240;&#x4EE5;&#x5982;&#x679C;&#x5728;&#x8FD9;&#x4E9B;&#x95F4;&#x9694;&#x70B9;&#x53D1;&#x9001;&#x7801;&#x5143;&#xFF0C;&#x5219;&#x4E0D;&#x4F1A;&#x88AB;&#x5E72;&#x6270;&#x3002;&#x8FD9;&#x4E9B;&#x70B9;&#x7684;&#x95F4;&#x9694;&#x65F6;&#x95F4;&#x4E3A;<span class="math inline">\(T_s=\frac{\pi}{\omega_s}=\frac{1}{2f_m}\)</span>&#xFF0C;&#x6240;&#x4EE5;&#x7801;&#x5143;&#x901F;&#x7387;&#x4E3A;<span class="math inline">\(R=\frac{1}{T_s}=2f_m\)</span></p>
+<h2 id="the-effect-of-noise-on-communication">The Effect of Noise On Communication</h2>
+<p>&#x5948;&#x594E;&#x65AF;&#x7279;&#x5B9A;&#x7406;&#x63D0;&#x4F9B;&#x4E86;&#x4E86;&#x7406;&#x8BBA;&#x4E0A;&#x7684;&#x6700;&#x9AD8;&#x7801;&#x5143;&#x901F;&#x7387;&#xFF0C;&#x56E0;&#x4E3A;&#x4ED6;&#x5E76;&#x6CA1;&#x6709;&#x5C06;&#x566A;&#x97F3;&#x7EB3;&#x5165;&#x8003;&#x8651;&#xFF0C; &#x800C;&#x5B9E;&#x9645;&#x4E2D;&#x566A;&#x97F3;&#x4E0D;&#x53EF;&#x907F;&#x514D;&#x3002;&#x9999;&#x519C;&#x5728;&#x6B64;&#x57FA;&#x7840;&#x4E0A;&#x7ED9;&#x51FA;&#x4E86;&#x8003;&#x8651;&#x566A;&#x97F3;&#x7684;&#x6570;&#x636E;&#x901F;&#x7387;&#xFF0C;&#x79F0;&#x4E3A;&#x9999;&#x519C;&#x5B9A;&#x7406;&#xFF08;Shannon&apos;s Theorem&#xFF09;&#xFF1A;</p>
+<p><span class="math display">\[
+C=B\log_2(1+S/N) bits/s
+\]</span></p>
+<p>&#x5176;&#x4E2D;<span class="math inline">\(S/N\)</span>&#x79F0;&#x4E3A;&#x4FE1;&#x566A;&#x6BD4;&#xFF0C;&#x5F0F;&#x5B50;&#x4E2D;&#x5E76;&#x6CA1;&#x6709;&#x7ED9;&#x51FA;&#x7535;&#x5E73;&#x6570;&#x91CF;K&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x5B9E;&#x9645;&#x4E0A;&#x5728;&#x8003;&#x8651;&#x566A;&#x58F0;&#x65F6;&#xFF0C;&#x7535;&#x5E73;&#x6570;&#x91CF;&#x662F;&#x53D7;&#x566A;&#x58F0;&#x5F71;&#x54CD;&#x7684;&#xFF0C;&#x566A;&#x58F0;&#x8D8A;&#x5927;&#xFF0C;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x5E72;&#x6270;&#xFF0C;&#x7535;&#x5E73;&#x7684;&#x95F4;&#x9694;&#x5C31;&#x53EA;&#x80FD;&#x8D8A;&#x5927;&#xFF0C;&#x56E0;&#x6B64;&#x7535;&#x5E73;&#x6570;&#x91CF;&#x5C31;&#x8D8A;&#x5C11;&#x3002;</p>
+<h2 id="the-significance-of-channel-capacity">The Significance Of Channel Capacity</h2>
+<p>&#x5948;&#x594E;&#x65AF;&#x7279;&#x5B9A;&#x5F8B;&#x9F13;&#x52B1;&#x5DE5;&#x7A0B;&#x5E08;&#x63A2;&#x7D22;&#x66F4;&#x9AD8;&#x6548;&#x7684;&#x7F16;&#x7801;&#x65B9;&#x5F0F;&#xFF0C;&#x56E0;&#x4E3A;&#x5728;&#x6700;&#x9AD8;&#x7801;&#x5143;&#x901F;&#x7387;&#x53D7;&#x4FE1;&#x9053;&#x5E26;&#x5BBD;&#x9650;&#x5236;&#x65F6;&#xFF0C;&#x7F16;&#x7801;&#x65B9;&#x5F0F;&#x8D8A;&#x9AD8;&#x6548;&#xFF0C;&#x4E00;&#x4E2A;&#x7801;&#x5143;&#x643A;&#x5E26;&#x7684;&#x6570;&#x636E;&#x5C31;&#x8D8A;&#x591A;&#xFF0C;&#x5355;&#x4F4D;&#x65F6;&#x95F4;&#x5185;&#x5C31;&#x80FD;&#x4F20;&#x8F93;&#x66F4;&#x591A;&#x7684;&#x6BD4;&#x7279;&#x3002;</p>
+<p>&#x9999;&#x519C;&#x5B9A;&#x7406;&#x7ED9;&#x51FA;&#x4E86;&#x771F;&#x5B9E;&#x73AF;&#x5883;&#x4E0B;&#xFF0C;&#x6570;&#x636E;&#x901F;&#x7387;&#x7684;&#x4E0A;&#x9650;&#xFF0C;&#x5373;&#x65E0;&#x8BBA;&#x7F16;&#x7801;&#x591A;&#x4E48;&#x9AD8;&#x6548;&#xFF0C;&#x5728;&#x975E;&#x7406;&#x60F3;&#x73AF;&#x5883;&#xFF08;&#x6709;&#x566A;&#x58F0;&#xFF09;&#x4E0B;&#xFF0C;&#x6BCF;&#x79D2;&#x6700;&#x5927;&#x7684;&#x6BD4;&#x7279;&#x4F20;&#x8F93;&#x91CF;</p>
+<div class="note primary">
+            <ol type="1"><li><p>Xianping, W.M.L.R.T., 2002. Simple Certification of Nyquist Rule. Journal of Beijing Institufe of Petrochemical Technology, (2), p.12.</p></li><li><p>https://zh.wikipedia.org/wiki/%E5%9C%B0%E7%90%83%E9%9D%9C%E6%AD%A2%E8%BB%8C%E9%81%93</p></li><li><p><em>Computer Networks and Internets</em> 6th</p></li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/CNI-Chapter7-Notes/" title="《计算机网络与因特网》 第七章笔记">https://xuejiaw.github.io/CNI-Chapter7-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/CNI-Chapter6-Notes/" rel="prev" title="《计算机网络与因特网》 第六章笔记">
+      <i class="fa fa-chevron-left"></i> 《计算机网络与因特网》 第六章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/CNI-Chapter8-Notes/" rel="next" title="《计算机网络与因特网》 第八章笔记">
+      《计算机网络与因特网》 第八章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-7-transmission-media"><span class="nav-number">1.</span> <span class="nav-text">Chapter 7 Transmission Media</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#guided-and-unguided-transmission"><span class="nav-number">1.2.</span> <span class="nav-text">Guided And Unguided Transmission</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#taxonomy-by-forms-of-energy"><span class="nav-number">1.3.</span> <span class="nav-text">Taxonomy By Forms Of Energy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#background-radiation-and-electrical-noise"><span class="nav-number">1.4.</span> <span class="nav-text">Background Radiation And Electrical Noise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#twisted-pair-coppter-wiring"><span class="nav-number">1.5.</span> <span class="nav-text">Twisted Pair Coppter Wiring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shieldingcoaxial-cable-and-shielded-twisted-pair"><span class="nav-number">1.6.</span> <span class="nav-text">Shielding：Coaxial Cable And Shielded Twisted Pair</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#categories-of-twisted-pair-cable"><span class="nav-number">1.7.</span> <span class="nav-text">Categories Of Twisted Pair Cable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#media-using-light-energy-and-optical-fibers"><span class="nav-number">1.8.</span> <span class="nav-text">Media Using Light Energy And Optical Fibers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#types-of-fiber-and-light-transmission"><span class="nav-number">1.9.</span> <span class="nav-text">Types Of Fiber And Light Transmission</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optical-fiber-compared-to-copper-wiring"><span class="nav-number">1.10.</span> <span class="nav-text">Optical Fiber Compared To Copper Wiring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#infrared-communication-technologies"><span class="nav-number">1.11.</span> <span class="nav-text">Infrared Communication Technologies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#point-to-point-laser-communication"><span class="nav-number">1.12.</span> <span class="nav-text">Point-To-Point Laser Communication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#electronmagneticradio-communication"><span class="nav-number">1.13.</span> <span class="nav-text">Electronmagnetic(Radio) Communication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#signal-progagation"><span class="nav-number">1.14.</span> <span class="nav-text">Signal Progagation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#types-of-satellites"><span class="nav-number">1.15.</span> <span class="nav-text">Types Of Satellites</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#geostationary-earth-orbitgeo-satellites"><span class="nav-number">1.16.</span> <span class="nav-text">Geostationary Earth Orbit(GEO) Satellites</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#geo-coverage-of-the-earth"><span class="nav-number">1.17.</span> <span class="nav-text">GEO Coverage Of The Earth</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#low-earch-orbitleo-satellites-and-clusters"><span class="nav-number">1.18.</span> <span class="nav-text">Low Earch Orbit(LEO) Satellites And Clusters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tradeoffs-among-media-types"><span class="nav-number">1.19.</span> <span class="nav-text">Tradeoffs Among Media Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#measuring-transmission-media"><span class="nav-number">1.20.</span> <span class="nav-text">Measuring Transmission Media</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-effect-of-noise-on-communication"><span class="nav-number">1.21.</span> <span class="nav-text">The Effect of Noise On Communication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-significance-of-channel-capacity"><span class="nav-number">1.22.</span> <span class="nav-text">The Significance Of Channel Capacity</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

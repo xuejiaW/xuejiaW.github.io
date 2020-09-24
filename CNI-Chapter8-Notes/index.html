@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;&amp;#x8BA1;&amp;#x7B97;&amp;#x673A;&amp;#x7F51;&amp;#x7EDC;&amp;#x4E0E;&amp;#x56E0;&amp;#x7279;&amp;#x7F51;&amp;#x300B; &amp;#x7B2C;&amp;#x516B;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x7ED9;&amp;#x51FA;&amp;#x4E86;&amp;#x53EF;&amp;#x80FD;&amp;#x51FA;">
+<meta name="keywords" content="读书笔记,计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《计算机网络与因特网》 第八章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/CNI-Chapter8-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;&amp;#x8BA1;&amp;#x7B97;&amp;#x673A;&amp;#x7F51;&amp;#x7EDC;&amp;#x4E0E;&amp;#x56E0;&amp;#x7279;&amp;#x7F51;&amp;#x300B; &amp;#x7B2C;&amp;#x516B;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x7ED9;&amp;#x51FA;&amp;#x4E86;&amp;#x53EF;&amp;#x80FD;&amp;#x51FA;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter8-Notes/2019-12-05-14-46-47.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter8-Notes/2019-12-06-17-25-08.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter8-Notes/2019-12-07-00-01-18.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter8-Notes/2019-12-07-00-06-02.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.159Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《计算机网络与因特网》 第八章笔记">
+<meta name="twitter:description" content="&amp;#x300A;&amp;#x8BA1;&amp;#x7B97;&amp;#x673A;&amp;#x7F51;&amp;#x7EDC;&amp;#x4E0E;&amp;#x56E0;&amp;#x7279;&amp;#x7F51;&amp;#x300B; &amp;#x7B2C;&amp;#x516B;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002; &amp;#x7ED9;&amp;#x51FA;&amp;#x4E86;&amp;#x53EF;&amp;#x80FD;&amp;#x51FA;">
+<meta name="twitter:image" content="https://xuejiaw.github.io/CNI-Chapter8-Notes/2019-12-05-14-46-47.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/CNI-Chapter8-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《计算机网络与因特网》 第八章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/CNI-Chapter8-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《计算机网络与因特网》 第八章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-07 00:18:54" itemprop="dateCreated datePublished" datetime="2019-12-07T00:18:54+08:00">2019-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/计算机网络/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/CNI-Chapter8-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《计算机网络与因特网》 第八章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/CNI-Chapter8-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/CNI-Chapter8-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;&#x8BA1;&#x7B97;&#x673A;&#x7F51;&#x7EDC;&#x4E0E;&#x56E0;&#x7279;&#x7F51;&#x300B; &#x7B2C;&#x516B;&#x7AE0;&#x7B14;&#x8BB0;&#x3002;</p>
+<p>&#x7ED9;&#x51FA;&#x4E86;&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x7684;&#x9519;&#x8BEF;&#xFF0C;&#x4EE5;&#x53CA;&#x63A7;&#x5236;&#x9519;&#x8BEF;&#x7684;&#x4FE1;&#x9053;&#x7F16;&#x7801;&#x65B9;&#x6CD5;&#xFF0C;&#x5305;&#x62EC;&#x68C0;&#x6D4B;&#x9519;&#x8BEF;&#x548C;&#x4FEE;&#x590D;&#x9519;&#x8BEF;&#x3002;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-8-reliability-and-channel-coding">Chapter 8 Reliability And Channel Coding</h1>
+<h2 id="introduction">Introduction</h2>
+<p>&#x8FD9;&#x4E00;&#x7AE0;&#x4ECB;&#x7ECD;&#x5728;&#x901A;&#x4FE1;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F1A;&#x51FA;&#x73B0;&#x7684;&#x9519;&#x8BEF;&#xFF0C;&#x4EE5;&#x53CA;&#x63A7;&#x5236;&#x9519;&#x8BEF;&#x7684;&#x6280;&#x672F;&#x3002;</p>
+<p>&#x5176;&#x4E2D;&#x7684;&#x4E00;&#x90E8;&#x5206;&#x4E5F;&#x88AB;&#x7EB3;&#x5165;&#x4E86;&#x56E0;&#x7279;&#x7F51;&#x7684;&#x534F;&#x8BAE;&#x4E2D;&#xFF0C;&#x8FD9;&#x4E5F;&#x4F1A;&#x5728;&#x672C;&#x7AE0;&#x4E2D;&#x4ECB;&#x7ECD;&#x3002;</p>
+<h2 id="the-three-main-sources-of-transmission-errors">The Three Main Sources Of Transmission Errors</h2>
+<p>&#x4F20;&#x8F93;&#x4E2D;&#x53D1;&#x751F;&#x7684;&#x9519;&#x8BEF;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;&#x4E09;&#x5927;&#x7C7B;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5E72;&#x6270;&#xFF08;Interference&#xFF09;&#xFF1A;&#x5982;&#x7B2C;&#x4E03;&#x7AE0;&#x6240;&#x8FF0;&#xFF0C;&#x73AF;&#x5883;&#x4E2D;&#x5B58;&#x5728;&#x8BB8;&#x591A;&#x7535;&#x78C1;&#x5E72;&#x6270;&#xFF0C;&#x8FD9;&#x4E9B;&#x7535;&#x78C1;&#x5E72;&#x6270;&#x4F1A;&#x963B;&#x788D;&#x65E0;&#x7EBF;&#x7535;&#x4F20;&#x8F93;&#x548C;&#x7EBF;&#x7F06;&#x4E2D;&#x7684;&#x4FE1;&#x53F7;&#x4F20;&#x8F93;&#x3002;</li>
+<li>&#x5931;&#x771F;&#xFF08;Distortion&#xFF09;&#xFF1A;&#x6240;&#x6709;&#x7684;&#x7269;&#x7406;&#x7CFB;&#x7EDF;&#x90FD;&#x4F1A;&#x9020;&#x6210;&#x4FE1;&#x53F7;&#x7684;&#x5931;&#x771F;&#x3002;&#x5149;&#x7EA4;&#x4E2D;&#x7684;&#x5149;&#x56E0;&#x4E3A;&#x79FB;&#x52A8;&#x8DDD;&#x79BB;&#x7684;&#x589E;&#x52A0;&#xFF0C;&#x65F6;&#x57DF;&#x4F1A;&#x53D1;&#x751F;&#x6269;&#x5F20;&#xFF08;&#x9891;&#x57DF;&#x4E5F;&#x56E0;&#x6B64;&#x53D8;&#x5316;&#xFF09;&#x3002;&#x4FE1;&#x9053;&#x5BB9;&#x91CF;&#x4F1A;&#x5BFC;&#x81F4;&#x4E00;&#x4E9B;&#x9891;&#x7387;&#x7684;&#x4FE1;&#x53F7;&#x88AB;&#x8FC7;&#x6EE4;&#x6389;&#x3002;&#x653E;&#x5728;&#x7EBF;&#x7F06;&#x65C1;&#x8FB9;&#x7684;&#x91D1;&#x5C5E;&#x53EF;&#x80FD;&#x4F1A;&#x6539;&#x53D8;&#x7EBF;&#x7F06;&#x5185;&#x4FE1;&#x53F7;&#x7684;&#x9891;&#x7387;&#xFF0C;&#x91D1;&#x5C5E;&#x4E5F;&#x80FD;&#x5E72;&#x6270;&#x65E0;&#x7EBF;&#x7535;&#x4FE1;&#x53F7;&#x3002;</li>
+<li>&#x8870;&#x5F31;&#xFF08;Attenuation&#xFF09;&#xFF1A;&#x4FE1;&#x53F7;&#x5728;&#x5A92;&#x4ECB;&#x4E2D;&#x4F20;&#x8F93;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x4FE1;&#x53F7;&#x4F1A;&#x9010;&#x6E10;&#x8870;&#x5F31;&#x3002;</li>
+</ol>
+<p>&#x9999;&#x519C;&#x5B9A;&#x7406;&#x7ED9;&#x51FA;&#x4E86;&#x4ECB;&#x7ECD;&#x9519;&#x8BEF;&#x7684;&#x601D;&#x8DEF;&#xFF1A;&#x63D0;&#x9AD8;&#x4FE1;&#x566A;&#x6BD4;&#x3002;</p>
+<p>&#x4F46;&#x65E0;&#x8BBA;&#x5982;&#x4F55;&#x566A;&#x58F0;&#x4E0D;&#x53EF;&#x80FD;&#x88AB;&#x5B8C;&#x5168;&#x7684;&#x6D88;&#x9664;&#xFF0C;&#x6240;&#x4EE5;&#x8BB8;&#x591A;&#x65B9;&#x6CD5;&#x81F4;&#x529B;&#x4E8E;&#x68C0;&#x6D4B;&#x9519;&#x8BEF;&#xFF0C;&#x5728;&#x67D0;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#x81EA;&#x52A8;&#x4FEE;&#x590D;&#x9519;&#x8BEF;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x9519;&#x8BEF;&#x7684;&#x76D1;&#x6D4B;&#x673A;&#x5236;&#x65E0;&#x7591;&#x662F;&#x4F1A;&#x4E3A;&#x7CFB;&#x7EDF;&#x589E;&#x52A0;&#x5F00;&#x9500;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x7CFB;&#x7EDF;&#x8BBE;&#x8BA1;&#x65F6;&#x8981;&#x8003;&#x8651;&#x5728;&#x9519;&#x8BEF;&#x5F71;&#x54CD;&#x4E0E;&#x9519;&#x8BEF;&#x68C0;&#x6D4B;&#x5F00;&#x9500;&#x95F4;&#x505A;&#x6743;&#x8861;&#xFF0C;&#x5982;&#x91D1;&#x878D;&#x7CFB;&#x7EDF;&#xFF0C;1bit&#x7684;&#x9519;&#x8BEF;&#x53EF;&#x80FD;&#x4F1A;&#x9020;&#x6210;&#x5F88;&#x4E25;&#x91CD;&#x7684;&#x9519;&#x8BEF;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x56FE;&#x7247;&#x4E2D;1bit&#x7684;&#x9519;&#x8BEF;&#x53EF;&#x80FD;&#x6839;&#x672C;&#x65E0;&#x6CD5;&#x88AB;&#x8BC6;&#x522B;&#x5230;&#x3002;</p>
+<h2 id="effect-of-transmission-errors-on-data">Effect Of Transmission Errors On Data</h2>
+<p>&#x8FD9;&#x91CC;&#x8981;&#x533A;&#x5206;&#x4F20;&#x8F93;&#x9519;&#x8BEF;&#x4E0E;&#x6570;&#x636E;&#x9519;&#x8BEF;&#xFF0C;&#x6570;&#x636E;&#x662F;&#x7531;&#x4F20;&#x8F93;&#x4FE1;&#x53F7;&#x5728;&#x7ECF;&#x8FC7;&#x4F8B;&#x5982;&#x89E3;&#x7801;&#xFF0C;&#x89E3;&#x8C03;&#x540E;&#x5F97;&#x5230;&#x7684;&#x3002;&#x4F20;&#x8F93;&#x9519;&#x8BEF;&#x6700;&#x540E;&#x90FD;&#x4F1A;&#x5BFC;&#x81F4;&#x6700;&#x540E;&#x7684;&#x6570;&#x636E;&#x51FA;&#x9519;&#x3002;&#x4E3B;&#x8981;&#x6709;&#x4E09;&#x7C7B;&#x4F20;&#x8F93;&#x9020;&#x6210;&#x7684;&#x6570;&#x636E;&#x9519;&#x8BEF;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x5355;&#x5143;&#x4F4D;&#x9519;&#x8BEF;&#xFF08;Single Bit Error&#xFF09;&#xFF1A;&#x5373;&#x4E00;&#x7CFB;&#x5217;&#x6570;&#x636E;&#x4E2D;&#xFF0C;&#x53EA;&#x6709;&#x4E00;&#x4F4D;&#x6570;&#x636E;&#x88AB;&#x6539;&#x53D8;&#x4E86;&#x3002;&#x8FD9;&#x901A;&#x5E38;&#x662F;&#x56E0;&#x4E3A;&#x4F20;&#x8F93;&#x4FE1;&#x53F7;&#x7684;&#x77ED;&#x65F6;&#x95F4;&#xFF08;&#x79F0;&#x4E3A;&#x8109;&#x51B2;&#xFF0C;Spike&#xFF09;&#x5E72;&#x6270;&#x9020;&#x6210;&#x7684;&#x3002;</p></li>
+<li><p>&#x7A81;&#x53D1;&#x6027;&#x9519;&#x8BEF;&#xFF1A;&#x4E00;&#x7CFB;&#x5217;&#x6570;&#x636E;&#x4E2D;&#x6709;&#x591A;&#x4F4D;&#x6570;&#x636E;&#x88AB;&#x6539;&#x53D8;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x7531;&#x957F;&#x65F6;&#x95F4;&#x7684;&#x5E72;&#x6270;&#x9020;&#x6210;&#x7684;&#x3002;&#x9519;&#x8BEF;&#x957F;&#x5EA6;&#x662F;&#x7531;&#x9519;&#x8BEF;&#x5F00;&#x59CB;&#x4F4D;&#x5230;&#x9519;&#x8BEF;&#x7ED3;&#x675F;&#x4F4D;&#x76F4;&#x63A5;&#x7684;&#x4F4D;&#x6570;&#x51B3;&#x5B9A;&#x3002;&#x5982;&#x4E0B;&#x8868;&#xFF0C;&#x9519;&#x8BEF;&#x7684;&#x6570;&#x636E;&#x7531;&#x52A0;&#x7C97;&#x8868;&#x793A;&#xFF0C;&#x9519;&#x8BEF;&#x957F;&#x5EA6;&#x662F;7&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x53D1;&#x9001;</th>
+<th>1</th>
+<th>0</th>
+<th>1</th>
+<th>1</th>
+<th>0</th>
+<th>0</th>
+<th>0</th>
+<th>1</th>
+<th>0</th>
+<th>1</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&#x63A5;&#x6536;</td>
+<td>1</td>
+<td>0</td>
+<td><strong>0</strong></td>
+<td>1</td>
+<td><strong>1</strong></td>
+<td>0</td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<h2 id="two-strategies-for-handling-channel-errors">Two Strategies For Handling Channel Errors</h2>
+<p>&#x6709;&#x4E00;&#x7CFB;&#x5217;&#x7684;&#x65B9;&#x6CD5;&#x89E3;&#x51B3;&#x6570;&#x636E;&#x9519;&#x8BEF;&#x5E76;&#x589E;&#x52A0;&#x6570;&#x636E;&#x7684;&#x53EF;&#x9760;&#x6027;&#xFF0C;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x7EDF;&#x79F0;&#x4E3A;<code>&#x4FE1;&#x9053;&#x7F16;&#x7801;(Channel Coding)</code>&#xFF0C;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x88AB;&#x5206;&#x4E3A;&#x4E24;&#x7C7B;&#xFF1A;<code>&#x524D;&#x5411;&#x9519;&#x8BEF;&#x7EA0;&#x6B63;&#x6280;&#x672F;&#xFF08;Forward Error Correction&#xFF0C;FEC&#xFF09;</code>&#xFF0C;<code>&#x81EA;&#x52A8;&#x91CD;&#x4F20;&#x8BF7;&#x6C42;&#x6280;&#x672F;&#xFF08;Automatic Repeat reQuest&#xFF0C;ARQ&#xFF09;</code>&#x3002;</p>
+<p>&#x524D;&#x5411;&#x9519;&#x8BEF;&#x7EA0;&#x6B63;&#x6280;&#x672F;&#x7684;&#x4E3B;&#x9898;&#x601D;&#x60F3;&#x662F;&#x5728;&#x53D1;&#x9001;&#x7684;&#x6570;&#x636E;&#x4E2D;&#x589E;&#x52A0;&#x989D;&#x5916;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x63A5;&#x6536;&#x7AEF;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x8FD9;&#x4E9B;&#x989D;&#x5916;&#x4FE1;&#x606F;&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x6709;&#x9519;&#x8BEF;&#x53D1;&#x751F;&#xFF0C;&#x6709;&#x4E9B;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x68C0;&#x6D4B;&#x51FA;&#x7A76;&#x7ADF;&#x662F;&#x54EA;&#x4E00;&#x4F4D;&#x6570;&#x636E;&#x53D1;&#x751F;&#x4E86;&#x9519;&#x8BEF;&#xFF0C;&#x5E76;&#x5728;&#x53EF;&#x80FD;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x7EA0;&#x6B63;&#x9519;&#x8BEF;&#x3002;</p>
+<p>&#x81EA;&#x52A8;&#x91CD;&#x4F20;&#x8BF7;&#x6C42;&#x6280;&#x672F;&#x662F;&#x8BA9;&#x63A5;&#x6536;&#x7AEF;&#x548C;&#x53D1;&#x9001;&#x7AEF;&#x4E92;&#x6362;&#x6570;&#x636E;&#x6765;&#x4FDD;&#x8BC1;&#x6570;&#x636E;&#x88AB;&#x6B63;&#x786E;&#x7684;&#x4F20;&#x9012;&#x3002;</p>
+<h2 id="block-and-convolutional-error-codes">Block And Convolutional Error Codes</h2>
+<p>&#x524D;&#x5411;&#x9519;&#x8BEF;&#x7EA0;&#x6B63;&#x6280;&#x672F;&#x53EF;&#x4EE5;&#x518D;&#x7EC6;&#x5206;&#x4E3A;&#x4E24;&#x7C7B;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5206;&#x7EC4;&#x9519;&#x8BEF;&#x7801;&#xFF08;Block Error Codes&#xFF09;&#xFF1A;&#x5206;&#x7EC4;&#x9519;&#x8BEF;&#x7801;&#x662F;&#x5C06;&#x6570;&#x636E;&#x5206;&#x6210;&#x4E00;&#x5757;&#x5757;&#x7684;&#xFF0C;&#x7136;&#x540E;&#x5BF9;&#x6BCF;&#x4E00;&#x5757;&#x90FD;&#x589E;&#x52A0;&#x989D;&#x5916;&#x4FE1;&#x606F;&#x3002;&#x6BCF;&#x4E00;&#x5757;&#x7684;&#x989D;&#x5916;&#x4FE1;&#x606F;&#x53EA;&#x9488;&#x5BF9;&#x4E8E;&#x8BE5;&#x5757;&#x6570;&#x636E;&#x672C;&#x8EAB;&#x3002;</li>
+<li>&#x5377;&#x79EF;&#x9519;&#x8BEF;&#x7801;&#xFF08;Convolutional Error Codes&#xFF09;&#xFF1A;&#x5377;&#x79EF;&#x9519;&#x8BEF;&#x7801;&#x662F;&#x5C06;&#x6570;&#x636E;&#x770B;&#x4F5C;&#x4E00;&#x7CFB;&#x5217;bits&#xFF0C;&#x589E;&#x52A0;&#x7684;&#x989D;&#x5916;&#x4FE1;&#x606F;&#x662F;&#x7531;&#x5F53;&#x524D;&#x7684;bit&#x548C;&#x4E4B;&#x524D;&#x7684;bit&#x5171;&#x540C;&#x51B3;&#x5B9A;&#x7684;&#x3002;</li>
+</ol>
+<p>&#x5377;&#x79EF;&#x9519;&#x8BEF;&#x7801;&#x76F8;&#x5BF9;&#x4E8E;&#x5206;&#x7EC4;&#x9519;&#x8BEF;&#x7801;&#x9700;&#x8981;&#x66F4;&#x591A;&#x7684;&#x8BA1;&#x7B97;&#xFF0C;&#x4F46;&#x662F;&#x4E5F;&#x66F4;&#x80FD;&#x68C0;&#x6D4B;&#x51FA;&#x9519;&#x8BEF;&#x3002;</p>
+<h2 id="an-example-block-error-codesingle-parity-checking">An Example Block Error Code&#xFF1A;Single Parity Checking</h2>
+<p>&#x5355;&#x4E00;&#x5947;&#x5076;&#x6821;&#x9A8C;&#x68C0;&#x67E5;&#xFF08;Single Parity Checking&#xFF09;&#x662F;&#x5206;&#x7EC4;&#x9519;&#x8BEF;&#x7801;&#x68C0;&#x6D4B;&#x7684;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF0C;&#x53EF;&#x4EE5;&#x518D;&#x5206;&#x4E3A;&#x5076;&#x6821;&#x9A8C;&#x68C0;&#x67E5;&#x548C;&#x5947;&#x6821;&#x9A8C;&#x68C0;&#x67E5;&#x3002;&#x5982;&#x679C;&#x5C06;&#x6570;&#x636E;&#x5206;&#x4E3A;<span class="math inline">\(n\)</span> bit&#x4E00;&#x7EC4;&#xFF0C;&#x90A3;&#x4E48;&#x6BCF;&#x4E00;&#x7EC4;&#x589E;&#x52A0;&#x4E00;&#x4F4D;&#x6570;&#x636E;&#xFF0C;&#x5F53;&#x662F;&#x5076;&#x6821;&#x9A8C;&#x65F6;&#xFF0C;<span class="math inline">\(n\)</span>&#x4F4D;&#x6570;&#x636E;+1&#x4F4D;&#x989D;&#x5916;&#x6570;&#x636E;&#x5E94;&#x8BE5;&#x4E00;&#x5171;&#x6709;&#x5076;&#x6570;&#x4E2A;1&#xFF0C;&#x5F53;&#x662F;&#x5947;&#x6821;&#x9A8C;&#x65F6;&#xFF0C;<span class="math inline">\(n\)</span>&#x4F4D;&#x6570;&#x636E;+1&#x4F4D;&#x989D;&#x5916;&#x6570;&#x636E;&#x5E94;&#x8BE5;&#x4E00;&#x5171;&#x6709;&#x5947;&#x6570;&#x4E2A;1&#x3002;&#x4E0B;&#x8868;&#x4E3A;8&#x4F4D;&#x6570;&#x636E;&#x65F6;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x539F;&#x59CB;&#x6570;&#x636E;</th>
+<th>&#x5076;&#x6821;&#x9A8C;</th>
+<th>&#x5947;&#x6821;&#x9A8C;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>00000000</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>01011011</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>01010101</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>&#x5355;&#x4E00;&#x5947;&#x5076;&#x6821;&#x9A8C;&#x662F;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x5F31;&#x7684;&#x4FE1;&#x9053;&#x7F16;&#x7801;&#xFF0C;&#x4ED6;&#x53EA;&#x80FD;&#x68C0;&#x6D4B;&#x9519;&#x8BEF;&#xFF0C;&#x4F46;&#x65E0;&#x6CD5;&#x68C0;&#x6D4B;&#x51FA;&#x9519;&#x8BEF;&#x5177;&#x4F53;&#x51FA;&#x73B0;&#x5728;&#x54EA;&#x4E00;&#x4F4D;&#xFF0C;&#x4E5F;&#x65E0;&#x6CD5;&#x7EA0;&#x6B63;&#x9519;&#x8BEF;&#x3002;&#x800C;&#x4E14;&#x5F53;&#x6709;&#x5076;&#x6570;&#x4E2A;&#x4F4D;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x65F6;&#xFF0C;&#x9519;&#x8BEF;&#x5C31;&#x65E0;&#x6CD5;&#x88AB;&#x68C0;&#x6D4B;&#x51FA;&#x6765;&#x3002;</p>
+<h2 id="the-methematics-of-block-error-codes-and-nk-notation">The Methematics of Block Error Codes And (n,k) Notation</h2>
+<p>&#x5982;&#x6709;<span class="math inline">\(k\)</span>&#x4F4D;bit&#x7684;&#x6570;&#x636E;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x6240;&#x6709;<span class="math inline">\(2^k\)</span>&#x79CD;&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x7684;&#x6570;&#x636E;&#x79F0;&#x4E3A;<code>&#x6570;&#x636E;&#x5B57;(Datawords)</code>&#xFF0C;&#x5728;&#x8FD9;&#x4E9B;&#x6570;&#x636E;&#x4E2D;&#x589E;&#x52A0;<span class="math inline">\(r\)</span>&#x4F4D;&#x989D;&#x5916;&#x6570;&#x636E;&#xFF0C;&#x4E00;&#x5171;&#x6709;<span class="math inline">\(n=k+r\)</span>&#x4E2A;&#x6570;&#x636E;&#xFF0C;&#x6240;&#x6709;<span class="math inline">\(2^n\)</span>&#x79CD;&#x53EF;&#x80FD;&#x79F0;&#x4E3A;<code>&#x7F16;&#x7801;&#x5B57;(codeworks)</code>&#xFF0C;&#x5176;&#x4E2D;&#x7F16;&#x7801;&#x5B57;&#x4E2D;&#x5408;&#x6CD5;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x5373;&#x989D;&#x5916;&#x6DFB;&#x52A0;&#x7684;&#x6570;&#x636E;&#x4E0E;&#x539F;&#x6570;&#x636E;&#x65F6;&#x7B26;&#x5408;&#x89C4;&#x5219;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x79F0;&#x4E3A;<code>&#x7801;&#x4E66;(Codebook)</code>&#xFF0C;&#x5E76;&#x5C06;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x6807;&#x8BB0;&#x4E3A;<span class="math inline">\((n,k)\)</span></p>
+<p>&#x5982;&#x5355;&#x4E00;&#x5947;&#x5076;&#x6821;&#x9A8C;&#x4E2D;,<span class="math inline">\(k=8,r=1\)</span>&#xFF0C;&#x56E0;&#x6B64;&#x4E00;&#x5171;&#x6709;256&#x4E2A;&#x6570;&#x636E;&#x5B57;&#xFF0C;&#x4E5F;&#x5BF9;&#x5E94;&#x4E86;&#x6709;256&#x4E2A;&#x5408;&#x6CD5;&#x7684;&#x7F16;&#x7801;&#x5B57;&#xFF0C;&#x4E00;&#x5171;&#x6709;512&#x4E2A;&#x7F16;&#x7801;&#x5B57;&#x3002;</p>
+<p>&#x5728;&#x7406;&#x60F3;&#x72B6;&#x6001;&#x4E0B;&#xFF0C;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x4E2D;&#x7684;&#x4EFB;&#x4E00;&#x4E00;&#x4F4D;&#x88AB;&#x6539;&#x53D8;&#x4E86;&#xFF0C;&#x6539;&#x53D8;&#x540E;&#x7684;&#x7F16;&#x7801;&#x5B57;&#x5C31;&#x4E0D;&#x662F;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x3002;&#x4F46;&#x662F;&#x5728;&#x5355;&#x4E00;&#x5947;&#x5076;&#x6821;&#x9A8C;&#x7684;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x540C;&#x65F6;&#x6539;&#x53D8;&#x4E86;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x4E2D;&#x7684;&#x4E24;&#x4F4D;&#xFF0C;&#x90A3;&#x4E48;&#x7ED3;&#x679C;&#x4ECD;&#x7136;&#x662F;&#x4E00;&#x4E2A;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x3002;</p>
+<p>&#x6CA1;&#x6709;&#x4E00;&#x4E2A;&#x4FE1;&#x9053;&#x7F16;&#x7801;&#x53EF;&#x4EE5;&#x8FBE;&#x5230;&#x7406;&#x60F3;&#x72B6;&#x6001;&#xFF0C;&#x6240;&#x4EE5;&#x8981;&#x8003;&#x8651;&#x7684;&#x5C31;&#x662F;&#xFF0C;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x6700;&#x5C11;&#x591A;&#x5C11;&#x4F4D;&#x6570;&#x636E;&#x8981;&#x88AB;&#x540C;&#x65F6;&#x6539;&#x53D8;&#xFF0C;&#x624D;&#x80FD;&#x4EA7;&#x751F;&#x53E6;&#x4E00;&#x4E2A;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x3002;&#x5728;&#x5355;&#x4E00;&#x6570;&#x5B57;&#x7F16;&#x7801;&#x4E2D;&#xFF0C;&#x8FD9;&#x4E2A;&#x4F4D;&#x6570;&#x4E3A;2&#x3002;</p>
+<h2 id="hamming-distancea-measure-of-a-codes-strength">Hamming Distance&#xFF1A;A Measure Of A Code&apos;s Strength</h2>
+<p>&#x6C49;&#x660E;&#x8DDD;&#x79BB;&#xFF08;Hamming Distance&#xFF09;&#x662F;&#x7528;&#x6765;&#x6D4B;&#x91CF;&#x4E00;&#x4E2A;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x8981;&#x8F6C;&#x6362;&#x4E3A;&#x53E6;&#x4E00;&#x4E2A;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x6700;&#x5C11;&#x8981;&#x6539;&#x53D8;&#x7684;&#x6570;&#x636E;&#x4F4D;&#x6570;&#x7684;&#x65B9;&#x6CD5;&#x4E2D;&#x9700;&#x8981;&#x7528;&#x5230;&#x7684;&#x6982;&#x5FF5;&#x3002;&#x5982;&#x679C;&#x7ED9;&#x5B9A;&#x4E24;&#x4E2A;<span class="math inline">\(n\)</span>&#x957F;&#x5EA6;&#x7684;&#x5B57;&#x7B26;&#xFF0C;&#x4E24;&#x4E2A;&#x5B57;&#x7B26;&#x7684;&#x6C49;&#x660E;&#x8DDD;&#x79BB;&#x5C31;&#x662F;&#x4E24;&#x4E2A;&#x5B57;&#x7B26;&#x95F4;&#x4E0D;&#x540C;&#x7684;&#x6570;&#x636E;&#x6570;&#x91CF;&#x3002;</p>
+<p>&#x5982;<span class="math inline">\(d(000,001)=1,d(000,101)=2,d(000,111)=3,d(101,001)=1\)</span>&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x5148;&#x5BF9;&#x4E24;&#x4E2A;&#x5B57;&#x7B26;&#x6C42;&#x5F02;&#x6216;&#xFF0C;&#x7136;&#x540E;&#x8BA1;&#x7B97;&#x5F02;&#x6216;&#x51FA;&#x6765;&#x7684;&#x5B57;&#x7B26;1&#x7684;&#x603B;&#x6570;&#xFF0C;&#x5373;&#x4E3A;&#x6C49;&#x660E;&#x8DDD;&#x79BB;&#x3002;</p>
+<h2 id="the-hamming-distance-among-string-in-a-codebook">The Hamming Distance Among String In A Codebook</h2>
+<p>&#x4E3A;&#x4E86;&#x8BA1;&#x7B97;&#x51FA;&#x4E00;&#x4E2A;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x8981;&#x8F6C;&#x6362;&#x4E3A;&#x53E6;&#x4E00;&#x4E2A;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x6700;&#x5C11;&#x8981;&#x6539;&#x53D8;&#x7684;&#x6570;&#x636E;&#x4F4D;&#x6570;&#xFF0C;&#x5148;&#x8981;&#x8BA1;&#x7B97;&#x51FA;&#x7801;&#x4E66;&#x4E2D;&#x6240;&#x6709;&#x7F16;&#x7801;&#x5B57;&#x7EC4;&#x5408;&#x7684;&#x6C49;&#x660E;&#x8DDD;&#x79BB;&#x3002;&#x5982;&#x5BF9;2&#x4F4D;bit&#x6570;&#x636E;&#x8FDB;&#x884C;&#x5355;&#x4E00;&#x5947;&#x6821;&#x9A8C;&#x68C0;&#x6D4B;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x6570;&#x636E;&#x5B57;</th>
+<th>&#x7F16;&#x7801;&#x5B57;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>00</td>
+<td>001</td>
+</tr>
+<tr class="even">
+<td>01</td>
+<td>010</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td>111</td>
+</tr>
+</tbody>
+</table>
+<p>&#x4E00;&#x5171;&#x6709;4&#x4E2A;&#x7F16;&#x7801;&#x5B57;&#xFF0C;4&#x4E2A;&#x7F16;&#x7801;&#x5B57;&#x4E00;&#x4E00;&#x914D;&#x5BF9;&#x4E00;&#x5171;&#x6709;6&#x79CD;&#x53EF;&#x80FD;&#xFF0C;<span class="math inline">\(d(001,010)=2,d(010,100)=2,d(001,100)=2,d(010,111)=2,d(001,111)=2,d(100,111)=2\)</span>&#x3002;6&#x79CD;&#x53EF;&#x80FD;&#x4E2D;&#x6700;&#x5C0F;&#x7684;&#x6C49;&#x660E;&#x8DDD;&#x79BB;&#x662F;2&#xFF0C;&#x6240;&#x4EE5;&#x6700;&#x5C11;&#x9700;&#x8981;&#x66F4;&#x6539;2&#x4F4D;&#x6570;&#x636E;&#x624D;&#x80FD;&#x4ECE;&#x4E00;&#x4E2A;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x53D8;&#x4E3A;&#x53E6;&#x4E00;&#x4E2A;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x8BA1;&#x7B97;&#x4ECE;&#x4E00;&#x4E2A;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x8F6C;&#x6362;&#x4E3A;&#x53E6;&#x4E00;&#x4E2A;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#x6700;&#x5C11;&#x8981;&#x6539;&#x53D8;&#x7684;&#x6570;&#x636E;&#x4F4D;&#x6570;&#x8FC7;&#x7A0B;&#x662F;&#xFF0C;&#x8BA1;&#x7B97;&#x51FA;&#x6240;&#x6709;&#x7801;&#x4E66;&#x4E2D;&#x7684;&#x7F16;&#x7801;&#x5B57;&#xFF08;&#x5373;&#x5408;&#x6CD5;&#x7F16;&#x7801;&#x5B57;&#xFF09;&#x4E24;&#x4E24;&#x914D;&#x5BF9;&#x540E;&#x7684;&#x6240;&#x6709;&#x6C49;&#x660E;&#x8DDD;&#x79BB;<span class="math inline">\(d_{min}\)</span>&#xFF0C;&#x5176;&#x4E2D;&#x7684;&#x6700;&#x5C0F;&#x503C;&#x5373;&#x4E3A;&#x6240;&#x6C42;&#x503C;&#x3002;</p>
+<h2 id="the-tradeoff-between-error-detection-and-overhead">The Tradeoff Between Error Detection And Overhead</h2>
+<p>&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x7F16;&#x7801;&#xFF0C;&#x6700;&#x591A;&#x7684;&#x80FD;&#x88AB;&#x68C0;&#x6D4B;&#x51FA;&#x6765;&#x7684;&#x9519;&#x8BEF;&#x4F4D;&#x6570;&#x4E3A;<span class="math inline">\(e=d_{min}-1\)</span>&#xFF0C;&#x5982;&#x5355;&#x4E00;&#x5947;&#x5076;&#x6821;&#x9A8C;&#xFF0C;&#x56E0;&#x4E3A;<span class="math inline">\(d_{min}=2\)</span>&#xFF0C;&#x6240;&#x4EE5;&#x6700;&#x591A;&#x80FD;&#x6B63;&#x786E;&#x68C0;&#x6D4B;&#x51FA;&#x6765;&#x7684;&#x9519;&#x8BEF;&#x4F4D;&#x6570;&#x4E3A;1&#x3002;</p>
+<p>&#x867D;&#x7136;<span class="math inline">\(d_{min}\)</span>&#x8D8A;&#x5927;&#x80FD;&#x68C0;&#x6D4B;&#x51FA;&#x6765;&#x7684;&#x9519;&#x8BEF;&#x4F4D;&#x6570;&#x8D8A;&#x591A;&#xFF0C;&#x4F46;&#x8FD9;&#x4E5F;&#x610F;&#x5473;&#x7740;&#x8981;&#x589E;&#x52A0;&#x66F4;&#x591A;&#x7684;&#x989D;&#x5916;&#x6570;&#x636E;&#xFF0C;&#x5BF9;&#x4E8E;<span class="math inline">\((n,k)\)</span>&#x7684;&#x7F16;&#x7801;&#xFF0C;&#x5DE5;&#x7A0B;&#x5E08;&#x7528;&#x7F16;&#x7801;&#x7387;&#xFF08;Code Rate&#xFF09;<span class="math inline">\(R=\frac{k}{n}\)</span>&#x6765;&#x8868;&#x793A;&#x4E3A;&#x4E86;&#x68C0;&#x6D4B;&#x51FA;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#x7684;&#x7F16;&#x7801;&#x5F00;&#x9500;&#x3002;</p>
+<h2 id="error-correction-with-row-and-columnrac-parity">Error Correction With Row And Column(RAC) Parity</h2>
+<p>&#x5947;&#x5076;&#x6821;&#x9A8C;&#x672C;&#x8EAB;&#x662F;&#x4E0D;&#x80FD;&#x8FDB;&#x884C;&#x9519;&#x8BEF;&#x7EA0;&#x6B63;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x901A;&#x8FC7;<code>&#x884C;&#x5217;&#x5947;&#x5076;&#x6821;&#x9A8C;&#xFF08;Row And Column Parity&#xFF09;</code>&#x5C31;&#x53EF;&#x4EE5;&#x505A;&#x5230;&#x3002;&#x5982;&#x4E00;&#x5171;&#x6709;12&#x4E2A;bit&#x7684;&#x539F;&#x59CB;&#x6570;&#x636E;&#xFF0C;&#x5373;<span class="math inline">\(k=12\)</span>&#xFF0C;&#x6392;&#x6210;&#x4E09;&#x884C;&#x56DB;&#x5217;&#x6BCF;&#x4E00;&#x5217;&#x6BCF;&#x4E00;&#x884C;&#x90FD;&#x8FDB;&#x884C;&#x5947;&#x5076;&#x6821;&#x9A8C;&#xFF0C;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x989D;&#x5916;&#x4F4D;&#xFF0C;&#x5219;&#x4E00;&#x5171;8&#x4E2A;&#x989D;&#x5916;&#x4F4D;&#xFF0C;&#x5373;<span class="math inline">\(r=8&#xFF0C;n=k+r=20\)</span>&#xFF0C;&#x56E0;&#x6B64;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;<span class="math inline">\((20,12)\)</span>&#x7684;&#x7F16;&#x7801;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter8-Notes/2019-12-05-14-46-47.png" alt="&#x884C;&#x5217;&#x5947;&#x5076;&#x6821;&#x9A8C;"></p>
+<p>&#x56E0;&#x6B64;&#x5982;&#x679C;&#x4E00;&#x4F4D;&#x6570;&#x636E;&#x51FA;&#x9519;&#xFF0C;&#x4F1A;&#x540C;&#x65F6;&#x5728;&#x5BF9;&#x5E94;&#x7684;&#x884C;&#x548C;&#x5217;&#x6821;&#x9A8C;&#x4F4D;&#x611F;&#x77E5;&#x5230;&#xFF0C;&#x56E0;&#x6B64;&#x5C31;&#x53EF;&#x4EE5;&#x5B9A;&#x4F4D;&#x5230;&#x9519;&#x8BEF;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x53D6;&#x53CD;&#x540E;&#x5C31;&#x80FD;&#x7EA0;&#x6B63;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x5947;&#x5076;&#x6821;&#x9A8C;&#x6570;&#x636E;&#x7684;<span class="math inline">\(d_{min}\)</span>&#x8FD8;&#x662F;2&#xFF0C;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x9519;&#x8BEF;&#x7684;&#x4F4D;&#x6570;&#x5927;&#x4E8E;1&#xFF0C;&#x5F53;&#x662F;&#x5076;&#x6570;&#x65F6;&#x65E0;&#x6CD5;&#x88AB;&#x68C0;&#x6D4B;&#x5230;&#xFF0C;&#x5F53;&#x662F;&#x5947;&#x6570;&#x65F6;&#x867D;&#x7136;&#x80FD;&#x68C0;&#x6D4B;&#x51FA;&#x9519;&#x8BEF;&#xFF0C;&#x4F46;&#x65E0;&#x6CD5;&#x7EA0;&#x6B63;&#x3002;</p>
+<h2 id="the-16-bit-checksum-used-in-the-internet">The 16-Bit Checksum Used In The Internet</h2>
+<p>&#x6709;&#x4E2A;&#x79F0;&#x4E3A;<code>&#x56E0;&#x7279;&#x7F51;&#x6821;&#x9A8C;&#x548C;&#xFF08;Internet checksum&#xFF09;</code>&#x7684;&#x4FE1;&#x9053;&#x7F16;&#x7801;&#x65B9;&#x6CD5;&#x5728;&#x7F51;&#x7EDC;&#x4E2D;&#x626E;&#x6F14;&#x4E86;&#x91CD;&#x8981;&#x89D2;&#x8272;&#x3002;&#x8FD9;&#x4E2A;&#x7B97;&#x6CD5;&#x7684;&#x8F93;&#x5165;&#x53EF;&#x4EE5;&#x662F;&#x4EFB;&#x610F;&#x957F;&#x5EA6;&#xFF0C;&#x5C06;&#x8F93;&#x5165;&#x62C6;&#x5206;&#x4E3A;&#x4E00;&#x6BB5;&#x6BB5;16&#x5B57;&#x8282;&#x7684;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x80FD;&#x957F;&#x5EA6;&#x4E0D;&#x80FD;&#x88AB;16&#x6574;&#x9664;&#xFF0C;&#x5219;&#x6700;&#x540E;&#x8865;0&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter8-Notes/2019-12-06-17-25-08.png" alt="&#x62C6;&#x5206;&#x4E3A;16&#x5B57;&#x8282;"></p>
+<p>&#x7B97;&#x6CD5;&#x7684;&#x6D41;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5C06;&#x8F93;&#x5165;&#x62C6;&#x5206;&#x4E3A;&#x4EE5;16-bit&#x4E3A;&#x4E00;&#x7EC4;</li>
+<li>&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;32-bit&#x7684;&#x53D8;&#x91CF;&#xFF08;&#x8FD9;&#x91CC;&#x79F0;&#x4E3A;<span class="math inline">\(C\)</span>&#xFF09;&#x4F5C;&#x4E3A;&#x7ED3;&#x679C;&#x3002;</li>
+<li>&#x5C06;&#x6BCF;&#x4E00;&#x7EC4;16-bit&#x7684;&#x6570;&#x636E;&#x7D2F;&#x52A0;&#x7ED9;<span class="math inline">\(C\)</span></li>
+<li>&#x5C06;<span class="math inline">\(C\)</span>&#x7684;&#x524D;16&#x4F4D;&#x7D2F;&#x52A0;&#x7ED9;&#x540E;16&#x4F4D;</li>
+<li>&#x5C06;<span class="math inline">\(C\)</span>&#x7684;&#x540E;16&#x4F4D;&#x53D6;&#x53CD;&#xFF0C;&#x5982;&#x679C;&#x53D6;&#x53CD;&#x540E;&#x5168;&#x662F;0&#xFF0C;&#x5219;&#x5C06;&#x5176;&#x6539;&#x4E3A;&#x5168;&#x662F;1</li>
+<li>&#x6B64;&#x65F6;<span class="math inline">\(C\)</span>&#x7684;16&#x4F4D;&#x5373;&#x4E3A;&#x6821;&#x9A8C;&#x548C;&#x3002;</li>
+</ol>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x6700;&#x540E;&#x7684;&#x6821;&#x9A8C;&#x548C;&#x4E5F;&#x662F;16&#x4F4D;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5C06;&#x6821;&#x9A8C;&#x548C;&#x4F5C;&#x4E3A;&#x65B0;&#x7684;&#x4E00;&#x7EC4;16-bit&#x653E;&#x5728;&#x539F;&#x6570;&#x636E;&#x540E;&#xFF08;&#x7ECF;&#x8FC7;&#x4E86;&#x8865;0&#x7684;&#x539F;&#x6570;&#x636E;&#xFF09;&#x53D1;&#x9001;&#x51FA;&#x53BB;&#x3002;&#x63A5;&#x6536;&#x7AEF;&#x63A5;&#x53D7;&#x4FE1;&#x606F;&#x540E;&#x91CD;&#x590D;&#x7B97;&#x6CD5;&#x6D41;&#x7A0B;&#xFF0C;&#x5982;&#x679C;&#x6570;&#x636E;&#x6CA1;&#x6709;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#xFF0C;&#x6700;&#x540E;&#x63A5;&#x6536;&#x7AEF;&#x8BA1;&#x7B97;&#x51FA;&#x7684;&#x6821;&#x9A8C;&#x548C;&#x5E94;&#x8BE5;&#x662F;FFFF&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x4EE5;&#x4E24;&#x4E2A;&#x4F8B;&#x5B50;&#x8FDB;&#x884C;&#x8BF4;&#x660E;&#xFF1A; 1. &#x4F8B;&#x5B50;1 &#x5982;&#x679C;&#x53D1;&#x9001;&#x7AEF;&#x8F93;&#x5165;&#x6570;&#x636E;&#x4E3A;<code>0100 1000 0110 0101</code>&#xFF0C;<code>0110 1100 0110 1100</code>&#xFF0C;<code>0110 1111 0010 0001</code>&#xFF0C;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A; <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">+  0110 1111 0010 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  0010 0011 1111 0010</span><br></pre></td></tr></table></figure></p>
+<pre><code>&#x5C06;&#x9AD8;16&#x4F4D;&#x79FB;&#x5230;&#x540E;16&#x4F4D;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  0010 0011 1111 0010</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  0010 0011 1111 0011</span><br></pre></td></tr></table></figure>
+
+&#x53D6;&#x53CD;&#x540E;&#x5F97;&#x5230;&#xFF1A;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1101 1100 0000 1100</span><br></pre></td></tr></table></figure>
+
+&#x8FD9;&#x5373;&#x4E3A;&#x6821;&#x9A8C;&#x548C;
+
+&#x5BF9;&#x4E8E;&#x63A5;&#x6536;&#x7AEF;&#xFF0C;&#x56E0;&#x4E3A;&#x5C06;&#x6821;&#x9A8C;&#x548C;&#x4E5F;&#x4E00;&#x5E76;&#x53D1;&#x9001;&#x4E86;&#x8FC7;&#x53BB;&#xFF0C;&#x6240;&#x4EE5;&#x63A5;&#x6536;&#x7AEF;&#x7684;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">   0110 1111 0010 0001</span><br><span class="line">+  1101 1100 0000 1100</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
+
+&#x5C06;&#x9AD8;16&#x4F4D;&#x79FB;&#x5230;&#x540E;16&#x4F4D;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+
+&#x53D6;&#x53CD;&#x540E;&#x5F97;&#x5230;&#xFF1A;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
+
+&#x56E0;&#x4E3A;&#x5168;&#x4E3A;0&#xFF0C;&#x6240;&#x4EE5;&#x6539;&#x4E3A;&#x5168;&#x4E3A;1
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure></code></pre>
+<ol start="2" type="1">
+<li><p>&#x4F8B;&#x5B50;2 &#x5982;&#x679C;&#x53D1;&#x9001;&#x7AEF;&#x8F93;&#x5165;&#x6570;&#x636E;&#x4E3A;<code>1111 1111 1111 1111</code>&#xFF0C;<code>1111 1111 1111 1111</code>&#xFF0C;<code>0000 0000 0000 0001</code>&#xFF0C;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A; <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">+  0000 0000 0000 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1111</span><br></pre></td></tr></table></figure></p>
+<p>&#x5C06;&#x9AD8;16&#x4F4D;&#x79FB;&#x5230;&#x540E;16&#x4F4D; <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  1111 1111 1111 1111</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000</span><br></pre></td></tr></table></figure></p>
+<p>&#x6B64;&#x65F6;&#x867D;&#x7136;&#x9AD8;16&#x4ECD;&#x7136;&#x6709;&#x6570;&#x503C;&#xFF0C;&#x4F46;&#x4E0D;&#x9700;&#x8981;&#x518D;&#x6B21;&#x7D2F;&#x52A0;&#xFF0C;&#x540E;16&#x4F4D;&#x53D6;&#x53CD;&#x540E;&#x5F97;&#x5230;&#xFF1A; <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1111 1111 1111 11111</span><br></pre></td></tr></table></figure></p>
+<p>&#x8FD9;&#x5373;&#x4E3A;&#x6821;&#x9A8C;&#x548C;</p>
+<p>&#x5BF9;&#x4E8E;&#x63A5;&#x6536;&#x7AEF;&#xFF0C;&#x56E0;&#x4E3A;&#x5C06;&#x6821;&#x9A8C;&#x548C;&#x4E5F;&#x4E00;&#x5E76;&#x53D1;&#x9001;&#x4E86;&#x8FC7;&#x53BB;&#xFF0C;&#x6240;&#x4EE5;&#x63A5;&#x6536;&#x7AEF;&#x7684;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A; <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">   0000 0000 0000 0001</span><br><span class="line">+  1111 1111 1111 1111</span><br><span class="line">----------------------------</span><br><span class="line">10 1111 1111 1111 1110</span><br></pre></td></tr></table></figure></p>
+<p>&#x5C06;&#x9AD8;16&#x4F4D;&#x79FB;&#x5230;&#x540E;16&#x4F4D; <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                  10</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000</span><br></pre></td></tr></table></figure></p>
+<p>&#x53D6;&#x53CD;&#x540E;&#x5F97;&#x5230;&#xFF1A; <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<h2 id="cyclic-redundancy-codescrcs">Cyclic Redundancy Codes(CRCs)</h2>
+<p>&#x5728;&#x9AD8;&#x901F;&#x7F51;&#x7EDC;&#x4E2D;&#xFF0C;&#x6709;&#x4E00;&#x4E2A;&#x79F0;&#x4E3A;<code>&#x5FAA;&#x73AF;&#x5197;&#x4F59;&#x7801;(Cyclic Redundancy Codes,CRCs)</code>&#x7684;&#x4FE1;&#x9053;&#x7F16;&#x7801;&#x65B9;&#x6CD5;&#x3002;&#x5FAA;&#x73AF;&#x5197;&#x4F59;&#x7801;&#x6709;&#x4E09;&#x4E2A;&#x4E3B;&#x8981;&#x4F18;&#x70B9;&#xFF1A;</p>
+<ol type="1">
+<li>&#x53EF;&#x4EE5;&#x5BF9;&#x4EFB;&#x610F;&#x957F;&#x5EA6;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x8BA1;&#x7B97;</li>
+<li>&#x53EF;&#x4EE5;&#x5145;&#x5206;&#x7684;&#x68C0;&#x6D4B;&#x51FA;&#x9519;&#x8BEF;</li>
+<li>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x786C;&#x4EF6;&#x5B9E;&#x73B0;&#xFF0C;&#x6240;&#x4EE5;&#x975E;&#x5E38;&#x7684;&#x9AD8;&#x6548;</li>
+</ol>
+<p>&#x6C42;<span class="math inline">\(CRC\)</span>&#x7684;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x662F;&#x4E24;&#x4E2A;&#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x7684;&#x76F8;&#x9664;&#xFF0C;&#x4E00;&#x4E2A;&#x4EE3;&#x8868;&#x539F;&#x6570;&#x636E;&#xFF0C;&#x4E00;&#x4E2A;&#x4EE3;&#x8868;&#x4E00;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x9664;&#x6570;&#xFF08;&#x53EF;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x7684;&#x60C5;&#x51B5;&#x8BBE;&#x7F6E;&#xFF0C;&#x9664;&#x6570;&#x7684;&#x8BBE;&#x7F6E;&#x51B3;&#x5B9A;&#x9519;&#x8BEF;&#x68C0;&#x6D4B;&#x7684;&#x80FD;&#x529B;&#xFF09;&#xFF0C;&#x5982;&#x679C;&#x9700;&#x8981;&#x6C42;&#x5F97;<span class="math inline">\(N\)</span>&#x957F;&#x5EA6;&#x7684;<span class="math inline">\(CRC\)</span>&#xFF0C;&#x5219;&#x9700;&#x8981;<span class="math inline">\(N+1\)</span>&#x957F;&#x5EA6;&#x7684;&#x88AB;&#x9664;&#x6570;&#x3002;&#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x76F8;&#x9664;&#x7684;&#x8FC7;&#x7A0B;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x662F;&#x591A;&#x9879;&#x5F0F;&#x76F8;&#x9664;&#xFF0C;&#x5982;&#x679C;&#x539F;&#x6570;&#x636E;&#x662F;<span class="math inline">\(1010\)</span>&#xFF0C;&#x9664;&#x6570;&#x8BBE;&#x7F6E;&#x4E3A;<span class="math inline">\(1011\)</span>&#xFF0C;&#x5219;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#x56FE;&#xFF1A;</p>
+<p><img src="/CNI-Chapter8-Notes/2019-12-07-00-01-18.png" alt="CRC&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;"></p>
+<h2 id="an-efficient-hardware-implementation-of-crc">An Efficient Hardware Implementation Of CRC</h2>
+<p>CRC&#x7B97;&#x6CD5;&#x7684;&#x5B9E;&#x73B0;&#x786C;&#x4EF6;&#x662F;&#x7531;<code>&#x79FB;&#x4F4D;&#x5BC4;&#x5B58;&#x5668;(Shift Register)</code>&#x548C;<code>&#x5F02;&#x6216;&#x95E8;(Exclusive or gates)</code>&#x6784;&#x6210;&#x7684;&#x3002;&#x5728;&#x8BA1;&#x7B97;CRC&#x524D;&#xFF0C;&#x786C;&#x4EF6;&#x4F1A;&#x521D;&#x59CB;&#x5316;&#x5C06;&#x79FB;&#x4F4D;&#x5BC4;&#x5B58;&#x5668;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x4F4D;&#x6539;&#x4E3A;0&#xFF0C;&#x4E0A;&#x4F8B;&#x4E2D;&#x7684;&#x9664;&#x6570;<span class="math inline">\(1011\)</span>&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x786C;&#x4EF6;&#x56FE;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/CNI-Chapter8-Notes/2019-12-07-00-06-02.png" alt="1011&#x786C;&#x4EF6;"></p>
+<p>TODO&#xFF1A;&#x4E3A;&#x4EC0;&#x4E48;&#x8FD9;&#x4E48;&#x8BBE;&#x8BA1;&#x7684;&#x539F;&#x56E0;&#x3002;</p>
+<h2 id="automatic-repeat-requestarq-mechanisms">Automatic Repeat Request(ARQ) Mechanisms</h2>
+<p>&#x81EA;&#x52A8;&#x91CD;&#x4F20;&#x8BF7;&#x6C42;&#x6280;&#x672F;&#xFF08;Automatic Repeat Request,ARQ&#xFF09;&#x9700;&#x8981;&#x53D1;&#x9001;&#x7AEF;&#x548C;&#x63A5;&#x6536;&#x7AEF;&#x4F20;&#x9012;&#x4FE1;&#x606F;&#x6765;&#x68C0;&#x6D4B;&#x9519;&#x8BEF;&#x3002;&#x5F53;&#x4E00;&#x65B9;&#x53D1;&#x9001;&#x6570;&#x636E;&#x7ED9;&#x53E6;&#x4E00;&#x65B9;&#x65F6;&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x9700;&#x8981;&#x4F20;&#x9012;&#x4E00;&#x4E2A;&#x56DE;&#x6267;&#x7ED9;&#x53D1;&#x9001;&#x65B9;&#x3002;&#x5982;&#x679C;&#x5728;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x540E;&#x53D1;&#x9001;&#x65B9;&#x4ECD;&#x7136;&#x6CA1;&#x6709;&#x6536;&#x5230;&#x56DE;&#x6267;&#xFF0C;&#x5219;&#x8BA4;&#x4E3A;&#x6570;&#x636E;&#x4E22;&#x5931;&#xFF0C;&#x91CD;&#x65B0;&#x53D1;&#x9001;&#x6570;&#x636E;&#x3002;</p>
+<p>&#x81EA;&#x52A8;&#x91CD;&#x4F20;&#x8BF7;&#x6C42;&#x6280;&#x672F;&#x9002;&#x5408;&#x53EA;&#x80FD;&#x68C0;&#x6D4B;&#x9519;&#x8BEF;&#xFF0C;&#x4F46;&#x4E0D;&#x80FD;&#x4FEE;&#x590D;&#x9519;&#x8BEF;&#x7684;&#x7CFB;&#x7EDF;&#x3002;&#x5F53;&#x63A5;&#x6536;&#x65B9;&#x68C0;&#x6D4B;&#x51FA;&#x6570;&#x636E;&#x6709;&#x9519;&#x8BEF;&#x540E;&#xFF0C;&#x5C06;&#x6570;&#x636E;&#x4E22;&#x5F03;&#x5E76;&#x4E0D;&#x4F20;&#x9012;&#x56DE;&#x6267;&#xFF0C;&#x90A3;&#x4E48;&#x53D1;&#x9001;&#x65B9;&#x5C31;&#x4F1A;&#x518D;&#x6B21;&#x53D1;&#x9001;&#x6570;&#x636E;&#x3002;</p>
+<div class="note primary">
+            <ol type="1"><li><em>Computer Networks and Internets</em> 6th</li><li><a href="https://en.wikipedia.org/wiki/Polynomial_long_division" target="_blank" rel="noopener">&#x591A;&#x9879;&#x5F0F;&#x9664;&#x6CD5;</a></li><li><a href="https://heasarc.gsfc.nasa.gov/docs/heasarc/ofwg/docs/general/checksum/node11.html" target="_blank" rel="noopener">1&apos;s Complement Arithmetic</a></li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/CNI-Chapter8-Notes/" title="《计算机网络与因特网》 第八章笔记">https://xuejiaw.github.io/CNI-Chapter8-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/CNI-Chapter7-Notes/" rel="prev" title="《计算机网络与因特网》 第七章笔记">
+      <i class="fa fa-chevron-left"></i> 《计算机网络与因特网》 第七章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/CNI-Chapter10-Notes/" rel="next" title="《计算机网络与因特网》 第十章笔记">
+      《计算机网络与因特网》 第十章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-8-reliability-and-channel-coding"><span class="nav-number">1.</span> <span class="nav-text">Chapter 8 Reliability And Channel Coding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-three-main-sources-of-transmission-errors"><span class="nav-number">1.2.</span> <span class="nav-text">The Three Main Sources Of Transmission Errors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#effect-of-transmission-errors-on-data"><span class="nav-number">1.3.</span> <span class="nav-text">Effect Of Transmission Errors On Data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#two-strategies-for-handling-channel-errors"><span class="nav-number">1.4.</span> <span class="nav-text">Two Strategies For Handling Channel Errors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#block-and-convolutional-error-codes"><span class="nav-number">1.5.</span> <span class="nav-text">Block And Convolutional Error Codes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-example-block-error-codesingle-parity-checking"><span class="nav-number">1.6.</span> <span class="nav-text">An Example Block Error Code：Single Parity Checking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-methematics-of-block-error-codes-and-nk-notation"><span class="nav-number">1.7.</span> <span class="nav-text">The Methematics of Block Error Codes And (n,k) Notation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hamming-distancea-measure-of-a-codes-strength"><span class="nav-number">1.8.</span> <span class="nav-text">Hamming Distance：A Measure Of A Code&#39;s Strength</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-hamming-distance-among-string-in-a-codebook"><span class="nav-number">1.9.</span> <span class="nav-text">The Hamming Distance Among String In A Codebook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-tradeoff-between-error-detection-and-overhead"><span class="nav-number">1.10.</span> <span class="nav-text">The Tradeoff Between Error Detection And Overhead</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#error-correction-with-row-and-columnrac-parity"><span class="nav-number">1.11.</span> <span class="nav-text">Error Correction With Row And Column(RAC) Parity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-16-bit-checksum-used-in-the-internet"><span class="nav-number">1.12.</span> <span class="nav-text">The 16-Bit Checksum Used In The Internet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cyclic-redundancy-codescrcs"><span class="nav-number">1.13.</span> <span class="nav-text">Cyclic Redundancy Codes(CRCs)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-efficient-hardware-implementation-of-crc"><span class="nav-number">1.14.</span> <span class="nav-text">An Efficient Hardware Implementation Of CRC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#automatic-repeat-requestarq-mechanisms"><span class="nav-number">1.15.</span> <span class="nav-text">Automatic Repeat Request(ARQ) Mechanisms</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x516B;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; 8.1&amp;#x8282; &amp;#x4ECB;&amp;#x7ECD;&amp;#x">
+<meta name="keywords" content="读书笔记,3D数学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《3D数学基础：图形和游戏开发》第八章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x516B;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; 8.1&amp;#x8282; &amp;#x4ECB;&amp;#x7ECD;&amp;#x">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-01-12-32-22.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-02-08-34-50.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-02-09-13-03.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-02-09-19-43.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-03-12-08-20.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-03-12-16-01.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-03-12-32-58.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-03-12-32-37.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.015Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《3D数学基础：图形和游戏开发》第八章笔记">
+<meta name="twitter:description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x516B;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; 8.1&amp;#x8282; &amp;#x4ECB;&amp;#x7ECD;&amp;#x">
+<meta name="twitter:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-01-12-32-22.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《3D数学基础：图形和游戏开发》第八章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《3D数学基础：图形和游戏开发》第八章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-07 14:55:42" itemprop="dateCreated datePublished" datetime="2020-04-07T14:55:42+08:00">2020-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/图形学/" itemprop="url" rel="index"><span itemprop="name">图形学</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《3D数学基础：图形和游戏开发》第八章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>39k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1:12</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;3D&#x6570;&#x5B66;&#x57FA;&#x7840;&#xFF1A;&#x56FE;&#x5F62;&#x548C;&#x6E38;&#x620F;&#x5F00;&#x53D1;&#x300B;&#x7B2C;&#x516B;&#x7AE0;&#x7B14;&#x8BB0;</p>
+<p>8.1&#x8282; &#x4ECB;&#x7ECD;&#x4E86;&#x671D;&#x5411;&#xFF08;Orientation&#xFF09;&#x7684;&#x6982;&#x5FF5;&#x3002;</p>
+<p>8.2&#x8282; &#x4ECB;&#x7ECD;&#x4E86;&#x5982;&#x4F55;&#x7528;&#x77E9;&#x9635;&#x8868;&#x793A;&#x671D;&#x5411;&#x3002;</p>
+<p>8.3&#x8282; &#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x6B27;&#x62C9;&#x89D2;&#x8868;&#x793A;&#x671D;&#x5411;&#x3002;</p>
+<p>8.4&#x8282; &#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x8F74;&#x89D2;&#x6CD5;&#x548C;&#x6307;&#x6570;&#x6620;&#x5C04;&#x8868;&#x793A;&#x671D;&#x5411;&#x3002;</p>
+<p>8.5&#x8282; &#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x56DB;&#x5143;&#x6570;&#x8868;&#x793A;&#x671D;&#x5411;</p>
+<p>8.6&#x8282; &#x6BD4;&#x8F83;&#x4E86;&#x5404;&#x4E2A;&#x8868;&#x793A;&#x65B9;&#x6CD5;&#x7684;&#x5229;&#x5F0A;</p>
+<p>8.7&#x8282; &#x4ECB;&#x7ECD;&#x4E86;&#x5404;&#x4E2A;&#x8868;&#x793A;&#x65B9;&#x6CD5;&#x5982;&#x4F55;&#x76F8;&#x4E92;&#x8F6C;&#x6362;&#x3002;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-8-rotation-in-three-dimensions">Chapter 8 Rotation in Three Dimensions</h1>
+<h2 id="what-exactly-is-orientation">What Exactly is &quot;Orientation&quot;</h2>
+<p><code>&#x65B9;&#x5411;&#xFF08;direction&#xFF09;</code>&#x53EA;&#x9700;&#x8981;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x8868;&#x793A;&#xFF0C;&#x800C;<code>&#x671D;&#x5411;&#xFF08;orientation&#xFF09;</code>&#x9700;&#x8981;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#x8868;&#x793A;&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x4E2D;&#x786E;&#x8BA4;&#x98DE;&#x673A;&#x7684;&#x671D;&#x5411;&#x9700;&#x8981;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x800C;&#x671D;&#x5411;&#x8FD8;&#x9700;&#x8981;&#x56FE;&#x4E2D;&#x7684;&#x7EFF;&#x5708;&#x65B9;&#x5411;&#x6765;&#x51B3;&#x5B9A;&#x5176;&#x65CB;&#x8F6C;&#x89D2;&#x5EA6;&#x3002;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-01-12-32-22.png" alt="&#x7EFF;&#x8272;&#x7684;&#x5149;&#x5708;"></p>
+<p><code>&#x671D;&#x5411;&#xFF08;orientation&#xFF09;</code>&#xFF0C;<code>&#x65CB;&#x8F6C;&#xFF08;rotation&#xFF09;</code>&#x548C;<code>&#x89D2;&#x4F4D;&#x79FB;&#xFF08;angular displacement&#xFF09;</code>&#x4E09;&#x8005;&#x7684;&#x5173;&#x7CFB;&#x4E3A;&#xFF0C;<code>&#x65CB;&#x8F6C;</code>&#x5C06;&#x7269;&#x4F53;&#x4ECE;&#x4E00;&#x4E2A;<code>&#x671D;&#x5411;</code>&#x8F6C;&#x6362;&#x4E3A;&#x53E6;&#x4E00;&#x4E2A;<code>&#x671D;&#x5411;</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x8F6C;&#x6362;&#x7684;&#x6570;&#x503C;&#x4E3A;<code>&#x89D2;&#x4F4D;&#x79FB;</code>&#x3002;</p>
+<p>&#x89D2;&#x4F4D;&#x79FB;&#x4E0E;&#x671D;&#x5411;&#x7684;&#x5173;&#x7CFB;&#x4E0E;&#x7EBF;&#x6BB5;&#x548C;&#x70B9;&#x7684;&#x5173;&#x7CFB;&#x6709;&#x70B9;&#x7C7B;&#x4F3C;&#xFF0C;&#x524D;&#x8005;&#x90FD;&#x662F;&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x53D8;&#x6362;&#xFF0C;&#x540E;&#x8005;&#x90FD;&#x662F;&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x72B6;&#x6001;&#x3002;</p>
+<h2 id="matrix-form">Matrix Form</h2>
+<p>&#x8FD9;&#x4E00;&#x8282;&#x662F;&#x63CF;&#x8FF0;&#x7528;<span class="math inline">\(3 \times 3\)</span>&#x7684;&#x77E9;&#x9635;&#x6765;&#x63CF;&#x8FF0;&#x65CB;&#x8F6C;&#x3002;</p>
+<h3 id="which-matrix">Which Matrix&#xFF1F;</h3>
+<p>&#x77E9;&#x9635;&#x5F88;&#x5E38;&#x7528;&#x7684;&#x64CD;&#x4F5C;&#x662F;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x8F6C;&#x6362;&#xFF0C;&#x5176;&#x4E2D;&#x4E24;&#x4E2A;&#x7528;&#x7684;&#x6BD4;&#x8F83;&#x591A;&#x7684;&#x662F;</p>
+<ol type="1">
+<li>&#x4ECE;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x8F6C;&#x6362;&#x4E3A;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x2014;&#x2014;&#x4E58;&#x4EE5;&#x53D8;&#x6362;&#x77E9;&#x9635;</li>
+<li>&#x4ECE;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x8F6C;&#x6362;&#x4E3A;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x2014;&#x2014;&#x4E58;&#x4EE5;&#x53D8;&#x6362;&#x77E9;&#x9635;&#x7684;&#x9006;&#x77E9;&#x9635;</li>
+</ol>
+<p>&#x5728;&#x8FD9;&#x91CC;&#xFF0C;&#x6BCF;&#x4E2A;&#x5BF9;&#x8C61;&#x90FD;&#x542B;&#x6709;&#x4E00;&#x4E2A;<span class="math inline">\(3 \times 3\)</span>&#x7684;&#x77E9;&#x9635;&#x8868;&#x793A;&#x671D;&#x5411;&#xFF0C;&#x8FDB;&#x884C;&#x53D8;&#x6362;&#x7684;&#x77E9;&#x9635;&#x53EA;&#x5305;&#x542B;&#x65CB;&#x8F6C;&#x4FE1;&#x606F;&#xFF0C;&#x5373;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#xFF08;&#x867D;&#x7136;&#x53CD;&#x8F6C;&#x77E9;&#x9635;&#x4E5F;&#x662F;&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#xFF0C;&#x4F46;&#x8FD9;&#x91CC;&#x53EA;&#x5305;&#x542B;&#x65CB;&#x8F6C;&#x4FE1;&#x606F;&#xFF09;&#x3002;</p>
+<h3 id="direction-consines-matrix">Direction Consines Matrix</h3>
+<p>&#x901A;&#x8FC7;&#x77E9;&#x9635;&#x6765;&#x8FDB;&#x884C;&#x65CB;&#x8F6C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4ECE;&#x65B9;&#x5411;&#x4F59;&#x5F26;&#xFF08;Direction cosines&#xFF09;&#x8FD9;&#x4E2A;&#x6982;&#x5FF5;&#x4E2D;&#x5F97;&#x5230;&#x7684;&#x3002;&#x4E00;&#x4E2A;&#x65B9;&#x5411;&#x9884;&#x5148;&#x77E9;&#x9635;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x65CB;&#x8F6C;&#x77E9;&#x9635;&#x3002;</p>
+<p>&#x5047;&#x8BBE;&#x53D8;&#x6362;&#x524D;&#x7684;&#x4E09;&#x4E2A;&#x5750;&#x6807;&#x8F74;&#x5206;&#x522B;&#x4E3A;<span class="math inline">\(\hat{\mathbf{x}}_{1}, \hat{\mathbf{x}}_{2}, \hat{\mathbf{x}}_{3}\)</span>&#xFF0C;&#x53D8;&#x6362;&#x540E;&#x7684;&#x4E09;&#x4E2A;&#x5750;&#x6807;&#x8F74;&#x5206;&#x522B;&#x4E3A;<span class="math inline">\(\hat{\mathbf{e}}_{1}, \hat{\mathbf{e}}_{2}, \hat{\mathbf{e}}_{3}\)</span>&#x3002;</p>
+<p>&#x90A3;&#x4E48;<span class="math inline">\(\hat{\mathbf{e}}_{i}\)</span>&#x548C;<span class="math inline">\(\hat{\mathbf{x}}_{j}\)</span>&#x4E4B;&#x95F4;&#x7684;&#x65B9;&#x5411;&#x4F59;&#x5F26;<span class="math inline">\(a_{ij}\)</span>&#x5B9A;&#x4E49;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[a_{i j} \stackrel{\text {def}}{=} \cos \left(\theta_{i j}\right)=\frac{\hat{\mathbf{e}}_{i} \cdot \hat{\mathbf{x}}_{j}}{|\hat{\mathbf{e}}_{i}||\hat{\mathbf{x}}_{j}|}= \hat{\mathbf{e}}_{i} \cdot \hat{\mathbf{x}}_{j}\]</span></p>
+<p>&#x800C;&#x4E14;&#x5750;&#x6807;&#x8F74;<span class="math inline">\(\hat{e_{i}}\)</span>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5176;&#x5728;<span class="math inline">\(\hat{x_{i}}\)</span>&#x4E0A;&#x7684;&#x5206;&#x91CF;&#x7D2F;&#x52A0;&#x8FDB;&#x884C;&#x8868;&#x793A;&#x3002;&#x53C8;<span class="math inline">\(\hat{e_{i}}\)</span>&#x5728;&#x539F;&#x5750;&#x6807;&#x8F74;&#x4E0A;&#x7684;&#x5206;&#x91CF;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<span class="math inline">\(cos\)</span>&#x6C42;&#x5F97;&#x3002;&#x4E8E;&#x662F;&#x53EF;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;\hat{\mathbf{e}}_{1}=\cos \left(\theta_{11}\right) \hat{\mathbf{x}}_{1}+\cos \left(\theta_{12}\right) \hat{\mathbf{x}}_{2}+\cos \left(\theta_{13}\right) \hat{\mathbf{x}}_{3}=a_{11} \hat{\mathbf{x}}_{1}+a_{12} \hat{\mathbf{x}}_{2}+a_{13} \hat{\mathbf{x}}_{3}\\
+&amp;\hat{\mathbf{e}}_{2}=\cos \left(\theta_{21}\right) \hat{\mathbf{x}}_{1}+\cos \left(\theta_{22}\right) \hat{\mathbf{x}}_{2}+\cos \left(\theta_{23}\right) \hat{\mathbf{x}}_{3}=a_{21} \hat{\mathbf{x}}_{1}+a_{22} \hat{\mathbf{x}}_{2}+a_{23} \hat{\mathbf{x}}_{3}\\
+&amp;\hat{\mathbf{e}}_{3}=\cos \left(\theta_{31}\right) \hat{\mathbf{x}}_{1}+\cos \left(\theta_{32}\right) \hat{\mathbf{x}}_{2}+\cos \left(\theta_{33}\right) \hat{\mathbf{x}}_{3}=a_{31} \hat{\mathbf{x}}_{1}+a_{32} \hat{\mathbf{x}}_{2}+a_{33} \hat{\mathbf{x}}_{3}
+\end{aligned}\]</span></p>
+<p>&#x5982;&#x679C;&#x5C06;&#x8FD9;&#x4E2A;&#x53D8;&#x6362;&#x7528;&#x77E9;&#x9635;&#x8868;&#x793A;&#xFF0C;&#x5373;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[
+A=\left[\begin{array}{lll}
+\cos \left(\theta_{11}\right)&amp; \cos \left(\theta_{12}\right)&amp; \cos \left(\theta_{13}\right) \\
+\cos \left(\theta_{21}\right)&amp; \cos \left(\theta_{22}\right)&amp; \cos \left(\theta_{23}\right) \\
+\cos \left(\theta_{31}\right)&amp; \cos \left(\theta_{32}\right)&amp; \cos \left(\theta_{33}\right)
+\end{array}\right] \\
+=\left[\begin{array}{lll}
+\hat{\mathbf{e}}_{1} \cdot \hat{\mathbf{x}}_{1}&amp; \hat{\mathbf{e}}_{1} \cdot \hat{\mathbf{x}}_{2}&amp; \hat{\mathbf{e}}_{1} \cdot \hat{\mathbf{x}}_{3} \\
+\hat{\mathbf{e}}_{2} \cdot \hat{\mathbf{x}}_{1}&amp; \hat{\mathbf{e}}_{2} \cdot \hat{\mathbf{x}}_{2}&amp; \hat{\mathbf{e}}_{2} \cdot \hat{\mathbf{x}}_{3}\\
+\hat{\mathbf{e}}_{3} \cdot \hat{\mathbf{x}}_{1}&amp; \hat{\mathbf{e}}_{3} \cdot \hat{\mathbf{x}}_{2}&amp; \hat{\mathbf{e}}_{3} \cdot \hat{\mathbf{x}}_{3}
+\end{array}\right]
+\]</span></p>
+<p>&#x4E66;&#x4E2D;&#x7528;<span class="math inline">\(\mathbf{p}, \mathbf{q}\)</span> &#x548C; <span class="math inline">\(\mathbf{r}\)</span>&#x8868;&#x793A;&#x539F;&#x5148;&#x7684;&#x5750;&#x6807;&#x8F74;&#xFF0C;&#x7528;<span class="math inline">\(\mathbf{p}^{\prime}, \mathbf{q}^{\prime}\)</span> &#x548C; <span class="math inline">\(\mathbf{r}^{\prime}\)</span>&#x8868;&#x793A;&#x53D8;&#x6362;&#x540E;&#x7684;&#x5750;&#x6807;&#x8F74;&#xFF0C;&#x5C06;&#x5176;&#x5E26;&#x5165;&#x4E0A;&#x77E9;&#x9635;&#xFF0C;&#x53EF;&#x5F97;</p>
+<p><span class="math display">\[
+A=\left[\begin{array}{lll}
+\mathbf{p} \cdot \mathbf{p}^{\prime} &amp; \mathbf{q} \cdot \mathbf{p}^{\prime} &amp; \mathbf{r} \cdot \mathbf{p}^{\prime} \\
+\mathbf{p} \cdot \mathbf{q}^{\prime} &amp; \mathbf{q} \cdot \mathbf{q}^{\prime} &amp; \mathbf{r} \cdot \mathbf{q}^{\prime} \\
+\mathbf{p} \cdot \mathbf{r}^{\prime} &amp; \mathbf{q} \cdot \mathbf{r}^{\prime} &amp; \mathbf{r} \cdot \mathbf{r}^{\prime}
+\end{array}\right]
+\]</span></p>
+<p>&#x6CE8;&#x610F;&#x8FD9;&#x4E2A;&#x53D8;&#x6362;&#x77E9;&#x9635;&#x662F;&#x7528;&#x6765;&#x5C06;&#x7528;<span class="math inline">\(\mathbf{p}, \mathbf{q}, \mathbf{r}\)</span>&#x8868;&#x8FBE;&#x7684;&#x5411;&#x91CF;&#x8F6C;&#x6362;&#x4E3A;&#x7528;<span class="math inline">\(\mathbf{p}^{\prime}, \mathbf{q}^{\prime}, \mathbf{r}^{\prime}\)</span>&#x8868;&#x8FBE;&#x7684;&#x5411;&#x91CF;&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[
+\mathbf{v}A=\mathbf{v^{\prime}}
+\]</span></p>
+<p>&#x5982;&#x679C;&#x7528;<span class="math inline">\([1,0,0], [0,1,0], [0,0,1]\)</span>&#x6765;&#x8868;&#x793A;<span class="math inline">\(\mathbf{p}, \mathbf{q}, \mathbf{r}\)</span>&#x5E76;&#x5E26;&#x5165;&#x4E0A;&#x77E9;&#x9635;&#xFF0C;&#x53EF;&#x5F97;</p>
+<p><span class="math display">\[\left[\begin{array}{lll}
+{[1,0,0] \cdot \mathbf{p}^{\prime}} &amp; {[0,1,0] \cdot \mathbf{p}^{\prime}} &amp; {[0,0,1] \cdot \mathbf{p}^{\prime}} \\
+{[1,0,0] \cdot \mathbf{q}^{\prime}} &amp; {[0,1,0] \cdot \mathbf{q}^{\prime}} &amp; {[0,0,1] \cdot \mathbf{q}^{\prime}} \\
+{[1,0,0] \cdot \mathbf{r}^{\prime}} &amp; {[0,1,0] \cdot \mathbf{r}^{\prime}} &amp; {[0,0,1] \cdot \mathbf{r}^{\prime}}
+\end{array}\right]=\left[\begin{array}{lll}
+p_{x}^{\prime} &amp; p_{y}^{\prime} &amp; p_{z}^{\prime} \\
+q_{x}^{\prime} &amp; q_{y}^{\prime} &amp; q_{z}^{\prime} \\
+r_{x}^{\prime} &amp; r_{y}^{\prime} &amp; r_{z}^{\prime}
+\end{array}\right]=\left[\begin{array}{l}
+-\mathbf{p}^{\prime}- \\
+-\mathbf{q}^{\prime}- \\
+-\mathbf{r}^{\prime}-
+\end{array}\right]\]</span></p>
+<p>&#x5373;&#x77E9;&#x9635;&#x7684;&#x6BCF;&#x4E00;&#x884C;&#x662F;&#x7528;&#x539F;&#x5750;&#x6807;&#x8F74;&#x8868;&#x793A;&#x7684;&#x53D8;&#x6362;&#x540E;&#x7684;&#x5750;&#x6807;&#x8F74;&#xFF08;&#x8FD9;&#x4E00;&#x70B9;&#x5728;&#x524D;&#x9762;&#x7684;&#x63A8;&#x5BFC;&#x8FC7;&#x7A0B;&#x4E2D;&#x4E5F;&#x80FD;&#x770B;&#x51FA;<span class="math inline">\(\hat{\mathbf{e}}_{i}\)</span>&#xFF0C;&#x662F;&#x7531;<span class="math inline">\(\hat{\mathbf{x}}_{i}\)</span>&#x8868;&#x793A;&#x7684;&#xFF09;&#x3002;</p>
+<p>&#x540C;&#x7406;&#xFF0C;&#x5982;&#x679C;&#x7528;<span class="math inline">\([1,0,0], [0,1,0], [0,0,1]\)</span>&#x8868;&#x793A;<span class="math inline">\(\mathbf{p}^{\prime}, \mathbf{q}^{\prime}, \mathbf{r}^{\prime}\)</span>&#x5E26;&#x5165;&#x4E0A;&#x77E9;&#x9635;&#xFF0C;&#x53EF;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[\left[\begin{array}{ccc}
+\mathbf{p} \cdot[1,0,0] &amp; \mathbf{q} \cdot[1,0,0] &amp; \mathbf{r} \cdot[1,0,0] \\
+\mathbf{p} \cdot[0,1,0] &amp; \mathbf{q} \cdot[0,1,0] &amp; \mathbf{r} \cdot[0,1,0] \\
+\mathbf{p} \cdot[0,0,1] &amp; \mathbf{q} \cdot[0,0,1] &amp; \mathbf{r} \cdot[0,0,1]
+\end{array}\right]=\left[\begin{array}{ccc}
+p_{x} &amp; q_{x} &amp; r_{x} \\
+p_{y} &amp; q_{y} &amp; r_{y} \\
+p_{z} &amp; q_{z} &amp; r_{z}
+\end{array}\right]=\left[\begin{array}{ccc}
+| &amp; | &amp; | \\
+\mathbf{p}^{\mathrm{T}} &amp; \mathbf{q}^{\mathrm{T}} &amp; \mathbf{r}^{\mathrm{T}} \\
+| &amp; | &amp; |
+\end{array}\right]\]</span></p>
+<p>&#x5373;&#x77E9;&#x9635;&#x7684;&#x6BCF;&#x4E00;&#x5217;&#xFF0C;&#x662F;&#x7531;&#x53D8;&#x6362;&#x540E;&#x7684;&#x5750;&#x6807;&#x8F74;&#x8868;&#x793A;&#x7684;&#x539F;&#x5750;&#x6807;&#x8F74;&#x3002;</p>
+<h3 id="advantages-of-matrix-form">Advantages of Matrix Form</h3>
+<p>&#x7528;&#x77E9;&#x9635;&#x8868;&#x793A;&#x65CB;&#x8F6C;&#x7684;&#x4F18;&#x70B9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5411;&#x91CF;&#x7684;&#x65CB;&#x8F6C;&#x53EF;&#x4EE5;&#x5F88;&#x5FEB;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x5305;&#x62EC;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x53D8;&#x6362;&#x7B49;</li>
+<li>&#x7EDD;&#x5927;&#x90E8;&#x5206;&#x56FE;&#x5F62;API&#x90FD;&#x662F;&#x901A;&#x8FC7;&#x77E9;&#x9635;&#x6765;&#x8FDB;&#x884C;&#x53D8;&#x6362;&#x7684;&#x3002;</li>
+<li>&#x591A;&#x4E2A;&#x53D8;&#x6362;&#x77E9;&#x9635;&#x53EF;&#x4EE5;&#x7EA7;&#x8054;&#xFF0C;&#x5373;&#x77E9;&#x9635;&#x76F8;&#x4E58;</li>
+<li>&#x5F53;&#x8981;&#x8FDB;&#x884C;&#x9006;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;&#x77E9;&#x9635;&#x53D6;&#x53CD;&#x5373;&#x53EF;</li>
+</ol>
+<h3 id="disadvantages-of-matrix-form">Disadvantages of Matrix Form</h3>
+<p>&#x7528;&#x77E9;&#x9635;&#x8868;&#x793A;&#x65CB;&#x8F6C;&#x7684;&#x7F3A;&#x70B9;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol type="1">
+<li>&#x77E9;&#x9635;&#x82B1;&#x8D39;&#x66F4;&#x591A;&#x7684;&#x5185;&#x5B58;&#x3002;&#x7528;&#x6765;&#x8868;&#x793A;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x65CB;&#x8F6C;&#x7684;&#x77E9;&#x9635;&#x4E3A;<span class="math inline">\(3\times 3\)</span>&#x7684;&#x77E9;&#x9635;&#xFF0C;&#x8981;9&#x4E2A;&#x6570;&#x5B57;&#xFF0C;&#x800C;&#x901A;&#x8FC7;&#x6B27;&#x62C9;&#x89D2;&#x53EA;&#x8981;&#x4E09;&#x4E2A;&#x6570;&#x5B57;&#x3002;</li>
+<li>&#x4EBA;&#x65E0;&#x6CD5;&#x76F4;&#x89C2;&#x7406;&#x89E3;&#x3002;&#x867D;&#x7136;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6BCF;&#x4E00;&#x884C;&#x8FDB;&#x884C;&#x5224;&#x65AD;&#xFF0C;&#x4F46;&#x662F;&#x77E9;&#x9635;&#x7528;&#x6765;&#x8868;&#x793A;&#x65CB;&#x8F6C;&#x4ECD;&#x4E0D;&#x591F;&#x76F4;&#x89C2;&#x3002;&#x800C;&#x4E14;&#x6240;&#x6709;&#x7684;&#x6570;&#x5B57;&#x90FD;&#x4F1A;&#x88AB;&#x5F52;&#x4E00;&#x5230;<span class="math inline">\(-1\sim 1\)</span>&#x7684;&#x8303;&#x56F4;&#x5185;&#xFF08;&#x4E3A;&#x4E86;&#x8868;&#x793A;&#x957F;&#x5EA6;&#x4F4D;&#x4E3A;&#x4E00;&#x7684;&#x5355;&#x4F4D;&#x5411;&#x91CF;&#xFF09;&#x3002;</li>
+<li>&#x77E9;&#x9635;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x683C;&#x5F0F;&#x9519;&#x8BEF;&#x3002;
+<ol type="a">
+<li>&#x5E76;&#x4E0D;&#x662F;&#x968F;&#x624B;&#x5199;&#x4E00;&#x4E2A;&#x77E9;&#x9635;&#x90FD;&#x80FD;&#x8868;&#x793A;&#x65CB;&#x8F6C;&#x7684;&#xFF0C;&#x65CB;&#x8F6C;&#x77E9;&#x9635;&#x5FC5;&#x987B;&#x662F;&#x6B63;&#x4EA4;&#x77E9;&#x9635;&#xFF0C;&#x540C;&#x65F6;&#x8FD8;&#x4E0D;&#x80FD;&#x662F;&#x53CD;&#x8F6C;&#x53D8;&#x6362;&#x3002;&#x6240;&#x4EE5;&#x77E9;&#x9635;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x5FC5;&#x987B;&#x8981;&#x989D;&#x5916;&#x5C0F;&#x5FC3;&#xFF0C;&#x5FC5;&#x987B;&#x6EE1;&#x8DB3;&#x65CB;&#x8F6C;&#x7684;&#x8868;&#x8FBE;&#x683C;&#x5F0F;&#x3002;</li>
+<li>&#x53EF;&#x80FD;&#x7531;&#x8FDB;&#x5EA6;&#x4E0D;&#x591F;&#x9020;&#x6210;&#x6570;&#x636E;&#x9519;&#x8BEF;&#x3002;&#x56E0;&#x4E3A;&#x65CB;&#x8F6C;&#x77E9;&#x9635;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x6570;&#x503C;&#x901A;&#x5E38;&#x8303;&#x56F4;&#x4E3A;<span class="math inline">\(-1\sim 1\)</span>&#xFF0C;&#x5F53;&#x8868;&#x793A;&#x4E00;&#x4E9B;&#x53D8;&#x6362;&#x65F6;&#xFF0C;&#x7CBE;&#x5EA6;&#x53EF;&#x80FD;&#x4F1A;&#x4E0D;&#x591F;&#x3002;&#x56E0;&#x6B64;&#x5728;&#x53D8;&#x6362;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5F53;&#x5C0F;&#x6570;&#x70B9;&#x540E;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x4E86;&#x820D;&#x5F03;&#xFF0C;&#x53EF;&#x80FD;&#x5BFC;&#x81F4;&#x65E0;&#x6CD5;&#x6EE1;&#x8DB3;&#x65CB;&#x8F6C;&#x77E9;&#x9635;&#x7684;&#x6027;&#x8D28;&#xFF0C;&#x8FD9;&#x79CD;&#x73B0;&#x8C61;&#x79F0;&#x4E3A;&#x77E9;&#x9635;&#x8815;&#x53D8;&#xFF08;Matrix creep&#xFF09;&#x3002;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x77E9;&#x9635;&#x7684;&#x6B63;&#x4EA4;&#x5316;&#x89E3;&#x51B3;&#xFF08;&#x5728;&#x7B2C;&#x516D;&#x7AE0;&#x6709;&#x63D0;&#x5230;&#xFF09;&#x3002;</li>
+</ol></li>
+</ol>
+<h2 id="eular-angles">Eular Angles</h2>
+<p>&#x6B27;&#x62C9;&#x89D2;&#x8868;&#x793A;&#x65CB;&#x8F6C;&#x7684;&#x57FA;&#x672C;&#x601D;&#x8DEF;&#x662F;&#x901A;&#x8FC7;&#x8FDE;&#x7EED;&#x7684;&#x7ED5;&#x7740;&#x4E09;&#x4E2A;&#x76F8;&#x4E92;&#x5782;&#x76F4;&#x7684;&#x8F74;&#x7684;&#x89D2;&#x4F4D;&#x79FB;&#x6765;&#x8868;&#x793A;&#x65CB;&#x8F6C;&#x3002;</p>
+<p>&#x7406;&#x8BBA;&#x4E0A;&#x6765;&#x8BF4;&#xFF0C;&#x8FD9;&#x4E09;&#x4E2A;&#x76F8;&#x4E92;&#x5782;&#x76F4;&#x7684;&#x8F74;&#x53EF;&#x4EE5;&#x662F;&#x4EFB;&#x610F;&#x7684;&#xFF0C;&#x4F46;&#x901A;&#x5E38;&#x6765;&#x8BF4;&#xFF0C;&#x90FD;&#x9009;&#x62E9;&#x4E00;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x4E09;&#x4E2A;&#x57FA;&#x8F74;&#xFF08;cardinal axes&#xFF09;&#x3002;&#x5728;&#x8FD9;&#x672C;&#x4E66;&#x4E2D;&#xFF0C;&#x79F0;&#x4E3A;<code>heading-pitch-bank</code>&#xFF0C;&#x7ED5;&#x7740;&#x8FD9;&#x4E09;&#x4E2A;&#x8F74;&#x7684;&#x65CB;&#x8F6C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-02-08-34-50.png" alt="heading-pitch-bank&#x65CB;&#x8F6C;"></p>
+<p>&#x7B2C;&#x4E00;&#x5F20;&#x56FE;&#x663E;&#x793A;&#x7684;&#x662F;&#x539F;&#x59CB;&#x72B6;&#x6001;&#xFF0C;&#x7B2C;&#x4E8C;&#x5F20;&#x56FE;&#x662F;&#x7ED5;&#x7740;heading&#x8F74;&#xFF08;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;y&#x8F74;&#xFF09;&#x65CB;&#x8F6C;&#xFF0C;&#x7B2C;&#x4E09;&#x5F20;&#x56FE;&#x662F;&#x7ED5;&#x7740;pitch&#x8F74;&#x65CB;&#x8F6C;&#xFF08;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;x&#x8F74;&#xFF09;&#xFF0C;&#x7B2C;&#x56DB;&#x7AE0;&#x56FE;&#x662F;&#x7ED5;&#x7740;bank&#x8F74;&#x65CB;&#x8F6C;&#xFF08;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#x7684;z&#x8F74;&#xFF09;&#x3002;</p>
+<h3 id="other-euler-angle-conventions">Other Euler Angle Conventions</h3>
+<p>&#x8FD8;&#x5B58;&#x5728;&#x5F88;&#x591A;&#x5176;&#x4ED6;&#x7684;&#x6B27;&#x62C9;&#x89D2;&#x65CB;&#x8F6C;&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#xFF0C;&#x5982;&#x5F88;&#x5E38;&#x89C1;&#x7684;<code>yaw-pitch-roll</code>&#x3002;&#x8FD9;&#x79CD;&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#x4E0B;&#xFF0C;&#x901A;&#x5E38;<code>roll</code>&#x4E0E;<code>bank</code>&#x7684;&#x542B;&#x4E49;&#x4E00;&#x6A21;&#x4E00;&#x6837;&#xFF0C;&#x4F46;<code>heading</code>&#x548C;<code>yaw</code>&#x6709;&#x7EC6;&#x5FAE;&#x5DEE;&#x522B;&#xFF0C;<code>heading</code>&#x662F;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x7684;y&#x8F74;&#xFF0C;<code>yaw</code>&#x662F;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x7684;y&#x8F74;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x6240;&#x6709;&#x7684;&#x65CB;&#x8F6C;&#x8F74;&#x90FD;&#x662F;&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x8F74;&#xFF0C;&#x5219;&#x79F0;&#x4E3A;&#x56FA;&#x5B9A;&#x8F74;&#xFF08;Fixed-Axis&#xFF09;&#x65CB;&#x8F6C;&#x3002;&#x800C;&#x4F20;&#x7EDF;&#x7684;&#x6B27;&#x62C9;&#x89D2;&#x65CB;&#x8F6C;&#x90FD;&#x662F;&#x7ED5;&#x7740;&#x7269;&#x4F53;&#x81EA;&#x5DF1;&#x7684;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x8F74;&#x3002;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x7B49;&#x6548;&#x7684;&#xFF0C;&#x53EA;&#x8981;&#x7528;&#x76F8;&#x53CD;&#x7684;&#x987A;&#x5E8F;&#x6267;&#x884C;&#x65CB;&#x8F6C;&#x5373;&#x53EF;&#xFF08;&#x4F20;&#x7EDF;&#x6B27;&#x62C9;&#xFF1A;yaw-pitch-roll,&#x56FA;&#x5B9A;&#x8F74;&#xFF1A;roll-pitch-yaw&#xFF09;&#x3002;&#x56E0;&#x4E3A;&#x4F20;&#x7EDF;&#x6B27;&#x62C9;&#x89D2;&#x65CB;&#x8F6C;&#x987A;&#x5E8F;&#x4E2D;&#xFF0C;&#x524D;&#x4E00;&#x4E2A;&#x8F74;&#x7684;&#x65CB;&#x8F6C;&#x4F1A;&#x5F71;&#x54CD;&#x540E;&#x9762;&#x7684;&#x8F74;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x800C;&#x56FA;&#x5B9A;&#x8F74;&#x6B27;&#x62C9;&#x89D2;&#x7684;&#x65CB;&#x8F6C;&#x987A;&#x5E8F;&#x5219;&#x4E0D;&#x4F1A;&#x3002;</p>
+<p>&#x5728;&#x6700;&#x539F;&#x59CB;&#x7684;&#x6B27;&#x62C9;&#x89D2;&#x5B9A;&#x4E49;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x7B2C;&#x4E00;&#x4E2A;&#x8F74;&#x548C;&#x7B2C;&#x4E09;&#x4E2A;&#x8F74;&#x662F;&#x76F8;&#x540C;&#x7684;&#xFF0C;&#x8FD9;&#x79CD;&#x5B9A;&#x4E49;&#x53C8;&#x88AB;&#x547D;&#x540D;&#x4E3A;<code>proper Euler angles</code>&#x3002;&#x800C;&#x73B0;&#x5728;&#x5E38;&#x7528;&#x7684;&#x6B27;&#x62C9;&#x89D2;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x79F0;&#x4E3A;<code>Tait-Bryan angles</code>&#x3002;</p>
+<ul>
+<li>&#x8FD9;&#x4E00;&#x8282;&#x4E2D;&#x63D0;&#x5230;&#x4E2A;&#x5404;&#x79CD;&#x547D;&#x540D;&#xFF0C;&#x5E76;&#x4E0D;&#x662F;&#x7EDD;&#x5BF9;&#x7684;&#xFF0C;&#x5373;&#x53EF;&#x80FD;&#x73B0;&#x5728;&#x547D;&#x540D;&#x540D;&#x5B57;&#x76F8;&#x540C;&#x4F46;&#x662F;&#x542B;&#x4E49;&#x5374;&#x4E0D;&#x540C;&#x7684;&#x60C5;&#x51B5;&#x3002;</li>
+<li>&#x5728;&#x8FD9;&#x91CC;&#x63D0;&#x53CA;&#x5404;&#x79CD;&#x547D;&#x540D;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4E3A;&#x4E86;&#x8BA9;&#x8BFB;&#x8005;&#x5728;&#x63A5;&#x89E6;&#x5176;&#x4ED6;&#x7684;&#x7CFB;&#x7EDF;&#x65F6;&#xFF0C;&#x9996;&#x5148;&#x786E;&#x8BA4;&#x4E0B;&#x5176;&#x4E2D;&#x7684;&#x6B27;&#x62C9;&#x89D2;&#x5B9A;&#x4E49;&#x65B9;&#x5F0F;&#x662F;&#x5426;&#x4E0D;&#x540C;&#xFF0C;&#x5982;&#x65CB;&#x8F6C;&#x6B63;&#x65B9;&#x5411;&#xFF0C;&#x7ED5;&#x4EC0;&#x4E48;&#x8F74;&#x65CB;&#x8F6C;&#xFF0C;&#x7ED5;&#x4E0D;&#x540C;&#x8F74;&#x65CB;&#x8F6C;&#x7684;&#x987A;&#x5E8F;&#x7B49;&#x3002;</li>
+<li>&#x4E0D;&#x540C;&#x5B9A;&#x4E49;&#x7684;&#x6B27;&#x62C9;&#x89D2;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#x8FC7;&#x7A0B;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x5148;&#x539F;&#x59CB;&#x6B27;&#x62C9;&#x89D2;&#x8F6C;&#x6362;&#x4E3A;&#x77E9;&#x9635;&#xFF0C;&#x518D;&#x4ECE;&#x77E9;&#x9635; &#x8F6C;&#x6362;&#x4E3A;&#x76EE;&#x6807;&#x6B27;&#x62C9;&#x89D2;</li>
+</ul>
+<h3 id="advantages-of-euler-angles">Advantages of Euler Angles</h3>
+<p>&#x6B27;&#x62C9;&#x89D2;&#x8868;&#x8FBE;&#x7684;&#x4F18;&#x70B9;&#x5728;&#x4E8E;&#xFF1A;</p>
+<ol type="1">
+<li>&#x4EBA;&#x53EF;&#x4EE5;&#x76F4;&#x89C2;&#x7406;&#x89E3;&#x3002;&#x5F53;&#x9700;&#x8981;&#x4EBA;&#x6765;&#x8F93;&#x5165;&#x65CB;&#x8F6C;&#x89D2;&#x5EA6;&#x65F6;&#xFF0C;&#x901A;&#x5E38;&#x6B27;&#x62C9;&#x89D2;&#x8868;&#x8FBE;&#x662F;&#x552F;&#x4E00;&#x7684;&#x9009;&#x62E9;&#x3002;</li>
+<li>&#x6B27;&#x62C9;&#x89D2;&#x7528;&#x4E86;&#x6700;&#x5C11;&#x7684;&#x6570;&#x5B57;&#x6765;&#x8868;&#x8FBE;&#x65CB;&#x8F6C;&#x3002;&#x53E6;&#x5916;&#x56E0;&#x4E3A;&#x6B27;&#x62C9;&#x89D2;&#x4E2D;&#x7684;&#x6570;&#x5B57;&#x662F;&#x7528;&#x6765;&#x8868;&#x8FBE;&#x89D2;&#x5EA6;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x4F1A;&#x50CF;&#x5728;&#x77E9;&#x9635;&#x4E2D;&#x7684;&#x6570;&#x5B57;&#x4E00;&#x6837;&#xFF0C;&#x5C40;&#x9650;&#x5728;&#x8303;&#x56F4;<span class="math inline">\(-1\sim 1\)</span>&#x4E4B;&#x4E2D;&#xFF0C;&#x4E5F;&#x56E0;&#x6B64;&#x6D6E;&#x70B9;&#x6570;&#x7684;&#x7CBE;&#x5EA6;&#x8BEF;&#x5DEE;&#x4E5F;&#x4E0D;&#x4F1A;&#x50CF;&#x5728;&#x77E9;&#x9635;&#x4E2D;&#x4E25;&#x91CD;&#x3002;</li>
+<li>&#x4EFB;&#x610F;&#x4E09;&#x4E2A;&#x6570;&#x503C;&#x7684;&#x7EC4;&#x5408;&#x90FD;&#x662F;&#x5408;&#x6CD5;&#x7684;&#x3002;</li>
+</ol>
+<h3 id="disadvantages-of-euler-angles">Disadvantages of Euler Angles</h3>
+<ol type="1">
+<li>&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x65CB;&#x8F6C;&#x89D2;&#x5EA6;&#x7684;&#x8868;&#x8FBE;&#x4E0D;&#x552F;&#x4E00;&#xFF0C;&#x5373;&#x5B58;&#x5728;&#x522B;&#x540D;&#x3002;</li>
+<li>&#x5728;&#x4E0D;&#x540C;&#x89D2;&#x5EA6;&#x4E4B;&#x95F4;&#x7684;&#x7EBF;&#x6027;&#x5DEE;&#x503C;&#x53D8;&#x6362;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x95EE;&#x9898;&#x3002;</li>
+<li>&#x4E07;&#x5411;&#x9501;</li>
+</ol>
+<p>&#x7B2C;&#x4E00;&#x4E2A;&#x522B;&#x540D;&#x95EE;&#x9898;&#xFF0C;&#x4E00;&#x662F;&#x56E0;&#x4E3A;&#x6240;&#x6709;&#x7684;&#x89D2;&#x5EA6;&#x90FD;&#x53EF;&#x4EE5;&#x52A0;&#x4E0A;360&#xB0;&#x4FDD;&#x6301;&#x4E0D;&#x53D8;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x539F;&#x56E0;&#x662F;&#x56E0;&#x4E3A;&#x7ED5;&#x7740;&#x4E09;&#x4E2A;&#x8F74;&#x7684;&#x65CB;&#x8F6C;&#x5E76;&#x975E;&#x5B8C;&#x5168;&#x76F8;&#x4E92;&#x72EC;&#x7ACB;&#xFF0C;&#x5982;pitch&#x5411;&#x4E0B;135&#xB0;&#xFF0C;&#x548C;&#x5148;heading&#x8F6C;180&#x518D;pitch&#x5411;&#x4E0B;45&#xB0;&#x6548;&#x679C;&#x4E00;&#x6837;&#x3002;</p>
+<p>&#x800C;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6807;&#x51C6;&#x5750;&#x6807;&#xFF08;canonical&#xFF09;&#x89E3;&#x51B3;&#x3002;&#x9650;&#x5236;heading&#x548C;bank&#x7684;&#x8303;&#x56F4;&#x4E3A;<span class="math inline">\(\left(-180^{\circ},+180^{\circ}\right]\)</span>&#xFF0C;pitch&#x7684;&#x8303;&#x56F4;&#x662F;<span class="math inline">\(\left[-90^{\circ},+90^{\circ}\right]\)</span>&#x3002;&#x4F46;&#x8FD9;&#x6837;&#x8FD8;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x6B67;&#x4E49;&#x6027;&#xFF0C;&#x5F53;pitch&#x89D2;&#x5EA6;&#x662F;<span class="math inline">\(\pm 90^{\circ}\)</span>&#x65F6;&#xFF0C;heading&#x548C;bank&#x65CB;&#x8F6C;&#x662F;&#x4E00;&#x6837;&#x7684;&#x6548;&#x679C;&#xFF0C;&#x8FD9;&#x4E2A;&#x73B0;&#x8C61;&#x79F0;&#x4E3A;&#x4E07;&#x5411;&#x9501;&#xFF08;Gimbal Lock&#xFF09;&#x3002;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5B9A;&#x4E49;&#x53D8;&#x6362;&#x7684;&#x8F74;&#x662F;heading&#xFF0C;bank&#x8F74;&#x59CB;&#x7EC8;&#x4E3A;0&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x6B27;&#x62C9;&#x89D2;&#x7684;&#x6807;&#x51C6;&#x5750;&#x6807;&#x89C4;&#x5219;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\left\{\begin{aligned}
+-180^{\circ}&lt;&amp; h \leq 180^{\circ} \\
+-90^{\circ} \leq &amp; p \leq 90^{\circ} \\
+-180^{\circ}&lt;b &amp; \leq 180^{\circ} \\
+p=\pm 90^{\circ} &amp; \Rightarrow \quad b=0
+\end{aligned}\right.\]</span></p>
+<p>&#x5F53;&#x901A;&#x8FC7;&#x4EE3;&#x7801;&#x5B9E;&#x73B0;&#x6B27;&#x62C9;&#x89D2;&#x65F6;&#xFF0C;&#x6700;&#x597D;&#x4FDD;&#x8BC1;&#x8FD4;&#x56DE;&#x7684;&#x6570;&#x503C;&#x65F6;&#x6807;&#x51C6;&#x5750;&#x6807;&#x3002;</p>
+<p>&#x7B2C;&#x4E8C;&#x4E2A;&#x95EE;&#x9898;&#x662F;&#x5173;&#x4E8E;&#x89D2;&#x5EA6;&#x53D8;&#x6362;&#x63D2;&#x503C;&#x7684;&#x3002; &#x63D2;&#x503C;&#x53D8;&#x6362;&#x662F;&#x6307;&#xFF0C;&#x6709;&#x4E24;&#x4E2A;&#x89D2;&#x5EA6;<span class="math inline">\(\mathbf{R}_{0}\)</span> &#x548C; <span class="math inline">\(\mathbf{R}_{1}\)</span>&#xFF0C;&#x5E0C;&#x671B;&#x901A;&#x8FC7;&#x53C2;&#x6570;<span class="math inline">\(0 \leq t \leq 1\)</span>&#xFF0C;&#x5B9E;&#x73B0;<span class="math inline">\(\mathbf{R}(t)\)</span>&#x5728;<span class="math inline">\(\mathbf{R}_{0}\)</span> &#x548C; <span class="math inline">\(\mathbf{R}_{1}\)</span>&#x95F4;&#x7EBF;&#x6027;&#x53D8;&#x5316;&#x3002;&#x7C7B;&#x4F3C;&#x4E8E;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\Delta \theta &amp;=\theta_{1}-\theta_{0} \\
+\theta_{t} &amp;=\theta_{0}+t \Delta \theta
+\end{aligned}\]</span></p>
+<p>&#x6B27;&#x62C9;&#x89D2;&#x7684;&#x63D2;&#x503C;&#x53D8;&#x6362;&#x95EE;&#x9898;&#x7B2C;&#x4E00;&#x79CD;&#x53EF;&#x80FD;&#x662F;&#x7531;&#x522B;&#x540D;&#x9020;&#x6210;&#x7684;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-02-09-13-03.png" alt="&#x522B;&#x540D;&#x63D2;&#x503C;&#x9519;&#x8BEF;"></p>
+<p>&#x5728;&#x5176;&#x4E2D;&#x4E24;&#x4E2A;&#x89D2;&#x5EA6;&#x5B9E;&#x9645;&#x4E0A;&#x76F8;&#x5DEE;&#x4E3A;<span class="math inline">\(45^{\circ}\)</span>&#xFF0C;&#x4F46;&#x56E0;&#x4E3A;&#x7528;&#x4E86;&#x522B;&#x540D;&#x8868;&#x793A;&#xFF0C;&#x8DEF;&#x5F84;&#x591A;&#x8D70;&#x4E86;&#x5C06;&#x8FD1;&#x4E24;&#x5708;&#x3002;&#x8FD9;&#x79CD;&#x53EF;&#x80FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F7F;&#x7528;&#x6807;&#x51C6;&#x5750;&#x6807;&#x8868;&#x793A;&#x89E3;&#x51B3;&#x3002;</p>
+<p>&#x7B2C;&#x4E8C;&#x4E2A;&#x95EE;&#x9898;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-02-09-19-43.png" alt="&#x975E;&#x522B;&#x540D;&#x63D2;&#x503C;&#x9519;&#x8BEF;"></p>
+<p>&#x5176;&#x4E2D;<span class="math inline">\(-170^{\circ}&#x548C;170^{\circ}\)</span>&#x90FD;&#x662F;&#x5728;&#x8303;&#x56F4;<span class="math inline">\((-180^{\circ},+180^{\circ}]\)</span>&#x5185;&#xFF0C;&#x56E0;&#x6B64;&#x6EE1;&#x8DB3;&#x6807;&#x51C6;&#x89C4;&#x8303;&#x3002;&#x4F46;&#x5B9E;&#x9645;&#x4E0A;&#x4E24;&#x8005;&#x76F8;&#x5DEE;20&#xB0;&#xFF0C;&#x5374;&#x8981;&#x63D2;&#x503C;340&#xB0;&#x3002;</p>
+<p>&#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#x662F;&#x901A;&#x8FC7;<code>wrapPi</code>&#x8FDB;&#x884C;&#x8BA1;&#x7B97;&#xFF0C;&#x8BA1;&#x7B97;&#x5F0F;&#x5B50;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\operatorname{wrap} \operatorname{Pi}(x)=x-360^{\circ}\left\lfloor\left(x+180^{\circ}\right) / 360^{\circ}\right\rfloor\]</span></p>
+<p>&#x5176;&#x4E2D;&#x7684;x&#x5373;&#x4E3A;&#x4E24;&#x4E2A;&#x89D2;&#x5EA6;&#x76F8;&#x51CF;&#x540E;&#x7684;&#x63D2;&#x503C;&#xFF0C;&#x5728;&#x6B64;&#x4F8B;&#x4E2D;&#x4E3A;340&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x7EBF;&#x6027;&#x63D2;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#x5E94;&#x8BE5;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\Delta \theta &amp;=\operatorname{wrap} \mathrm{Pi}\left(\theta_{1}-\theta_{0}\right) \\
+\theta_{t} &amp;=\theta_{0}+t \Delta \theta
+\end{aligned}\]</span></p>
+<p>&#x7B2C;&#x4E09;&#x4E2A;&#x95EE;&#x9898;&#x4E07;&#x5411;&#x9501;&#x65E0;&#x6CD5;&#x88AB;&#x89E3;&#x51B3;&#x3002;&#x53EA;&#x8981;&#x4F7F;&#x7528;&#x4E86;&#x4E09;&#x4E2A;&#x6570;&#x503C;&#x6765;&#x8868;&#x8FBE;&#x65CB;&#x8F6C;&#xFF0C;&#x90A3;&#x4E48;&#x5F53;&#x7B2C;&#x4E8C;&#x4E2A;&#x8F74;&#x65CB;&#x8F6C;&#x81F3;90&#xB0;&#x65F6;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x8F74;&#x4E0E;&#x7B2C;&#x4E09;&#x4E2A;&#x8F74;&#x7684;&#x65CB;&#x8F6C;&#x6548;&#x679C;&#x90FD;&#x4F1A;&#x53D8;&#x5F97;&#x76F8;&#x540C;&#x3002;</p>
+<h2 id="axis-angle-and-exponential-map-representations">Axis-Angle and Exponential Map Representations</h2>
+<p>&#x6B27;&#x62C9;&#x8FD8;&#x63D0;&#x51FA;&#x4E86;&#x6B27;&#x62C9;&#x65CB;&#x8F6C;&#x7406;&#x8BBA;&#xFF08;Euler&#x2018;s rotation theorem&#xFF09;&#xFF1A;&#x4EFB;&#x4F55;&#x7684;3D&#x65CB;&#x8F6C;&#xFF0C;&#x90FD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7ED5;&#x7740;&#x67D0;&#x4E00;&#x4E2A;&#x8F74;&#x7684;&#x5355;&#x4E00;&#x65CB;&#x8F6C;&#x5B9E;&#x73B0;&#x3002;&#x5982;&#x7ED9;&#x5B9A;&#x4E86;&#x4E24;&#x4E2A;&#x65CB;&#x8F6C;<span class="math inline">\(\mathbf{R}_1&#x548C;\mathbf{R}_2\)</span>&#xFF0C;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x8F74;<span class="math inline">\(\hat{\mathbf{n}}\)</span>&#xFF0C;&#x4F7F;&#x5F97;<span class="math inline">\(\mathbf{R}_1&#x548C;\mathbf{R}_2\)</span>&#x4E24;&#x4E2A;&#x65CB;&#x8F6C;&#x7684;&#x7ED3;&#x5408;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7ED5;&#x7740;<span class="math inline">\(\hat{\mathbf{n}}\)</span>&#x8F74;&#x7684;&#x4E00;&#x6B21;&#x65CB;&#x8F6C;&#x641E;&#x5B9A;&#x3002;</p>
+<p>&#x8FD9;&#x79CD;&#x901A;&#x8FC7;&#x8F74;<span class="math inline">\(\hat{\mathbf{n}}\)</span>&#x548C;&#x4E00;&#x4E2A;&#x65CB;&#x8F6C;&#x89D2;&#x5EA6;<span class="math inline">\(\theta\)</span>&#x6765;&#x8868;&#x793A;&#x7684;&#x65B9;&#x6CD5;&#x79F0;&#x4E3A;&#x8F74;&#x89D2;&#x6CD5;&#xFF08;Axis-Angle&#xFF09;&#x3002;</p>
+<p>&#x800C;&#x6307;&#x6570;&#x6620;&#x5C04;&#x6CD5;(exponential map)&#x662F;&#x66F4;&#x8FDB;&#x4E00;&#x6B65;&#xFF0C;&#x901A;&#x8FC7;<span class="math inline">\(\mathbf{e}=\theta \hat{\mathbf{n}}\)</span>&#x5C06;&#x8F74;&#x548C;&#x89D2;&#x7ED3;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x8868;&#x793A;&#x3002;&#x5982;&#x679C;&#x60F3;&#x83B7;&#x53D6;&#x89D2;&#x5EA6;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<span class="math inline">\(\theta=\|\mathbf{e}\|\)</span>&#x3002;&#x5982;&#x679C;&#x60F3;&#x83B7;&#x53D6;&#x65CB;&#x8F6C;&#x8F74;&#xFF0C;&#x53EF;&#x4EE5;&#x5BF9;<span class="math inline">\(\mathbf{e}\)</span>&#x8FDB;&#x884C;&#x5F52;&#x4E00;&#x5316;&#xFF0C;&#x5373;<span class="math inline">\(\hat{\mathbf{n}}=\bar{\mathbf{e}}\)</span>&#x3002;</p>
+<p>&#x5F53;<span class="math inline">\(\theta=0\)</span>&#x65F6;&#xFF0C;&#x8F74;&#x89D2;&#x6CD5;&#x4F1A;&#x51FA;&#x73B0;&#x6B67;&#x4E49;&#x6027;&#xFF0C;&#x4F46;&#x662F;&#x6307;&#x6570;&#x6620;&#x5C04;&#x6CD5;&#x4E0D;&#x4F1A;&#xFF08;&#x56E0;&#x4E3A;&#x6700;&#x7EC8;&#x503C;&#x5DF2;&#x7ECF;&#x53D8;&#x4E3A;&#x4E86;0&#xFF09;.&#x540C;&#x6837;&#xFF0C;&#x56E0;&#x4E3A;&#x89D2;&#x5EA6;&#x548C;&#x8F74;&#x7684;&#x6B63;&#x8D1F;&#x53F7;&#x9020;&#x6210;&#x7684;&#x522B;&#x540D;&#x95EE;&#x9898;&#xFF0C;&#x6307;&#x6570;&#x6620;&#x5C04;&#x6CD5;&#x4E2D;&#x4E5F;&#x4E0D;&#x4F1A;&#x53D1;&#x751F;&#xFF0C;&#x56E0;&#x4E3A;&#x6B63;&#x8D1F;&#x53F7;&#x88AB;&#x76F8;&#x4E58;&#x7684;&#x64CD;&#x4F5C;&#x62B5;&#x6D88;&#x4E86;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x56E0;&#x4E3A;&#x52A0;&#x51CF;<span class="math inline">\(360^{\circ}\)</span>&#x9020;&#x6210;&#x7684;&#x522B;&#x540D;&#x95EE;&#x9898;&#xFF0C;&#x65E0;&#x8BBA;&#x662F;&#x8F74;&#x89D2;&#x6CD5;&#x8FD8;&#x662F;&#x6307;&#x6570;&#x6620;&#x5C04;&#x6CD5;&#x4E2D;&#x90FD;&#x4F1A;&#x51FA;&#x73B0;&#x3002;</p>
+<p>&#x540C;&#x65F6;&#xFF0C;&#x5728;&#x4F7F;&#x7528;&#x6307;&#x6570;&#x6620;&#x5C04;&#x6CD5;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x591A;&#x4E2A;&#x89D2;&#x5EA6;&#x7684;&#x65CB;&#x8F6C;&#x4E0D;&#x80FD;&#x901A;&#x8FC7;&#x52A0;&#x6CD5;&#x6765;&#x83B7;&#x5F97;&#x3002;&#x56E0;&#x4E3A;&#x52A0;&#x6CD5;&#x64CD;&#x4F5C;&#x662F;&#x652F;&#x6301;&#x4EA4;&#x6362;&#x5F8B;&#x7684;&#xFF0C;&#x800C;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#x4E0D;&#x652F;&#x6301;&#x3002;</p>
+<p>&#x5982;&#x6709;&#x4E24;&#x4E2A;&#x65CB;&#x8F6C;<span class="math inline">\(\mathbf{e}_{1}=\left[90^{\circ}, 0,0\right]\)</span> &#x548C;<span class="math inline">\(\mathbf{e}_{2}=\left[0,90^{\circ}, 0\right]\)</span>&#xFF0C;&#x5148;&#x6267;&#x884C;<span class="math inline">\(\mathbf{e}_{1}\)</span>&#x548C;&#x5148;&#x6267;&#x884C;<span class="math inline">\(\mathbf{e}_{2}\)</span>&#x7684;&#x7ED3;&#x679C;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x3002;&#x56E0;&#x4E3A;&#x65CB;&#x8F6C;&#x8F74;&#x90FD;&#x662F;&#x9488;&#x5BF9;&#x4E8E;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7684;&#xFF0C;&#x540E;&#x8005;&#x7684;&#x65CB;&#x8F6C;&#x8F74;&#x4F4D;&#x7F6E;&#x4F1A;&#x53D7;&#x524D;&#x4E00;&#x4E2A;&#x65CB;&#x8F6C;&#x7684;&#x5F71;&#x54CD;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x8FD9;&#x4E2A;&#x7ED3;&#x679C;&#x7684;&#x5DEE;&#x8DDD;&#x4F1A;&#x968F;&#x7740;&#x89D2;&#x5EA6;&#x7684;&#x7F29;&#x5C0F;&#x800C;&#x7F29;&#x5C0F;&#xFF0C;&#x5982;&#x65CB;&#x8F6C;&#x7684;&#x89D2;&#x5EA6;&#x662F;2&#xB0;&#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;&#x7ED3;&#x679C;&#x7684;&#x5DEE;&#x5F02;&#x76F8;&#x5BF9;&#x6765;&#x8BF4;&#x6CA1;&#x6709;&#x90A3;&#x4E48;&#x660E;&#x663E;&#x3002;&#x56E0;&#x6B64;&#x4E00;&#x5B9A;&#x610F;&#x4E49;&#x4E0A;&#x5982;&#x679C;&#x65CB;&#x8F6C;&#x7684;&#x89D2;&#x5EA6;&#x8DB3;&#x591F;&#x5C0F;&#xFF0C;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6307;&#x6570;&#x6620;&#x5C04;&#x6CD5;&#x7684;&#x52A0;&#x6CD5;&#x6765;&#x7ED3;&#x5408;&#x89D2;&#x5EA6;&#x7684;&#x65CB;&#x8F6C;&#x3002;</p>
+<p>&#x8F74;&#x89D2;&#x6CD5;&#x66F4;&#x591A;&#x7684;&#x662F;&#x4E00;&#x4E2A;&#x6982;&#x5FF5;&#x4E0A;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5728;&#x5B9E;&#x9645;&#x4E0A;&#x4E2D;&#x8FD0;&#x7528;&#x7684;&#x6BD4;&#x8F83;&#x5C11;&#x3002;&#x56DB;&#x5143;&#x6570;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x901A;&#x8FC7;&#x8F74;&#x89D2;&#x6CD5;&#x6F14;&#x53D8;&#x6765;&#x7684;&#x3002;</p>
+<p>&#x6307;&#x6570;&#x6620;&#x5C04;&#x6CD5;&#x8FD0;&#x7528;&#x7684;&#x76F8;&#x5BF9;&#x8F83;&#x591A;&#x3002;&#x5728;&#x8BA1;&#x7B97;&#x89D2;&#x901F;&#x5EA6;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x901A;&#x5E38;&#x4F7F;&#x7528;&#x6307;&#x6570;&#x6620;&#x5C04;&#x6CD5;&#x3002;&#x4E00;&#x662F;&#x56E0;&#x4E3A;&#x6307;&#x6570;&#x6620;&#x5C04;&#x6CD5;&#x53D7;&#x52A0;&#x51CF;360&#xB0;&#x522B;&#x540D;&#x7684;&#x5F71;&#x54CD;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x4FDD;&#x7559;&#x901F;&#x5EA6;&#x7684;&#x53D8;&#x6362;&#x3002;&#x4E8C;&#x662F;&#x56E0;&#x4E3A;&#x867D;&#x7136;&#x6307;&#x6570;&#x6620;&#x5C04;&#x6CD5;&#x7684;&#x52A0;&#x6CD5;&#x65E0;&#x6CD5;&#x5B8C;&#x7F8E;&#x7ED3;&#x5408;&#x591A;&#x4E2A;&#x53D8;&#x6362;&#xFF0C;&#x4F46;&#x662F;&#x53EF;&#x4EE5;&#x7ED3;&#x5408;&#x591A;&#x4E2A;&#x53D8;&#x6362;&#x7684;&#x53D8;&#x6362;&#x89D2;&#x5EA6;&#x7684;&#x5927;&#x5C0F;&#x3002;</p>
+<h2 id="quaternions">Quaternions</h2>
+<p>&#x4ECE;&#x6570;&#x5B66;&#x4E0A;&#x53EF;&#x4EE5;&#x8BC1;&#x660E;&#x4E3A;&#x4EC0;&#x4E48;&#x7528;&#x6B27;&#x62C9;&#x89D2;&#x6765;&#x8868;&#x793A;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x65CB;&#x8F6C;&#x5FC5;&#x7136;&#x4F1A;&#x5F15;&#x8D77;&#x4E07;&#x5411;&#x9501;&#xFF0C;&#x6240;&#x7528;&#x65B9;&#x6CD5;&#x4E3A;&#x201C;manifolds&#x201D;&#xFF0C;&#x4F46;&#x8FD9;&#x4E2A;&#x8BBA;&#x8BC1;&#x8D85;&#x51FA;&#x4E86;&#x672C;&#x4E66;&#x7684;&#x8303;&#x56F4;&#x3002;</p>
+<h3 id="quaternion-notation">Quaternion Notation</h3>
+<p>&#x56DB;&#x5143;&#x6570;&#x901A;&#x5E38;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x6807;&#x91CF;&#x90E8;&#x5206;&#xFF08;<span class="math inline">\(\mathbf{w}\)</span>&#xFF09;&#xFF0C;&#x548C;&#x4E00;&#x4E2A;&#x4E09;&#x7EF4;&#x5411;&#x91CF;&#x90E8;&#x5206;&#xFF08;<span class="math inline">\(\mathbf{v}\)</span>&#xFF09;&#xFF0C;&#x5373;&#x56DB;&#x5143;&#x6570;&#x6807;&#x8BB0;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\left[\begin{array}{ll}
+w &amp; \mathbf{v}
+\end{array}\right], \quad\left[\begin{array}{llll}
+w &amp; (x &amp; y &amp; z)
+\end{array}\right]\]</span></p>
+<p>&#x56DB;&#x5143;&#x6570;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7EB5;&#x5411;&#x8868;&#x793A;&#xFF0C;&#x5982;&#xFF1A;</p>
+<p><span class="math display">\[\left[\begin{array}{c}
+w \\
+\left(\begin{array}{l}
+x \\
+y \\
+z
+\end{array}\right)
+\end{array}\right]\]</span></p>
+<p>&#x4F46;&#x4E0D;&#x50CF;&#x5411;&#x91CF;&#x4E2D;&#x7684;&#x6A2A;&#x5411;&#x91CF;&#x4E0E;&#x7EB5;&#x5411;&#x91CF;&#x4F1A;&#x5F71;&#x54CD;&#x8BA1;&#x7B97;&#xFF0C;&#x56DB;&#x5143;&#x6570;&#x7684;&#x6A2A;&#x5411;&#x4E0E;&#x7EB5;&#x5411;&#x8868;&#x793A;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x533A;&#x522B;&#xFF0C;&#x4EC5;&#x4EC5;&#x662F;&#x5199;&#x6CD5;&#x7684;&#x4E0D;&#x540C;&#x3002;</p>
+<h3 id="what-do-those-four-numers-mean">What Do Those Four Numers Mean&#xFF1F;</h3>
+<p>&#x4E4B;&#x524D;&#x63D0;&#x5230;&#x4E86;&#x8F74;&#x89D2;&#x6CD5;&#x8868;&#x793A;&#x65CB;&#x8F6C;&#xFF0C;&#x5373;&#x901A;&#x8FC7;<span class="math inline">\((\theta, \hat{\mathbf{n}})\)</span>&#x8868;&#x8FBE;&#x65CB;&#x8F6C;&#x3002;&#x53EF;&#x4EE5;&#x5C06;&#x5176;&#x8868;&#x793A;&#x4E3A;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x5C06;&#x5176;&#x4E2D;&#x7684;&#x65CB;&#x8F6C;&#x89D2;&#x5EA6;&#x548C;&#x65CB;&#x8F6C;&#x8F74;&#x7684;&#x4FE1;&#x606F;&#x8FDB;&#x884C;&#x7F16;&#x7801;&#x653E;&#x5165;&#x56DB;&#x4E2A;&#x6570;&#x4E2D;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;\left[\begin{array}{ll}
+w &amp; \mathbf{v}
+\end{array}\right]=[\cos (\theta / 2) \quad \sin (\theta / 2) \hat{\mathbf{n}}]\\
+&amp;\left.\left[\begin{array}{llll}
+w &amp; (x &amp; y &amp; z
+\end{array}\right)\right]=\left[\cos (\theta / 2) \quad\left(\sin (\theta / 2) n_{x} \quad \sin (\theta / 2) n_{y} \quad \sin (\theta / 2) n_{z}\right)\right]
+\end{aligned}\]</span></p>
+<p>&#x8FD9;&#x6837;&#x7684;&#x56DB;&#x5143;&#x6570;&#x662F;&#x5173;&#x4E8E;&#x89D2;&#x5EA6;&#x65CB;&#x8F6C;&#x7684;&#xFF0C;&#x5176;&#x4E2D;&#x7684;<span class="math inline">\(\mathbf{v}\)</span>&#x548C;&#x65CB;&#x8F6C;&#x8F74;<span class="math inline">\(\hat{\mathbf{n}}\)</span>&#x76F8;&#x5173;&#xFF0C;<span class="math inline">\(\omega\)</span>&#x548C;&#x65CB;&#x8F6C;&#x89D2;&#x5EA6;<span class="math inline">\(\theta\)</span>&#x76F8;&#x5173;&#x3002;</p>
+<p>&#x8FD9;&#x6837;&#x662F;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#x4E0A;&#x7684;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x4F46;&#x662F;&#x4ECE;&#x590D;&#x6570;&#x5C42;&#x9762;&#x6216;&#x8005;&#x5176;&#x4ED6;&#x5B66;&#x79D1;&#x4E2D;&#xFF0C;&#x56DB;&#x5143;&#x6570;&#x8FD8;&#x6709;&#x5176;&#x4ED6;&#x7528;&#x5904;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x8D85;&#x51FA;&#x4E86;&#x672C;&#x4E66;&#x7684;&#x8303;&#x56F4;&#x3002;</p>
+<h3 id="quaternion-negation">Quaternion Negation</h3>
+<blockquote>
+<p>&#x4ECE;&#x7B2C;&#x4E09;&#x8282;&#x5230;&#x7B2C;11&#x8282;&#x90FD;&#x662F;&#x5173;&#x4E8E;&#x56DB;&#x5143;&#x6570;&#x7684;&#x64CD;&#x4F5C;</p>
+</blockquote>
+<p>&#x56DB;&#x5143;&#x6570;&#x7684;&#x53D6;&#x53CD;&#x64CD;&#x4F5C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+-\mathbf{q} &amp;\left.=-\left[w \quad\left(\begin{array}{lll}
+w &amp; y &amp; z
+\end{array}\right)\right]=\left[\begin{array}{llll}
+-w &amp; (-x &amp; -y &amp; -z
+\end{array}\right)\right] \\
+&amp;=-[w \quad \mathbf{v}]=\left[\begin{array}{ll}
+-w &amp; -\mathbf{v}
+\end{array}\right]
+\end{aligned}\]</span></p>
+<p>&#x4ECE;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#x4E0A;&#x6765;&#x8BF4;&#xFF0C;<span class="math inline">\(\mathbf{q}\)</span>&#x548C;<span class="math inline">\(\mathbf{-q}\)</span>&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x533A;&#x522B;&#x3002;&#x56E0;&#x4E3A;&#x6839;&#x636E;&#x4E0A;&#x4E00;&#x8282;&#x4E2D;&#x56DB;&#x5143;&#x6570;&#x6570;&#x636E;&#x7684;&#x5B9A;&#x4E49;&#xFF0C;&#x56E0;&#x4E3A;&#x6BCF;&#x4E2A;&#x64CD;&#x4F5C;&#x7B26;&#x90FD;&#x662F;&#x5BF9;&#x4E8E;<span class="math inline">\(\theta/2\)</span>&#xFF0C;&#x7ED9;<span class="math inline">\(\theta\)</span>&#x52A0;&#x4E0A;360&#xB0;&#xFF0C;&#x5176;&#x6570;&#x503C;&#x5C31;&#x4F1A;&#x53D6;&#x53CD;&#xFF0C;&#x4F46;&#x662F;&#x65CB;&#x8F6C;&#x7684;&#x89D2;&#x5EA6;&#x4ECD;&#x7136;&#x76F8;&#x540C;&#x3002;</p>
+<h3 id="identity-quaternions">Identity Quaternion(s)</h3>
+<p>&#x4ECE;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#x89D2;&#x5EA6;&#x4E0A;&#x8BF4;&#xFF0C;&#x5B58;&#x5728;&#x4E24;&#x4E2A;&#x5355;&#x4F4D;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x8868;&#x793A;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x7684;&#x65CB;&#x8F6C;&#xFF0C;&#x5B83;&#x4EEC;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\left[\begin{array}{ll}
+1 &amp; 0
+\end{array}\right] \text { &#x548C; }\left[\begin{array}{ll}
+-1 &amp; 0
+\end{array}\right]\]</span></p>
+<p>&#x5F53;<span class="math inline">\(\theta\)</span>&#x4E3A;&#x5076;&#x6570;&#x500D;&#x7684;360&#xB0;&#x65F6;&#xFF0C;<span class="math inline">\(\cos(\theta /2) =1\)</span>&#xFF0C;&#x5BF9;&#x5E94;&#x4E0A;&#x5F0F;&#x4E2D;&#x7B2C;&#x4E00;&#x4E2A;&#x5355;&#x4F4D;&#x56DB;&#x5143;&#x6570;&#x3002;&#x5F53;<span class="math inline">\(\theta\)</span>&#x4E3A;&#x5947;&#x6570;&#x500D;&#x7684;360&#xB0;&#x65F6;&#xFF0C;<span class="math inline">\(\cos(\theta /2) =-1\)</span>&#xFF0C;&#x5BF9;&#x5E94;&#x4E0A;&#x5F0F;&#x4E2D;&#x7B2C;&#x4E8C;&#x4E2A;&#x5355;&#x4F4D;&#x56DB;&#x5143;&#x6570;&#x3002;&#x5728;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;<span class="math inline">\(\sin(\theta/2)\)</span>&#x90FD;&#x4E3A;0&#xFF0C;&#x6240;&#x4EE5;<span class="math inline">\(\hat{\mathbf{n}}&#x7684;&#x53D6;&#x503C;&#x4E5F;&#x662F;&#x6CA1;&#x5173;&#x7CFB;&#x7684;\)</span>&#x3002;</p>
+<p>&#x4F46;&#x4ECE;&#x4EE3;&#x6570;&#x89D2;&#x5EA6;&#x4E0A;&#x8BF4;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x53EA;&#x6709;<span class="math inline">\(\left[\begin{array}{ll}1 &amp; 0\end{array}\right]\)</span>&#x4E00;&#x4E2A;&#x56DB;&#x5143;&#x6570;&#x3002;</p>
+<h3 id="quaternion-magnitude">Quaternion Magnitude</h3>
+<p>&#x5BF9;&#x4E8E;&#x4EFB;&#x610F;&#x7684;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x6C42;&#x6A21;&#x7684;&#x516C;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\|\mathbf{q}\| &amp;=\left\|\left[w \quad\left(\begin{array}{ll}
+x &amp; y
+\end{array} \quad z\right)\right]\right\|=\sqrt{w^{2}+x^{2}+y^{2}+z^{2}} \\
+&amp;=\|[w \quad \mathbf{v}]\|=\sqrt{w^{2}+\|\mathbf{v}\|^{2}}
+\end{aligned}\]</span></p>
+<p>&#x5BF9;&#x4E8E;&#x8868;&#x793A;&#x65CB;&#x8F6C;&#x7684;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#x4E0A;&#x7684;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x5176;&#x6C42;&#x6A21;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\|\mathbf{q}\| &amp;=\|[w \quad \mathbf{v}]\|=\sqrt{w^{2}+\|\mathbf{v}\|^{2}} \\
+&amp;=\sqrt{\cos ^{2}(\theta / 2)+(\sin (\theta / 2)\|\hat{\mathbf{n}}\|)^{2}} \\
+&amp;=\sqrt{\cos ^{2}(\theta / 2)+\sin ^{2}(\theta / 2)\|\hat{\mathbf{n}}\|^{2}} \\
+&amp;=\sqrt{\cos ^{2}(\theta / 2)+\sin ^{2}(\theta / 2)(1)} \\
+&amp;=\sqrt{1} \\
+&amp;=1
+\end{aligned}\]</span></p>
+<p>&#x5373;&#x7528;&#x4E8E;&#x8868;&#x8FBE;&#x65CB;&#x8F6C;&#x7684;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x5176;&#x6A21;&#x4E3A;1&#x3002;</p>
+<p>&#x5728;&#x51E0;&#x4F55;&#x4E2D;&#xFF0C;&#x901A;&#x5E38;<code>unit quaternions</code>&#x7528;&#x6765;&#x63CF;&#x8FF0;&#x8FD9;&#x4E9B;&#x6A21;&#x4E3A;1&#x7684;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x5E76;&#x4E14;&#x540C;&#x6837;&#x7FFB;&#x8BD1;&#x4E3A;&#x5355;&#x4F4D;&#x56DB;&#x5143;&#x6570;&#x3002;</p>
+<h3 id="quaternion-conjugate-and-inverse">Quaternion Conjugate and Inverse</h3>
+<p>&#x56DB;&#x5143;&#x6570;&#x6709;&#x5171;&#x8F6D;&#x64CD;&#x4F5C;&#xFF0C;&#x8868;&#x793A;&#x4E3A;<span class="math inline">\(\mathbf{q}*\)</span>&#xFF0C;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\mathbf{q}^{*} &amp;=\left[\begin{array}{ll}
+w &amp; \mathbf{v}
+\end{array}\right]^{*}=\left[\begin{array}{ll}
+w &amp; -\mathbf{v}
+\end{array}\right] \\
+&amp;\left.\left.=\left[\begin{array}{lll}
+w &amp; (x &amp; y &amp; z
+\end{array}\right)\right]^{*}=\left[\begin{array}{llll}
+w &amp; (-x &amp; -y &amp; -z
+\end{array}\right)\right]
+\end{aligned}\]</span></p>
+<p>&#x56DB;&#x5143;&#x6570;&#x4E5F;&#x6709;&#x53D6;&#x53CD;&#x64CD;&#x4F5C;&#xFF0C;&#x8868;&#x793A;&#x4E3A;<span class="math inline">\(\mathbf{q}^{-1}\)</span>&#xFF0C;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{q}^{-1}=\frac{\mathbf{q}^{*}}{\|\mathbf{q}\|}\]</span></p>
+<p>&#x4E14;&#x7C7B;&#x4F3C;&#x4E8E;&#x77E9;&#x9635;&#xFF0C;&#x540C;&#x6837;&#x6709;&#x6027;&#x8D28;&#xFF1A;</p>
+<p><span class="math display">\[
+\mathbf{q}\mathbf{q}^{-1}=\left[\begin{array}{ll}
+1 &amp; \mathbf{0}
+\end{array}\right]
+\]</span></p>
+<p>&#x4ECE;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#x4E0A;&#x6765;&#x8BF4;&#xFF0C;&#x7528;&#x4E8E;&#x65CB;&#x8F6C;&#x7684;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x56E0;&#x4E3A;&#x6A21;&#x4E3A;1&#xFF0C;&#x6240;&#x4EE5;<span class="math inline">\(\mathbf{q}^{*}=\mathbf{q}^{-1}\)</span>&#x3002;&#x5B83;&#x4EEC;&#x90FD;&#x8868;&#x793A;&#x4E3A;&#x7ED5;&#x7740;&#x76F8;&#x53CD;&#x7684;&#x8F74;&#xFF08;&#x56E0;&#x4E3A;<span class="math inline">\(\mathbf{v}\)</span>&#x53D6;&#x53CD;&#x4E86;&#xFF09;&#x8FDB;&#x884C;&#x65CB;&#x8F6C;&#x3002;</p>
+<h3 id="quaternion-multiplication">Quaternion Multiplication</h3>
+<p>&#x56DB;&#x5143;&#x6570;&#x7684;&#x76F8;&#x4E58;&#x548C;&#x77E9;&#x9635;&#x7684;&#x53C9;&#x4E58;&#x7C7B;&#x4F3C;&#xFF0C;&#x53C9;&#x4E58;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x5411;&#x91CF;&#xFF0C;&#x56DB;&#x5143;&#x6570;&#x76F8;&#x4E58;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x56DB;&#x5143;&#x6570;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\mathbf{q}_{1} \mathbf{q}_{2} &amp;\left.=\left[w_{1} \quad\left(\begin{array}{ccc}
+x_{1} &amp; y_{1} &amp; z_{1}
+\end{array}\right)\right]\left[\begin{array}{ccc}
+w_{2} &amp; \left(x_{2}\right. &amp; y_{2} &amp; z_{2}
+\end{array}\right)\right] \\
+&amp;=\left[\begin{array}{c}
+w_{1} w_{2}-x_{1} x_{2}-y_{1} y_{2}-z_{1} z_{2} \\
+\left(\begin{array}{l}
+w_{1} x_{2}+x_{1} w_{2}+y_{1} z_{2}-z_{1} y_{2} \\
+w_{1} y_{2}+y_{1} w_{2}+z_{1} x_{2}-x_{1} z_{2} \\
+w_{1} z_{2}+z_{1} w_{2}+x_{1} y_{2}-y_{1} x_{2}
+\end{array}\right)
+\end{array}\right] \\
+&amp;=\left[\begin{array}{lll}
+w_{1} &amp; \mathbf{v}_{1}
+\end{array}\right]\left[\begin{array}{ll}
+w_{2} &amp; \mathbf{v}_{2}
+\end{array}\right] \\
+&amp;=\left[w_{1} w_{2}-\mathbf{v}_{1} \cdot \mathbf{v}_{2} \quad w_{1} \mathbf{v}_{2}+w_{2} \mathbf{v}_{1}+\mathbf{v}_{1} \times \mathbf{v}_{2}\right]
+\end{aligned}\]</span></p>
+<p>&#x56DB;&#x5143;&#x6570;&#x7684;&#x4E58;&#x6CD5;&#xFF0C;&#x6EE1;&#x8DB3;&#x7ED3;&#x5408;&#x5F8B;&#xFF0C;&#x4E0D;&#x6EE1;&#x8DB3;&#x4EA4;&#x6362;&#x5F8B;</p>
+<p><span class="math display">\[\begin{aligned}
+(\mathbf{a b}) \mathbf{c} &amp;=\mathbf{a}(\mathbf{b} \mathbf{c}) \\
+\mathbf{a b} &amp; \neq \mathbf{b a}
+\end{aligned}\]</span></p>
+<p>&#x4E58;&#x79EF;&#x7684;&#x6A21;&#x7B49;&#x4E8E;&#x6A21;&#x7684;&#x4E58;&#x79EF;</p>
+<p><span class="math display">\[\left\|\mathbf{q}_{1} \mathbf{q}_{2}\right\|=\left\|\mathbf{q}_{1}\right\|\left\|\mathbf{q}_{2}\right\|\]</span></p>
+<p>&#x4E58;&#x79EF;&#x7684;&#x9006;&#xFF0C;&#x7B49;&#x4E8E;&#x9006;&#x6309;&#x76F8;&#x53CD;&#x987A;&#x5E8F;&#x7684;&#x4E58;&#x79EF;</p>
+<p><span class="math display">\[\begin{aligned}
+(\mathbf{a b})^{-1} &amp;=\mathbf{b}^{-1} \mathbf{a}^{-1} \\
+\left(\mathbf{q}_{1} \mathbf{q}_{2} \cdots \mathbf{q}_{n-1} \mathbf{q}_{n}\right)^{-1} &amp;=\mathbf{q}_{n}^{-1} \mathbf{q}_{n-1}^{-1} \cdots \mathbf{q}_{2}^{-1} \mathbf{q}_{1}^{-1}
+\end{aligned}\]</span></p>
+<p>&#x5982;&#x679C;<span class="math inline">\(\mathbf{q}\)</span>&#x662F;&#x4E00;&#x4E2A;&#x8868;&#x793A;&#x65CB;&#x8F6C;&#x7684;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x90A3;&#x4E48;&#x4E0B;&#x5F0F;&#x53EF;&#x4EE5;&#x8868;&#x793A;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{p}^{\prime}=\mathbf{q p q}^{-1}\]</span></p>
+<p>&#x5F0F;&#x5B50;&#x4E2D;&#x7684;<span class="math inline">\(\mathbf{p}\)</span>&#x662F;&#x63CF;&#x8FF0;&#x4E00;&#x4E2A;&#x70B9;&#x7684;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x7684;&#x70B9;<span class="math inline">\((x,y,z)\)</span>&#xFF0C;&#x7528;&#x56DB;&#x5143;&#x6570;&#x8868;&#x793A;&#x5219;&#x4E3A;<span class="math inline">\([0 \quad(x \quad y \quad z)]\)</span>&#x3002;</p>
+<p>&#x4F7F;&#x7528;&#x8BE5;&#x5F0F;&#x5B50;&#x7684;&#x4F8B;&#x5B50;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p>&#x5982;&#x679C;&#x5B58;&#x5728;&#x70B9;<span class="math inline">\(\mathbf{P}=(1,0,0)\)</span>&#xFF0C;&#x5E0C;&#x671B;&#x5176;&#x7ED5;&#x7740;+z&#x8F74;&#x65CB;&#x8F6C;90&#xB0;&#xFF0C;&#x5219;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x4E3A;<span class="math inline">\(\left[\frac{\sqrt{2}}{2} \quad ( 0 \quad 0 \quad \frac{\sqrt{2}}{2} ) \right]\)</span>&#xFF0C;&#x9700;&#x8981;&#x6C42;&#x5F97;&#x65CB;&#x8F6C;&#x7684;&#x70B9;<span class="math inline">\(\mathbf{P^{&apos;}}\)</span>&#xFF0C;&#x8BA1;&#x7B97;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[
+p^{\prime}=q p q^{-1}
+\]</span></p>
+<p><span class="math display">\[
+\begin{array}{l}
+q p =\left[\frac{\sqrt{2}}{2} \quad\left(0 \quad 0 \quad\frac{\sqrt{2}}{2} \right)\right] \quad \left[0 \quad\left(1 \quad 0 \quad 0\right)\right] \\
+=\left[0-0 \quad\left(\frac{\sqrt{2}}{2} \quad 0 \quad 0\right)+(0 \quad 0 \quad 0)+\left(0 \quad \frac{\sqrt{2}}{2} \quad  0\right)\right] \\
+=\left[0 \quad\left(\frac{\sqrt{2}}{2} \quad \frac{\sqrt{2}}{2} \quad 0\right)\right]
+\end{array}
+\]</span></p>
+<p><span class="math display">\[
+\begin{array}{l}
+q p q^{-1} =\left[0 \quad\left(\frac{\sqrt{2}}{2}\quad  \frac{\sqrt{2}}{2}\quad  0\right)\right]\left[\frac{\sqrt{2}}{2} \quad \left(0\quad 0\quad -\frac{\sqrt{2}}{2}\right)\right] \\
+=\left[0-0 \quad \left(0 \quad 0 \quad 0\right)+\left(\frac{1}{2} \quad  \frac{1}{2} \quad  0\right) +\left(-\frac{1}{2} \quad \frac{1}{2} \quad 0\right)\right] \\
+=\left[0 \quad\left(0 \quad 1 \quad 0\right)\right]
+\end{array}
+\]</span></p>
+<p>&#x5373;&#x6C42;&#x5F97;&#x53D8;&#x6362;&#x540E;&#x7684;&#x56DB;&#x5143;&#x6570;<span class="math inline">\(\mathbf{p^{&apos;}}\)</span>&#x4E3A;<span class="math inline">\(\left[0 \quad\left(0 \quad 1 \quad 0\right)\right]\)</span>&#xFF0C;&#x56E0;&#x6B64;&#x53D8;&#x6362;&#x540E;&#x7684;&#x70B9;&#x4E3A;<span class="math inline">\((0,1,0)\)</span>&#x3002;</p>
+<p>&#x4F46;&#x8FD9;&#x4E2A;&#x5F0F;&#x5B50;&#x53EA;&#x662F;&#x7406;&#x8BBA;&#x4E0A;&#x4F7F;&#x7528;&#xFF0C;&#x5B9E;&#x9645;&#x64CD;&#x4F5C;&#x4E2D;&#x5E76;&#x4E0D;&#x4F1A;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x5F0F;&#x5B50;&#x8FDB;&#x884C;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#x3002;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;&#x5F0F;&#x5B50;&#x505A;&#x7406;&#x8BBA;&#x4E0A;&#x7684;&#x5206;&#x6790;&#xFF0C;&#x5982;&#x4E0B;&#x5F0F;: <span class="math display">\[\begin{aligned}
+\mathbf{p}^{\prime} &amp;=\mathbf{b}\left(\mathbf{a p a}^{-1}\right) \mathbf{b}^{-1} \\
+&amp;=(\mathbf{b} \mathbf{a}) \mathbf{p}\left(\mathbf{a}^{-1} \mathbf{b}^{-1}\right) \\
+&amp;=(\mathbf{b} \mathbf{a}) \mathbf{p}(\mathbf{b} \mathbf{a})^{-1}
+\end{aligned}\]</span></p>
+<p>&#x8BE5;&#x5F0F;&#x5B50;&#x8868;&#x793A;&#x56DB;&#x5143;&#x6570;&#x7684;&#x65CB;&#x8F6C;&#x53EF;&#x4EE5;&#x7EA7;&#x8054;&#xFF0C;&#x4E5F;&#x8868;&#x793A;&#x4E86;&#x4E24;&#x4E2A;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#xFF08;&#x7531;<span class="math inline">\(\mathbf{a}\)</span>&#x548C;<span class="math inline">\(\mathbf{b}\)</span>&#x8868;&#x793A;&#xFF09;&#xFF0C;&#x53EF;&#x4EE5;&#x7ED3;&#x5408;&#x4E3A;&#x540C;&#x4E00;&#x4E2A;&#x65CB;&#x8F6C;<span class="math inline">\(\mathbf{ba}\)</span></p>
+<ul>
+<li>&#x5F53;&#x591A;&#x4E2A;&#x56DB;&#x5143;&#x6570;&#x8868;&#x793A;&#x591A;&#x6B21;&#x76F8;&#x8FDE;&#x7684;&#x65CB;&#x8F6C;&#x65F6;&#xFF0C;&#x5176;&#x8BA1;&#x7B97;&#x987A;&#x5E8F;&#x662F;&#x7531;&#x5185;&#x5411;&#x5916;&#x7684;&#xFF08;&#x4E0A;&#x5F0F;&#x4E2D;&#x5148;&#x8BA1;&#x7B97;<span class="math inline">\(\mathbf{a}\)</span>&#x518D;&#x8BA1;&#x7B97;<span class="math inline">\(\mathbf{b}\)</span>&#xFF09;</li>
+</ul>
+<h3 id="quaternion-difference">Quaternion &quot;Difference&quot;</h3>
+<p>&#x56DB;&#x5143;&#x6570;&#x7684;&#x5DEE;&#x503C;&#xFF08;Difference&#xFF09;&#x662F;&#x7528;&#x6765;&#x8868;&#x793A;&#x4E24;&#x4E2A;&#x671D;&#x5411;&#x7684;&#x89D2;&#x5EA6;&#x76F8;&#x4E92;&#x53D8;&#x6362;&#x65F6;&#x5DEE;&#x8DDD;&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x7684;&#x5DEE;&#x503C;&#x5E76;&#x4E0D;&#x662F;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#x4E0A;&#x7684;&#x4E24;&#x4E2A;&#x89D2;&#x5EA6;&#x5927;&#x5C0F;&#x4E4B;&#x95F4;&#x7684;&#x5DEE;&#xFF0C;&#x548C;&#x4E0A;&#x4E00;&#x8282;&#x4E2D;&#x7528;&#x4E8E;&#x53D8;&#x6362;&#x7684;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x4E5F;&#x4E0D;&#x76F8;&#x540C;&#x3002;&#x8FD9;&#x91CC;&#x7684;&#x5DEE;&#x503C;&#x6307;&#x7684;&#x662F;&#x4ECE;&#x4E00;&#x4E2A;&#x89D2;&#x5EA6;&#x53D8;&#x6362;&#x4E3A;&#x53E6;&#x4E00;&#x4E2A;&#x89D2;&#x5EA6;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x5C06;&#x8FD9;&#x4E2A;&#x64CD;&#x4F5C;&#x7528;&#x56DB;&#x5143;&#x6570;&#x8868;&#x793A;&#x51FA;&#x6765;&#x3002;</p>
+<p>&#x5982;&#x7ED9;&#x5B9A;&#x4E86;&#x4E24;&#x4E2A;&#x671D;&#x5411;<span class="math inline">\(\mathbf{a}&#x548C;\mathbf{b}\)</span>&#xFF0C;&#x9700;&#x8981;&#x6C42;&#x5F97;&#x5DEE;&#x503C;<span class="math inline">\(\mathbf{d}\)</span>&#x6EE1;&#x8DB3;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{d a}=\mathbf{b}\]</span></p>
+<p>&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x4E0B;&#x5F0F;&#x6C42;&#x5F97;<span class="math inline">\(\mathbf{d}\)</span>,</p>
+<p><span class="math display">\[\begin{aligned}
+(\mathbf{d a}) \mathbf{a}^{-1} &amp;=\mathbf{b a}^{-1} \\
+\mathbf{d}\left(\mathbf{a a}^{-1}\right) &amp;=\mathbf{b a}^{-1} \\
+\mathbf{d}[1 \quad \mathbf{0}] &amp;=\mathbf{b a}^{-1} \\
+\mathbf{d} &amp;=\mathbf{b a}^{-1}
+\end{aligned}\]</span></p>
+<p>&#x4F8B;&#x5982;&#x6709;&#x53D8;&#x6362;&#x524D;&#x7684;&#x70B9;<span class="math inline">\(\mathbf{p}=\left[0 \quad\left(1 \quad 0 \quad 0\right)\right]\)</span>&#x548C;&#x53D8;&#x6362;&#x540E;&#x7684;&#x70B9;<span class="math inline">\(\mathbf{p}^{\prime}=\left[0 \quad\left(0 \quad 1 \quad 0\right)\right]\)</span>&#xFF0C;&#x9700;&#x8981;&#x6C42;&#x5F97;&#x5DEE;&#x503C;<span class="math inline">\(d\)</span></p>
+<p><span class="math display">\[d=p^{\prime}p^{-1}\]</span></p>
+<p><span class="math display">\[
+\begin{array}{l}
+d=\left[\begin{array}{cc}
+0 &amp; (0\quad 1\quad 0)
+\end{array}\right]\left[\begin{array}{cc}
+0 &amp; (-1\quad 0\quad 0)
+\end{array}\right] \\
+=[0-0 \quad(0\quad 0\quad 0)+(0\quad 0\quad 0)+(0\quad 0\quad 1)] \\
+= {[0 \quad(0\quad 0\quad 1)]}
+\end{array}\]</span></p>
+<p>&#x5982;&#x4E4B;&#x524D;&#x6240;&#x8FF0;&#xFF0C;&#x8FD9;&#x91CC;&#x6C42;&#x5F97;&#x7684;<span class="math inline">\(\mathbf{d}\)</span>&#x867D;&#x7136;&#x5F62;&#x5F0F;&#x4E0A;&#x6EE1;&#x8DB3;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x7684;&#x5B9A;&#x4E49;&#xFF0C;&#x4F46;&#x662F;&#x5B83;&#x5E76;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x800C;&#x662F;&#x8868;&#x793A;&#x4E24;&#x4E2A;&#x70B9;&#x4E4B;&#x95F4;&#x7684;&#x5DEE;&#x503C;&#x3002;</p>
+<p>&#x8FD9;&#x5DEE;&#x503C;&#x4E5F;&#x540C;&#x6837;&#x4E0D;&#x662F;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#x4E0A;&#x7684;&#x4E24;&#x4E2A;&#x70B9;&#x4E4B;&#x95F4;&#x7684;&#x89D2;&#x5EA6;&#x5DEE;&#x3002;&#x5982;&#x4F8B;&#x5B50;&#x4E2D;&#x7684;<span class="math inline">\(\mathbf{p}=[0 (\quad 1 \quad 0 \quad 0)]\)</span>&#x548C;<span class="math inline">\(\mathbf{p^{\prime}}=[0 (\quad 0 \quad 1 \quad 0)]\)</span>&#xFF0C;&#x4E24;&#x8005;&#x5B9E;&#x9645;&#x4E0A;&#x7684;&#x89D2;&#x5EA6;&#x5DEE;&#x503C;&#x662F;90&#xB0;&#xFF08;&#x7ED5;&#x7740;+z&#xFF09;&#x8F74;&#x3002;&#x4F46;&#x662F;&#x8FD9;&#x91CC;&#x6C42;&#x51FA;&#x7684;<span class="math inline">\(\mathbf{d}=[0 \quad(0\quad 0\quad 1)]\)</span>&#xFF0C;&#x5982;&#x679C;&#x6309;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x6765;&#x89E3;&#x91CA;<span class="math inline">\(\mathbf{d}\)</span>&#xFF0C;&#x90A3;&#x4E48;<span class="math inline">\(\cos(\theta/2)=0\)</span>&#xFF0C;<span class="math inline">\(\theta=180^{\circ}\)</span>&#xFF0C;&#x660E;&#x663E;&#x4E0E;&#x5B9E;&#x9645;&#x60C5;&#x51B5;&#x4E0D;&#x540C;&#x3002;</p>
+<h3 id="quaternion-dot-product">Quaternion Dot Product</h3>
+<p>&#x56DB;&#x5143;&#x6570;&#x7684;&#x70B9;&#x4E58;&#x4E0E;&#x77E9;&#x9635;&#x7684;&#x70B9;&#x4E58;&#x7C7B;&#x4F3C;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\mathbf{q}_{1} \cdot \mathbf{q}_{2} &amp;=\left[\begin{array}{ll}
+w_{1} &amp; \mathbf{v}_{1}
+\end{array}\right] \cdot\left[\begin{array}{ll}
+w_{2} &amp; \mathbf{v}_{2}
+\end{array}\right] \\
+&amp;=w_{1} w_{2}+\mathbf{v}_{1} \cdot \mathbf{v}_{2} \\
+&amp;\left.=\left[w_{1} \quad\left(\begin{array}{lll}
+x_{1} &amp; y_{1} &amp; z_{1}
+\end{array}\right)\right] \cdot\left[\begin{array}{llll}
+w_{2} &amp; \left(x_{2}\right. &amp; y_{2} &amp; z_{2}
+\end{array}\right)\right] \\
+&amp;=w_{1} w_{2}+x_{1} x_{2}+y_{1} y_{2}+z_{1} z_{2}
+\end{aligned}\]</span></p>
+<p>&#x5728;&#x4E0A;&#x4E00;&#x8282;&#x6C42;&#x56DB;&#x5143;&#x6570;&#x5DEE;&#x503C;&#x7684;&#x90E8;&#x5206;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x8BBE;<span class="math inline">\(\mathbf{a}=[\omega_{1} \quad \mathbf{v_1}]\)</span>&#x548C;<span class="math inline">\(\mathbf{b}=[\omega_{2} \quad \mathbf{v_2} ]\)</span>&#xFF0C;&#x90A3;&#x4E48;<span class="math inline">\(\mathbf{d}\)</span>&#x4E2D;&#x7684;<span class="math inline">\(\omega\)</span>&#x90E8;&#x5206;&#x5373;&#x4E3A;<span class="math inline">\(w_{1} w_{2}+\mathbf{v}_{1} \cdot \mathbf{v}_{2}\)</span>&#xFF0C;&#x5373;&#x548C;<span class="math inline">\(\mathbf{a} \cdot \mathbf{b}\)</span>&#x7684;&#x7ED3;&#x679C;&#x76F8;&#x540C;&#x3002;</p>
+<p>&#x800C;<span class="math inline">\(\mathbf{d}\)</span>&#x7684;&#x5F62;&#x5F0F;&#x4E0A;&#x6EE1;&#x8DB3;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x7684;&#x5B9A;&#x4E49;&#xFF08;&#x867D;&#x7136;<span class="math inline">\(\theta\)</span>&#x548C;<span class="math inline">\(\hat{\mathbf{n}}\)</span>&#x548C;&#x771F;&#x5B9E;&#x7684;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x5E76;&#x4E0D;&#x76F8;&#x7B49;&#xFF09;&#xFF0C;&#x6240;&#x4EE5;&#x5176;&#x4E2D;&#x7684;<span class="math inline">\(\omega\)</span>&#x4E5F;&#x80FD;&#x53CD;&#x5E94;&#x5DEE;&#x503C;&#x7684;&#x89D2;&#x5EA6;&#x5927;&#x5C0F;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x70B9;&#x4E58;&#x6765;&#x6C42;&#x5F97;&#x5DEE;&#x503C;&#x7684;&#x89D2;&#x5EA6;&#x5927;&#x5C0F;&#x3002;</p>
+<h3 id="quaternion-logexp-and-multiplication-by-a-scaler">Quaternion log&#xFF0C;exp, and Multiplication by a Scaler</h3>
+<p>&#x4E3A;&#x4E86;&#x4E66;&#x5199;&#x65B9;&#x4FBF;&#xFF0C;&#x56DB;&#x5143;&#x6570;&#x53EF;&#x8868;&#x793A;&#x4E3A;&#xFF0C;<span class="math inline">\(\alpha=\theta / 2&#xFF0C;\mathbf{q}=[\cos \alpha \quad \hat{\mathbf{n}} \sin \alpha]\)</span></p>
+<p>&#x56DB;&#x5143;&#x6570;&#x7684;log&#xFF08;logarithm&#xFF09;&#x5B9A;&#x4E49;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\log \mathbf{q}=\log ([\cos \alpha \quad \hat{\mathbf{n}} \sin \alpha]) \equiv\left[\begin{array}{ll}
+0 &amp; \alpha \hat{\mathbf{n}}
+\end{array}\right]\]</span></p>
+<p>&#x56DB;&#x5143;&#x6570;&#x7684;&#x81EA;&#x7136;&#x6307;&#x6570;&#x51FD;&#x6570;&#xFF08;Exponential function&#xFF09;&#x5B9A;&#x4E49;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\exp \mathbf{p}=\exp \left(\left[\begin{array}{ll}
+0 &amp; \alpha \hat{\mathbf{n}}
+\end{array}\right]\right) \equiv[\cos \alpha \quad \hat{\mathbf{n}} \sin \alpha]\]</span></p>
+<p>&#x53EF;&#x4EE5;&#x5F97;&#x51FA;&#xFF1A;</p>
+<p><span class="math display">\[\exp (\log \mathbf{q})=\mathbf{q}\]</span></p>
+<p>&#x8FD9;&#x4E0E;&#x4E00;&#x822C;&#x6570;&#x5B66;&#x4E2D;&#x7684;&#x64CD;&#x4F5C;&#x662F;&#x5BF9;&#x5E94;&#x7684;&#xFF0C;&#x5373;&#xFF1A;</p>
+<p><span class="math display">\[e^{\ln a}=a\]</span></p>
+<p>&#x56DB;&#x5143;&#x6570;&#x4E0E;&#x6807;&#x91CF;&#x76F8;&#x4E58;&#x7684;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[k \mathbf{q}=k[w \quad \mathbf{v}]=\left[\begin{array}{ll}
+k w &amp; k \mathbf{v}
+\end{array}\right]\]</span></p>
+<h3 id="quaternion-exponentiation">Quaternion Exponentiation</h3>
+<p>&#x56DB;&#x5143;&#x6570;&#x7684;&#x6307;&#x6570;&#x5F62;&#x5F0F;&#xFF08;Exponentiation&#xFF09;&#xFF0C;&#x5199;&#x4E3A;<span class="math inline">\(\mathbf{q}^{t}\)</span></p>
+<p>&#x5728;&#x81EA;&#x7136;&#x6570;&#x4E2D;&#xFF0C;<span class="math inline">\(a^0=1,a^1=a\)</span>&#xFF0C;&#x5373;&#x6307;&#x6570;&#x4ECE;<span class="math inline">\(0\sim1\)</span>&#x53D8;&#x5316;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x7ED3;&#x679C;&#x4ECE;<span class="math inline">\(1\sim a\)</span>&#x9010;&#x6E10;&#x53D8;&#x6362;&#x3002;&#x5728;&#x56DB;&#x5143;&#x6570;&#x4E2D;&#x7C7B;&#x4F3C;&#xFF0C;&#x5373;&#x6307;&#x6570;&#x4ECE;<span class="math inline">\(0\sim 1\)</span>&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x7ED3;&#x679C;&#x4ECE;<span class="math inline">\([1 \quad \mathbf{0}]\)</span>&#x9010;&#x6E10;&#x53D8;&#x6362;&#x4E3A;<span class="math inline">\(\mathbf{q}\)</span></p>
+<p>&#x56DB;&#x5143;&#x6570;&#x6307;&#x6570;&#x64CD;&#x4F5C;&#x7684;&#x51E0;&#x4F55;&#x610F;&#x4E49;&#x5728;&#x4E8E;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x622A;&#x53D6;&#x6216;&#x500D;&#x5316;&#x5DEE;&#x503C;&#xFF0C;&#x56E0;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{q}^{t}=\exp (t \log \mathbf{q})\]</span></p>
+<p>&#x4E0A;&#x5F0F;&#x4E2D;&#xFF0C;&#x5148;&#x8FDB;&#x884C;&#x4E86;log&#x64CD;&#x4F5C;&#xFF0C;&#x7531;&#x4E0A;&#x8282;&#x53EF;&#x77E5;&#xFF0C;log&#x64CD;&#x4F5C;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x5C06;&#x89D2;&#x5EA6;&#x62BD;&#x79BB;&#x51FA;&#x6765;&#xFF08;&#x4ECE;<span class="math inline">\(\sin \alpha \hat{\mathbf{n}}\)</span>&#x53D8;&#x4E3A;&#x4E86;<span class="math inline">\(\alpha \hat{\mathbf{n}}\)</span>&#xFF09;&#x3002;&#x8FD9;&#x65F6;&#x5019;&#x4E58;&#x4EE5;<span class="math inline">\(t\)</span>&#x5C31;&#x662F;&#x76F4;&#x63A5;&#x5BF9;&#x89D2;&#x5EA6;&#x8FDB;&#x884C;&#x622A;&#x53D6;&#x6216;&#x500D;&#x5316;&#x3002;&#x7136;&#x540E;&#x8FDB;&#x884C;&#x7684;exp&#x64CD;&#x4F5C;&#xFF0C;&#x5219;&#x53C8;&#x662F;&#x5C06;&#x89D2;&#x5EA6;&#x53D8;&#x5316;&#x56DE;&#x4E86;&#x56DB;&#x5143;&#x6570;&#x3002;</p>
+<p>&#x6240;&#x4EE5;&#x5982;&#x679C;<span class="math inline">\(\mathbf{q}\)</span>&#x8868;&#x793A;&#x7ED5;&#x7740;x&#x8F74;&#x65CB;&#x8F6C;30&#xB0;&#xFF0C;&#x90A3;&#x4E48;<span class="math inline">\(\mathbf{q}^2\)</span>&#x8868;&#x793A;&#x7ED5;&#x7740;x&#x8F74;&#x65CB;&#x8F6C;60&#xB0;&#xFF0C;<span class="math inline">\(\mathbf{q}^{-1/3}\)</span>&#x8868;&#x793A;&#x7ED5;&#x7740;&#x53CD;&#x65B9;&#x5411;&#x65CB;&#x8F6C;&#x4E86;10&#xB0;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x6307;&#x6570;&#x64CD;&#x4F5C;&#x7684;&#x65CB;&#x8F6C;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#xFF0C;&#x5373;<span class="math inline">\(\mathbf{q}^8\)</span>&#x7684;&#x7ED3;&#x679C;&#x5E76;&#x4E0D;&#x662F;&#x65CB;&#x8F6C;240&#xB0;&#xFF0C;&#x800C;&#x662F;120&#xB0;&#x3002;</p>
+<p>&#x53E6;&#x5916;&#x56DB;&#x5143;&#x6570;&#x7684;&#x51E0;&#x4F55;&#x64CD;&#x4F5C;&#x4E0D;&#x6EE1;&#x8DB3;&#x5B9E;&#x6570;&#x7684;&#x6307;&#x6570;&#x64CD;&#x4F5C;&#x7684;&#x4E00;&#x4E9B;&#x6027;&#x8D28;&#xFF0C;&#x5982;<span class="math inline">\(\left(a^{s}\right)^{t}=a^{s t}\)</span>&#x65E0;&#x6CD5;&#x5728;&#x56DB;&#x5143;&#x6570;&#x4E2D;&#x5B9E;&#x73B0;&#x3002;</p>
+<p>//TODO:</p>
+<p>&#x4E66;&#x4E2D;&#x7ED9;&#x51FA;&#x4E86;&#x5B9E;&#x73B0;&#x56DB;&#x5143;&#x6570;&#x6307;&#x6570;&#x64CD;&#x4F5C;&#x7684;&#x4EE3;&#x7801;</p>
+<h3 id="quaternion-interpolation-a.k.a-slerp">Quaternion Interpolation, a.k.a Slerp</h3>
+<p>&#x7403;&#x9762;&#x7EBF;&#x6027;&#x63D2;&#x503C;&#xFF08;Slerp&#xFF0C;Spherical Linera interpolation&#xFF0C;&#x4E0B;&#x7B80;&#x79F0;&#x63D2;&#x503C;&#xFF09;&#x662F;&#x7528;&#x6765;&#x5728;&#x4E24;&#x4E2A;&#x89D2;&#x5EA6;&#x95F4;&#x9010;&#x6E10;&#x53D8;&#x6362;&#x7684;&#x65B9;&#x6CD5;&#x3002;Slerp&#x65B9;&#x6CD5;&#x9700;&#x8981;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;<span class="math inline">\(\mathbf{q}_0,\mathbf{q}_1&#x548C;t\)</span>&#xFF0C;&#x5206;&#x522B;&#x8868;&#x793A;&#x63D2;&#x503C;&#x7684;&#x8D77;&#x59CB;&#x70B9;&#xFF0C;&#x7EC8;&#x70B9;&#x548C;&#x76EE;&#x524D;&#x7684;&#x8FDB;&#x5EA6;&#x3002;</p>
+<p>&#x63D2;&#x503C;&#x7684;&#x57FA;&#x672C;&#x6B65;&#x9AA4;&#x4E3A;&#xFF1A;</p>
+<ol type="1">
+<li>&#x7B97;&#x51FA;&#x8D77;&#x59CB;&#x70B9;&#x548C;&#x91CD;&#x70B9;&#x4E4B;&#x95F4;&#x7684;&#x5DEE;&#x8DDD;</li>
+<li>&#x4F7F;&#x7528;t&#x5F97;&#x51FA;&#x4E00;&#x90E8;&#x5206;&#x5DEE;&#x8DDD;</li>
+<li>&#x5C06;&#x8FD9;&#x4E00;&#x90E8;&#x5206;&#x5DEE;&#x8DDD;&#x52A0;&#x5230;&#x8D77;&#x59CB;&#x70B9;&#x4E0A;</li>
+</ol>
+<p>&#x8FD9;&#x4E09;&#x4E2A;&#x6B65;&#x9AA4;&#x53EF;&#x8868;&#x793A;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\Delta a &amp;=a_{1}-a_{0} \\
+\operatorname{lerp}\left(a_{0}, a_{1}, t\right) &amp;=a_{0}+t \Delta a
+\end{aligned}\]</span></p>
+<p>&#x800C;&#x5BF9;&#x4E8E;&#x56DB;&#x5143;&#x6570;&#x7684;&#x63D2;&#x503C;&#x6765;&#x8BF4;&#xFF0C;&#x6B65;&#x9AA4;&#x57FA;&#x672C;&#x7C7B;&#x4F3C;&#xFF0C;&#x5177;&#x4F53;&#x4E3A;&#xFF1A; 1. &#x7B97;&#x51FA;&#x4E24;&#x4E2A;&#x671D;&#x5411;&#x7684;&#x5DEE;&#x503C; <span class="math display">\[\Delta \mathbf{q}=\mathbf{q}_{1} \mathbf{q}_{0}^{-1}\]</span> 2. &#x4F7F;&#x7528;&#x6307;&#x6570;&#x64CD;&#x4F5C;&#xFF0C;&#x6C42;&#x51FA;&#x4E00;&#x90E8;&#x5206;&#x5DEE;&#x503C; <span class="math display">\[(\Delta \mathbf{q})^{t}\]</span> 3. &#x901A;&#x8FC7;&#x4E58;&#x6CD5;&#xFF0C;&#x5BF9;&#x8D77;&#x59CB;&#x4F4D;&#x7F6E;&#x52A0;&#x4E0A;&#x5DEE;&#x503C; <span class="math display">\[(\Delta \mathbf{q})^{t} \mathbf{q}_{0}\]</span></p>
+<p>&#x7ED3;&#x5408;&#x8D77;&#x6765;&#xFF0C;&#x56DB;&#x5143;&#x6570;&#x7684;&#x63D2;&#x503C;&#x8FD0;&#x7B97;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\text { slerp }\left(\mathbf{q}_{0}, \mathbf{q}_{1}, t\right)=\left(\mathbf{q}_{1} \mathbf{q}_{0}^{-1}\right)^{t} \mathbf{q}_{0}\]</span></p>
+<p>&#x4F46;&#x5728;&#x5B9E;&#x9645;&#x8FD0;&#x7528;&#x4E2D;&#xFF0C;&#x901A;&#x5E38;&#x4F7F;&#x7528;&#x53E6;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x56DB;&#x5143;&#x6570;&#x7684;&#x63D2;&#x503C;&#x8FD0;&#x7B97;&#x3002;</p>
+<p>&#x56E0;&#x4E3A;&#x6240;&#x6709;&#x5F62;&#x5F0F;&#x4E3A;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x7684;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x5176;&#x6A21;&#x90FD;&#x4E3A;1&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x662F;&#x5728;&#x957F;&#x5EA6;&#x4E3A;1&#x7684;&#x56DB;&#x7EF4;&#x7403;&#x4F53;&#x8868;&#x9762;&#x3002;&#x90A3;&#x4E48;&#x63D2;&#x503C;&#x8FD0;&#x7B97;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x662F;&#x5728;&#x8FD9;&#x4E2A;&#x56DB;&#x7EF4;&#x7684;&#x7403;&#x4F53;&#x8868;&#x9762;&#x7684;&#x5F27;&#x7EBF;&#x4E0A;&#x8FD0;&#x52A8;&#xFF08;&#x6240;&#x4EE5;&#x63D2;&#x503C;&#x8FD0;&#x7B97;&#x5168;&#x7A0B;&#x662F;&#x7403;&#x9762;&#x7EBF;&#x6027;&#x63D2;&#x503C;&#xFF09;&#x3002;</p>
+<p>&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-03-12-08-20.png" alt="&#x7403;&#x4F53;&#x8868;&#x9762;&#x63D2;&#x503C;"></p>
+<p>&#x800C;&#x53EF;&#x4EE5;&#x8FDB;&#x4E00;&#x6B65;&#xFF0C;&#x5C06;<span class="math inline">\(v_t\)</span>&#x770B;&#x4F5C;&#x662F;<span class="math inline">\(v_0\)</span>&#x548C;<span class="math inline">\(v_1\)</span>&#x7684;&#x7EBF;&#x6027;&#x7EC4;&#x5408;&#x3002;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-03-12-16-01.png" alt="&#x7EBF;&#x6027;&#x7EC4;&#x5408;&#x6C42;&#x63D2;&#x503C;"></p>
+<p>&#x6839;&#x636E;&#x4E0B;&#x56FE;&#xFF0C;&#x53EF;&#x4EE5;&#x6C42;&#x5F97;<span class="math inline">\(k_1\)</span></p>
+<p><span class="math display">\[\begin{aligned}
+\sin \omega &amp;=\frac{\sin t \omega}{k_{1}} \\
+k_{1} &amp;=\frac{\sin t \omega}{\sin \omega}
+\end{aligned}\]</span></p>
+<p>&#x6CE8;&#x610F;&#x56E0;&#x4E3A;<span class="math inline">\(v_1\)</span>&#x7684;&#x6A21;&#x4E3A;1&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x5206;&#x6BCD;&#x4E2D;&#x7701;&#x7565;&#x4E86;&#x3002;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-03-12-32-58.png" alt="&#x6C42;k1"></p>
+<p>&#x540C;&#x7406;&#xFF0C;&#x6839;&#x636E;&#x4E0B;&#x56FE;&#xFF0C;&#x53EF;&#x4EE5;&#x6C42;&#x51FA;<span class="math inline">\(k_0\)</span></p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/2020-04-03-12-32-37.png" alt="&#x6C42;k0"></p>
+<p>&#x56E0;&#x6B64;&#x53EF;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{v}_{t}=k_{0} \mathbf{v}_{0}+k_{1} \mathbf{v}_{1}=\frac{\sin (1-t) \omega}{\sin \omega} \mathbf{v}_{0}+\frac{\sin t \omega}{\sin \omega} \mathbf{v}_{1}\]</span></p>
+<p>&#x5373;</p>
+<p><span class="math display">\[\operatorname{slerp}\left(\mathbf{q}_{0}, \mathbf{q}_{1}, t\right)=\frac{\sin (1-t) \omega}{\sin \omega} \mathbf{q}_{0}+\frac{\sin t \omega}{\sin \omega} \mathbf{q}_{1}\]</span></p>
+<p>&#x73B0;&#x5728;&#x8FD8;&#x9057;&#x7559;&#x7684;&#x95EE;&#x9898;&#x662F;&#x5982;&#x4F55;&#x6C42;&#x51FA;&#x63D2;&#x503C;&#x7684;&#x89D2;&#x5EA6;<span class="math inline">\(\omega\)</span>&#x3002;&#x6839;&#x636E;&#x4E4B;&#x524D;&#x5BF9;&#x4E8E;&#x56DB;&#x5143;&#x6570;&#x70B9;&#x4E58;&#x7684;&#x5B9A;&#x4E49;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x70B9;&#x79EF;&#x6C42;&#x5F97;&#x56DB;&#x5143;&#x6570;&#x4E2D;&#x5F97;&#x6807;&#x91CF;&#x90E8;&#x5206;<span class="math inline">\(\omega\)</span>(&#x8FD9;&#x91CC;&#x7684;<span class="math inline">\(\omega\)</span>&#x4E0D;&#x662F;&#x6307;&#x89D2;&#x5EA6;)&#xFF0C;&#x5373;&#x53EF;&#x901A;&#x8FC7;<span class="math inline">\(\mathbf{q}_0 \cdot \mathbf{q}_1\)</span>&#x5F97;&#x5230;<span class="math inline">\(\cos\omega\)</span> &#xFF08;&#x8FD9;&#x91CC;&#x7684;<span class="math inline">\(\omega\)</span>&#x662F;&#x6307;&#x8981;&#x6C42;&#x5F97;&#x89D2;&#x5EA6;&#x5DEE;&#x503C;&#xFF0C;&#x4E0D;&#x662F;&#x6807;&#x91CF;&#xFF09;&#x3002;</p>
+<p>//TODO</p>
+<p>&#x4E66;&#x4E2D;&#x6709;&#x7ED9;&#x51FA;&#x5173;&#x4E8E;&#x5DEE;&#x503C;&#x7684;&#x7B97;&#x6CD5;</p>
+<h3 id="advantages-and-disadvantage-of-quaternions">Advantages and Disadvantage of Quaternions</h3>
+<p>&#x4F18;&#x70B9;&#xFF1A;</p>
+<ol type="1">
+<li>&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x5E73;&#x6ED1;&#x7684;&#x63D2;&#x503C;&#x8FD0;&#x7B97;</li>
+<li>&#x53EF;&#x4EE5;&#x7EA7;&#x8054;&#x548C;&#x4F7F;&#x7528;&#x56DB;&#x5143;&#x6570;&#x7684;&#x9006;&#x8FDB;&#x884C;&#x9006;&#x8F6C;&#x6362;</li>
+<li>&#x53EF;&#x4EE5;&#x5FEB;&#x901F;&#x7684;&#x8F6C;&#x6362;&#x81F3;&#x77E9;&#x9635;&#x5F62;&#x5F0F;&#xFF0C;&#x548C;&#x4ECE;&#x77E9;&#x9635;&#x5F62;&#x5F0F;&#x8F6C;&#x6362;&#x56DE;&#x6765;</li>
+<li>&#x53EA;&#x9700;&#x8981;&#x56DB;&#x4E2A;&#x6570;&#x5B57;</li>
+</ol>
+<p>&#x7F3A;&#x70B9;&#xFF1A; 1. &#x9700;&#x8981;&#x7684;&#x6570;&#x5B57;&#x4ECD;&#x7136;&#x6BD4;&#x6B27;&#x62C9;&#x89D2;&#x591A;&#xFF08;&#x6B27;&#x62C9;&#x89D2;&#x53EA;&#x9700;&#x8981;3&#x4E2A;&#x6570;&#x5B57;&#xFF09; 2. &#x5E76;&#x4E0D;&#x662F;&#x6240;&#x6709;&#x7684;&#x56DB;&#x5143;&#x6570;&#x90FD;&#x80FD;&#x8868;&#x793A;&#x65CB;&#x8F6C; &#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x7684;&#x6A21;&#x662F;1 3. &#x4EBA;&#x65E0;&#x6CD5;&#x76F4;&#x89C2;&#x7406;&#x89E3;</p>
+<h3 id="quaternions-as-complex-number">Quaternions as Complex Number</h3>
+<p>&#x8FD9;&#x4E00;&#x8282;&#x662F;&#x7528;&#x4ECE;&#x590D;&#x6570;&#x7684;&#x89D2;&#x5EA6;&#x6765;&#x63CF;&#x8FF0;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x4ECE;&#x8FD9;&#x4E2A;&#x89D2;&#x5EA6;&#x53EF;&#x4EE5;&#x89E3;&#x91CA;&#x4E24;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x4E00;&#x662F;&#x4E3A;&#x4EC0;&#x4E48;&#x4ECE;&#x65CB;&#x8F6C;&#x89D2;&#x5EA6;&#x6765;&#x770B;&#xFF0C;&#x56DB;&#x5143;&#x6570;&#x4EE3;&#x8868;&#x7684;&#x662F;<span class="math inline">\(\theta/2\)</span>&#x800C;&#x4E0D;&#x662F;<span class="math inline">\(\theta\)</span>&#xFF0C;&#x4E8C;&#x662F;&#x4E3A;&#x4EC0;&#x4E48;&#x7528;&#x4E8E;&#x65CB;&#x8F6C;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x662F;<span class="math inline">\(\mathbf{qvq_{-1}}\)</span></p>
+<p>&#x9996;&#x5148;&#x5B9E;&#x6570;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x77E9;&#x9635;&#x5F62;&#x5F0F;&#x8FDB;&#x884C;&#x8868;&#x8FBE;&#xFF0C;&#x5982;&#x5B9E;&#x6570;<span class="math inline">\(a\)</span>&#xFF0C;&#x53EF;&#x6309;&#x5982;&#x4E0B;&#x65B9;&#x5F0F;&#x8868;&#x793A;&#xFF1A;</p>
+<p><span class="math display">\[a \equiv\left[\begin{array}{ll}
+a &amp; 0 \\
+0 &amp; a
+\end{array}\right]\]</span></p>
+<p>&#x590D;&#x6570;&#x540C;&#x6837;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x77E9;&#x9635;&#x5F62;&#x5F0F;&#x8868;&#x8FBE;&#xFF0C;&#x5982;&#x590D;&#x6570;<span class="math inline">\(a+bi\)</span>&#xFF0C;&#x53EF;&#x4EE5;&#x8868;&#x8FBE;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[a+b i \equiv\left[\begin{array}{cc}
+a &amp; -b \\
+b &amp; a
+\end{array}\right]\]</span></p>
+<p>&#x800C;&#x4E14;&#x8FD9;&#x6837;&#x8868;&#x8FBE;&#x590D;&#x6570;&#xFF0C;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x6EE1;&#x8DB3;<span class="math inline">\(i^2=-1\)</span>&#x7684;&#x6027;&#x8D28;&#xFF0C;&#x5982;&#x4E0B;</p>
+<p><span class="math display">\[i^{2} \equiv\left[\begin{array}{cc}
+0 &amp; -1 \\
+1 &amp; 0
+\end{array}\right]^{2}=\left[\begin{array}{cc}
+0 &amp; -1 \\
+1 &amp; 0
+\end{array}\right]\left[\begin{array}{cc}
+0 &amp; -1 \\
+1 &amp; 0
+\end{array}\right]=\left[\begin{array}{cc}
+-1 &amp; 0 \\
+0 &amp; -1
+\end{array}\right] \equiv-1\]</span></p>
+<p>&#x56E0;&#x4E3A;&#x56DB;&#x5143;&#x6570;&#x7684;&#x4E58;&#x6CD5;&#x662F;&#x4ECE;&#x53F3;&#x5411;&#x5DE6;&#x7684;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x662F;&#x77E9;&#x9635;&#x4E2D;&#x7684;&#x53F3;&#x624B;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x6240;&#x4EE5;&#x77E9;&#x9635;&#x4E2D;&#x7684;&#x6BCF;&#x4E00;&#x5217;&#x4EE3;&#x8868;&#x5750;&#x6807;&#x8F74;&#xFF0C;&#x4ECE;&#x4E0A;&#x5F0F;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x5728;<span class="math inline">\(i\)</span>&#x4E58;&#x4EE5;<span class="math inline">\(i\)</span>&#x540E;&#xFF0C;&#x5217;&#x4ECE;<span class="math inline">\([0,1]\)</span>&#x53D8;&#x4E3A;&#x4E86;<span class="math inline">\([-1,0]\)</span>&#xFF0C;&#x4ECE;<span class="math inline">\([-1,0]\)</span>&#x53D8;&#x4E3A;&#x4E86;<span class="math inline">\([0,-1]\)</span>&#xFF0C;&#x5373;&#x65CB;&#x8F6C;&#x4E86;90&#xB0;&#x3002;</p>
+<p>&#x5373;&#x53EF;&#x4EE5;&#x5C06;&#x590D;&#x6570;&#x770B;&#x4F5C;&#x662F;&#x4E00;&#x79CD;&#x65CB;&#x8F6C;&#x7684;&#x8868;&#x8FBE;&#xFF0C;&#x5982;&#x679C;&#x65CB;&#x8F6C;<span class="math inline">\(\theta^{\circ}\)</span>&#xFF0C;&#x5373;&#x8868;&#x8FBE;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\cos \theta+i \sin \theta \equiv\left[\begin{array}{cc}
+\cos \theta &amp; -\sin \theta \\
+\sin \theta &amp; \cos \theta
+\end{array}\right]\]</span></p>
+<p>&#x8FD9;&#x4E2A;&#x77E9;&#x9635;&#x5373;&#x4E3A;&#x4E4B;&#x524D;&#x5728;&#x4E8C;&#x7EF4;&#x65CB;&#x8F6C;&#x4E2D;&#x63A8;&#x5BFC;&#x51FA;&#x7684;&#xFF0C;&#x65CB;&#x8F6C;<span class="math inline">\(\theta^{\delta}\)</span>&#x7684;&#x77E9;&#x9635;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x4E4B;&#x524D;&#x63A8;&#x5BFC;&#x7684;&#x662F;&#x5DE6;&#x624B;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#x7684;&#xFF0C;&#x8FD9;&#x91CC;&#x662F;&#x53F3;&#x624B;&#x5750;&#x6807;&#x7CFB;&#x4E2D;&#x7684;&#xFF08;&#x4E24;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x7ED3;&#x679C;&#x4E92;&#x4E3A;&#x8F6C;&#x7F6E;&#xFF09;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x5C06;&#x590D;&#x6570;<span class="math inline">\(x+yi\)</span>&#x7528;&#x77E9;&#x9635;&#x8868;&#x793A;&#x4E3A;&#x77E9;&#x9635;<span class="math inline">\([x,y]\)</span>&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5B9E;&#x6570;&#x7684;&#x4E58;&#x6CD5;&#x4E0E;&#x77E9;&#x9635;&#x7684;&#x4E58;&#x6CD5;&#x540C;&#x6837;&#x53EF;&#x4EE5;&#x5BF9;&#x5E94;&#x8D77;&#x6765;&#x3002;&#x8FDB;&#x4E00;&#x6B65;&#x8BC1;&#x660E;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5B9E;&#x6570;&#x6765;&#x8FDB;&#x884C;&#x65CB;&#x8F6C;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x540C;&#x65F6;&#x590D;&#x6570;&#x7684;&#x5171;&#x8F6D;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4E0E;&#x77E9;&#x9635;&#x7684;&#x6C42;&#x9006;&#x5BF9;&#x5E94;&#x8D77;&#x6765;&#xFF0C;&#x4E24;&#x8005;&#x90FD;&#x662F;&#x8FDB;&#x884C;&#x9006;&#x53D8;&#x6362;&#x3002;</p>
+<p><span class="math display">\[\begin{aligned}
+(\cos \theta+i \sin \theta)(x+i y) &amp;=x \cos \theta+i y \cos \theta+i x \sin \theta+i^{2} y \sin \theta \\
+&amp;=(x \cos \theta-y \sin \theta)+i(x \sin \theta+y \cos \theta)
+\end{aligned}\]</span></p>
+<p><span class="math display">\[\left[\begin{array}{cc}
+\cos \theta &amp; -\sin \theta \\
+\sin \theta &amp; \cos \theta
+\end{array}\right]\left[\begin{array}{l}
+x \\
+y
+\end{array}\right]=\left[\begin{array}{l}
+x \cos \theta-y \sin \theta \\
+x \sin \theta+y \cos \theta
+\end{array}\right]\]</span></p>
+<p>&#x5F53;&#x8FD9;&#x4E2A;&#x7ED3;&#x8BBA;&#x65E0;&#x6CD5;&#x63A8;&#x5BFC;&#x81F3;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x3002;&#x5728;&#x4E8C;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#xFF0C;&#x7528;&#x5B9E;&#x6570;&#x548C;&#x865A;&#x6570;<span class="math inline">\(i\)</span>&#x5BF9;&#x5E94;&#x4E24;&#x4E2A;&#x7EF4;&#x5EA6;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x65E0;&#x6CD5;&#x7528;&#x5B9E;&#x6570;&#x548C;&#x4E24;&#x4E2A;&#x865A;&#x6570;<span class="math inline">\(i,j\)</span>&#x6765;&#x5BF9;&#x5E94;&#x4E09;&#x4E2A;&#x7EF4;&#x5EA6;&#xFF08;&#x65E0;&#x6CD5;&#x7528;<span class="math inline">\(3\times3\)</span>&#x7684;&#x77E9;&#x9635;&#x8868;&#x793A;&#xFF09;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x53EF;&#x4EE5;&#x5BF9;&#x5E94;&#xFF0C;&#x90A3;&#x4E48;&#x4E09;&#x7EF4;&#x7684;&#x5355;&#x4F4D;&#x77E9;&#x9635;<span class="math inline">\(I_3\)</span>&#xFF0C;&#x5E94;&#x8BE5;&#x5BF9;&#x5E94;&#x6570;&#x5B57;1&#xFF0C;&#x4E09;&#x7EF4;&#x7684;&#x8D1F;&#x5355;&#x4F4D;&#x77E9;&#x9635;<span class="math inline">\(I_3\)</span>&#xFF0C;&#x5E94;&#x8BE5;&#x5BF9;&#x5E94;-1&#x3002;&#x56E0;&#x4E3A;<span class="math inline">\(i^2=-1\)</span>&#xFF0C;&#x6240;&#x4EE5;&#x8868;&#x793A;&#x865A;&#x6570;<span class="math inline">\(i\)</span>&#x7684;&#x77E9;&#x9635;&#x7684;&#x5E73;&#x65B9;&#x5E94;&#x8BE5;&#x7B49;&#x4E8E;<span class="math inline">\(-I_3\)</span>&#x3002;</p>
+<p>&#x4F46;&#x662F;<span class="math inline">\(-I_3\)</span>&#x7684;&#x884C;&#x5217;&#x5F0F;&#x503C;&#x4E3A;-1&#xFF0C;&#x6839;&#x636E;&#x884C;&#x5217;&#x5F0F;&#x6027;&#x8D28;&#x201C;&#x4E58;&#x79EF;&#x7684;&#x884C;&#x5217;&#x5F0F;&#x7B49;&#x4E8E;&#x884C;&#x5217;&#x5F0F;&#x7684;&#x4E58;&#x79EF;&#x201D;&#xFF0C;&#x90A3;&#x4E48;&#x8868;&#x793A;&#x865A;&#x6570;<span class="math inline">\(i\)</span>&#x7684;&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;&#x5F0F;&#x7684;&#x5E73;&#x65B9;&#xFF0C;&#x5E94;&#x8BE5;&#x7B49;&#x4E8E;-1&#xFF0C;&#x5373;&#x8BE5;&#x77E9;&#x9635;&#x7684;&#x884C;&#x5217;&#x5F0F;&#x503C;&#x4E3A;i&#xFF0C;&#x8FD9;&#x663E;&#x7136;&#x65E0;&#x6CD5;&#x6EE1;&#x8DB3;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;<span class="math inline">\(3\times 3\)</span>&#x7684;&#x77E9;&#x9635;&#x6765;&#x8868;&#x793A;&#x4E09;&#x7EF4;&#x4E09;&#x7EF4;&#x7684;&#x865A;&#x6570;&#x3002;</p>
+<p>&#x6570;&#x5B66;&#x5BB6;<span class="math inline">\(William Hamilton\)</span>&#x63D0;&#x51FA;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x56DB;&#x7EF4;&#x7684;&#x865A;&#x6570;&#x6765;&#x8868;&#x793A;&#x56DB;&#x7EF4;&#x7A7A;&#x95F4;&#xFF0C;&#x5373;&#x901A;&#x8FC7;&#x5B9E;&#x6570;&#xFF0C;&#x548C;&#x4E09;&#x4E2A;&#x865A;&#x6570;<span class="math inline">\(i,j,k\)</span>&#x6765;&#x8868;&#x793A;&#x3002;&#x5176;&#x4E2D;&#x4E09;&#x4E2A;&#x865A;&#x6570;&#x6EE1;&#x8DB3;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;i^{2}=j^{2}=k^{2}=-1\\
+&amp;i j=k, \quad j i=-k\\
+&amp;j k=i, \quad k j=-i\\
+&amp;k i=j, \quad i k=-j
+\end{aligned}\]</span></p>
+<p>&#x800C;&#x56DB;&#x5143;&#x6570;&#x5C31;&#x662F;&#x4E00;&#x79CD;&#x5F62;&#x5F0F;&#x7684;&#x56DB;&#x7EF4;&#x77E9;&#x9635;&#xFF0C;&#x5373;<span class="math inline">\([w,(x, y, z)]\)</span>&#x53EF;&#x7528;&#x6765;&#x5BF9;&#x5E94;<span class="math inline">\(w+x i+y j+z k\)</span>&#x3002;</p>
+<p>&#x5C06;&#x56DB;&#x7EF4;&#x7684;&#x865A;&#x6570;&#x7528;<span class="math inline">\(4\times4\)</span>&#x7684;&#x77E9;&#x9635;&#x8868;&#x793A;&#x6709;&#x591A;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x4EE5;&#x4E0B;&#x4E3A;&#x5176;&#x4E2D;&#x4E00;&#x79CD;&#xFF1A;</p>
+<p><span class="math display">\[a \equiv\left[\begin{array}{llll}
+a &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; a &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; a &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; a
+\end{array}\right]\]</span></p>
+<p><span class="math display">\[i \equiv\left[\begin{array}{cccc}
+0 &amp; 0 &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; -1 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+-1 &amp; 0 &amp; 0 &amp; 0
+\end{array}\right], \quad j \equiv\left[\begin{array}{cccc}
+0 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 \\
+-1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; -1 &amp; 0 &amp; 0
+\end{array}\right], \quad k \equiv\left[\begin{array}{cccc}
+0 &amp; -1 &amp; 0 &amp; 0 \\
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; -1 &amp; 0
+\end{array}\right]\]</span></p>
+<p>&#x7ED3;&#x5408;&#x53EF;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[w+x i+y j+z k \equiv\left[\begin{array}{cccc}
+w &amp; -z &amp; y &amp; x \\
+z &amp; w &amp; -x &amp; y \\
+-y &amp; x &amp; w &amp; z \\
+-x &amp; -y &amp; -z &amp; w
+\end{array}\right]\]</span></p>
+<p>&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#xFF0C;<span class="math inline">\(k\)</span>&#x77E9;&#x9635;&#x7684;&#x5DE6;&#x4E0A;&#x90E8;&#x5206;&#x4E0E;&#x4E8C;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;<span class="math inline">\(i\)</span>&#x7684;&#x8868;&#x8FBE;&#x4E00;&#x6A21;&#x4E00;&#x6837;&#xFF0C;&#x4E8E;&#x662F;&#x731C;&#x6D4B;<span class="math inline">\(k\)</span>&#x77E9;&#x9635;&#x4E5F;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x8868;&#x8FBE;&#x65CB;&#x8F6C;&#xFF0C;&#x4E14;&#x662F;&#x7ED5;&#x7740;<span class="math inline">\(z\)</span>&#x7684;&#x65CB;&#x8F6C;&#x3002;&#x4F7F;&#x7528;&#x4E09;&#x7EF4;&#x5411;&#x91CF;<span class="math inline">\([1,0,1]\)</span>&#x6765;&#x6D4B;&#x8BD5;&#x3002;&#x8BE5;&#x5411;&#x91CF;&#x5982;&#x679C;&#x7528;&#x56DB;&#x5143;&#x6570;&#x8868;&#x8FBE;&#xFF0C;&#x5219;&#x4E3A;<span class="math inline">\([0 \quad (1,0,1)]\)</span>&#xFF0C;&#x5373;&#x7528;&#x5B9E;&#x6570;&#x8868;&#x8FBE;&#x4E3A;<span class="math inline">\(i+k\)</span>&#x3002;&#x56E0;&#x4E3A;&#x662F;&#x7ED5;&#x7740;<span class="math inline">\(z\)</span>&#x8F74;&#x65CB;&#x8F6C;&#xFF0C;&#x6240;&#x4EE5;<span class="math inline">\(z\)</span>&#x7684;&#x53D8;&#x91CF;&#x4E0D;&#x4F1A;&#x53D8;&#xFF0C;<span class="math inline">\(xy\)</span>&#x53D8;&#x91CF;&#x7684;&#x7ED3;&#x679C;&#x4E0E;&#x4E8C;&#x7EF4;&#x7A7A;&#x95F4;&#x65CB;&#x8F6C;&#x7ED3;&#x679C;&#x76F8;&#x540C;&#xFF0C;&#x5373;&#x6700;&#x540E;&#x7684;&#x6B63;&#x786E;&#x7ED3;&#x679C;&#x5E94;&#x8BE5;&#x662F;<span class="math inline">\((\cos \theta,\sin\theta,1)\)</span>&#xFF0C;&#x5373;<span class="math inline">\(\cos\theta i +\sin\theta j+k\)</span> &#x90A3;&#x4E48;&#x76F8;&#x4E58;&#x8FC7;&#x7A0B;&#x53EF;&#x4EE5;&#x8868;&#x793A;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+(\cos \theta+k \sin \theta)(i+k) &amp;=i \cos \theta+k \cos \theta+k i \sin \theta+k^{2} \sin \theta \\
+&amp;=i \cos \theta+j \sin \theta+k \cos \theta-\sin \theta
+\end{aligned}\]</span></p>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x7ED3;&#x679C;&#x6839;&#x672C;&#x5C31;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x7684;&#x5411;&#x91CF;&#xFF0C;&#x56E0;&#x4E3A;<span class="math inline">\(w\)</span>&#x53C2;&#x6570;&#x5E76;&#x4E0D;&#x4E3A;0&#x3002;&#x8FD9;&#x4E2A;&#x7ED3;&#x679C;&#x4E2D;&#xFF0C;<span class="math inline">\(x,y\)</span>&#x5E73;&#x9762;&#x7684;&#x7B54;&#x6848;&#x662F;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x7684;&#xFF0C;&#x800C;<span class="math inline">\(z,w\)</span>&#x5E73;&#x9762;&#x5219;&#x4E0D;&#x662F;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x5BF9;&#x5B9E;&#x6570;&#x53D6;&#x5171;&#x8F6D;&#xFF0C;&#x5373;&#x8868;&#x8FBE;&#x4E3A;<span class="math inline">\(\cos\theta - k\sin \theta\)</span>&#xFF0C;&#x5E76;&#x4E14;&#x8FDB;&#x884C;&#x53F3;&#x4E58;&#xFF0C;&#x90A3;&#x4E48;&#x7ED3;&#x679C;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[(i+k)(\cos \theta-k \sin \theta)=i \cos \theta+j \sin \theta-k \cos \theta+\sin \theta\]</span></p>
+<p>&#x7ED3;&#x679C;&#x4ECD;&#x7136;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x4F60;&#x7684;&#x5411;&#x91CF;&#xFF0C;<span class="math inline">\(x,y\)</span>&#x5E73;&#x9762;&#x7684;&#x7ED3;&#x679C;&#x4E0D;&#x53D8;&#xFF0C;<span class="math inline">\(z,w\)</span>&#x5E73;&#x9762;&#x7684;&#x7ED3;&#x679C;&#x867D;&#x7136;&#x4E0D;&#x540C;&#xFF0C;&#x4F46;&#x662F;&#x4E0E;&#x4E4B;&#x524D;&#x7684;&#x7ED3;&#x679C;&#x6B63;&#x597D;&#x76F8;&#x53CD;&#xFF0C;&#x6240;&#x4EE5;&#x5C1D;&#x8BD5;&#x5C06;&#x4E24;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x7ED3;&#x5408;&#x5728;&#x4E00;&#x8D77;&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;(\cos \theta+k \sin \theta)(i+k)(\cos \theta-k \sin \theta) \\
+=&amp;(i \cos \theta+j \sin \theta+k \cos \theta-\sin \theta)(\cos \theta-k \sin \theta) \\
+=&amp; i \cos ^{2} \theta-i k \cos \theta \sin \theta+j \sin \theta \cos \theta-j k \sin ^{2} \theta+k \cos ^{2} \theta-k^{2} \cos \theta \sin \theta-\sin \theta \cos \theta+k \sin ^{2} \theta \\
+=&amp; i \cos ^{2} \theta+j \cos \theta \sin \theta+j \sin \theta \cos \theta-i \sin ^{2} \theta+k \cos ^{2} \theta+\cos \theta \sin \theta-\sin \theta \cos \theta+k \sin ^{2} \theta \\
+=&amp; i \cos ^{2} \theta-i \sin ^{2} \theta+2 j \sin \theta \cos \theta+k \\
+=&amp; i \cos 2 \theta+j \sin 2 \theta+k
+\end{aligned}\]</span></p>
+<p>&#x4E0E;&#x6B63;&#x786E;&#x7ED3;&#x679C;<span class="math inline">\(\cos\theta i +\sin\theta j+k\)</span>&#x76F8;&#x6BD4;&#xFF0C;<span class="math inline">\(\theta\)</span>&#x53D8;&#x4E3A;&#x4E86;<span class="math inline">\(2\theta\)</span>&#x3002;&#x56E0;&#x6B64;&#x5982;&#x679C;&#x8981;&#x7528;&#x590D;&#x6570;&#x6765;&#x8868;&#x8FBE;&#x65CB;&#x8F6C;&#x7684;&#x8BDD;&#xFF0C;&#x5F0F;&#x5B50;&#x5E94;&#x8BE5;&#x6539;&#x4E3A;<span class="math inline">\((\cos \theta /2+k \sin \theta /2)(i+k)(\cos \theta /2-k \sin \theta /2)\)</span>&#xFF0C;&#x5373;&#x56DB;&#x5143;&#x6570;&#x5E94;&#x8BE5;&#x8868;&#x8FBE;&#x4E3A;<span class="math inline">\(\mathbf{q}=[\cos \theta /2 \quad \mathbf{\sin \theta/2k}]\)</span>&#xFF0C;&#x4E14;&#x4E0A;&#x8FF0;&#x5F0F;&#x5B50;&#x5BF9;&#x5E94;&#x7684;&#x4E58;&#x6CD5;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;<span class="math inline">\(\mathbf{qpq^-1}\)</span>&#x3002;</p>
+<p>&#x800C;&#x8FD9;&#x5C31;&#x662F;&#x524D;&#x51E0;&#x8282;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x7528;&#x56DB;&#x5143;&#x6570;&#x6765;&#x8868;&#x793A;&#x4E58;&#x6CD5;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<h3 id="summary-of-quaternions">Summary of Quaternions</h3>
+<p>&#x8FD9;&#x4E00;&#x8282;&#x662F;&#x603B;&#x7ED3;&#x4E0A;&#x8FF0;&#x63CF;&#x8FF0;&#x4E2D;&#x6BD4;&#x8F83;&#x91CD;&#x8981;&#x7684;&#x6982;&#x5FF5;&#x3002;</p>
+<ol type="1">
+<li><p>&#x6982;&#x5FF5;&#x4E0A;&#x6765;&#x8BF4;&#xFF0C;&#x56DB;&#x5143;&#x6570;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x8868;&#x8FBE;&#x7ED5;&#x7740;&#x4E00;&#x4E2A;&#x8F74;&#x7684;&#x65CB;&#x8F6C;&#x4E00;&#x5B9A;&#x89D2;&#x5EA6;&#x3002; &#x5176;&#x4E2D;&#x56DB;&#x5143;&#x6570;&#x4E2D;&#x7684;&#x6807;&#x91CF;&#x90E8;&#x5206;<span class="math inline">\(w=\cos (\theta / 2)\)</span>&#xFF0C;&#x5411;&#x91CF;&#x90E8;&#x5206;<span class="math inline">\(\mathbf{v}=\hat{\mathbf{n}} \sin (\theta / 2)\)</span>&#x3002; &#x8FD9;&#x79CD;&#x56DB;&#x5143;&#x6570;&#x79F0;&#x4E3A;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#xFF0C;&#x5176;&#x6A21;&#x4E3A;1</p></li>
+<li><p>&#x4ECE;&#x51E0;&#x4F55;&#x89D2;&#x5EA6;&#x6765;&#x8BF4;&#xFF0C;&#x6BCF;&#x4E2A;&#x4E09;&#x7EF4;&#x70B9;&#x7684;&#x65CB;&#x8F6C;&#xFF0C;&#x90FD;&#x6709;&#x4E24;&#x79CD;&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#xFF0C;&#x4E14;&#x8FD9;&#x4E24;&#x4E2A;&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#x4E92;&#x4E3A;&#x5BF9;&#x65B9;&#x7684;&#x76F8;&#x53CD;&#xFF08;&#x4E0D;&#x662F;&#x9006;&#xFF09;&#xFF0C;&#x5373;<span class="math inline">\(\mathbf{q}=\mathbf{-q}\)</span></p></li>
+<li><p>&#x5355;&#x4F4D;&#x56DB;&#x5143;&#x6570;<span class="math inline">\([1 \quad \mathbf{0}]\)</span>&#x548C;<span class="math inline">\([-1 \quad \mathbf{0}]\)</span>&#x90FD;&#x8868;&#x8FBE;&#x6CA1;&#x6709;&#x65CB;&#x8F6C;</p></li>
+<li><p>&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x53EF;&#x4EE5;&#x7EA7;&#x8054;&#x8868;&#x793A;&#x591A;&#x4E2A;&#x65CB;&#x8F6C;&#xFF08;&#x4ECE;&#x53F3;&#x5411;&#x505A;&#x7EA7;&#x8054;&#xFF09;&#xFF0C;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;<span class="math inline">\(\mathbf{qpq^-1}\)</span>&#x4E14;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6C42;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x7684;&#x9006;&#x6765;&#x8868;&#x793A;&#x9006;&#x53D8;&#x6362;&#xFF0C;&#x4E14;&#x56E0;&#x4E3A;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x7684;&#x6A21;&#x4E3A;1&#xFF0C;&#x6240;&#x4EE5;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x7684;&#x9006;&#x7B49;&#x4E8E;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x7684;&#x5171;&#x8F6D;&#x3002;</p>
+<p>&#x4F46;&#x5B9E;&#x9645;&#x8FD0;&#x7528;&#x4E2D;&#xFF0C;&#x5F88;&#x5C11;&#x901A;&#x8FC7;<span class="math inline">\(\mathbf{qpq^-1}\)</span>&#x8BA1;&#x7B97;&#x65CB;&#x8F6C;&#xFF0C;&#x66F4;&#x591A;&#x7684;&#x662F;&#x4F7F;&#x7528;&#x77E9;&#x9635;&#x3002;</p></li>
+<li><p>&#x56DB;&#x5143;&#x6570;&#x7684;&#x6307;&#x6570;&#x8FD0;&#x7B97;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x622A;&#x53D6;&#x6216;&#x8005;&#x500D;&#x5316;&#x56DB;&#x5143;&#x6570;&#x8868;&#x793A;&#x7684;&#x65CB;&#x8F6C;&#xFF0C;&#x4F46;&#x53EA;&#x80FD;&#x8868;&#x793A;&#x6700;&#x77ED;&#x8DEF;&#x5F84;&#x3002; &#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x5E38;&#x7528;&#x6765;&#x8BA1;&#x7B97;&#x63D2;&#x503C;&#x3002;</p></li>
+</ol>
+<h2 id="comparision-of-methods">Comparision of Methods</h2>
+<ol type="1">
+<li>&#x6B27;&#x62C9;&#x89D2;&#x662F;&#x6700;&#x9002;&#x5408;&#x4EBA;&#x76F4;&#x63A5;&#x7406;&#x89E3;&#x7684;&#x65B9;&#x6CD5;</li>
+<li>&#x5F53;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x7A7A;&#x95F4;&#x8F6C;&#x6362;&#x65F6;&#xFF0C;&#x5FC5;&#x987B;&#x662F;&#x4F7F;&#x7528;&#x77E9;&#x9635;</li>
+<li>&#x5982;&#x679C;&#x8981;&#x5927;&#x91CF;&#x7684;&#x5B58;&#x50A8;&#x65CB;&#x8F6C;&#x4FE1;&#x606F;&#xFF0C;&#x6B27;&#x62C9;&#x89D2;&#xFF0C;&#x6307;&#x6570;&#x6620;&#x5C04;&#x548C;&#x56DB;&#x5143;&#x6570;&#x662F;&#x6BD4;&#x8F83;&#x7406;&#x60F3;&#x7684;&#x5B58;&#x50A8;&#x65B9;&#x5F0F;</li>
+<li>&#x8981;&#x5B9E;&#x73B0;&#x53EF;&#x9760;&#x7684;&#x63D2;&#x503C;&#x8FD0;&#x7B97;&#xFF0C;&#x53EA;&#x80FD;&#x901A;&#x8FC7;&#x56DB;&#x5143;&#x6570;</li>
+<li>&#x53EA;&#x6709;&#x56DB;&#x5143;&#x6570;&#x548C;&#x77E9;&#x9635;&#x8FD0;&#x7B97;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x65CB;&#x8F6C;&#x7EA7;&#x8054;</li>
+<li>&#x77E9;&#x9635;&#xFF0C;&#x6307;&#x6570;&#x6620;&#x5C04;&#xFF0C;&#x56DB;&#x5143;&#x6570;&#x90FD;&#x53EF;&#x4EE5;&#x5FEB;&#x901F;&#x7684;&#x6C42;&#x51FA;&#x9006;&#x8FD0;&#x7B97;</li>
+<li>&#x5982;&#x679C;&#x8981;&#x6C42;&#x89D2;&#x901F;&#x5EA6;&#xFF0C;&#x6216;&#x8005;&#x5176;&#x4ED6;&#x8981;&#x4FDD;&#x7559;&#x989D;&#x5916;&#x7684;&#x65CB;&#x8F6C;&#xFF08;&#x6709;&#x51E0;&#x6B21;360&#xB0;&#x7684;&#x65CB;&#x8F6C;&#xFF09;&#xFF0C;&#x53EA;&#x6709;&#x8F74;&#x89D2;&#x6CD5;&#x6216;&#x8005;&#x6307;&#x6570;&#x6620;&#x5C04;&#x8868;&#x8FBE;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x3002;</li>
+</ol>
+<h2 id="converting-between-representations">Converting between Representations</h2>
+<h3 id="converting-euler-angles-to-matrix">Converting Euler Angles to Matrix</h3>
+<p>&#x4ECE;&#x6B27;&#x62C9;&#x89D2;&#x8868;&#x8FBE;&#x8F6C;&#x5230;&#x77E9;&#x9635;&#x8868;&#x8FBE;&#xFF0C;&#x5B58;&#x5728;&#x4E0D;&#x540C;&#x60C5;&#x51B5;&#x4E0B;&#x7684;&#x4E0D;&#x540C;&#x77E9;&#x9635;&#x3002;&#x5982;&#x4E00;&#x4E2A;&#x573A;&#x666F;&#x4E2D;&#x6709;&#x666E;&#x901A;&#x7269;&#x4F53;&#x548C;&#x6444;&#x50CF;&#x673A;&#xFF0C;&#x7528;&#x4E8E;&#x8868;&#x8FBE;&#x666E;&#x901A;&#x7269;&#x4F53;&#x65CB;&#x8F6C;&#x7684;&#x77E9;&#x9635;&#x4E0E;&#x6444;&#x50CF;&#x673A;&#x662F;&#x4E0D;&#x540C;&#x7684;&#xFF0C;&#x666E;&#x901A;&#x7269;&#x4F53;&#x662F;&#x7528;<code>&#x7269;&#x4F53;-&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x7684;</code>&#x77E9;&#x9635;&#x8868;&#x8FBE;&#xFF0C;&#x800C;&#x6444;&#x50CF;&#x673A;&#x4E3A;<code>&#x76F4;&#x7ACB;&#x5230;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;</code>&#x7684;&#x77E9;&#x9635;&#x3002;</p>
+<p>&#x4E24;&#x4E2A;&#x77E9;&#x9635;&#x4E92;&#x4E3A;&#x9006;&#x77E9;&#x9635;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x8FD9;&#x91CC;&#x91CD;&#x70B9;&#x8BF4;&#x660E;&#x7269;&#x4F53;-&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x77E9;&#x9635;&#x8868;&#x8FBE;&#xFF0C;&#x76F4;&#x7ACB;&#x5230;&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x77E9;&#x9635;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x53D6;&#x53CD;&#x5FEB;&#x901F;&#x5F97;&#x5230;&#x3002;</p>
+<p>&#x6B27;&#x62C9;&#x89D2;&#x8F6C;&#x6362;&#x6210;&#x77E9;&#x9635;&#x8868;&#x8FBE;&#x7684;&#x57FA;&#x672C;&#x601D;&#x60F3;&#x5C31;&#x662F;&#xFF0C;&#x5C06;&#x7ED5;&#x7740;&#x4E09;&#x4E2A;&#x8F74;&#x7684;&#x65CB;&#x8F6C;&#x62C6;&#x5206;&#xFF0C;&#x5404;&#x81EA;&#x8868;&#x8FBE;&#x4E3A;&#x4E00;&#x4E2A;&#x65CB;&#x8F6C;&#x77E9;&#x9635;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x7EA7;&#x8054;&#xFF0C;&#x5373;&#x5F97;&#x5230;&#x4E86;&#x7ED3;&#x679C;&#x3002;</p>
+<p>&#x8FD9;&#x91CC;&#x8FD8;&#x5B58;&#x5728;&#x7684;&#x95EE;&#x9898;&#x662F;&#xFF0C;&#x7EA7;&#x8054;&#x7684;&#x987A;&#x5E8F;&#x8BE5;&#x5982;&#x4F55;&#x5B9A;&#x3002;&#x5982;&#x4E4B;&#x524D;&#x6240;&#x8FF0;&#xFF0C;&#x5173;&#x4E8E;&#x6B27;&#x62C9;&#x89D2;&#x7684;&#x8868;&#x8FBE;&#x5206;&#x4E3A;&#x4F20;&#x7EDF;&#x6B27;&#x62C9;&#x65CB;&#x8F6C;&#x987A;&#x5E8F;&#xFF08;heading-pitch-row&#xFF09;&#x548C;&#x56FA;&#x5B9A;&#x8F74;&#x65CB;&#x8F6C;&#x987A;&#x5E8F;&#xFF08;row-pitch-heading&#xFF09;&#x3002;&#x8FD9;&#x91CC;&#x7528;&#x56FA;&#x5B9A;&#x8F74;&#x7684;&#x65CB;&#x8F6C;&#x987A;&#x5E8F;&#x8FDB;&#x884C;&#x65CB;&#x8F6C;&#xFF0C;&#x5426;&#x5219;&#x7684;&#x8BDD;&#x5728;&#x4E4B;&#x524D;&#x7684;&#x8F74;&#x65CB;&#x8F6C;&#x540E;&#xFF0C;&#x540E;&#x7EED;&#x7684;&#x8F74;&#x5C31;&#x53D1;&#x751F;&#x4E86;&#x53D8;&#x6362;&#x3002;</p>
+<p>&#x53C8;&#x56E0;&#x4E3A;&#x5728;&#x5DE6;&#x624B;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#xFF0C;&#x4E58;&#x6CD5;&#x987A;&#x5E8F;&#x662F;&#x4ECE;&#x5DE6;&#x81F3;&#x53F3;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x6B27;&#x62C9;&#x89D2;&#x5728;&#x7269;&#x4F53;-&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x77E9;&#x9635;&#x4E2D;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{M}_{\text {object} \rightarrow \text {upright}}=\mathbf{B P H}\]</span></p>
+<p>&#x6839;&#x636E;&#x7B2C;&#x4E94;&#x7AE0;&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x53EF;&#x4EE5;&#x5F88;&#x5BB9;&#x6613;&#x7684;&#x5F97;&#x5230;&#x7ED5;&#x7740;&#x6BCF;&#x4E2A;&#x8F74;&#x65CB;&#x8F6C;&#x7684;&#x77E9;&#x9635;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;\mathbf{B}=\mathbf{R}_{z}(b)=\left[\begin{array}{ccc}
+\cos b &amp; \sin b &amp; 0 \\
+-\sin b &amp; \cos b &amp; 0 \\
+0 &amp; 0 &amp; 1
+\end{array}\right]\\
+&amp;\begin{array}{l}
+\mathbf{P}=\mathbf{R}_{x}(p)=\left[\begin{array}{ccc}
+1 &amp; 0 &amp; 0 \\
+0 &amp; \cos p &amp; \sin p \\
+0 &amp; -\sin p &amp; \cos p
+\end{array}\right] \\
+\mathbf{H}=\mathbf{R}_{y}(h)=\left[\begin{array}{ccc}
+\cos h &amp; 0 &amp; -\sin h \\
+0 &amp; 1 &amp; 0 \\
+\sin h &amp; 0 &amp; \cos h
+\end{array}\right]
+\end{array}
+\end{aligned}\]</span></p>
+<p>&#x7ED3;&#x5408;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\mathbf{M}_{o b j e c t \rightarrow u p r i g h t} &amp;=\mathbf{B P H} \\
+&amp;=\left[\begin{array}{ccc}
+\cos h \cos b+\sin h \sin p \sin b &amp; \sin b \cos p &amp; -\sin h \cos b+\cos h \sin p \sin b \\
+-\cos h \sin b+\sin h \sin p \cos b &amp; \cos b \cos p &amp; \sin b \sin h+\cos h \sin p \cos b \\
+\sin h \cos p &amp; -\sin p &amp; \cos h \cos p
+\end{array}\right]
+\end{aligned}\]</span></p>
+<p>&#x76F4;&#x7ACB;-&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x8868;&#x8FBE;&#x53D6;&#x9006;&#x5373;&#x53EF;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\mathbf{M}_{u p r i g h t \rightarrow o b j e c t} &amp;=\mathbf{H}^{-1} \mathbf{P}^{-1} \mathbf{B}^{-1}=\mathbf{R}_{y}(-h) \mathbf{R}_{x}(-p) \mathbf{R}_{z}(-b) \\
+&amp;=\left[\begin{array}{ccc}
+\cos h \cos b+\sin h \sin p \sin b &amp; -\cos h \sin b+\sin h \sin p \cos b &amp;\sin h \cos p \\
+\sin b \cos p &amp; \cos b \cos p &amp;-\sin p\\
+ -\sin h \cos b+\cos h \sin p \sin b &amp;  \sin b \sin h+\cos h \sin p \cos b  &amp;\cos h \cos p
+\end{array}\right]
+\end{aligned}\]</span></p>
+<h3 id="converting-a-matrix-to-euler-angles">Converting a Matrix to Euler angles</h3>
+<ol type="1">
+<li>&#x4ECE;&#x77E9;&#x9635;&#x8F6C;&#x6362;&#x5230;&#x6B27;&#x62C9;&#x89D2;&#xFF0C;&#x9996;&#x5148;&#x8981;&#x786E;&#x8BA4;&#x77E9;&#x9635;&#x8868;&#x8FBE;&#x7684;&#x662F;&#x4EC0;&#x4E48;&#x5F62;&#x5F0F;&#x7684;&#x65CB;&#x8F6C;&#xFF0C;&#x7269;&#x4F53;-&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x8FD8;&#x662F;&#x76F4;&#x7ACB;-&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x3002;</li>
+<li>&#x77E9;&#x9635;&#x8F6C;&#x6362;&#x5230;&#x5230;&#x6B27;&#x62C9;&#x89D2;&#x540E;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x6807;&#x51C6;&#x5750;&#x6807;&#xFF0C;&#x5373;heading&#x548C;bank&#x7684;&#x8303;&#x56F4;&#x4E3A;<span class="math inline">\(\left(-180^{\circ},+180^{\circ}\right]\)</span>&#xFF0C;pitch&#x7684;&#x8303;&#x56F4;&#x662F;<span class="math inline">\(\left[-90^{\circ},+90^{\circ}\right]\)</span></li>
+<li>&#x8FD9;&#x8282;&#x4E2D;&#x65B9;&#x6CD5;&#x9ED8;&#x8BA4;&#x7ED9;&#x7684;&#x77E9;&#x9635;&#x662F;&#x5408;&#x6CD5;&#x7684;&#x65CB;&#x8F6C;&#x77E9;&#x9635;&#x3002;</li>
+</ol>
+<p>&#x9996;&#x5148;&#x662F;&#x5C06;&#x7269;&#x4F53;-&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x77E9;&#x9635;&#x8F6C;&#x6362;&#x4E3A;&#x6B27;&#x62C9;&#x89D2;&#xFF0C;&#x77E9;&#x9635;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><span class="math display">\[\left[\begin{array}{ccc}
+\cos h \cos b+\sin h \sin p \sin b &amp; \sin b \cos p &amp; -\sin h \cos b+\cos h \sin p \sin b \\
+-\cos h \sin b+\sin h \sin p \cos b &amp; \cos b \cos p &amp; \sin b \sin h+\cos h \sin p \cos b \\
+\sin h \cos p &amp; -\sin p &amp; \cos h \cos p
+\end{array}\right]\]</span></p>
+<p>&#x4ECE;&#x5143;&#x7D20;<span class="math inline">\(m_{32}=-\sin p\)</span>&#x4E2D;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x6C42;&#x51FA;pitch&#x89D2;&#x5EA6;,<span class="math inline">\(\arcsin \left(-m_{32}\right)=p\)</span>&#x3002; C&#x6807;&#x51C6;&#x5E93;&#x4E2D;&#x7684;<span class="math inline">\(asin()\)</span>&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7684;&#x6570;&#x503C;&#x8303;&#x56F4;&#x4E3A;<span class="math inline">\([-\pi / 2,+\pi / 2]\)</span>&#xFF0C;&#x6B63;&#x597D;&#x7B26;&#x5408;&#x6807;&#x51C6;&#x5750;&#x6807;&#x5BF9;&#x4E8E;pitch&#x89D2;&#x5EA6;&#x7684;&#x8303;&#x56F4;&#x8981;&#x6C42;&#x3002;&#x6240;&#x4EE5;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[
+p=\operatorname{asin}(-m_{32})
+\]</span></p>
+<p>&#x6C42;heading&#x548C;roll&#x89D2;&#x5EA6;&#x65F6;&#xFF0C;&#x8981;&#x8003;&#x8651;&#x4E07;&#x5411;&#x9501;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x5373;&#x5F53;pitch&#x89D2;&#x5EA6;&#x4E3A;&#x6B63;&#x8D1F;90&#xB0;&#x7684;&#x60C5;&#x51B5;&#x3002;</p>
+<p>&#x9996;&#x5148;&#x5982;&#x679C;&#x4E0D;&#x662F;&#x4E07;&#x5411;&#x9501;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x5143;&#x7D20;<span class="math inline">\(m_{31}=\sin h \cos p\)</span>&#x548C;&#x5143;&#x7D20;<span class="math inline">\(m_{33}=\cos h \cos p\)</span>&#x6C42;&#x51FA;&#xFF0C;</p>
+<p>&#x5373;</p>
+<p><span class="math display">\[h=\operatorname{atan2} (\sin h, \cos h)=\operatorname{atan2} \left(m_{31} / \cos p, m_{33} / \cos p\right)\]</span></p>
+<p>&#x56E0;&#x4E3A;pitch&#x89D2;&#x5EA6;&#x4E0D;&#x4E3A;<span class="math inline">\(\pm 90 ^{\circ}\)</span>&#xFF0C;&#x6240;&#x4EE5;<span class="math inline">\(\cos p\)</span>&#x4E0D;&#x4E3A;0&#xFF0C;&#x4E14;&#x53EF;&#x4EE5;&#x7EA6;&#x5206;&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[h=\operatorname{atan2} \left(m_{31}, m_{33}\right)\]</span></p>
+<p>C&#x6807;&#x51C6;&#x5E93;&#x4E2D;&#x7684;<span class="math inline">\(atan2()\)</span>&#x51FD;&#x6570;&#x8868;&#x793A;&#x8FDB;&#x884C;<span class="math inline">\(\arctan\)</span>c&#x64CD;&#x4F5C;&#xFF08;2&#x4E3A;&#x51FD;&#x6570;&#x540D;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x5E76;&#x4E0D;&#x662F;&#x4E58;2&#xFF09;&#xFF0C;&#x8303;&#x56F4;&#x662F;<span class="math display">\[[-\pi,+\pi]\]</span>&#xFF0C;&#x540C;&#x6837;&#x7B26;&#x5408;&#x6807;&#x51C6;&#x5750;&#x6807;&#x7684;&#x8303;&#x56F4;&#x3002;</p>
+<p>&#x7C7B;&#x4F3C;&#x7684;&#x5728;&#x975E;&#x4E07;&#x5411;&#x9501;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5143;&#x7D20;<span class="math inline">\(m_{12}=\sin b \cos p\)</span>&#x548C;&#x5143;&#x7D20;<span class="math inline">\(m_{22}=\cos b \cos p\)</span>&#x6C42;&#x51FA;roll&#x89D2;&#x5EA6;&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[\begin{aligned}
+b &amp;=\operatorname{atan2} (\sin b, \cos b)=\operatorname{atan2} \left(m_{12} / \cos p, m_{22} / \cos p\right) \\
+&amp;=\operatorname{atan2} \left(m_{12}, m_{22}\right)
+\end{aligned}\]</span></p>
+<p>&#x800C;&#x5728;&#x4E07;&#x5411;&#x9501;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x56E0;&#x4E3A;<span class="math inline">\(p=\pm 90^{\circ}&#xFF0C;&#x5373;\)</span><span class="math inline">\(\cos p=0\)</span>&#xFF0C;&#x6240;&#x4EE5;&#x65E0;&#x6CD5;&#x5C06;<span class="math inline">\(\cos p\)</span>&#x4F5C;&#x4E3A;&#x5206;&#x6BCD;&#x3002;&#x800C;&#x4E14;&#x6B64;&#x65F6;&#xFF0C;heading&#x89D2;&#x5EA6;&#x548C;roll&#x89D2;&#x5EA6;&#x7684;&#x65CB;&#x8F6C;&#x662F;&#x76F8;&#x540C;&#x6548;&#x679C;&#x7684;&#x3002;</p>
+<p>&#x5728;&#x4E07;&#x5411;&#x9501;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x9650;&#x5B9A;roll&#x89D2;&#x5EA6;&#x4E3A;0&#xFF0C;&#x5373;<span class="math inline">\(b=0, \sin b =0 \cos b=1\)</span>&#xFF0C;&#x6B64;&#x65F6;&#x901A;&#x8FC7;&#x5143;&#x7D20;<span class="math inline">\(m_{11}=\cos h \cos b+\sin h \sin p \sin b\)</span>&#x548C;&#x5143;&#x7D20;<span class="math inline">\(m_{13}=-\sin h \cos b+\cos h \sin p \sin b\)</span>&#x6765;&#x6C42;&#x5F97;heading&#x89D2;&#x5EA6;&#x3002;</p>
+<p>&#x5C06;<span class="math inline">\(\cos b=1, \sin p=1, \sin b=0\)</span>&#xFF0C;&#x5E26;&#x5165;&#x5F97;</p>
+<p><span class="math display">\[
+m_{11}=\cos h \quad m_{13}=-\sin h
+\]</span></p>
+<p>&#x5373;</p>
+<p><span class="math display">\[h=\operatorname{atan2} \left(-m_{13}, m_{11}\right)\]</span></p>
+<p>&#x76F4;&#x7ACB;-&#x7269;&#x4F53;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x77E9;&#x9635;&#x5230;&#x6B27;&#x62C9;&#x89D2;&#x7684;&#x8F6C;&#x6362;&#x96F7;&#x540C;&#xFF0C;&#x77E9;&#x9635;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[
+\left[\begin{array}{ccc}
+\cos h \cos b+\sin h \sin p \sin b &amp; -\cos h \sin b+\sin h \sin p \cos b &amp;\sin h \cos p \\
+\sin b \cos p &amp; \cos b \cos p &amp;-\sin p\\
+ -\sin h \cos b+\cos h \sin p \sin b &amp;  \sin b \sin h+\cos h \sin p \cos b  &amp;\cos h \cos p
+\end{array}\right]
+\]</span></p>
+<p>&#x6B27;&#x62C9;&#x89D2;&#x8BA1;&#x7B97;&#x65B9;&#x6CD5;&#x4E3A;</p>
+<p><span class="math display">\[
+p=\operatorname{asin}(-m_{23})
+\]</span></p>
+<p>&#x5F53;&#x975E;&#x4E07;&#x5411;&#x9501;&#x65F6;&#xFF0C;&#x5373;<span class="math inline">\(p\neq \pm 90^{\circ}\)</span>&#x65F6;&#xFF0C;&#x6709;&#xFF1A;</p>
+<p><span class="math display">\[
+h=\operatorname{atan2} \left(m_{13}, m_{33}\right) \\
+b=\operatorname{atan2} \left(m_{21}, m_{22}\right)
+\]</span></p>
+<p>&#x5F53;&#x4E07;&#x5411;&#x9501;&#x65F6;&#xFF0C;&#x5373;<span class="math inline">\(p= \pm 90^{\circ}\)</span>&#x65F6;&#xFF0C;&#x6709;&#xFF1A;</p>
+<p><span class="math display">\[
+b=0 \\
+h=\operatorname{atan2} \left(m_{31}, m_{11}\right)
+\]</span></p>
+<p>//TODO</p>
+<p>&#x4E66;&#x4E2D;&#x7ED9;&#x51FA;&#x4ECE;&#x6B27;&#x62C9;&#x89D2;&#x8F6C;&#x6362;&#x4E3A;&#x7269;&#x4F53;-&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x77E9;&#x9635;&#x7684;&#x4EE3;&#x7801;</p>
+<h3 id="converting-a-quaternion-to-a-matrix">Converting a Quaternion to a Matrix</h3>
+<p>&#x56E0;&#x4E3A;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x8868;&#x8FBE;&#x7684;&#x662F;&#x7ED5;&#x7740;&#x4EFB;&#x610F;&#x8F74;<span class="math inline">\(\hat{n}\)</span>&#x65CB;&#x8F6C;<span class="math inline">\(\theta\)</span>&#xFF0C;&#x800C;&#x8FD9;&#x4E2A;&#x540C;&#x6837;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x77E9;&#x9635;&#x8868;&#x8FBE;&#xFF0C;&#x5373;&#x7B2C;&#x4E94;&#x7AE0;&#x4E2D;&#x5F97;&#x51FA;&#x7684;&#xFF1A;</p>
+<p><span class="math display">\[\left[\begin{array}{ccc}
+n_{x}^{2}(1-\cos \theta)+\cos \theta &amp; n_{x} n_{y}(1-\cos \theta)+n_{z} \sin \theta &amp; n_{x} n_{z}(1-\cos \theta)-n_{y} \sin \theta \\
+n_{x} n_{y}(1-\cos \theta)-n_{z} \sin \theta &amp; n_{y}^{2}(1-\cos \theta)+\cos \theta &amp; n_{y} n_{z}(1-\cos \theta)+n_{x} \sin \theta \\
+n_{x} n_{z}(1-\cos \theta)+n_{y} \sin \theta &amp; n_{y} n_{z}(1-\cos \theta)-n_{x} \sin \theta &amp; n_{z}^{2}(1-\cos \theta)+\cos \theta
+\end{array}\right]\]</span></p>
+<p>&#x800C;&#x8F6C;&#x6362;&#x56DB;&#x5143;&#x6570;&#x5230;&#x77E9;&#x9635;&#x7684;&#x601D;&#x8DEF;&#xFF0C;&#x5C31;&#x662F;&#x7528;&#x56DB;&#x5143;&#x6570;&#x7684;&#x56DB;&#x4E2A;&#x5143;&#x7D20;&#x6765;&#x53D6;&#x4EE3;&#x4E0A;&#x9762;&#x77E9;&#x9635;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x56DB;&#x5143;&#x6570;&#x7684;&#x56DB;&#x4E2A;&#x5143;&#x7D20;&#x5206;&#x522B;&#x8868;&#x793A;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\begin{array}{l}
+w=\cos (\theta / 2) \\
+x=n_{x} \sin (\theta / 2) \\
+y=n_{y} \sin (\theta / 2) \\
+z=n_{z} \sin (\theta / 2)
+\end{array}\]</span></p>
+<p>&#x901A;&#x8FC7;&#x89C2;&#x5BDF;&#x7ED5;&#x4EFB;&#x610F;&#x8F74;&#x65CB;&#x8F6C;&#x7684;&#x77E9;&#x9635;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#xFF0C;&#x5BF9;&#x89D2;&#x7EBF;&#x5143;&#x7D20;&#x7684;&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#x662F;&#x4E00;&#x79CD;&#x7C7B;&#x578B;&#xFF0C;&#x975E;&#x5BF9;&#x89D2;&#x7EBF;&#x5143;&#x7D20;&#x7684;&#x8868;&#x8FBE;&#x65B9;&#x5F0F;&#x662F;&#x53E6;&#x4E00;&#x79CD;&#x7C7B;&#x578B;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x53EA;&#x8981;&#x5206;&#x522B;&#x6C42;&#x51FA;&#x4E00;&#x4E2A;&#x5BF9;&#x89D2;&#x7EBF;&#x5143;&#x7D20;&#x7684;&#x8F6C;&#x6362;&#x548C;&#x4E00;&#x4E2A;&#x975E;&#x5BF9;&#x89D2;&#x7EBF;&#x5143;&#x7D20;&#x7684;&#x8F6C;&#x6362;&#xFF0C;&#x5176;&#x4ED6;&#x7684;&#x5143;&#x7D20;&#x90FD;&#x53EF;&#x4EE5;&#x7C7B;&#x6BD4;&#x5F97;&#x5230;&#x3002;</p>
+<p>&#x9996;&#x5148;&#x6C42;&#x5BF9;&#x89D2;&#x7EBF;&#x5143;&#x7D20;<span class="math inline">\(m_{11}\)</span>&#xFF0C;&#x901A;&#x8FC7;&#x7B49;&#x5F0F;&#x4EE3;&#x6362;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x4E3A;&#x56DB;&#x5143;&#x6570;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+m_{11} &amp;=n_{x}^{2}(1-\cos \theta)+\cos \theta \\
+&amp;=n_{x}^{2}-n_{x}^{2} \cos \theta+\cos \theta \\
+&amp;=1-1+n_{x}^{2}-n_{x}^{2} \cos \theta+\cos \theta \\
+&amp;=1-\left(1-n_{x}^{2}+n_{x}^{2} \cos \theta-\cos \theta\right) \\
+&amp;=1-\left(1-\cos \theta-n_{x}^{2}+n_{x}^{2} \cos \theta\right) \\
+&amp;=1-\left(1-n_{x}^{2}\right)(1-\cos \theta)
+\end{aligned}\]</span></p>
+<p>&#x6839;&#x636E;&#x500D;&#x89D2;&#x516C;&#x5F0F;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x4E00;&#x6B65;&#x62C6;&#x5206;<span class="math inline">\(\cos \theta\)</span>&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+\cos 2 \alpha &amp;=1-2 \sin ^{2} \alpha \\
+\cos \theta &amp;=1-2 \sin ^{2}(\theta / 2)
+\end{aligned}\]</span></p>
+<p>&#x5E26;&#x5165;&#x4E0A;&#x8FF0;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+m_{11} &amp;=1-\left(1-n_{x}^{2}\right)(1-\cos \theta) \\
+&amp;=1-\left(1-n_{x}^{2}\right)\left(1-\left(1-2 \sin ^{2}(\theta / 2)\right)\right) \\
+&amp;=1-\left(1-n_{x}^{2}\right)\left(2 \sin ^{2}(\theta / 2)\right)
+\end{aligned}\]</span></p>
+<p>&#x56E0;&#x4E3A;<span class="math inline">\(\hat{\mathbf{n}}\)</span>&#x662F;&#x4E00;&#x4E2A;&#x5355;&#x4F4D;&#x5411;&#x91CF;&#xFF0C;&#x6240;&#x4EE5;&#x6709;<span class="math inline">\(n_{x}^{2}+n_{y}^{2}+n_{z}^{2}=1\)</span>&#xFF0C;&#x5E26;&#x5165;&#x4E0A;&#x5F0F;&#x53EF;&#x7EE7;&#x7EED;&#x4EE3;&#x6362;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+m_{11} &amp;=1-\left(1-n_{x}^{2}\right)\left(2 \sin ^{2}(\theta / 2)\right) \\
+&amp;=1-\left(n_{y}^{2}+n_{z}^{2}\right)\left(2 \sin ^{2}(\theta / 2)\right) \\
+&amp;=1-2 n_{y}^{2} \sin ^{2}(\theta / 2)-2 n_{z}^{2} \sin ^{2}(\theta / 2) \\
+&amp;=1-2 y^{2}-2 z^{2}
+\end{aligned}\]</span></p>
+<p>&#x53EF;&#x7C7B;&#x6BD4;&#x5F97;&#x5230;&#x5176;&#x4ED6;&#x5F97;&#x5BF9;&#x89D2;&#x7EBF;&#x5143;&#x7D20; <span class="math display">\[
+m_{22}=1-2x^2-2z^2 \\
+m_{33}=1-2x^2-2y^2
+\]</span></p>
+<p>&#x5728;&#x6C42;&#x975E;&#x5BF9;&#x89D2;&#x7EBF;&#x5143;&#x7D20;<span class="math inline">\(m_{12}\)</span>&#xFF0C;&#x540C;&#x6837;&#x662F;&#x901A;&#x8FC7;&#x7B49;&#x5F0F;&#x4EE3;&#x6362;&#xFF0C;&#x9996;&#x5148;&#x6839;&#x636E;&#x500D;&#x89D2;&#x516C;&#x5F0F;&#x53EF;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;\sin 2 \alpha=2 \sin \alpha \cos \alpha\\
+&amp;\sin \theta=2 \sin (\theta / 2) \cos (\theta / 2)
+\end{aligned}\]</span></p>
+<p>&#x4E0E;&#x4E4B;&#x524D;&#x7684;<span class="math inline">\(\cos\)</span>&#x7684;&#x500D;&#x89D2;&#x516C;&#x5F0F;&#x7ED3;&#x679C;&#x4E00;&#x8D77;&#x5E26;&#x5165;<span class="math inline">\(m_{12}\)</span>&#xFF0C;&#x5F97;</p>
+<p><span class="math display">\[\begin{aligned}
+m_{12} &amp;=n_{x} n_{y}(1-\cos \theta)+n_{z} \sin \theta \\
+&amp;=n_{x} n_{y}\left(1-\left(1-2 \sin ^{2}(\theta / 2)\right)\right)+n_{z}(2 \sin (\theta / 2) \cos (\theta / 2)) \\
+&amp;=n_{x} n_{y}\left(2 \sin ^{2}(\theta / 2)\right)+2 n_{z} \sin (\theta / 2) \cos (\theta / 2) \\
+&amp;=2\left(n_{x} \sin (\theta / 2)\right)\left(n_{y} \sin (\theta / 2)\right)+2 \cos (\theta / 2)\left(n_{z} \sin (\theta / 2)\right) \\
+&amp;=2 x y+2 w z
+\end{aligned}\]</span></p>
+<p>&#x7C7B;&#x6BD4;&#x53EF;&#x5F97;&#x5176;&#x4ED6;&#x7684;&#x975E;&#x5BF9;&#x89D2;&#x5143;&#x7D20;&#xFF0C;&#x5982;&#xFF1A;</p>
+<p><span class="math inline">\(m_{13}=2xz-2wy\)</span></p>
+<p>&#x6700;&#x7EC8;&#x8F6C;&#x6362;&#x4E3A;&#x7684;&#x77E9;&#x9635;&#x4E3A;:</p>
+<p><span class="math display">\[\left[\begin{array}{ccc}
+1-2 y^{2}-2 z^{2} &amp; 2 x y+2 w z &amp; 2 x z-2 w y \\
+2 x y-2 w z &amp; 1-2 x^{2}-2 z^{2} &amp; 2 y z+2 w x \\
+2 x z+2 w y &amp; 2 y z-2 w x &amp; 1-2 x^{2}-2 y^{2}
+\end{array}\right]\]</span></p>
+<h3 id="converting-a-matrix-to-a-quaternion">Converting a Matrix to a Quaternion</h3>
+<p>&#x77E9;&#x9635;&#x8F6C;&#x6362;&#x4E3A;&#x56DB;&#x5143;&#x6570;&#x7684;&#x4E3B;&#x8981;&#x601D;&#x8DEF;&#x662F;&#x901A;&#x8FC7;&#x7EC4;&#x5408;&#x77E9;&#x9635;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x6765;&#x83B7;&#x5F97;&#x56DB;&#x5143;&#x6570;&#x56DB;&#x4E2A;&#x5143;&#x7D20;&#x7684;&#x8868;&#x8FBE;&#x3002;&#x800C;&#x77E9;&#x9635;&#x4E2D;&#x7684;&#x5BF9;&#x89D2;&#x7EBF;&#x5143;&#x7D20;&#xFF0C;&#x4E0D;&#x5305;&#x542B;&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x56DB;&#x5143;&#x6570;&#x5143;&#x7D20;&#x7684;&#x4E58;&#x79EF;&#xFF0C;&#x6240;&#x4EE5;&#x901A;&#x8FC7;&#x77E9;&#x9635;&#x7684;&#x5BF9;&#x89D2;&#x7EBF;&#x5143;&#x7D20;&#x6765;&#x8BA1;&#x7B97;&#xFF1A;</p>
+<p>&#x5982;&#x7D2F;&#x52A0;&#x4E09;&#x4E2A;&#x5BF9;&#x89D2;&#x5143;&#x7D20;&#xFF0C;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+m_{11}+m_{22}+m_{33}
+&amp;=\left(1-2 y^{2}-2 z^{2}\right)+\left(1-2 x^{2}-2 z^{2}\right)+\left(1-2 x^{2}-2 y^{2}\right) \\
+&amp;=3-4\left(x^{2}+y^{2}+z^{2}\right) \\
+&amp;=3-4\left(1-w^{2}\right) \\
+&amp;=4 w^{2}-1
+\end{aligned}\]</span></p>
+<p>&#x540C;&#x6837;&#x53EF;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+m_{11}-m_{22}-m_{33} &amp;=\left(1-2 y^{2}-2 z^{2}\right)-\left(1-2 x^{2}-2 z^{2}\right)-\left(1-2 x^{2}-2 y^{2}\right) \\
+&amp;=4 x^{2}-1 \\
+-m_{11}+m_{22}-m_{33} &amp;=-\left(1-2 y^{2}-2 z^{2}\right)+\left(1-2 x^{2}-2 z^{2}\right)-\left(1-2 x^{2}-2 y^{2}\right) \\
+&amp;=4 y^{2}-1 \\
+-m_{11}-m_{22}+m_{33} &amp;=-\left(1-2 y^{2}-2 z^{2}\right)-\left(1-2 x^{2}-2 z^{2}\right)+\left(1-2 x^{2}-2 y^{2}\right) \\
+&amp;=4 z^{2}-1
+\end{aligned}\]</span></p>
+<p>&#x56E0;&#x6B64;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;w=\frac{\sqrt{m_{11}+m_{22}+m_{33}+1}}{2}\\
+&amp;x=\frac{\sqrt{m_{11}-m_{22}-m_{33}+1}}{2}\\
+&amp;y=\frac{\sqrt{-m_{11}+m_{22}-m_{33}+1}}{2}\\
+&amp;z=\frac{\sqrt{-m_{11}-m_{22}+m_{33}+1}}{2}
+\end{aligned}\]</span></p>
+<p>&#x4F46;&#x8FD9;&#x4E2A;&#x8BA1;&#x7B97;&#x65B9;&#x5F0F;&#x7684;&#x95EE;&#x9898;&#x5728;&#x4E8E;&#xFF0C;&#x56E0;&#x4E3A;&#x662F;&#x901A;&#x8FC7;&#x6839;&#x53F7;&#x6C42;&#x5F97;&#x7ED3;&#x679C;&#xFF0C;&#x6240;&#x4EE5;&#x56DB;&#x4E2A;&#x5143;&#x7D20;&#x7684;&#x7ED3;&#x679C;&#x90FD;&#x662F;&#x6B63;&#x6570;&#x3002;&#x5728;&#x56DB;&#x5143;&#x6570;&#x4E2D;&#xFF0C;<span class="math inline">\(\mathbf{q}\)</span>&#x548C;<span class="math inline">\(\mathbf{-q}\)</span>&#x8868;&#x8FBE;&#x7684;&#x662F;&#x76F8;&#x540C;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x6240;&#x4EE5;&#x5355;&#x4E00;&#x7684;&#x5143;&#x7D20;&#x5230;&#x5E95;&#x662F;&#x6B63;&#x6570;&#x8FD8;&#x662F;&#x8D1F;&#x6570;&#x6CA1;&#x6709;&#x5173;&#x7CFB;&#xFF0C;&#x53EA;&#x8981;&#x5176;&#x4ED6;&#x7684;&#x5143;&#x7D20;&#x76F8;&#x5E94;&#x53D8;&#x5316;&#x5C31;&#x53EF;&#x4EE5;&#xFF0C;&#x4F46;&#x662F;&#x6240;&#x6709;&#x7684;&#x5143;&#x7D20;&#x90FD;&#x4E00;&#x5B9A;&#x662F;&#x6B63;&#x6570;&#x4F1A;&#x9020;&#x6210;&#x95EE;&#x9898;&#x3002;</p>
+<p>&#x6839;&#x636E;&#x975E;&#x5BF9;&#x89D2;&#x5143;&#x7D20;&#x7684;&#x7EC4;&#x5408;&#x53EF;&#x5F97;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;m_{12}+m_{21}=(2 x y+2 w z)+(2 x y-2 w z)=4 x y\\
+&amp;\begin{array}{l}
+m_{12}-m_{21}=(2 x y+2 w z)-(2 x y-2 w z)=4 w z \\
+m_{31}+m_{13}=(2 x z+2 w y)+(2 x z-2 w y)=4 x z \\
+m_{31}-m_{13}=(2 x z+2 w y)-(2 x z-2 w y)=4 w y \\
+m_{23}+m_{32}=(2 y z+2 w x)+(2 y z-2 w x)=4 y z \\
+m_{23}-m_{32}=(2 y z+2 w x)-(2 y z-2 w x)=4 w x
+\end{array}
+\end{aligned}\]</span></p>
+<p>&#x7528;&#x4E4B;&#x524D;&#x7684;&#x6839;&#x53F7;&#x6C42;&#x89E3;&#x51FA;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x6570;&#x503C;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;&#x8FD9;&#x4E9B;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x6C42;&#x51FA;&#x6B63;&#x786E;&#x7684;&#x7B54;&#x6848;&#xFF0C;&#x5373;&#x5982;&#x4E0B;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x56DB;&#x9009;&#x4E00;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+&amp;w=\frac{\sqrt{m_{11}+m_{22}+m_{33}+1}}{2} \Longrightarrow x=\frac{m_{23}-m_{32}}{4 w} \quad y=\frac{m_{31}-m_{13}}{4 w} \quad z=\frac{m_{12}-m_{21}}{4 w}\\
+&amp;x=\frac{\sqrt{m_{11}-m_{22}-m_{33}+1}}{2} \Longrightarrow w=\frac{m_{23}-m_{32}}{4 x} \quad y=\frac{m_{12}+m_{21}}{4 x} \quad z=\frac{m_{31}+m_{13}}{4 x}\\
+&amp;y=\frac{\sqrt{-m_{11}+m_{22}-m_{33}+1}}{2} \Longrightarrow w=\frac{m_{31}-m_{13}}{4 y} \quad x=\frac{m_{12}+m_{21}}{4 y} \quad z=\frac{m_{23}+m_{32}}{4 y}\\
+&amp;z=\frac{\sqrt{-m_{11}-m_{22}+m_{33}+1}}{2} \Longrightarrow w=\frac{m_{12}-m_{21}}{4 z} \quad x=\frac{m_{31}+m_{13}}{4 z} \quad y=\frac{m_{23}+m_{32}}{4 z}
+\end{aligned}\]</span></p>
+<p>&#x65B0;&#x95EE;&#x9898;&#x662F;&#xFF0C;&#x5982;&#x4F55;&#x51B3;&#x5B9A;&#x53D6;&#x54EA;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x7528;&#x6839;&#x53F7;&#x6C42;&#x89E3;&#xFF1F;</p>
+<p>&#x901A;&#x5E38;&#x7684;&#x505A;&#x6CD5;&#x662F;&#x5148;&#x8BA1;&#x7B97;&#x51FA;&#x6BCF;&#x4E2A;&#x5143;&#x7D20;&#x7684;&#x5E73;&#x65B9;&#x503C;&#xFF0C;&#x7136;&#x540E;&#x7528;&#x5E73;&#x65B9;&#x503C;&#x6700;&#x5927;&#x7684;&#x5143;&#x7D20;&#x5F00;&#x6839;&#xFF0C;&#x518D;&#x901A;&#x8FC7;&#x7ED3;&#x679C;&#x6C42;&#x89E3;&#x5176;&#x4ED6;&#x503C;&#x3002;</p>
+<p>//TODO</p>
+<p>&#x4E66;&#x4E2D;&#x7ED9;&#x51FA;&#x4ECE;&#x77E9;&#x9635;&#x8F6C;&#x6362;&#x5230;&#x6B27;&#x62C9;&#x89D2;&#x7684;&#x4EE3;&#x7801;</p>
+<h3 id="converting-euler-angles-to-a-quaternion">Converting Euler Angles to a Quaternion</h3>
+<p>&#x5982;&#x540C;&#x6B27;&#x62C9;&#x89D2;&#x8F6C;&#x6362;&#x4E3A;&#x77E9;&#x9635;&#x4E00;&#x6837;&#xFF0C;&#x6B27;&#x62C9;&#x89D2;&#x8F6C;&#x6362;&#x5230;&#x56DB;&#x5143;&#x6570;&#x4E5F;&#x4E00;&#x6837;&#x8981;&#x8003;&#x8651;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;<code>&#x7269;&#x4F53;-&#x76F4;&#x7ACB;&#x56DB;&#x5143;&#x6570;</code>&#x548C;<code>&#x76F4;&#x7ACB;-&#x7269;&#x4F53;&#x56DB;&#x5143;&#x6570;</code>&#x3002;&#x56E0;&#x4E3A;&#x4E24;&#x8005;&#x76F8;&#x4E92;&#x53D6;&#x5171;&#x8F6D;&#x5C31;&#x80FD;&#x8F6C;&#x6362;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x8BA8;&#x8BBA;<code>&#x7269;&#x4F53;-&#x76F4;&#x7ACB;&#x56DB;&#x5143;&#x6570;</code>&#x3002;</p>
+<p>&#x56DB;&#x5143;&#x6570;&#x7684;&#x8F6C;&#x6362;&#xFF0C;&#x5982;&#x77E9;&#x9635;&#x7684;&#x8F6C;&#x6362;&#x7C7B;&#x4F3C;&#xFF0C;&#x540C;&#x6837;&#x662F;&#x901A;&#x8FC7;&#x6C42;&#x6BCF;&#x4E2A;&#x8F74;&#x7684;&#x56DB;&#x5143;&#x6570;&#x8868;&#x8FBE;&#xFF0C;&#x7136;&#x540E;&#x7EA7;&#x8054;&#x5F97;&#x5230;&#x3002;&#x5176;&#x4E2D;&#x6BCF;&#x4E2A;&#x6BCF;&#x4E2A;&#x8F74;&#x7684;&#x65CB;&#x8F6C;&#x56DB;&#x5143;&#x6570;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\mathbf{h}=\left[\begin{array}{c}\cos (h / 2) \\
+\left(\begin{array}{c}
+0 \\
+\sin (h / 2) \\
+0 \end{array}\right) \end{array}\right],  \quad \mathbf{p}= \left[\begin{array}{c} \cos (p / 2) \\
+\left(\begin{array}{c} \sin (p / 2) \\
+0 \\ 0 \end{array}\right) \end{array}\right], 
+\quad \mathbf{b}= \left[\begin{array}{c} \cos (b / 2) \\
+\left(\begin{array}{c} 0 \\
+0 \\ \sin (p / 2)  \end{array}\right) \end{array}\right]\]</span></p>
+<p>&#x800C;&#x4E14;&#x540C;&#x6837;&#x662F;&#x901A;&#x8FC7;&#x56FA;&#x5B9A;&#x8F74;&#xFF0C;&#x5373;&#x8BA1;&#x7B97;&#x987A;&#x5E8F;&#x4E3A;<span class="math inline">\(roll-pitch-heading\)</span>&#x3002;&#x4F46;&#x4E0D;&#x540C;&#x7684;&#x662F;&#x56DB;&#x5143;&#x6570;&#x7684;&#x4E58;&#x6CD5;&#x7ED3;&#x5408;&#x987A;&#x5E8F;&#x662F;&#x4ECE;&#x53F3;&#x5230;&#x5DE6;&#x7684;&#x3002;&#x56E0;&#x6B64;&#x7ED3;&#x5408;&#x7684;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\begin{array}{l} \mathbf{q}_{object \rightarrow upright}(h, p, b)=\mathbf{hpb} \\ 
+=\left[\begin{array}{c} \cos (h / 2) \\
+\left(\begin{array}{c}0 \\ \sin (h / 2) \\
+0 \end{array}\right) \end{array}\right]
+\left[\begin{array}{c} \cos (p / 2) \\
+\left(\begin{array}{c}\sin (p / 2) \\0 \\ 0
+\end{array}\right) \end{array}\right]
+\left[\begin{array}{c} \cos (b / 2) \\
+\left(\begin{array}{c}0 \\0 \\ \sin (b / 2)
+\end{array}\right) \end{array}\right] \\
+=\left[\begin{array}{c} \cos (h / 2) \cos (p / 2) \\
+\left(\begin{array}{c} \cos (h / 2) \sin (p / 2) \\
+\sin (h / 2) \cos (p / 2) \\
+-\sin (h / 2) \sin (p / 2) \end{array}\right) \end{array}\right]
+\left[\begin{array}{c} \cos (b / 2) \\
+\left(\begin{array}{c} 0 \\
+0 \\
+\sin (b / 2) \end{array}\right) \end{array}\right] \\
+=\left[\begin{array}{c} \cos (h / 2) \cos (p / 2) \cos (b / 2)+\sin (h / 2) \sin (p / 2) \sin (b / 2) \\
+\left(\begin{array}{c} \cos (h / 2) \sin (p / 2) \cos (b / 2)+\sin (h / 2) \cos (p / 2) \sin (b / 2) \\
+\sin (h / 2) \cos (p / 2) \cos (b / 2)-\cos (h / 2) \sin (p / 2) \sin (b / 2) \\
+\cos (h / 2) \cos (p / 2) \sin (b / 2)-\sin (h / 2) \sin (p / 2) \cos (b / 2) \end{array}\right) \end{array}\right]
+\end{array}
+\]</span></p>
+<p>&#x76F4;&#x7ACB;&#x5750;&#x6807;&#x7CFB;&#x5230;&#x7A7A;&#x95F4;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x56DB;&#x5143;&#x6570;&#x4E3A;&#xFF1A;</p>
+<p><span class="math display">\[\begin{array}{l}
+\mathbf{q}_{upright \rightarrow object}(h, p, b)
+= \mathbf{q}_{object \rightarrow upright }(h, p, b)^{*} \\
+=\left[\begin{array}{c}
+\cos (h / 2) \cos (p / 2) \cos (b / 2)+\sin (h / 2) \sin (p / 2) \sin (b / 2) \\
+\left(\begin{array}{c} -\cos (h / 2) \sin (p / 2) \cos (b / 2)-\sin (h / 2) \cos (p / 2) \sin (b / 2) \\
+\cos (h / 2) \sin (p / 2) \sin (b / 2)-\sin (h / 2) \cos (p / 2) \cos (b / 2) \\
+\sin (h / 2) \sin (p / 2) \cos (b / 2)-\cos (h / 2) \cos (p / 2) \sin (b / 2)
+\end{array}\right) 
+\end{array}\right]
+\end{array}\]</span></p>
+<h3 id="converting-a-quaternion-to-euler-angles">Converting a Quaternion to Euler Angles</h3>
+<p>&#x9996;&#x5148;&#x8BA8;&#x8BBA;&#x4ECE;&#x7269;&#x4F53;-&#x76F4;&#x7ACB;&#x56DB;&#x5143;&#x6570;&#x8F6C;&#x6362;&#x4E3A;&#x6B27;&#x62C9;&#x89D2;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x4E4B;&#x524D;&#x5DF2;&#x7ECF;&#x6C42;&#x51FA;&#x4E86;&#x5982;&#x4F55;&#x4ECE;&#x77E9;&#x9635;&#x8F6C;&#x6362;&#x4E3A;&#x6B27;&#x62C9;&#x89D2;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><span class="math display">\[\begin{array}{lll}
+p &amp; =\arcsin \left(-m_{32}\right) \\
+h &amp; =\left\{\begin{array}{ll}
+\operatorname{atan2}\left(m_{31}, m_{33}\right) &amp; \text { if } \cos p \neq 0 \\
+\operatorname{atan2}\left(-m_{13}, m_{11}\right) &amp; \text { otherwise }
+\end{array}\right. \\
+b &amp; =\left\{\begin{array}{ll}
+\operatorname{atan2}\left(m_{12}, m_{22}\right) &amp; \text { if } \cos p \neq 0 \\
+0 &amp; \text { otherwise }
+\end{array}\right.
+\end{array}\]</span></p>
+<p>&#x540C;&#x6837;&#x6C42;&#x51FA;&#x4E86;&#x77E9;&#x9635;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#xFF0C;&#x5982;&#x4F55;&#x7528;&#x56DB;&#x5143;&#x6570;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x8868;&#x8FBE;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+m_{11}=1-2 y^{2}-2 z^{2}, \quad &amp; m_{12}=2 x y+2 w z, \quad m_{13}=2 x z-2 w y, \\
+&amp; m_{22}=1-2 x^{2}-2 z^{2} \\
+m_{31}=2 x z+2 w y, \quad &amp; m_{32}=2 y z-2 w x, \quad m_{33}=1-2 x^{2}-2 y^{2}
+\end{aligned}\]</span></p>
+<p>&#x5C06;&#x4E24;&#x8005;&#x7ED3;&#x5408;&#x5C31;&#x80FD;&#x5F97;&#x5230;&#x56DB;&#x5143;&#x6570;&#x8F6C;&#x6362;&#x4E3A;&#x6B27;&#x62C9;&#x89D2;&#x7684;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<p><span class="math display">\[\begin{aligned}
+p &amp;=\arcsin \left(-m_{32}\right) \\
+&amp;=\arcsin (-2(y z-w x))
+\end{aligned}\]</span></p>
+<p><span class="math display">\[h=\left\{\begin{array}{ll}
+\operatorname{atan2} \left(m_{31}, m_{33}\right) \\
+=\operatorname{atan2} \left(2 x z+2 w y, 1-2 x^{2}-2 y^{2}\right) &amp; \text { if } \cos p \neq 0 \\
+=\operatorname{atan2} \left(x z+w y, 1 / 2-x^{2}-y^{2}\right) \\
+\operatorname{atan2}\left(-m_{13}, m_{11}\right) \\
+=\operatorname{atan2}\left(-2 x z+2 w y, 1-2 y^{2}-2 z^{2}\right) &amp; \text { otherwise } \\
+=\operatorname{atan2}\left(-x z+w y, 1 / 2-y^{2}-z^{2}\right)
+\end{array}\right.\]</span></p>
+<p><span class="math display">\[b=\left\{\begin{array}{ll}
+\operatorname{atan} 2\left(m_{12}, m_{22}\right) &amp; \text { if } \cos p \neq 0 \\
+=\operatorname{atan} 2\left(2 x y+2 w z, 1-2 x^{2}-2 z^{2}\right) &amp; \\
+=\operatorname{atan} 2\left(x y+w z, 1 / 2-x^{2}-z^{2}\right)
+\\
+0 &amp; otherwise
+\end{array}\right.\]</span></p>
+<p>&#x4ECE;&#x76F4;&#x7ACB;-&#x7269;&#x4F53;&#x56DB;&#x5143;&#x6570;&#x8F6C;&#x6362;&#x4E3A;&#x6B27;&#x62C9;&#x89D2;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5C06;<span class="math inline">\(x,y,z\)</span>&#x4E09;&#x4E2A;&#x5143;&#x7D20;&#x53D6;&#x53CD;&#x5373;&#x53EF;&#xFF0C;&#x56E0;&#x4E3A;&#x76F4;&#x7ACB;-&#x7269;&#x4F53;&#x56DB;&#x5143;&#x6570;&#x662F;&#x7269;&#x4F53;-&#x76F4;&#x7ACB;&#x56DB;&#x5143;&#x6570;&#x7684;&#x5171;&#x8F6D;&#xFF0C;&#x5373;</p>
+<p><span class="math display">\[\begin{aligned}
+p &amp;=\arcsin \left(-m_{32}\right) \\
+&amp;=\arcsin (-2(y z+w x))
+\end{aligned}\]</span></p>
+<p><span class="math display">\[h=\left\{\begin{array}{ll}
+\operatorname{atan2} \left(m_{31}, m_{33}\right) \\
+=\operatorname{atan2} \left(2 x z-2 w y, 1-2 x^{2}-2 y^{2}\right) &amp; \text { if } \cos p \neq 0 \\
+=\operatorname{atan2} \left(x z-w y, 1 / 2-x^{2}-y^{2}\right) \\
+\operatorname{atan2}\left(-m_{13}, m_{11}\right) \\
+=\operatorname{atan2}\left(-2 x z-2 w y, 1-2 y^{2}-2 z^{2}\right) &amp; \text { otherwise } \\
+=\operatorname{atan2}\left(-x z-w y, 1 / 2-y^{2}-z^{2}\right)
+\end{array}\right.\]</span></p>
+<p><span class="math display">\[b=\left\{\begin{array}{ll}
+\operatorname{atan} 2\left(m_{12}, m_{22}\right) &amp; \text { if } \cos p \neq 0 \\
+=\operatorname{atan} 2\left(2 x y-2 w z, 1-2 x^{2}-2 z^{2}\right) &amp; \\
+=\operatorname{atan} 2\left(x y-w z, 1 / 2-x^{2}-z^{2}\right)
+\\
+0 &amp; otherwise
+\end{array}\right.\]</span></p>
+<p>//TODO</p>
+<p>&#x4E66;&#x4E2D;&#x7ED9;&#x51FA;&#x4E86;&#x56DB;&#x5143;&#x6570;&#x5230;&#x6B27;&#x62C9;&#x89D2;&#x7684;&#x8F6C;&#x6362;&#x7684;&#x4EE3;&#x7801;</p>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>3D Math Primer for Graphics and Game Development</em> 2nd 2011</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/" title="《3D数学基础：图形和游戏开发》第八章笔记">https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/3D数学/" rel="tag"># 3D数学</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter7-Notes/" rel="prev" title="《3D数学基础：图形和游戏开发》第七章笔记">
+      <i class="fa fa-chevron-left"></i> 《3D数学基础：图形和游戏开发》第七章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/" rel="next" title="《3D数学基础：图形和游戏开发》第九章笔记">
+      《3D数学基础：图形和游戏开发》第九章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-8-rotation-in-three-dimensions"><span class="nav-number">1.</span> <span class="nav-text">Chapter 8 Rotation in Three Dimensions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#what-exactly-is-orientation"><span class="nav-number">1.1.</span> <span class="nav-text">What Exactly is &quot;Orientation&quot;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#matrix-form"><span class="nav-number">1.2.</span> <span class="nav-text">Matrix Form</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#which-matrix"><span class="nav-number">1.2.1.</span> <span class="nav-text">Which Matrix？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#direction-consines-matrix"><span class="nav-number">1.2.2.</span> <span class="nav-text">Direction Consines Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#advantages-of-matrix-form"><span class="nav-number">1.2.3.</span> <span class="nav-text">Advantages of Matrix Form</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#disadvantages-of-matrix-form"><span class="nav-number">1.2.4.</span> <span class="nav-text">Disadvantages of Matrix Form</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eular-angles"><span class="nav-number">1.3.</span> <span class="nav-text">Eular Angles</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#other-euler-angle-conventions"><span class="nav-number">1.3.1.</span> <span class="nav-text">Other Euler Angle Conventions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#advantages-of-euler-angles"><span class="nav-number">1.3.2.</span> <span class="nav-text">Advantages of Euler Angles</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#disadvantages-of-euler-angles"><span class="nav-number">1.3.3.</span> <span class="nav-text">Disadvantages of Euler Angles</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#axis-angle-and-exponential-map-representations"><span class="nav-number">1.4.</span> <span class="nav-text">Axis-Angle and Exponential Map Representations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#quaternions"><span class="nav-number">1.5.</span> <span class="nav-text">Quaternions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#quaternion-notation"><span class="nav-number">1.5.1.</span> <span class="nav-text">Quaternion Notation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#what-do-those-four-numers-mean"><span class="nav-number">1.5.2.</span> <span class="nav-text">What Do Those Four Numers Mean？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quaternion-negation"><span class="nav-number">1.5.3.</span> <span class="nav-text">Quaternion Negation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#identity-quaternions"><span class="nav-number">1.5.4.</span> <span class="nav-text">Identity Quaternion(s)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quaternion-magnitude"><span class="nav-number">1.5.5.</span> <span class="nav-text">Quaternion Magnitude</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quaternion-conjugate-and-inverse"><span class="nav-number">1.5.6.</span> <span class="nav-text">Quaternion Conjugate and Inverse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quaternion-multiplication"><span class="nav-number">1.5.7.</span> <span class="nav-text">Quaternion Multiplication</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quaternion-difference"><span class="nav-number">1.5.8.</span> <span class="nav-text">Quaternion &quot;Difference&quot;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quaternion-dot-product"><span class="nav-number">1.5.9.</span> <span class="nav-text">Quaternion Dot Product</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quaternion-logexp-and-multiplication-by-a-scaler"><span class="nav-number">1.5.10.</span> <span class="nav-text">Quaternion log，exp, and Multiplication by a Scaler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quaternion-exponentiation"><span class="nav-number">1.5.11.</span> <span class="nav-text">Quaternion Exponentiation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quaternion-interpolation-a.k.a-slerp"><span class="nav-number">1.5.12.</span> <span class="nav-text">Quaternion Interpolation, a.k.a Slerp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#advantages-and-disadvantage-of-quaternions"><span class="nav-number">1.5.13.</span> <span class="nav-text">Advantages and Disadvantage of Quaternions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quaternions-as-complex-number"><span class="nav-number">1.5.14.</span> <span class="nav-text">Quaternions as Complex Number</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summary-of-quaternions"><span class="nav-number">1.5.15.</span> <span class="nav-text">Summary of Quaternions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#comparision-of-methods"><span class="nav-number">1.6.</span> <span class="nav-text">Comparision of Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#converting-between-representations"><span class="nav-number">1.7.</span> <span class="nav-text">Converting between Representations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#converting-euler-angles-to-matrix"><span class="nav-number">1.7.1.</span> <span class="nav-text">Converting Euler Angles to Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#converting-a-matrix-to-euler-angles"><span class="nav-number">1.7.2.</span> <span class="nav-text">Converting a Matrix to Euler angles</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#converting-a-quaternion-to-a-matrix"><span class="nav-number">1.7.3.</span> <span class="nav-text">Converting a Quaternion to a Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#converting-a-matrix-to-a-quaternion"><span class="nav-number">1.7.4.</span> <span class="nav-text">Converting a Matrix to a Quaternion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#converting-euler-angles-to-a-quaternion"><span class="nav-number">1.7.5.</span> <span class="nav-text">Converting Euler Angles to a Quaternion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#converting-a-quaternion-to-euler-angles"><span class="nav-number">1.7.6.</span> <span class="nav-text">Converting a Quaternion to Euler Angles</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

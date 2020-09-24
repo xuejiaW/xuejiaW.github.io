@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;&amp;#x8BA1;&amp;#x7B97;&amp;#x673A;&amp;#x7F51;&amp;#x7EDC;&amp;#x4E0E;&amp;#x56E0;&amp;#x7279;&amp;#x7F51;&amp;#x300B; &amp;#x7B2C;&amp;#x5341;&amp;#x516D;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;">
+<meta name="keywords" content="读书笔记,计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《计算机网络与因特网》 第十六章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;&amp;#x8BA1;&amp;#x7B97;&amp;#x673A;&amp;#x7F51;&amp;#x7EDC;&amp;#x4E0E;&amp;#x56E0;&amp;#x7279;&amp;#x7F51;&amp;#x300B; &amp;#x7B2C;&amp;#x5341;&amp;#x516D;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-15-51-47.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-16-04-51.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-16-21-32.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-16-48-56.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-16-59-39.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-17-06-11.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-17-07-42.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-21-20-32.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-22-02-35.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-22-04-05.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-22-18-47.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-22-21-33.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-23-19-08.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-23-20-04.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-23-39-52.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-23-45-24.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-23-53-54.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.094Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《计算机网络与因特网》 第十六章笔记">
+<meta name="twitter:description" content="&amp;#x300A;&amp;#x8BA1;&amp;#x7B97;&amp;#x673A;&amp;#x7F51;&amp;#x7EDC;&amp;#x4E0E;&amp;#x56E0;&amp;#x7279;&amp;#x7F51;&amp;#x300B; &amp;#x7B2C;&amp;#x5341;&amp;#x516D;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;">
+<meta name="twitter:image" content="https://xuejiaw.github.io/CNI-Chapter16-Notes/2019-12-30-15-51-47.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/CNI-Chapter16-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《计算机网络与因特网》 第十六章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/CNI-Chapter16-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《计算机网络与因特网》 第十六章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-30 23:58:24" itemprop="dateCreated datePublished" datetime="2019-12-30T23:58:24+08:00">2019-12-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/计算机网络/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/CNI-Chapter16-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《计算机网络与因特网》 第十六章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/CNI-Chapter16-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/CNI-Chapter16-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;&#x8BA1;&#x7B97;&#x673A;&#x7F51;&#x7EDC;&#x4E0E;&#x56E0;&#x7279;&#x7F51;&#x300B; &#x7B2C;&#x5341;&#x516D;&#x7AE0;&#x7B14;&#x8BB0;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-16-wireless-networking-technologies">Chapter 16 Wireless Networking Technologies</h1>
+<h2 id="introduction">Introduction</h2>
+<p>&#x8FD9;&#x4E00;&#x7AE0;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x8BA1;&#x7B97;&#x673A;&#x7F51;&#x7EDC;&#x65E0;&#x7EBF;&#x90E8;&#x5206;&#x7684;&#x6280;&#x672F;&#x3002;</p>
+<p><span class="math inline">\(16.2\)</span>&#x8282;&#x5BF9;&#x65E0;&#x7EBF;&#x6280;&#x672F;&#x4F9D;&#x636E;&#x7F51;&#x7EDC;&#x7684;&#x8986;&#x76D6;&#x8303;&#x56F4;&#x505A;&#x4E86;&#x5206;&#x7C7B;&#x3002; <span class="math inline">\(16.3\)</span>&#x8282;&#x4ECB;&#x7ECD;&#x4E86;&#x4E2A;&#x4EBA;&#x5C40;&#x57DF;&#x7F51;&#x3002; <span class="math inline">\(16.4\)</span>&#x8282;&#x4ECB;&#x7ECD;&#x4E86;ISM&#x9891;&#x57DF;&#x3002; <span class="math inline">\(16.5\sim16.11\)</span>&#x90FD;&#x662F;&#x4ECB;&#x7ECD;&#x5C40;&#x57DF;&#x7F51;&#x76F8;&#x5173;&#x6280;&#x672F;&#xFF0C;&#x4E3B;&#x8981;&#x5173;&#x6CE8;&#x5BF9;&#x8C61;&#x662F;Wifi&#x6280;&#x672F;&#x3002; <span class="math inline">\(16.12\)</span>&#x4ECB;&#x7ECD;&#x4E86;&#x57CE;&#x57DF;&#x7F51;&#x4E2D;&#x4F7F;&#x7528;&#x7684;WiMax&#x6280;&#x672F;&#x3002; <span class="math inline">\(16.13\)</span>&#x7ED9;&#x51FA;&#x4E86;&#x4E2A;&#x4EBA;&#x5C40;&#x57DF;&#x7F51;&#x7684;&#x6807;&#x51C6;&#x5206;&#x7C7B;&#x5217;&#x8868;&#x3002; <span class="math inline">\(16.14\)</span>&#x4ECB;&#x7ECD;&#x4E86;&#x4E24;&#x4E2A;&#x6CA1;&#x6709;&#x88AB;&#x5305;&#x542B;&#x5728;&#x4E2A;&#x4EBA;&#x5C40;&#x57DF;&#x7F51;&#x4E2D;&#x7684;&#x77ED;&#x8DDD;&#x79BB;&#x901A;&#x4FE1;&#xFF0C;&#x7EA2;&#x5916;&#x7EBF;&#x548C;&#x5C04;&#x9891;&#x8BC6;&#x522B;&#x901A;&#x4FE1;&#x3002; <span class="math inline">\(16.15\sim16.18\)</span>&#x4ECB;&#x7ECD;&#x4E86;&#x5E7F;&#x57DF;&#x7F51;&#x6280;&#x672F;&#xFF0C;&#x4E3B;&#x8981;&#x5173;&#x6CE8;&#x8702;&#x7A9D;&#x5F0F;&#x7F51;&#x7EDC;&#x3002; <span class="math inline">\(16.19&#x548C;16.20\)</span>&#x4ECB;&#x7ECD;&#x4E86;&#x536B;&#x661F;&#x901A;&#x4FE1;&#x3002; <span class="math inline">\(16.20\)</span>&#x4ECB;&#x7ECD;&#x4E86;&#x8F6F;&#x4EF6;&#x65E0;&#x7EBF;&#x7535;&#x7CFB;&#x7EDF;&#x3002;</p>
+<h2 id="a-taxonomy-of-wireless-networks">A Taxonomy Of Wireless Networks</h2>
+<p>&#x8BA1;&#x7B97;&#x673A;&#x7F51;&#x7EDC;&#x65E0;&#x7EBF;&#x6280;&#x672F;&#x7684;&#x53D8;&#x79CD;&#x975E;&#x5E38;&#x591A;&#x7684;&#x539F;&#x56E0;&#x4E4B;&#x4E00;&#x5728;&#x4E8E;&#x56E0;&#x4E3A;&#x653F;&#x5E9C;&#x7684;&#x7BA1;&#x7406;&#xFF0C;&#x7535;&#x78C1;&#x4FE1;&#x53F7;&#x7684;&#x9891;&#x8C31;&#x88AB;&#x5207;&#x5206;&#x4E3A;&#x4E86;&#x8BB8;&#x591A;&#x4E0D;&#x540C;&#x7684;&#x90E8;&#x5206;&#x4EE5;&#x4F9B;&#x4E0D;&#x540C;&#x7684;&#x76EE;&#x7684;&#x4F7F;&#x7528;&#xFF0C;&#x800C;&#x8FD9;&#x4E9B;&#x4E0D;&#x540C;&#x9891;&#x57DF;&#x7684;&#x6280;&#x672F;&#x901A;&#x5E38;&#x90FD;&#x4E0D;&#x540C;&#x3002;</p>
+<p>&#x65E0;&#x7EBF;&#x6280;&#x672F;&#x901A;&#x5E38;&#x901A;&#x8FC7;&#x5176;&#x4F7F;&#x7528;&#x7684;&#x8303;&#x56F4;&#x6765;&#x5206;&#x7C7B;&#xFF0C;&#x4E3B;&#x8981;&#x53EF;&#x5206;&#x4E3A;&#xFF1A;<code>&#x5C40;&#x57DF;&#x7F51;&#xFF08;Local Area Networks,LANs&#xFF09;</code>&#xFF0C;<code>&#x57CE;&#x57DF;&#x7F51;&#xFF08;Metropolitan Area Networks,MANs&#xFF09;</code>&#xFF0C;<code>&#x5E7F;&#x57DF;&#x7F51;&#xFF08;Wide Area Networks&#xFF0C;WANs</code>&#xFF09;&#x4EE5;&#x53CA;<code>&#x4E2A;&#x4EBA;&#x5C40;&#x57DF;&#x7F51;&#xFF08; Personal Area Networks&#xFF0C;PANs&#xFF09;</code>&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-15-51-47.png" alt="&#x65E0;&#x7EBF;&#x7F51;&#x7EDC;&#x5206;&#x7C7B;"></p>
+<h2 id="personal-area-networkspans">Personal Area Networks&#xFF08;PANs&#xFF09;</h2>
+<p>&#x4E0A;&#x8282;&#x4E2D;&#x5BF9;&#x4E8E;&#x65E0;&#x7EBF;&#x7F51;&#x7EDC;&#x7684;&#x5206;&#x7C7B;&#x4E0E;&#x5728;&#x7B2C;&#x5341;&#x4E09;&#x7AE0;&#x4E2D;&#x5BF9;&#x4E8E;&#x7F51;&#x7EDC;&#x7684;&#x5206;&#x7C7B;&#x5341;&#x5206;&#x7C7B;&#x4F3C;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x662F;&#x8FD9;&#x91CC;&#x8FD8;&#x5F15;&#x5165;&#x4E86;&#x4E2A;&#x4EBA;&#x5C40;&#x57DF;&#x7F51;&#xFF08;Personal Area Networks&#xFF0C;PANs&#xFF09;&#x7684;&#x6982;&#x5FF5;&#x3002;&#x4E2A;&#x4EBA;&#x5C40;&#x57DF;&#x7F51;&#x662F;&#x63D0;&#x4F9B;&#x975E;&#x5E38;&#x77ED;&#x8DDD;&#x79BB;&#x4E0B;&#x7684;&#x901A;&#x4FE1;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x53EA;&#x4F9B;&#x4E00;&#x4E2A;&#x7528;&#x6237;&#x4F7F;&#x7528;&#xFF0C;&#x5982;&#x84DD;&#x7259;&#x8033;&#x673A;&#x5C31;&#x5C5E;&#x4E8E;&#x4E2A;&#x4EBA;&#x5C40;&#x57DF;&#x7F51;&#x7684;&#x5E94;&#x7528;&#x3002;</p>
+<p>&#x4E2A;&#x4EBA;&#x5C40;&#x57DF;&#x7F51;&#x7EDC;&#x53EF;&#x4EE5;&#x518D;&#x7EC6;&#x5206;&#x4E3A;&#x4EE5;&#x4E0B;&#x51E0;&#x79CD;&#xFF1A;</p>
+<ol type="1">
+<li>&#x84DD;&#x7259;&#xFF08;Bluetooth&#xFF09;&#xFF1A;&#x8DDD;&#x79BB;&#x8F83;&#x77ED;</li>
+<li>&#x7EA2;&#x5916;&#x7EBF;&#xFF08;Infrared&#xFF09;&#xFF1A;&#x89C6;&#x8DDD;&#x901A;&#x4FE1;&#xFF08;Line-Of-Sight Communication&#xFF09;&#x5373;&#x53D1;&#x5C04;&#x7AEF;&#x548C;&#x63A5;&#x6536;&#x7AEF;&#x4E4B;&#x95F4;&#x9700;&#x8981;&#x65E0;&#x906E;&#x6321;</li>
+<li>&#x7D2B;&#x5CF0;&#xFF08;ZigBee&#xFF09;&#xFF1A;&#x8DDD;&#x79BB;&#x53EF;&#x4EE5;&#x652F;&#x6491;&#x4E00;&#x4E2A;&#x4F4F;&#x5B85;&#x7684;&#x8303;&#x56F4;&#xFF0C;&#x5728;&#x667A;&#x80FD;&#x5BB6;&#x5C45;&#x4E2D;&#x88AB;&#x8FD0;&#x7528;&#x3002;</li>
+<li>&#x5176;&#x4ED6;ISM&#x65E0;&#x7EBF;&#x6280;&#x672F;&#xFF1A;&#x4E3A;&#x5DE5;&#x4E1A;&#xFF0C;&#x79D1;&#x5B66;&#x4EE5;&#x53CA;&#x533B;&#x836F;&#xFF08;Industrial&#xFF0C;Scientific&#xFF0C;Medical&#xFF0C;ISM&#xFF09;&#x9884;&#x7559;&#x7684;&#x9891;&#x7387;&#x53D1;&#x5C55;&#x7684;&#x6280;&#x672F;&#x3002;</li>
+</ol>
+<h2 id="ism-wireless-bands-used-by-lans-and-pans">ISM Wireless Bands Used By LANs And PANs</h2>
+<p>&#x632F;&#x5E45;&#x4E3A;&#x4E86;&#x5DE5;&#x4E1A;&#xFF0C;&#x79D1;&#x5B66;&#x4EE5;&#x53CA;&#x533B;&#x836F;&#x9886;&#x57DF;&#x4E13;&#x95E8;&#x9884;&#x7559;&#x4E86;&#x4E00;&#x90E8;&#x5206;&#x9891;&#x57DF;&#xFF0C;&#x88AB;&#x79F0;&#x4E3A;ISM&#x65E0;&#x7EBF;&#x3002;&#x8FD9;&#x90E8;&#x5206;&#x7684;&#x9891;&#x57DF;&#x5E76;&#x6CA1;&#x6709;&#x518D;&#x8FDB;&#x4E00;&#x6B65;&#x7EC6;&#x5206;&#xFF0C;&#x5982;&#x79D1;&#x5B66;&#x53EA;&#x80FD;&#x7528;&#x54EA;&#x4E00;&#x6BB5;&#x9891;&#x57DF;&#x4E4B;&#x7C7B;&#x3002;&#x8FD9;&#x4E09;&#x4E2A;&#x9886;&#x57DF;&#x7684;&#x4EA7;&#x54C1;&#x90FD;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x8FD9;&#x90E8;&#x5206;&#x9891;&#x57DF;&#xFF0C;&#x5177;&#x4F53;&#x9891;&#x57DF;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-16-04-51.png" alt="ISM&#x9891;&#x57DF;"></p>
+<h2 id="wireless-lan-technologies-and-wi-fi">Wireless LAN Technologies And Wi-Fi</h2>
+<p>IEEE&#x5C06;&#x5C40;&#x57DF;&#x7F51;&#x4E0B;&#x7684;&#x65E0;&#x7EBF;&#x7F51;&#x7EDC;&#x534F;&#x8BAE;&#x5206;&#x7C7B;&#x5728;<span class="math inline">\(802.11\)</span>&#x4E0B;&#x3002;1999&#x5E74;&#x4E00;&#x4E9B;&#x9500;&#x552E;&#x5546;&#x5EFA;&#x7ACB;&#x4E86;Wifi&#x8054;&#x76DF;&#xFF0C;&#x4E00;&#x4E2A;&#x751F;&#x4EA7;&#x548C;&#x9A8C;&#x8BC1;&#x4F7F;&#x7528;802.11&#x534F;&#x8BAE;&#x7684;&#x65E0;&#x7EBF;&#x8BBE;&#x5907;&#x7684;&#x975E;&#x76C8;&#x5229;&#x7EC4;&#x7EC7;&#x3002;&#x56E0;&#x4E3A;&#x8FD9;&#x4E2A;&#x8054;&#x76DF;&#x7684;&#x4EA7;&#x54C1;&#x5728;&#x5546;&#x4E1A;&#x5E02;&#x573A;&#x4E0A;&#x53CD;&#x5E94;&#x5F88;&#x597D;&#xFF0C;&#x6D88;&#x8D39;&#x8005;&#x5C06;Wifi&#x4E00;&#x8BCD;&#x4E0E;&#x65E0;&#x7EBF;&#x5C40;&#x57DF;&#x7F51;&#x8054;&#x7CFB;&#x5728;&#x4E86;&#x4E00;&#x8D77;&#xFF0C;Wifi&#x539F;&#x5148;&#x662F;&#x4EA7;&#x54C1;&#x5E7F;&#x544A;&#x8BCD;&#x4E2D;<code>Wireless Fidelity</code>&#x7684;&#x7F29;&#x5199;&#x3002;</p>
+<p>&#x4E0B;&#x8868;&#x4E3A;Wifi&#x8054;&#x76DF;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x534F;&#x8BAE;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-16-21-32.png" alt="Wifi&#x8054;&#x76DF;&#x534F;&#x8BAE;"></p>
+<h2 id="spread-spectrum-technology">Spread Spectrum Technology</h2>
+<p>&#x5728;&#x7B2C;&#x5341;&#x4E00;&#x7AE0;&#x4E2D;&#x63D0;&#x5230;&#x7684;&#x5C55;&#x9891;&#x6280;&#x672F;&#xFF08;Spread Spectrum Technology&#xFF09;&#x5728;wifi&#x6280;&#x672F;&#x4E2D;&#x4E5F;&#x6709;&#x5E94;&#x7528;&#x3002;</p>
+<p>&#x5C55;&#x9891;&#x6280;&#x672F;&#x7684;&#x539F;&#x7406;&#x662F;&#x53D1;&#x9001;&#x7AEF;&#x5C06;&#x539F;&#x5148;&#x7684;&#x4FE1;&#x9053;&#x9891;&#x57DF;&#x518D;&#x7EC6;&#x5206;&#x4E3A;&#x591A;&#x4E2A;&#x90E8;&#x5206;&#xFF0C;&#x5C06;&#x6570;&#x636E;&#x901A;&#x8FC7;&#x4E0D;&#x540C;&#x7684;&#x9891;&#x7387;&#x53D1;&#x9001;&#x51FA;&#x53BB;&#xFF0C;&#x63A5;&#x6536;&#x7AEF;&#x63A5;&#x53D7;&#x591A;&#x4E2A;&#x9891;&#x7387;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x518D;&#x8FD8;&#x539F;&#x51FA;&#x539F;&#x4FE1;&#x53F7;&#x3002;&#x4F7F;&#x7528;&#x5C55;&#x9891;&#x6280;&#x672F;&#x4E3B;&#x8981;&#x76EE;&#x7684;&#x6709;&#x4E24;&#x4E2A;&#xFF0C;&#x4E00;&#x662F;&#x589E;&#x52A0;&#x4F20;&#x8F93;&#x901F;&#x7387;&#xFF0C;&#x53E6;&#x5916;&#x662F;&#x589E;&#x52A0;&#x5BF9;&#x566A;&#x58F0;&#x7684;&#x6297;&#x5E72;&#x6270;&#x80FD;&#x529B;&#x3002;</p>
+<p>Wifi&#x6280;&#x672F;&#x4E3B;&#x8981;&#x7528;&#x4E86;&#x4EE5;&#x4E0B;&#x6269;&#x9891;&#x6280;&#x672F;&#xFF0C;&#x5176;&#x4E3B;&#x8981;&#x76EE;&#x7684;&#x8FD8;&#x662F;&#x5E2E;&#x52A9;Wifi&#x5728;&#x6709;&#x566A;&#x58F0;&#x73AF;&#x5883;&#x4E0B;&#x80FD;&#x66F4;&#x597D;&#x7684;&#x5DE5;&#x4F5C;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x76F4;&#x63A5;&#x6269;&#x9891;&#xFF08;Direct Sequence Spread Spectrum&#xFF0C;DSSS&#xFF09;&#xFF1A;</p>
+<p>&#x53D1;&#x9001;&#x7AEF;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x5E8F;&#x5217;&#x7801;&#x5F97;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x9891;&#x7387;&#xFF0C;&#x7528;&#x8FD9;&#x4E9B;&#x9891;&#x7387;&#x6765;&#x53D1;&#x9001;&#x6570;&#x636E;&#x3002;</p></li>
+<li><p>&#x8DF3;&#x9891;&#x6269;&#x9891;&#xFF08;Frequency Hopping Spread Spectrum&#xFF0C;FHSS&#xFF09;&#xFF1A;</p>
+<p>&#x8F7D;&#x6CE2;&#x7684;&#x9891;&#x7387;&#x4E00;&#x76F4;&#x5728;&#x8BBE;&#x5B9A;&#x7684;&#x51E0;&#x4E2A;&#x9891;&#x7387;&#x95F4;&#x5207;&#x6362;&#x3002;</p></li>
+<li><p>&#x6B63;&#x4EA4;&#x9891;&#x7387;&#x590D;&#x7528;&#xFF08;Orthogonal Frequency Division Multiplexing&#xFF0C;OFDM&#xFF09;&#xFF1A;</p>
+<p>&#x5C06;&#x539F;&#x4FE1;&#x9053;&#x5206;&#x4E3A;&#x591A;&#x4E2A;&#x5C0F;&#x4FE1;&#x9053;&#xFF0C;&#x6BCF;&#x4E2A;&#x5C0F;&#x4FE1;&#x9053;&#x4F20;&#x8F93;&#x4E00;&#x90E8;&#x5206;&#x7684;&#x6570;&#x636E;&#x3002;</p></li>
+</ol>
+<ul>
+<li>&#x4E66;&#x4E2D;&#x5E76;&#x672A;&#x5BF9;&#x4E09;&#x4E2A;&#x6280;&#x672F;&#x505A;&#x8BE6;&#x7EC6;&#x7684;&#x89E3;&#x91CA;&#xFF0C;&#x4E0A;&#x9762;&#x7684;&#x6982;&#x62EC;&#x89E3;&#x91CA;&#x4E5F;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x9519;&#x8BEF;&#x3002;</li>
+</ul>
+<p>&#x4E09;&#x4E2A;&#x6280;&#x672F;&#x90FD;&#x6709;&#x5404;&#x81EA;&#x7684;&#x4F18;&#x70B9;&#xFF0C;OFDM&#x6709;&#x6700;&#x9AD8;&#x7684;&#x9002;&#x7528;&#x6027;&#xFF0C;DSSS&#x6027;&#x80FD;&#x597D;&#xFF0C;FHSS&#x5BF9;&#x4E8E;&#x566A;&#x58F0;&#x7684;&#x6297;&#x5E72;&#x6270;&#x80FD;&#x529B;&#x5F3A;&#x3002;</p>
+<h2 id="other-wireless-lan-standards">Other Wireless LAN Standards</h2>
+<p>&#x9664;&#x4E86;&#x4E0A;&#x8FF0;Wifi&#x8054;&#x76DF;&#x6240;&#x6307;&#x5B9A;&#x7684;&#x534F;&#x8BAE;&#xFF0C;&#x65E0;&#x7EBF;&#x5C40;&#x57DF;&#x7F51;&#x8FD8;&#x6709;&#x5176;&#x4ED6;&#x8BB8;&#x591A;&#x7684;&#x534F;&#x8BAE;&#xFF0C;&#x90FD;&#x5C5E;&#x4E8E;<span class="math inline">\(802.11\)</span>&#x534F;&#x8BAE;&#x5206;&#x7C7B;&#x4E0B;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-16-48-56.png" alt="&#x5176;&#x4ED6;802.11&#x534F;&#x8BAE;"></p>
+<h2 id="wireless-lan-architecture">Wireless LAN Architecture</h2>
+<p>&#x5C40;&#x57DF;&#x7F51;&#x65E0;&#x7EBF;&#x7F51;&#x7EDC;&#x7ED3;&#x6784;&#x4E3B;&#x8981;&#x6709;&#x4E09;&#x4E2A;&#x56E0;&#x7D20;&#xFF1A;&#xFF08;1&#xFF09;<code>&#x63A5;&#x5165;&#x70B9;&#xFF08;Access Point&#xFF09;</code>&#xFF0C;&#x6709;&#x65F6;&#x4E5F;&#x88AB;&#x79F0;&#x4E3A;<code>&#x57FA;&#x7AD9;&#xFF08;Base Station&#xFF09;</code>&#x3002;&#xFF08;2&#xFF09; <code>&#x4E92;&#x8054;&#x673A;&#x5236;&#xFF08;Interconnection mechanism&#xFF09;</code>&#xFF0C;&#x4F8B;&#x5982;&#x8DEF;&#x7531;&#x5668;&#x6216;&#x8005;&#x4EA4;&#x6362;&#x673A;&#xFF0C;&#x7528;&#x6765;&#x5C06;&#x63A5;&#x5165;&#x70B9;&#x8FDE;&#x63A5;&#x5728;&#x4E00;&#x8D77;&#x3002;&#xFF08;3&#xFF09;&#x4E00;&#x7CFB;&#x5217;<code>&#x7EC8;&#x7AEF;&#xFF08;Hosts&#xFF09;</code>&#xFF0C;&#x5982;&#x4E2A;&#x4EBA;&#x624B;&#x673A;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x7EC8;&#x7AEF;&#x3002;</p>
+<p>&#x5B58;&#x5728;&#x4E24;&#x79CD;&#x65E0;&#x7EBF;&#x5C40;&#x57DF;&#x7F51;&#xFF0C;&#x4E00;&#x662F;<code>&#x81EA;&#x4E3B;&#x7F51;&#xFF08;Ad hoc&#xFF09;</code>&#xFF0C;&#x5176;&#x4E2D;&#x6240;&#x6709;&#x7684;&#x7EC8;&#x7AEF;&#x90FD;&#x53EF;&#x4EE5;&#x5728;&#x6CA1;&#x6709;&#x63A5;&#x5165;&#x70B9;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x76F8;&#x4E92;&#x901A;&#x4FE1;&#x3002;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x662F;<code>&#x57FA;&#x7840;&#x8BBE;&#x65BD;&#x7ED3;&#x6784;&#xFF08;Infrastructure&#xFF09;</code>&#x3002;</p>
+<p>&#x5728;&#x5B9E;&#x9645;&#x8FD0;&#x7528;&#x4E2D;&#xFF0C;&#x81EA;&#x4E3B;&#x7F51;&#x5F88;&#x5C11;&#x5B58;&#x5728;&#xFF0C;&#x57FA;&#x7840;&#x8BBE;&#x65BD;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x56FE;&#x4E2D;&#x7684;<span class="math inline">\(AP\)</span>&#x5373;&#x4E3A;&#x63A5;&#x5165;&#x70B9;&#xFF08;Access Point&#xFF09;&#xFF0C;&#x4E00;&#x4E2A;&#x63A5;&#x5165;&#x70B9;&#x548C;&#x8FDE;&#x63A5;&#x5B83;&#x7684;&#x4E00;&#x7CFB;&#x5217;&#x7EC8;&#x7AEF;&#x79F0;&#x4E3A;<code>&#x57FA;&#x672C;&#x670D;&#x52A1;&#x96C6;&#xFF08;Basic Service Set&#xFF0C;BSS&#xFF09;</code>&#x3002;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-16-59-39.png" alt="&#x57FA;&#x7840;&#x8BBE;&#x65BD;&#x7ED3;&#x6784;"></p>
+<h2 id="overlapassociationand-802.11-frame-format">Overlap&#xFF0C;Association&#xFF0C;And 802.11 Frame Format</h2>
+<p>&#x5728;&#x5B9E;&#x9645;&#x8FD0;&#x7528;&#x4E2D;&#xFF0C;&#x57FA;&#x7840;&#x8BBE;&#x65BD;&#x7ED3;&#x6784;&#x4E2D;&#x7684;&#x63A5;&#x5165;&#x70B9;&#x5982;&#x679C;&#x8DDD;&#x79BB;&#x592A;&#x8FDC;&#xFF0C;&#x4F1A;&#x51FA;&#x73B0;<code>&#x65E0;&#x670D;&#x52A1;&#x533A;&#xFF08;Dead Zone&#xFF09;</code>&#xFF0C;&#x8DDD;&#x79BB;&#x592A;&#x4EC5;&#x7684;&#x8BDD;&#xFF0C;&#x4ED6;&#x4EEC;&#x7684;&#x8986;&#x76D6;&#x7684;&#x8303;&#x56F4;&#x4F1A;&#x51FA;&#x73B0;&#x91CD;&#x53E0;&#xFF08;Overlap&#xFF09;&#xFF0C;&#x56E0;&#x6B64;&#x7EC8;&#x7AEF;&#x53EF;&#x80FD;&#x4F1A;&#x540C;&#x65F6;&#x5B58;&#x5728;&#x4E8E;&#x4E24;&#x4E2A;&#x63A5;&#x5165;&#x70B9;&#x7684;&#x8303;&#x56F4;&#x5185;&#x3002;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x7EC8;&#x7AEF;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x4ED6;&#x4E0E;&#x54EA;&#x4E2A;&#x63A5;&#x5165;&#x70B9;&#x8FDB;&#x884C;&#x901A;&#x4FE1;&#xFF0C;&#x56E0;&#x6B64;&#x5728;<span class="math inline">\(802.11\)</span>&#x534F;&#x8BAE;&#x5B9A;&#x4E49;&#x7684;&#x7F51;&#x7EDC;&#x5E27;&#x683C;&#x5F0F;&#x4E0B;&#xFF0C;&#x5E27;&#x6570;&#x636E;&#x5FC5;&#x987B;&#x5305;&#x542B;&#x5176;&#x8FDE;&#x63A5;&#x7684;&#x63A5;&#x5165;&#x70B9;&#x7684;MAC&#x5730;&#x5740;&#x3002;</p>
+<p>&#x53E6;&#x5916;&#x5982;&#x679C;&#x57FA;&#x7840;&#x8BBE;&#x65BD;&#x7ED3;&#x6784;&#x662F;&#x8981;&#x8FDE;&#x63A5;&#x5916;&#x7F51;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x63A5;&#x5165;&#x70B9;&#x7684;&#x4E92;&#x8054;&#x673A;&#x5236;&#x8FD8;&#x9700;&#x8981;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x6709;&#x7EBF;&#x8FDE;&#x63A5;&#x81F3;&#x4E0E;&#x5916;&#x7F51;&#x8FDE;&#x63A5;&#x7684;&#x8DEF;&#x7531;&#x5668;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x4E0B;&#x56FE;&#x4E5F;&#x540C;&#x65F6;&#x5C55;&#x793A;&#x4E86;&#x4E0A;&#x8FF0;&#x7684;&#x63A5;&#x5165;&#x70B9;&#x91CD;&#x53E0;&#x60C5;&#x51B5;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-17-06-11.png" alt="&#x5916;&#x7F51;&#x8FDE;&#x63A5;&#x4EE5;&#x53CA;&#x63A5;&#x5165;&#x70B9;&#x91CD;&#x53E0;"></p>
+<p><span class="math inline">\(802.11\)</span>&#x7684;&#x5B9A;&#x4E49;&#x7684;&#x6570;&#x636E;&#x5E27;&#xFF0C;&#x8FD8;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x8FDE;&#x63A5;&#x5916;&#x7F51;&#x7684;&#x8DEF;&#x7531;&#x5668;&#x7684;MAC&#x5730;&#x5740;&#xFF0C;&#x7EFC;&#x4E0A;&#x6570;&#x636E;&#x5E27;&#x7684;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-17-07-42.png" alt="802.11&#x6570;&#x636E;&#x5E27;"></p>
+<h2 id="coordination-among-access-points">Coordination Among Access Points</h2>
+<p>&#x5982;&#x4E0A;&#x8282;&#x6240;&#x8FF0;&#xFF0C;&#x5728;&#x63A5;&#x5165;&#x70B9;&#x91CD;&#x53E0;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x7EC8;&#x7AEF;&#x9700;&#x8981;&#x51B3;&#x5B9A;&#x4E0E;&#x54EA;&#x4E2A;&#x63A5;&#x5165;&#x70B9;&#x8FDB;&#x884C;&#x901A;&#x4FE1;&#x3002;</p>
+<p>&#x4E3B;&#x8981;&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x6CD5;&#x6765;&#x5B9E;&#x73B0;&#x63A5;&#x5165;&#x70B9;&#x7684;&#x5207;&#x6362;&#xFF0C;&#x7B2C;&#x4E00;&#x4E2A;&#x662F;&#x9760;&#x63A5;&#x5165;&#x70B9;&#x672C;&#x8EAB;&#xFF0C;&#x63A5;&#x5165;&#x70B9;&#x80FD;&#x76F8;&#x4E92;&#x901A;&#x4FE1;&#xFF0C;&#x5F53;&#x63A5;&#x5165;&#x70B9;&#x53D1;&#x73B0;&#x6709;&#x7EC8;&#x7AEF;&#x540C;&#x65F6;&#x6536;&#x5230;&#x591A;&#x4E2A;&#x63A5;&#x5165;&#x70B9;&#x4FE1;&#x53F7;&#x65F6;&#xFF0C;&#x63A5;&#x5165;&#x70B9;&#x4F1A;&#x5224;&#x65AD;&#x4FE1;&#x53F7;&#x5F3A;&#x5EA6;&#x7136;&#x540E;&#x5E2E;&#x52A9;&#x7EC8;&#x7AEF;&#x65E0;&#x7F1D;&#x5207;&#x6362;&#xFF0C;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x5B9E;&#x73B0;&#x8F83;&#x4E3A;&#x590D;&#x6742;&#x4E14;&#x6210;&#x672C;&#x8F83;&#x9AD8;&#x3002;&#x7B2C;&#x4E8C;&#x79CD;&#x65B9;&#x6CD5;&#x4E0B;&#xFF0C;&#x6240;&#x6709;&#x63A5;&#x5165;&#x70B9;&#x90FD;&#x662F;&#x72EC;&#x7ACB;&#x7684;&#xFF0C;&#x5207;&#x6362;&#x662F;&#x9760;&#x7EC8;&#x7AEF;&#x672C;&#x8EAB;&#x5B9E;&#x73B0;&#xFF0C;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x7684;&#x6210;&#x672C;&#x8F83;&#x4F4E;&#x3002;</p>
+<h2 id="contention-and-contention-free-access">Contention And Contention-Free Access</h2>
+<p><span class="math inline">\(802.11\)</span>&#x5B9A;&#x4E49;&#x4E86;&#x4E24;&#x79CD;&#x4FE1;&#x9053;&#x8BBF;&#x95EE;&#x7684;&#x65B9;&#x5F0F;&#xFF1A;&#x65E0;&#x7ADE;&#x4E89;&#xFF08;Contention-Free&#xFF09;&#x7684;&#x70B9;&#x534F;&#x8C03;&#x65B9;&#x5F0F;&#xFF08;Point Coordinated Function&#xFF0C;PCF&#xFF09;&#x548C;&#x5B58;&#x5728;&#x7ADE;&#x4E89;&#x7684;&#x5206;&#x5E03;&#x534F;&#x8C03;&#x65B9;&#x5F0F;&#xFF08;Distributed Coordinated Function&#xFF0C;DCF&#xFF09;&#x3002;</p>
+<p>PCF&#x65B9;&#x5F0F;&#x4FDD;&#x8BC1;&#x5728;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x670D;&#x52A1;&#x96C6;&#x4E2D;&#x7684;&#x63A5;&#x5165;&#x70B9;&#x4FDD;&#x8BC1;&#x4E0B;&#x9762;&#x7684;&#x7EC8;&#x7AEF;&#x4E0D;&#x4F1A;&#x53D1;&#x751F;&#x4EFB;&#x4F55;&#x5E72;&#x6270;&#xFF0C;&#x4F8B;&#x5982;&#x901A;&#x8FC7;&#x7ED9;&#x6BCF;&#x4E00;&#x4E2A;&#x7EC8;&#x7AEF;&#x4E00;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x9891;&#x7387;&#x6765;&#x5B9E;&#x73B0;&#x3002;&#x4F46;&#x5728;&#x5B9E;&#x9645;&#x4E2D;PCF&#x4ECE;&#x6765;&#x90FD;&#x6CA1;&#x6709;&#x88AB;&#x4F7F;&#x7528;&#x8FC7;&#x3002;</p>
+<p>DCF&#x5219;&#x662F;&#x8BA9;&#x4E00;&#x4E2A;&#x57FA;&#x672C;&#x670D;&#x52A1;&#x96C6;&#x4E2D;&#x7684;&#x7EC8;&#x7AEF;&#x90FD;&#x4F7F;&#x7528;<code>&#x968F;&#x673A;&#x8BBF;&#x95EE;&#x534F;&#x8BAE;&#xFF08;Random Access Protocols&#xFF09;</code>&#x3002;&#x5E76;&#x5982;&#x540C;&#x5728;&#x5341;&#x56DB;&#x7AE0;&#x4E2D;&#x7684;&#x4ECB;&#x7ECD;&#xFF0C;&#x56E0;&#x4E3A;<span class="math inline">\(802.11\)</span>&#x662F;&#x65E0;&#x7EBF;&#x7F51;&#x7EDC;&#xFF0C;&#x6240;&#x4EE5;&#x901A;&#x5E38;&#x4F7F;&#x7528;&#x7684;&#x662F;CSMA/CA&#xFF0C;&#x7EC8;&#x7AEF;&#x9700;&#x8981;&#x53D1;&#x9001;&#x51C6;&#x5907;&#x5B8C;&#x6BD5;&#xFF08;Ready to Send&#xFF0C;RTS&#xFF09;&#x548C;&#x4FE1;&#x9053;&#x7A7A;&#x95F2;&#xFF08;Clear To Send&#xFF0C;CTS&#xFF09;&#x4E24;&#x79CD;&#x63A7;&#x5236;&#x547D;&#x4EE4;&#x3002;</p>
+<p><span class="math inline">\(802.11\)</span>&#x4E2D;&#x4F7F;&#x7528;&#x7684;CSMA/CA&#x8FD8;&#x5305;&#x542B;&#x4E00;&#x4E9B;&#x5728;&#x5341;&#x56DB;&#x7AE0;&#x672A;&#x63D0;&#x53CA;&#x7684;&#x7EC6;&#x8282;&#xFF0C;&#x5982;&#x5B9A;&#x4E49;&#x4E86;&#x4EE5;&#x4E0B;&#x4E09;&#x4E2A;&#x65F6;&#x95F4;&#x53C2;&#x6570;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x77ED;&#x5E27;&#x65F6;&#x95F4;&#x95F4;&#x9694;&#xFF08;Short Inter-Frame Space,SIFS&#xFF09;&#x4E3A;10&#x5FAE;&#x79D2;&#x3002;</p>
+<p>&#x63A5;&#x6536;&#x7AEF;&#x5728;&#x53D1;&#x9001;&#x786E;&#x8BA4;&#x4FE1;&#x606F;&#xFF08;Acknowledge&#xFF0C;ACK&#xFF09;&#x6216;&#x5176;&#x4ED6;&#x63A7;&#x5236;&#x547D;&#x4EE4;&#x524D;&#x7684;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#x3002;</p></li>
+<li><p>&#x5E27;&#x95F4;&#x95F4;&#x9694;&#xFF08;Distributed Inter-Frame Space&#xFF09;&#x4E3A;50&#x5FAE;&#x79D2;&#x3002;</p>
+<p>&#x5728;&#x53D1;&#x9001;&#x7AEF;&#x53D1;&#x9001;&#x6570;&#x636E;&#x524D;&#x5FC5;&#x987B;&#x7B49;&#x5F85;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x4EE5;&#x4FDD;&#x8BC1;&#x5176;&#x4ED6;&#x7684;&#x7EC8;&#x7AEF;&#x53EF;&#x4EE5;&#x76D1;&#x542C;&#x5230;&#x4FE1;&#x9053;&#x7684;&#x7A7A;&#x95F2;&#x3002;</p></li>
+<li><p>&#x65F6;&#x9699;&#xFF08;Slot Time&#xFF09;&#x4E3A;20&#x5FAE;&#x79D2;</p></li>
+</ol>
+<p>Wifi&#x7F51;&#x7EDC;&#x4E2D;&#x6240;&#x4F7F;&#x7528;&#x7684;CSMA/CA&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-21-20-32.png" alt="Wifi&#x7F51;&#x7EDC;&#x4E2D;&#x6240;&#x4F7F;&#x7528;&#x7684;CSMA/CA"></p>
+<p>&#x56E0;&#x4E3A;&#x5404;&#x7EC8;&#x7AEF;&#x95F4;&#x7684;&#x7269;&#x7406;&#x95F4;&#x9694;&#x4EE5;&#x53CA;&#x73AF;&#x5883;&#x566A;&#x58F0;&#xFF0C;&#x5FAE;&#x5F31;&#x4FE1;&#x53F7;&#x7684;&#x68C0;&#x6D4B;&#x662F;&#x5F88;&#x56F0;&#x96BE;&#x7684;&#xFF0C;&#x56E0;&#x6B64;Wifi&#x7F51;&#x7EDC;&#x5E76;&#x6CA1;&#x6709;&#x5F15;&#x5165;CSMA/CA&#x4E2D;&#x7684;&#x51B2;&#x7A81;&#x68C0;&#x6D4B;&#xFF08;Collision Detection&#xFF09;&#x90E8;&#x5206;&#xFF0C;&#x5373;&#x53D1;&#x9001;&#x7AEF;&#x5E76;&#x4E0D;&#x4F1A;&#x5728;&#x6570;&#x636E;&#x53D1;&#x9001;&#x8FC7;&#x7A0B;&#x4E2D;&#x76D1;&#x542C;&#x4FE1;&#x9053;&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x6709;&#x51B2;&#x7A81;&#x3002;&#x5728;Wifi&#x7F51;&#x7EDC;&#x4E2D;&#xFF0C;&#x53D1;&#x9001;&#x7AEF;&#x4F1A;&#x7B49;&#x5F85;ACK&#x4FE1;&#x53F7;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6536;&#x5230;ACK&#x4FE1;&#x53F7;&#xFF0C;&#x53D1;&#x9001;&#x7AEF;&#x5219;&#x8BA4;&#x4E3A;&#x6570;&#x636E;&#x53D1;&#x9001;&#x5931;&#x8D25;&#x3002;</p>
+<h2 id="wireless-man-technology-and-wimax">Wireless MAN Technology And WiMax</h2>
+<p>&#x57CE;&#x57DF;&#x7F51;&#x6280;&#x672F;&#x7684;&#x534F;&#x8BAE;&#x88AB;&#x53CD;&#x7C7B;&#x5728;<span class="math inline">\(802.16\)</span>&#x4E2D;&#x3002;&#x5982;&#x540C;&#x5728;&#x5C40;&#x57DF;&#x7F51;&#x4E2D;&#x4E3B;&#x8981;&#x4F7F;&#x7528;&#x7684;&#x662F;Wifi&#xFF0C;&#x5728;&#x57CE;&#x57DF;&#x7F51;&#x4E2D;&#x4E3B;&#x8981;&#x4F7F;&#x7528;&#x7684;&#x4E8B;WiMax&#xFF08;World-wide Interoperability For Microwave Access&#xFF09;&#x6280;&#x672F;&#x3002;</p>
+<p>WiMax&#x53EF;&#x4EE5;&#x518D;&#x88AB;&#x7EC6;&#x5206;&#x4E3A;&#x56FA;&#x5B9A;WiMax&#x548C;&#x79FB;&#x52A8;WiMax&#xFF0C;&#x524D;&#x8005;&#x662F;&#x6307;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x65B9;&#x4E0E;&#x8FDE;&#x63A5;&#x8005;&#x7684;&#x4F4D;&#x7F6E;&#x662F;&#x56FA;&#x5B9A;&#x7684;&#xFF0C;&#x5982;&#x5927;&#x697C;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#xFF0C;&#x540E;&#x8005;&#x5219;&#x6307;&#x63A5;&#x6536;&#x65B9;&#x662F;&#x53EF;&#x4EE5;&#x79FB;&#x52A8;&#x7684;&#xFF0C;&#x5982;&#x7528;&#x6237;&#x7684;&#x624B;&#x673A;&#x548C;&#x7535;&#x8111;&#x7B49;&#x3002;</p>
+<p>WiMax&#x5728;&#x57CE;&#x57DF;&#x7F51;&#x4E2D;&#x7684;&#x4F7F;&#x7528;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x7528;&#x5728;&#x56DE;&#x4F20;&#x7F51;&#x7EDC;&#xFF08;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x65B9;&#x4E4B;&#x95F4;&#x7684;&#x8FDE;&#x63A5;&#xFF0C;&#x901A;&#x5E38;&#x9700;&#x8981;&#x8F83;&#x9AD8;&#x7684;&#x6570;&#x636E;&#x901F;&#x7387;&#xFF09;&#x4E2D;&#x5219;&#x9700;&#x8981;&#x65E0;&#x963B;&#x788D;&#xFF08;Line-Of-Sight&#xFF0C;LOS&#xFF09;&#x7684;&#x8FDE;&#x63A5;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x5728;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x65B9;&#x4E0E;&#x63A5;&#x5165;&#x70B9;&#x76F4;&#x63A5;&#x7684;&#x8FDE;&#x63A5;&#x5219;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x6709;&#x963B;&#x788D;&#x7684;&#x8FDE;&#x63A5;&#xFF08;Non-Line-Of-Sight&#xFF0C;NLOS&#xFF09;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-22-02-35.png" alt="WiMax&#x7684;&#x4F7F;&#x7528;"></p>
+<h2 id="pan-technologies-and-standards">PAN Technologies And Standards</h2>
+<p>PAN&#x6280;&#x672F;&#x88AB;&#x5206;&#x7C7B;&#x5728;<span class="math inline">\(802.15\)</span>&#x5206;&#x7C7B;&#x4E0B;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-22-04-05.png" alt="PAN&#x6280;&#x672F;"></p>
+<h2 id="other-short-distantce-communication-technologies">Other Short-Distantce Communication Technologies</h2>
+<p>&#x8FD8;&#x6709;&#x4E24;&#x79CD;&#x6280;&#x672F;&#x77ED;&#x8DDD;&#x79BB;&#x7684;&#x901A;&#x4FE1;&#x65B9;&#x5F0F;&#x5E76;&#x6CA1;&#x6709;&#x88AB;&#x5206;&#x7C7B;&#x5728;PANs&#x4E0B;&#xFF0C;&#x7EA2;&#x5916;&#x901A;&#x4FE1;&#xFF08;Infrared Data Association&#xFF0C;IrDA&#xFF09;&#x4EE5;&#x53CA;&#x5C04;&#x9891;&#x8BC6;&#x522B;&#xFF08;Radio Frequency Identification&#xFF0C;RFID&#xFF09;&#x901A;&#x4FE1;&#x3002;</p>
+<p>&#x7EA2;&#x5916;&#x901A;&#x4FE1;&#x662F;&#x65B9;&#x5411;&#x6027;&#x7684;&#xFF0C;&#x5927;&#x7EA6;&#x6709;30&#xB0;&#x7684;&#x8303;&#x56F4;&#xFF0C;&#x800C;&#x4E14;&#x4FE1;&#x53F7;&#x53EF;&#x4EE5;&#x5728;&#x969C;&#x788D;&#x7269;&#x8868;&#x9762;&#x53CD;&#x5C04;&#xFF0C;&#x4F46;&#x662F;&#x5E76;&#x4E0D;&#x80FD;&#x4F20;&#x7EDF;&#x969C;&#x788D;&#x7269;&#x3002;&#x7535;&#x89C6;&#x9065;&#x63A7;&#x5668;&#x5373;&#x662F;&#x4F7F;&#x7528;&#x4E86;&#x7EA2;&#x5916;&#x901A;&#x4FE1;&#x3002;</p>
+<p>&#x5C04;&#x9891;&#x8BC6;&#x522B;&#x901A;&#x4FE1;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x82AF;&#x7247;&#x4E2D;&#x5305;&#x542B;&#x6709;&#x9A8C;&#x8BC1;&#x4FE1;&#x606F;&#x7684;Tag&#xFF0C;&#x63A5;&#x6536;&#x65B9;&#x53EF;&#x4EE5;&#x5C06;&#x4FE1;&#x606F;&#x4ECE;&#x82AF;&#x7247;&#x4E2D;&#x8BFB;&#x53D6;&#x51FA;&#x6765;&#x3002;&#x9152;&#x5E97;&#x7684;&#x95E8;&#x7981;&#x5361;&#xFF0C;&#x5927;&#x5B66;&#x98DF;&#x5802;&#x7684;&#x996D;&#x5361;&#x7B49;&#x90FD;&#x662F;&#x4F7F;&#x7528;&#x4E86;&#x8FD9;&#x4E2A;&#x6280;&#x672F;&#x3002;</p>
+<h2 id="wireless-wan-technologies">Wireless WAN Technologies</h2>
+<p>&#x5E7F;&#x57DF;&#x7F51;&#x901A;&#x4FE1;&#x6709;&#x4E24;&#x5927;&#x7C7B;&#xFF0C;&#x8702;&#x7A9D;&#x5F0F;&#x901A;&#x4FE1;&#x7CFB;&#x7EDF;&#xFF08;Cellular communication systems&#xFF09;&#x548C;&#x536B;&#x661F;&#x901A;&#x4FE1;&#x7CFB;&#x7EDF;&#xFF08;Satellite communication system&#xFF09;&#x3002;</p>
+<p>&#x8702;&#x7A9D;&#x5F0F;&#x901A;&#x4FE1;&#x7CFB;&#x7EDF;&#x6700;&#x65E9;&#x662F;&#x4E3A;&#x4E86;&#x6EE1;&#x8DB3;&#x624B;&#x673A;&#x7684;&#x7535;&#x8BDD;&#x670D;&#x52A1;&#x8BBE;&#x8BA1;&#x7684;&#x3002;&#x5728;&#x8FD9;&#x4E2A;&#x7CFB;&#x7EDF;&#x4E0B;&#xFF0C;&#x5730;&#x533A;&#x88AB;&#x98CE;&#x683C;&#x4E3A;&#x4E00;&#x4E2A;&#x4E2A;&#x5C0F;&#x5757;&#x79F0;&#x4E3A;<code>&#x5DE3;&#x5BA4;&#xFF08;Cell&#xFF09;</code>&#xFF0C;&#x6BCF;&#x4E2A;&#x5DE3;&#x5BA4;&#x90FD;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x57FA;&#x7AD9;&#x5854;&#xFF0C;&#x4E00;&#x7CFB;&#x5217;&#x57FA;&#x7AD9;&#x5854;&#x7531;&#x4E00;&#x4E2A;&#x79FB;&#x52A8;&#x4EA4;&#x6362;&#x4E2D;&#x5FC3;&#x63A7;&#x5236;&#x3002;&#x8FD9;&#x4E2A;&#x4E2D;&#x5FC3;&#x4F1A;&#x8FFD;&#x8E2A;&#x7528;&#x6237;&#xFF0C;&#x5E76;&#x5728;&#x7528;&#x6237;&#x4ECE;&#x4E00;&#x4E2A;&#x5DE3;&#x5BA4;&#x8FDB;&#x5165;&#x53E6;&#x4E00;&#x4E2A;&#x5DE3;&#x5BA4;&#x65F6;&#xFF0C;&#x63D0;&#x4F9B;&#x5DE3;&#x5BA4;&#x7684;&#x5207;&#x6362;&#x670D;&#x52A1;&#x3002;&#x8702;&#x7A9D;&#x5F0F;&#x7CFB;&#x7EDF;&#x7684;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#x56FE;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-22-18-47.png" alt="&#x8702;&#x7A9D;&#x5F0F;&#x7CFB;&#x7EDF;&#x7ED3;&#x6784;"></p>
+<p>&#x7406;&#x8BBA;&#x4E0A;&#x6BCF;&#x4E2A;&#x5DE3;&#x5BA4;&#x90FD;&#x662F;&#x516D;&#x8FB9;&#x5F62;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x80FD;&#x65E0;&#x7F1D;&#x7684;&#x5206;&#x5272;&#x533A;&#x57DF;&#xFF0C;&#x4F46;&#x5728;&#x5B9E;&#x9645;&#x8FD0;&#x7528;&#x4E2D;&#xFF0C;&#x6BCF;&#x4E2A;&#x57FA;&#x7AD9;&#x5854;&#x7684;&#x8986;&#x76D6;&#x8303;&#x56F4;&#x5927;&#x81F4;&#x662F;&#x5706;&#x5F62;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x5C31;&#x4F1A;&#x51FA;&#x73B0;&#x91CD;&#x53E0;&#x6216;&#x8005;&#x65E0;&#x670D;&#x52A1;&#x533A;&#x3002;&#x4E14;&#x57FA;&#x7AD9;&#x5854;&#x7684;&#x8986;&#x76D6;&#x8303;&#x56F4;&#x7531;&#x6240;&#x5904;&#x533A;&#x57DF;&#x7684;&#x7528;&#x6237;&#x6570;&#x91CF;&#x51B3;&#x5B9A;&#xFF0C;&#x5982;&#x679C;&#x7528;&#x6237;&#x6570;&#x91CF;&#x5F88;&#x591A;&#xFF0C;&#x5219;&#x6BCF;&#x4E2A;&#x57FA;&#x7AD9;&#x5854;&#x7684;&#x8986;&#x76D6;&#x8303;&#x56F4;&#x4F1A;&#x8F83;&#x5C0F;&#xFF0C;&#x4E14;&#x6709;&#x66F4;&#x591A;&#x7684;&#x57FA;&#x7AD9;&#x5854;&#xFF0C;&#x53CD;&#x4E4B;&#x6BCF;&#x4E2A;&#x57FA;&#x7AD9;&#x5854;&#x8986;&#x76D6;&#x5F88;&#x5927;&#x4E00;&#x5757;&#x533A;&#x57DF;&#x3002;&#x7406;&#x8BBA;&#x548C;&#x5B9E;&#x9645;&#x7684;&#x5DE3;&#x5BA4;&#x56FE;&#x5982;&#x4E0B;&#xFF0C;&#xFF08;a&#xFF09;&#x56FE;&#x4E3A;&#x7406;&#x60F3;&#x60C5;&#x51B5;&#xFF0C;&#xFF08;b&#xFF09;&#x56FE;&#x4E3A;&#x5B9E;&#x9645;&#x60C5;&#x51B5;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-22-21-33.png" alt="&#x5DE3;&#x5BA4;&#x60C5;&#x51B5;"></p>
+<h2 id="micro-cells">Micro Cells</h2>
+<p>&#x5982;&#x4E0A;&#x8282;&#x6240;&#x8FF0;&#xFF0C;&#x7528;&#x6237;&#x5BC6;&#x5EA6;&#x8D8A;&#x5927;&#xFF0C;&#x5219;&#x8BBE;&#x8BA1;&#x65F6;&#x6BCF;&#x4E2A;&#x5DE3;&#x5BA4;&#x7684;&#x9762;&#x79EF;&#x8D8A;&#x5C0F;&#x3002;&#x5728;&#x57CE;&#x5E02;&#x4E2D;&#xFF0C;&#x6709;&#x65F6;&#x4F1A;&#x51FA;&#x73B0;&#x4E00;&#x4E2A;&#x5DE3;&#x5BA4;&#x4EC5;&#x8986;&#x76D6;&#x5927;&#x697C;&#x7684;&#x4E00;&#x5C42;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x8FD9;&#x662F;&#x79F0;&#x5176;&#x4E3A;&#x5FAE;&#x5DE3;&#x5BA4;&#xFF08;Micro Cells&#xFF09;&#x3002;&#x56E0;&#x4E3A;&#x5DE3;&#x5BA4;&#x5F88;&#x5C0F;&#x4E14;&#x5F88;&#x5C0F;&#x5757;&#x533A;&#x57DF;&#x5185;&#x6709;&#x591A;&#x4E2A;&#x5DE3;&#x5BA4;&#xFF0C;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x5E72;&#x6270;&#xFF0C;&#x5FAE;&#x5DE3;&#x5BA4;&#x7684;&#x529F;&#x7387;&#x90FD;&#x6BD4;&#x8F83;&#x5C0F;&#x3002;</p>
+<h2 id="cell-clusters-and-frequency-reuse">Cell Clusters And Frequency Reuse</h2>
+<p>&#x8702;&#x7A9D;&#x5F0F;&#x901A;&#x4FE1;&#x6709;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x539F;&#x5219;&#xFF1A;&#x76F8;&#x90BB;&#x7684;&#x5DE3;&#x5BA4;&#x5728;&#x4E0D;&#x4F7F;&#x7528;&#x76F8;&#x540C;&#x9891;&#x7387;&#x7684;&#x8F7D;&#x6CE2;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5E72;&#x6270;&#x6700;&#x5C0F;&#x3002;</p>
+<p>&#x8702;&#x7A9D;&#x5F0F;&#x7CFB;&#x7EDF;&#x4F7F;&#x7528;&#x79F0;&#x4E3A;&#x5DE3;&#x5BA4;&#x7C07;&#x7684;&#x7ED3;&#x6784;&#x6784;&#x6210;&#xFF0C;&#x6BCF;&#x4E2A;&#x5DE3;&#x5BA4;&#x7C07;&#x90FD;&#x7531;&#x7279;&#x5B9A;&#x6570;&#x76EE;&#x7684;&#x5DE3;&#x5BA4;&#x6784;&#x6210;&#xFF0C;&#x5176;&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x5DE3;&#x5BA4;&#x9891;&#x7387;&#x90FD;&#x4E0D;&#x540C;&#x3002;&#x901A;&#x5E38;&#x800C;&#x8A00;&#xFF0C;&#x5DE3;&#x5BA4;&#x7C07;&#x7531;3&#xFF0C;4&#xFF0C;7&#x6216;12&#x4E2A;&#x5DE3;&#x5BA4;&#x6784;&#x6210;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-23-19-08.png" alt="&#x5DE3;&#x5BA4;&#x7C07;"></p>
+<p>&#x5DE3;&#x5BA4;&#x7C07;&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x5DE3;&#x5BA4;&#x9891;&#x7387;&#x4E0D;&#x540C;&#xFF0C;&#x5C06;&#x5DE3;&#x5BA4;&#x7C07;&#x62FC;&#x63A5;&#x540E;&#x5C31;&#x4E0D;&#x4F1A;&#x6709;&#x76F8;&#x90BB;&#x5DE3;&#x5BA4;&#x9891;&#x7387;&#x76F8;&#x540C;&#x7684;&#x60C5;&#x51B5;&#x51FA;&#x73B0;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x4E3A;7&#x5DE3;&#x5BA4;&#x7C07;&#x62FC;&#x63A5;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-23-20-04.png" alt="&#x5DE3;&#x5BA4;&#x7C07;&#x62FC;&#x63A5;"></p>
+<h2 id="generations-of-cellular-technologies">Generations Of Cellular Technologies</h2>
+<p>&#x76EE;&#x524D;&#x901A;&#x4FE1;&#x6280;&#x672F;&#x7684;&#x53D1;&#x5C55;&#x6709;&#x56DB;&#x4EE3;&#xFF0C;&#x79F0;&#x4E3A;1G,2G,3G&#x548C;4G&#xFF1A;</p>
+<ol type="1">
+<li>1G&#xFF1A;&#x51FA;&#x73B0;&#x5728;1970&#x5E74;&#x4EE3;&#x540E;&#x671F;&#xFF0C;&#x901A;&#x8FC7;&#x6A21;&#x62DF;&#x4FE1;&#x53F7;&#x4F20;&#x9012;&#x8BED;&#x97F3;&#x4FE1;&#x606F;&#x3002;</li>
+<li>2G&#x548C;2.5G&#xFF1A;&#x4ECE;1990&#x5E74;&#x4EE3;&#x65E9;&#x671F;&#x5F00;&#x59CB;&#x53D1;&#x5C55;&#xFF0C;&#x81F3;&#x4ECA;&#x4ECD;&#x7136;&#x5728;&#x4F7F;&#x7528;&#x3002;&#x4E0E;1G&#x7684;&#x4E3B;&#x8981;&#x533A;&#x522B;&#x5728;&#x4E8E;&#xFF0C;2G&#x4F7F;&#x7528;&#x4E86;&#x6570;&#x5B57;&#x4FE1;&#x53F7;&#x4F20;&#x9012;&#x8BED;&#x97F3;&#x4FE1;&#x606F;&#x3002;2.5G&#x662F;2G&#x7684;&#x6269;&#x5C55;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x90E8;&#x5206;3G&#x7684;&#x7279;&#x6027;&#x3002;</li>
+<li>3G&#x548C;2.5G&#xFF1A;&#x4ECE;2000&#x5E74;&#x5F00;&#x59CB;&#x53D1;&#x5C55;&#xFF0C;&#x4E3B;&#x8981;&#x5173;&#x6CE8;&#x9AD8;&#x901F;&#x6570;&#x636E;&#x670D;&#x52A1;&#x3002;3G&#x7CFB;&#x7EDF;&#x63D0;&#x4F9B;400Kbps&#x5230;2Mbps&#x7684;&#x6570;&#x636E;&#x901F;&#x5EA6;&#x3002;</li>
+<li>4G&#xFF1A;&#x4ECE;&#x5927;&#x7EA6;2008&#x5E74;&#x5F00;&#x59CB;&#x4F7F;&#x7528;&#xFF0C;&#x4E3B;&#x8981;&#x5173;&#x6CE8;&#x5B9E;&#x65F6;&#x5A92;&#x4F53;&#x7684;&#x4F7F;&#x7528;&#xFF0C;&#x5982;&#x7535;&#x89C6;&#x76F4;&#x64AD;&#xFF0C;&#x9AD8;&#x901F;&#x89C6;&#x9891;&#x4E0B;&#x8F7D;&#x7B49;&#x3002;4G&#x624B;&#x673A;&#x901A;&#x5E38;&#x5305;&#x542B;&#x591A;&#x79CD;&#x6570;&#x636E;&#x8FDE;&#x63A5;&#x65B9;&#x5F0F;&#xFF0C;&#x5982;Wifi&#x548C;&#x536B;&#x661F;&#x901A;&#x4FE1;&#x3002;</li>
+</ol>
+<p>&#x5728;2G&#x6280;&#x672F;&#x53D1;&#x5C55;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x8BB8;&#x591A;&#x7EC4;&#x7EC7;&#x90FD;&#x5C1D;&#x8BD5;&#x5B9A;&#x4E49;&#x6807;&#x51C6;&#xFF0C;&#x6B27;&#x6D32;&#x4E3B;&#x8981;&#x4F7F;&#x7528;TDMA&#x6280;&#x672F;&#x5E76;&#x5236;&#x8BA2;&#x4E86;GSM&#x6807;&#x51C6;&#xFF08;Global System For Mobile Communication&#xFF09;&#xFF0C;&#x8BE5;&#x6807;&#x51C6;&#x9010;&#x6E10;&#x79F0;&#x4E3A;&#x4E86;&#x5168;&#x7403;&#x6807;&#x51C6;&#x3002;&#x5728;&#x7F8E;&#x56FD;&#xFF0C;&#x6469;&#x6258;&#x7F57;&#x62C9;&#x4F7F;&#x7528;TDMA&#x6280;&#x672F;&#x5B9A;&#x4E49;&#x4E86;iDEM&#x6807;&#x51C6;&#x3002;&#x540C;&#x65F6;&#x5927;&#x90E8;&#x5206;&#x5176;&#x4ED6;&#x7684;&#x7F8E;&#x56FD;&#x8FD0;&#x8425;&#x5546;&#x548C;&#x4E9A;&#x6D32;&#x8FD0;&#x8425;&#x5546;&#x90FD;&#x4F7F;&#x7528;&#x4E86;CDMA&#x6280;&#x672F;&#x6765;&#x6307;&#x5B9A;&#x6807;&#x51C6;&#x3002;</p>
+<p>&#x5728;3G&#x65F6;&#x4EE3;&#xFF0C;EVDO&#xFF08;Evolution Data Optimized/Evolution Data Only&#xFF09;&#x548C;EVDV&#x6807;&#x51C6;&#x51E0;&#x4E4E;&#x540C;&#x65F6;&#x51FA;&#x73B0;&#xFF0C;&#x4E24;&#x8005;&#x90FD;&#x662F;CDMA&#x548C;FDM&#x6280;&#x672F;&#x7684;&#x6DF7;&#x5408;&#x3002;EVDO&#x6280;&#x672F;&#x88AB;&#x8FD0;&#x7528;&#x7684;&#x8F83;&#x4E3A;&#x5E7F;&#x6CDB;&#x3002;</p>
+<p>&#x5728;&#x8BBE;&#x8BA1;4G&#x6807;&#x51C6;&#x65F6;&#xFF0C;&#x56FD;&#x9645;&#x901A;&#x4FE1;&#x534F;&#x4F1A;&#xFF08;ITU&#xFF09;&#x6307;&#x5B9A;&#x4E86;4G&#x8702;&#x7A9D;&#x5F0F;&#x7CFB;&#x7EDF;&#x7684;&#x6807;&#x51C6;&#xFF0C;&#x79F0;&#x4E3A;<code>IMT-Advanced&#xFF08;International Mobile Telecommunication Advaced&#xFF09;</code>&#x3002;&#x5176;&#x6307;&#x5B9A;&#x7EC8;&#x7AEF;&#x5728;&#x9AD8;&#x901F;&#x79FB;&#x52A8;&#x65F6;&#xFF08;&#x5982;&#x5728;&#x706B;&#x8F66;&#x4E0A;&#xFF09;&#x5E94;&#x8BE5;&#x6709;100Mbps&#x7684;&#x6570;&#x636E;&#x901F;&#x7387;&#xFF0C;&#x800C;&#x5728;&#x9759;&#x6B62;&#x65F6;&#x5E94;&#x8BE5;&#x6709;100Mbps&#x7684;&#x901F;&#x7387;&#x3002;</p>
+<p>&#x5728;&#x65E9;&#x671F;&#xFF0C;&#x8FD0;&#x8425;&#x5546;&#x6307;&#x5B9A;&#x7684;4G&#x6807;&#x51C6;&#xFF0C;&#x5982;<code>HSPA+</code>&#xFF0C;<code>HTC Evo 4G</code>&#xFF0C;<code>WiMax</code>&#x548C;<code>LTE&#xFF08;Long Term Evolution&#xFF09;</code>&#x90FD;&#x672A;&#x6EE1;&#x8DB3;&#x8981;&#x6C42;&#x3002;&#x4F46;&#x662F;ITU&#x8FD8;&#x662F;&#x5141;&#x8BB8;&#x4E86;&#x4ED6;&#x4EEC;&#x4F7F;&#x7528;4G&#x4F5C;&#x4E3A;&#x81EA;&#x5DF1;&#x7684;&#x5E7F;&#x544A;&#x8BED;&#xFF0C;&#x5728;&#x540E;&#x671F;&#xFF0C;<code>LTE-Advanced</code>&#x548C;<code>WiMax Advanced</code>&#x6EE1;&#x8DB3;&#x4E86;ITU&#x7684;&#x6807;&#x51C6;&#xFF0C;&#x88AB;&#x79F0;&#x4E3A;&#x771F;4G&#x3002;</p>
+<p>3G&#x548C;4G&#x7684;&#x4E3B;&#x8981;&#x533A;&#x522B;&#x5728;&#x4E8E;&#xFF0C;3G&#x7CFB;&#x7EDF;&#x8BBE;&#x8BA1;&#x65F6;&#x4ECD;&#x7136;&#x662F;&#x57FA;&#x4E8E;&#x8BED;&#x97F3;&#x901A;&#x8BDD;&#x7CFB;&#x7EDF;&#x8003;&#x8651;&#x7684;&#xFF0C;&#x8FD8;&#x662F;&#x7EE7;&#x627F;&#x81EA;&#x539F;&#x5148;&#x7684;&#x6A21;&#x62DF;&#x7535;&#x8BDD;&#x7CFB;&#x7EDF;&#xFF0C;&#x5176;&#x4ED6;&#x7684;&#x6570;&#x636E;&#x662F;&#x4F5C;&#x4E3A;&#x989D;&#x5916;&#x7684;&#x8981;&#x6C42;&#x3002;&#x800C;&#x5728;4G&#x6807;&#x51C6;&#x8BBE;&#x8BA1;&#x65F6;&#x4E3B;&#x8981;&#x8003;&#x8651;&#x56E0;&#x7279;&#x7F51;&#x534F;&#x8BAE;&#xFF0C;&#x56E0;&#x6B64;4G&#x7CFB;&#x7EDF;&#x4F7F;&#x7528;&#x4E86;&#x5E27;&#x4EA4;&#x6362;&#x800C;&#x8BED;&#x97F3;&#x53EA;&#x662F;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x5E94;&#x7528;&#x3002;&#x5728;&#x5B9E;&#x9645;&#x5E94;&#x7528;&#x4E2D;&#xFF0C;&#x8BB8;&#x591A;&#x8702;&#x7A9D;&#x7CFB;&#x7EDF;&#x4ECD;&#x7136;&#x901A;&#x8FC7;3G&#x6765;&#x4F20;&#x8F93;&#x901A;&#x8BDD;&#x4FE1;&#x606F;&#xFF0C;&#x800C;&#x5728;&#x5176;&#x4ED6;&#x6570;&#x636E;&#x65F6;&#x4F7F;&#x7528;4G&#x3002;</p>
+<h2 id="vsat-satellite-technology">VSAT Satellite Technology</h2>
+<p>&#x536B;&#x661F;&#x901A;&#x4FE1;&#x7684;&#x5173;&#x952E;&#x662F;&#x7528;&#x4E00;&#x4E2A;&#x66F2;&#x9762;&#x5929;&#x7EBF;&#xFF08;Parabolic antenna/Dish&#xFF09;&#x4FDD;&#x8BC1;&#x7535;&#x78C1;&#x4FE1;&#x53F7;&#x88AB;&#x53CD;&#x5C04;&#x5230;&#x4E00;&#x4E2A;&#x5355;&#x4E00;&#x70B9;&#x4E0A;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-23-39-52.png" alt="&#x66F2;&#x9762;&#x5929;&#x7EBF;"></p>
+<p>&#x4E3A;&#x4E86;&#x6700;&#x5927;&#x5316;&#x6536;&#x96C6;&#x5230;&#x7684;&#x4FE1;&#x53F7;&#xFF0C;&#x65E9;&#x671F;&#x7684;&#x536B;&#x661F;&#x901A;&#x4FE1;&#x7CFB;&#x7EDF;&#x4F7F;&#x7528;&#x76F4;&#x5F84;&#x5927;&#x4E8E;3&#x7C73;&#x7684;&#x66F2;&#x9762;&#x5929;&#x7EBF;&#xFF0C;&#x4F46;&#x8FD9;&#x79CD;&#x5C3A;&#x5BF8;&#x7684;&#x5929;&#x7EBF;&#x5E76;&#x4E0D;&#x9002;&#x7528;&#x4E8E;&#x4E2A;&#x4EBA;&#x6216;&#x5C0F;&#x5546;&#x5BB6;&#x3002;&#x4E8E;&#x662F;&#x79F0;&#x4E3A;<code>&#x751A;&#x5C0F;&#x53E3;&#x5F84;&#x5929;&#x7EBF;&#x7EC8;&#x7AEF;&#xFF08;Very Small Aperture Terminal&#xFF0C;VSAT&#xFF09;</code>&#x7684;&#x6280;&#x672F;&#x51FA;&#x73B0;&#xFF0C;&#x5B83;&#x6307;&#x4EE3;&#x76F4;&#x5F84;&#x5C0F;&#x4E8E;3&#x7C73;&#x7684;&#x66F2;&#x9762;&#x5929;&#x7EBF;&#xFF0C;&#x901A;&#x5E38;&#x76F4;&#x5F84;&#x5728;1&#x7C73;&#x4EE5;&#x4E0B;&#x3002;</p>
+<p>VSAT&#x536B;&#x661F;&#x901A;&#x4FE1;&#x9009;&#x62E9;&#x7684;&#x9891;&#x7387;&#x4E0D;&#x540C;&#x4F1A;&#x5F71;&#x54CD;&#x4FE1;&#x53F7;&#x5F3A;&#x5EA6;&#xFF0C;&#x5929;&#x6C14;&#x73AF;&#x5883;&#x53D8;&#x5316;&#x7684;&#x654F;&#x611F;&#x7A0B;&#x5EA6;&#xFF0C;&#x548C;&#x4FE1;&#x53F7;&#x7684;&#x8986;&#x76D6;&#x8303;&#x56F4;&#xFF08;Satellite&apos;s footprint&#xFF09;&#x3002;&#x5982;&#x4E0B;&#x8868;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-23-45-24.png" alt="VSAT&#x536B;&#x661F;&#x9891;&#x7387;"></p>
+<h2 id="gps-satellites">GPS Satellites</h2>
+<p>GPS&#xFF08;Global Positioning System&#xFF09;&#x536B;&#x661F;&#x63D0;&#x4F9B;&#x5B9E;&#x65F6;&#x7684;&#x51C6;&#x786E;&#x4F4D;&#x7F6E;&#x4FE1;&#x606F;&#x3002;GPS&#x901A;&#x4FE1;&#x5E76;&#x975E;&#x662F;&#x8BA1;&#x7B97;&#x673A;&#x901A;&#x4FE1;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x4F46;&#x662F;&#x8D8A;&#x6765;&#x8D8A;&#x591A;&#x7684;&#x79FB;&#x52A8;&#x7F51;&#x7EDC;&#x4F7F;&#x7528;&#x4E86;&#x4F4D;&#x7F6E;&#x4FE1;&#x606F;&#x3002;</p>
+<p>GPS&#x7CFB;&#x7EDF;&#x901A;&#x8FC7;&#x4E09;&#x9897;&#x536B;&#x661F;&#x8BA1;&#x7B97;&#x51FA;&#x7EC8;&#x7AEF;&#x7684;&#x4F4D;&#x7F6E;&#x3002;&#x9996;&#x5148;&#x8981;&#x8BA1;&#x7B97;&#x7EC8;&#x7AEF;&#x8DDD;&#x79BB;&#x4E09;&#x9897;&#x536B;&#x661F;&#x7684;&#x8DDD;&#x79BB;&#xFF0C;&#x8DDD;&#x79BB;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x536B;&#x661F;&#x4E0E;&#x7EC8;&#x7AEF;&#x7684;&#x4F20;&#x8F93;&#x65F6;&#x95F4;&#x4E58;&#x4E0A;&#x5149;&#x901F;&#x6765;&#x786E;&#x5B9A;&#x3002;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x7EC8;&#x7AEF;&#x4E0E;&#x536B;&#x661F;&#x7684;&#x8DDD;&#x79BB;&#x4E3A;<span class="math inline">\(d\)</span>&#xFF0C;&#x5219;&#x7EC8;&#x7AEF;&#x51FA;&#x73B0;&#x5728;&#x4EE5;&#x536B;&#x661F;&#x4E3A;&#x7403;&#x661F;&#xFF0C;&#x534A;&#x5F84;&#x4E3A;<span class="math inline">\(d\)</span>&#x7684;&#x7403;&#x4E0A;&#x4EFB;&#x610F;&#x4F4D;&#x7F6E;&#x3002;&#x901A;&#x8FC7;&#x4E09;&#x4E2A;&#x536B;&#x661F;&#xFF0C;&#x53EF;&#x4EE5;&#x8BA1;&#x7B97;&#x51FA;&#x4E09;&#x4E2A;&#x7403;&#xFF0C;&#x4E09;&#x4E2A;&#x7403;&#x7684;&#x4EA4;&#x70B9;&#x4E3A;&#x4E24;&#x4E2A;&#x70B9;&#xFF08;&#x4E24;&#x4E2A;&#x7403;&#x7684;&#x4EA4;&#x70B9;&#x4E3A;&#x4E00;&#x4E2A;&#x5706;&#x5F62;&#xFF09;&#x3002;&#x8FD9;&#x4E24;&#x4E2A;&#x4EA4;&#x70B9;&#xFF0C;&#x4E00;&#x4E2A;&#x5728;&#x592A;&#x7A7A;&#x4E2D;&#xFF0C;&#x4E00;&#x4E2A;&#x5728;&#x5730;&#x7403;&#x4E0A;&#xFF0C;&#x5730;&#x7403;&#x4E0A;&#x7684;&#x70B9;&#x5373;&#x4E3A;&#x7EC8;&#x7AEF;&#x7684;&#x4F4D;&#x7F6E;&#x3002;</p>
+<h2 id="software-defined-radio-and-the-future-of-wireless">Software Defined Radio And The Future Of Wireless</h2>
+<p>&#x901A;&#x5E38;&#x4E00;&#x4E2A;&#x8702;&#x7A9D;&#x7F51;&#x7EDC;&#x624B;&#x673A;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x5929;&#x7EBF;&#xFF0C;&#x53D1;&#x5C04;&#x5668;&#x548C;&#x63A5;&#x6536;&#x5668;&#x7684;&#x89C4;&#x683C;&#xFF0C;&#x8FD9;&#x4E9B;&#x6570;&#x636E;&#x90FD;&#x662F;&#x9700;&#x8981;&#x9884;&#x5148;&#x6307;&#x5B9A;&#x7684;&#x3002;&#x5982;&#x679C;&#x540C;&#x65F6;&#x652F;&#x6301;GSM&#xFF0C;Wifi&#x548C;CDMA&#xFF0C;&#x5219;&#x9700;&#x8981;&#x4E09;&#x5957;&#x72EC;&#x7ACB;&#x7684;&#x65E0;&#x7EBF;&#x7535;&#x7CFB;&#x7EDF;&#xFF0C;&#x4F7F;&#x7528;&#x65F6;&#x5728;&#x5176;&#x4E2D;&#x5207;&#x6362;&#x3002;</p>
+<p>&#x73B0;&#x5728;&#x4F20;&#x7EDF;&#x7684;&#x65E0;&#x7EBF;&#x7535;&#x7CFB;&#x7EDF;&#x88AB;&#x8F6F;&#x4EF6;&#x65E0;&#x7EBF;&#x7535;&#x53D6;&#x4EE3;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x8F6F;&#x4EF6;&#x6765;&#x6307;&#x5B9A;&#x7684;&#x7279;&#x6027;&#x5982;&#x4E0B;&#x8868;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="/CNI-Chapter16-Notes/2019-12-30-23-53-54.png" alt="&#x8F6F;&#x4EF6;&#x65E0;&#x7EBF;&#x7535;&#x53EF;&#x4EE5;&#x8BBE;&#x5B9A;&#x7684;&#x7279;&#x6027;"></p>
+<p>&#x8F6F;&#x4EF6;&#x65E0;&#x7EBF;&#x7535;&#x7684;&#x4E00;&#x5927;&#x7279;&#x6027;&#x662F;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x4F7F;&#x7528;&#x591A;&#x4E2A;&#x5929;&#x7EBF;&#xFF0C;&#x79F0;&#x5B9E;&#x73B0;&#x4E86;&#x591A;&#x5929;&#x7EBF;&#x540C;&#x65F6;&#x4F20;&#x8F93;&#x548C;&#x63A5;&#x53D7;&#x7684;&#x7CFB;&#x7EDF;&#x4E3A;<code>MIMO&#xFF08;Multiple-Input Multiple-Output&#xFF09;</code>&#x7CFB;&#x7EDF;&#x3002;</p>
+<p>&#x901A;&#x8FC7;&#x8F6F;&#x4EF6;&#x6765;&#x8BBE;&#x5B9A;&#x901A;&#x4FE1;&#x7279;&#x6027;&#x4E5F;&#x6709;&#x4E00;&#x5B9A;&#x7684;&#x5371;&#x9669;&#x6027;&#xFF0C;&#x5982;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x88AB;&#x653F;&#x5E9C;&#x9650;&#x5236;&#x7684;&#x9891;&#x7387;&#x6765;&#x53D1;&#x9001;&#x6570;&#x636E;&#x6216;&#x8005;&#x5360;&#x636E;&#x4E3A;&#x7D27;&#x6025;&#x670D;&#x52A1;&#x9884;&#x7559;&#x7684;&#x9891;&#x9053;&#x3002;&#x56E0;&#x6B64;&#x8FD9;&#x4E2A;&#x6280;&#x672F;&#x4E5F;&#x9700;&#x8981;&#x4E25;&#x683C;&#x89C4;&#x8303;&#x3002;</p>
+<div class="note primary">
+            <ol type="1"><li><em>Computer Networks and Internets</em> 6th</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/CNI-Chapter16-Notes/" title="《计算机网络与因特网》 第十六章笔记">https://xuejiaw.github.io/CNI-Chapter16-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/CNI-Chapter14-Notes/" rel="prev" title="《计算机网络与因特网》 第十四章笔记">
+      <i class="fa fa-chevron-left"></i> 《计算机网络与因特网》 第十四章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/CNI-Chapter17-Notes/" rel="next" title="《计算机网络与因特网》 第十七章笔记">
+      《计算机网络与因特网》 第十七章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-16-wireless-networking-technologies"><span class="nav-number">1.</span> <span class="nav-text">Chapter 16 Wireless Networking Technologies</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#a-taxonomy-of-wireless-networks"><span class="nav-number">1.2.</span> <span class="nav-text">A Taxonomy Of Wireless Networks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#personal-area-networkspans"><span class="nav-number">1.3.</span> <span class="nav-text">Personal Area Networks（PANs）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ism-wireless-bands-used-by-lans-and-pans"><span class="nav-number">1.4.</span> <span class="nav-text">ISM Wireless Bands Used By LANs And PANs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wireless-lan-technologies-and-wi-fi"><span class="nav-number">1.5.</span> <span class="nav-text">Wireless LAN Technologies And Wi-Fi</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spread-spectrum-technology"><span class="nav-number">1.6.</span> <span class="nav-text">Spread Spectrum Technology</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#other-wireless-lan-standards"><span class="nav-number">1.7.</span> <span class="nav-text">Other Wireless LAN Standards</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wireless-lan-architecture"><span class="nav-number">1.8.</span> <span class="nav-text">Wireless LAN Architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#overlapassociationand-802.11-frame-format"><span class="nav-number">1.9.</span> <span class="nav-text">Overlap，Association，And 802.11 Frame Format</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#coordination-among-access-points"><span class="nav-number">1.10.</span> <span class="nav-text">Coordination Among Access Points</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#contention-and-contention-free-access"><span class="nav-number">1.11.</span> <span class="nav-text">Contention And Contention-Free Access</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wireless-man-technology-and-wimax"><span class="nav-number">1.12.</span> <span class="nav-text">Wireless MAN Technology And WiMax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pan-technologies-and-standards"><span class="nav-number">1.13.</span> <span class="nav-text">PAN Technologies And Standards</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#other-short-distantce-communication-technologies"><span class="nav-number">1.14.</span> <span class="nav-text">Other Short-Distantce Communication Technologies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wireless-wan-technologies"><span class="nav-number">1.15.</span> <span class="nav-text">Wireless WAN Technologies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#micro-cells"><span class="nav-number">1.16.</span> <span class="nav-text">Micro Cells</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cell-clusters-and-frequency-reuse"><span class="nav-number">1.17.</span> <span class="nav-text">Cell Clusters And Frequency Reuse</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#generations-of-cellular-technologies"><span class="nav-number">1.18.</span> <span class="nav-text">Generations Of Cellular Technologies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vsat-satellite-technology"><span class="nav-number">1.19.</span> <span class="nav-text">VSAT Satellite Technology</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gps-satellites"><span class="nav-number">1.20.</span> <span class="nav-text">GPS Satellites</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#software-defined-radio-and-the-future-of-wireless"><span class="nav-number">1.21.</span> <span class="nav-text">Software Defined Radio And The Future Of Wireless</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

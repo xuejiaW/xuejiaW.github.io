@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x4E00;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x5173;&amp;#x4E8E;&amp;#x7B1B;&amp;#x53">
+<meta name="keywords" content="读书笔记,3D数学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《3D数学基础：图形和游戏开发》第一章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x4E00;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x5173;&amp;#x4E8E;&amp;#x7B1B;&amp;#x53">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/2020-02-24-19-18-36.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/2020-02-24-19-28-49.png">
+<meta property="og:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/2020-02-24-20-37-18.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:42.956Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《3D数学基础：图形和游戏开发》第一章笔记">
+<meta name="twitter:description" content="&amp;#x300A;3D&amp;#x6570;&amp;#x5B66;&amp;#x57FA;&amp;#x7840;&amp;#xFF1A;&amp;#x56FE;&amp;#x5F62;&amp;#x548C;&amp;#x6E38;&amp;#x620F;&amp;#x5F00;&amp;#x53D1;&amp;#x300B;&amp;#x7B2C;&amp;#x4E00;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x5173;&amp;#x4E8E;&amp;#x7B1B;&amp;#x53">
+<meta name="twitter:image" content="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/2020-02-24-19-18-36.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《3D数学基础：图形和游戏开发》第一章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《3D数学基础：图形和游戏开发》第一章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-24 20:46:26" itemprop="dateCreated datePublished" datetime="2020-02-24T20:46:26+08:00">2020-02-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:42" itemprop="dateModified" datetime="2020-09-24T19:59:42+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/图形学/" itemprop="url" rel="index"><span itemprop="name">图形学</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《3D数学基础：图形和游戏开发》第一章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr>
+<blockquote class="blockquote-center">
+            <p>&#x300A;3D&#x6570;&#x5B66;&#x57FA;&#x7840;&#xFF1A;&#x56FE;&#x5F62;&#x548C;&#x6E38;&#x620F;&#x5F00;&#x53D1;&#x300B;&#x7B2C;&#x4E00;&#x7AE0;&#x7B14;&#x8BB0;</p>
+<p>&#x5173;&#x4E8E;&#x7B1B;&#x5361;&#x5C14;&#x5750;&#x6807;&#x7CFB;&#x7684;&#x4ECB;&#x7ECD;&#xFF0C;&#x5982;&#x4E09;&#x7EF4;&#x5750;&#x6807;&#x79CD;&#x7684;&#x5DE6;&#x53F3;&#x624B;&#x5750;&#x6807;&#x7CFB;&#x3002;</p>
+<p>&#x4E00;&#x4E9B;&#x4E09;&#x89D2;&#x51FD;&#x6570;&#x7684;&#x4ECB;&#x7ECD;&#x3002;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-1">Chapter 1</h1>
+<p>&#x5728;&#x8BA1;&#x7B97;&#x673A;&#x4E09;&#x7EF4;&#x6570;&#x5B66;&#x548C;&#x4E09;&#x7EF4;&#x5750;&#x6807;&#x7684;&#x8BA1;&#x7B97;&#x4E2D;&#xFF0C;&#x7528;&#x7684;&#x6700;&#x9891;&#x7E41;&#x7684;&#x6846;&#x67B6;&#x5C31;&#x662F;&#x7B1B;&#x5361;&#x5C14;&#x5750;&#x6807;&#x7CFB;&#xFF08;Cartesian coordinate system&#xFF09;&#x3002;</p>
+<h2 id="d-mathematics">1D Mathematics</h2>
+<p>&#x6709;&#x7406;&#x6570;&#xFF08;Rational numbers&#xFF09;&#x5B9A;&#x4E49;&#xFF1A;&#x53EF;&#x4EE5;&#x8868;&#x793A;&#x4E3A;&#x4E24;&#x4E2A;&#x6574;&#x6570;&#x7684;&#x6BD4; &#x5B9E;&#x6570;&#x5B9A;&#x4E49;&#xFF1A;&#x5305;&#x62EC;&#x6709;&#x7406;&#x6570;&#x548C;&#x65E0;&#x7406;&#x6570;&#xFF08;&#x4F8B;&#x5982;<span class="math inline">\(\pi\)</span>&#xFF09;</p>
+<p>&#x5BF9;&#x4E8E;&#x81EA;&#x7136;&#x6570;&#x548C;&#x6574;&#x6570;&#x7684;&#x7814;&#x7A76;&#x79F0;&#x4F5C;&#x4E3A;&#x79BB;&#x6563;&#x6570;&#x5B66;&#xFF08;Discrete Mathematics&#xFF09;&#xFF0C;&#x5BF9;&#x4E8E;&#x5B9E;&#x6570;&#x7684;&#x5B66;&#x4E60;&#x79F0;&#x4E3A;&#x8FDE;&#x7EED;&#x6570;&#x5B66;&#xFF08;Continuous Mathematics&#xFF09;&#x3002;</p>
+<div class="note info">
+            <p>&#x56FE;&#x5F62;&#x5B66;&#x7B2C;&#x4E00;&#x5B9A;&#x7406;&#xFF1A;&#x5982;&#x679C;&#x770B;&#x8D77;&#x6765;&#x7ED3;&#x679C;&#x662F;&#x5BF9;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x662F;&#x5BF9;&#x7684;</p><p>If it looks right, it is right.</p>
+          </div>
+<h2 id="d-cartesian-space">2D Cartesian Space</h2>
+<p>&#x5750;&#x6807;&#x8F74;&#x7684;&#x957F;&#x5EA6;&#x662F;&#x65E0;&#x9650;&#x7684;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x4E8C;&#x7EF4;&#x5750;&#x6807;&#x800C;&#x8A00;&#xFF0C;&#x65E0;&#x8BBA;X&#x8F74;&#x548C;Y&#x8F74;&#x9009;&#x53D6;&#x7684;&#x65B9;&#x5411;&#x5982;&#x4F55;&#xFF0C;&#x90FD;&#x80FD;&#x901A;&#x8FC7;&#x65CB;&#x8F6C;&#xFF08;&#x5305;&#x62EC;&#x7FFB;&#x8F6C;&#xFF09;&#x5C06;&#x5176;&#x4E92;&#x76F8;&#x8F6C;&#x6362;&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x662F;&#x4E8C;&#x7EF4;&#x5750;&#x6807;&#x7684;&#x4E00;&#x5171;8&#x79CD;&#x53EF;&#x80FD;&#xFF08;&#x5F53;X&#x8F74;&#x9009;&#x5B9A;&#x4E00;&#x4E2A;&#x65B9;&#x5411;&#xFF08;X&#x8F74;&#x7684;&#x9009;&#x62E9;&#x6709;&#x516D;&#x79CD;&#x53EF;&#x80FD;&#xFF09;&#x65F6;&#xFF0C;Y&#x8F74;&#x56E0;&#x4E3A;&#x5FC5;&#x987B;&#x4E0E;X&#x8F74;&#x5782;&#x76F4;&#xFF0C;&#x6240;&#x4EE5;&#x53EA;&#x6709;&#x4E24;&#x79CD;&#x53EF;&#x80FD;&#xFF0C;&#x6B63;&#x5411;&#x6216;&#x53CD;&#x5411;&#xFF09;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/2020-02-24-19-18-36.png" alt="&#x4E8C;&#x7EF4;&#x5750;&#x6807;8&#x79CD;&#x53EF;&#x80FD;&#x6027;"></p>
+<p>&#x6240;&#x4EE5;&#x4ECE;&#x67D0;&#x79CD;&#x89D2;&#x5EA6;&#x800C;&#x8A00;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x4E8C;&#x7EF4;&#x5750;&#x6807;&#x90FD;&#x662F;&#x7B49;&#x6548;&#x7684;&#x3002;</p>
+<h2 id="d-cartesian-space-1">3D Cartesian Space</h2>
+<p>&#x6240;&#x6709;&#x7684;&#x4E8C;&#x7EF4;&#x5750;&#x6807;&#x662F;&#x7B49;&#x6548;&#x7684;&#xFF0C;&#x4F46;&#x6240;&#x6709;&#x7684;&#x4E09;&#x7EF4;&#x5750;&#x6807;&#x5E76;&#x4E0D;&#x662F;&#x7B49;&#x6548;&#x7684;&#x3002;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x65CB;&#x8F6C;&#x6216;&#x53CD;&#x8F6C;&#x5C06;&#x4E09;&#x7EF4;&#x5750;&#x6807;&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x5339;&#x914D;&#xFF0C;&#x4F46;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#x7B2C;&#x4E09;&#x4E2A;&#x5750;&#x6807;&#x7684;&#x65B9;&#x5411;&#x53EF;&#x80FD;&#x662F;&#x53CD;&#x7684;&#x3002;</p>
+<blockquote>
+<p>&#x4E09;&#x7EF4;&#x5750;&#x6807;&#x4E00;&#x5171;&#x6709;48&#x79CD;&#x53EF;&#x80FD;&#xFF08;Z&#x8F74;&#x4E00;&#x5171;&#x6709;6&#x79CD;&#x53EF;&#x80FD;&#xFF0C;X&#x548C;Y&#x6784;&#x6210;&#x4E8C;&#x7EF4;&#x5750;&#x6807;&#xFF0C;&#x6709;8&#x79CD;&#x53EF;&#x80FD;&#xFF0C;6*8 = 48&#xFF09;&#x3002;</p>
+</blockquote>
+<p>&#x56E0;&#x6B64;&#x6240;&#x6709;&#x7684;&#x4E09;&#x7EF4;&#x5750;&#x6807;&#x88AB;&#x5206;&#x4E3A;&#x4E24;&#x7EC4;&#xFF0C;&#x4E00;&#x7EC4;&#x88AB;&#x79F0;&#x4E3A;&#x5DE6;&#x624B;&#x5750;&#x6807;&#x7CFB;&#xFF08;Left-handed coordinate spaces&#xFF09;&#xFF0C;&#x53E6;&#x4E00;&#x7EC4;&#x88AB;&#x79F0;&#x4E3A;&#x53F3;&#x624B;&#x5750;&#x6807;&#x7CFB;&#xFF08;Right-handed coordinate spaces&#xFF09;&#x3002;&#x5DE6;&#x53F3;&#x624B;&#x5750;&#x6807;&#x7CFB;&#x53EA;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x9009;&#x62E9;&#xFF0C;&#x4E24;&#x8005;&#x5176;&#x4ED6;&#x65B9;&#x9762;&#x7684;&#x5DEE;&#x5F02;&#x3002;</p>
+<p>&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x5DE6;&#x8FB9;&#x4E3A;&#x5DE6;&#x624B;&#x5750;&#x6807;&#x7CFB;&#xFF0C;&#x53F3;&#x8FB9;&#x4E3A;&#x53F3;&#x624B;&#x5750;&#x6807;&#x7CFB;&#x3002;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/2020-02-24-19-28-49.png" alt="&#x5DE6;&#x624B;&#xFF0C;&#x53F3;&#x624B;&#x5750;&#x6807;&#x7CFB;"></p>
+<p>&#x5728;&#x6BCF;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#xFF0C;&#x5982;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x98DF;&#x6307;&#xFF0C;&#x4E2D;&#x6307;&#xFF0C;&#x5927;&#x62C7;&#x6307;&#x76F8;&#x4E92;&#x5782;&#x76F4;&#xFF0C;&#x5927;&#x62C7;&#x6307;&#x6307;&#x5411;X&#x8F74;&#x6B63;&#x65B9;&#x5411;&#xFF0C;&#x98DF;&#x6307;&#x6307;&#x5411;Y&#x8F74;&#x6B63;&#x65B9;&#x5411;&#xFF0C;&#x4E2D;&#x6307;&#x6307;&#x5411;Z&#x8F74;&#x6B63;&#x65B9;&#x5411;&#x3002;</p>
+<p>&#x5DE6;&#x53F3;&#x624B;&#x5750;&#x6807;&#x7CFB;&#x8FD8;&#x4F1A;&#x5F71;&#x54CD;<code>&#x65CB;&#x8F6C;&#x7684;&#x6B63;&#x65B9;&#x5411;</code>&#x3002;&#x5728;&#x6BCF;&#x4E2A;&#x5750;&#x6807;&#x7CFB;&#x4E0B;&#xFF0C;&#x5982;&#x679C;&#x8981;&#x7ED5;&#x7740;&#x67D0;&#x4E2A;&#x8F74;&#x65CB;&#x8F6C;&#xFF0C;&#x7528;&#x5927;&#x62C7;&#x6307;&#x6307;&#x5411;&#x8BE5;&#x8F74;&#x7684;&#x6B63;&#x65B9;&#x5411;&#xFF0C;&#x56DB;&#x6307;&#x73AF;&#x7ED5;&#x65B9;&#x5411;&#x5373;&#x4E3A;&#x65CB;&#x8F6C;&#x7684;&#x6B63;&#x65B9;&#x5411;&#x3002;</p>
+<div class="note warning">
+            <p>&#x8FD9;&#x672C;&#x4E66;&#x4E0B;&#x7684;&#x4F8B;&#x5B50;&#x90FD;&#x662F;&#x4EE5;&#x5DE6;&#x624B;&#x5750;&#x6807;&#x7CFB;&#x4E3A;&#x51C6;&#x7684;&#x3002;</p>
+          </div>
+<h2 id="odds-and-ends">Odds and Ends</h2>
+<h3 id="summation-and-product-notation">Summation and Product Notation</h3>
+<p>&#x7D2F;&#x52A0;&#x7B26;&#x53F7;&#xFF1A; <span class="math display">\[
+\sum_{i=1}^{n}a_i
+\]</span></p>
+<p>&#x7D2F;&#x4E58;&#x7B26;&#x53F7;: <span class="math display">\[
+\prod_{i=1}^{n}a_i
+\]</span></p>
+<h3 id="&#x95F4;&#x9694;&#x7B26;&#x53F7;">&#x95F4;&#x9694;&#x7B26;&#x53F7;</h3>
+<p><span class="math inline">\([a,b]\)</span>&#x8868;&#x793A;<span class="math inline">\(a\leq x\leq b\)</span></p>
+<p><span class="math inline">\((a,b)\)</span>&#x8868;&#x793A;<span class="math inline">\(a&lt;x&lt;b\)</span></p>
+<p><span class="math inline">\([a,b)\)</span>&#x8868;&#x793A;<span class="math inline">\(a\leq x &lt;b\)</span></p>
+<p><span class="math inline">\((a,b]\)</span>&#x8868;&#x793A;<span class="math inline">\(a&lt;x\leq b\)</span></p>
+<h3 id="anglesdegrees-and-radians">Angles,Degrees, and Radians</h3>
+<p>&#x89D2;&#x5EA6;&#xFF08;Angles&#xFF09;&#x5728;&#x65E5;&#x5E38;&#x751F;&#x6D3B;&#x4E2D;&#x7528;&#x7684;&#x6BD4;&#x8F83;&#x591A;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x6570;&#x5B66;&#x4E0A;&#x5F27;&#x5EA6;&#xFF08;Radians&#xFF09;&#x7528;&#x7684;&#x66F4;&#x591A;&#x3002;</p>
+<p>&#x5F53;&#x63D0;&#x53CA;&#x5F27;&#x5EA6;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x8BA1;&#x7B97;&#x67D0;&#x89D2;&#x5EA6;&#x5728;&#x534A;&#x5F84;&#x4E3A;1&#x7684;&#x5706;&#x4E0A;&#x6240;&#x5360;&#x7684;&#x957F;&#x5EA6;&#x3002;&#x56E0;&#x4E3A;&#x534A;&#x5F84;&#x4E3A;1&#x7684;&#x5706;&#x5468;&#x957F;&#x4E3A;<span class="math inline">\(2\pi\)</span>&#xFF0C;&#x6240;&#x4EE5;<span class="math inline">\(360^\circ = 2\pi &#x5F27;&#x5EA6;\)</span>&#x3002;</p>
+<p>&#x5F27;&#x5EA6;&#x4E0E;&#x89D2;&#x5EA6;&#x7684;&#x8F6C;&#x6362;&#x5173;&#x7CFB;&#x5982;&#x4E0B;&#xFF1A; <span class="math display">\[
+1\text{ rad} = (180/\pi)^\circ \approx 57.29578^\circ \\\\
+1 ^ \circ = (\pi /180) \text{ rad} \approx 0.01745329 \text{ rad}
+\]</span></p>
+<h3 id="trig-functions">Trig Functions</h3>
+<p>&#x5BF9;&#x4E8E;&#x5728;&#x534A;&#x5F84;&#x4E3A;1&#x7684;&#x5706;&#x4E0A;&#x7684;&#x70B9;<span class="math inline">\(&#xFF08;x,y&#xFF09;\)</span>&#xFF0C;<span class="math inline">\(\theta\)</span>&#x4E3A;&#x8BE5;&#x70B9;&#x4E0E;&#x539F;&#x70B9;&#x5F62;&#x6210;&#x7684;&#x5411;&#x91CF;&#x4E0E;X&#x8F74;&#x6B63;&#x65B9;&#x5411;&#x7684;&#x5939;&#x89D2;&#xFF0C;&#x5219; <span class="math display">\[
+x = \cos(\theta) \\\\
+y = \sin(\theta) \\\\
+\]</span></p>
+<h3 id="trig-identities">Trig Identities</h3>
+<ol type="1">
+<li>&#x57FA;&#x672C;&#x8F6C;&#x6362;</li>
+</ol>
+<p><span class="math display">\[
+\sin(-\theta)=-\sin\theta\\\\
+\cos(-\theta)=\cos\theta\\\\
+\tan(-\theta)=-\tan\theta \\\\
+\sin(\frac{\pi}{2}-\theta) = \cos\theta\\\\
+\cos(\frac{\pi}{2}-\theta) = \sin\theta\\\\
+\tan(\frac{\pi}{2}-\theta) = \cot\theta\\\\
+\cos \theta = -\cos(180-\theta)\\\\
+\sin \theta = \sin (180-\theta)
+\]</span></p>
+<ol start="2" type="1">
+<li><p>&#x52FE;&#x80A1;&#x5B9A;&#x7406; <span class="math display">\[
+\sin^2\theta+cos^2\theta=1 \\\\
+1 + \tan^2\theta = \sec^2\theta \\\\
+1 + \cot^2\theta = csc^2 \theta
+\]</span></p></li>
+<li></li>
+</ol>
+<p><span class="math display">\[
+\sin(a+b) = \sin a \cos b + \cos a\sin b \\\\
+\sin(a-b) = \sin a \cos b - \ cos a \sin b \\\\
+\cos(a+b) = \cos a \cos b -\sin a \sin b \\\\
+\cos(a-b) = \cos a \cos b + \sin a \sin b \\\\
+\tan(a+b) = \frac{tan a+ tan b}{1- \tan a\tan b } \\\\
+\tan(a-b) = \frac{tan a - tan b }{1+ \tan a \tan b} \\\\
+\]</span></p>
+<ol start="4" type="1">
+<li><p>&#x4E24;&#x500D;&#x89D2;&#x5B9A;&#x7406; <span class="math display">\[
+\sin 2\theta = 2\sin \theta \cos \theta \\\\
+\cos 2\theta = \cos ^2 \theta-\sin^2\theta=2cos^2\theta-1=1-2sin^2\theta \\\\
+\tan 2 \theta=\frac{2\tan \theta}{1- \tan^2\theta}
+\]</span></p></li>
+<li><p>&#x6B63;&#x5F26;&#x5B9A;&#x7406;</p>
+<p>&#x5BF9;&#x4E8E;&#x5982;&#x4E0B;&#x7684;&#x4E09;&#x89D2;&#x5F62;&#xFF0C;&#x6709;&#xFF1A;</p>
+<p><img src="/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/2020-02-24-20-37-18.png" alt="&#x6B63;&#x5F26;&#x4E09;&#x89D2;&#x5F62;"></p>
+<p><span class="math display">\[
+\frac{\sin A}{a} = \frac{\sin B}{b}=\frac{\sin C}{c}
+\]</span></p></li>
+<li><p>&#x4F59;&#x5F26;&#x5B9A;&#x7406; &#x5BF9;&#x4E8E;&#x4E0A;&#x9762;&#x7684;&#x4E09;&#x89D2;&#x5F62;&#xFF0C;&#x6709;</p>
+<p><span class="math display">\[
+a^2=b^2+c^2-2bc\cos A, \\\\
+b^2 = a^2 +c^2 - 2ac \cos B, \\\\
+c^2 = a^2 +b^2 -2ab \cos C.
+\]</span></p></li>
+</ol>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>3D Math Primer for Graphics and Game Development</em> 2nd 2011</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/" title="《3D数学基础：图形和游戏开发》第一章笔记">https://xuejiaw.github.io/3DMathPrimerForGraphicsAGameDevelopment-Chapter1-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/3D数学/" rel="tag"># 3D数学</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/CPPPrimer-Chapter6-Notes/" rel="prev" title="《C++ Primer》 第六章笔记">
+      <i class="fa fa-chevron-left"></i> 《C++ Primer》 第六章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/" rel="next" title="《3D数学基础：图形和游戏开发》第二章笔记">
+      《3D数学基础：图形和游戏开发》第二章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-1"><span class="nav-number">1.</span> <span class="nav-text">Chapter 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#d-mathematics"><span class="nav-number">1.1.</span> <span class="nav-text">1D Mathematics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#d-cartesian-space"><span class="nav-number">1.2.</span> <span class="nav-text">2D Cartesian Space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#d-cartesian-space-1"><span class="nav-number">1.3.</span> <span class="nav-text">3D Cartesian Space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#odds-and-ends"><span class="nav-number">1.4.</span> <span class="nav-text">Odds and Ends</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#summation-and-product-notation"><span class="nav-number">1.4.1.</span> <span class="nav-text">Summation and Product Notation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#间隔符号"><span class="nav-number">1.4.2.</span> <span class="nav-text">间隔符号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#anglesdegrees-and-radians"><span class="nav-number">1.4.3.</span> <span class="nav-text">Angles,Degrees, and Radians</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trig-functions"><span class="nav-number">1.4.4.</span> <span class="nav-text">Trig Functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trig-identities"><span class="nav-number">1.4.5.</span> <span class="nav-text">Trig Identities</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

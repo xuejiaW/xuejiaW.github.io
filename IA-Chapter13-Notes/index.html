@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;&amp;#x7B97;&amp;#x6CD5;&amp;#x5BFC;&amp;#x8BBA;&amp;#x300B; &amp;#x7B2C;&amp;#x5341;&amp;#x4E09;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x7EA2;&amp;#x9ED1;&amp;#x6811;&amp;#x5B9E;&amp;#x73B0;">
+<meta name="keywords" content="读书笔记,数据结构与算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《算法导论》 第十三章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/IA-Chapter13-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;&amp;#x7B97;&amp;#x6CD5;&amp;#x5BFC;&amp;#x8BBA;&amp;#x300B; &amp;#x7B2C;&amp;#x5341;&amp;#x4E09;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x7EA2;&amp;#x9ED1;&amp;#x6811;&amp;#x5B9E;&amp;#x73B0;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-06-16-54-51.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-07-00-05-44.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-07-10-52-42.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-09-20-08-02.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-09-20-30-37.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-09-20-35-41.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-09-20-44-24.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-16-15-17-38.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-16-17-09-19.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-16-16-28-06.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-16-17-31-28.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-16-17-39-14.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-16-18-16-43.png">
+<meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-16-18-20-17.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.466Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《算法导论》 第十三章笔记">
+<meta name="twitter:description" content="&amp;#x300A;&amp;#x7B97;&amp;#x6CD5;&amp;#x5BFC;&amp;#x8BBA;&amp;#x300B; &amp;#x7B2C;&amp;#x5341;&amp;#x4E09;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0; &amp;#x7EA2;&amp;#x9ED1;&amp;#x6811;&amp;#x5B9E;&amp;#x73B0;">
+<meta name="twitter:image" content="https://xuejiaw.github.io/IA-Chapter13-Notes/2019-11-06-16-54-51.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/IA-Chapter13-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《算法导论》 第十三章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/IA-Chapter13-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《算法导论》 第十三章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-16 23:12:31" itemprop="dateCreated datePublished" datetime="2019-11-16T23:12:31+08:00">2019-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/数据结构与算法/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/IA-Chapter13-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《算法导论》 第十三章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/IA-Chapter13-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/IA-Chapter13-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>19k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>34 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;&#x7B97;&#x6CD5;&#x5BFC;&#x8BBA;&#x300B; &#x7B2C;&#x5341;&#x4E09;&#x7AE0;&#x7B14;&#x8BB0; &#x7EA2;&#x9ED1;&#x6811;&#x5B9E;&#x73B0;</p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-13.-red-black-trees">Chapter 13. Red-Black Trees</h1>
+<p>&#x7EA2;&#x9ED1;&#x6811;&#x662F;&#x4F17;&#x591A;&#x8BA9;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x8FBE;&#x5230;&#x5E73;&#x8861;&#x7684;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x4E4B;&#x4E00;&#x3002;&#x6811;&#x8FBE;&#x5230;&#x5E73;&#x8861;&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x52A8;&#x6001;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x5220;&#x9664;&#xFF0C;&#x63D2;&#x5165;&#xFF0C;&#x641C;&#x7D22;&#x7B49;&#xFF0C;&#x590D;&#x6742;&#x5EA6;&#x90FD;&#x4E3A;<span class="math inline">\(O(lgn)\)</span>&#x3002;</p>
+<h2 id="properties-of-red-black-trees">Properties of red-black trees</h2>
+<p>&#x7EA2;&#x9ED1;&#x6811;&#x662F;&#x4E00;&#x79CD;&#x7279;&#x6B8A;&#x7684;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#xFF0C;&#x6BCF;&#x4E2A;&#x7ED3;&#x70B9;&#x9700;&#x8981;&#x82B1;&#x8D39;&#x989D;&#x5916;&#x4E00;&#x4E2A;bit&#x6765;&#x5B58;&#x50A8;&#x7ED3;&#x70B9;&#x7684;&#x989C;&#x8272;&#x4FE1;&#x606F;&#xFF0C;&#x989C;&#x8272;&#x4E3A;&#x7EA2;&#x6216;&#x8005;&#x9ED1;&#x3002;&#x7EA2;&#x9ED1;&#x6811;&#x4FDD;&#x8BC1;&#x4E86;&#x6574;&#x68F5;&#x6811;&#xFF0C;&#x4E0D;&#x4F1A;&#x6709;&#x4E00;&#x4E2A;&#x8DEF;&#x5F84;&#x662F;&#x53E6;&#x4E00;&#x4E2A;&#x8DEF;&#x5F84;&#x7684;&#x4E24;&#x500D;&#x957F;&#x3002;</p>
+<p>&#x7EA2;&#x9ED1;&#x6811;&#x6EE1;&#x8DB3;&#x4EE5;&#x4E0B;&#x4E94;&#x4E2A;&#x7279;&#x6027;&#xFF1A;</p>
+<ol type="1">
+<li>&#x6240;&#x6709;&#x7ED3;&#x70B9;&#x8981;&#x4E48;&#x662F;&#x9ED1;&#x8981;&#x4E48;&#x662F;&#x7EA2;</li>
+<li>&#x6839;&#x8282;&#x70B9;&#x662F;&#x9ED1;&#x8272;&#x7684;</li>
+<li>&#x6BCF;&#x4E2A;&#x53F6;&#x5B50;&#xFF08;&#x8FD9;&#x91CC;&#x6307;NULL&#x7ED3;&#x70B9;&#xFF09;&#x662F;&#x9ED1;&#x8272;&#x7684;</li>
+<li>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x662F;&#x7EA2;&#x8272;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x4ED6;&#x7684;&#x4E24;&#x4E2A;&#x5B50;&#x7ED3;&#x70B9;&#x662F;&#x9ED1;&#x8272;&#x7684;&#xFF08;&#x5373;&#x4E0D;&#x4F1A;&#x6709;&#x8FDE;&#x7EED;&#x7684;&#x4E24;&#x5C42;&#x662F;&#x7EA2;&#xFF09;</li>
+<li>&#x6240;&#x6709;&#x7ED3;&#x70B9;&#x5230;&#x4EFB;&#x610F;&#x53F6;&#x5B50;&#x7684;&#x7B80;&#x5355;&#x8DEF;&#x5F84;&#x4E0A;&#xFF08;&#x4E0D;&#x5B58;&#x5728;&#x7ED5;&#x884C;&#xFF09;&#x6709;&#x76F8;&#x540C;&#x7684;&#x9ED1;&#x8272;&#x7ED3;&#x70B9;&#x6570;</li>
+</ol>
+<p>&#x5C06;&#x4EFB;&#x610F;&#x7ED3;&#x70B9;&#x5230;&#x53F6;&#x5B50;&#x7684;&#x8DEF;&#x5F84;&#x4E0A;&#x9ED1;&#x8272;&#x7ED3;&#x70B9;&#x7684;&#x6570;&#x76EE;&#x6210;&#x4E3A;<code>&#x9ED1;&#x9AD8;(black-height)</code>&#xFF0C;&#x8868;&#x8FBE;&#x4E3A;<span class="math inline">\(bh(x)\)</span>&#x3002;&#x5C06;&#x4E00;&#x68F5;&#x6811;&#x7684;&#x9ED1;&#x9AD8;&#x5B9A;&#x4E49;&#x4E3A;&#xFF1A;&#x6839;&#x8282;&#x70B9;&#x5230;&#x53F6;&#x5B50;&#x7684;&#x9ED1;&#x9AD8;&#x3002;</p>
+<ul>
+<li>&#x9ED1;&#x9AD8;&#x7684;&#x8BA1;&#x7B97;&#x5E76;&#x4E0D;&#x5305;&#x542B;&#x7ED3;&#x70B9;&#x81EA;&#x5DF1;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x6839;&#x8282;&#x70B9;&#x5FC5;&#x7136;&#x662F;&#x9ED1;&#x8272;&#x7684;&#xFF0C;&#x4F46;&#x5982;&#x679C;&#x4E00;&#x68F5;&#x6811;&#xFF0C;&#x53EA;&#x6709;&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x90A3;&#x4E48;&#x4ED6;&#x7684;&#x9ED1;&#x9AD8;&#x662F;0&#xFF0C;&#x56E0;&#x4E3A;&#x6839;&#x8282;&#x70B9;&#x5E76;&#x4E0D;&#x7EB3;&#x5165;&#x9ED1;&#x9AD8;&#x7684;&#x8BA1;&#x7B97;&#x3002;</li>
+</ul>
+<p>&#x7528;&#x4E00;&#x4E2A;&#x54E8;&#x5175;&#xFF08;&#x7528;<code>T.nil</code>&#x8868;&#x793A;&#xFF09;&#x6765;&#x6307;&#x4EE3;&#x53F6;&#x5B50;&#x7ED3;&#x70B9;&#xFF08;NULL&#xFF09;&#xFF0C;&#x8FD9;&#x6837;&#x6240;&#x6709;&#x7684;&#x53F6;&#x5B50;&#x548C;&#x6839;&#x8282;&#x70B9;&#x7684;&#x7236;&#x8282;&#x70B9;&#x90FD;&#x4E3A;<code>T.nil</code>&#x3002;</p>
+<p>&#x5C06;&#x9664;&#x4E86;&#x53F6;&#x5B50;&#x7ED3;&#x70B9;&#x5916;&#x7684;&#x6240;&#x6709;&#x7ED3;&#x70B9;&#x6210;&#x4E3A;<code>&#x5185;&#x90E8;&#x7ED3;&#x70B9;(internal nodes)</code>&#xFF0C;&#x5426;&#x5219;&#x4E3A;&#x5916;&#x90E8;&#x7ED3;&#x70B9;<code>external nodes</code></p>
+<div class="note info">
+            <p>&#x5B9A;&#x7406;&#xFF1A;&#x4E00;&#x4E2A;&#x6709;<span class="math inline">\(n\)</span>&#x4E2A;&#x5185;&#x90E8;&#x7ED3;&#x70B9;&#x7684;&#x7EA2;&#x9ED1;&#x6811;&#xFF0C;&#x5176;&#x9AD8;&#x5EA6;&#x6700;&#x591A;&#x4E3A;<span class="math inline">\(2\lg (n+1)\)</span></p>
+          </div>
+<p>&#x5B9A;&#x7406;&#x8BC1;&#x660E;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x9996;&#x5148;&#x9700;&#x8981;&#x8BC1;&#x660E;&#x5B9A;&#x7406;&#xFF1A;&#x5BF9;&#x4E8E;&#x4EFB;&#x610F;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;<span class="math inline">\(x\)</span>&#xFF0C;&#x81F3;&#x5C11;&#x6709;<span class="math inline">\(2^{bh(x)}-1\)</span>&#x4E2A;&#x5185;&#x90E8;&#x5B50;&#x7ED3;&#x70B9;</p>
+<p>&#x7528;&#x63A8;&#x5BFC;&#x6CD5;&#x8BC1;&#x660E;&#x8BE5;&#x5B9A;&#x7406;&#xFF1A;</p>
+<p>(1)&#x5982;&#x679C;&#x7ED3;&#x70B9;<code>x</code>&#x7684;&#x9AD8;&#x5EA6;&#x662F;0&#xFF0C;&#x5219;<code>x</code>&#x4E00;&#x5B9A;&#x662F;&#x53F6;&#x5B50;&#x7ED3;&#x70B9;&#x3002;&#x5176;&#x9ED1;&#x9AD8;&#x4E3A;0&#xFF0C;&#x90A3;&#x4E48;&#x5185;&#x90E8;&#x5B50;&#x8282;&#x70B9;&#x4E3A;<span class="math inline">\(2^0-1=0\)</span>&#xFF0C;&#x5373;0&#x4E2A;&#x5185;&#x90E8;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x6EE1;&#x8DB3;</p>
+<ol start="2" type="1">
+<li>&#x5982;&#x679C;&#x7ED3;&#x70B9;<code>x</code>&#x7684;&#x9AD8;&#x5EA6;&#x4E0D;&#x4E3A;0&#xFF0C;&#x4E14;&#x6709;&#x4E24;&#x4E2A;&#x5B50;&#x7ED3;&#x70B9;&#x3002;&#x6839;&#x636E;&#x7279;&#x6027;5&#xFF0C;&#x53EF;&#x4EE5;&#x63A8;&#x5F97;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x5B50;&#x7ED3;&#x70B9;&#x662F;&#x7EA2;&#x8272;&#xFF0C;&#x5219;&#x8FD9;&#x4E2A;&#x5B50;&#x7ED3;&#x70B9;&#x7684;&#x9ED1;&#x9AD8;&#x4E3A;<span class="math inline">\(bh(x)\)</span>&#xFF0C;&#x5982;&#x679C;&#x5B50;&#x7ED3;&#x70B9;&#x662F;&#x9ED1;&#x8272;&#xFF0C;&#x5219;&#x5B50;&#x7ED3;&#x70B9;&#x7684;&#x9ED1;&#x9AD8;&#x4E3A;<span class="math inline">\(bh(x)-1\)</span>&#x3002;</li>
+</ol>
+<p>&#x56E0;&#x4E3A;<span class="math inline">\(x\)</span>&#x7684;&#x9ED1;&#x9AD8;&#x4E3A;<span class="math inline">\(bh(x)\)</span>&#xFF0C;&#x5982;&#x679C;&#x5B50;&#x7ED3;&#x70B9;&#x662F;&#x9ED1;&#x8272;&#x7684;&#xFF0C;&#x5219;&#x8FD9;&#x4E2A;&#x5B50;&#x7ED3;&#x70B9;&#x672C;&#x8EAB;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x9ED1;&#x8272;&#x7ED3;&#x70B9;&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x7684;&#x9ED1;&#x9AD8;&#x53EA;&#x80FD;&#x4E3A;&#x7236;&#x7ED3;&#x70B9;&#x9ED1;&#x9AD8;&#x51CF;1&#xFF0C;&#x5373;<span class="math inline">\(bh(x)-1\)</span>&#xFF0C;&#x53CD;&#x4E4B;&#x5B50;&#x7ED3;&#x70B9;&#x662F;&#x7EA2;&#x8272;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x7ED3;&#x70B9;&#x4E0D;&#x63D0;&#x4F9B;&#x9ED1;&#x8272;&#x7ED3;&#x70B9;&#xFF0C;&#x4ED6;&#x7684;&#x9ED1;&#x9AD8;&#x548C;&#x7236;&#x7ED3;&#x70B9;&#x4E00;&#x6837;&#xFF0C;&#x4E3A;<span class="math inline">\(bh(x)\)</span></p>
+<p>&#x6240;&#x4EE5;&#x7ED3;&#x70B9;<span class="math inline">\(x\)</span>&#x81F3;&#x5C11;&#x6709; <span class="math inline">\(2*(2^{bh(x)-1}-1) +1\)</span>&#x4E2A;&#x7ED3;&#x70B9;&#xFF0C;&#x8FD9;&#x91CC;&#x4E24;&#x4E2A;&#x5B50;&#x7ED3;&#x70B9;&#x7684;&#x5404;&#x81EA;&#x5185;&#x90E8;&#x5B50;&#x7ED3;&#x70B9;&#x6570;&#x8BA1;&#x7B97;&#x90FD;&#x53D6;&#x66F4;&#x5C0F;&#x7684;&#x9ED1;&#x9AD8;&#x6570;<span class="math inline">\(bh(x)-1\)</span>&#xFF0C;&#x5F0F;&#x5B50;&#x6700;&#x540E;&#x5B9E;&#x9645;&#x4E0A;&#x5E94;&#x8BE5;&#x662F;+2&#x7684;&#xFF0C;&#x5373;<span class="math inline">\(x\)</span>&#x7684;&#x4E24;&#x4E2A;&#x5B50;&#x7ED3;&#x70B9;&#xFF0C;&#x4F46;&#x8FD9;&#x91CC;&#x53D6;&#x66F4;&#x5C0F;&#x7684;1&#xFF0C;&#x5F0F;&#x5B50;&#x8BA1;&#x7B97;&#x5F97;<span class="math inline">\(2^{bh(x)}-1\)</span>&#xFF0C;&#x5373;&#x6EE1;&#x8DB3;&#x5B9A;&#x7406;&#x3002;</p></li>
+<li><p>&#x6839;&#x636E;&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x7279;&#x6027;4&#xFF0C;&#x7EA2;&#x8272;&#x7ED3;&#x70B9;&#x7684;&#x5B50;&#x7ED3;&#x70B9;&#x5FC5;&#x4E3A;&#x9ED1;&#x8272;&#x3002;&#x6240;&#x4EE5;&#x7EA2;&#x8272;&#x7ED3;&#x70B9;&#x51FA;&#x73B0;&#x6700;&#x591A;&#x7684;&#x60C5;&#x51B5;&#x4E5F;&#x53EA;&#x80FD;&#x662F;&#x7EA2;&#x9ED1;&#x76F8;&#x95F4;&#xFF0C;&#x7EA2;&#x8272;&#x7ED3;&#x70B9;&#x4E0D;&#x53EF;&#x80FD;&#x8FDE;&#x7EED;&#x51FA;&#x73B0;&#x800C;&#x9ED1;&#x8272;&#x7ED3;&#x70B9;&#x53EF;&#x4EE5;&#x3002;&#x56E0;&#x6B64;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x9ED1;&#x9AD8;&#x6570;&#x6700;&#x8D77;&#x7801;&#x662F;&#x5176;&#x9AD8;&#x5EA6;&#x7684;&#x4E00;&#x534A;&#xFF0C;&#x5373;<span class="math inline">\(bh(x)&gt;\frac{h}{2}\)</span>&#x3002;</p></li>
+<li><p>&#x7ED3;&#x5408;1&#x548C;2&#x4E2D;&#x5F97;&#x51FA;&#x7684;&#x7ED3;&#x8BBA;&#x3002;1&#x4E2D;&#x5F97;&#x51FA;&#x4E86;</p>
+<p><span class="math display">\[
+n \geq 2^{bh(x)}-1
+\]</span></p>
+<p>2&#x4E2D;&#x5F97;&#x51FA;&#x4E86;</p>
+<p><span class="math display">\[
+bh(x)&gt;\frac{h}{2}
+\]</span></p>
+<p>&#x6240;&#x4EE5;</p>
+<p><span class="math display">\[
+n \geq 2^{bh(x)}-1 \geq 2^{\frac{h}{2}} -1
+\]</span></p>
+<p>&#x5373;</p>
+<p><span class="math display">\[
+2^{\frac{h}{2}} \leq n+1
+\]</span></p>
+<p>&#x5373;</p>
+<p><span class="math display">\[
+h \leq 2 \lg (n+1)
+\]</span></p>
+<p>&#x5F97;&#x8BC1;&#x3002;</p></li>
+</ol>
+<p>&#x56E0;&#x4E3A;&#x4E00;&#x4E2A;&#x6709;<span class="math inline">\(n\)</span>&#x4E2A;&#x7ED3;&#x70B9;&#x7684;&#x7EA2;&#x9ED1;&#x6811;&#xFF0C;&#x5176;&#x9AD8;&#x5EA6;<span class="math inline">\(h\)</span>&#x6700;&#x591A;&#x4E3A;<span class="math inline">\(2\lg (n+1)\)</span>&#xFF0C;&#x4E14;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x7684;&#x64CD;&#x4F5C;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x90FD;&#x4E3A;<span class="math inline">\(O(h)\)</span>&#xFF0C;&#x6240;&#x4EE5;&#x7EA2;&#x9ED1;&#x6811;&#x64CD;&#x4F5C;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(O(\lg n)\)</span></p>
+<h2 id="rotations">Rotations</h2>
+<p>&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x63D2;&#x5165;&#x548C;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#x90FD;&#x53EF;&#x80FD;&#x7834;&#x574F;&#x7EA2;&#x9ED1;&#x6811;&#x7279;&#x6027;&#x3002;&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x4E24;&#x4E2A;&#x64CD;&#x4F5C;&#x540E;&#x901A;&#x8FC7;&#x4FEE;&#x6539;&#x7ED3;&#x70B9;&#x7684;&#x989C;&#x8272;&#xFF0C;&#x548C;&#x6539;&#x53D8;&#x6811;&#x7684;&#x90E8;&#x5206;&#x7ED3;&#x6784;&#x4FDD;&#x8BC1;&#x5176;&#x4ECD;&#x7136;&#x6EE1;&#x8DB3;&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x7279;&#x6027;&#x3002;</p>
+<p>&#x901A;&#x8FC7;<code>Rotate</code>&#x64CD;&#x4F5C;&#x6765;&#x4FEE;&#x6539;&#x6811;&#x7684;&#x90E8;&#x5206;&#x7ED3;&#x6784;&#xFF0C;&#x8FD9;&#x4E2A;&#x64CD;&#x4F5C;&#x8981;&#x4FDD;&#x8BC1;&#x4FEE;&#x6539;&#x6811;&#x7ED3;&#x6784;&#x7684;&#x540C;&#x65F6;<strong>&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x7684;&#x7279;&#x6027;</strong>&#x3002;<code>Rotate</code>&#x5206;&#x4E3A;<code>leftRotate</code>&#x548C;<code>rightRotate</code>&#xFF0C;&#x56E0;&#x4E3A;&#x4E24;&#x4E2A;&#x64CD;&#x4F5C;&#x57FA;&#x672C;&#x662F;&#x955C;&#x50CF;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x53EA;&#x5BF9;<code>leftRotate</code>&#x4F5C;&#x5177;&#x4F53;&#x5206;&#x6790;&#x3002;</p>
+<p>&#x5728;&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;<span class="math inline">\(x\)</span>&#x8FDB;&#x884C;&#x5DE6;&#x65CB;&#x65F6;&#xFF0C;<span class="math inline">\(x\)</span>&#x5FC5;&#x987B;&#x542B;&#x6709;&#x53F3;&#x5B50;&#x6811;&#xFF0C;&#x5C06;<span class="math inline">\(x\)</span>&#x7684;&#x53F3;&#x5B50;&#x6811;&#x79F0;&#x4E3A;<span class="math inline">\(y\)</span>&#x3002;&#x5DE6;&#x65CB;&#x64CD;&#x4F5C;&#x7684;&#x652F;&#x70B9;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x662F;<span class="math inline">\(x\)</span>&#x548C;<span class="math inline">\(y\)</span>&#x7684;&#x4EA4;&#x754C;&#x70B9;&#xFF0C;&#x5DE6;&#x65CB;&#x64CD;&#x4F5C;&#x4E3A;&#xFF1A;&#x7528;y&#x66FF;&#x6362;x&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5C06;<span class="math inline">\(y\)</span>&#x539F;&#x5148;&#x7684;&#x5DE6;&#x5B50;&#x6811;&#x53D8;&#x4E3A;<span class="math inline">\(x\)</span>&#x7684;&#x53F3;&#x5B50;&#x6811;,&#x5C06;<span class="math inline">\(x\)</span>&#x53D8;&#x4E3A;<span class="math inline">\(y\)</span>&#x7684;&#x5DE6;&#x5B50;&#x6811;&#xFF0C;&#x3002;</p>
+<p>&#x5DE6;&#x65CB;&#x548C;&#x53F3;&#x65CB;&#x7684;&#x793A;&#x610F;&#x56FE;&#x5982;&#x4E0B;&#xFF1A;&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x662F;&#x5BF9;&#x4E8E;y&#x7684;&#x53F3;&#x65CB;&#xFF0C;&#x4ECE;&#x53F3;&#x5230;&#x5DE6;&#x662F;&#x5BF9;x&#x7684;&#x5DE6;&#x65CB;</p>
+<ul>
+<li>&#x65E0;&#x8BBA;&#x662F;&#x5DE6;&#x65CB;&#x8FD8;&#x662F;&#x53F3;&#x65CB;&#xFF0C;&#x88AB;&#x65CB;&#x8F6C;&#x7684;&#x8282;&#x70B9;&#x6DF1;&#x5EA6;&#x90FD;+1&#xFF0C;&#xFF08;&#x53D8;&#x5F97;&#x66F4;&#x9760;&#x4E0B;&#xFF09;</li>
+</ul>
+<p><img src="/IA-Chapter13-Notes/2019-11-06-16-54-51.png" alt="&#x5DE6;&#x65CB;&#x53CA;&#x53F3;&#x65CB;&#x64CD;&#x4F5C;"></p>
+<p>&#x5DE6;&#x65CB;&#x64CD;&#x4F5C;&#x7684;&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">TREE-ROTATE(T,x)</span><br><span class="line"></span><br><span class="line">y = x.right;</span><br><span class="line"></span><br><span class="line">//&#x7528;y&#x66FF;&#x6362;x&#x7684;&#x4F4D;&#x7F6E;</span><br><span class="line">y.p = x.p</span><br><span class="line">if( x.p == NULL)</span><br><span class="line">    T.root = y</span><br><span class="line">else if ( x == x.p.left )</span><br><span class="line">    x.p.left = y</span><br><span class="line">else</span><br><span class="line">    x.p.right = y</span><br><span class="line"></span><br><span class="line">//&#x5C06;y&#x7684;&#x5DE6;&#x7ED3;&#x70B9;&#x53D8;&#x4E3A;x&#x7684;&#x53F3;&#x7ED3;&#x70B9;</span><br><span class="line">x.right = y.left</span><br><span class="line">if y.left != NULL</span><br><span class="line">y.left.p = x</span><br><span class="line"></span><br><span class="line">//&#x5C06;x&#x4F5C;&#x4E3A;y&#x7684;&#x5DE6;&#x5B50;&#x6811;</span><br><span class="line">y.left = x</span><br><span class="line">x.p = y</span><br></pre></td></tr></table></figure>
+<p>c++&#x4EE3;&#x7801;&#x7684;&#x5B9E;&#x73B0;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> RBTree::LeftRotate(RBTreeNode* node)</span><br><span class="line">{</span><br><span class="line">	<span class="keyword">if</span> (node == nullNode || node-&gt;right == nullNode)</span><br><span class="line">	{</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Invalid operation: LeftRotate&quot;</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	RBTreeNode* lowerRight = node-&gt;right;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//lowerRight replace node&apos;s place</span></span><br><span class="line">	lowerRight-&gt;parent = node-&gt;parent;</span><br><span class="line">	<span class="keyword">if</span> (node-&gt;parent == nullNode)</span><br><span class="line">	{</span><br><span class="line">		rootNode = lowerRight;</span><br><span class="line">		nullNode-&gt;right = rootNode;</span><br><span class="line">		nullNode-&gt;left = rootNode;</span><br><span class="line">		nullNode-&gt;parent = rootNode;</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (node == node-&gt;parent-&gt;left)</span><br><span class="line">	{</span><br><span class="line">		node-&gt;parent-&gt;left = lowerRight;</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	{</span><br><span class="line">		node-&gt;parent-&gt;right = lowerRight;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="comment">//lowerRight&apos;s left subtree become node&apos;s right subtree</span></span><br><span class="line">	node-&gt;right = lowerRight-&gt;left;</span><br><span class="line">	<span class="keyword">if</span> (lowerRight-&gt;left != nullNode)</span><br><span class="line">	{</span><br><span class="line">		lowerRight-&gt;left-&gt;parent = node;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="comment">//node as lowerRight&apos;s left subtree</span></span><br><span class="line">	node-&gt;parent = lowerRight;</span><br><span class="line">	lowerRight-&gt;left = node;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x53F3;&#x65CB;&#x64CD;&#x4F5C;&#x4E0E;&#x5DE6;&#x65CB;&#x64CD;&#x4F5C;&#x5BF9;&#x79F0;&#xFF0C;&#x53EA;&#x8981;&#x5C06;&#x5DE6;&#x65CB;&#x64CD;&#x4F5C;&#x4E2D;&#x7684;left&#x90FD;&#x6362;&#x4E3A;right,right&#x90FD;&#x6362;&#x4E3A;left&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x8FD9;&#x91CC;&#x76F4;&#x63A5;&#x7ED9;&#x51FA;&#x53F3;&#x65CB;&#x64CD;&#x4F5C;&#x7684;c++&#x4EE3;&#x7801;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> RBTree::RightRotate(RBTreeNode* node)</span><br><span class="line">{</span><br><span class="line">	<span class="comment">//As the symmetry of LeftRotate</span></span><br><span class="line">	<span class="keyword">if</span> (node == nullNode || node-&gt;left == nullNode)</span><br><span class="line">	{</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	RBTreeNode* lowerLeft = node-&gt;left;</span><br><span class="line"></span><br><span class="line">	lowerLeft-&gt;parent = node-&gt;parent;</span><br><span class="line">	<span class="keyword">if</span> (node-&gt;parent == nullNode)</span><br><span class="line">	{</span><br><span class="line">		rootNode = lowerLeft;</span><br><span class="line">		nullNode-&gt;left = rootNode;</span><br><span class="line">		nullNode-&gt;right = rootNode;</span><br><span class="line">		nullNode-&gt;parent = rootNode;</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (node == node-&gt;parent-&gt;right)</span><br><span class="line">	{</span><br><span class="line">		node-&gt;parent-&gt;right = lowerLeft;</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	{</span><br><span class="line">		node-&gt;parent-&gt;left = lowerLeft;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	node-&gt;left = lowerLeft-&gt;right;</span><br><span class="line">	<span class="keyword">if</span> (lowerLeft-&gt;right != nullNode)</span><br><span class="line">	{</span><br><span class="line">		lowerLeft-&gt;right-&gt;parent = node;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	node-&gt;parent = lowerLeft;</span><br><span class="line">	lowerLeft-&gt;right = node;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5DE6;&#x65CB;&#x53CA;&#x53F3;&#x65CB;&#x64CD;&#x4F5C;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x90FD;&#x4E3A;<span class="math inline">\(O(1)\)</span></p>
+<h2 id="insertion">Insertion</h2>
+<p>&#x7EA2;&#x9ED1;&#x6811;&#x63D2;&#x5165;&#x7B97;&#x6CD5;&#x7684;&#x601D;&#x60F3;&#x4E3A;&#xFF0C;&#x5148;&#x50CF;&#x666E;&#x901A;&#x7684;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x4E00;&#x6837;&#x63D2;&#x5165;&#x7ED3;&#x70B9;&#xFF0C;&#x7136;&#x540E;&#x8C03;&#x7528;<code>RB-INSERT-FIXUP</code>&#x51FD;&#x6570;&#x8C03;&#x6574;&#x6811;&#x4F7F;&#x5176;&#x6EE1;&#x8DB3;&#x7EA2;&#x9ED1;&#x6811;&#x7279;&#x6027;&#x3002;</p>
+<p>&#x7EA2;&#x9ED1;&#x6811;&#x63D2;&#x5165;&#x7B97;&#x6CD5;&#x4E0E;&#x666E;&#x901A;&#x7684;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x63D2;&#x5165;&#x7B97;&#x6CD5;&#x4E3B;&#x8981;&#x6709;&#x56DB;&#x4E2A;&#x533A;&#x522B;&#xFF1A;</p>
+<ol type="1">
+<li><p>&#x7528;<code>T.nil</code>&#x66FF;&#x4EE3;<code>NULL</code></p></li>
+<li><p>&#x5C06;<code>T.nil</code>&#x8BBE;&#x4E3A;&#x65B0;&#x63D2;&#x5165;&#x7ED3;&#x70B9;&#x7684;&#x5B50;&#x7ED3;&#x70B9;</p></li>
+<li><p>&#x65B0;&#x63D2;&#x5165;&#x7ED3;&#x70B9;&#x7684;&#x989C;&#x8272;&#x4E3A;&#x7EA2;&#x8272;</p>
+<p>&#x8FD9;&#x662F;&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x6027;&#x8D28;5&#x3002;&#x5982;&#x679C;&#x65B0;&#x63D2;&#x5165;&#x7684;&#x7ED3;&#x70B9;&#x8BBE;&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x90A3;&#x4E48;&#x65B0;&#x7ED3;&#x70B9;&#x6240;&#x5728;&#x8DEF;&#x5F84;&#x9ED1;&#x9AD8;&#x5219;&#x4F1A;&#x589E;&#x52A0;&#xFF0C;&#x800C;&#x53E6;&#x4E00;&#x6761;&#x8DEF;&#x5F84;&#x4E0D;&#x53D8;&#xFF0C;&#x5219;&#x8FDD;&#x80CC;&#x4E86;&#x6027;&#x8D28;5&#xFF09;&#x3002;</p></li>
+<li><p>&#x63D2;&#x5165;&#x540E;&#xFF0C;&#x8C03;&#x7528;<code>RB-INSERT-FIXUP</code>&#x51FD;&#x6570;</p></li>
+</ol>
+<p>Insert&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">RB-INSERT(T,z)</span><br><span class="line"></span><br><span class="line">z.left = T.nil</span><br><span class="line">z.right = T.nil</span><br><span class="line">z. color = RED</span><br><span class="line"></span><br><span class="line">y = T.nil</span><br><span class="line">x = T.root</span><br><span class="line">while x != T.nil</span><br><span class="line">    y = x</span><br><span class="line">    if z.key &lt; x.key</span><br><span class="line">        x = x.left</span><br><span class="line">    else</span><br><span class="line">        x= x.right</span><br><span class="line">z.p = y</span><br><span class="line">if y == T.nil</span><br><span class="line">    T.root = z</span><br><span class="line">else if z.key &lt; y.key</span><br><span class="line">    y.left = z</span><br><span class="line">else</span><br><span class="line">    y.right = z</span><br><span class="line"></span><br><span class="line">RB-INSERT-FIXUP(T,z)</span><br></pre></td></tr></table></figure>
+<p>c++ &#x5B9E;&#x73B0;&#x5982;&#x4E0B;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> RBTree::Insert(<span class="keyword">int</span> value)</span><br><span class="line">{</span><br><span class="line">	RBTreeNode* toInsert = <span class="keyword">new</span> RBTreeNode();</span><br><span class="line">	toInsert-&gt;value = value;</span><br><span class="line">	toInsert-&gt;color = RED;</span><br><span class="line">	toInsert-&gt;right = nullNode;</span><br><span class="line">	toInsert-&gt;left = nullNode;</span><br><span class="line"></span><br><span class="line">	RBTreeNode* targetNode = rootNode;</span><br><span class="line">	RBTreeNode* targetNodeParent = nullNode;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (targetNode != nullNode)</span><br><span class="line">	{</span><br><span class="line">		targetNodeParent = targetNode;</span><br><span class="line">		<span class="keyword">if</span> (value &lt; targetNode-&gt;value)</span><br><span class="line">		{</span><br><span class="line">			targetNode = targetNode-&gt;left;</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (value &gt; targetNode-&gt;value)</span><br><span class="line">		{</span><br><span class="line">			targetNode = targetNode-&gt;right;</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		{</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (targetNodeParent == nullNode)<span class="comment">//Tree is empty</span></span><br><span class="line">	{</span><br><span class="line">		rootNode = toInsert;</span><br><span class="line">		rootNode-&gt;parent = nullNode;</span><br><span class="line">		nullNode-&gt;left = rootNode;</span><br><span class="line">		nullNode-&gt;right = rootNode;</span><br><span class="line">		nullNode-&gt;parent = rootNode;</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	{</span><br><span class="line">		<span class="keyword">if</span> (value &lt; targetNodeParent-&gt;value)</span><br><span class="line">		{</span><br><span class="line">			targetNodeParent-&gt;left = toInsert;</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		{</span><br><span class="line">			targetNodeParent-&gt;right = toInsert;</span><br><span class="line">		}</span><br><span class="line">		toInsert-&gt;parent = targetNodeParent;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	InsertFixUp(toInsert);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x540E;&#x9762;&#x8981;&#x89E3;&#x51B3;&#x7684;&#x95EE;&#x9898;&#x5C31;&#x662F;&#x51FD;&#x6570;<code>RB-INSERT-FIXUP(T,z)</code>&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x5728;&#x8FDB;&#x5165;&#x8BA8;&#x8BBA;&#x524D;&#xFF0C;&#x9700;&#x8981;&#x5148;&#x660E;&#x786E;&#x51E0;&#x70B9;</p>
+<ol type="1">
+<li><p>&#x6027;&#x8D28;1&#x4E0D;&#x53EF;&#x80FD;&#x8FDD;&#x80CC;&#xFF0C;&#x56E0;&#x4E3A;&#x65B0;&#x63D2;&#x5165;&#x7684;&#x7ED3;&#x70B9;&#x662F;&#x7EA2;&#x8272;</p></li>
+<li><p>&#x6027;&#x8D28;3&#x4E0D;&#x53EF;&#x80FD;&#x8FDD;&#x80CC;&#xFF0C;&#x56E0;&#x4E3A;&#x65B0;&#x63D2;&#x5165;&#x7684;&#x7ED3;&#x70B9;&#x4E24;&#x4E2A;&#x53F6;&#x5B50;&#x8BBE;&#x4E3A;&#x4E86;&#x9ED1;&#x8272;</p></li>
+<li><p>&#x6027;&#x8D28;5&#x4E0D;&#x53EF;&#x80FD;&#x8FDD;&#x80CC;&#xFF0C;&#x56E0;&#x4E3A;&#x65B0;&#x63D2;&#x5165;&#x7684;&#x7ED3;&#x70B9;&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;&#x4E14;&#x66FF;&#x6362;&#x7684;&#x662F;&#x539F;&#x6765;NULL&#x7684;&#x5730;&#x65B9;</p></li>
+<li><p>&#x53EF;&#x80FD;&#x8FDD;&#x80CC;&#x7684;&#x53EA;&#x6709;&#x6027;&#x8D28;2&#x548C;&#x6027;&#x8D28;4&#x3002;</p>
+<p>&#x5F53;&#x65B0;&#x63D2;&#x5165;&#x7684;&#x7ED3;&#x70B9;<span class="math inline">\(z\)</span>&#x662F;&#x6839;&#x8282;&#x70B9;&#x65F6;&#xFF0C;&#x8FDD;&#x80CC;&#x6027;&#x8D28;2</p>
+<p>&#x5F53;&#x65B0;&#x63D2;&#x5165;&#x7684;&#x7ED3;&#x70B9;&#x7236;&#x8282;&#x70B9;&#x662F;&#x7EA2;&#x8272;&#x65F6;&#xFF0C;&#x8FDD;&#x80CC;&#x6027;&#x8D28;4</p></li>
+<li><p>&#x5728;&#x6BCF;&#x6B21;&#x63D2;&#x5165;&#x65B0;&#x7ED3;&#x70B9;&#x524D;&#xFF0C;&#x6811;&#x7684;&#x72B6;&#x6001;&#x4E00;&#x5B9A;&#x662F;&#x6EE1;&#x8DB3;&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x540C;&#x65F6;&#x6027;&#x8D28;2&#x548C;&#x6027;&#x8D28;4&#x6700;&#x591A;&#x88AB;&#x8FDD;&#x80CC;&#x4E00;&#x4E2A;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x8FDD;&#x80CC;&#x4E86;&#x6027;&#x8D28;2&#xFF0C;&#x90A3;&#x4E48;&#x8BF4;&#x660E;&#x65B0;&#x63D2;&#x5165;&#x7684;<span class="math inline">\(z\)</span>&#x662F;&#x6811;&#x4E2D;&#x552F;&#x4E00;&#x7684;&#x7ED3;&#x70B9;&#xFF0C;&#x90A3;&#x4E48;&#x4E0D;&#x53EF;&#x80FD;&#x8FDD;&#x80CC;&#x6027;&#x8D28;4</p>
+<p>&#x5982;&#x679C;&#x8FDD;&#x80CC;&#x4E86;&#x6027;&#x8D28;4&#xFF0C;&#x90A3;&#x4E48;&#x8BF4;&#x660E;<span class="math inline">\(z\)</span>&#x548C;<span class="math inline">\(z.p\)</span>&#x90FD;&#x4E3A;&#x7EA2;&#x8272;&#x3002;<span class="math inline">\(z.p\)</span>&#x4E0D;&#x53EF;&#x80FD;&#x662F;&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x4E0D;&#x7136;&#x5728;&#x63D2;&#x5165;<span class="math inline">\(z\)</span>&#x524D;&#x5C31;&#x5DF2;&#x7ECF;&#x4E3A;&#x8FDD;&#x80CC;&#x4E86;&#x7EA2;&#x9ED1;&#x6811;&#x7279;&#x6027;2&#xFF0C;<span class="math inline">\(z.p.p\)</span>&#x5FC5;&#x7136;&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x5426;&#x5219;&#x4E5F;&#x662F;&#x5728;&#x63D2;&#x5165;&#x524D;&#x5C31;&#x8FDD;&#x80CC;&#x4E86;&#x6027;&#x8D28;4&#x3002;&#x56E0;&#x6B64;&#x8FDD;&#x80CC;&#x6027;&#x8D28;4&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4E0D;&#x53EF;&#x80FD;&#x8FDD;&#x80CC;&#x6027;&#x8D28;2&#x3002;</p></li>
+</ol>
+<p>&#x8FD9;&#x91CC;&#x7B97;&#x6CD5;&#x66F4;&#x591A;&#x7684;&#x662F;&#x5173;&#x6CE8;&#x8FDD;&#x80CC;&#x6027;&#x8D28;4&#x65F6;&#x7684;&#x5904;&#x7406;&#x65B9;&#x5F0F;&#xFF0C;&#x56E0;&#x4E3A;&#x6027;&#x8D28;2&#x6BD4;&#x8F83;&#x597D;&#x4FEE;&#x590D;&#xFF0C;&#x53EA;&#x8981;&#x5C06;&#x6839;&#x8282;&#x70B9;&#x7684;&#x989C;&#x8272;&#x6539;&#x53D8;&#x5373;&#x53EF;&#x3002;</p>
+<p><code>RB-INSERT-FIXUP(T,z)</code>&#x7B97;&#x6CD5;&#x4E00;&#x5171;&#x5BF9;&#x63D2;&#x5165;&#x65B0;&#x7ED3;&#x70B9;&#x540E;&#xFF0C;&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x7684;&#x8FDD;&#x80CC;&#x7EA2;&#x9ED1;&#x6811;&#x539F;&#x5219;&#x7684;6&#x79CD;&#x60C5;&#x51B5;&#x8FDB;&#x884C;&#x4FEE;&#x590D;&#x3002;&#x524D;&#x4E09;&#x79CD;&#x60C5;&#x51B5;&#x51FA;&#x73B0;&#x5728;<span class="math inline">\(z.p\)</span>&#x662F;<span class="math inline">\(z.p.p\)</span>&#x7684;&#x5DE6;&#x7ED3;&#x70B9;&#xFF0C;&#x540E;&#x4E09;&#x79CD;&#x60C5;&#x51B5;&#x662F;<span class="math inline">\(z.p\)</span>&#x662F;<span class="math inline">\(z.p.p\)</span>&#x7684;&#x53F3;&#x7ED3;&#x70B9;&#x3002;&#x524D;&#x4E09;&#x79CD;&#x4E0E;&#x540E;&#x4E09;&#x79CD;&#x60C5;&#x51B5;&#x7684;&#x4FEE;&#x590D;&#x662F;&#x5BF9;&#x79F0;&#x7684;&#xFF0C;&#x5C06;&#x524D;&#x4E09;&#x79CD;&#x4FEE;&#x590D;&#x65F6;&#x7684;&#x5DE6;&#x65CB;&#x64CD;&#x4F5C;&#x6539;&#x6210;&#x53F3;&#x65CB;&#x64CD;&#x4F5C;&#x5373;&#x4E3A;&#x540E;&#x4E09;&#x79CD;&#x60C5;&#x51B5;&#x7684;&#x4FEE;&#x590D;&#x3002;&#x56E0;&#x6B64;&#x8FD9;&#x91CC;&#x53EA;&#x5173;&#x6CE8;&#x4E8E;&#x524D;&#x4E09;&#x79CD;&#x60C5;&#x51B5;&#x7684;&#x8BB2;&#x89E3;&#x3002;</p>
+<p>&#x524D;&#x4E09;&#x79CD;(z.p = z.p.p.left )&#x60C5;&#x51B5;&#x7684;&#x533A;&#x5206;&#x5728;&#x4E8E;<span class="math inline">\(z\)</span>&#x7684;<span class="math inline">\(uncle\)</span>&#x7684;&#x989C;&#x8272;&#xFF0C;&#x5373;<span class="math inline">\(z.p.p.right\)</span>&#x7684;&#x989C;&#x8272;&#x3002;</p>
+<ol type="1">
+<li>&#x5982;&#x679C;<span class="math inline">\(z.p.p.right\)</span>&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;&#x65E0;&#x8BBA;<span class="math inline">\(z\)</span>&#x662F;<span class="math inline">\(z.p\)</span>&#x7684;&#x54EA;&#x79D1;&#x5B50;&#x6811;&#xFF0C;&#x90FD;&#x4E3A;&#x60C5;&#x51B5;1&#x3002;</li>
+<li>&#x5982;&#x679C;<span class="math inline">\(z.p.p.right\)</span>&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x4E14;<span class="math inline">\(z\)</span>&#x662F;<span class="math inline">\(z.p\)</span>&#x662F;&#x53F3;&#x5B50;&#x6811;&#xFF0C;&#x5219;&#x4E3A;&#x60C5;&#x51B5;2&#x3002;</li>
+<li>&#x5982;&#x679C;<span class="math inline">\(z.p.p.right\)</span>&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x4E14;<span class="math inline">\(z\)</span>&#x662F;<span class="math inline">\(z.p\)</span>&#x662F;&#x5DE6;&#x5B50;&#x6811;&#xFF0C;&#x5219;&#x4E3A;&#x60C5;&#x51B5;3&#x3002;</li>
+</ol>
+<p><img src="/IA-Chapter13-Notes/2019-11-07-00-05-44.png" alt="&#x4E09;&#x79CD;&#x60C5;&#x51B5;&#x7684;&#x793A;&#x610F;&#x56FE;"></p>
+<p>&#x5BF9;&#x4E8E;&#x60C5;&#x51B5;1&#x7684;&#x4FEE;&#x590D;&#xFF1A;</p>
+<p>&#x5982;&#x56FE;&#x793A;&#xFF0C;<span class="math inline">\(z\)</span>&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;<span class="math inline">\(z.p\)</span>&#x548C;<span class="math inline">\(z.uncle\)</span>&#x90FD;&#x662F;&#x7EA2;&#x8272;&#x3002;&#x60C5;&#x51B5;1&#x7684;&#x4FEE;&#x590D;&#x6B65;&#x9AA4;&#x4E3A;&#xFF1A; 1. &#x5C06;<span class="math inline">\(z.p\)</span>&#x548C;<span class="math inline">\(z.uncle\)</span>&#x90FD;&#x53D8;&#x4E3A;&#x9ED1;&#x8272;</p>
+<pre><code>&#x8FD9;&#x6837;&#x8FDD;&#x80CC;&#x6027;&#x8D28;4&#x7684;&#x8FDE;&#x7EED;&#x7EA2;&#x8272;&#x7ED3;&#x70B9;&#x5C31;&#x6D88;&#x5931;&#x4E86;&#x3002;</code></pre>
+<ol start="2" type="1">
+<li><p>&#x5C06;<span class="math inline">\(z.p.p\)</span>&#x53D8;&#x4E3A;&#x7EA2;&#x8272;</p>
+<p>&#x56E0;&#x4E3A;<span class="math inline">\(z.p\)</span>&#x548C;<span class="math inline">\(z.uncle\)</span>&#x90FD;&#x53D8;&#x6210;&#x4E86;&#x9ED1;&#x8272;&#xFF0C;&#x6240;&#x6709;&#x5305;&#x542B;&#x4ED6;&#x4EEC;&#x7684;&#x901A;&#x8DEF;&#xFF0C;&#x9ED1;&#x9AD8;&#x90FD;+1&#x3002;&#x8003;&#x8651;&#x5230;&#x5305;&#x542B;&#x4E86;<span class="math inline">\(z.p\)</span>&#x548C;<span class="math inline">\(z.uncle\)</span>&#x7684;&#x901A;&#x8DEF;&#x5FC5;&#x7136;&#x90FD;&#x5305;&#x542B;<span class="math inline">\(z.p.p\)</span>&#xFF0C;&#x6240;&#x4EE5;&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x901A;&#x8DEF;&#x4E0A;&#x7684;&#x9ED1;&#x9AD8;&#x4E0D;&#x53D8;&#xFF0C;&#x5C06;<span class="math inline">\(z.p.p\)</span>&#x53D8;&#x4E3A;&#x7EA2;&#xFF0C;&#x8FD9;&#x6837;&#x589E;&#x52A0;&#x7684;&#x9ED1;&#x9AD8;&#x5C31;&#x5F25;&#x8865;&#x4E86;&#x3002;</p></li>
+<li><p>&#x5C06;<span class="math inline">\(z\)</span>&#x6307;&#x9488;&#x6307;&#x5411;<span class="math inline">\(z.p.p\)</span></p>
+<p>&#x56E0;&#x4E3A;&#x5C06;<span class="math inline">\(z.p.p\)</span>&#x53D8;&#x4E3A;&#x4E86;&#x7EA2;&#x8272;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x80FD;<span class="math inline">\(z.p.p\)</span>&#x548C;<span class="math inline">\(z.p.p.p\)</span>&#x4F1A;&#x51FA;&#x73B0;&#x8FDD;&#x80CC;&#x6027;&#x8D28;4&#x7684;&#x60C5;&#x51B5;&#x3002;&#x5C06;<span class="math inline">\(z\)</span>&#x6307;&#x9488;&#x6307;&#x5411;<span class="math inline">\(z.p.p\)</span>&#x5373;&#x53EF;&#x91CD;&#x65B0;&#x901A;&#x8FC7;<code>RB-INSERT-FIXUP(T,z)</code>&#x7B97;&#x6CD5;&#x8FDB;&#x884C;&#x5224;&#x65AD;&#x3002;</p></li>
+</ol>
+<p>&#x60C5;&#x51B5;1&#x4FEE;&#x590D;&#x7684;&#x56FE;&#x89E3;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/IA-Chapter13-Notes/2019-11-07-10-52-42.png" alt="&#x60C5;&#x51B5;1&#x7684;&#x4FEE;&#x590D;"></p>
+<p>&#x5BF9;&#x4E8E;&#x60C5;&#x51B5;2&#x3001;3&#x7684;&#x4FEE;&#x590D;&#xFF1A;</p>
+<p>&#x5728;&#x60C5;&#x51B5;2&#x548C;3&#x4E0B;&#xFF0C;<span class="math inline">\(z.uncle\)</span>&#x662F;&#x9ED1;&#x8272;&#xFF0C;&#x56E0;&#x6B64;<span class="math inline">\(z.uncle\)</span>&#x548C;<span class="math inline">\(z.p\)</span>&#x7684;&#x989C;&#x8272;&#x4E0D;&#x540C;&#xFF0C;&#x4E5F;&#x5C31;&#x4E0D;&#x80FD;&#x50CF;&#x60C5;&#x51B5;1&#x7684;&#x4FEE;&#x590D;&#x4E00;&#x6837;&#x7EDF;&#x4E00;&#x6539;&#x6210;&#x9ED1;&#x8272;&#xFF0C;&#x4E0D;&#x7136;&#x4F1A;&#x5F71;&#x54CD;&#x4ED6;&#x4EEC;&#x5B50;&#x6811;&#x7684;&#x9ED1;&#x9AD8;&#x3002;&#x56E0;&#x6B64;&#x8FD9;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#x9700;&#x8981;&#x7528;&#x5230;&#x65CB;&#x8F6C;&#x6765;&#x4FEE;&#x590D;&#x3002;</p>
+<p>&#x60C5;&#x51B5;2&#x4E0B;<span class="math inline">\(z\)</span>&#x4F5C;&#x4E3A;<span class="math inline">\(z.p\)</span>&#x7684;&#x53F3;&#x5B50;&#x6811;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x5BF9;<span class="math inline">\(z.p\)</span>&#x8FDB;&#x884C;&#x5DE6;&#x65CB;&#x3002;&#x4E8E;<span class="math inline">\(z.p\)</span>&#x8FDB;&#x884C;&#x5DE6;&#x65CB;&#x540E;&#xFF0C;&#x5C06;&#x539F;&#x5148;<span class="math inline">\(z.p\)</span>&#x5B9A;&#x4E49;&#x4E3A;<span class="math inline">\(z\)</span>&#x5373;&#x8F6C;&#x6362;&#x4E3A;&#x4E86;&#x60C5;&#x51B5;3&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;</p>
+<p><img src="/IA-Chapter13-Notes/2019-11-09-20-08-02.png" alt="&#x60C5;&#x51B5;2&#x8F6C;&#x6362;&#x4E3A;&#x60C5;&#x51B5;3"></p>
+<p>&#x5BF9;&#x4E8E;&#x60C5;&#x51B5;3&#xFF0C;&#x6211;&#x4EEC;&#x5BF9;<span class="math inline">\(z.p.p\)</span>&#xFF0C;&#x5373;&#x4E0A;&#x56FE;&#x4E2D;&#x7684;<span class="math inline">\(C\)</span>&#x8FDB;&#x884C;&#x53F3;&#x65CB;&#x3002;&#x65CB;&#x8F6C;&#x540E;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x3002;</p>
+<p><img src="/IA-Chapter13-Notes/2019-11-09-20-30-37.png" alt="&#x60C5;&#x51B5;3&#x5BF9;&#x4E8E;z.p.p&#x53F3;&#x65CB;"></p>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x8DEF;&#x5F84;&#x5B58;&#x5728;<span class="math inline">\(A\)</span>&#x7ED3;&#x70B9;&#x7684;&#x6811;&#x7684;&#x9ED1;&#x9AD8;&#x90FD;&#x51CF;&#x4E00;&#xFF08;&#x539F;&#x5148;&#x7236;&#x7ED3;&#x70B9;&#x662F;&#x9ED1;&#x8272;&#x7684;<span class="math inline">\(C\)</span>,&#x73B0;&#x5728;&#x53D8;&#x6210;&#x4E86;&#x7EA2;&#x8272;&#x7684;<span class="math inline">\(B\)</span>&#xFF09;&#xFF0C;&#x800C;&#x5305;&#x542B;<span class="math inline">\(C\)</span>&#x7ED3;&#x70B9;&#x7684;&#x8DEF;&#x5F84;&#x9ED1;&#x9AD8;&#x662F;&#x4E0D;&#x53D8;&#x7684;&#x3002;&#x800C;&#x4E14;&#x6B64;&#x65F6;<span class="math inline">\(A\)</span>&#x548C;<span class="math inline">\(B\)</span>&#x8FD8;&#x662F;&#x4E0D;&#x6EE1;&#x8DB3;&#x6027;&#x8D28;4&#x3002;&#x8FD9;&#x91CC;&#x518D;&#x5C06;&#x539F;&#x5148;&#x7684;<span class="math inline">\(B\)</span>&#x8C03;&#x6574;&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x539F;&#x5148;&#x7684;<span class="math inline">\(C\)</span>&#x8C03;&#x6574;&#x4E3A;&#x7EA2;&#x8272;&#x3002;&#x5BF9;&#x4E8E;&#x5305;&#x542B;<span class="math inline">\(A\)</span>&#x7684;&#x8DEF;&#x5F84;&#x800C;&#x8A00;&#xFF0C;&#x9ED1;&#x9AD8;+1&#xFF0C;&#x5BF9;&#x4E8E;&#x5305;&#x542B;<span class="math inline">\(C\)</span>&#x7684;&#x8DEF;&#x5F84;&#x800C;&#x8A00;&#xFF0C;&#x9ED1;&#x9AD8;&#x4E0D;&#x53D8;&#xFF0C;&#x56E0;&#x4E3A;&#x8DEF;&#x5F84;&#x4E0A;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x53D8;&#x6210;&#x4E86;&#x7EA2;&#xFF0C;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x53D8;&#x6210;&#x4E86;&#x9ED1;&#x3002;&#x56E0;&#x6B64;&#x60C5;&#x51B5;&#x4E09;&#x7684;&#x6700;&#x7EC8;&#x53D8;&#x5316;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p><img src="/IA-Chapter13-Notes/2019-11-09-20-35-41.png" alt="&#x60C5;&#x51B5;3&#x53D8;&#x5316;"></p>
+<p>&#x60C5;&#x51B5;3&#x8C03;&#x6574;&#x540E;&#x6027;&#x8D28;4&#x548C;5&#x90FD;&#x6EE1;&#x8DB3;&#x4E86;&#xFF0C;&#x800C;&#x4E0D;&#x50CF;&#x60C5;&#x51B5;1&#x8C03;&#x6574;&#x540E;&#x4ECD;&#x7136;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x8FDD;&#x80CC;&#x6027;&#x8D28;4&#x7684;&#x53EF;&#x80FD;&#x3002;</p>
+<p>&#x53E6;&#x5916;&#x5BF9;&#x4E8E;&#x60C5;&#x51B5;2&#x548C;3&#x7684;&#x5904;&#x7406;&#xFF0C;&#x4E0D;&#x80FD;&#x662F;&#x60C5;&#x51B5;3&#x901A;&#x8FC7;&#x53F3;&#x65CB;<span class="math inline">\(z.p\)</span>&#x6765;&#x8F6C;&#x6362;&#x4E3A;&#x60C5;&#x51B5;2&#x518D;&#x8FDB;&#x884C;&#x4FEE;&#x590D;&#x3002;&#x56E0;&#x4E3A;&#x5982;&#x679C;&#x5728;&#x60C5;&#x51B5;2&#x4E0B;&#x5BF9;<span class="math inline">\(C\)</span>&#x8FDB;&#x884C;&#x53F3;&#x65CB;&#xFF0C;&#x4F1A;&#x51FA;&#x73B0;&#x5982;&#x4E0B;&#x60C5;&#x51B5;&#x3002;</p>
+<p><img src="/IA-Chapter13-Notes/2019-11-09-20-44-24.png" alt="&#x5BF9;&#x60C5;&#x51B5;2&#x8FDB;&#x884C;&#x76F4;&#x63A5;&#x4FEE;&#x590D;"></p>
+<p>&#x6B64;&#x65F6;&#x6EE1;&#x8DB3;&#x4E86;&#x6027;&#x8D28;4&#xFF0C;&#x4F46;&#x662F;&#x5305;&#x542B;<span class="math inline">\(\alpha\)</span>&#x7ED3;&#x70B9;&#x8DEF;&#x5F84;&#x7684;&#x9ED1;&#x9AD8;&#x5C11;&#x4E86;1&#xFF0C;&#x5982;&#x679C;&#x4E3A;&#x4E86;&#x6EE1;&#x8DB3;&#x6027;&#x8D28;5&#x5C06;<span class="math inline">\(A\)</span>&#x7ED3;&#x70B9;&#x548C;<span class="math inline">\(C\)</span>&#x7ED3;&#x70B9;&#x8C03;&#x6574;&#x989C;&#x8272;&#xFF0C;&#x90A3;&#x4E48;<span class="math inline">\(C\)</span>&#x7ED3;&#x70B9;&#x548C;<span class="math inline">\(B\)</span>&#x7ED3;&#x70B9;&#x53C8;&#x4F1A;&#x8FDD;&#x80CC;&#x6027;&#x8D28;4&#x3002;</p>
+<p>&#x60C5;&#x51B5;4&#xFF0C;5&#xFF0C;6&#x7684;&#x8C03;&#x6574;&#x4E0E;&#x60C5;&#x51B5;1&#xFF0C;2&#xFF0C;3&#x662F;&#x955C;&#x50CF;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x590D;&#x8FF0;&#x4E86;&#x3002;</p>
+<p>&#x6574;&#x4E2A;&#x7ED9;&#x51FA;<code>RB-INSERT-FIXUP(T,z)</code>&#x7684;&#x4F2A;&#x4EE3;&#x7801;&#x5B9E;&#x73B0;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">RB-INSERT-FIXUP(T,z)</span><br><span class="line"></span><br><span class="line">while z.p.color == RED</span><br><span class="line">	if z.p == z.p.p.left // Case 1,2,3</span><br><span class="line">		y= z.p.p.right</span><br><span class="line">		if (y.color == RED) //Case 1</span><br><span class="line">			z.p.color = BLACK</span><br><span class="line">			y.color = BLACK</span><br><span class="line">			z.p.p.color = RED</span><br><span class="line">			z = z.p.p</span><br><span class="line">		else</span><br><span class="line">			if z == z.p.right //Case 2</span><br><span class="line">				z = z.p</span><br><span class="line">				LEFT-ROTATE(T,z)</span><br><span class="line">			z.p.color = BLACK // Case 3,&#x4E0B;&#x4E00;&#x6B21;&#x5FAA;&#x73AF;&#x5C06;&#x76F4;&#x63A5;&#x9000;&#x51FA;</span><br><span class="line">			z.p.p.color = RED</span><br><span class="line">			RIGHT-ROTATE(T,z.p.p)</span><br><span class="line">	else //Case 4,5,6</span><br><span class="line">		...</span><br><span class="line">		//&#x548C;&#x60C5;&#x51B5;1,2,3&#x7C7B;&#x4F3C;&#xFF0C;&#x5C06;right&#x548C;left&#x5BF9;&#x8C03;&#x5373;&#x53EF;</span><br><span class="line">T.root.color = BLACK //&#x4FDD;&#x8BC1;&#x6027;&#x8D28;2</span><br></pre></td></tr></table></figure>
+<p>c++&#x4EE3;&#x7801;&#x5982;&#x4E0B;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> RBTree::InsertFixUp(RBTreeNode* node)</span><br><span class="line">{</span><br><span class="line">	<span class="keyword">while</span> (node-&gt;parent-&gt;color == RED)</span><br><span class="line">	{</span><br><span class="line">		<span class="keyword">if</span> (node-&gt;parent == node-&gt;parent-&gt;parent-&gt;left)<span class="comment">//The first three cases</span></span><br><span class="line">		{</span><br><span class="line">			RBTreeNode* uncle = node-&gt;parent-&gt;parent-&gt;right;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (uncle-&gt;color == RED) <span class="comment">//Case 1</span></span><br><span class="line">			{</span><br><span class="line">				node-&gt;parent-&gt;color = BLACK;</span><br><span class="line">				uncle-&gt;color = BLACK;</span><br><span class="line">				node-&gt;parent-&gt;parent-&gt;color = RED;</span><br><span class="line">				node = node-&gt;parent-&gt;parent;</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			{</span><br><span class="line">				<span class="keyword">if</span> (node == node-&gt;parent-&gt;right) <span class="comment">//Case 2</span></span><br><span class="line">				{</span><br><span class="line">					node = node-&gt;parent;</span><br><span class="line">					LeftRotate(node);</span><br><span class="line">				}</span><br><span class="line"></span><br><span class="line">				<span class="comment">//Case3</span></span><br><span class="line">				node-&gt;parent-&gt;color = BLACK;</span><br><span class="line">				node-&gt;parent-&gt;parent-&gt;color = RED;</span><br><span class="line">				RightRotate(node-&gt;parent-&gt;parent);</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		{</span><br><span class="line">			<span class="comment">//The remainging three cases, as the symmetry of the first three</span></span><br><span class="line"></span><br><span class="line">			RBTreeNode* uncle = node-&gt;parent-&gt;parent-&gt;left;</span><br><span class="line">			<span class="keyword">if</span> (uncle-&gt;color == RED)</span><br><span class="line">			{</span><br><span class="line">				node-&gt;parent-&gt;color = BLACK;</span><br><span class="line">				uncle-&gt;color = BLACK;</span><br><span class="line">				node-&gt;parent-&gt;parent-&gt;color = RED;</span><br><span class="line">				node = node-&gt;parent-&gt;parent;</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			{</span><br><span class="line">				<span class="keyword">if</span> (node == node-&gt;parent-&gt;left)</span><br><span class="line">				{</span><br><span class="line">					node = node-&gt;parent;</span><br><span class="line">					RightRotate(node);</span><br><span class="line">				}</span><br><span class="line"></span><br><span class="line">				node-&gt;parent-&gt;color = BLACK;</span><br><span class="line">				node-&gt;parent-&gt;parent-&gt;color = RED;</span><br><span class="line">				LeftRotate(node-&gt;parent-&gt;parent);</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">	rootNode-&gt;color = BLACK;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;<code>RB-INSERT</code>&#x64CD;&#x4F5C;&#x662F;&#x4E00;&#x5C42;&#x5C42;&#x7684;&#x5411;&#x4E0B;&#x641C;&#x7D22;&#x53EF;&#x4EE5;&#x63D2;&#x5165;&#x7684;&#x70B9;&#xFF0C;&#x6240;&#x4EE5;&#x590D;&#x6742;&#x5EA6;&#x4E0E;&#x6811;&#x7684;&#x9AD8;&#x5EA6;&#x6709;&#x5173;&#xFF0C;&#x5373;&#x4E3A;<span class="math inline">\(O(\lg n)\)</span>&#xFF0C;<code>RB-INSERT-FIXUP</code>&#x64CD;&#x4F5C;&#x53EA;&#x6709;&#x5728;&#x60C5;&#x51B5;1&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x4F1A;&#x7EE7;&#x7EED;&#x5FAA;&#x73AF;&#xFF0C;&#x4E14;&#x6BCF;&#x6B21;&#x5FAA;&#x73AF;&#x524D;&#x90FD;&#x5C06;<span class="math inline">\(z\)</span>&#x5411;&#x4E0A;&#x79FB;&#x4E24;&#x4F4D;&#xFF0C;&#x56E0;&#x6B64;&#x6267;&#x884C;&#x6B21;&#x6570;&#x662F;&#x5C42;&#x6570;&#x7684;&#x4E00;&#x534A;&#xFF0C;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E5F;&#x4E3A;<span class="math inline">\(O(\lg n)\)</span>&#x3002;&#x7EFC;&#x4E0A;&#xFF0C;&#x7EA2;&#x9ED1;&#x6811;&#x63D2;&#x5165;&#x64CD;&#x4F5C;&#x603B;&#x4F53;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(O(\lg n)\)</span>&#x3002;</p>
+<h2 id="deletion">Deletion</h2>
+<p>&#x5982;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x4E00;&#x6837;&#xFF0C;&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#x540C;&#x6837;&#x9700;&#x8981;<code>Transplant</code>&#x64CD;&#x4F5C;&#x6765;&#x7528;&#x4E00;&#x4E2A;&#x7ED3;&#x70B9;&#x66FF;&#x6362;&#x53E6;&#x4E00;&#x4E2A;&#xFF0C;&#x8FD9;&#x91CC;&#x4E0E;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x4E0D;&#x540C;&#x7684;&#x53EA;&#x662F;&#x5C06;<code>Null</code>&#x53D8;&#x4E3A;&#x4E86;<code>T.nil</code>&#xFF0C;&#x4EE5;&#x53CA;&#x5728;&#x8BBE;&#x7F6E;<span class="math inline">\(v.p\)</span>&#x65F6;&#x4E0D;&#x9700;&#x8981;&#x989D;&#x5916;&#x7684;&#x5224;&#x65AD;&#xFF0C;&#x56E0;&#x4E3A;&#x5373;&#x4F7F;<span class="math inline">\(v\)</span>&#x662F;&#x54E8;&#x5175;&#xFF0C;&#x8BBF;&#x95EE;<span class="math inline">\(v.p\)</span>&#x4E5F;&#x4E0D;&#x4F1A;&#x51FA;&#x9519;</p>
+<p>&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B; <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">RB-TRANSPLANT(T,u,v)</span><br><span class="line">if u.p == T.nil</span><br><span class="line">	T.root = v</span><br><span class="line">else if u == u.p.left</span><br><span class="line">	u.p.left = v</span><br><span class="line">else</span><br><span class="line">	u.p.right = v</span><br><span class="line">v.p=u.p</span><br></pre></td></tr></table></figure></p>
+<p>c++&#x4EE3;&#x7801;&#x5B9E;&#x73B0;&#x5982;&#x4E0B;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> RBTree::TransPlant(RBTreeNode* originNode, RBTreeNode* newNode)</span><br><span class="line">{</span><br><span class="line">	<span class="keyword">if</span> (originNode-&gt;parent == nullNode)</span><br><span class="line">	{</span><br><span class="line">		rootNode = newNode;</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (originNode == originNode-&gt;parent-&gt;left)</span><br><span class="line">	{</span><br><span class="line">		originNode-&gt;parent-&gt;left = newNode;</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	{</span><br><span class="line">		originNode-&gt;parent-&gt;right = newNode;</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	newNode-&gt;parent = originNode-&gt;parent;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x7684;&#x5220;&#x9664;&#x64CD;&#x4F5C;&#x4E2D;&#xFF0C;&#x6700;&#x590D;&#x6742;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x5373;&#x88AB;&#x5220;&#x9664;&#x8282;&#x70B9;<span class="math inline">\(z\)</span>&#x6709;&#x4E24;&#x4E2A;&#x5B50;&#x6811;&#xFF0C;&#x4E14;&#x4ED6;&#x7684;<code>successor</code>&#x4E0D;&#x662F;<span class="math inline">\(z\)</span>&#x7684;&#x53F3;&#x5B50;&#x6811;&#x3002;</p>
+<p>&#x8FD9;&#x65F6;&#x5019;&#x9700;&#x8981;&#x6267;&#x884C;&#x7684;&#x64CD;&#x4F5C;&#x662F;&#xFF0C;&#x5C06;<span class="math inline">\(successor.right\)</span>&#x66FF;&#x6362;<span class="math inline">\(successnor\)</span>&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x518D;&#x7528;<span class="math inline">\(successor\)</span>&#x66FF;&#x6362;<span class="math inline">\(z\)</span>&#x7684;&#x4F4D;&#x7F6E;&#x3002;&#x56E0;&#x4E3A;&#x6574;&#x4E2A;&#x64CD;&#x4F5C;&#x7275;&#x626F;&#x5230;&#x4E09;&#x4E2A;&#x8282;&#x70B9;<span class="math inline">\(succcessor.right,successor,z\)</span>&#x7684;&#x53D8;&#x5316;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x64CD;&#x4F5C;&#x4E0B;&#xFF0C;&#x8FD9;&#x4E09;&#x4E2A;&#x7ED3;&#x70B9;&#x90FD;&#x9700;&#x8981;&#x88AB;&#x786E;&#x8BA4;&#x662F;&#x5426;&#x4F1A;&#x9020;&#x6210;&#x7EA2;&#x9ED1;&#x6811;&#x6027;&#x8D28;&#x7684;&#x7834;&#x574F;&#x3002;</p>
+<p>&#x5728;&#x5220;&#x9664;&#x7B97;&#x6CD5;&#x4E2D;&#xFF0C;&#x5C06;&#x9700;&#x8981;&#x79FB;&#x8FDB;&#x6216;&#x8005;&#x79FB;&#x51FA;&#x539F;&#x5148;<span class="math inline">\(z\)</span>&#x4F4D;&#x7F6E;&#x7684;&#x7ED3;&#x70B9;&#x547D;&#x540D;&#x4E3A;<span class="math inline">\(y\)</span>&#xFF0C;&#x9700;&#x8981;&#x8BB0;&#x5F55;<span class="math inline">\(y\)</span>&#x7ED3;&#x70B9;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x56E0;&#x4E3A;&#x5982;&#x679C;&#x4ED6;&#x662F;&#x9ED1;&#x8272;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x4ED6;&#x7684;&#x79FB;&#x52A8;&#x4F1A;&#x7834;&#x574F;&#x7EA2;&#x9ED1;&#x6811;&#x7684;&#x6027;&#x8D28;5&#x3002;&#x9700;&#x8981;&#x66FF;&#x4EE3;<span class="math inline">\(y\)</span>&#x4F4D;&#x7F6E;&#x7684;&#x70B9;&#x7528;<span class="math inline">\(x\)</span>&#x8868;&#x793A;&#x3002;</p>
+<p>&#x5220;&#x9664;&#x64CD;&#x4F5C;&#x7684;&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">y = z //&#x8FD9;&#x91CC;y&#x8868;&#x793A;&#x8981;&#x79FB;&#x9664;z&#x4F4D;&#x7F6E;&#x7684;&#x7ED3;&#x70B9;&#xFF0C;&#x5373;z&#x81EA;&#x5DF1;</span><br><span class="line">y-original-code = y.color</span><br><span class="line">if z.left == T.nil</span><br><span class="line">	x = z.right</span><br><span class="line">	RB-TRANSPLANT(T,y,x) //&#x7528;z&#x7684;&#x53F3;&#x6811;&#x66FF;&#x4EE3;z&#xFF0C;&#x5373;&#x7528;x&#x66FF;&#x4EE3;z&#xFF0C;&#x5373;&#x7528;x&#x66FF;&#x4EE3;y</span><br><span class="line">else if z.right = T.nil</span><br><span class="line">	x = z.left</span><br><span class="line">	RB-TRANSPLANT(T,y,x) //&#x7528;z&#x7684;&#x5DE6;&#x6811;&#x66FF;&#x4EE3;z&#xFF0C;&#x5373;&#x7528;x&#x66FF;&#x4EE3;z&#xFF0C;&#x5373;&#x7528;x&#x66FF;&#x4EE3;y</span><br><span class="line">else</span><br><span class="line">	y = TREE-MINIMUM(z.right) //y&#x8868;&#x793A;z.successor&#xFF0C;&#x8FD9;&#x91CC;y&#x8868;&#x793A;&#x9700;&#x8981;&#x79FB;&#x8FDB;z&#x4F4D;&#x7F6E;&#x7684;&#x7ED3;&#x70B9;</span><br><span class="line">	x = y.right //&#x5982;&#x666E;&#x901A;&#x7684;&#x641C;&#x7D22;&#x4E8C;&#x53C9;&#x6811;&#x4E00;&#x6837;&#xFF0C;&#x7528;y&#x7684;&#x53F3;&#x5B50;&#x6811;&#x66FF;&#x4EE3;y&#x7684;&#x4F4D;&#x7F6E;</span><br><span class="line">	if y.p == z</span><br><span class="line">		x.p = z //&#x5728;&#x666E;&#x901A;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#x4E2D;&#xFF0C;y.p == z&#x7684;&#x60C5;&#x51B5;&#x4E0D;&#x9700;&#x8981;&#x4EFB;&#x4F55;&#x64CD;&#x4F5C;&#xFF0C;&#x8FD9;&#x91CC;&#x56E0;&#x4E3A;&#x8BBE;&#x7F6E;&#x4E86;x&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x4E3A;x&#x6307;&#x5B9A;&#x7236;&#x8282;&#x70B9;</span><br><span class="line">	else</span><br><span class="line">		RB-TRANSPLANT(T,y,x) //TRANSPLANT&#x64CD;&#x4F5C;&#x540C;&#x65F6;&#x4E5F;&#x4E3A;x&#x8BBE;&#x7F6E;&#x4E86;&#x7236;&#x7ED3;&#x70B9;&#xFF0C;&#x5373;x.p = y.p</span><br><span class="line">		y.right = z.right</span><br><span class="line">		y.right.p = y</span><br><span class="line">	RB-TRANSPLANT(T,z,y)</span><br><span class="line">	y.left = z.left</span><br><span class="line">	y.left.p = y</span><br><span class="line">	y.colour = z.clour //&#x5728;y&#x79FB;&#x52A8;&#x5230;&#x4E86;z&#x7684;&#x4F4D;&#x7F6E;&#x540E;&#xFF0C;&#x7528;z&#x7684;&#x989C;&#x8272;&#x8868;&#x793A;y&#x7684;&#x989C;&#x8272;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x4FDD;&#x8BC1;&#x4E86;y&#x6709;&#x539F;&#x5148;z.p&#x4E0D;&#x4F1A;&#x8FDD;&#x80CC;&#x6027;&#x8D28;4</span><br><span class="line">if(y-original-color == Black)//&#x5728;&#x539F;&#x5148;&#x7684;y&#x7ED3;&#x70B9;&#x662F;&#x9ED1;&#x8272;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4F1A;&#x5F15;&#x53D1;&#x95EE;&#x9898;&#xFF08;&#x540E;&#x9762;&#x4F1A;&#x89E3;&#x91CA;&#xFF09;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x4FEE;&#x590D;</span><br><span class="line">	RB-DELETE-FIXUP(T,x)</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4F2A;&#x4EE3;&#x7801;&#x7684;&#x6700;&#x540E;&#xFF0C;&#x4EC5;&#x5728;&#x539F;<span class="math inline">\(y\)</span>&#x7ED3;&#x70B9;&#x989C;&#x8272;&#x4E3A;&#x9ED1;&#x8272;&#x7684;&#x65F6;&#x5019;&#x8C03;&#x7528;&#x4FEE;&#x590D;&#x51FD;&#x6570;<code>RB_DELETE_FIXUP</code>,&#x56E0;&#x4E3A;<span class="math inline">\(y\)</span>&#x7ED3;&#x70B9;&#x5982;&#x679C;&#x539F;&#x5148;&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;&#x5219;&#x4E0D;&#x4F1A;&#x8FDD;&#x53CD;&#x4EFB;&#x4F55;&#x7684;&#x7EA2;&#x9ED1;&#x6811;&#x6027;&#x8D28;</p>
+<ol type="1">
+<li>&#x56E0;&#x4E3A;<span class="math inline">\(y\)</span>&#x662F;&#x7EA2;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x79FB;&#x52A8;<span class="math inline">\(y\)</span>&#x4E0D;&#x4F1A;&#x9020;&#x6210;&#x6811;&#x7684;&#x9ED1;&#x9AD8;&#x7684;&#x53D8;&#x5316;&#xFF0C;&#x6027;&#x8D28;5&#x4E5F;&#x5C31;&#x4E0D;&#x4F1A;&#x88AB;&#x7834;&#x574F;</li>
+<li>&#x56E0;&#x4E3A;&#x5728;&#x4EE3;&#x7801;&#x7684;20&#x884C;&#x5C06;<span class="math inline">\(z\)</span>&#x7684;&#x989C;&#x8272;&#x8D4B;&#x7ED9;&#x4E86;<span class="math inline">\(y\)</span>&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x4F1A;&#x53D1;&#x751F;<span class="math inline">\(y\)</span>&#x4E0E;<span class="math inline">\(z.p\)</span>=&#x7834;&#x574F;&#x6027;&#x8D28;4&#x7684;&#x60C5;&#x51B5;&#x3002;</li>
+<li><span class="math inline">\(x\)</span>&#x4F5C;&#x4E3A;&#x66FF;&#x4EE3;<span class="math inline">\(y\)</span>&#x7684;&#x7ED3;&#x70B9;&#xFF0C;&#x5982;&#x679C;<span class="math inline">\(y\)</span>&#x662F;&#x7EA2;&#x7684;,<span class="math inline">\(x\)</span>&#x5C31;&#x662F;&#x9ED1;&#x8272;&#x7684;&#xFF0C;&#x79FB;&#x52A8;<span class="math inline">\(x\)</span>&#x4E5F;&#x4E0D;&#x4F1A;&#x9020;&#x6210;&#x7834;&#x574F;&#x6027;&#x8D28;4&#x7684;&#x60C5;&#x51B5;</li>
+<li><span class="math inline">\(y\)</span>&#x662F;&#x7EA2;&#x8272;&#x7684;&#xFF0C;<span class="math inline">\(y\)</span>&#x4E0D;&#x53EF;&#x80FD;&#x662F;&#x6811;&#x7684;&#x6839;&#xFF0C;&#x6240;&#x4EE5;&#x6839;&#x4E5F;&#x4E0D;&#x4F1A;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF0C;&#x6027;&#x8D28;2&#x4E5F;&#x4E0D;&#x4F1A;&#x88AB;&#x7834;&#x574F;</li>
+<li>&#x6027;&#x8D28;1&#xFF0C;3&#x5728;&#x64CD;&#x4F5C;&#x4E2D;&#x6839;&#x672C;&#x6CA1;&#x6709;&#x76F8;&#x5173;&#x6539;&#x52A8;&#x7684;&#x5730;&#x65B9;&#xFF0C;&#x80AF;&#x5B9A;&#x4E0D;&#x4F1A;&#x88AB;&#x7834;&#x574F;</li>
+</ol>
+<p>&#x800C;<span class="math inline">\(y\)</span>&#x7ED3;&#x70B9;&#x5982;&#x679C;&#x662F;&#x9ED1;&#x8272;&#x7684;&#xFF0C;&#x5219;&#x53EF;&#x80FD;&#x4F1A;&#x5B58;&#x5728;&#x4EE5;&#x4E0B;&#x60C5;&#x51B5; 1. &#x5982;&#x679C;<span class="math inline">\(y\)</span>&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x800C;&#x4E14;<span class="math inline">\(y\)</span>&#x7684;&#x5B50;&#x7ED3;&#x70B9;&#x662F;&#x7EA2;&#x8272;&#xFF0C;&#x90A3;&#x4E48;&#x7834;&#x574F;&#x6027;&#x8D28;2&#x3002;</p>
+<ul>
+<li>&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x53EA;&#x6709;<span class="math inline">\(y\)</span>&#x8868;&#x793A;&#x7684;&#x662F;&#x79FB;&#x51FA;<span class="math inline">\(z\)</span>&#x4F4D;&#x7F6E;&#x7684;&#x7ED3;&#x70B9;&#x65F6;(<span class="math inline">\(y=z\)</span>)&#x624D;&#x53EF;&#x80FD;&#x53D1;&#x751F;&#x3002;&#x5426;&#x5219;<span class="math inline">\(y\)</span>&#x79FB;&#x5165;<span class="math inline">\(z\)</span>&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x4E14;<span class="math inline">\(y\)</span>&#x662F;&#x9ED1;&#x8272;&#x7684;&#xFF0C;&#x4E0D;&#x53EF;&#x80FD;&#x7834;&#x574F;&#x6027;&#x8D28;2&#x3002;&#x5982;&#x679C;<span class="math inline">\(y\)</span>&#x8868;&#x793A;&#x662F;&#x79FB;&#x51FA;<span class="math inline">\(z\)</span>&#x4F4D;&#x7F6E;&#xFF0C;&#x8BF4;&#x660E;<span class="math inline">\(z\)</span>&#x6700;&#x591A;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x5B50;&#x6811;&#xFF0C;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;<span class="math inline">\(y\)</span>&#x7684;&#x5B50;&#x7ED3;&#x70B9;&#x5373;&#x4E3A;<span class="math inline">\(x\)</span>&#x3002;</li>
+</ul>
+<ol start="2" type="1">
+<li><p>&#x5982;&#x679C;<span class="math inline">\(x\)</span>&#x548C;<span class="math inline">\(x.p\)</span>&#x90FD;&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;&#x90A3;&#x4E48;&#x7834;&#x574F;&#x6027;&#x8D28;4&#x3002;</p>
+<p>&#x9996;&#x5148;&#x5206;&#x6790;<span class="math inline">\(x\)</span>&#x548C;<span class="math inline">\(x.p\)</span>&#x7684;&#x53EF;&#x80FD;&#x53D6;&#x503C;&#x3002;</p>
+<p>&#xFF08;1&#xFF09; <span class="math inline">\(x\)</span>&#x53EF;&#x80FD;&#x662F;<span class="math inline">\(y.left\)</span>&#xFF08;&#x5728;<span class="math inline">\(z\)</span>&#x53EA;&#x6709;&#x5DE6;&#x7ED3;&#x70B9;&#xFF09;&#x6216;&#x8005;<span class="math inline">\(y.right\)</span>&#xFF08;&#x5728;<span class="math inline">\(z\)</span>&#x6709;&#x4E24;&#x79CD;&#x7ED3;&#x70B9;&#x7684;&#x60C5;&#x51B5;&#x6216;<span class="math inline">\(z\)</span>&#x53EA;&#x6709;&#x53F3;&#x7ED3;&#x70B9;&#xFF09;&#x3002;</p>
+<p>&#xFF08;2&#xFF09; <span class="math inline">\(x.p\)</span>&#x5728;&#x5927;&#x90E8;&#x5206;&#x60C5;&#x51B5;&#x4E0B;&#x90FD;&#x4E3A;<span class="math inline">\(y.p\)</span>&#xFF0C;&#x9664;&#x4E86;<span class="math inline">\(x\)</span>&#x5728;<span class="math inline">\(z\)</span>&#x6709;&#x4E24;&#x4E2A;&#x7ED3;&#x70B9;&#xFF0C;&#x4E14;<span class="math inline">\(y\)</span>&#x662F;<span class="math inline">\(z.right\)</span>&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;<span class="math inline">\(x.p\)</span>=<span class="math inline">\(y\)</span>&#x3002;</p>
+<p>&#x56E0;&#x4E3A;<span class="math inline">\(x\)</span>&#x548C;<span class="math inline">\(x.p\)</span>&#x90FD;&#x662F;&#x7EA2;&#x8272;&#xFF0C;&#x4E14;<span class="math inline">\(y\)</span>&#x662F;&#x9ED1;&#x7684;&#xFF0C;&#x6240;&#x4EE5;<span class="math inline">\(x.p\)</span>&#x4E0D;&#x80FD;&#x7B49;&#x4E8E;<span class="math inline">\(y\)</span>&#x3002;&#x56E0;&#x6B64;&#x53D1;&#x751F;&#x7684;&#x60C5;&#x51B5;&#x4E00;&#x5B9A;&#x662F;<span class="math inline">\(z\)</span>&#x6709;&#x4E24;&#x4E2A;&#x7ED3;&#x70B9;&#xFF0C;&#x4E14;<span class="math inline">\(y\)</span>&#x4E0D;&#x7B49;&#x4E8E;<span class="math inline">\(z.right\)</span>&#x6216;<span class="math inline">\(y\)</span>&#x53EA;&#x6709;&#x53F3;&#x7ED3;&#x70B9;&#x3002;&#x5373;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x7684;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</p>
+<p><img src="/IA-Chapter13-Notes/2019-11-16-15-17-38.png" alt="&#x5220;&#x9664;z&#x8FDD;&#x80CC;&#x6027;&#x8D28;4&#x7684;&#x60C5;&#x51B5;"> <img src="/IA-Chapter13-Notes/2019-11-16-17-09-19.png" alt="&#x5220;&#x9664;z&#x8FDD;&#x80CC;&#x6027;&#x8D28;4&#x7684;&#x60C5;&#x51B5;2"></p></li>
+<li><p>&#x4EFB;&#x610F;&#x5305;&#x542B;&#x4E86;<span class="math inline">\(y\)</span>&#x7684;&#x8DEF;&#x5F84;&#x90FD;&#x4F1A;&#x51FA;&#x73B0;&#x9ED1;&#x9AD8;&#x51CF;&#x4E00;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x8FDD;&#x80CC;&#x6027;&#x8D28;5</p>
+<ol type="1">
+<li><p>&#x5728;<span class="math inline">\(y\)</span>&#x8868;&#x793A;&#x79FB;&#x51FA;<span class="math inline">\(z\)</span>&#x4F4D;&#x7F6E;&#x7684;&#x7ED3;&#x70B9;&#x7684;&#x60C5;&#x51B5;&#x4E0B;(&#x5373; <span class="math inline">\(y\)</span> = <span class="math inline">\(z\)</span> )&#xFF0C;&#x56E0;&#x4E3A;<span class="math inline">\(z\)</span>&#x548C;<span class="math inline">\(y\)</span>&#x90FD;&#x662F;&#x9ED1;&#x8272;&#xFF0C;&#x6240;&#x4EE5;&#x5220;&#x9664;<span class="math inline">\(z\)</span>&#x7ED3;&#x70B9;&#x5FC5;&#x7136;&#x4F1A;&#x51FA;&#x73B0;&#x9ED1;&#x9AD8;&#x51CF;&#x4E00;</p></li>
+<li><p>&#x5728;<span class="math inline">\(y\)</span>&#x8868;&#x793A;&#x79FB;&#x5165;<span class="math inline">\(z\)</span>&#x4F4D;&#x7F6E;&#x7684;&#x7ED3;&#x70B9;&#x7684;&#x60C5;&#x51B5;&#x4E0B;(&#x5373; <span class="math inline">\(y\)</span> = <span class="math inline">\(z.successor\)</span> )&#xFF0C;&#x4ECD;&#x7136;&#x4F1A;&#x51FA;&#x73B0;&#x9ED1;&#x9AD8;&#x51CF;&#x4E00;&#x3002;&#x5982;&#x679C;<span class="math inline">\(z\)</span>&#x662F;&#x9ED1;&#x8272;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x540C;&#x6837;&#x662F;<span class="math inline">\(y\)</span>&#x548C;<span class="math inline">\(z\)</span>&#x90FD;&#x662F;&#x9ED1;&#x8272;&#xFF0C;&#x5220;&#x9664;<span class="math inline">\(z\)</span>&#x7ED3;&#x70B9;&#x51FA;&#x73B0;&#x9ED1;&#x9AD8;&#x51CF;&#x4E00;&#x3002;&#x5982;&#x679C;<span class="math inline">\(z\)</span>&#x662F;&#x7EA2;&#x8272;&#x7684;&#xFF0C;&#x5220;&#x9664;<span class="math inline">\(z\)</span>&#x4E0D;&#x4F1A;&#x9020;&#x6210;&#x9ED1;&#x9AD8;&#x51CF;&#x4E00;&#xFF0C;&#x4F46;&#x662F;&#x56E0;&#x4E3A;&#x5728;&#x7B97;&#x6CD5;&#x7684;&#x6700;&#x540E;&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x65B0;&#x79FB;&#x5165;&#x7684;<span class="math inline">\(y\)</span>&#x4E0D;&#x4F1A;&#x4E0E;&#x6811;&#x7684;&#x4E0A;&#x5C42;&#x53D1;&#x751F;&#x51B2;&#x7A81;&#xFF0C;&#x6240;&#x4EE5;&#x5C06;<span class="math inline">\(y\)</span>&#x8BBE;&#x4E3A;&#x4E86;&#x539F;&#x5148;<span class="math inline">\(z\)</span>&#x7684;&#x989C;&#x8272;&#xFF0C;&#x5373;&#x5C06;<span class="math inline">\(y\)</span>&#x53D8;&#x4E3A;&#x4E86;&#x9ED1;&#x8272;&#xFF0C;&#x56E0;&#x6B64;&#x540C;&#x6837;&#x9ED1;&#x9AD8;&#x51CF;&#x4E00;&#x3002;</p></li>
+</ol></li>
+</ol>
+<p>&#x5728;&#x8FD9;&#x91CC;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x5305;&#x542B;<span class="math inline">\(y\)</span>&#x7684;&#x8DEF;&#x5F84;&#x51FA;&#x73B0;&#x7684;&#x9ED1;&#x9AD8;&#x51CF;&#x4E00;&#x73B0;&#x8C61;&#xFF0C;&#x5C06;&#x989D;&#x5916;&#x7684;&#x4E00;&#x4E2A;&#x9ED1;&#x8272;&#x7ED9;&#x4E88;<span class="math inline">\(x\)</span>&#x7ED3;&#x70B9;&#xFF0C;&#x56E0;&#x4E3A;&#x5305;&#x542B;&#x6709;<span class="math inline">\(y\)</span>&#x7684;&#x8DEF;&#x5F84;&#x4E00;&#x5B9A;&#x5305;&#x542B;<span class="math inline">\(x\)</span>&#xFF08;&#x56E0;&#x4E3A;<span class="math inline">\(x\)</span>=<span class="math inline">\(y\)</span>&#x6216;&#x8005;<span class="math inline">\(y.right\)</span>&#xFF09;&#x3002;&#x56E0;&#x4E3A;&#x4FEE;&#x590D;&#x4E86;&#x9ED1;&#x9AD8;&#x51CF;&#x4E00;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x6027;&#x8D28;5&#x6EE1;&#x8DB3;&#x4E86;&#xFF0C;&#x4F46;&#x56E0;&#x4E3A;<span class="math inline">\(x\)</span>&#x73B0;&#x5728;&#x662F;&#x62E5;&#x6709;&#x4E24;&#x4E2A;&#x9ED1;&#x8272;&#xFF0C;&#x6216;&#x8005;&#x662F;&#x4E00;&#x9ED1;&#x4E00;&#x7EA2;&#xFF0C;&#x56E0;&#x6B64;&#x8FDD;&#x80CC;&#x4E86;&#x6027;&#x8D28;1&#xFF0C;&#x5373;&#x6240;&#x6709;&#x7ED3;&#x70B9;&#x8981;&#x4E48;&#x662F;&#x7EA2;&#x8272;&#xFF0C;&#x8981;&#x4E48;&#x662F;&#x9ED1;&#x8272;&#x3002;</p>
+<ul>
+<li>&#x8FD9;&#x91CC;&#x7ED9;<span class="math inline">\(x\)</span>&#x4E00;&#x4E2A;&#x989D;&#x5916;&#x9ED1;&#x7684;&#x64CD;&#x4F5C;&#x5E76;&#x6CA1;&#x6709;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x4F53;&#x73B0;&#xFF0C;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x601D;&#x8DEF;&#x3002;&#x56E0;&#x6B64;<span class="math inline">\(x\)</span>&#x7684;&#x989C;&#x8272;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x5224;&#x65AD;&#xFF0C;&#x4F9D;&#x7136;&#x6309;<span class="math inline">\(x\)</span>&#x4E4B;&#x524D;&#x7684;&#x989C;&#x8272;&#x5224;&#x65AD;&#x3002;</li>
+</ul>
+<p>&#x56E0;&#x6B64;RB-DELETE-FIXUP&#x4E00;&#x5171;&#x9700;&#x8981;&#x89E3;&#x51B3;&#x4E09;&#x4E2A;&#x6027;&#x8D28;&#x7684;&#x95EE;&#x9898;&#x5373;&#xFF0C;&#x6027;&#x8D28;1&#xFF0C;2&#xFF0C;4&#x3002;&#x4E14;&#x6027;&#x8D28;1&#x662F;&#x9488;&#x5BF9;<span class="math inline">\(x\)</span>&#x7ED3;&#x70B9;&#xFF0C;&#x6240;&#x4EE5;&#x4F20;&#x9012;&#x7684;&#x53C2;&#x6570;&#x4E3A;<span class="math inline">\(x\)</span>&#x7ED3;&#x70B9;&#x3002;</p>
+<p>RB-DELETE-FIXUP&#x7684;&#x4F2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">while x != T.root and x.color == BLACK</span><br><span class="line">	if x == x.p.left</span><br><span class="line">		w = x.p.right</span><br><span class="line">		if w.color == RED // &#x60C5;&#x51B5;1</span><br><span class="line">			w. color = BLACK</span><br><span class="line">			x.p.color = RED</span><br><span class="line">			LEFT-ROTATE(T,x.p)</span><br><span class="line">			w = x.p.right // &#x65B0;&#x7684;w&#xFF0C;&#x56E0;&#x4E3A;&#x65B0;&#x7684;w&#x5FC5;&#x7136;&#x662F;&#x9ED1;&#x8272;&#xFF0C;&#x6240;&#x4EE5;&#x60C5;&#x51B5;1&#x8F6C;&#x6362;&#x4E3A;1&#x60C5;&#x51B5;2/3/4</span><br><span class="line">		if w.left.color == BLACK and w.right.color == BLACK</span><br><span class="line">			w.color = RED</span><br><span class="line">			x = x.p</span><br><span class="line">		else</span><br><span class="line">			if w.right.color == BLACK</span><br><span class="line">				w.left.color = BLACK</span><br><span class="line">				w.color = RED</span><br><span class="line">				RIGHT-ROTATE(T,w)</span><br><span class="line">				w = x.p.right</span><br><span class="line">			w.color = x.p.color</span><br><span class="line">			x.p.color = BLACK</span><br><span class="line">			w.right.color = BLACK</span><br><span class="line">			LEFT-ROTATE(T,x.p)</span><br><span class="line">			x = T.root</span><br><span class="line">	else</span><br><span class="line">		....</span><br><span class="line">		//&#x548C;&#x60C5;&#x51B5;1,2,3,4&#x7C7B;&#x4F3C;&#xFF0C;&#x5C06;right&#x548C;left&#x5BF9;&#x8C03;&#x5373;&#x53EF;</span><br><span class="line">x.color = BLACK</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x7684;&#x5220;&#x9664;&#x4FEE;&#x590D;&#x5982;&#x540C;&#x63D2;&#x5165;&#x4FEE;&#x590D;&#x4E00;&#x6837;&#xFF0C;&#x6709;&#x5F88;&#x591A;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x8FD9;&#x91CC;&#x4E00;&#x5171;&#x662F;8&#x79CD;&#x60C5;&#x51B5;&#x3002;&#x4F46;&#x662F;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;&#x524D;&#x56DB;&#x79CD;&#x548C;&#x540E;&#x56DB;&#x79CD;&#xFF0C;&#x5206;&#x5272;&#x6807;&#x51C6;&#x662F;<span class="math inline">\(x\)</span>&#x662F;<span class="math inline">\(x.p\)</span>&#x7684;&#x5DE6;&#x7ED3;&#x70B9;&#xFF0C;&#x8FD8;&#x662F;&#x53F3;&#x7ED3;&#x70B9;&#x3002;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x53EA;&#x8BA8;&#x8BBA;<span class="math inline">\(x\)</span>&#x662F;&#x5DE6;&#x7ED3;&#x70B9;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x5373;&#x524D;&#x56DB;&#x79CD;&#x3002;&#x540E;&#x56DB;&#x79CD;&#x4E3A;&#x524D;&#x56DB;&#x79CD;&#x7684;&#x5BF9;&#x79F0;&#xFF0C;&#x5982;&#x540C;&#x63D2;&#x5165;&#x4FEE;&#x590D;&#x7684;&#x5BF9;&#x79F0;&#x4E00;&#x6837;,&#x89E3;&#x6CD5;&#x53EA;&#x8981;&#x5C06;&#x524D;&#x56DB;&#x79CD;&#x4E2D;&#x7684;<span class="math inline">\(left\)</span>&#x6539;&#x4E3A;<span class="math inline">\(right\)</span>&#xFF0C;&#x53CD;&#x4E4B;&#x4EA6;&#x7136;&#x3002;</p>
+<p>&#x6574;&#x4E2A;&#x7B97;&#x6CD5;&#x662F;&#x4E00;&#x4E2A;&#x5FAA;&#x73AF;&#x548C;&#x4E00;&#x4E2A;&#x5C06;x.color&#x8BBE;&#x4E3A;Black&#x7684;&#x8BED;&#x53E5;&#x3002;&#x9000;&#x51FA;&#x5FAA;&#x73AF;&#x7684;&#x6761;&#x4EF6;&#x662F;<span class="math inline">\(x\)</span>&#x662F;&#x7EA2;&#x8272;&#xFF08;&#x5B9E;&#x9645;&#x4E0A;<span class="math inline">\(x\)</span>&#x6709;&#x7EA2;-&#x9ED1;&#x4E24;&#x4E2A;&#x989C;&#x8272;&#x5C5E;&#x6027;&#xFF09;&#x6216;<span class="math inline">\(x\)</span>&#x662F;&#x6839;&#x3002;</p>
+<p>&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#x5C06;<span class="math inline">\(x\)</span>&#x8BBE;&#x4E3A;&#x5355;&#x4E00;&#x9ED1;&#x8272;&#xFF08;&#x5373;x.color = Black&#xFF09;&#x53EF;&#x4EE5;<strong>&#x4FEE;&#x590D;&#x6027;&#x8D28;1</strong>&#xFF0C;&#x4E14;&#x4E0D;&#x4F1A;&#x7834;&#x574F;&#x6027;&#x8D28;5&#xFF0C;&#x56E0;&#x4E3A;</p>
+<pre><code>(1) &#x5982;&#x679C;$x$&#x662F;&#x6839;&#xFF0C;&#x90A3;&#x4E48;&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x9ED1;&#x8272;&#xFF0C;&#x662F;&#x6574;&#x68F5;&#x6811;&#x7684;&#x9ED1;&#x9AD8;&#x90FD;&#x51CF;&#x4E00;&#xFF0C;&#x4F9D;&#x7136;&#x6EE1;&#x8DB3;&#x6027;&#x8D28;5
+
+(2) &#x5982;&#x679C;$x$&#x662F;&#x7EA2;-&#x9ED1;&#xFF0C;&#x5373;&#x8D21;&#x732E;&#x4E86;&#x4E00;&#x4E2A;&#x9ED1;&#x9AD8;&#xFF0C;&#x8BBE;&#x4E3A;&#x9ED1;&#x8272;&#x540E;&#xFF0C;&#x4F9D;&#x7136;&#x662F;&#x8D21;&#x732E;&#x4E00;&#x4E2A;&#x9ED1;&#x9AD8;&#xFF0C;&#x6EE1;&#x8DB3;&#x6027;&#x8D28;5</code></pre>
+<p>&#x5C06;<span class="math inline">\(x.color\)</span>&#x8BBE;&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x56E0;&#x4E3A;<span class="math inline">\(x\)</span>&#x548C;<span class="math inline">\(x.p\)</span>&#x90FD;&#x4E3A;&#x7EA2;&#x8272;&#x800C;&#x9020;&#x6210;&#x7684;<strong>&#x6027;&#x8D28;4&#x7684;&#x7834;&#x574F;&#x4E5F;&#x4F1A;&#x88AB;&#x4FEE;&#x590D;</strong>&#x3002;</p>
+<p>&#x800C;&#x4E14;&#x5982;&#x4E0A;&#x8BA8;&#x8BBA;&#xFF0C;&#x8FDD;&#x80CC;&#x6027;&#x8D28;2&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x5FC5;&#x7136;&#x662F;<span class="math inline">\(z\)</span>&#x6700;&#x591A;&#x53EA;&#x6709;&#x4E00;&#x9897;&#x5B50;&#x6811;&#xFF0C;&#x5373;<span class="math inline">\(y=z\)</span>&#xFF0C;<span class="math inline">\(x\)</span>&#x4F5C;&#x4E3A;<span class="math inline">\(y\)</span>&#x7684;&#x5B50;&#x7ED3;&#x70B9;&#x4E14;&#x4E3A;&#x7EA2;&#x8272;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x90A3;&#x4E48;&#x5C06;<span class="math inline">\(x\)</span>&#x8BBE;&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x540C;&#x6837;<strong>&#x4FEE;&#x590D;&#x4E86;&#x6027;&#x8D28;2</strong>&#x3002;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;<span class="math inline">\(x\)</span>&#x5C31;&#x662F;&#x6839;&#x7ED3;&#x70B9;&#xFF0C;&#x5E76;&#x4E0D;&#x4F1A;&#x8FDB;&#x5165;&#x5FAA;&#x73AF;&#xFF0C;&#x5C06;&#x76F4;&#x63A5;&#x6267;&#x884C;&#x6700;&#x540E;&#x4E00;&#x53E5;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x9000;&#x51FA;&#x5FAA;&#x73AF;&#x540E;&#x7684;<code>x.color = BLACK</code>&#x8BED;&#x53E5;&#x5C06;&#x540C;&#x65F6;&#x4FEE;&#x590D;&#x6027;&#x8D28;1,2,4&#x3002;&#x73B0;&#x5728;&#x9700;&#x8981;&#x5173;&#x5FC3;&#x7684;&#x662F;&#x8BE5;&#x5982;&#x4F55;&#x9000;&#x51FA;&#x5FAA;&#x73AF;&#x3002;</p>
+<p>&#x73B0;&#x5728;&#x5148;&#x5206;&#x6790;&#x524D;&#x56DB;&#x79CD;&#x60C5;&#x51B5;&#x3002;&#x8FD9;&#x56DB;&#x79CD;&#x60C5;&#x51B5;&#x7684;&#x5206;&#x7C7B;&#x662F;&#x6839;&#x636E;<span class="math inline">\(x\)</span>&#x7684;&#x5144;&#x5F1F;<span class="math inline">\(w\)</span>&#xFF08;&#x5728;<span class="math inline">\(x\)</span>=<span class="math inline">\(x.p.left\)</span>&#x7684;&#x60C5;&#x51B5;&#x4E0B;<span class="math inline">\(w\)</span>&#x5373;&#x4E3A;<span class="math inline">\(x.p.right\)</span>&#xFF09;&#x3002;</p>
+<ul>
+<li>&#x56E0;&#x4E3A;&#x8FDB;&#x5165;&#x5FAA;&#x73AF;&#x662F;<span class="math inline">\(x\)</span>&#x662F;&#x4E24;&#x4E2A;&#x9ED1;&#x8272;&#x5C5E;&#x6027;&#xFF0C;&#x6240;&#x4EE5;<span class="math inline">\(w\)</span>&#x5FC5;&#x7136;&#x5B58;&#x5728;&#x4E14;&#x4E00;&#x5B9A;&#x6709;&#x4E24;&#x4E2A;&#x5B50;&#x7ED3;&#x70B9;&#x3002;&#x4E0D;&#x7136;&#x901A;&#x8FC7;<span class="math inline">\(x\)</span>&#x62B5;&#x8FBE;&#x53F6;&#x5B50;&#x7684;&#x9ED1;&#x9AD8;&#x4E00;&#x5B9A;&#x5927;&#x4E8E;&#x5230;&#x8FBE;<span class="math inline">\(w\)</span>&#x7684;&#x9ED1;&#x9AD8;&#x3002;<span class="math inline">\(w\)</span>&#x7684;&#x5B50;&#x7ED3;&#x70B9;&#x4E5F;&#x5FC5;&#x7136;&#x6709;&#x4E24;&#x4E2A;&#x5B50;&#x7ED3;&#x70B9;&#xFF0C;&#x56E0;&#x4E3A;&#x53EA;&#x6709;<span class="math inline">\(w\)</span>&#x4E0E;<span class="math inline">\(w.left\)</span>&#x6216;<span class="math inline">\(w.right\)</span>&#x90FD;&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x624D;&#x80FD;&#x521A;&#x597D;&#x4E0E;<span class="math inline">\(x\)</span>&#x7684;&#x4E24;&#x4E2A;&#x9ED1;&#x8272;&#x76F8;&#x62B5;&#x3002;&#x5982;&#x679C;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;&#x90A3;&#x4E48;&#x5219;&#x9700;&#x8981;&#x66F4;&#x6DF1;&#x7684;&#x6811;&#x624D;&#x80FD;&#x62B5;&#x6D88;&#x3002;</li>
+</ul>
+<ol type="1">
+<li><span class="math inline">\(w\)</span>&#x662F;&#x7EA2;&#x8272;&#x4E3A;&#x60C5;&#x51B5;1&#x3002;</li>
+</ol>
+<p>&#x5982;&#x679C;<span class="math inline">\(w\)</span>&#x662F;&#x9ED1;&#x8272;&#x7684;&#xFF0C;&#x518D;&#x7EC6;&#x5206;&#x4E3A;&#x4E09;&#x4E2A;&#x60C5;&#x51B5;</p>
+<ol start="2" type="1">
+<li><p><span class="math inline">\(w\)</span>&#x662F;&#x9ED1;&#x8272;&#xFF0C;&#x4E14;&#x53F3;&#x7ED3;&#x70B9;&#x662F;&#x9ED1;&#x8272;&#xFF0C;&#x5DE6;&#x7ED3;&#x70B9;&#x662F;&#x9ED1;&#x8272;&#x4E3A;&#x60C5;&#x51B5;2</p></li>
+<li><p><span class="math inline">\(w\)</span>&#x662F;&#x9ED1;&#x8272;&#xFF0C;&#x4E14;&#x53F3;&#x7ED3;&#x70B9;&#x662F;&#x9ED1;&#x8272;&#xFF0C;&#x5DE6;&#x7ED3;&#x70B9;&#x662F;&#x7EA2;&#x8272;&#xFF0C;&#x4E3A;&#x60C5;&#x51B5;3</p></li>
+<li><p><span class="math inline">\(w\)</span>&#x662F;&#x9ED1;&#x8272;&#xFF0C;&#x4E14;&#x53F3;&#x7ED3;&#x70B9;&#x662F;&#x7EA2;&#x8272;&#xFF0C;&#x5DE6;&#x7ED3;&#x70B9;&#x662F;&#x7EA2;&#x8272;&#x6216;&#x9ED1;&#x8272;&#xFF0C;&#x4E3A;&#x60C5;&#x51B5;4</p></li>
+</ol>
+<p>&#x5BF9;&#x4E8E;&#x60C5;&#x51B5;1&#x7684;&#x4FEE;&#x590D;&#xFF1A;</p>
+<p>&#x56E0;&#x4E3A;<span class="math inline">\(w\)</span>&#x662F;&#x7EA2;&#x8272;&#xFF0C;&#x6240;&#x4EE5;<span class="math inline">\(w.p\)</span>&#x5373;<span class="math inline">\(w.p\)</span>&#x5FC5;&#x7136;&#x662F;&#x9ED1;&#x8272;&#x7684;&#x3002;&#x5C06;<span class="math inline">\(w.p\)</span>&#x4E0E;<span class="math inline">\(w\)</span>&#x7684;&#x989C;&#x8272;&#x5BF9;&#x8C03;&#xFF0C;&#x4E14;&#x5BF9;<span class="math inline">\(w.p\)</span>&#x8FDB;&#x884C;&#x5DE6;&#x65CB;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF0C;&#x4E0D;&#x4F1A;&#x8FDD;&#x80CC;&#x4EFB;&#x4F55;&#x7684;&#x7EA2;&#x9ED1;&#x6811;&#x6027;&#x8D28;&#x3002;</p>
+<p><img src="/IA-Chapter13-Notes/2019-11-16-16-28-06.png" alt="&#x60C5;&#x51B5;1&#x4FEE;&#x590D;"></p>
+<ul>
+<li>&#x4E0A;&#x56FE;&#x4EE5;&#x53CA;&#x4E4B;&#x540E;&#x5176;&#x4ED6;&#x7684;&#x5BF9;&#x4E8E;&#x5404;&#x79CD;&#x60C5;&#x51B5;&#x7684;&#x4FEE;&#x590D;&#x56FE;&#x4E2D;&#xFF0C;&#x9ED1;&#x8272;&#x7ED3;&#x70B9;&#x8868;&#x793A;&#x9ED1;&#x8272;&#xFF0C;&#x6DF1;&#x7070;&#x8272;&#x7ED3;&#x70B9;&#xFF0C;&#x5982;&#x4E0A;&#x56FE;&#x4E2D;&#x7684;<span class="math inline">\(D\)</span>&#x8868;&#x793A;&#x7EA2;&#x8272;&#xFF0C;&#x6D45;&#x7070;&#x8272;&#x7ED3;&#x70B9;&#x8868;&#x793A;&#x53EF;&#x80FD;&#x662F;&#x9ED1;&#x53EF;&#x80FD;&#x662F;&#x7EA2;&#x3002;</li>
+</ul>
+<p>&#x540C;&#x6837;&#x56E0;&#x4E3A;<span class="math inline">\(w\)</span>&#x662F;&#x7EA2;&#x8272;&#x7684;&#xFF0C;<span class="math inline">\(w\)</span>&#x7684;&#x4E24;&#x4E2A;&#x5B50;&#x7ED3;&#x70B9;&#x4E5F;&#x5FC5;&#x7136;&#x662F;&#x9ED1;&#x8272;&#x7684;&#xFF0C;&#x5728;&#x4E0A;&#x8FF0;&#x7684;&#x64CD;&#x4F5C;&#x540E;&#xFF0C;&#x539F;<span class="math inline">\(w\)</span>&#x7684;&#x5DE6;&#x7ED3;&#x70B9;&#x5C06;&#x4F1A;&#x6210;&#x4E3A;<span class="math inline">\(x\)</span>&#x7684;&#x65B0;&#x5144;&#x5F1F;&#xFF0C;&#x5373;&#x6210;&#x4E3A;&#x65B0;&#x7684;<span class="math inline">\(w\)</span>&#xFF0C;&#x4E3A;&#x9ED1;&#x8272;&#x3002;</p>
+<p>&#x5982;&#x4E4B;&#x524D;&#x6240;&#x8FF0;&#xFF0C;<span class="math inline">\(w\)</span>&#x4E5F;&#x5FC5;&#x7136;&#x6709;&#x4E24;&#x4E2A;&#x5B50;&#x7ED3;&#x70B9;&#xFF0C;&#x6839;&#x636E;&#x5B50;&#x7ED3;&#x70B9;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x60C5;&#x51B5;1&#x4F1A;&#x53D8;&#x4E3A;&#x60C5;&#x51B5;2&#x6216;3&#x6216;4&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;&#x60C5;&#x51B5;2&#x7684;&#x4FEE;&#x590D;&#xFF1A;</p>
+<p>&#x5728;&#x60C5;&#x51B5;2&#x4E0B;&#xFF0C;&#x56E0;&#x4E3A;<span class="math inline">\(x\)</span>&#x662F;&#x53CC;&#x91CD;&#x9ED1;&#x8272;&#xFF0C;<span class="math inline">\(w\)</span>&#x662F;&#x9ED1;&#x8272;&#xFF0C;&#x6240;&#x4EE5;&#x4ECE;&#x4ED6;&#x4EEC;&#x4E24;&#x4E2A;&#x7ED3;&#x70B9;&#x4E2D;&#x90FD;&#x53D6;&#x51FA;&#x4E00;&#x4E2A;&#x9ED1;&#x8272;&#xFF0C;&#x5373;<span class="math inline">\(x\)</span>&#x53D8;&#x4E3A;&#x5355;&#x4E2A;&#x9ED1;&#x8272;&#xFF0C;<span class="math inline">\(w\)</span>&#x53D8;&#x4E3A;&#x7EA2;&#x8272;&#x3002;&#x5C06;&#x8FD9;&#x4E2A;&#x53D6;&#x51FA;&#x7684;&#x9ED1;&#x8272;&#x7ED9;&#x4E88;<span class="math inline">\(x.p\)</span>&#x3002;</p>
+<p>&#x8FD9;&#x4E2A;&#x64CD;&#x4F5C;&#x53EA;&#x6709;&#x5728;<span class="math inline">\(w\)</span>&#x7684;&#x4E24;&#x4E2A;&#x7ED3;&#x70B9;&#x90FD;&#x662F;&#x9ED1;&#x8272;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF08;&#x5373;&#x60C5;&#x51B5;2&#xFF09;&#x624D;&#x80FD;&#x6267;&#x884C;&#xFF0C;&#x4E0D;&#x7136;&#x5F53;<span class="math inline">\(w\)</span>&#x53D8;&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;&#x5C06;&#x4F1A;&#x4E0E;&#x5B83;&#x7684;&#x5B50;&#x7ED3;&#x70B9;&#x8FDD;&#x80CC;&#x6027;&#x8D28;4&#x3002;</p>
+<p>&#x56E0;&#x4E3A;<span class="math inline">\(x\)</span>&#x548C;<span class="math inline">\(w\)</span>&#x90FD;&#x4E3A;&#x9ED1;&#x8272;&#xFF0C;&#x6240;&#x4EE5;<span class="math inline">\(x.p\)</span>&#x7684;&#x989C;&#x8272;&#x5E76;&#x4E0D;&#x80FD;&#x786E;&#x5B9A;&#xFF08;&#x4E0B;&#x56FE;&#x4E2D;&#x7531;&#x6D45;&#x7070;&#x8272;&#x8868;&#x793A;&#xFF09;&#xFF0C;&#x589E;&#x52A0;&#x4E86;&#x989D;&#x5916;&#x9ED1;&#x8272;&#x540E;&#xFF0C;&#x53EF;&#x80FD;&#x4E3A;&#x9ED1;-&#x9ED1;&#x4E5F;&#x53EF;&#x80FD;&#x4E3A;&#x7EA2;-&#x9ED1;&#x3002;</p>
+<ul>
+<li>&#x4ECE;<span class="math inline">\(x\)</span>&#x548C;<span class="math inline">\(w\)</span>&#x4E2D;&#x90FD;&#x53D6;&#x51FA;&#x4E00;&#x4E2A;&#x9ED1;&#x8272;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x5C06;<span class="math inline">\(x.p\)</span>&#x7684;&#x4E24;&#x4E2A;&#x5B50;&#x6811;&#x7684;&#x9ED1;&#x9AD8;&#x90FD;&#x51CF;&#x4E00;&#xFF0C;&#x800C;&#x6B64;&#x65F6;&#x5C06;&#x9ED1;&#x8272;&#x7ED9;&#x4E88;<span class="math inline">\(x.p\)</span>&#x76F8;&#x5F53;&#x4E8E;&#x5C06;&#x5C06;&#x5931;&#x53BB;&#x7684;&#x9ED1;&#x9AD8;&#x8865;&#x4E86;&#x56DE;&#x6765;&#x3002;</li>
+</ul>
+<p>&#x6B64;&#x65F6;<span class="math inline">\(x.p\)</span>&#x6210;&#x4E3A;&#x4E86;&#x7834;&#x574F;&#x6027;&#x8D28;1&#x7684;&#x7ED3;&#x70B9;&#xFF0C;&#x56E0;&#x6B64;&#x5C06;&#x4ED6;&#x8BBE;&#x4E3A;&#x65B0;&#x7684;<span class="math inline">\(x\)</span>&#x5E76;&#x518D;&#x6B21;&#x8FDB;&#x5165;&#x5FAA;&#x73AF;&#x3002;</p>
+<ul>
+<li>&#x5982;&#x679C;&#x662F;&#x7531;&#x60C5;&#x51B5;1&#x8F6C;&#x6362;&#x4E3A;&#x7684;&#x60C5;&#x51B5;2&#xFF0C;&#x90A3;&#x4E48;&#x518D;&#x6B21;&#x8FDB;&#x5165;&#x5FAA;&#x73AF;&#x540E;&#xFF0C;&#x5C06;&#x4E0D;&#x6EE1;&#x8DB3;&#x5FAA;&#x73AF;&#x6761;&#x4EF6;&#x76F4;&#x63A5;&#x9000;&#x51FA;&#x5FAA;&#x73AF;&#x3002;&#x56E0;&#x4E3A;&#x5728;&#x60C5;&#x51B5;1&#x4FEE;&#x590D;&#x540E;<span class="math inline">\(x.p\)</span>&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;&#x5728;&#x60C5;&#x51B5;2&#x4FEE;&#x590D;&#x540E;&#x88AB;&#x7ED9;&#x4E88;&#x4E86;&#x989D;&#x5916;&#x7684;&#x9ED1;&#x8272;&#x540E;&#xFF0C;&#x53D8;&#x4E3A;&#x7EA2;-&#x9ED1;&#xFF0C;&#x4E0D;&#x6EE1;&#x8DB3;&#x5FAA;&#x73AF;&#x6761;&#x4EF6;&#xFF0C;&#x56E0;&#x6B64;&#x9000;&#x51FA;&#x3002;</li>
+</ul>
+<p><img src="/IA-Chapter13-Notes/2019-11-16-17-31-28.png" alt="&#x60C5;&#x51B5;2&#x7684;&#x4FEE;&#x590D;"></p>
+<p>&#x5BF9;&#x4E8E;&#x60C5;&#x51B5;3&#x7684;&#x4FEE;&#x590D;&#xFF1A;</p>
+<p>&#x60C5;&#x51B5;3&#x901A;&#x8FC7;&#x964D;<span class="math inline">\(w\)</span>&#xFF08;&#x9ED1;&#x8272;&#xFF09;&#x4E0E;<span class="math inline">\(w.left\)</span>&#xFF08;&#x7EA2;&#x8272;&#xFF09;&#x7684;&#x989C;&#x8272;&#x5BF9;&#x6362;&#xFF0C;&#x5E76;&#x5BF9;<span class="math inline">\(w\)</span>&#x6267;&#x884C;&#x53F3;&#x65CB;&#xFF0C;&#x518D;&#x5C06;&#x539F;<span class="math inline">\(w.left\)</span>&#x8BBE;&#x4E3A;&#x65B0;<span class="math inline">\(w\)</span>&#x8F6C;&#x6362;&#x4E3A;&#x60C5;&#x51B5;4&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#x3002;</p>
+<p><img src="/IA-Chapter13-Notes/2019-11-16-17-39-14.png" alt="&#x60C5;&#x51B5;3&#x7684;&#x4FEE;&#x590D;"></p>
+<p>&#x5BF9;&#x4E8E;&#x60C5;&#x51B5;4&#x7684;&#x4FEE;&#x590D;&#xFF1A;</p>
+<p>&#x5728;&#x60C5;&#x51B5;4&#x4E2D;&#xFF0C;&#x5148;&#x5C06;<span class="math inline">\(w\)</span>&#x4E0E;<span class="math inline">\(w.p\)</span>&#x7684;&#x989C;&#x8272;&#x4E92;&#x6362;&#xFF0C;&#x7136;&#x540E;&#x5BF9;<span class="math inline">\(w.p\)</span>&#x8FDB;&#x884C;&#x5DE6;&#x65CB;&#xFF0C;<span class="math inline">\(w\)</span>&#x53D6;&#x4EE3;&#x539F;&#x5148;<span class="math inline">\(w.p\)</span>&#x7684;&#x4F4D;&#x7F6E;&#x3002;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;</p>
+<p><img src="/IA-Chapter13-Notes/2019-11-16-18-16-43.png" alt="&#x60C5;&#x51B5;4&#x4FEE;&#x590D;1"></p>
+<p>&#x5206;&#x6790;&#x4E09;&#x4E2A;&#x7ED3;&#x70B9;<span class="math inline">\(A\)</span>,<span class="math inline">\(C\)</span>&#x548C;<span class="math inline">\(E\)</span>&#x7684;&#x9ED1;&#x9AD8;&#xFF0C;&#x53D1;&#x73B0;<span class="math inline">\(A\)</span>&#x7684;&#x9ED1;&#x9AD8;&#x591A;&#x4E86;1&#xFF0C;<span class="math inline">\(C\)</span>&#x7684;&#x9ED1;&#x9AD8;&#x4E0D;&#x53D8;&#xFF0C;<span class="math inline">\(E\)</span>&#x7684;&#x9ED1;&#x9AD8;&#x5C11;&#x4E86;1&#x3002;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x5C06;<span class="math inline">\(A\)</span>&#x7684;&#x4E00;&#x4E2A;&#x9ED1;&#x9AD8;&#x7ED9;<span class="math inline">\(E\)</span>&#xFF0C;&#x8FD9;&#x6837;&#x4E09;&#x4E2A;&#x7ED3;&#x70B9;&#x7684;&#x9ED1;&#x9AD8;&#x90FD;&#x4E0D;&#x53D8;&#x3002;<span class="math inline">\(A\)</span>&#x7ED3;&#x70B9;&#x5373;&#x4E3A;<span class="math inline">\(x\)</span>&#xFF0C;&#x539F;&#x5148;&#x6709;&#x4E24;&#x4E2A;&#x9ED1;&#x8272;&#xFF0C;&#x73B0;&#x5728;&#x51CF;&#x53BB;&#x4E00;&#x4E2A;&#x53D8;&#x6210;&#x5355;&#x72EC;&#x7684;&#x9ED1;&#x8272;&#x7ED3;&#x70B9;&#xFF0C;&#x6EE1;&#x8DB3;&#x6027;&#x8D28;1&#x3002;<span class="math inline">\(E\)</span>&#x539F;&#x5148;&#x4E3A;&#x7EA2;&#x8272;&#xFF0C;&#x73B0;&#x5728;&#x591A;&#x4E86;&#x4E00;&#x4E2A;&#x9ED1;&#x8272;&#xFF0C;&#x53D8;&#x4E3A;&#x9ED1;&#x8272;&#x7ED3;&#x70B9;&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x60C5;&#x51B5;4&#x7684;&#x6700;&#x7EC8;&#x4FEE;&#x590D;&#x6548;&#x679C;&#x5982;&#x4E0B;</p>
+<p><img src="/IA-Chapter13-Notes/2019-11-16-18-20-17.png" alt="&#x60C5;&#x51B5;4&#x4FEE;&#x590D;2"></p>
+<p>&#x5728;&#x8FD9;&#x4E2A;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x7ED3;&#x70B9;&#x90FD;&#x6EE1;&#x8DB3;&#x4E86;&#x6027;&#x8D28;1&#x3002;&#x6240;&#x4EE5;&#x5C06;<span class="math inline">\(x\)</span>&#x76F4;&#x63A5;&#x6307;&#x5411;<span class="math inline">\(T.root\)</span>&#x6765;&#x9000;&#x51FA;&#x5FAA;&#x73AF;&#x5373;&#x53EF;&#x3002;</p>
+<ul>
+<li>&#x4E4B;&#x6240;&#x4EE5;&#x60C5;&#x51B5;2&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x9000;&#x51FA;&#x5FAA;&#x73AF;&#xFF0C;&#x662F;&#x56E0;&#x4E3A;&#x5728;&#x60C5;&#x51B5;2&#x7684;&#x4FEE;&#x590D;&#x540E;&#xFF0C;&#x539F;<span class="math inline">\(x.p\)</span>&#x4ECD;&#x7136;&#x7834;&#x574F;&#x4E86;&#x6027;&#x8D28;1&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x8FDB;&#x5165;&#x5FAA;&#x73AF;&#x7EE7;&#x7EED;&#x4FEE;&#x590D;&#x3002;</li>
+</ul>
+<p>&#x540E;&#x56DB;&#x79CD;&#x60C5;&#x51B5;&#x7684;&#x4FEE;&#x590D;&#x4E0E;&#x524D;&#x56DB;&#x79CD;&#x5BF9;&#x79F0;&#xFF0C;&#x8FD9;&#x91CC;&#x4E0D;&#x5728;&#x8D58;&#x8FF0;&#x3002;</p>
+<p><code>RB-DELETE</code>&#x64CD;&#x4F5C;&#x672C;&#x8EAB;&#x6CA1;&#x6709;&#x5FAA;&#x73AF;&#xFF0C;&#x6240;&#x4EE5;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x7531;<code>TREE-MINIMUM</code>&#x548C;<code>RB-DELETE-FIXUP</code>&#x5171;&#x540C;&#x51B3;&#x5B9A;&#x3002;</p>
+<p>&#x5982;&#x540C;&#x666E;&#x901A;&#x4E8C;&#x53C9;&#x641C;&#x7D22;&#x6811;&#xFF0C;<code>TREE-MINIMUM</code>&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(O(\lg n )\)</span>&#x3002;</p>
+<p>&#x800C;<code>RB-DELETE-FIXUP</code>&#xFF0C;&#x53EA;&#x6709;&#x60C5;&#x51B5;2&#x4F1A;&#x518D;&#x6B21;&#x8FDB;&#x5165;&#x5FAA;&#x73AF;&#xFF0C;&#x5269;&#x4E0B;&#x7684;&#x4E09;&#x79CD;&#x60C5;&#x51B5;&#x90FD;&#x662F;&#x8F6C;&#x6362;&#x4E3A;&#x5176;&#x4ED6;&#x60C5;&#x51B5;&#x6216;&#x8005;&#x5728;&#x4E0B;&#x4E00;&#x6B21;&#x76F4;&#x63A5;&#x9000;&#x51FA;&#x5FAA;&#x73AF;&#x3002;&#x800C;&#x60C5;&#x51B5;2&#x6BCF;&#x6B21;&#x90FD;&#x4F1A;&#x5C06;<span class="math inline">\(x\)</span>&#x4E0A;&#x79FB;&#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x6700;&#x574F;&#x60C5;&#x51B5;&#x4E0B;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E5F;&#x4E3A;<span class="math inline">\(O(\lg n)\)</span>&#x3002;</p>
+<p>&#x7EFC;&#x4E0A;<code>RB-DELETE</code>&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;<span class="math inline">\(O(\lg n ) + O(\lg n)\)</span>&#xFF0C;&#x5373;<span class="math inline">\(O(\lg n)\)</span>&#x3002;</p>
+<p><code>RB-DELETE</code>&#x4E0E;<code>RB-DELETE-FIXUP</code>&#x7684;c++&#x4EE3;&#x7801;&#x5982;&#x4E0B;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> RBTree::Delete(<span class="keyword">int</span> value)</span><br><span class="line">{</span><br><span class="line">	RBTreeNode* toDelete = Search(value);</span><br><span class="line">	<span class="keyword">if</span> (toDelete == nullNode)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	RBTreeNode* toDeleteTrack = toDelete;<span class="comment">//this track will be removed from the tree</span></span><br><span class="line">	NodeColor originDeleteTrackColor = toDeleteTrack-&gt;color;</span><br><span class="line"></span><br><span class="line">	RBTreeNode* toReplaceTrack;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (toDelete-&gt;left == nullNode)</span><br><span class="line">	{</span><br><span class="line">		toReplaceTrack = toDelete-&gt;right;</span><br><span class="line">		TransPlant(toDelete, toReplaceTrack);</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (toDelete-&gt;right == nullNode)</span><br><span class="line">	{</span><br><span class="line">		toReplaceTrack = toDelete-&gt;left;</span><br><span class="line">		TransPlant(toDelete, toReplaceTrack);</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">else</span> <span class="comment">//Both children are not nullNode</span></span><br><span class="line">	{</span><br><span class="line">		toDeleteTrack = GetMinimum(toDelete-&gt;right);<span class="comment">//The track is Successor</span></span><br><span class="line">		<span class="comment">//This track will moved in toDelete&apos;s postion</span></span><br><span class="line">		originDeleteTrackColor = toDeleteTrack-&gt;color;</span><br><span class="line"></span><br><span class="line">		toReplaceTrack = toDeleteTrack-&gt;right;</span><br><span class="line">		<span class="keyword">if</span> (toDeleteTrack-&gt;parent == toDelete)<span class="comment">//Track is toDelete&apos;s rightChild</span></span><br><span class="line">		{</span><br><span class="line">			toReplaceTrack-&gt;parent = toDeleteTrack;</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		{</span><br><span class="line">			TransPlant(toDeleteTrack, toReplaceTrack);</span><br><span class="line">			toDeleteTrack-&gt;right = toDelete-&gt;right;</span><br><span class="line">			toDeleteTrack-&gt;right-&gt;parent = toDeleteTrack;</span><br><span class="line">		}</span><br><span class="line">		TransPlant(toDelete, toDeleteTrack);</span><br><span class="line">		toDeleteTrack-&gt;left = toDelete-&gt;left;</span><br><span class="line">		toDeleteTrack-&gt;left-&gt;parent = toDeleteTrack;</span><br><span class="line">		toDeleteTrack-&gt;color = toDelete-&gt;color;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//set the pointer be null to ensure children and parent won&apos;t be released</span></span><br><span class="line">		toDelete-&gt;parent = <span class="literal">nullptr</span>;</span><br><span class="line">		toDelete-&gt;right = <span class="literal">nullptr</span>;</span><br><span class="line">		toDelete-&gt;left = <span class="literal">nullptr</span>;</span><br><span class="line">		<span class="keyword">delete</span> toDelete;</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">if</span> (originDeleteTrackColor == BLACK)</span><br><span class="line">	{</span><br><span class="line">		DeleteFixUp(toReplaceTrack);</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> RBTree::DeleteFixUp(RBTreeNode* toReplaceTrack)</span><br><span class="line">{</span><br><span class="line">	<span class="keyword">while</span> (toReplaceTrack != rootNode &amp;&amp; toReplaceTrack-&gt;color == BLACK)</span><br><span class="line">	{</span><br><span class="line">		<span class="keyword">if</span> (toReplaceTrack == toReplaceTrack-&gt;parent-&gt;left) <span class="comment">//The first four cases</span></span><br><span class="line">		{</span><br><span class="line">			RBTreeNode* uncle = toReplaceTrack-&gt;parent-&gt;right;</span><br><span class="line">			<span class="keyword">if</span> (uncle-&gt;color == RED)   <span class="comment">//case1</span></span><br><span class="line">			{</span><br><span class="line">				uncle-&gt;color = BLACK;</span><br><span class="line">				toReplaceTrack-&gt;parent-&gt;color = RED;</span><br><span class="line">				LeftRotate(toReplaceTrack-&gt;parent);</span><br><span class="line">				uncle = toReplaceTrack-&gt;parent-&gt;right;   <span class="comment">//to case 2/3/4</span></span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">if</span> (uncle-&gt;left-&gt;color == BLACK &amp;&amp; uncle-&gt;right-&gt;color == BLACK)</span><br><span class="line">			{</span><br><span class="line">				uncle-&gt;color = RED;    <span class="comment">//case2</span></span><br><span class="line">				toReplaceTrack = toReplaceTrack-&gt;parent;</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			{</span><br><span class="line">				<span class="keyword">if</span> (uncle-&gt;right-&gt;color == BLACK)</span><br><span class="line">				{</span><br><span class="line">					uncle-&gt;left-&gt;color = BLACK;</span><br><span class="line">					uncle-&gt;color = RED;</span><br><span class="line">					RightRotate(uncle);   <span class="comment">// to case4</span></span><br><span class="line">					uncle = toReplaceTrack-&gt;parent-&gt;right;</span><br><span class="line">				}</span><br><span class="line">				uncle-&gt;color = toReplaceTrack-&gt;parent-&gt;color;</span><br><span class="line">				toReplaceTrack-&gt;parent-&gt;color = BLACK;          <span class="comment">//case4;</span></span><br><span class="line">				uncle-&gt;right-&gt;color = BLACK;</span><br><span class="line">				RightRotate(toReplaceTrack-&gt;parent);</span><br><span class="line">				toReplaceTrack = rootNode;</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">else</span><span class="comment">//The remaining four cases,as the symetry of the first four</span></span><br><span class="line">		{</span><br><span class="line">			RBTreeNode* uncle = toReplaceTrack-&gt;parent-&gt;left;</span><br><span class="line">			<span class="keyword">if</span> (uncle-&gt;color == RED)</span><br><span class="line">			{</span><br><span class="line">				uncle-&gt;color = BLACK;</span><br><span class="line">				toReplaceTrack-&gt;parent-&gt;color = RED;</span><br><span class="line">				RightRotate(toReplaceTrack-&gt;parent);</span><br><span class="line">				uncle = toReplaceTrack-&gt;parent-&gt;left;</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">if</span> (uncle-&gt;right-&gt;color == BLACK &amp;&amp; uncle-&gt;left-&gt;color == BLACK)</span><br><span class="line">			{</span><br><span class="line">				uncle-&gt;color = RED;</span><br><span class="line">				toReplaceTrack = toReplaceTrack-&gt;parent;</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			{</span><br><span class="line">				<span class="keyword">if</span> (uncle-&gt;left-&gt;color == BLACK)</span><br><span class="line">				{</span><br><span class="line">					uncle-&gt;right-&gt;color = BLACK;</span><br><span class="line">					uncle-&gt;color = RED;</span><br><span class="line">					LeftRotate(uncle);</span><br><span class="line">					uncle = toReplaceTrack-&gt;parent-&gt;left;</span><br><span class="line">				}</span><br><span class="line">				uncle-&gt;color = toReplaceTrack-&gt;parent-&gt;color;</span><br><span class="line">				toReplaceTrack-&gt;parent-&gt;color = BLACK;</span><br><span class="line">				uncle-&gt;left-&gt;color = BLACK;</span><br><span class="line">				RightRotate(toReplaceTrack-&gt;parent);</span><br><span class="line">				toReplaceTrack = rootNode;</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">	toReplaceTrack-&gt;color = BLACK;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>Introduction to Algorithms</em> 3rd Sep.2009</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/IA-Chapter13-Notes/" title="《算法导论》 第十三章笔记">https://xuejiaw.github.io/IA-Chapter13-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/数据结构与算法/" rel="tag"># 数据结构与算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IA-Chapter12-Notes/" rel="prev" title="《算法导论》 第十二章笔记">
+      <i class="fa fa-chevron-left"></i> 《算法导论》 第十二章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/CNI-Chapter1-Notes/" rel="next" title="《计算机网络与因特网》 第一章笔记">
+      《计算机网络与因特网》 第一章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-13.-red-black-trees"><span class="nav-number">1.</span> <span class="nav-text">Chapter 13. Red-Black Trees</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#properties-of-red-black-trees"><span class="nav-number">1.1.</span> <span class="nav-text">Properties of red-black trees</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rotations"><span class="nav-number">1.2.</span> <span class="nav-text">Rotations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#insertion"><span class="nav-number">1.3.</span> <span class="nav-text">Insertion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deletion"><span class="nav-number">1.4.</span> <span class="nav-text">Deletion</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

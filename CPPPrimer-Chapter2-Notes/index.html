@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x4E8C;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#xFF0C;&amp;#x5173;&amp;#x4E8E;&amp;#x53D8;&amp;#x91CF;&amp;#x4E0E;&amp;#x57FA;&amp;#x672C;&amp;#x7C7B;&amp;#x578B;&amp;#x3002;">
+<meta name="keywords" content="读书笔记,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《C++ Primer》 第二章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/CPPPrimer-Chapter2-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x4E8C;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#xFF0C;&amp;#x5173;&amp;#x4E8E;&amp;#x53D8;&amp;#x91CF;&amp;#x4E0E;&amp;#x57FA;&amp;#x672C;&amp;#x7C7B;&amp;#x578B;&amp;#x3002;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter2-Notes/2020-04-15-22-06-48.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter2-Notes/2020-02-07-16-03-22.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter2-Notes/2020-02-07-17-43-40.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter2-Notes/2020-02-07-17-59-23.png">
+<meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter2-Notes/2020-02-07-18-04-25.png">
+<meta property="og:updated_time" content="2020-09-24T11:59:43.162Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《C++ Primer》 第二章笔记">
+<meta name="twitter:description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x4E8C;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#xFF0C;&amp;#x5173;&amp;#x4E8E;&amp;#x53D8;&amp;#x91CF;&amp;#x4E0E;&amp;#x57FA;&amp;#x672C;&amp;#x7C7B;&amp;#x578B;&amp;#x3002;">
+<meta name="twitter:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter2-Notes/2020-04-15-22-06-48.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/CPPPrimer-Chapter2-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《C++ Primer》 第二章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/CPPPrimer-Chapter2-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《C++ Primer》 第二章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-11 20:51:14" itemprop="dateCreated datePublished" datetime="2020-02-11T20:51:14+08:00">2020-02-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 19:59:43" itemprop="dateModified" datetime="2020-09-24T19:59:43+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/计算机语言/" itemprop="url" rel="index"><span itemprop="name">计算机语言</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/CPPPrimer-Chapter2-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《C++ Primer》 第二章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/CPPPrimer-Chapter2-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/CPPPrimer-Chapter2-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>21k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>39 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;C++ Primer&#x300B; &#x7B2C;&#x4E8C;&#x7AE0;&#x7B14;&#x8BB0;&#xFF0C;&#x5173;&#x4E8E;&#x53D8;&#x91CF;&#x4E0E;&#x57FA;&#x672C;&#x7C7B;&#x578B;&#x3002;</p>
+<p><img src="/CPPPrimer-Chapter2-Notes/2020-04-15-22-06-48.png" alt="&#x7B2C;&#x4E8C;&#x7AE0;&#x5185;&#x5BB9;"></p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-2-variables-and-basic-types">Chapter 2 Variables And Basic Types</h1>
+<h2 id="primitive-built-in-types">Primitive Built-in-Types</h2>
+<p>C++&#x7684;&#x5185;&#x7F6E;&#x7C7B;&#x578B;&#xFF08;Primitive Type&#xFF09;&#x5305;&#x62EC;&#x7B97;&#x6570;&#x7C7B;&#x578B;&#x548C;&#x7A7A;&#xFF08;Void&#xFF09;&#x3002;&#x7B97;&#x6570;&#x7C7B;&#x578B;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x8868;&#x793A;&#x5B57;&#x7B26;&#xFF0C;&#x6574;&#x6570;&#xFF0C;&#x5E03;&#x5C14;&#x503C;&#xFF0C;&#x6D6E;&#x70B9;&#x6570;&#x3002;</p>
+<h3 id="arithmetic-types">Arithmetic Types</h3>
+<p>&#x7B97;&#x6570;&#x7C7B;&#x578B;&#xFF08;Arithmetic Types&#xFF09;&#x53EF;&#x4EE5;&#x518D;&#x7EC6;&#x5206;&#x4E3A;&#x6574;&#x6570;&#x7C7B;&#x578B;&#xFF08;Integral types&#xFF09;&#x548C;&#x6D6E;&#x70B9;&#x6570;&#x7C7B;&#x578B;&#xFF08;Floating-point types&#xFF09;&#x3002;</p>
+<blockquote>
+<p>&#x7B97;&#x6570;&#x7C7B;&#x578B;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x5373;&#x5360;&#x7528;&#x591A;&#x5C11;&#x4E2A;bit&#xFF0C;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x8BBE;&#x5907;&#x4E0A;&#x662F;&#x4E0D;&#x540C;&#x7684;</p>
+</blockquote>
+<p>C++&#x6807;&#x51C6;&#x4FDD;&#x8BC1;&#x4E86;&#x6BCF;&#x4E2A;&#x7C7B;&#x578B;&#x7684;&#x6700;&#x5C0F;&#x5C3A;&#x5BF8;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x53EF;&#x4EE5;&#x7ED9;&#x7C7B;&#x578B;&#x5206;&#x914D;&#x5927;&#x4E8E;&#x6700;&#x5C0F;&#x5C3A;&#x5BF8;&#x7684;&#x4F4D;&#x6570;&#x3002;&#x56E0;&#x4E3A;&#x4F4D;&#x6570;&#x7684;&#x53D8;&#x6362;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x6240;&#x80FD;&#x8868;&#x793A;&#x7684;&#x6700;&#x5927;&#x503C;&#x548C;&#x6700;&#x5C0F;&#x503C;&#x4E5F;&#x4F1A;&#x76F8;&#x5E94;&#x7684;&#x53D8;&#x6362;&#x3002;</p>
+<p>C++&#x6709;&#x7684;&#x7B97;&#x6570;&#x7C7B;&#x578B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x7C7B;&#x578B;</th>
+<th>&#x542B;&#x4E49;</th>
+<th>&#x6700;&#x5C0F;&#x5C3A;&#x5BF8;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>bool</td>
+<td>&#x5E03;&#x5C14;&#x503C;</td>
+<td>Not Available</td>
+</tr>
+<tr class="even">
+<td>char</td>
+<td>&#x5B57;&#x7B26;</td>
+<td>8 bits</td>
+</tr>
+<tr class="odd">
+<td>wchar_t</td>
+<td>&#x5BBD;&#x5B57;&#x7B26;</td>
+<td>16 bits</td>
+</tr>
+<tr class="even">
+<td>char16_t</td>
+<td>Unicode &#x5B57;&#x7B26;</td>
+<td>16 bits</td>
+</tr>
+<tr class="odd">
+<td>char32_t</td>
+<td>Unicode &#x5B57;&#x7B26;</td>
+<td>32 bits</td>
+</tr>
+<tr class="even">
+<td>short</td>
+<td>&#x77ED;&#x6574;&#x6570;</td>
+<td>16 bits</td>
+</tr>
+<tr class="odd">
+<td>int</td>
+<td>&#x6574;&#x6570;</td>
+<td>16 bits</td>
+</tr>
+<tr class="even">
+<td>long</td>
+<td>&#x957F;&#x6574;&#x6570;</td>
+<td>32 bits</td>
+</tr>
+<tr class="odd">
+<td>long long</td>
+<td>&#x957F;&#x6574;&#x6570;</td>
+<td>32 bits</td>
+</tr>
+<tr class="even">
+<td>float</td>
+<td>&#x5355;&#x7CBE;&#x5EA6;&#x6D6E;&#x70B9;&#x6570;</td>
+<td>&#x7CBE;&#x5EA6;&#x4E3A;6&#x4F4D;&#x6709;&#x6548;&#x6570;&#x5B57;</td>
+</tr>
+<tr class="odd">
+<td>double</td>
+<td>&#x53CC;&#x7CBE;&#x5EA6;&#x6D6E;&#x70B9;&#x6570;</td>
+<td>&#x7CBE;&#x5EA6;&#x4E3A;10&#x4F4D;&#x6709;&#x6548;&#x6570;&#x5B57;</td>
+</tr>
+<tr class="even">
+<td>long double</td>
+<td>&#x989D;&#x5916;&#x7CBE;&#x5EA6;&#x6D6E;&#x70B9;&#x6570;</td>
+<td>&#x7CBE;&#x5EA6;&#x4E3A;10&#x4F4D;&#x6709;&#x6548;&#x6570;&#x5B57;</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>long long &#x662F;C++ 11 &#x540E;&#x624D;&#x652F;&#x6301;&#x7684;&#x7279;&#x6027;</p>
+</blockquote>
+<blockquote>
+<p>&#x4E00;&#x4E2A;char&#x7684;&#x5927;&#x5C0F;&#x5E94;&#x8BE5;&#x4FDD;&#x8BC1;&#x53EF;&#x4EE5;&#x5BB9;&#x7EB3;&#x4E00;&#x4E2A;&#x8BBE;&#x5907;&#x7684;&#x57FA;&#x7840;&#x5B57;&#x7B26;&#x96C6;&#xFF0C;&#x901A;&#x5E38;&#x5C3A;&#x5BF8;&#x4E3A;8 bits&#x3002;wchar_t,char16_t&#x548C;char32_t&#x90FD;&#x662F;&#x4E3A;&#x4E86;&#x6269;&#x5C55;&#x5B57;&#x7B26;&#x96C6;&#x3002;</p>
+</blockquote>
+<blockquote>
+<p>&#x5E03;&#x5C14;&#x503C;&#xFF0C;&#x5B57;&#x7B26;&#x548C;&#x5404;&#x79CD;&#x6574;&#x6570;&#xFF0C;&#x90FD;&#x662F;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x3002;</p>
+</blockquote>
+<p>&#x5185;&#x5B58;&#x53EF;&#x4EE5;&#x5206;&#x914D;&#x7684;&#x6700;&#x5C0F;&#x5355;&#x5143;&#x662F;byte&#xFF0C;&#x5B58;&#x50A8;&#x7684;&#x57FA;&#x672C;&#x5355;&#x5143;&#x4E3A;word&#x3002;&#x5728;c++&#x4E2D;&#xFF0C;byte&#x7684;&#x5927;&#x5C0F;&#x662F;&#x53EF;&#x4EE5;&#x5BB9;&#x7EB3;&#x673A;&#x5668;&#x57FA;&#x672C;&#x5B57;&#x7B26;&#x96C6;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x901A;&#x5E38;&#x4E3A;8 bits&#x3002;word&#x7684;&#x5927;&#x5C0F;&#x901A;&#x5E38;&#x4E3A;32 bits&#x6216;&#x8005;64 bits&#xFF0C;&#x5373;4&#x5230;8 bytes&#x3002;</p>
+<blockquote>
+<p>&#x901A;&#x5E38;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x63D0;&#x4F9B;&#x7ED9;&#x6D6E;&#x70B9;&#x6570;&#x6BD4;&#x6700;&#x4F4E;&#x8981;&#x6C42;&#x66F4;&#x9AD8;&#x7684;&#x7CBE;&#x5EA6;&#xFF0C;float&#x4E00;&#x822C;&#x8868;&#x793A;7&#x4F4D;&#x6709;&#x6548;&#x6570;&#x5B57;&#xFF0C;double&#x8868;&#x793A;16&#x4F4D;&#x6709;&#x6548;&#x6570;&#x5B57;&#x3002;&#x901A;&#x5E38;float&#x7528;1&#x4E2A;word&#x8868;&#x793A;&#xFF0C;double&#x7528;&#x4E24;&#x4E2A;words&#x8868;&#x793A;&#xFF0C;long double&#x7528;3&#x6216;4&#x4E2A;words&#x8868;&#x793A;&#x3002;&#x4F46;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x8FD9;&#x4E9B;&#x7CBE;&#x5EA6;&#x4E0E;&#x5C3A;&#x5BF8;&#x90FD;&#x4E0D;&#x662F;&#x56FA;&#x5B9A;&#x7684;&#xFF0C;&#x53EF;&#x80FD;&#x56E0;&#x8BBE;&#x5907;&#x7684;&#x4E0D;&#x540C;&#x800C;&#x4E0D;&#x540C;&#x3002;</p>
+</blockquote>
+<p>&#x5927;&#x591A;&#x6570;&#x7684;&#x8BA1;&#x7B97;&#x673A;&#x90FD;&#x4F1A;&#x7ED9;&#x6BCF;&#x4E2A;byte&#x5206;&#x914D;&#x4E00;&#x4E2A;&#x5730;&#x5740;&#x3002;&#x5982;&#x5728;&#x4E00;&#x53F0;8-bit byte&#x548C; 32-bit words&#x7684;&#x7535;&#x8111;&#x4E0A;&#xFF0C;&#x4E00;&#x4E2A;word&#x7684;&#x5185;&#x5B58;&#x5982;&#x4E0B;&#xFF0C;&#x53EF;&#x4EE5;&#x8BF4;&#x662F;&#x5730;&#x5740;&#x5728;736424&#x7684;word&#x6216;&#x5730;&#x5740;&#x5728;736427&#x7684;byte&#x3002;</p>
+<p><img src="/CPPPrimer-Chapter2-Notes/2020-02-07-16-03-22.png" alt="word&#x5185;&#x5B58;&#x5206;&#x5E03;"></p>
+<p>&#x6570;&#x636E;&#x7684;&#x7C7B;&#x578B;&#x51B3;&#x5B9A;&#x4E86;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x5982;&#x4F55;&#x5904;&#x7406;&#x8FD9;&#x4E9B;&#x5185;&#x5B58;&#xFF0C;&#x5373;&#x591A;&#x5C11;bit&#x7684;&#x6570;&#x636E;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x4EE5;&#x53CA;&#x8BE5;&#x5982;&#x4F55;&#x7FFB;&#x8BD1;&#x8FD9;&#x4E9B;&#x5185;&#x5B58;&#x3002;</p>
+<h3 id="signed-and-unsigned-types">Signed and Unsigned Types</h3>
+<p>&#x9664;&#x4E86;&#x5E03;&#x5C14;&#x503C;&#x548C;&#x6269;&#x5C55;&#x5B57;&#x7B26;&#x96C6;&#x7684;&#x5B57;&#x7B26;&#xFF08;&#x5982;wchar_t&#x7B49;&#xFF09;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x90FD;&#x53EF;&#x4EE5;&#x88AB;&#x5206;&#x7C7B;&#x4E3A;&#x6709;&#x7B26;&#x53F7;&#xFF08;signed&#xFF09;&#x4E0E;&#x65E0;&#x7B26;&#x53F7;&#xFF08;unsigned&#xFF09;&#x3002;</p>
+<p>&#x9ED8;&#x8BA4;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x5982;int&#xFF0C;short&#xFF0C;long&#x548C;long long&#x90FD;&#x662F;&#x6709;&#x5B57;&#x7B26;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x52A0;&#x4E0A;&#x76F8;&#x5E94;&#x7684;<code>unsigned</code>&#x5173;&#x952E;&#x5B57;&#x5F97;&#x5230;&#x65E0;&#x5B57;&#x7B26;&#x7248;&#x672C;&#xFF0C;&#x5982;<code>unsigned long</code>&#x3002;<code>unsigned int</code>&#x88AB;&#x7F29;&#x5199;&#x4E3A;<code>unsigned</code>&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x5BF9;&#x4E8E;char&#x7C7B;&#x578B;&#xFF0C;&#x6709;&#x4E09;&#x4E2A;&#x7C7B;&#x578B;<code>char</code>&#xFF0C;<code>signed char</code>&#xFF0C;<code>unsigned char</code>&#x4E09;&#x4E2A;&#x7248;&#x672C;&#x3002;<code>char</code>&#x662F;<code>signed char</code>&#x6216;<code>unsigned char</code>&#x4E2D;&#x7684;&#x4E00;&#x79CD;&#xFF0C;&#x5177;&#x4F53;&#x662F;&#x54EA;&#x4E00;&#x79CD;&#x7531;&#x7F16;&#x8BD1;&#x5668;&#x51B3;&#x5B9A;&#x3002;</p>
+<p>&#x6807;&#x51C6;&#x5E76;&#x6CA1;&#x6709;&#x5B9A;&#x4E49;&#x6709;&#x7B26;&#x53F7;&#x7C7B;&#x578B;&#x5982;&#x4F55;&#x8868;&#x793A;&#x6570;&#x636E;&#xFF0C;&#x4F46;&#x662F;&#x5B9A;&#x4E49;&#x4E86;&#x6B63;&#x6570;&#x90E8;&#x5206;&#x548C;&#x8D1F;&#x6570;&#x90E8;&#x5206;&#x5E94;&#x8BE5;&#x662F;&#x5747;&#x5300;&#x7684;&#x5206;&#x5272;&#xFF0C;&#x5982;8-bit&#x7684; signed char&#xFF0C;&#x5E94;&#x8BE5;&#x4FDD;&#x8BC1;&#x80FD;&#x8986;&#x76D6;<span class="math inline">\(-127 \sim 127\)</span>&#x7684;&#x8303;&#x56F4;&#x3002;&#x5927;&#x591A;&#x6570;&#x73B0;&#x4EE3;&#x8BBE;&#x5907;&#x7684;&#x5B9E;&#x73B0;&#x4E0B;&#xFF0C;char&#x8868;&#x793A;&#x7684;&#x8303;&#x56F4;&#x662F;<span class="math inline">\(-128\sim127\)</span>&#x3002;</p>
+<blockquote>
+<p>&#x6570;&#x636E;&#x5B9A;&#x4E49;&#x5EFA;&#x8BAE;&#xFF1A; 1. &#x5982;&#x679C;&#x786E;&#x4FDD;&#x6570;&#x503C;&#x4E0D;&#x4F1A;&#x662F;&#x8D1F;&#x6570;&#xFF0C;&#x4F7F;&#x7528;unsigned&#x7C7B;&#x578B; 2. &#x901A;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;&#x4F7F;&#x7528;int&#xFF0C;short&#x7684;&#x53EF;&#x5B9A;&#x4E49;&#x8303;&#x56F4;&#x592A;&#x5C0F;&#xFF0C;&#x5982;&#x679C;&#x6570;&#x503C;&#x5927;&#x4E8E;&#x4E86;int&#x53EF;&#x8868;&#x793A;&#x8303;&#x56F4;&#xFF0C;&#x4F7F;&#x7528;long long&#x3002;&#x4E4B;&#x6240;&#x4EE5;&#x4E0D;&#x4F7F;&#x7528;long&#xFF0C;&#x662F;&#x56E0;&#x4E3A;&#x5728;&#x8BB8;&#x591A;&#x8BBE;&#x5907;&#x7684;&#x5B9E;&#x73B0;&#x4E0B;&#xFF0C;long&#x548C;int&#x7684;&#x5927;&#x5C0F;&#x662F;&#x76F8;&#x540C;&#x7684;&#x3002; 3. &#x5728;&#x7B97;&#x6570;&#x8868;&#x8FBE;&#x5F0F;&#x4E2D;&#xFF0C;&#x4E0D;&#x8981;&#x4F7F;&#x7528;char&#x548C;&#x5E03;&#x5C14;&#x503C;&#x3002;char&#x7C7B;&#x578B;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x8BBE;&#x5907;&#x4E0B;&#xFF0C;&#x53EF;&#x80FD;&#x662F;signed char&#x53EF;&#x80FD;&#x662F;unsigned char&#xFF0C;&#x8FD9;&#x4E2A;&#x4F1A;&#x5BFC;&#x81F4;bug&#x7684;&#x53D1;&#x751F;&#x3002;&#x5E03;&#x5C14;&#x503C;&#x5219;&#x4F1A;&#x88AB;&#x89E3;&#x91CA;&#x4E3A;0&#x6216;1&#xFF0C;&#x53EF;&#x80FD;&#x4E0E;&#x8BBE;&#x60F3;&#x7684;&#x7ED3;&#x679C;&#x4E0D;&#x540C;&#xFF0C;&#x5EFA;&#x8BAE;&#x76F4;&#x63A5;&#x7528;0&#x6216;1&#x6765;&#x8868;&#x8FBE;&#x3002; 4. &#x4F7F;&#x7528;double&#x8FDB;&#x884C;&#x6D6E;&#x70B9;&#x6570;&#x8BA1;&#x7B97;&#x3002;&#x4E00;&#x662F;&#x56E0;&#x4E3A;float&#x901A;&#x5E38;&#x6CA1;&#x6709;&#x8DB3;&#x591F;&#x7684;&#x7CBE;&#x5EA6;&#xFF0C;&#x4E8C;&#x662F;&#x56E0;&#x4E3A;&#x5355;&#x7CBE;&#x5EA6;&#x548C;&#x53CC;&#x7CBE;&#x5EA6;&#x7684;&#x5F00;&#x9500;&#x5DEE;&#x8DDD;&#x51E0;&#x4E4E;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#x4E0D;&#x8BA1;&#xFF0C;&#x4E09;&#x662F;&#x56E0;&#x4E3A;&#x5BF9;&#x4E8E;&#x4E00;&#x4E9B;&#x8BBE;&#x5907;&#x800C;&#x8A00;&#xFF0C;&#x53CC;&#x7CBE;&#x5EA6;&#x53CD;&#x800C;&#x4F1A;&#x6709;&#x66F4;&#x9AD8;&#x7684;&#x6548;&#x7387;&#x3002;</p>
+</blockquote>
+<h3 id="type-conversions">Type Conversions</h3>
+<p>&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x4F1A;&#x5728;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x4F46;&#x5E0C;&#x671B;&#x5F97;&#x5230;&#x53E6;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x7684;&#x5BF9;&#x8C61;&#x65F6;&#x81EA;&#x52A8;&#x8FDB;&#x884C;&#x3002;</p>
+<p>&#x5982;&#x4E0B;&#x5217;&#x4EE3;&#x7801;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> b = <span class="number">42</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">int</span> i = b;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">i = <span class="number">3.14</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">if</span> (i)</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;result is true&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">double</span> pi = i;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; pi &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> c = <span class="number">-1</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; (<span class="keyword">int</span>)c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">signed</span> <span class="keyword">char</span> c2 = <span class="number">256</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; (<span class="keyword">int</span>)c2 &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x7ED3;&#x679C;&#x4E3A;</p>
+<p><img src="/CPPPrimer-Chapter2-Notes/2020-02-07-17-43-40.png" alt="&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x4F8B;&#x5B50;1&#x7ED3;&#x679C;"></p>
+<p>&#x89C4;&#x5219;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5982;&#x679C;&#x5C06;&#x4E00;&#x4E2A;&#x975E;&#x5E03;&#x5C14;&#x503C;&#x7684;&#x7B97;&#x6570;&#x7C7B;&#x578B;&#x8D4B;&#x503C;&#x7ED9;&#x5E03;&#x5C14;&#x503C;&#xFF0C;&#x5982;&#x679C;&#x8BE5;&#x6570;&#x636E;&#x503C;&#x4E3A;0&#xFF0C;&#x5219;&#x5E03;&#x5C14;&#x503C;&#x4E3A;false&#xFF0C;&#x5426;&#x5219;&#x4E3A;true&#x3002;</li>
+<li>&#x5982;&#x679C;&#x5C06;&#x5E03;&#x5C14;&#x503C;&#x8D4B;&#x503C;&#x7ED9;&#x7B97;&#x6570;&#x7C7B;&#x578B;&#xFF0C;&#x5982;&#x679C;&#x5E03;&#x5C14;&#x503C;&#x662F;true&#xFF0C;&#x5219;&#x503C;&#x4E3A;1&#xFF0C;&#x5426;&#x5219;&#x503C;&#x4E3A;0&#x3002;</li>
+<li>&#x5982;&#x679C;&#x5C06;&#x6D6E;&#x70B9;&#x6570;&#x7C7B;&#x578B;&#x8D4B;&#x503C;&#x7ED9;&#x6574;&#x6570;&#x7C7B;&#x578B;&#xFF0C;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x5C06;&#x4FDD;&#x7559;&#x6D6E;&#x70B9;&#x6570;&#x7684;&#x6574;&#x6570;&#x90E8;&#x5206;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x5C06;&#x6574;&#x6570;&#x7C7B;&#x578B;&#x8D4B;&#x503C;&#x7ED9;&#x6D6E;&#x70B9;&#x6570;&#x7C7B;&#x578B;&#xFF0C;&#x5219;&#x6D6E;&#x70B9;&#x6570;&#x7684;&#x5C0F;&#x6570;&#x90E8;&#x5206;&#x4E3A;0&#x3002;</li>
+<li>&#x5982;&#x679C;&#x7ED9;unsigned&#x7C7B;&#x578B;&#x8D4B;&#x503C;&#x4E86;&#x8D85;&#x8FC7;&#x5176;&#x80FD;&#x8868;&#x8FBE;&#x7684;&#x8303;&#x56F4;&#x7684;&#x6570;&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;&#x503C;&#x4E0E;unsigned&#x7C7B;&#x578B;&#x8303;&#x56F4;&#x7684;&#x53D6;&#x6A21;&#x3002;&#x5982;&#x4E0A;&#x4F8B;&#x4E2D;&#xFF0C;<code>unsigned char c = -1</code>&#xFF0C;&#x503C;&#x4E3A;&#x6700;&#x5927;&#x80FD;&#x8868;&#x8FBE;&#x7684;&#x6570;<span class="math inline">\(256-1\)</span>&#xFF08;&#x6D4B;&#x8BD5;&#x7535;&#x8111;char&#x4E3A;8-bit&#xFF09;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x7ED9;signed&#x7C7B;&#x578B;&#x8D4B;&#x503C;&#x4E86;&#x8D85;&#x8FC7;&#x5176;&#x80FD;&#x8868;&#x8FBE;&#x7684;&#x8303;&#x56F4;&#x7684;&#x6570;&#xFF0C;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x867D;&#x7136;&#x5728;&#x8FD9;&#x91CC;&#x7684;&#x6D4B;&#x8BD5;&#x4E2D;&#xFF0C;&#x7ED3;&#x679C;&#x4E3A;0&#x3002; &#x4F46;&#x7ED3;&#x679C;&#x5728;&#x4E0D;&#x540C;&#x7535;&#x8111;&#xFF0C;&#x4E0D;&#x540C;&#x7F16;&#x8BD1;&#x5668;&#xFF0C;&#x751A;&#x81F3;&#x4E0D;&#x540C;&#x7684;&#x8FD0;&#x884C;&#x65F6;&#x95F4;&#x90FD;&#x4F1A;&#x4E0D;&#x540C;&#xFF0C;&#x7ED3;&#x679C;&#x662F;&#x4E0D;&#x53EF;&#x9884;&#x77E5;&#x7684;&#x3002;</li>
+</ol>
+<h4 id="expression-involving-unsigned-types">Expression Involving Unsigned Types</h4>
+<p>&#x5F53;signed&#x4E0E;unsigned&#x6570;&#x4E00;&#x8D77;&#x8BA1;&#x7B97;&#x65F6;&#xFF0C;signed&#x4F1A;&#x88AB;&#x8F6C;&#x6362;&#x4E3A;unsigned&#xFF0C;&#x5982;&#x4E0B;&#x9762;&#x4EE3;&#x7801;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> u1 = <span class="number">10</span>, u2 = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">-42</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; i + i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; i + u1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; u2 - u1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; u1 - u2 &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x7ED3;&#x679C;&#x4E3A;&#xFF1A;</p>
+<p><img src="/CPPPrimer-Chapter2-Notes/2020-02-07-17-59-23.png" alt="signed&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x4F8B;&#x5B50;"></p>
+<p>&#x7B2C;&#x4E8C;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x503C;&#x4E3A;4294967264&#xFF0C;&#x56E0;&#x4E3A;&#x5728;&#x8BA1;&#x7B97;&#x65F6;<span class="math inline">\(i\)</span>&#x88AB;&#x8F6C;&#x6362;&#x4E3A;&#x4E86;unsigned,&#x503C;&#x4E3A;<span class="math inline">\(2^{32}-42\)</span>&#xFF08;32&#x6B21;&#x65B9;&#x662F;&#x56E0;&#x4E3A;int&#x7528;32-bit&#x8868;&#x793A;&#xFF09;&#xFF0C;&#x56E0;&#x6B64;&#x6574;&#x4E2A;&#x5F0F;&#x5B50;&#x7684;&#x7ED3;&#x679C;&#x4E3A;<span class="math inline">\(2^{32}-42+10=4294967264\)</span>&#x3002;</p>
+<p>&#x540C;&#x7406;&#x7B2C;&#x56DB;&#x4E2A;&#x5F0F;&#x5B50;&#x76F4;&#x89C9;&#x4E0A;&#x7ED3;&#x679C;&#x5E94;&#x8BE5;&#x4E3A;-32&#xFF0C;&#x4F46;&#x56E0;&#x4E3A;&#x662F;unsigned&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x7ED3;&#x679C;&#x4E3A;<span class="math inline">\(2^{32}-32=4294967264\)</span>&#x3002;</p>
+<p>&#x5728;&#x4F7F;&#x7528;unsigned&#x4F5C;&#x4E3A;&#x5FAA;&#x73AF;&#x6761;&#x4EF6;&#x65F6;&#x5C24;&#x5176;&#x8981;&#x6CE8;&#x610F;&#xFF0C;&#x5982;&#x4E0B;&#x5F0F;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">unsigned</span> i = <span class="number">10</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">{</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;i is &quot;</span> &lt;&lt; i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x7ED3;&#x679C;&#x4F1A;&#x53D8;&#x6210;&#x6B7B;&#x5FAA;&#x73AF;&#xFF1A;</p>
+<p><img src="/CPPPrimer-Chapter2-Notes/2020-02-07-18-04-25.png" alt="unsigned&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x9020;&#x6210;&#x7684;&#x6B7B;&#x5FAA;&#x73AF;"></p>
+<p>&#x56E0;&#x4E3A;&#x5728;i&#x53D8;&#x4E3A;0&#x540E;&#xFF0C;&#x6267;&#x884C;<code>i--</code>&#xFF0C;i&#x5C06;&#x53D8;&#x6210;<span class="math inline">\(2^{32}-1\)</span>&#xFF0C;&#x800C;&#x4E0D;&#x662F;-1&#x3002;</p>
+<ul>
+<li>&#x56E0;&#x6B64;&#x4E0D;&#x8981;&#x5C06;signed&#x548C;unsigned&#x6DF7;&#x7528;&#xFF0C;&#x5373;&#x4F7F;&#x662F;&#x77E5;&#x9053;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x7684;&#x89C4;&#x5219;&#x3002;&#x56E0;&#x4E3A;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x8BBE;&#x5907;&#x4E0B;&#xFF0C;&#x7528;&#x4EE5;&#x8868;&#x8FBE;unsigned&#x7C7B;&#x578B;&#x7684;&#x5B57;&#x8282;&#x6570;&#x662F;&#x53EF;&#x80FD;&#x662F;&#x4E0D;&#x540C;&#x7684;&#xFF0C;&#x8FD9;&#x5C06;&#x4F1A;&#x5BFC;&#x81F4;&#x9690;&#x5F0F;&#x8F6C;&#x6362;&#x540E;&#x7684;&#x7ED3;&#x679C;&#x4E0D;&#x540C;&#x3002;&#x672C;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;int&#x4E3A;32-bit&#x8868;&#x8FBE;&#xFF0C;&#x4F46;&#x5E76;&#x4E0D;&#x4FDD;&#x8BC1;&#x6240;&#x6709;&#x7684;&#x8BBE;&#x5907;&#x90FD;&#x662F;&#x7528;32-bit&#x8868;&#x8FBE;int&#x3002;</li>
+</ul>
+<h3 id="literals">Literals</h3>
+<h4 id="integar-and-floating-point-literals">Integar and Floating-Point Literals</h4>
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5341;&#x8FDB;&#x5236;&#xFF0C;&#x516B;&#x8FDB;&#x5236;&#x6216;&#x8005;&#x5341;&#x516D;&#x8FDB;&#x5236;&#x6765;&#x5199;&#x6574;&#x6570;&#x5B57;&#x9762;&#x91CF;&#x3002;&#x4EE5;<code>0</code>&#x5F00;&#x59CB;&#x7684;&#x5B57;&#x9762;&#x91CF;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x516B;&#x8FDB;&#x5236;&#xFF0C;&#x4EE5;<code>0x</code>&#x6216;&#x8005;<code>0X</code>&#x5F00;&#x59CB;&#x7684;&#x5B57;&#x9762;&#x91CF;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x5341;&#x516D;&#x8FDB;&#x5236;&#x3002;</p>
+<p>&#x4EE5;&#x4E0B;&#x7684;&#x4E09;&#x4E2A;&#x8868;&#x8FBE;&#x662F;&#x7B49;&#x6548;&#x7684;&#xFF0C;&#x7ED3;&#x679C;&#x90FD;&#x662F;&#x5341;&#x8FDB;&#x5236;&#x7684;20&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i_decimal = <span class="number">20</span>, i_octal = <span class="number">024</span>, i_hexadecimal = <span class="number">0x14</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;i decimal is &quot;</span> &lt;&lt; i_decimal &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;i octal is &quot;</span> &lt;&lt; i_octal &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;i hexadecimal is &quot;</span> &lt;&lt; i_hexadecimal &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x4E09;&#x4E2A;&#x8868;&#x8FBE;&#x662F;&#x7B49;&#x6548;&#x7684;&#xFF0C;&#x7ED3;&#x679C;&#x90FD;&#x662F;&#x5341;&#x8FDB;&#x5236;&#x7684;20&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> month = <span class="number">09</span>;<span class="comment">//error, 09 is treated as octal</span></span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x5F0F;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#xFF0C;&#x56E0;&#x4E3A;0&#x5F00;&#x5934;&#x7684;&#x5B57;&#x9762;&#x503C;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x516B;&#x8FDB;&#x5236;&#x6570;&#xFF0C;&#x800C;&#x6570;&#x5B57;9&#x4E0D;&#x4F1A;&#x51FA;&#x73B0;&#x5728;&#x516B;&#x8FDB;&#x5236;&#x6570;&#x4E2D;&#x3002;</p>
+<p>&#x5341;&#x8FDB;&#x5236;&#x7684;&#x5B57;&#x9762;&#x503C;&#x4F1A;&#x88AB;&#x9ED8;&#x8BA4;&#x662F;&#x6709;&#x7B26;&#x53F7;&#x7684;&#xFF0C;&#x516B;&#x8FDB;&#x5236;&#x548C;&#x5341;&#x516D;&#x8FDB;&#x5236;&#x5219;&#x53EF;&#x4EE5;&#x662F;&#x65E0;&#x7B26;&#x53F7;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x6709;&#x7B26;&#x53F7;&#x7684;&#x3002;&#x5373;&#x5341;&#x8FDB;&#x5236;&#x7684;&#x5B57;&#x9762;&#x503C;&#x7C7B;&#x578B;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;<code>int,long,long long</code>&#x4E4B;&#x4E2D;&#x6700;&#x5C0F;&#x7684;&#x6EE1;&#x8DB3;&#x503C;&#x7684;&#x7C7B;&#x578B;&#x3002;&#x516B;&#x8FDB;&#x5236;&#x6216;&#x5341;&#x516D;&#x8FDB;&#x5236;&#x5219;&#x4F1A;&#x5728;<code>int,unsigned int,long,unsigned long,long long, unsigned long long</code>&#x4E2D;&#x9009;&#x62E9;&#x6700;&#x5C0F;&#x7684;&#x6EE1;&#x8DB3;&#x7684;&#x7C7B;&#x578B;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x5B57;&#x9762;&#x503C;&#x7684;&#x5927;&#x5C0F;&#x8D85;&#x8FC7;long long &#x6216;unsigned long long&#x6240;&#x80FD;&#x5339;&#x914D;&#x7684;&#x503C;&#xFF0C;&#x5219;&#x65E0;&#x6CD5;&#x5339;&#x914D;&#x4EFB;&#x610F;&#x4E00;&#x79CD;&#x7C7B;&#x578B;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x5C06;&#x4F1A;&#x62A5;&#x9519;&#xFF0C;&#x5982;&#x4EE5;&#x4E0B;&#x8BED;&#x53E5;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//cout &lt;&lt; 9223372036854775808 &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">//cout &lt;&lt; -9223372036854775808 &lt;&lt; endl;</span></span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;&#x8FD9;&#x662F;10&#x8FDB;&#x5236;&#x7684;&#x5B57;&#x9762;&#x503C;&#xFF0C;&#x5176;&#x6700;&#x5927;&#x7C7B;&#x578B;&#x4E3A;long long&#xFF0C;&#x800C;signed long long&#x7684;&#x8303;&#x56F4;&#x662F;<span class="math inline">\(-9223372036854775808 \sim 9223372036854775807\)</span>&#x3002;<span class="math inline">\(-9223372036854775808\)</span>&#x867D;&#x7136;&#x5728;&#x8303;&#x56F4;&#x5185;&#xFF0C;&#x4F46;&#x4ECD;&#x7136;&#x65E0;&#x6CD5;&#x88AB;&#x7F16;&#x8BD1;&#xFF0C;&#x56E0;&#x4E3A;&#x5341;&#x8FDB;&#x5236;&#x7684;&#x5B57;&#x9762;&#x503C;&#x5E76;&#x4E0D;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x6709;&#x8D1F;&#x53F7;&#xFF0C;&#x5373;<span class="math inline">\(-9223372036854775808\)</span>&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x4E00;&#x4E2A;<span class="math inline">\(0&#x51CF;&#x53BB;9223372036854775808\)</span>&#xFF0C;&#x5373;&#x4ECD;&#x7136;&#x8BA1;&#x7B97;&#x7684;&#x662F;<span class="math inline">\(9223372036854775808\)</span>&#x3002;</p>
+<blockquote>
+<p>&#x8FD9;&#x91CC;&#x8C08;&#x8BBA;&#x7684;&#x9650;&#x5236;&#x90FD;&#x662F;C++&#x6807;&#x51C6;&#x7684;&#x9650;&#x5236;&#xFF0C;&#x4F46;&#x662F;&#x6709;&#x4E9B;&#x7F16;&#x8BD1;&#x5668;&#x7684;&#x5B9E;&#x73B0;&#x4F1A;&#x4E0E;&#x6807;&#x51C6;&#x4E0D;&#x540C;&#xFF0C;&#x5982;&#x4E0A;&#x8FF0;&#x4EE3;&#x7801;&#x5728;visual studio 2019&#x4E2D;&#x53EF;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x7F16;&#x8BD1;&#x5668;&#x5C06;&#x5176;&#x81EA;&#x52A8;&#x8F6C;&#x6362;&#x4E3A;&#x4E86;unsigned long long &#x7C7B;&#x578B;</p>
+</blockquote>
+<p>&#x6D6E;&#x70B9;&#x6570;&#x7684;&#x5B57;&#x9762;&#x503C;&#x7528;&#x5341;&#x8FDB;&#x5236;&#x7684;&#x5C0F;&#x6570;&#x70B9;&#x6216;&#x8005;&#x7528;&#x79D1;&#x5B66;&#x8BA1;&#x6570;&#x6CD5;&#xFF08;&#x7B26;&#x53F7;E&#x8868;&#x793A;&#xFF09;&#xFF0C;&#x5982;&#x4E0B;:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">3.14159</span> &lt;&lt; <span class="built_in">endl</span>;   <span class="comment">//3.14159</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">3.14159E0</span> &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//3.14159</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">3.14159E1</span> &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//31.14159</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">0.</span> &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//0</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">0e0</span> &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//0</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">.001</span> &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//0.001</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">1E-3</span> &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//0.001</span></span><br></pre></td></tr></table></figure>
+<p>&#x9ED8;&#x8BA4;&#x7684;&#x6240;&#x6709;&#x6D6E;&#x70B9;&#x6570;&#x5B57;&#x9762;&#x503C;&#x7684;&#x7C7B;&#x578B;&#x4E3A;double&#x3002;</p>
+<h4 id="character-and-character-string-literals">Character and Character String Literals</h4>
+<p>&#x5355;&#x5F15;&#x53F7;&#x4E4B;&#x95F4;&#x7684;&#x5B57;&#x7B26;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;char&#x5B57;&#x9762;&#x503C;&#xFF0C;&#x53CC;&#x5F15;&#x53F7;&#x4E4B;&#x95F4;&#x7684;&#x5B57;&#x7B26;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;string&#x5B57;&#x9762;&#x503C;&#x3002;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&apos;a&apos;</span> &lt;&lt; <span class="built_in">endl</span>;	   <span class="comment">//a</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Hello&quot;</span> &lt;&lt; <span class="built_in">endl</span>;   <span class="comment">//Hello</span></span><br></pre></td></tr></table></figure>
+<p>string&#x5B57;&#x9762;&#x503C;&#x662F;const char&#x7684;&#x6570;&#x7EC4;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x81EA;&#x52A8;&#x5728;&#x6570;&#x7EC4;&#x7684;&#x6700;&#x540E;&#x52A0;&#x4E0A;&#x4E00;&#x4E2A;&#x7A7A;&#x767D;&#x5B57;&#x7B26;&#xFF0C;&#x5373;<code>\0</code>&#xFF0C;&#x6240;&#x4EE5;string&#x7684;&#x771F;&#x5B9E;&#x957F;&#x5EA6;&#x6BD4;&#x770B;&#x4E0A;&#x53BB;&#x7684;&#x5B57;&#x7B26;&#x6570;&#x5927;1&#x3002;&#x5982;&apos;a&apos;&#x957F;&#x5EA6;&#x4E3A;1&#xFF0C;&quot;a&quot;&#x957F;&#x5EA6;&#x4E3A;2&#x3002;</p>
+<p>&#x4E24;&#x4E2A;string&#x5B57;&#x9762;&#x503C;&#x5982;&#x679C;&#x4E2D;&#x95F4;&#x53EA;&#x6709;&#x7A7A;&#x683C;&#xFF0C;&#x6216;tab&#x6216;&#x8005;&#x6362;&#x884C;&#x7B26;&#xFF0C;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x4E00;&#x4E2A;string&#x5B57;&#x9762;&#x503C;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;This is first string literal&quot;</span></span><br><span class="line">		<span class="string">&quot;This is second string literal&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="escape-sequences">Escape Sequences</h4>
+<p>&#x4E00;&#x4E9B;&#x65E0;&#x6CD5;&#x663E;&#x793A;&#x51FA;&#x6765;&#x7684;&#x5B57;&#x7B26;&#xFF08;&#x5982;&#x56DE;&#x8F66;&#xFF09;&#x548C;&#x4E00;&#x4E9B;&#x6709;&#x7279;&#x6B8A;&#x542B;&#x4E49;&#x7684;&#x5B57;&#x7B26;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x8F6C;&#x4E49;&#x5E8F;&#x5217;&#xFF08;Escape sequence&#xFF09;&#x8868;&#x793A;&#x3002;</p>
+<p>&#x4E00;&#x4E9B;&#x5E38;&#x7528;&#x8F6C;&#x4E49;&#x5E8F;&#x5217;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x8F6C;&#x4E49;&#x7B26;</th>
+<th>&#x4F5C;&#x7528;</th>
+<th>&#x8F6C;&#x4E49;&#x7B26;</th>
+<th>&#x4F5C;&#x7528;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>&#x6362;&#x884C;</td>
+<td> &#x6C34;&#x5E73; tab</td>
+<td></td>
+</tr>
+<tr class="even">
+<td> &#x7EB5;&#x5411;tab</td>
+<td>&lt;*&gt;</td>
+<td>&#x6253;&#x5370;&#x51FA;&#x7279;&#x6B8A;&#x7B26;&#x53F7;*&#xFF0C;&#x5982;&quot; &apos; \</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x6570;&#x5B57;&#x548C;&#x8F6C;&#x4E49;&#x7B26;&#x6765;&#x751F;&#x6210;&#x8F6C;&#x4E49;&#x5E8F;&#x5217;&#xFF0C;&#x5047;&#x8BBE;&#x7F16;&#x8BD1;&#x5668;&#x4F7F;&#x7528;&#x7684;&#x662F;<a href="CPPPrimer-Chapter2-Notes/%22https://kb.iu.edu/d/aepu%22"><code>Latin-1</code>&#x5B57;&#x7B26;&#x96C6;</a>&#x3002;&#x53EF;&#x5728;<code>\x</code>&#x540E;&#x8DDF;1&#x6216;&#x591A;&#x4F4D;&#x5341;&#x516D;&#x8FDB;&#x5236;&#x6570;&#x7EC4;&#xFF0C;&#x6216;&#x5728;<code>\</code>&#x540E;&#x8DDF;&#x7740;1&#x81F3;3&#x4F4D;&#x516B;&#x8FDB;&#x5236;&#x6570;&#x5B57;&#xFF0C;&#x5982;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#x90FD;&#x5C06;&#x663E;&#x793A;&#x4E00;&#x6837;&#x7684;&#x7ED3;&#x679C;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;M\n&quot;</span>;	 <span class="comment">//M</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;\115\12&quot;</span>; <span class="comment">//M</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;\x4d\xA&quot;</span>; <span class="comment">//M</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>&#x8FD9;&#x91CC;&#x7684;\115&#x540E;&#x8DDF;&#x7740;&#x7684;&#x662F;&#x516B;&#x8FDB;&#x5236;&#x6570;&#xFF0C;&#x8F6C;&#x6362;&#x4E3A;&#x5341;&#x8FDB;&#x5236;&#x4E3A;77&#xFF0C;&#x53EF;&#x5728;Latin-1&#x8868;&#x4E2D;&#x5F97;&#x77E5;&#xFF0C;77&#x8868;&#x793A;&#x4E3A;M&#x3002;&#x540C;&#x7406;\12&#x8868;&#x793A;&#x5341;&#x8FDB;&#x5236;10&#xFF0C;&#x8868;&#x793A;&#x4E3A;LF&#xFF0C;&#x5373;&#x6362;&#x884C;&#x3002;</p></li>
+<li><p>&#x8DDF;&#x5728;<code>\</code>&#x540E;&#x7684;&#x6570;&#x5B57;&#x6700;&#x591A;&#x53EA;&#x4F1A;&#x88AB;&#x8BA1;&#x7B97;&#x524D;&#x4E09;&#x4F4D;&#xFF0C;&#x5982;<code>\1234</code>&#x5C06;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x8F6C;&#x4E49;&#x5E8F;&#x5217;<code>\123</code>&#x548C;&#x4E00;&#x4E2A;&#x666E;&#x901A;&#x7684;4&#x3002;&#x800C;<code>\x</code>&#x4E4B;&#x540E;&#x8DDF;&#x7740;&#x7684;&#x6240;&#x6709;&#x6570;&#x5B57;&#x90FD;&#x4F1A;&#x88AB;&#x8BA1;&#x7B97;,&#x5982;<code>\x1234</code>&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x540E;&#x9762;&#x8DDF;&#x7740;16-bits&#x7684;&#x5341;&#x516D;&#x8FDB;&#x5236;&#x6570;&#xFF08;&#x4E00;&#x4E2A;16&#x8FDB;&#x5236;&#x6570;&#x662F;4-bits&#xFF09;&#xFF0C;&#x4F46;&#x662F;&#x5927;&#x591A;&#x6570;&#x7684;&#x786C;&#x4EF6;&#x90FD;&#x662F;&#x4F7F;&#x7528;8-bits char&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x901A;&#x5E38;&#x6765;&#x8BF4;&#xFF0C;&#x4E24;&#x4F4D;&#x5341;&#x516D;&#x8FDB;&#x5236;&#x6570;&#x5C31;&#x8DB3;&#x4EE5;&#x8868;&#x793A;&#x5B57;&#x7B26;&#x8868;&#x4E86;&#x3002;</p></li>
+</ul>
+<h4 id="specifying-the-type-of-a-literal">Specifying the Type of a Literal</h4>
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x524D;&#x7F00;&#x6216;&#x540E;&#x7F00;&#x6765;&#x6307;&#x5B9A;&#x6574;&#x6570;&#x3001;&#x6D6E;&#x70B9;&#x6570;&#x4EE5;&#x53CA;&#x5B57;&#x7B26;&#x5B57;&#x9762;&#x503C;&#x7684;&#x7C7B;&#x578B;&#x3002;&#x5B57;&#x7B26;&#x5B57;&#x9762;&#x503C;&#x7528;&#x524D;&#x7F00;&#xFF0C;&#x6574;&#x6570;&#x53CA;&#x6D6E;&#x70B9;&#x6570;&#x5B57;&#x9762;&#x503C;&#x7528;&#x540E;&#x7F00;&#x3002;</p>
+<p>&#x5B57;&#x7B26;&#x5B57;&#x9762;&#x503C;&#x7C7B;&#x578B;&#x6307;&#x5B9A;&#x5982;&#x4E0B;&#x8868;&#x6240;&#x793A;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x524D;&#x7F00;</th>
+<th>&#x7C7B;&#x578B;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>u</td>
+<td>char16_t</td>
+</tr>
+<tr class="even">
+<td>U</td>
+<td>char32_t</td>
+</tr>
+<tr class="odd">
+<td>L</td>
+<td>wchar_t</td>
+</tr>
+<tr class="even">
+<td>u8&#xFF08;&#x53EA;&#x80FD;&#x7528;&#x4E8E;string&#x7C7B;&#x578B;&#xFF09;</td>
+<td>char</td>
+</tr>
+</tbody>
+</table>
+<p>&#x6574;&#x6570;&#x5B57;&#x9762;&#x503C;&#x6307;&#x5B9A;&#x5982;&#x4E0B;&#x8868;&#x6240;&#x793A;:</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x540E;&#x7F00;</th>
+<th>&#x6700;&#x5C0F;&#x7C7B;&#x578B;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>u &#x6216; U</td>
+<td>unsigned</td>
+</tr>
+<tr class="even">
+<td>l &#x6216; L</td>
+<td>long</td>
+</tr>
+<tr class="odd">
+<td>ll &#x6216; LL</td>
+<td>long long</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>&#x6574;&#x6570;&#x5B57;&#x9762;&#x503C;&#x8BBE;&#x5B9A;&#x7684;&#x662F;&#x6700;&#x5C0F;&#x7C7B;&#x578B;&#xFF0C;&#x5373;&#x6700;&#x7EC8;&#x7684;&#x7C7B;&#x578B;&#x8FD8;&#x662F;&#x4F1A;&#x6839;&#x636E;&#x5B57;&#x9762;&#x503C;&#x7684;&#x5927;&#x5C0F;&#x6765;&#x8C03;&#x6574; &#x6307;&#x5B9A;&#x6709;&#x65E0;&#x7B26;&#x53F7;&#x7684;&#x7C7B;&#x578B;&#x540E;&#x7F00;&#x53EF;&#x4EE5;&#x548C;&#x6307;&#x5B9A;&#x957F;&#x5EA6;&#x7684;&#x7C7B;&#x578B;&#x7684;&#x6DF7;&#x5408;&#x4F7F;&#x7528;</p>
+</blockquote>
+<p>&#x6D6E;&#x70B9;&#x6570;&#x5B57;&#x9762;&#x503C;&#x6307;&#x5B9A;&#x5982;&#x4E0B;&#x8868;&#x6240;&#x793A;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x540E;&#x7F00;</th>
+<th>&#x7C7B;&#x578B;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>f &#x6216; F</td>
+<td>float</td>
+</tr>
+<tr class="even">
+<td>l &#x6216; L</td>
+<td>long double</td>
+</tr>
+</tbody>
+</table>
+<p>&#x6307;&#x5B9A;&#x5B57;&#x9762;&#x503C;&#x7C7B;&#x578B;&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">9223372036854775808U</span>LL &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; L&apos;a&apos; &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">u8&quot;hi&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">1E-3</span>F &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">0.001F</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="number">3.14159L</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="variables">Variables</h2>
+<p>C++&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x53D8;&#x91CF;&#xFF08;Variables&#xFF09;&#x90FD;&#x6709;&#x7C7B;&#x578B;&#x3002;</p>
+<h3 id="variable-definitions">Variable Definitions</h3>
+<p>&#x7B80;&#x5355;&#x7684;&#x53D8;&#x91CF;&#x5B9A;&#x4E49;&#x7531;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x6307;&#x793A;&#x5668;&#xFF08;Type Specifier&#xFF09;&#x8DDF;&#x7740;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x7531;&#x9017;&#x53F7;&#x5206;&#x5272;&#x7684;&#x53D8;&#x91CF;&#x540D;&#x79F0;&#x7EC4;&#x6210;&#xFF0C;&#x4EE5;&#x5206;&#x53F7;&#x7ED3;&#x675F;&#x3002;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> sum = <span class="number">0</span>, value, units_sold = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="initializers">Initializers</h3>
+<p>&#x5F53;&#x53D8;&#x91CF;&#x5B9A;&#x4E49;&#x5728;&#x540C;&#x4E2A;&#x8BED;&#x53E5;&#x4E2D;&#x5B9A;&#x4E49;&#x591A;&#x4E2A;&#x53D8;&#x91CF;&#x65F6;&#xFF0C;&#x6BCF;&#x4E2A;&#x53D8;&#x91CF;&#x5728;&#x58F0;&#x660E;&#x540E;&#x9A6C;&#x4E0A;&#x53EF;&#x89C1;&#xFF0C;&#x5373;&#x540E;&#x7EED;&#x7684;&#x53D8;&#x91CF;&#x53EF;&#x4EE5;&#x7528;&#x524D;&#x9762;&#x7684;&#x53D8;&#x91CF;&#x6765;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> price = <span class="number">109.99</span>, discount = price * <span class="number">0.16</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x5728;C++&#x4E2D;&#x521D;&#x59CB;&#x5316;&#xFF08;Initialization&#xFF09;&#x548C;&#x8D4B;&#x503C;&#xFF08;assignment&#xFF09;&#x662F;&#x4E24;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x5728;&#x8BB8;&#x591A;&#x8BED;&#x8A00;&#x4E2D;&#x8FD9;&#x4E24;&#x8005;&#x7684;&#x533A;&#x522B;&#x51E0;&#x4E4E;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#x3002;&#x4F46;&#x662F;&#x5728;C++&#x4E2D;&#x4E24;&#x8005;&#x7684;&#x533A;&#x522B;&#x5374;&#x5F88;&#x91CD;&#x8981;&#xFF0C;&#x521D;&#x59CB;&#x5316;&#x662F;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x5728;&#x521B;&#x5EFA;&#x65F6;&#x7ED9;&#x4E88;&#x53C2;&#x6570;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x8D4B;&#x503C;&#x662F;&#x53D8;&#x91CF;&#x5DF2;&#x7ECF;&#x751F;&#x6210;&#x540E;&#x7531;&#x65B0;&#x7684;&#x53C2;&#x6570;&#x66FF;&#x4EE3;&#x539F;&#x5148;&#x53C2;&#x6570;&#x7684;&#x8FC7;&#x7A0B;&#x3002;</p>
+<ul>
+<li>&#x5728;&#x540E;&#x7EED;&#x7684;&#x7AE0;&#x8282;&#x4E2D;&#x4F1A;&#x8FDB;&#x4E00;&#x6B65;&#x8BA8;&#x8BBA;&#x4E24;&#x8005;&#x7684;&#x5DEE;&#x5F02;&#x3002;</li>
+</ul>
+<h3 id="list-initialization">List initialization</h3>
+<p>C++&#x6709;&#x591A;&#x79CD;&#x65B9;&#x6CD5;&#x6765;&#x521D;&#x59CB;&#x5316;&#x53D8;&#x91CF;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> units_sold = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// int units_sold(0);</span></span><br><span class="line"><span class="comment">// int units_sold = {0};</span></span><br><span class="line"><span class="comment">// int units_sold{0};</span></span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x56DB;&#x8005;&#x90FD;&#x662F;&#x521D;&#x59CB;&#x5316;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5176;&#x4E2D;&#x540E;&#x4E24;&#x79CD;&#x5E26;&#x6709;&#x5927;&#x62EC;&#x53F7;&#x7684;&#x662F;C++11&#x7684;&#x65B0;&#x7279;&#x6027;&#xFF0C;&#x79F0;&#x4E3A;&#x5217;&#x8868;&#x521D;&#x59CB;&#x5316;&#xFF08;list initialization&#xFF09;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4F7F;&#x7528;&#x5217;&#x8868;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x521D;&#x59CB;&#x5316;&#x53D8;&#x91CF;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x4E0D;&#x5141;&#x8BB8;&#x51FA;&#x73B0;&#x7CBE;&#x5EA6;&#x7684;&#x4E22;&#x5931;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> <span class="keyword">double</span> id = <span class="number">3.1415926536</span>;</span><br><span class="line"><span class="keyword">float</span> ifloat{id};</span><br><span class="line"><span class="keyword">int</span> a{id}, b = {id};</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>&#x4E66;&#x4E2D;&#x63CF;&#x8FF0;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x7981;&#x6B62;&#x4E22;&#x5931;&#x7CBE;&#x5EA6;&#x7684;&#x8D4B;&#x503C;&#xFF0C;&#x4F46;&#x5728;gcc 8.1.0&#x7684;&#x7248;&#x672C;&#x6D4B;&#x8BD5;&#x4E0B;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x53EA;&#x662F;&#x7ED9;&#x51FA;&#x4E86;warning</p>
+</blockquote>
+<h3 id="default-initialization">Default Initialization</h3>
+<p>&#x5F53;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x4F46;&#x6CA1;&#x6709;&#x7ED9;&#x521D;&#x59CB;&#x5316;&#x6570;&#x503C;&#x65F6;&#xFF0C;&#x53C2;&#x6570;&#x4F1A;&#x88AB;&#x8D4B;&#x4E88;&#x9ED8;&#x8BA4;&#x503C;&#x3002;&#x5728;&#x4EFB;&#x4F55;&#x51FD;&#x6570;&#x5916;&#x7684;&#x672A;&#x8D4B;&#x503C;&#x53D8;&#x91CF;&#x4F1A;&#x88AB;&#x521D;&#x59CB;&#x5316;&#x4E3A;0&#xFF0C;&#x5728;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x7684;&#x672A;&#x8D4B;&#x503C;&#x5185;&#x7F6E;&#x53D8;&#x91CF;&#x5219;&#x4E0D;&#x4F1A;&#x88AB;&#x521D;&#x59CB;&#x5316;&#x3002;&#x672A;&#x521D;&#x59CB;&#x5316;&#x7684;&#x53D8;&#x91CF;&#x503C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF08;Undefined&#xFF09;&#xFF0C;&#x8BBF;&#x95EE;&#x6216;&#x62F7;&#x8D1D;&#x4EFB;&#x4F55;&#x672A;&#x521D;&#x59CB;&#x5316;&#x7684;&#x503C;&#x90FD;&#x4F1A;&#x4EA7;&#x751F;&#x9519;&#x8BEF;&#x3002;</p>
+<blockquote>
+<p>&#x8FD9;&#x91CC;&#x7684;&#x63CF;&#x8FF0;&#x4ECD;&#x7136;&#x662F;C++&#x7684;&#x6807;&#x51C6;&#x5B9A;&#x4E49;&#xFF0C;&#x4F46;&#x662F;&#x4E0D;&#x540C;&#x7684;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x5B9E;&#x73B0;&#xFF0C;&#x5982;&#x5728;gcc 8.1.0&#x7248;&#x672C;&#x4E2D;&#xFF0C;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x7684;&#x672A;&#x8D4B;&#x503C;&#x53D8;&#x91CF;&#x4ECD;&#x7136;&#x4F1A;&#x88AB;&#x521D;&#x59CB;&#x5316;&#x4E3A;0&#x3002;&#x4F46;&#x8981;&#x77E5;&#x9053;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x64CD;&#x4F5C;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x7248;&#x672C;&#x6216;&#x8BBE;&#x5907;&#x4E0B;&#x5F88;&#x53EF;&#x80FD;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x6240;&#x4EE5;&#x5E94;&#x8BE5;&#x5C3D;&#x53EF;&#x80FD;&#x907F;&#x514D;&#x3002;</p>
+</blockquote>
+<h3 id="variable-declarations-and-definitions">Variable Declarations and Definitions</h3>
+<p>C++&#x652F;&#x6301;&#x5355;&#x72EC;&#x7F16;&#x8BD1;&#xFF08;Separate Compilation&#xFF09;&#xFF0C;&#x5373;&#x53EF;&#x4EE5;&#x628A;&#x6574;&#x4E2A;&#x7A0B;&#x5E8F;&#x653E;&#x5728;&#x591A;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x6BCF;&#x4E2A;&#x6587;&#x4EF6;&#x53EF;&#x4EE5;&#x72EC;&#x7ACB;&#x7684;&#x88AB;&#x7F16;&#x8BD1;&#x3002;</p>
+<p>&#x4E3A;&#x652F;&#x6301;&#x5355;&#x72EC;&#x7F16;&#x8BD1;&#xFF0C;C++&#x9700;&#x8981;&#x533A;&#x5206;&#x58F0;&#x660E;&#xFF08;Declaration&#xFF09;&#x548C;&#x5B9A;&#x4E49;&#xFF08;Definition&#xFF09;&#x3002;</p>
+<p><code>&#x58F0;&#x660E;</code>&#x662F;&#x4E3A;&#x4E86;&#x8BA9;&#x7A0B;&#x5E8F;&#x77E5;&#x9053;&#x53D8;&#x91CF;&#x7684;&#x540D;&#x79F0;&#x3002;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x5728;&#x5176;&#x4ED6;&#x5730;&#x65B9;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#x9700;&#x8981;&#x5BF9;&#x8BE5;&#x53D8;&#x91CF;&#x8FDB;&#x884C;&#x58F0;&#x660E;&#x3002;&#x58F0;&#x660E;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x5B83;&#x7684;&#x7C7B;&#x578B;&#x548C;&#x540D;&#x79F0;&#x3002;</p>
+<p><code>&#x5B9A;&#x4E49;</code>&#x662F;&#x521B;&#x5EFA;&#x76F8;&#x5173;&#x7684;&#x53D8;&#x91CF;&#x3002;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x9996;&#x5148;&#x4F1A;&#x5148;&#x58F0;&#x660E;&#x8BE5;&#x53D8;&#x91CF;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x4E3A;&#x8BE5;&#x53D8;&#x91CF;&#x5F00;&#x8F9F;&#x5B58;&#x50A8;&#x7A7A;&#x95F4;&#xFF0C;&#x5E76;&#x8D4B;&#x4E88;&#x521D;&#x59CB;&#x503C;&#x3002;</p>
+<p>&#x6BCF;&#x4E2A;&#x53D8;&#x91CF;&#x90FD;&#x53EA;&#x53EF;&#x4EE5;&#x88AB;&#x5B9A;&#x4E49;&#x4E00;&#x6B21;&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x88AB;&#x58F0;&#x660E;&#x591A;&#x6B21;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5173;&#x952E;&#x5B57;<code>extern</code>&#x6765;&#x6307;&#x5B9A;&#x64CD;&#x4F5C;&#x662F;&#x58F0;&#x660E;&#x800C;&#x4E0D;&#x662F;&#x5B9A;&#x4E49;&#xFF0C;&#x4E0D;&#x5141;&#x8BB8;&#x5728;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x4F7F;&#x7528;extern&#x5173;&#x952E;&#x5B57;&#x3002;</p>
+<p>&#x5982;&#x4E0A;&#x6240;&#x5C5E;&#xFF0C;&#x58F0;&#x660E;&#x662F;&#x4E0D;&#x5305;&#x62EC;&#x51FD;&#x6570;&#x7684;&#x521D;&#x59CB;&#x503C;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x58F0;&#x660E;&#x5305;&#x542B;&#x4E86;&#x5BF9;&#x53D8;&#x91CF;&#x7684;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x90A3;&#x4E48;&#x8BE5;&#x58F0;&#x660E;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x5B9A;&#x4E49;&#xFF08;&#x5728;&#x540E;&#x7EED;&#x7AE0;&#x8282;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x5BF9;&#x4E8E;const&#x53D8;&#x91CF;&#x4F1A;&#x9700;&#x8981;&#x540C;&#x65F6;&#x4F7F;&#x7528;extern&#x548C;&#x521D;&#x59CB;&#x5316;&#xFF09;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Declarations and Definitions</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> i;			   <span class="comment">// Declares but does not define i</span></span><br><span class="line"><span class="keyword">int</span> j;					   <span class="comment">//declare and defines j</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">double</span> pi = <span class="number">3.1416</span>; <span class="comment">// declare and defines pi, same with expression without extern</span></span><br></pre></td></tr></table></figure>
+<p>&#x4E3A;&#x4E86;&#x5728;&#x591A;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#x4F7F;&#x7528;&#x540C;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x5FC5;&#x987B;&#x5728;<code>&#x4E00;&#x4E2A;&#x6587;&#x4EF6;</code>&#x4E2D;&#x5B9A;&#x4E49;&#x8BE5;&#x53D8;&#x91CF;&#xFF0C;&#x5728;&#x5176;&#x4ED6;&#x6587;&#x4EF6;&#x4E2D;&#x58F0;&#x660E;&#xFF08;&#x4E0D;&#x5305;&#x62EC;&#x5B9A;&#x4E49;&#xFF09;&#x8BE5;&#x53D8;&#x91CF;&#x3002;</p>
+<h3 id="identifiers">Identifiers</h3>
+<p>C++&#x4E2D;&#x7684;&#x6807;&#x8BC6;&#x7B26;&#xFF08;&#x53D8;&#x91CF;&#x540D;&#x79F0;&#xFF09;&#x7531;&#x5B57;&#x7B26;&#xFF0C;&#x6570;&#x5B57;&#x548C;&#x4E0B;&#x5212;&#x7EBF;&#x6784;&#x6210;&#xFF0C;C++&#x5E76;&#x6CA1;&#x6709;&#x9650;&#x5236;&#x540D;&#x79F0;&#x7684;&#x957F;&#x5EA6;&#x3002;</p>
+<h3 id="scope-of-a-name">Scope of a Name</h3>
+<p>&#x4F5C;&#x7528;&#x57DF;&#xFF08;Scope&#xFF09;&#x662F;&#x6307;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x5728;&#x7A0B;&#x5E8F;&#x4E2D;&#x5B58;&#x5728;&#x610F;&#x4E49;&#x7684;&#x90E8;&#x5206;&#xFF0C;&#x5728;C++&#x4E2D;&#x7EDD;&#x5927;&#x90E8;&#x5206;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x90FD;&#x662F;&#x901A;&#x8FC7;&#x5927;&#x62EC;&#x53F7;&#xFF08;<code>{  }</code>&#xFF09;&#x8FDB;&#x884C;&#x5206;&#x5272;&#x7684;&#x3002;</p>
+<h4 id="nested-scopes">Nested scopes</h4>
+<p>&#x4F5C;&#x7528;&#x57DF;&#x6709;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x5F62;&#x6210;&#x5D4C;&#x5957;&#xFF0C;&#x5982;&#x679C;&#x4EA7;&#x751F;&#x5D4C;&#x5957;&#x7684;&#x8BDD;&#xFF0C;&#x5916;&#x90E8;&#x4F5C;&#x7528;&#x57DF;&#xFF08;Outer scope&#xFF09;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x53C2;&#x6570;&#x53EF;&#x4EE5;&#x88AB;&#x5185;&#x90E8;&#x4F5C;&#x7528;&#x57DF;&#xFF08;Inner scope&#xFF09;&#x4F7F;&#x7528;&#xFF0C;&#x5982;&#x679C;&#x5185;&#x90E8;&#x4F5C;&#x7528;&#x57DF;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A;&#x4E0E;&#x5916;&#x90E8;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x67D0;&#x53D8;&#x91CF;&#x540D;&#x5B57;&#x76F8;&#x540C;&#x7684;&#x65B0;&#x53D8;&#x91CF;&#xFF0C;&#x5916;&#x90E8;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x5C06;&#x4F1A;&#x88AB;&#x9690;&#x85CF;&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x64CD;&#x4F5C;&#x7B26;<code>::</code>&#x6765;&#x8BBF;&#x95EE;&#x88AB;&#x9690;&#x85CF;&#x4E86;&#x7684;&#x53D8;&#x91CF;&#x3002;</p>
+<p>&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF0C;&#x5176;&#x4E2D;&#x5B9A;&#x4E49;&#x5728;&#x6240;&#x6709;&#x51FD;&#x6570;&#x5916;&#x7684;&#x53D8;&#x91CF;&#x6709;<code>&#x5168;&#x5C40;&#x4F5C;&#x7528;&#x57DF;(Global scope)</code>&#xFF0C;&#x5426;&#x5219;&#x7684;&#x8BDD;&#x6709;<code>&#x4EE3;&#x7801;&#x5757;&#x4F5C;&#x7528;&#x57DF;(block scope)</code>&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> reused = <span class="number">42</span>; <span class="comment">//global scope</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">  <span class="keyword">int</span> unique = <span class="number">0</span>;							   <span class="comment">//block scope</span></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; reused &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; unique &lt;&lt; <span class="built_in">endl</span>;   <span class="comment">//42 0</span></span><br><span class="line">  <span class="keyword">int</span> reused = <span class="number">0</span>;							   <span class="comment">//local named reused hides global reused</span></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; reused &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; unique &lt;&lt; <span class="built_in">endl</span>;   <span class="comment">// 0 0</span></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; ::reused &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; unique &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 42 0</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5176;&#x4E2D;&#x7B2C;&#x4E8C;&#x4E2A;&#x8F93;&#x51FA;&#x4E2D;&#x7684;reused&#x53D8;&#x91CF;&#x662F;&#x5728;&#x5185;&#x90E8;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x65B0;&#x5B9A;&#x4E49;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x56E0;&#x6B64;&#x503C;&#x4E3A;0&#x3002;&#x7B2C;&#x4E09;&#x4E2A;&#x8F93;&#x51FA;&#x4E2D;&#x7684;reused&#x4F7F;&#x7528;&#x4E86;<code>::</code>&#x64CD;&#x4F5C;&#x7B26;&#x8BBF;&#x95EE;&#x4E86;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x4E2D;&#x7684;reused,&#x6240;&#x4EE5;&#x503C;&#x4E3A;42&#x3002;</p>
+<h2 id="compound-types">Compound Types</h2>
+<p>&#x590D;&#x5408;&#x7C7B;&#x578B;&#xFF08;Compound Type&#xFF09;&#x662F;&#x6839;&#x636E;&#x5176;&#x4ED6;&#x7C7B;&#x578B;&#x5B9A;&#x4E49;&#x7684;&#x4E00;&#x79CD;&#x7C7B;&#x578B;&#xFF0C;C++&#x6709;&#x591A;&#x79CD;&#x6DF7;&#x5408;&#x7C7B;&#x578B;&#xFF0C;&#x5728;&#x8FD9;&#x91CC;&#x4F1A;&#x5148;&#x4ECB;&#x7ECD;&#x4E24;&#x79CD;&#xFF0C;&#x5F15;&#x7528;&#xFF08;Reference&#xFF09;&#x548C;&#x6307;&#x9488;&#xFF08;Points&#xFF09;&#x3002;</p>
+<h3 id="references">References</h3>
+<blockquote>
+<p>&#x5728;C++11&#x4E2D;&#x5F15;&#x5165;&#x4E86;&#x53F3;&#x5F15;&#x7528;(rvalue reference)&#x548C;&#x5DE6;&#x5F15;&#x7528;(lvalue reference)&#x7684;&#x6982;&#x5FF5;&#x3002;&#x4F46;&#x901A;&#x5E38;&#x6765;&#x8BF4;&#xFF0C;&#x5F53;&#x63D0;&#x53CA;&#x5F15;&#x7528;&#x65F6;&#x90FD;&#x662F;&#x6307;&#x5DE6;&#x5F15;&#x7528;&#x3002;</p>
+</blockquote>
+<p>&#x5F15;&#x7528;&#xFF08;Reference&#xFF09;&#x662F;&#x4E00;&#x4E2A;&#x7269;&#x4F53;&#x7684;&#x522B;&#x540D;&#xFF0C;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x6307;&#x4EE3;&#x53E6;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x3002;</p>
+<p>&#x4E00;&#x4E2A;&#x5F15;&#x7528;&#x521B;&#x5EFA;&#x65F6;&#x4F1A;&#x7ED1;&#x5B9A;&#x81F3;&#x53E6;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x6210;&#x4E3A;&#x5B83;&#x7684;&#x522B;&#x540D;&#x3002;&#x5F53;&#x5F15;&#x7528;&#x521B;&#x5EFA;&#x540E;&#x65E0;&#x6CD5;&#x91CD;&#x65B0;&#x7ED1;&#x5B9A;&#x81F3;&#x5176;&#x4ED6;&#x53D8;&#x91CF;&#xFF0C;&#x56E0;&#x6B64;&#x5F15;&#x7528;&#x521B;&#x5EFA;&#x7684;&#x65F6;&#x5019;&#x5FC5;&#x987B;&#x88AB;&#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ival = <span class="number">1024</span>;</span><br><span class="line"><span class="keyword">int</span> &amp;refVal = ival;</span><br><span class="line"><span class="comment">// int &amp;refVal2; //error,must be initialized</span></span><br><span class="line"><span class="comment">// &amp;refVal = reused; //error,can not be rebinded</span></span><br><span class="line">refVal = reused;<span class="comment">//Not rebingding, is to change ival&apos;s value</span></span><br></pre></td></tr></table></figure>
+<h4 id="a-reference-is-an-alias">A Reference Is an Alias</h4>
+<p>&#x5982;&#x4E4B;&#x524D;&#x6240;&#x8FF0;&#xFF0C;&#x5F15;&#x7528;&#x4E0D;&#x662F;&#x7269;&#x4F53;&#xFF0C;&#x800C;&#x662F;&#x53E6;&#x4E00;&#x4E2A;&#x7269;&#x4F53;&#x7684;&#x522B;&#x540D;&#xFF0C;&#x6240;&#x4EE5;&#x5BF9;&#x5F15;&#x7528;&#x7684;&#x4EFB;&#x4F55;&#x64CD;&#x4F5C;&#x5B9E;&#x9645;&#x4E0A;&#x90FD;&#x662F;&#x5BF9;&#x88AB;&#x7ED1;&#x5B9A;&#x7684;&#x7269;&#x4F53;&#x7684;&#x64CD;&#x4F5C;&#x3002;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ii = refVal;	   <span class="comment">//Bound to ival</span></span><br><span class="line"><span class="keyword">int</span> &amp;refVal3 = refVal; <span class="comment">//the same value as ival</span></span><br></pre></td></tr></table></figure>
+<h4 id="reference-definitions">Reference Definitions</h4>
+<p>&#x5F15;&#x7528;&#x7B26;&#x53F7;<code>&amp;</code>&#x662F;&#x9488;&#x5BF9;&#x53D8;&#x91CF;&#x540D;&#x79F0;&#x800C;&#x8A00;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x6BCF;&#x4E2A;&#x5F15;&#x7528;&#x5728;&#x5B9A;&#x4E49;&#x7684;&#x65F6;&#x5019;&#x524D;&#x9762;&#x90FD;&#x9700;&#x8981;&#x52A0;&#x4E0A;&#x5F15;&#x7528;&#x7B26;&#x53F7;&#x3002;</p>
+<p>&#x53E6;&#x5916;&#x9664;&#x4E86;&#x5728;2.4&#x8282;&#xFF08;const reference&#x53EF;&#x4EE5;&#x7ED1;&#x5B9A;&#x81F3;&#x4EFB;&#x610F;&#x53EF;&#x8F6C;&#x6362;&#x7684;&#x5BF9;&#x8C61;&#xFF09;&#x548C;15.2&#x8282;(&#x57FA;&#x7C7B;&#x7684;&#x5F15;&#x7528;&#x53EF;&#x4EE5;&#x7ED1;&#x5B9A;&#x6D3E;&#x751F;&#x7C7B;&#x5BF9;&#x8C61;)&#x63D0;&#x5230;&#x7684;&#x4E24;&#x4E2A;&#x7279;&#x6B8A;&#x60C5;&#x51B5;&#xFF0C;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x5FC5;&#x987B;&#x548C;&#x88AB;&#x6346;&#x7ED1;&#x7684;&#x503C;&#x7C7B;&#x578B;&#x4E00;&#x81F4;&#xFF0C;&#x4E14;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x4E0D;&#x80FD;&#x6346;&#x7ED1;&#x81F3;&#x5B57;&#x9762;&#x503C;&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1024</span>, i2 = <span class="number">2048</span>;</span><br><span class="line"><span class="keyword">int</span> &amp;r = i, r2 = i2; <span class="comment">//r is int refernece, r2 is int</span></span><br><span class="line"><span class="comment">// int &amp;refVal4 = 10; //error, can&apos;t be bound to literal</span></span><br><span class="line"><span class="keyword">double</span> dval = <span class="number">3.14</span>;</span><br><span class="line"><span class="comment">// int &amp;refVal5 = dval; //error, types not match</span></span><br></pre></td></tr></table></figure>
+<h3 id="pointers">Pointers</h3>
+<p>&#x6307;&#x9488;&#xFF08;Pointers&#xFF09;&#x662F;&#x4E00;&#x4E2A;&#x201C;&#x6307;&#x5411;&#x201D;&#x522B;&#x7684;&#x7C7B;&#x578B;&#x7684;&#x590D;&#x5408;&#x7C7B;&#x578B;&#x3002;</p>
+<p>&#x4E0E;&#x5F15;&#x7528;&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x6307;&#x9488;&#x662F;&#x4E00;&#x4E2A;&#x7269;&#x4F53;&#xFF0C;&#x56E0;&#x6B64;&#x5B83;&#x53EF;&#x4EE5;&#x88AB;&#x62F7;&#x8D1D;&#x548C;&#x8D4B;&#x503C;&#xFF0C;&#x5728;&#x6307;&#x9488;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x5185;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x88AB;&#x6307;&#x5411;&#x591A;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x7269;&#x4F53;&#x3002;&#x800C;&#x4E14;&#x6307;&#x9488;&#x5728;&#x5B9A;&#x4E49;&#x65F6;&#x5E76;&#x4E0D;&#x4E00;&#x5B9A;&#x8981;&#x88AB;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x4F46;&#x4E0E;&#x5176;&#x4ED6;&#x7684;&#x5185;&#x5EFA;&#x7C7B;&#x578B;&#x4E00;&#x6837;&#xFF0C;&#x5728;&#x4EE3;&#x7801;&#x5757;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x7684;&#x6307;&#x9488;&#x5982;&#x679C;&#x672A;&#x88AB;&#x521D;&#x59CB;&#x5316;&#x8D4B;&#x503C;&#xFF0C;&#x5219;&#x5B83;&#x7684;&#x503C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;</p>
+<p>&#x4E0E;&#x5F15;&#x7528;&#x76F8;&#x4F3C;&#x7684;&#x662F;&#xFF0C;&#x5728;&#x5B9A;&#x4E49;&#x6BCF;&#x4E2A;&#x6307;&#x9488;&#x53D8;&#x91CF;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x90FD;&#x9700;&#x8981;&#x5728;&#x524D;&#x9762;&#x52A0;&#x4E0A;&#x6307;&#x9488;&#x7B26;&#x53F7;<code>*</code>&#x3002;</p>
+<h4 id="taking-the-address-of-an-object">Taking the Address of an Object</h4>
+<p>&#x4E00;&#x4E2A;&#x6307;&#x9488;&#x5305;&#x542B;&#x53E6;&#x4E00;&#x4E2A;&#x7269;&#x4F53;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x53EF;&#x901A;&#x8FC7;&#x53D6;&#x5730;&#x5740;&#x7B26;(&amp;)&#x6765;&#x83B7;&#x5F97;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x5730;&#x5740;&#x3002;</p>
+<p>&#x4E0E;&#x5F15;&#x7528;&#x7C7B;&#x4F3C;&#xFF0C;&#x9664;&#x4E86;&#x5728;2.4&#x8282;&#xFF08;pointer to const&#x53EF;&#x4EE5;&#x7ED1;&#x5B9A;&#x81F3;nonconst&#x5BF9;&#x8C61;&#xFF09;&#x548C;15.2&#x8282;&#x9610;&#x8FF0;&#x7684;&#x7279;&#x6B8A;&#x60C5;&#x51B5;&#x5916;&#xFF0C;&#x6307;&#x9488;&#x6240;&#x6307;&#x5411;&#x7684;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x5FC5;&#x987B;&#x4E0E;&#x6307;&#x9488;&#x7C7B;&#x578B;&#x76F8;&#x540C;&#x3002;&#x5982;&#x4E0B;&#x5217;&#x4EE3;&#x7801;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Points</span></span><br><span class="line"><span class="keyword">int</span> *ip1, *ip2; <span class="comment">//define int pointer without initializer</span></span><br><span class="line"><span class="keyword">double</span> dp, dp2; <span class="comment">//dp is double, dp2 is double pointer</span></span><br><span class="line"><span class="keyword">int</span> ival = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">int</span> *p = &amp;ival; <span class="comment">//p hold the address of ival</span></span><br><span class="line"><span class="keyword">double</span> dval;</span><br><span class="line"><span class="keyword">double</span> *pd = &amp;dval; <span class="comment">//Initializer is the address of a double</span></span><br><span class="line"><span class="keyword">double</span> *pd2 = pd;   <span class="comment">//Initializer is a pointer to double</span></span><br><span class="line"><span class="comment">// int *pi = pd;		//error,pointer types not match</span></span><br><span class="line"><span class="comment">// int *pi2 = &amp;dval;   // error,pointer types and object typenot match</span></span><br></pre></td></tr></table></figure>
+<h4 id="pointer-value">Pointer Value</h4>
+<p>&#x4E00;&#x4E2A;&#x6307;&#x9488;&#x7684;&#x503C;&#xFF0C;&#x53EF;&#x4EE5;&#x662F;&#x4EE5;&#x4E0B;&#x56DB;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</p>
+<ol type="1">
+<li>&#x6307;&#x5411;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x5730;&#x5740;</li>
+<li>&#x6307;&#x5411;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x5730;&#x5740;&#x540E;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;byte</li>
+<li>&#x7A7A;&#x6307;&#x9488;&#xFF0C;&#x4E0D;&#x6307;&#x5411;&#x4EFB;&#x4F55;&#x5BF9;&#x8C61;</li>
+<li>&#x975E;&#x6CD5;&#x6307;&#x9488;&#xFF0C;&#x9664;&#x4E86;&#x4E0A;&#x8FF0;&#x4E09;&#x4E2A;&#x60C5;&#x51B5;&#x7684;&#x6307;&#x9488;&#x90FD;&#x662F;&#x975E;&#x6CD5;&#x6307;&#x9488;&#x3002;</li>
+</ol>
+<p>&#x4F7F;&#x7528;&#x975E;&#x6CD5;&#x6307;&#x9488;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x5177;&#x4F53;&#x7684;&#x7ED3;&#x679C;&#x7531;&#x4E0D;&#x540C;&#x7684;&#x7F16;&#x8BD1;&#x5668;&#x51B3;&#x5B9A;&#x3002;&#x867D;&#x7136;&#x60C5;&#x51B5;2&#x548C;3&#x662F;&#x5408;&#x6CD5;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x8BBF;&#x95EE;&#x8FD9;&#x4E24;&#x79CD;&#x60C5;&#x51B5;&#x7684;&#x6307;&#x9488;&#x7ED3;&#x679C;&#x4E5F;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x7684;&#x3002;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *ip = &amp;ival;	 <span class="comment">//Pointer to ival</span></span><br><span class="line"><span class="keyword">int</span> *ipEnd = ip + <span class="number">1</span>; <span class="comment">//Pointer to end of ival</span></span><br><span class="line"><span class="keyword">int</span> *ipNull = <span class="literal">NULL</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (*ip) &lt;&lt; <span class="string">&quot;  &quot;</span> &lt;&lt; (*ipEnd) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 42 0</span></span><br></pre></td></tr></table></figure>
+<p>&#x867D;&#x7136;&#x5728;&#x8FD9;&#x91CC;&#x7684;&#x6D4B;&#x8BD5;&#x4E2D;<code>(*ipEnd)</code>&#x8FD4;&#x56DE;&#x7684;&#x503C;&#x4E3A;0&#xFF0C;&#x4F46;&#x5B9E;&#x9645;&#x4E0A;&#x8FD9;&#x662F;&#x672A;&#x5B9A;&#x4E49;&#x64CD;&#x4F5C;&#xFF0C;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x7F16;&#x8BD1;&#x5668;&#x4F1A;&#x8FD4;&#x56DE;&#x4E0D;&#x540C;&#x7684;&#x7ED3;&#x679C;&#x3002;</p>
+<h4 id="using-a-pointer-to-access-an-object">Using a Pointer to Access an Object</h4>
+<p>&#x5F53;&#x4F7F;&#x7528;&#x6307;&#x9488;&#x8BBF;&#x95EE;&#x53D8;&#x91CF;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x89E3;&#x5F15;&#x7528;&#x7B26;&#x53F7;<code>*</code>&#x3002;&#x5982;&#x4E0A;&#x8282;&#x4EE3;&#x7801;&#x4E2D;&#x7684;<code>(*ip)</code>&#x3002;</p>
+<ul>
+<li>&#x5C3D;&#x53EF;&#x80FD;&#x907F;&#x514D;&#x89E3;&#x5F15;&#x7528;&#x90A3;&#x4E9B;&#x975E;&#x6CD5;&#x6216;&#x8005;&#x6CA1;&#x6709;&#x6307;&#x5411;&#x5177;&#x4F53;&#x5BF9;&#x8C61;&#x7684;&#x6307;&#x9488;&#x3002;</li>
+</ul>
+<p>&amp;&#x548C;*&#x7B26;&#x53F7;&#x73B0;&#x5728;&#x90FD;&#x6709;&#x591A;&#x4E2A;&#x542B;&#x4E49;&#xFF0C;&amp;&#x65E2;&#x53EF;&#x4EE5;&#x8868;&#x793A;&#x4E3A;&#x5F15;&#x7528;&#xFF0C;&#x53C8;&#x53EF;&#x4EE5;&#x8868;&#x793A;&#x53D6;&#x5730;&#x5740;&#x7B26;&#x53F7;&#xFF0C;*&#x65E2;&#x53EF;&#x4EE5;&#x8868;&#x793A;&#x6307;&#x9488;&#xFF0C;&#x53C8;&#x53EF;&#x4EE5;&#x8868;&#x793A;&#x89E3;&#x5F15;&#x7528;&#x7B26;&#x53F7;&#x3002;&#x5B83;&#x4EEC;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x5177;&#x4F53;&#x542B;&#x4E49;&#x7531;&#x4E0A;&#x4E0B;&#x6587;&#x51B3;&#x5B9A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">int</span> &amp;r = i;							 <span class="comment">//reference</span></span><br><span class="line"><span class="keyword">int</span> *pp;							 <span class="comment">//pointer</span></span><br><span class="line">pp = &amp;r;							 <span class="comment">//address-of operator</span></span><br><span class="line">*pp = i;							 <span class="comment">//dereference</span></span><br><span class="line"><span class="keyword">int</span> &amp;r2 = *pp;						 <span class="comment">// reference and dereference</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (r2) &lt;&lt; <span class="string">&quot;&quot;</span> &lt;&lt; (*pp) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//4242</span></span><br></pre></td></tr></table></figure>
+<h4 id="null-pointers">Null Pointers</h4>
+<p>&#x7A7A;&#x6307;&#x9488;&#xFF08;Null Pointers&#xFF09;&#x5E76;&#x4E0D;&#x6307;&#x5411;&#x4EFB;&#x4F55;&#x5BF9;&#x8C61;&#xFF0C;&#x4EE3;&#x7801;&#x53EF;&#x4EE5;&#x5728;&#x4F7F;&#x7528;&#x6307;&#x9488;&#x524D;&#x68C0;&#x67E5;&#x5176;&#x662F;&#x5426;&#x4E3A;&#x7A7A;&#x3002;</p>
+<p>&#x6709;&#x4E09;&#x79CD;&#x65B9;&#x6CD5;&#x5B9A;&#x4E49;&#x7A7A;&#x6307;&#x9488;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p1 = <span class="literal">nullptr</span>; <span class="comment">// c++ 11</span></span><br><span class="line"><span class="keyword">int</span> *p2 = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> *p3 = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<p>nullptr&#x662F;C++11&#x6807;&#x51C6;&#x4E2D;&#x5F15;&#x5165;&#x7684;&#x7279;&#x6027;&#xFF0C;&#x5B83;&#x662F;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684;&#x5B57;&#x9762;&#x503C;&#xFF0C;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x4E3A;&#x4EFB;&#x4F55;&#x6307;&#x9488;&#x7C7B;&#x578B;&#x3002;NULL&#x5B9A;&#x4E49;&#x5728;&#x5934;&#x6587;&#x4EF6;<code>cstdlib</code>&#x4E2D;&#xFF0C;&#x5B83;&#x4F7F;&#x7528;&#x9884;&#x5904;&#x7406;&#x5668;(<code>#define</code>)&#x8F6C;&#x6362;&#x4E3A;0&#xFF0C;&#x6240;&#x4EE5;&#x4F7F;&#x7528;NULL&#x548C;&#x4F7F;&#x7528;0&#x6765;&#x5B9A;&#x4E49;&#x7A7A;&#x6307;&#x9488;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x7B49;&#x6548;&#x7684;&#x3002;</p>
+<ul>
+<li>&#x5C3D;&#x91CF;&#x4F7F;&#x7528;nullptr</li>
+</ul>
+<p>&#x867D;&#x7136;&#x53EF;&#x4EE5;&#x7528;0&#x6765;&#x8868;&#x793A;&#x7A7A;&#x6307;&#x9488;&#xFF0C;&#x4F46;&#x5E76;&#x4E0D;&#x80FD;&#x5C06;int&#x53D8;&#x91CF;&#x76F4;&#x63A5;&#x8D4B;&#x503C;&#x7ED9;&#x6307;&#x9488;&#xFF0C;&#x5373;&#x4F7F;&#x8BE5;&#x53D8;&#x91CF;&#x503C;&#x4E3A;0&#x4E5F;&#x4E0D;&#x884C;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> zero = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// p3 = zero; //error, can&apos;t assign an int to pointer</span></span><br></pre></td></tr></table></figure>
+<h4 id="assignment-and-pointers">Assignment and Pointers</h4>
+<p>&#x6307;&#x9488;&#x548C;&#x5F15;&#x7528;&#x90FD;&#x662F;&#x5BF9;&#x5BF9;&#x8C61;&#x7684;&#x95F4;&#x63A5;&#x8BBF;&#x95EE;&#xFF0C;&#x4F46;&#x5F15;&#x7528;&#x662F;&#x5BF9;&#x8C61;&#x7684;&#x522B;&#x540D;&#xFF0C;&#x4E14;&#x5F15;&#x7528;&#x672C;&#x8EAB;&#x5E76;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x4F46;&#x6307;&#x9488;&#x662F;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x5B83;&#x5B58;&#x50A8;&#x53E6;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x5730;&#x5740;&#x3002;</p>
+<p>&#x5F15;&#x7528;&#x5728;&#x521D;&#x59CB;&#x5316;&#x540E;&#x65E0;&#x6CD5;&#x4FEE;&#x6539;&#x5176;&#x672C;&#x8EAB;&#x7ED1;&#x5B9A;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x6307;&#x9488;&#x53EF;&#x4EE5;&#x5728;&#x751F;&#x547D;&#x5468;&#x671F;&#x5185;&#x4FEE;&#x6539;&#x5B83;&#x6240;&#x6307;&#x5411;&#x7684;&#x5BF9;&#x8C61;&#x3002;</p>
+<h4 id="other-pointer-operations">Other Pointer Operations</h4>
+<p>&#x6307;&#x9488;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x4F5C;&#x4E3A;&#x5224;&#x65AD;&#x6761;&#x4EF6;&#xFF0C;&#x5982;&#x679C;&#x6307;&#x9488;&#x4E3A;0&#xFF08;&#x7A7A;&#x6307;&#x9488;&#xFF09;&#x5219;&#x4E3A;false&#xFF0C;&#x4EFB;&#x4F55;&#x975E;&#x7A7A;&#x6307;&#x9488;&#x90FD;&#x4E3A;true&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x6BD4;&#x8F83;&#x4E24;&#x4E2A;&#x6307;&#x9488;&#x662F;&#x5426;&#x76F8;&#x540C;&#xFF08;== &#x6216; !=&#xFF09;&#xFF0C;&#x5982;&#x679C;&#x4E24;&#x4E2A;&#x6307;&#x9488;&#x5305;&#x542B;&#x7684;&#x5730;&#x5740;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x5219;&#x4E24;&#x8005;&#x76F8;&#x540C;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x7528;&#x4E86;&#x975E;&#x6CD5;&#x7684;&#x6307;&#x9488;&#x6765;&#x4F5C;&#x4E3A;&#x5224;&#x65AD;&#x6761;&#x4EF6;&#x6216;&#x5224;&#x65AD;&#x662F;&#x5426;&#x76F8;&#x540C;&#xFF0C;&#x7ED3;&#x679C;&#x662F;<em>&#x672A;&#x5B9A;&#x4E49;&#x7684;</em>&#x3002;</p>
+<h4 id="void-pointers">void* Pointers</h4>
+<p>void*&#x7C7B;&#x578B;&#x662F;&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x5305;&#x542B;&#x4EFB;&#x4F55;&#x7C7B;&#x578B;&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x5730;&#x5740;&#x7684;&#x7279;&#x6B8A;&#x7C7B;&#x578B;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> obj = <span class="number">3.14</span>, *pdd = &amp;obj;</span><br><span class="line"><span class="keyword">void</span> *pv = &amp;obj;<span class="comment">//pv can hold a pointer to any type</span></span><br><span class="line">pv = pdd;</span><br></pre></td></tr></table></figure>
+<p>&#x4F46;&#x65E0;&#x6CD5;&#x901A;&#x8FC7;void*&#x5BF9;&#x5176;&#x6307;&#x5411;&#x7684;&#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x56E0;&#x4E3A;void*&#x65E0;&#x6CD5;&#x5F97;&#x77E5;&#x5BF9;&#x8C61;&#x7684;&#x5177;&#x4F53;&#x7C7B;&#x578B;&#xFF0C;&#x4E5F;&#x5C31;&#x65E0;&#x6CD5;&#x89E3;&#x91CA;&#x5BF9;&#x8C61;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cout &lt;&lt; (*pv) &lt;&lt; endl;//error,can&apos;t operate in the object void* addresses</span></span><br></pre></td></tr></table></figure>
+<p>void*&#x66F4;&#x591A;&#x7684;&#x662F;&#x7528;&#x6765;&#x5904;&#x7406;&#x5185;&#x5B58;&#x65B9;&#x9762;&#x7684;&#x5DE5;&#x4F5C;&#x3002;</p>
+<h3 id="understanding-compound-type-declarations">Understanding Compound Type Declarations</h3>
+<h4 id="defining-multiple-variables">Defining Multiple Variables</h4>
+<p>&#x5982;&#x4E4B;&#x524D;&#x6240;&#x8FF0;&#xFF0C;&#x5F15;&#x7528;&#x548C;&#x6307;&#x9488;&#x7684;&#x5B9A;&#x4E49;&#x662F;&#x8DDF;&#x7740;&#x53D8;&#x91CF;&#x540D;&#x5B57;&#x7684;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x5728;&#x4E00;&#x4E2A;&#x5B9A;&#x4E49;&#x4E2D;&#x540C;&#x65F6;&#x5B9A;&#x4E49;&#x666E;&#x901A;&#x53D8;&#x91CF;&#xFF0C;&#x5F15;&#x7528;&#x548C;&#x6307;&#x9488;&#x3002;&#x5982;:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1024</span>, *p = &amp;i, &amp;r = i</span><br></pre></td></tr></table></figure>
+<p>&amp;&#x548C;*&#x7B26;&#x53F7;&#x53EF;&#x4EE5;&#x5199;&#x5728;&#x7C7B;&#x578B;&#x540E;&#x9762;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5199;&#x5728;&#x53D8;&#x91CF;&#x524D;&#x9762;&#xFF0C;&#x5982;&#x4E0B;&#x9762;&#x4E24;&#x4E2A;&#x5F0F;&#x5B50;&#x662F;&#x7B49;&#x6548;&#x7684;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p;</span><br><span class="line"><span class="keyword">int</span> *p;</span><br></pre></td></tr></table></figure>
+<p>&#x4F46;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x8BEF;&#x89E3;&#xFF0C;&#x5373;&#x8BA4;&#x4E3A;&#x5F15;&#x7528;&#x548C;&#x6307;&#x9488;&#x7684;&#x5B9A;&#x4E49;&#x662F;&#x8DDF;&#x7740;&#x53D8;&#x91CF;&#x7C7B;&#x578B;&#x7684;&#xFF0C;&#x63A8;&#x8350;&#x4F7F;&#x7528;&#x7B2C;&#x4E8C;&#x79CD;&#x65B9;&#x5F0F;&#x3002;</p>
+<h4 id="pointers-to-pointers">Pointers to Pointers</h4>
+<p>&#x6307;&#x9488;&#x662F;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x6307;&#x9488;&#x6307;&#x5411;&#x53E6;&#x4E00;&#x4E2A;&#x6307;&#x9488;&#x5BF9;&#x8C61;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ival = <span class="number">1024</span>;</span><br><span class="line"><span class="keyword">int</span> *pi = &amp;ival;</span><br><span class="line"><span class="keyword">int</span> **ppi = &amp;pi;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Direct value is &quot;</span> &lt;&lt; ival &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//Direct value is1024</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Indirect value is &quot;</span> &lt;&lt; *pi &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//Indirect valueis 1024</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Double indirect value is &quot;</span> &lt;&lt; **ppi &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//Doubleindirect value is 1024</span></span><br></pre></td></tr></table></figure>
+<p>C++&#x5E76;&#x6CA1;&#x6709;&#x9650;&#x5B9A;&#x6307;&#x9488;&#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x8FDB;&#x4E00;&#x6B65;&#x5B9A;&#x4E49;<code>***pppi</code>&#x7B49;&#x3002;</p>
+<h4 id="reference-to-pointers">Reference to Pointers</h4>
+<p>&#x56E0;&#x4E3A;&#x5F15;&#x7528;&#x5E76;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x5F15;&#x7528;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x4F46;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x6307;&#x9488;&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">int</span> *p;</span><br><span class="line"><span class="keyword">int</span> *&amp;r = p;</span><br><span class="line">r = &amp;i; <span class="comment">//make p point to i</span></span><br><span class="line">*r = <span class="number">0</span>; <span class="comment">//make i&apos;s value to 0</span></span><br></pre></td></tr></table></figure>
+<p>&#x91CD;&#x70B9;&#x662F;&#x8BED;&#x53E5;<code>int *&amp;r = p</code>&#xFF0C;&#x8BE5;&#x8BED;&#x53E5;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x6BD4;&#x8F83;&#x591A;&#xFF0C;&#x4E3A;&#x4E86;&#x5F88;&#x597D;&#x7406;&#x89E3;&#xFF0C;&#x53EF;&#x4EE5;&#x4ECE;&#x53D8;&#x91CF;&#x540D;&#x9010;&#x6E10;&#x5411;&#x5916;&#x5C42;&#x8BFB;&#x3002;&#x53D8;&#x91CF;&#x540D;&#x662F;r&#xFF0C;&#x79BB;&#x53D8;&#x91CF;&#x540D;&#x6700;&#x8FD1;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x662F;<code>&amp;</code>&#xFF0C;&#x56E0;&#x6B64;r&#x662F;&#x4E00;&#x4E2A;&#x5F15;&#x7528;&#xFF0C;&#x5916;&#x5C42;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#x662F;<code>*</code>&#xFF0C;&#x56E0;&#x6B64;r&#x662F;&#x6307;&#x9488;&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x518D;&#x5916;&#x5C42;&#x662F;<code>int</code>&#xFF0C;&#x6240;&#x4EE5;r&#x662F;int&#x6307;&#x9488;&#x7684;&#x5F15;&#x7528;&#x3002;</p>
+<h2 id="const-qualifier">const Qualifier</h2>
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;const&#x9650;&#x5B9A;&#x8BCD;&#x6765;&#x9650;&#x5236;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x5728;&#x521D;&#x59CB;&#x5316;&#x540E;&#x4E0D;&#x4F1A;&#x88AB;&#x6539;&#x53D8;&#x3002;</p>
+<h4 id="initialization-and-const">Initialization and const</h4>
+<p>const&#x9650;&#x5B9A;&#x7684;&#x53D8;&#x91CF;&#x5FC5;&#x987B;&#x88AB;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x521D;&#x59CB;&#x5316;&#x7684;&#x8BED;&#x53E5;&#x53EF;&#x4EE5;&#x662F;&#x4EFB;&#x4F55;&#x590D;&#x6742;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x4E14;&#x7528;&#x4E8E;&#x521D;&#x59CB;&#x5316;&#x7684;&#x53D8;&#x91CF;&#x5E76;&#x4E0D;&#x4E00;&#x5B9A;&#x8981;&#x662F;const&#x7684;&#x3002;</p>
+<p>const&#x53D8;&#x91CF;&#x7684;&#x521D;&#x59CB;&#x5316;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> kk = getSize();</span><br><span class="line"><span class="comment">// const int k; //error, const value must be initialized</span></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = i;</span><br><span class="line"><span class="keyword">int</span> j = ci;</span><br></pre></td></tr></table></figure>
+<p>&#x5176;&#x4E2D;&#x4FEE;&#x9970;&#x53D8;&#x91CF;<span class="math inline">\(ci\)</span>&#x7684;const&#x9650;&#x5B9A;&#x7B26;&#xFF0C;&#x53EA;&#x662F;&#x8868;&#x660E;&#x53D8;&#x91CF;<span class="math inline">\(ci\)</span>&#x4E0D;&#x80FD;&#x4F1A;&#x4FEE;&#x6539;&#xFF0C;&#x7528;&#x4E8E;&#x521D;&#x59CB;&#x5316;&#x7684;<span class="math inline">\(i\)</span>&#x4ECD;&#x7136;&#x80FD;&#x88AB;&#x4FEE;&#x6539;&#xFF0C;&#x4F7F;&#x7528;<span class="math inline">\(ci\)</span>&#x521D;&#x59CB;&#x5316;&#x7684;j&#x4E5F;&#x4ECD;&#x7136;&#x80FD;&#x88AB;&#x4FEE;&#x6539;&#x3002;</p>
+<h4 id="by-default-const-objects-are-local-to-a-file">By Default, const Objects Are Local to a File</h4>
+<p>&#x5BF9;&#x4E8E;const&#x9650;&#x5B9A;&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x5927;&#x591A;&#x6570;&#x7F16;&#x8BD1;&#x5668;&#x5728;&#x7F16;&#x8BD1;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F1A;&#x5C06;&#x76F8;&#x5173;&#x7684;&#x4EE3;&#x7801;&#x76F4;&#x63A5;&#x4FEE;&#x6539;&#x4E3A;&#x9650;&#x5B9A;&#x7684;&#x503C;&#xFF0C;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> bufSize = <span class="number">512</span>;</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x4F7F;&#x7528;bufSize&#x7684;&#x5730;&#x65B9;&#x5728;&#x7F16;&#x8BD1;&#x540E;&#x90FD;&#x4F1A;&#x88AB;&#x4FEE;&#x6539;&#x4E3A;512&#x3002;</p>
+<p>&#x4E5F;&#x56E0;&#x6B64;&#xFF0C;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x591A;&#x4E2A;&#x540C;&#x540D;&#x7684;const&#x53D8;&#x91CF;&#xFF0C;&#x56E0;&#x4E3A;const&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x662F;&#x4EC5;&#x5C40;&#x9650;&#x5728;&#x672C;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x3002;&#x666E;&#x901A;&#x7684;&#x975E;const&#x7684;&#x53D8;&#x91CF;&#x5219;&#x4E0D;&#x884C;&#xFF0C;&#x5B83;&#x4EEC;&#x53EA;&#x80FD;&#x5728;&#x67D0;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#x88AB;&#x5B9A;&#x4E49;&#x4E00;&#x6B21;&#xFF0C;&#x5176;&#x4ED6;&#x6587;&#x4EF6;&#x4E2D;&#x53EA;&#x80FD;&#x58F0;&#x660E;&#x3002;</p>
+<p>&#x800C;&#x9700;&#x8981;&#x5728;&#x591A;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#x516C;&#x7528;&#x4E00;&#x4E2A;const&#x53D8;&#x91CF;&#x65F6;&#x5219;&#x9700;&#x8981;&#x7528;&#x5230;extern&#x5173;&#x952E;&#x5B57;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//In file Chapter2Const.h</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getSize</span><span class="params">()</span> </span>{ <span class="keyword">return</span> <span class="number">42</span>; }</span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">int</span> bufSize = getSize();</span><br><span class="line"></span><br><span class="line"><span class="comment">//In file Chapter2_VariablesAndBasicType.cpp</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keyword">int</span> bufSize;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value is: &quot;</span> &lt;&lt; bufSize; <span class="comment">//value is: 42</span></span><br></pre></td></tr></table></figure>
+<h3 id="reference-to-const">Reference to const</h3>
+<p>&#x5C06;&#x6709;&#x9650;&#x5B9A;&#x8BCD;const&#x7684;&#x5F15;&#x7528;&#x6210;&#x4E3A;<code>const reference</code>&#xFF0C;&#x4F46;&#x8FD9;&#x4E2A;&#x79F0;&#x547C;&#x6709;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x9020;&#x6210;&#x5E72;&#x6270;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x5E94;&#x8BE5;&#x7684;&#x8868;&#x8FBE;&#x65F6;reference to const&#x3002;&#x56E0;&#x4E3A;&#x4E25;&#x683C;&#x610F;&#x4E49;&#x4E0A;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x5F15;&#x7528;&#x672C;&#x8EAB;&#x5728;&#x521D;&#x59CB;&#x5316;&#x540E;&#x90FD;&#x662F;&#x65E0;&#x6CD5;&#x4FEE;&#x6539;&#x7684;&#xFF08;&#x65E0;&#x6CD5;&#x7ED1;&#x5B9A;&#x81F3;&#x522B;&#x4EBA;&#x7684;&#x53D8;&#x91CF;&#xFF09;&#xFF0C;&#x6240;&#x4EE5;&#x6240;&#x6709;&#x7684;&#x5F15;&#x7528;&#x90FD;&#x662F;const&#x7684;&#x3002;</p>
+<p>&#x4E00;&#x4E2A;const&#x53D8;&#x91CF;&#x7684;&#x5F15;&#x7528;&#x5FC5;&#x987B;&#x662F;const reference&#xFF0C;&#x5426;&#x5219;&#x5C31;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x666E;&#x901A;&#x7684;&#x5F15;&#x7528;&#x6765;&#x4FEE;&#x6539;const&#x53D8;&#x91CF;&#x3002;&#x793A;&#x4F8B;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = <span class="number">1024</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r1 = ci;</span><br><span class="line"><span class="comment">// r1 = 42;	  //error,ri is reference to a const variable</span></span><br><span class="line"><span class="comment">// int &amp;r2 = ci; //error, reference to a const variable mustbe const</span></span><br></pre></td></tr></table></figure>
+<h4 id="initialization-and-reference-to-const">Initialization and Reference to const</h4>
+<p>&#x5728;&#x4E4B;&#x524D;&#x7684;&#x5F15;&#x7528;&#x7AE0;&#x8282;&#x4E2D;&#xFF0C;&#x63D0;&#x5230;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x5FC5;&#x987B;&#x4E0E;&#x88AB;&#x5F15;&#x7528;&#x7684;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x4E00;&#x81F4;&#x3002;</p>
+<p>&#x8FD9;&#x91CC;&#x5C06;&#x9610;&#x8FF0;&#x7B2C;&#x4E00;&#x4E2A;&#x610F;&#x5916;&#xFF0C;&#x4E00;&#x4E2A;const reference&#x53EF;&#x4EE5;&#x7ED1;&#x5B9A;&#x81F3;&#x4EFB;&#x610F;&#x5176;&#x4ED6;&#x53EF;&#x4EE5;&#x88AB;&#x8F6C;&#x6362;&#x7684;&#x53D8;&#x91CF;&#x548C;&#x8868;&#x8FBE;&#x5F0F;&#xFF08;&#x5982;&#x975E;const&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x5B57;&#x9762;&#x503C;&#xFF0C;&#x7C7B;&#x578B;&#x4E0D;&#x540C;&#x4F46;&#x53EF;&#x8F6C;&#x6362;&#x7684;&#x53D8;&#x91CF;&#x7B49;&#xFF09;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">double</span> dval = <span class="number">3.14</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r1 = i;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r2 = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r3 = r1 * <span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r4 = dval;</span><br><span class="line"><span class="comment">// int &amp;r5 = i * 2;//error, plain,nonconst reference must match type</span></span><br></pre></td></tr></table></figure>
+<p>&#x5982;&#x8BED;&#x53E5;<code>const int &amp;r4 = dval</code>&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x5B9E;&#x9645;&#x4E0A;&#x5C06;&#x521D;&#x59CB;&#x5316;&#x8FC7;&#x7A0B;&#x8F6C;&#x6362;&#x4E3A;&#x4E86;&#x7C7B;&#x4F3C;&#x4E8E;&#x5982;&#x4E0B;&#x7684;&#x8BED;&#x53E5;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> temp = dval;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r4 = temp;</span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;r4&#x662F;const reference&#xFF0C;&#x6240;&#x4EE5;&#x5B83;&#x4E0D;&#x4F1A;&#x4FEE;&#x6539;&#x7ED1;&#x5B9A;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x56E0;&#x6B64;&#x7ED1;&#x5B9A;&#x7684;&#x5BF9;&#x8C61;&#x662F;&#x4E34;&#x65F6;&#x53D8;&#x91CF;&#x4E5F;&#x6CA1;&#x6709;&#x95EE;&#x9898;&#x3002;&#x800C;&#x5BF9;&#x4E8E;&#x666E;&#x901A;&#x5F15;&#x7528;&#x6765;&#x8BF4;&#xFF0C;&#x5982;&#x679C;&#x6267;&#x884C;&#x4E86;&#x540C;&#x6837;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x90A3;&#x540E;&#x7EED;&#x5BF9;&#x666E;&#x901A;&#x5F15;&#x7528;&#x7684;&#x64CD;&#x4F5C;&#x5C31;&#x53D8;&#x6210;&#x4E86;&#x64CD;&#x4F5C;&#x4E00;&#x4E2A;&#x4E34;&#x65F6;&#x53D8;&#x91CF;&#x4E86;&#x3002;</p>
+<h4 id="a-reference-to-const-may-refer-to-an-object-that-is-not-const">A Reference to const May Refer to an Object That is not const</h4>
+<p>const Refernece&#x53EA;&#x662F;&#x9650;&#x5B9A;&#x4E86;&#x4E0D;&#x80FD;&#x901A;&#x8FC7;&#x8BE5;&#x5F15;&#x7528;&#x6765;&#x4FEE;&#x6539;&#x7ED1;&#x5B9A;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x4F46;&#x53C2;&#x6570;&#x672C;&#x8EAB;&#x662F;&#x5426;&#x80FD;&#x4FEE;&#x6539;&#x5E76;&#x4E0D;&#x9650;&#x5B9A;&#xFF0C;&#x5982;&#x4E0B;&#x4EE3;&#x7801;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">int</span> &amp;r1 = i;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r2 = i;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; r2 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//value is 42</span></span><br><span class="line">r1 = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// r2=0;//error,can&apos;t change const reference</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; r2 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//value is 0</span></span><br></pre></td></tr></table></figure>
+<h3 id="points-and-const">Points and const</h3>
+<p>&#x6307;&#x5411;const&#x53D8;&#x91CF;&#x7684;&#x6307;&#x9488;&#x4E5F;&#x5FC5;&#x987B;&#x662F;const&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#x3002;&#x5BF9;&#x4E8E;&#x6307;&#x5411;const&#x53D8;&#x91CF;&#x7684;&#x6307;&#x9488;&#x800C;&#x8A00;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x6307;&#x5411;&#x975E;const&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x4F46;&#x4ECD;&#x7136;&#x4E0D;&#x80FD;&#x7ED1;&#x5B9A;&#x81F3;&#x7C7B;&#x578B;&#x4E0D;&#x540C;&#x7684;&#x53D8;&#x91CF;&#x548C;&#x5B57;&#x9762;&#x503C;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> pi = <span class="number">3.14</span>;</span><br><span class="line"><span class="comment">// double *ptr = &amp;pi;//error,pointer must be pointer to const</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> *cptr = &amp;pi;</span><br><span class="line"><span class="comment">// *cptr = 42; //error,can&apos;t modify const value</span></span><br><span class="line"><span class="keyword">double</span> dval = <span class="number">3.14</span>;</span><br><span class="line">cptr = &amp;dval; <span class="comment">//can pointer to different variable</span></span><br><span class="line"><span class="comment">// const int *iptr = &amp;dval;//error,can&apos;t point to differnet type</span></span><br></pre></td></tr></table></figure>
+<p>pointer to const&#x53EA;&#x662F;&#x9650;&#x5236;&#x4E86;&#x4E0D;&#x80FD;&#x901A;&#x8FC7;&#x8BE5;&#x6307;&#x9488;&#x5BF9;&#x53D8;&#x91CF;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#xFF08;&#x8FD9;&#x4E00;&#x70B9;&#x5982;&#x540C;const refernece&#xFF09;&#x3002;&#x4F46;&#x662F;&#x5BF9;&#x6307;&#x9488;&#x672C;&#x8EAB;&#x7684;&#x503C;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#xFF08;reference&#x4E0D;&#x884C;&#xFF0C;&#x65E0;&#x8BBA;&#x662F;&#x4E0D;&#x662F;const&#x7684;&#xFF09;&#x3002;</p>
+<h4 id="const-pointers">const Pointers</h4>
+<p>&#x5982;&#x679C;&#x8981;&#x9650;&#x5B9A;&#x6307;&#x9488;&#x672C;&#x8EAB;&#x7684;&#x503C;&#x4E0D;&#x88AB;&#x4FEE;&#x6539;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;const Pointers&#x3002;const Pointer&#x662F;&#x5728;&#x6307;&#x9488;&#x7B26;&#x53F7;*&#x540E;&#x52A0;&#x4E0A;const&#x3002; const pointers&#x5FC5;&#x987B;&#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<p><span class="math display">\[
+\begin{cases}
+  \text{pointer to const} &amp; \text{&#x4E0D;&#x80FD;&#x901A;&#x8FC7;&#x8BE5;&#x6307;&#x9488;&#x4FEE;&#x6539;&#x7ED1;&#x5B9A;&#x7684;&#x5185;&#x5BB9;} \\\\
+  \text{const pointer} &amp; \text{&#x4E0D;&#x80FD;&#x4FEE;&#x6539;&#x6307;&#x9488;&#x672C;&#x8EAB;}
+\end{cases}
+\]</span></p>
+<p>&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> errorNum = <span class="number">0</span>, warningNum = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// int *const curErr;//error, must be initialized.</span></span><br><span class="line"><span class="keyword">int</span> *<span class="keyword">const</span> curErr = &amp;errorNum;</span><br><span class="line"><span class="comment">// curErr = &amp;warningNum; // can not change pointer value</span></span><br><span class="line">*curErr = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> pi = <span class="number">3.14</span>;</span><br><span class="line"><span class="keyword">double</span> p = <span class="number">3.1415</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> *<span class="keyword">const</span> pip = &amp;pi;</span><br><span class="line"><span class="comment">// pip = &amp;p; //error,can not change pointer value</span></span><br><span class="line"><span class="comment">// *pip = 2.0; //error,can not const variable value</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="top-level-const">Top-Level const</h3>
+<p>&#x4F7F;&#x7528;&#x672F;&#x8BED;<code>top-level const</code>&#x6765;&#x8868;&#x793A;&#x672C;&#x8EAB;&#x662F;const,&#x4F7F;&#x7528;&#x672F;&#x8BED;<code>low-level const</code>&#x8868;&#x793A;&#x6307;&#x5411;&#x7684;&#x503C;&#x662F;const&#x7C7B;&#x578B;&#x3002;</p>
+<p>&#x66F4;&#x5BBD;&#x6CDB;&#x7684;&#x8BF4;&#xFF0C;&#x4EFB;&#x4F55;&#x7C7B;&#x578B;&#x90FD;&#x53EF;&#x4EE5;&#x662F;top-level const&#x7684;&#xFF0C;&#x590D;&#x5408;&#x7C7B;&#x578B;&#x5982;&#x5F15;&#x7528;&#x548C;&#x6307;&#x9488;&#x53EF;&#x4EE5;&#x662F;low-level const&#x7684;&#x3002;&#x800C;&#x6307;&#x9488;&#x4E0E;&#x5176;&#x4ED6;&#x7C7B;&#x578B;&#x4E0D;&#x540C;&#xFF0C;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x662F;top-level&#x548C;low-level&#x7684;const&#x3002;</p>
+<p>&#x5F53;&#x62F7;&#x8D1D;top-level const&#x7C7B;&#x578B;&#x7684;&#x53D8;&#x91CF;&#x65F6;&#xFF0C;top-level const&#x5C5E;&#x6027;&#x4F1A;&#x88AB;&#x65E0;&#x89C6;&#x3002;&#x800C;low-level const&#x5219;&#x5FC5;&#x987B;&#x6EE1;&#x8DB3;&#xFF0C;&#x5373;&#x88AB;&#x62F7;&#x8D1D;&#x7684;&#x5BF9;&#x8C61;&#x548C;&#x63A5;&#x7EB3;&#x62F7;&#x8D1D;&#x6570;&#x636E;&#x7684;&#x5BF9;&#x8C61;&#x90FD;&#x5FC5;&#x987B;&#x6709;&#x76F8;&#x540C;&#x7684;low-level const&#x5C5E;&#x6027;&#x6216;&#x8005;&#x5B83;&#x4EEC;&#x7684;&#x7C7B;&#x578B;&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#xFF0C;&#x901A;&#x5E38;non-const&#x53EF;&#x4EE5;&#x8F6C;&#x6362;&#x81F3;const&#xFF0C;&#x4F46;&#x662F;const&#x4E0D;&#x80FD;&#x8F6C;&#x6362;&#x81F3;non-const&#x3002;</p>
+<p>top-level const&#x548C;low-level const&#x7684;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> *<span class="keyword">const</span> pi = &amp;i;  <span class="comment">//pi is top level const</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = <span class="number">42</span>;   <span class="comment">//top level const</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *p2 = &amp;ci; <span class="comment">//low level const</span></span><br><span class="line"><span class="comment">// int *p3 = p2;	//error,differnt low level const,and const can&apos;t convert to nonconst</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *<span class="keyword">const</span> p4 = p2; <span class="comment">//both top and low level const</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r1 = ci;		  <span class="comment">//low level const</span></span><br><span class="line"><span class="comment">// int &amp;r2 = ci;	//error,differnt low level const,and const can&apos;t convert to nonconst</span></span><br><span class="line">i = ci;			   <span class="comment">//high level const of ci is ignored</span></span><br><span class="line">p2 = p4;		   <span class="comment">//high level of p4 is ignored</span></span><br><span class="line">p2 = &amp;i;		   <span class="comment">//although different low level const,but nonconst can convert to const</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;r3 = i; <span class="comment">//although different low level const,but nonconst can convert to const</span></span><br></pre></td></tr></table></figure>
+<h3 id="constexpr-and-constant-expressions">constexpr and Constant Expressions</h3>
+<p>//TODO</p>
+<h2 id="dealing-with-types">Dealing with Types</h2>
+<h3 id="type-aliases">Type Aliases</h3>
+<p>&#x7C7B;&#x578B;&#x522B;&#x540D;&#xFF08;Type Aliases&#xFF09;&#x662F;&#x7528;&#x6765;&#x7ED9;&#x53E6;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x65B0;&#x540D;&#x5B57;&#x3002;&#x53EF;&#x4EE5;&#x7528;<code>typedef</code>&#x5173;&#x952E;&#x5B57;&#x548C;<code>using</code>&#x5173;&#x952E;&#x5B57;&#xFF08;C++11&#x7279;&#x6027;&#xFF09;&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> wages; <span class="comment">//wages is a synonym for double</span></span><br><span class="line"><span class="keyword">using</span> base = wages;   <span class="comment">//base is a synonym for wages(double)</span></span><br><span class="line">base b = <span class="number">3.14</span>;</span><br><span class="line">wages w = b;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; b &lt;&lt; <span class="string">&quot;  &quot;</span> &lt;&lt; w &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//3.14  3.14</span></span><br></pre></td></tr></table></figure>
+<h4 id="pointers-const-and-type-aliases">Pointers, const, and Type Aliases</h4>
+<p>&#x4E5F;&#x53EF;&#x4EE5;&#x5BF9;&#x7C7B;&#x578B;&#x7684;&#x6307;&#x9488;&#x4F7F;&#x7528;&#x522B;&#x540D;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> value1 = <span class="number">15</span>, value2 = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> *pInt;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">const</span> <span class="keyword">int</span> *cpInt;</span><br><span class="line"><span class="keyword">const</span> pInt p = &amp;value1;<span class="comment">//equals to int *const p=&amp;value1;</span></span><br><span class="line">cpInt cp = &amp;value1;<span class="comment">//equals to const int *cp=&amp;value1;</span></span><br><span class="line"><span class="comment">// *cp = 20; //error, cp is pointer to const int</span></span><br><span class="line">*p = <span class="number">20</span>; <span class="comment">// p is int* const</span></span><br><span class="line"><span class="comment">// p = &amp;value2; //error,p is int * const</span></span><br></pre></td></tr></table></figure>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x5206;&#x8FA8;&#x6307;&#x9488;&#x522B;&#x540D;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x5982;&#x5728;&#x4E0A;&#x4F8B;&#x4E2D;&#xFF0C;&#x5B9A;&#x4E49;&#x4E86;<code>pInt</code>&#x7C7B;&#x578B;&#x4E3A;pointer to int&#xFF0C;&#x90A3;&#x4E48;const pInt&#x8FD8;&#x662F;&#x4FEE;&#x9970;&#x6307;&#x9488;&#x7684;&#xFF0C;&#x5373;&#x5176;&#x7C7B;&#x578B;&#x5E94;&#x8BE5;&#x662F;<code>int * const</code>,&#x4E3A;const pointer to int</p>
+<h3 id="the-auto-type-specifier">The auto Type Specifier</h3>
+<p>auto&#x5173;&#x952E;&#x5B57;&#x662F;C++11&#x7684;&#x7279;&#x6027;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;auto&#x6765;&#x8BA9;&#x7F16;&#x8BD1;&#x5668;&#x81EA;&#x52A8;&#x8BC6;&#x522B;&#x53D8;&#x91CF;&#x7684;&#x7C7B;&#x578B;&#x3002;&#x53D8;&#x91CF;&#x7684;&#x7C7B;&#x578B;&#x662F;&#x7531;&#x521D;&#x59CB;&#x5316;&#x6570;&#x503C;&#x51B3;&#x5B9A;&#x7684;&#x3002;&#x5373;&#x4F7F;&#x7528;&#x4E86;auto&#x7684;&#x8BDD;&#xFF0C;&#x5FC5;&#x987B;&#x5BF9;&#x53D8;&#x91CF;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<ul>
+<li>C++&#x662F;&#x9759;&#x6001;&#x8BED;&#x8A00;&#xFF0C;&#x6240;&#x4EE5;auto&#x53EA;&#x662F;&#x8BA9;&#x7F16;&#x8BD1;&#x5668;&#x8BC6;&#x522B;&#x51FA;&#x53D8;&#x91CF;&#x7C7B;&#x578B;&#xFF0C;&#x4F46;&#x53D8;&#x91CF;&#x7C7B;&#x578B;&#x5728;&#x8FD0;&#x884C;&#x65F6;&#x4ECD;&#x7136;&#x662F;&#x4E0D;&#x53EF;&#x6539;&#x53D8;&#x7684;&#x3002;</li>
+</ul>
+<p>&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x58F0;&#x660E;&#x8BED;&#x53E5;&#x4E2D;&#xFF0C;auto&#x5FC5;&#x987B;&#x6307;&#x4EE3;&#x540C;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> i = <span class="number">0</span>, *p = &amp;i; <span class="comment">//i is int, p is int*</span></span><br><span class="line"><span class="comment">// auto sz = 0, pi = 3.14; //error, sz is int but pi is double</span></span><br></pre></td></tr></table></figure>
+<h4 id="compound-typesconstand-auto">Compound Types,const,and auto</h4>
+<p>&#x5728;&#x590D;&#x5408;&#x7C7B;&#x578B;&#x4E0B;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x5E76;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;auto&#x5173;&#x952E;&#x5B57;&#x89E3;&#x6790;&#x51FA;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x4E0E;&#x521D;&#x59CB;&#x503C;&#x7684;&#x7C7B;&#x578B;&#x4E00;&#x81F4;&#x3002;</p>
+<p>&#x5982;&#x4F7F;&#x7528;&#x5F15;&#x7528;&#x6765;&#x521D;&#x59CB;&#x5316;auto&#x7C7B;&#x578B;&#xFF0C;&#x4F1A;&#x5F97;&#x5230;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x7ED1;&#x5B9A;&#x7684;&#x503C;&#x7684;&#x7C7B;&#x578B;&#x3002;&#x800C;&#x4E14;auto&#x7C7B;&#x578B;&#x4F1A;&#x65E0;&#x89C6;top level const,&#x5982;&#x679C;&#x8981;&#x4FDD;&#x7559;&#x7684;&#x8BDD;&#x9700;&#x8981;&#x663E;&#x793A;&#x7684;&#x4F7F;&#x7528;const&#xFF0C;&#x4F46;&#x5F53;&#x5BF9;top level const&#x4F7F;&#x7528;&#x5F15;&#x7528;&#x65F6;&#xFF0C;top level const&#x4E0D;&#x4F1A;&#x88AB;&#x65E0;&#x89C6;&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>, &amp;r = i;</span><br><span class="line"><span class="keyword">auto</span> a = r; <span class="comment">//a is int not int reference because r is alias for i</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = i, &amp;cr = i; <span class="comment">//ci is const int,cr is const int reference</span></span><br><span class="line"><span class="keyword">auto</span> b = ci;			   <span class="comment">//b is int</span></span><br><span class="line"><span class="keyword">auto</span> d = &amp;i;			   <span class="comment">//d is int*</span></span><br><span class="line"><span class="keyword">auto</span> e = &amp;ci;			   <span class="comment">//e is const int *</span></span><br><span class="line"><span class="keyword">auto</span> &amp;g = ci;			   <span class="comment">// g is const int reference</span></span><br><span class="line"><span class="comment">// auto &amp;h=42;//error</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">auto</span> &amp;h = <span class="number">42</span>; <span class="comment">//can bind const reference to literal</span></span><br><span class="line"><span class="keyword">auto</span> &amp;m = i, k = ci;	<span class="comment">//although i is int while ci is const int,but the top-level constis ignored</span></span><br><span class="line"><span class="comment">// auto &amp;n = i, *p2 = &amp;ci; //error,while using reference, top-level const is not ignored</span></span><br></pre></td></tr></table></figure>
+<p>&#x6709;&#x51E0;&#x4E2A;&#x8BED;&#x53E5;&#x9700;&#x8981;&#x7279;&#x522B;&#x6CE8;&#x610F;&#xFF0C;&#x9996;&#x5148;&#x662F;<code>auto e = &amp;ci</code>&#xFF0C;&#x8FD9;&#x91CC;&#x5BF9;const int&#x7684;ci&#x4F7F;&#x7528;&#x4E86;&#x5F15;&#x7528;&#xFF0C;&#x6240;&#x4EE5;const&#x4FDD;&#x7559;&#xFF0C;&#x5373;e&#x7C7B;&#x578B;&#x4E3A;const int&#xFF0C;&#x540C;&#x7406;&#x8FD8;&#x6709;<code>auto &amp;g = ci</code>,g&#x4E5F;&#x540C;&#x6837;&#x662F;const int reference&#x3002;</p>
+<p>&#x8FD8;&#x6709;&#x8BED;&#x53E5;<code>auto &amp;m = i, k = ci</code>&#xFF0C;&#x867D;&#x7136;i&#x548C;ci&#x7684;&#x7C7B;&#x578B;&#x4E0D;&#x540C;&#xFF0C;&#x4F46;&#x662F;&#x56E0;&#x4E3A;top level const&#x88AB;&#x65E0;&#x89C6;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x4ECD;&#x7136;&#x53EF;&#x4EE5;&#x653E;&#x5728;&#x4E00;&#x8D77;&#x88AB;&#x5B9A;&#x4E49;&#x3002;&#x800C;<code>auto &amp;n = i, *p2 = &amp;ci</code>&#x4E2D;&#x56E0;&#x4E3A;&#x5BF9;ci&#x4F7F;&#x7528;&#x4E86;&#x5F15;&#x7528;&#x7B26;&#x53F7;&#xFF0C;&#x6240;&#x4EE5;top level const&#x88AB;&#x4FDD;&#x7559;&#xFF0C;i&#x548C;ci&#x7C7B;&#x578B;&#x4E0D;&#x540C;&#xFF0C;&#x56E0;&#x6B64;&#x65E0;&#x6CD5;&#x5728;&#x4E00;&#x8D77;&#x5B9A;&#x4E49;&#x3002;</p>
+<h3 id="the-decltype-type-specifier">The decltype Type Specifier</h3>
+<p>&#x6709;&#x65F6;&#x5E0C;&#x671B;&#x7F16;&#x8BD1;&#x5668;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x4E00;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x6765;&#x81EA;&#x52A8;&#x5224;&#x5B9A;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x4F46;&#x5374;&#x4E0D;&#x5E0C;&#x671B;&#x7528;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x6765;&#x521D;&#x59CB;&#x5316;&#x53D8;&#x91CF;&#x3002;&#x8FD9;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>decltype</code>&#x5173;&#x952E;&#x5B57;&#xFF0C;&#x8BE5;&#x5173;&#x952E;&#x5B57;&#x662F;C++11&#x7684;&#x7279;&#x6027;&#xFF0C;&#x4F7F;&#x7528;&#x5982;&#x4E0B;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">decltype</span>(getSize_Literal()) size;</span><br></pre></td></tr></table></figure>
+<p>&#x4F46;&#x9700;&#x8981;&#x7279;&#x522B;&#x8BF4;&#x660E;&#x7684;&#xFF0C;&#x5F53;decltype&#x4F20;&#x5165;&#x7684;&#x662F;<em>&#x53D8;&#x91CF;</em>&#x65F6;&#xFF0C;decltype&#x5BF9;top level const&#x548C;&#x5F15;&#x7528;&#x7684;&#x5904;&#x7406;&#x4E0E;auto&#x4E0D;&#x4E00;&#x6837;&#xFF0C;auto&#x9ED8;&#x8BA4;&#x4F1A;&#x65E0;&#x89C6;&#x8FD9;&#x4E9B;&#xFF0C;&#x4F46;&#x662F;decltype&#x5219;&#x5168;&#x90E8;&#x4FDD;&#x7559;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = <span class="number">0</span>, &amp;cj = ci;</span><br><span class="line"><span class="keyword">decltype</span>(ci) x = <span class="number">0</span>; <span class="comment">// x is const int</span></span><br><span class="line"><span class="keyword">auto</span> xx = ci;<span class="comment">//xx is int</span></span><br><span class="line"><span class="keyword">decltype</span>(cj) y = x; <span class="comment">//y is int reference</span></span><br><span class="line"><span class="comment">// decltype(cj) yy; //yy is int reference, must be initialized</span></span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x4F8B;&#x4E2D;&#x7684;y&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;int&#x7684;&#x5F15;&#x7528;&#x6240;&#x4EE5;&#x5FC5;&#x987B;&#x8981;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;C++&#x8BED;&#x8A00;&#x4E2D;&#x552F;&#x4E00;&#x7684;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x4E0D;&#x8868;&#x73B0;&#x4E3A;&#x53E6;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x7684;&#x522B;&#x540D;&#xFF0C;&#x800C;&#x771F;&#x7684;&#x5C06;&#x5176;&#x89C6;&#x4E3A;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x7684;&#x60C5;&#x51B5;&#x3002;</p>
+<h4 id="decltype-and-reference">decltype and Reference</h4>
+<p>&#x5F53;decltype&#x4F20;&#x5165;&#x7684;&#x662F;&#x8868;&#x8FBE;&#x5F0F;&#x65F6;&#xFF0C;&#x5982;&#x679C;&#x8868;&#x8FBE;&#x5F0F;&#x8FD4;&#x56DE;&#x7684;&#x503C;&#x53EF;&#x4EE5;&#x4F5C;&#x4E3A;&#x8D4B;&#x503C;&#x64CD;&#x4F5C;&#x7684;&#x5DE6;&#x53C2;&#x6570;&#xFF0C;&#x90A3;&#x4E48;decltype&#x7684;&#x5224;&#x65AD;&#x7C7B;&#x578B;&#x5C06;&#x662F;&#x8FD4;&#x56DE;&#x7C7B;&#x578B;&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>, *p = &amp;i, &amp;r = i;</span><br><span class="line"><span class="keyword">decltype</span>(r) b = i;  <span class="comment">//b is int reference</span></span><br><span class="line"><span class="keyword">decltype</span>(r + <span class="number">0</span>) bb; <span class="comment">//bb is int,because r + 0 is a expression and result is literal</span></span><br><span class="line"><span class="keyword">decltype</span>(p) c;		<span class="comment">// c is int pointer</span></span><br><span class="line"><span class="comment">// decltype(*p) cc;//error,*p is a expression and *p can be the left hand side of assignment,cc is int&amp;</span></span><br></pre></td></tr></table></figure>
+<p>&#x5982;&#x4E0A;&#x5F0F;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#x8FD4;&#x56DE;&#x666E;&#x901A;&#x7C7B;&#x578B;&#xFF0C;&#x5C06;&#x5176;&#x5199;&#x6210;&#x8FD4;&#x56DE;&#x5B57;&#x9762;&#x503C;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x5373;&#x53EF;&#x3002;&#x4E14;&#x5982;&#x4E0A;&#x5F0F;&#x4E2D;&#xFF0C;<code>p</code>&#x662F;&#x53C2;&#x6570;&#xFF0C;&#x6240;&#x4EE5;&#x5224;&#x65AD;&#x7684;&#x7C7B;&#x578B;&#x662F;&#x53C2;&#x6570;&#x672C;&#x8EAB;&#x7684;&#x7C7B;&#x578B;&#x5373;int&#x6307;&#x9488;&#xFF0C;&#x800C;*p&#x662F;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x4E14;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x662F;int&#xFF0C;&#x56E0;&#x6B64;&#x6700;&#x7EC8;&#x7ED3;&#x679C;&#x662F;int &amp;</p>
+<p>&#x6CE8;&#x610F;&#x666E;&#x901A;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x662F;&#x5B57;&#x9762;&#x503C;&#xFF0C;&#x5982;&#x4E0B;&#x51FD;&#x6570;&#x770B;&#x8D77;&#x6765;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x4F46;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x8BE5;&#x53D8;&#x91CF;&#x503C;&#x7684;&#x5B57;&#x9762;&#x503C;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getSize_Int</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x6B64;&#x5F62;&#x5982;<code>decltype(getSize_Int()) size;</code>,size&#x7684;&#x7C7B;&#x578B;&#x4E3A;Int,&#x56E0;&#x4E3A;&#x8FD4;&#x56DE;&#x7684;&#x5B57;&#x9762;&#x503C;&#x65E0;&#x6CD5;&#x4F5C;&#x4E3A;&#x5DE6;&#x53C2;&#x6570;&#x3002;</p>
+<p>&#x53E6;&#x5916;&#x5728;decltype&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x666E;&#x901A;&#x53C2;&#x6570;&#x5916;&#x6709;&#x989D;&#x5916;&#x7684;&#x62EC;&#x53F7;&#xFF0C;&#x5219;&#x4E5F;&#x4F1A;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">decltype</span>(i) d; <span class="comment">// d is uninitialized int</span></span><br><span class="line"><span class="comment">// decltype((i)) dd;//error,(i) is expression and i can be left hand side, so dd is int&amp;</span></span><br></pre></td></tr></table></figure>
+<h2 id="defining-our-own-data-structures">Defining Our Own Data Structures</h2>
+<h3 id="defining-the-sales_data-type">Defining the Sales_Data Type</h3>
+<p>&#x5728;&#x7C7B;&#x4E0E;&#x7ED3;&#x6784;&#x4F53;&#x7684;&#x5B9A;&#x4E49;&#x4E3B;&#x4F53;&#x540E;&#x53EF;&#x76F4;&#x63A5;&#x58F0;&#x660E;&#x5BF9;&#x8C61;&#xFF0C;&#x867D;&#x7136;&#x901A;&#x5E38;&#x4E0D;&#x8FD9;&#x6837;&#x505A;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sales_data</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">string</span> bookNo;</span><br><span class="line">	<span class="keyword">unsigned</span> units_sold = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">double</span> revenue = <span class="number">0.0</span>;</span><br><span class="line">} accum, trans, *salesptr;</span><br></pre></td></tr></table></figure>
+<p>&#x4F46;&#x901A;&#x5E38;&#x5C06;&#x7C7B;&#x4E0E;&#x7ED3;&#x6784;&#x4F53;&#x7684;&#x5B9A;&#x4E49;&#x548C;&#x76F8;&#x5173;&#x5BF9;&#x8C61;&#x7684;&#x58F0;&#x660E;&#x5206;&#x5F00;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sales_data</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">string</span> bookNo;</span><br><span class="line">	<span class="keyword">unsigned</span> units_sold = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">double</span> revenue = <span class="number">0.0</span>;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">Sales_data accum, trans, *salesptr;</span><br></pre></td></tr></table></figure>
+<h4 id="class-data-menbers">Class Data Menbers</h4>
+<p>&#x7ED3;&#x6784;&#x4F53;&#x4E2D;&#x7684;&#x53D8;&#x91CF;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x521D;&#x59CB;&#x503C;&#xFF0C;&#x5C06;&#x4F1A;&#x9ED8;&#x8BA4;&#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<p>&#x800C;&#x5982;&#x540C;<code>double revenue = 0.0</code>&#x8FD9;&#x6837;&#x5728;&#x7C7B;&#x7684;&#x5185;&#x90E8;&#x5B9A;&#x4E49;&#x53D8;&#x91CF;&#x65F6;&#x76F4;&#x63A5;&#x8D4B;&#x4E88;&#x521D;&#x503C;&#xFF0C;&#x79F0;&#x4E3A;&#x7C7B;&#x5185;&#x521D;&#x59CB;&#x5316;&#xFF08;in-class initializer&#xFF09;&#x3002;&#x8FD9;&#x4E5F;&#x662F;C++11&#x7684;&#x7279;&#x6027;&#x3002;</p>
+<h3 id="using-the-sales_data-class">Using the Sales_data Class</h3>
+<p>&#x65E0;&#x91CD;&#x8981;&#x5185;&#x5BB9;</p>
+<h3 id="writing-our-own-header-files">Writing Our Own Header Files</h3>
+<p>&#x901A;&#x5E38;&#x7C7B;&#x662F;&#x5728;&#x51FD;&#x6570;&#x5916;&#x5B9A;&#x4E49;&#x7684;&#xFF08;&#x5728;19.7&#x8282;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5728;&#x51FD;&#x6570;&#x5185;&#x5B9A;&#x4E49;&#x7C7B;&#x7684;&#x65B9;&#x6CD5;&#xFF09;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x7C7B;&#x7684;&#x5B9A;&#x4E49;&#x5728;&#x6BCF;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#x662F;&#x76F8;&#x540C;&#x7684;&#xFF0C;&#x5728;&#x5934;&#x6587;&#x4EF6;&#x4E2D;&#x5B9A;&#x4E49;&#x7C7B;&#x3002;&#x901A;&#x5E38;&#x6765;&#x8BF4;&#x5934;&#x6587;&#x4EF6;&#x7684;&#x540D;&#x5B57;&#x4E0E;&#x5176;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x7C7B;&#x540D;&#x5B57;&#x76F8;&#x540C;&#x3002;</p>
+<p>&#x56E0;&#x4E3A;&#x5934;&#x6587;&#x4EF6;&#x5728;&#x591A;&#x6B21;&#x5F15;&#x7528;&#xFF08;include&#xFF09;&#xFF0C;&#x6240;&#x4EE5;&#x5FC5;&#x987B;&#x6709;&#x4E00;&#x4E2A;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x4FDD;&#x8BC1;&#x5373;&#x4F7F;&#x5934;&#x6587;&#x4EF6;&#x591A;&#x6B21;&#x88AB;&#x5F15;&#x7528;&#xFF0C;&#x7C7B;&#x7684;&#x5B9A;&#x4E49;&#x4E5F;&#x4E0D;&#x4F1A;&#x91CD;&#x590D;&#x3002;</p>
+<h3 id="a-brief-introduction-to-the-preprocessor">A Brief Introduction to the Preprocessor</h3>
+<p>&#x901A;&#x5E38;&#x4FDD;&#x8BC1;&#x5934;&#x6587;&#x4EF6;&#x53EF;&#x4EE5;&#x88AB;&#x5B89;&#x5168;&#x591A;&#x6B21;&#x5F15;&#x7528;&#x7684;&#x65B9;&#x6CD5;&#x662F;&#x9884;&#x5904;&#x7406;&#x5668;&#xFF08;preprocessor&#xFF09;&#x3002;C++&#x7684;&#x9884;&#x5904;&#x7406;&#x5668;&#x7EE7;&#x627F;&#x81EA;C&#x8BED;&#x8A00;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x5728;&#x7F16;&#x8BD1;&#x5668;&#x524D;&#x8FD0;&#x884C;&#x7684;&#x7A0B;&#x5E8F;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#x90E8;&#x5206;&#x6E90;&#x7801;&#x5185;&#x5BB9;&#x3002;</p>
+<p>&#x5F53;&#x9884;&#x5904;&#x7406;&#x5668;&#x770B;&#x5230;<code>#include xxx</code>&#x65F6;&#xFF0C;&#x5B83;&#x4F1A;&#x5C06;<code>#include xxx</code>&#x66FF;&#x6362;&#x4E3A;&#x6307;&#x5B9A;&#x5934;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x3002;</p>
+<p>C++&#x4F7F;&#x7528;&#x9884;&#x5904;&#x7406;&#x5668;&#x6765;&#x5B9A;&#x4E49;&#x6587;&#x4EF6;&#x4FDD;&#x62A4;&#x7B26;&#xFF08;Header guards&#xFF09;&#xFF0C;&#x9884;&#x5904;&#x7406;&#x5668;&#x53D8;&#x91CF;&#x6709;&#x4E24;&#x4E2A;&#x53EF;&#x80FD;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5B9A;&#x4E49;&#xFF08;define&#xFF09;&#x548C;&#x672A;&#x5B9A;&#x4E49;&#xFF08;undefined&#xFF09;&#x3002;</p>
+<p><code>#define</code>&#x5173;&#x952E;&#x5B57;&#x52A0;&#x4E0A;&#x4E00;&#x4E2A;&#x540D;&#x5B57;&#x53EF;&#x76F4;&#x63A5;&#x5C06;&#x8FD9;&#x4E2A;&#x540D;&#x5B57;&#x5B9A;&#x4E49;&#x4E3A;&#x9884;&#x5904;&#x7406;&#x53D8;&#x91CF;&#x3002;&#x540C;&#x6837;&#xFF0C;&#x9884;&#x5904;&#x7406;&#x5668;&#x8FD8;&#x6709;&#x4E24;&#x4E2A;&#x5173;&#x952E;&#x5B57;&#x6765;&#x5224;&#x65AD;&#x53D8;&#x91CF;&#x662F;&#x5426;&#x88AB;&#x5B9A;&#x4E49;&#xFF0C;<code>#ifndef</code>&#x548C;<code>#ifdef</code>&#xFF0C;&#x524D;&#x8005;&#x5728;&#x53D8;&#x91CF;&#x672A;&#x5B9A;&#x4E49;&#x65F6;&#x4E3A;true&#xFF0C;&#x540E;&#x8005;&#x5728;&#x53D8;&#x91CF;&#x5B9A;&#x4E49;&#x65F6;&#x4E3A;true&#x3002;</p>
+<blockquote>
+<p>&#x6CE8;&#x610F;#define&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x662F;&#x6587;&#x4EF6;&#xFF0C;&#x6240;&#x4EE5;&#x4F7F;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;&#x53EA;&#x80FD;&#x4FDD;&#x8BC1;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5185;&#xFF0C;&#x4E0D;&#x4F1A;&#x591A;&#x6B21;include&#x540C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x3002;&#x4F46;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x6574;&#x4E2A;&#x7A0B;&#x5E8F;&#x53EA;include&#x4E00;&#x6B21;&#x3002;&#x5982;&#x7A0B;&#x5E8F;&#x6709;&#x591A;&#x4E2A;CPP&#x6587;&#x4EF6;&#xFF0C;&#x6BCF;&#x4E2A;&#x6587;&#x4EF6;&#x90FD;include&#x67D0;h&#x6587;&#x4EF6;&#xFF0C;&#x4E14;&#x8BE5;&#x6587;&#x4EF6;&#x5185;&#x6709;&#x5B9A;&#x4E49;&#xFF08;&#x975E;&#x58F0;&#x660E;&#xFF09;&#x53C2;&#x6570;&#xFF0C;&#x90A3;&#x4E48;&#x540C;&#x6837;&#x4F1A;&#x9020;&#x6210;&#x91CD;&#x590D;&#x5B9A;&#x4E49;&#x3002; &#x56E0;&#x6B64;&#xFF0C;&#x5C3D;&#x91CF;&#x4E0D;&#x8981;&#x5728;&#x5934;&#x6587;&#x4EF6;&#x4E2D;&#x8FDB;&#x884C;&#x4EFB;&#x4F55;&#x51FD;&#x6570;&#x6216;&#x53D8;&#x91CF;&#x7684;&#x5B9A;&#x4E49;&#x3002;&#x9664;&#x975E;&#x662F;&#x5185;&#x8054;&#x51FD;&#x6570;&#x7684;&#x5B9A;&#x4E49;&#x3002;</p>
+</blockquote>
+<p>&#x5F53;<code>#ifndef</code>&#x548C;<code>#ifdef</code>&#x4E3A;true&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5B83;&#x4EEC;&#x540E;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x4F1A;&#x4E00;&#x76F4;&#x6267;&#x884C;&#xFF0C;&#x76F4;&#x5230;&#x9047;&#x5230;<code>#endif</code>&#x5173;&#x952E;&#x5B57;&#x3002;</p>
+<p>&#x5982;&#x4E00;&#x4E2A;&#x5E26;&#x6709;&#x6587;&#x4EF6;&#x4FDD;&#x62A4;&#x7B26;&#x7684;&#x5934;&#x6587;&#x4EF6;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> SALES_DATA_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SALES_DATA_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sales_data</span></span></span><br><span class="line"><span class="class">{</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> bookNo;</span><br><span class="line">    <span class="keyword">unsigned</span> units_sold;</span><br><span class="line">    <span class="keyword">double</span> revenue;</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x5F15;&#x5165;&#x8BE5;&#x5934;&#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x8FD8;&#x6CA1;&#x6709;&#x5B9A;&#x4E49;&#x8FC7;<code>SALES_DATA_H</code>&#xFF0C;&#x6240;&#x4EE5;<code>ifndef</code>&#x4E3A;true&#x3002;&#x4F46;&#x7B2C;&#x4E8C;&#x6B21;&#x5F15;&#x5165;&#x65F6;&#x56E0;&#x4E3A;<code>#define</code>&#x8BED;&#x53E5;&#x7684;&#x6267;&#x884C;&#xFF0C;<code>ifndef</code>&#x4E3A;false&#xFF0C;&#x5373;&#x4E4B;&#x540E;&#x7684;&#x8BED;&#x53E5;&#x4E0D;&#x4F1A;&#x518D;&#x88AB;&#x6267;&#x884C;&#xFF0C;&#x4E5F;&#x5C31;&#x4E0D;&#x4F1A;&#x6709;&#x7C7B;&#x7684;&#x91CD;&#x590D;&#x5B9A;&#x4E49;&#x3002;</p>
+<p>&#x9884;&#x5904;&#x7406;&#x5668;&#x53D8;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4E0E;C++&#x53D8;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4E0D;&#x540C;&#xFF0C;&#x9884;&#x5904;&#x7406;&#x5668;&#x53D8;&#x91CF;&#x7684;&#x540D;&#x79F0;&#x5FC5;&#x987B;&#x5728;&#x6574;&#x4E2A;&#x7A0B;&#x5E8F;&#x4E2D;&#x90FD;&#x662F;&#x72EC;&#x4E00;&#x65E0;&#x4E8C;&#x7684;&#x3002;&#x901A;&#x5E38;&#x6765;&#x8BF4;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x91CD;&#x590D;&#xFF0C;&#x90FD;&#x6839;&#x636E;&#x5934;&#x6587;&#x4EF6;&#x7684;&#x540D;&#x5B57;&#x5BF9;&#x9884;&#x5904;&#x7406;&#x5668;&#x53D8;&#x91CF;&#x53D6;&#x540D;&#xFF0C;&#x4E14;&#x4E00;&#x822C;&#x90FD;&#x662F;&#x5168;&#x5927;&#x5199;&#x3002;</p>
+<ul>
+<li>&#x867D;&#x7136;&#x4E0D;&#x662F;&#x5F3A;&#x5236;&#x89C4;&#x5B9A;&#xFF0C;&#x4F46;&#x5EFA;&#x8BAE;&#x6BCF;&#x4E2A;&#x5934;&#x6587;&#x4EF6;&#x90FD;&#x5E26;&#x6709;&#x6587;&#x4EF6;&#x4FDD;&#x62A4;&#x7B26;&#x3002;</li>
+</ul>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>Cpp Primer</em> 5th Aug.2012</li><li><a href="CPPPrimer-Chapter2-Notes/%22https://kb.iu.edu/d/aepu%22">Latin-1&#x5B57;&#x7B26;&#x96C6;</a></li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/CPPPrimer-Chapter2-Notes/" title="《C++ Primer》 第二章笔记">https://xuejiaw.github.io/CPPPrimer-Chapter2-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/IA-Chapter5-Notes/" rel="prev" title="《算法导论》 第五章笔记">
+      <i class="fa fa-chevron-left"></i> 《算法导论》 第五章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/CPPPrimer-Chapter3-Notes/" rel="next" title="《C++ Primer》 第三章笔记">
+      《C++ Primer》 第三章笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-2-variables-and-basic-types"><span class="nav-number">1.</span> <span class="nav-text">Chapter 2 Variables And Basic Types</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#primitive-built-in-types"><span class="nav-number">1.1.</span> <span class="nav-text">Primitive Built-in-Types</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#arithmetic-types"><span class="nav-number">1.1.1.</span> <span class="nav-text">Arithmetic Types</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#signed-and-unsigned-types"><span class="nav-number">1.1.2.</span> <span class="nav-text">Signed and Unsigned Types</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#type-conversions"><span class="nav-number">1.1.3.</span> <span class="nav-text">Type Conversions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#expression-involving-unsigned-types"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">Expression Involving Unsigned Types</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#literals"><span class="nav-number">1.1.4.</span> <span class="nav-text">Literals</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#integar-and-floating-point-literals"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">Integar and Floating-Point Literals</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#character-and-character-string-literals"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">Character and Character String Literals</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#escape-sequences"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">Escape Sequences</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#specifying-the-type-of-a-literal"><span class="nav-number">1.1.4.4.</span> <span class="nav-text">Specifying the Type of a Literal</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#variables"><span class="nav-number">1.2.</span> <span class="nav-text">Variables</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#variable-definitions"><span class="nav-number">1.2.1.</span> <span class="nav-text">Variable Definitions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#initializers"><span class="nav-number">1.2.2.</span> <span class="nav-text">Initializers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list-initialization"><span class="nav-number">1.2.3.</span> <span class="nav-text">List initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#default-initialization"><span class="nav-number">1.2.4.</span> <span class="nav-text">Default Initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#variable-declarations-and-definitions"><span class="nav-number">1.2.5.</span> <span class="nav-text">Variable Declarations and Definitions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#identifiers"><span class="nav-number">1.2.6.</span> <span class="nav-text">Identifiers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scope-of-a-name"><span class="nav-number">1.2.7.</span> <span class="nav-text">Scope of a Name</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#nested-scopes"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">Nested scopes</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compound-types"><span class="nav-number">1.3.</span> <span class="nav-text">Compound Types</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#references"><span class="nav-number">1.3.1.</span> <span class="nav-text">References</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-reference-is-an-alias"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">A Reference Is an Alias</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reference-definitions"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">Reference Definitions</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pointers"><span class="nav-number">1.3.2.</span> <span class="nav-text">Pointers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#taking-the-address-of-an-object"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">Taking the Address of an Object</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pointer-value"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">Pointer Value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#using-a-pointer-to-access-an-object"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">Using a Pointer to Access an Object</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null-pointers"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">Null Pointers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#assignment-and-pointers"><span class="nav-number">1.3.2.5.</span> <span class="nav-text">Assignment and Pointers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#other-pointer-operations"><span class="nav-number">1.3.2.6.</span> <span class="nav-text">Other Pointer Operations</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#void-pointers"><span class="nav-number">1.3.2.7.</span> <span class="nav-text">void* Pointers</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#understanding-compound-type-declarations"><span class="nav-number">1.3.3.</span> <span class="nav-text">Understanding Compound Type Declarations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#defining-multiple-variables"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">Defining Multiple Variables</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pointers-to-pointers"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">Pointers to Pointers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reference-to-pointers"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">Reference to Pointers</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const-qualifier"><span class="nav-number">1.4.</span> <span class="nav-text">const Qualifier</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#initialization-and-const"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">Initialization and const</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#by-default-const-objects-are-local-to-a-file"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">By Default, const Objects Are Local to a File</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reference-to-const"><span class="nav-number">1.4.1.</span> <span class="nav-text">Reference to const</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#initialization-and-reference-to-const"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">Initialization and Reference to const</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#a-reference-to-const-may-refer-to-an-object-that-is-not-const"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">A Reference to const May Refer to an Object That is not const</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#points-and-const"><span class="nav-number">1.4.2.</span> <span class="nav-text">Points and const</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#const-pointers"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">const Pointers</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#top-level-const"><span class="nav-number">1.4.3.</span> <span class="nav-text">Top-Level const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constexpr-and-constant-expressions"><span class="nav-number">1.4.4.</span> <span class="nav-text">constexpr and Constant Expressions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dealing-with-types"><span class="nav-number">1.5.</span> <span class="nav-text">Dealing with Types</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#type-aliases"><span class="nav-number">1.5.1.</span> <span class="nav-text">Type Aliases</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pointers-const-and-type-aliases"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">Pointers, const, and Type Aliases</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-auto-type-specifier"><span class="nav-number">1.5.2.</span> <span class="nav-text">The auto Type Specifier</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#compound-typesconstand-auto"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">Compound Types,const,and auto</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-decltype-type-specifier"><span class="nav-number">1.5.3.</span> <span class="nav-text">The decltype Type Specifier</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#decltype-and-reference"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">decltype and Reference</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#defining-our-own-data-structures"><span class="nav-number">1.6.</span> <span class="nav-text">Defining Our Own Data Structures</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#defining-the-sales_data-type"><span class="nav-number">1.6.1.</span> <span class="nav-text">Defining the Sales_Data Type</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#class-data-menbers"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">Class Data Menbers</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#using-the-sales_data-class"><span class="nav-number">1.6.2.</span> <span class="nav-text">Using the Sales_data Class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#writing-our-own-header-files"><span class="nav-number">1.6.3.</span> <span class="nav-text">Writing Our Own Header Files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#a-brief-introduction-to-the-preprocessor"><span class="nav-number">1.6.4.</span> <span class="nav-text">A Brief Introduction to the Preprocessor</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

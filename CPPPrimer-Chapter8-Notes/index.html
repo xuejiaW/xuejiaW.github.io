@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xuejiaw.github.io","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x516B;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002;">
+<meta name="keywords" content="读书笔记,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《C++ Primer》 第八章笔记">
+<meta property="og:url" content="https://xuejiaw.github.io/CPPPrimer-Chapter8-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x516B;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter8-Notes/Ch_8.png">
+<meta property="og:updated_time" content="2020-09-24T12:43:29.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《C++ Primer》 第八章笔记">
+<meta name="twitter:description" content="&amp;#x300A;C++ Primer&amp;#x300B; &amp;#x7B2C;&amp;#x516B;&amp;#x7AE0;&amp;#x7B14;&amp;#x8BB0;&amp;#x3002;">
+<meta name="twitter:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter8-Notes/Ch_8.png">
+
+<link rel="canonical" href="https://xuejiaw.github.io/CPPPrimer-Chapter8-Notes/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《C++ Primer》 第八章笔记 | 三叔胡言乱语的地方</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">三叔胡言乱语的地方</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xuejiaw.github.io/CPPPrimer-Chapter8-Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/blackCat.jpg">
+      <meta itemprop="name" content="三叔">
+      <meta itemprop="description" content="To see the world as it is, and to love it.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="三叔胡言乱语的地方">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《C++ Primer》 第八章笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-14 07:07:55" itemprop="dateCreated datePublished" datetime="2020-05-14T07:07:55+08:00">2020-05-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 20:43:29" itemprop="dateModified" datetime="2020-09-24T20:43:29+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/计算机语言/" itemprop="url" rel="index"><span itemprop="name">计算机语言</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/CPPPrimer-Chapter8-Notes/" class="post-meta-item leancloud_visitors" data-flag-title="《C++ Primer》 第八章笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/CPPPrimer-Chapter8-Notes/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/CPPPrimer-Chapter8-Notes/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <p>&#x300A;C++ Primer&#x300B; &#x7B2C;&#x516B;&#x7AE0;&#x7B14;&#x8BB0;&#x3002;</p>
+<p><img src="/CPPPrimer-Chapter8-Notes/Ch_8.png" alt="&#x7B2C;&#x516B;&#x7AE0;&#x5185;&#x5BB9;" style="zoom:50%;"></p>
+
+          </blockquote>
+<a id="more"></a>
+<h1 id="chapter-8-the-io-library">Chapter 8 The IO Library</h1>
+<p>IO&#x5E93;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x7CFB;&#x5217;&#x8BFB;&#x53D6;&#x548C;&#x5199;&#x5165;&#x5185;&#x5EFA;&#x7C7B;&#x578B;&#x7684;&#x64CD;&#x4F5C;&#x3002;</p>
+<h2 id="the-io-classes">The IO Classes</h2>
+<p>&#x4E3A;&#x4E86;&#x5904;&#x7406;&#x4E0D;&#x540C;&#x7684;IO&#x64CD;&#x4F5C;&#xFF0C;IO&#x5E93;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x7CFB;&#x5217;&#x7684;IO&#x7C7B;&#x578B;&#xFF0C;&#x4ED6;&#x4EEC;&#x96C6;&#x4E2D;&#x5728;&#x4E09;&#x4E2A;&#x5934;&#x6587;&#x4EF6;&#x4E2D;&#xFF1A;<code>iostream</code>&#x4E2D;&#x5B9A;&#x4E49;&#x5217;&#x8BFB;&#x53D6;&#x548C;&#x5199;&#x5165;&#x6D41;&#xFF08;Steam&#xFF09;&#x7684;&#x57FA;&#x672C;&#x7C7B;&#x578B;&#xFF0C;<code>fstream</code>&#x5B9A;&#x4E49;&#x4E86;&#x8BFB;&#x53D6;&#x548C;&#x5199;&#x5165;&#x6587;&#x4EF6;&#x7684;&#x7C7B;&#x578B;&#xFF0C;<code>sstream</code>&#x5B9A;&#x4E49;&#x5217;&#x8BFB;&#x53D6;&#x548C;&#x5199;&#x5165;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x7C7B;&#x578B;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x5934;&#x6587;&#x4EF6;</th>
+<th>&#x7C7B;&#x578B;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>iostream</td>
+<td>istream,wistream &#x4ECE;&#x6D41;&#x4E2D;&#x8BFB;&#x53D6;</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ostream,wostream &#x5411;&#x6D41;&#x4E2D;&#x5199;&#x5165;</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>iostream,wiostream &#x5BF9;&#x6D41;&#x8BFB;&#x53D6;&#x548C;&#x5199;&#x5165;</td>
+</tr>
+<tr class="even">
+<td>fstream</td>
+<td>ifstream,wifstream &#x4ECE;&#x6587;&#x4EF6;&#x4E2D;&#x8BFB;&#x53D6;</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>ofstream,wofstream &#x5411;&#x6587;&#x4EF6;&#x4E2D;&#x5199;&#x5165;</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>fstream,wfstream &#x5BF9;&#x6587;&#x4EF6;&#x8BFB;&#x53D6;&#x548C;&#x5199;&#x5165;</td>
+</tr>
+<tr class="odd">
+<td>sstream</td>
+<td>istringstream,wistringstream &#x4ECE;string&#x4E2D;&#x8BFB;&#x53D6;</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>ostringstream,wostringstream &#x5411;string&#x4E2D;&#x5199;&#x5165;</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>stringstream,wstringstream &#x5BF9;string&#x8BFB;&#x53D6;&#x548C;&#x5199;&#x5165;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x4ECE;&#x8868;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x6BCF;&#x4E2A;&#x7C7B;&#x578B;&#x90FD;&#x6709;&#x4E00;&#x4E2A;<code>w</code>&#x7248;&#x672C;&#xFF0C;&#x8FD9;&#x4E2A;&#x7248;&#x672C;&#x662F;&#x9488;&#x5BF9;&#x5BBD;&#x5B57;&#x7B26;&#x5904;&#x7406;&#x7684;&#x3002;&#x5982;<code>cin,cout,cerr</code>&#x90FD;&#x6709;&#x5BF9;&#x5E94;&#x7684;<code>wcin,wcout,wcerr</code>&#x3002;</p>
+<h4 id="relationships-among-the-io-types">Relationships among the IO Types</h4>
+<p>IO&#x5E93;&#x7528;&#x7EE7;&#x627F;&#x6765;&#x5B9E;&#x73B0;&#x5BF9;&#x4E8E;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;<code>ifstream</code>&#x548C;<code>istringstream</code>&#x90FD;&#x662F;&#x7EE7;&#x627F;&#x81EA;<code>istream</code>&#xFF0C;&#x56E0;&#x6B64;&#x6240;&#x6709;&#x5BF9;&#x4E8E;<code>istream</code>&#x7684;&#x64CD;&#x4F5C;&#x90FD;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5728;<code>ifstream</code>&#x548C;<code>istringstream</code>&#x4E0A;&#x3002;</p>
+<h3 id="no-copy-or-assign-for-io-objects">No Copy or Assign for IO Objects</h3>
+<p>IO&#x7C7B;&#x578B;&#x4E0D;&#x652F;&#x6301;&#x8D4B;&#x503C;&#x548C;&#x62F7;&#x8D1D;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ofstream out1, out2;</span><br><span class="line"><span class="comment">// out1 = out2; //error, cannot assign stream objects</span></span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x6B64;&#x65E0;&#x6CD5;&#x5C06;IO&#x7C7B;&#x578B;&#x4F5C;&#x4E3A;&#x51FD;&#x6570;&#x7684;&#x5F62;&#x53C2;&#x548C;&#x8FD4;&#x56DE;&#x503C;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x4F7F;&#x7528;IO&#x7C7B;&#x578B;&#x7684;&#x5F15;&#x7528;&#x6765;&#x8868;&#x793A;&#x3002;&#x8BFB;&#x5199;IO&#x7C7B;&#x578B;&#x90FD;&#x4F1A;&#x6539;&#x53D8;&#x5176;&#x72B6;&#x6001;&#xFF0C;&#x6240;&#x4EE5;&#x901A;&#x5E38;&#x4E5F;&#x4E0D;&#x4F1A;&#x5C06;&#x4F20;&#x9012;&#x7684;IO&#x7C7B;&#x578B;&#x53D8;&#x4E3A;const reference&#x3002;</p>
+<h3 id="condition-states">Condition States</h3>
+<p>&#x4E00;&#x65E6;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x53D1;&#x751F;&#xFF0C;&#x4E4B;&#x540E;&#x5BF9;&#x4E8E;IO&#x7C7B;&#x578B;&#x7684;&#x64CD;&#x4F5C;&#x5C31;&#x4F1A;&#x5931;&#x8D25;&#xFF0C;&#x53EA;&#x6709;&#x5F53;IO&#x7C7B;&#x578B;&#x5904;&#x4E8E;&#x65E0;&#x9519;&#x8BEF;&#x72B6;&#x6001;&#x4E0B;&#x624D;&#x80FD;&#x8FDB;&#x884C;&#x6D41;&#x7684;&#x8BFB;&#x53D6;&#x548C;&#x5199;&#x5165;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x901A;&#x5E38;&#x5728;&#x4EE3;&#x7801;&#x4E2D;&#x9700;&#x8981;&#x9996;&#x5148;&#x5224;&#x65AD;IO&#x7C7B;&#x578B;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x6700;&#x7B80;&#x5355;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x76F4;&#x63A5;&#x5C06;io&#x4F5C;&#x4E3A;&#x5224;&#x65AD;&#x6761;&#x4EF6;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; word)</span><br><span class="line">{</span><br><span class="line">    <span class="comment">///</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h4 id="interrogating-the-state-of-a-stream">Interrogating the State of a Stream</h4>
+<p>&#x5C06;IO&#x4F5C;&#x4E3A;&#x5224;&#x65AD;&#x6761;&#x4EF6;&#xFF0C;&#x53EA;&#x80FD;&#x5F97;&#x5230;IO&#x662F;&#x5426;&#x662F;&#x6B63;&#x786E;&#x7684;&#xFF0C;&#x4F46;&#x65E0;&#x6CD5;&#x786E;&#x5B9A;&#x5176;&#x7A76;&#x7ADF;&#x662F;&#x56E0;&#x4E3A;&#x4EC0;&#x4E48;&#x539F;&#x56E0;&#x5BFC;&#x81F4;&#x5931;&#x8D25;&#x3002;</p>
+<p>IO&#x7C7B;&#x578B;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x7CFB;&#x5217;&#x673A;&#x5668;&#x76F8;&#x5173;&#x7684;<code>iostate</code>&#x7C7B;&#x578B;&#x6765;&#x8868;&#x793A;IO&#x6D41;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x6BCF;&#x4E2A;IO&#x7C7B;&#x578B;&#x90FD;&#x6709;&#x81EA;&#x5DF1;&#x7684;<code>iostate</code>&#x7C7B;&#x578B;&#xFF0C;&#x5982;<code>istream::iostate</code>&#xFF0C;<code>fstream::iostate</code>&#x3002;&#x8FD9;&#x4E2A;&#x7C7B;&#x578B;&#x672C;&#x8D28;&#x4E0A;&#x662F;&#x4E00;&#x7CFB;&#x5217;&#x7684;bits&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F4D;&#x8FD0;&#x7B97;&#x6765;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;<code>iostate</code>&#x7C7B;&#x578B;&#x548C;&#x5185;&#x7F6E;&#x7684;&#x51FD;&#x6570;&#x64CD;&#x4F5C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x7C7B;&#x578B;&#x4E0E;&#x51FD;&#x6570;</th>
+<th>&#x8BF4;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>strm::iostate</td>
+<td>stm&#x8868;&#x793A;IO&#x7C7B;&#x578B;&#xFF0C;strm::iostate&#x8868;&#x793A;&#x8BE5;&#x7C7B;&#x578B;&#x5BF9;&#x5E94;&#x7684;&#x72B6;&#x6001;</td>
+</tr>
+<tr class="even">
+<td>strm::badbit</td>
+<td>&#x4E00;&#x4E2A;&#x4E0D;&#x53EF;&#x81EA;&#x52A8;&#x6062;&#x590D;&#x7684;&#x9519;&#x8BEF;&#x53D1;&#x751F;&#x4E86;&#xFF0C;&#x901A;&#x5E38;&#x662F;&#x7CFB;&#x7EDF;&#x5C42;&#x9762;&#x7684;&#x9519;&#x8BEF;</td>
+</tr>
+<tr class="odd">
+<td>strm::failbit</td>
+<td>&#x4E00;&#x4E2A;&#x53EF;&#x81EA;&#x52A8;&#x6062;&#x590D;&#x7684;&#x9519;&#x8BEF;&#x53D1;&#x751F;&#x4E86;&#xFF0C;&#x5982;&#x8BFB;&#x53D6;string&#xFF0C;&#x8D4B;&#x503C;&#x7ED9;int</td>
+</tr>
+<tr class="even">
+<td>strm:: eofbit</td>
+<td>&#x9047;&#x5230;&#x4E86;&#x6587;&#x4EF6;&#x7ED3;&#x5C3E;&#xFF08;end-of-file&#xFF09;</td>
+</tr>
+<tr class="odd">
+<td>strm:: goodbit</td>
+<td>&#x8868;&#x793A;&#x6D41;&#x6CA1;&#x6709;&#x9519;&#x8BEF;&#xFF0C;&#x8BE5;&#x503C;&#x4FDD;&#x8BC1;&#x4E3A;0</td>
+</tr>
+<tr class="even">
+<td>s.eof()</td>
+<td>s&#x662F;stm&#x7C7B;&#x578B;&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x5F53;eofbit&#x4F4D;&#x88AB;&#x7F6E;&#x4E0A;&#x65F6;&#xFF0C;&#x8BE5;&#x503C;&#x4E3A;true</td>
+</tr>
+<tr class="odd">
+<td>s.fail()</td>
+<td>&#x5F53;failbit&#x4F4D;&#x6216;badbit&#x4F4D;&#x88AB;&#x7F6E;&#x4E0A;&#x65F6;&#xFF0C;&#x8BE5;&#x503C;&#x4E3A;true</td>
+</tr>
+<tr class="even">
+<td>s.bad()</td>
+<td>&#x5F53;badbit&#x4F4D;&#x88AB;&#x7F6E;&#x4E0A;&#x65F6;&#xFF0C;&#x8BE5;&#x503C;&#x4E3A;true</td>
+</tr>
+<tr class="odd">
+<td>s.good()</td>
+<td>&#x5F53;badbit,failbit&#x548C;eofbit&#x90FD;&#x6CA1;&#x6709;&#x7F6E;&#x4E0A;&#x65F6;&#xFF0C;&#x8BE5;&#x503C;&#x4E3A;true&#xFF0C;</td>
+</tr>
+<tr class="even">
+<td>s.clear()</td>
+<td>&#x6E05;&#x7A7A;&#x6D41;&#x7684;&#x6240;&#x6709;&#x4F4D;&#xFF0C;&#x4F7F;&#x5176;&#x6062;&#x590D;&#x6B63;&#x786E;&#x72B6;&#x6001;&#xFF0C;&#x8FD4;&#x56DE;&#x7A7A;</td>
+</tr>
+<tr class="odd">
+<td>s.clear(flags)</td>
+<td>&#x6E05;&#x7A7A;flags&#x4F4D;&#xFF0C;flags&#x4E3A;iostate&#x7C7B;&#x578B;&#xFF0C;&#x8FD4;&#x56DE;&#x7A7A;</td>
+</tr>
+<tr class="even">
+<td>s.setstate(flags)</td>
+<td>&#x8BBE;&#x7F6E;flags&#x4F4D;&#xFF0C;flags&#x4E3A;iostate&#x7C7B;&#x578B;&#xFF0C;&#x8FD4;&#x56DE;&#x7A7A;</td>
+</tr>
+<tr class="odd">
+<td>s.sdstate</td>
+<td>&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x72B6;&#x6001;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x901A;&#x5E38;&#x6765;&#x8BF4;&#xFF0C;&#x4F7F;&#x7528;<code>good()</code>&#x548C;<code>fail()</code>&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x6765;&#x5224;&#x65AD;&#x6D41;&#x7684;&#x72B6;&#x6001;&#x3002;&#x5F53;&#x5C06;&#x6D41;&#x4F5C;&#x4E3A;&#x5224;&#x65AD;&#x6761;&#x4EF6;&#x65F6;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#x7B49;&#x540C;&#x4E8E;&#x8C03;&#x7528;&#x4E86;<code>!fail()</code>&#x3002;&#x8981;&#x6CE8;&#x610F;&#x8C03;&#x7528;<code>fail()</code>&#x5E76;&#x6CA1;&#x6709;&#x68C0;&#x67E5;<code>eofbit</code>&#x4F4D;&#xFF0C;&#x6240;&#x4EE5;&#x76F4;&#x63A5;&#x5C06;&#x6D41;&#x4F5C;&#x4E3A;&#x5224;&#x65AD;&#x6761;&#x4EF6;&#x65F6;&#xFF0C;&#x8BFB;&#x53D6;&#x5230;&#x6587;&#x4EF6;&#x672B;&#x5C3E;&#x5E76;&#x4E0D;&#x4F1A;&#x505C;&#x6B62;&#xFF0C;&#x8FD8;&#x4F1A;&#x7EE7;&#x7EED;&#x8BFB;&#x53D6;&#x4E00;&#x6B21;&#x3002;</p>
+<p>&#x5982;&#x4E0B;&#x4F7F;&#x7528;<code>ifstream</code>&#x6D4B;&#x8BD5;&#x6240;&#x793A;&#xFF0C;&#x6587;&#x4EF6;&#x5185;&#x5DF2;&#x6709;&#x5185;&#x5BB9;&#x4E3A;<code>123\n456</code>&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ifstream <span class="title">in</span><span class="params">(<span class="string">&quot;./Test.txt&quot;</span>)</span></span>;</span><br><span class="line"><span class="keyword">while</span> (in.good())</span><br><span class="line">{</span><br><span class="line">    in &gt;&gt; content;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Read Content with good is &quot;</span> &lt;&lt; content &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">in.close();</span><br><span class="line">in.open(<span class="string">&quot;./Test.txt&quot;</span>);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (in)</span><br><span class="line">{</span><br><span class="line">    in &gt;&gt; content;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Read Content with condition is &quot;</span> &lt;&lt; content &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Read Content with good is 123</span></span><br><span class="line"><span class="comment">Read Content with good is 456</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Read Content with condition is 123</span></span><br><span class="line"><span class="comment">Read Content with condition is 456</span></span><br><span class="line"><span class="comment">Read Content with condition is 456</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h4 id="managing-the-condition-state">Managing the Condition State</h4>
+<p>&#x5982;&#x4E4B;&#x524D;&#x6240;&#x8FF0;&#xFF0C;&#x53EF;&#x4EE5;&#x5BF9;<code>iostate</code>&#x7C7B;&#x578B;&#x8FDB;&#x884C;&#x4F4D;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x9700;&#x8981;&#x5C06;<code>failbit</code>&#x548C;<code>badbit</code>&#x8FD8;&#x539F;&#xFF0C;&#x4F46;&#x4FDD;&#x7559;<code>eofbit</code>&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4EE5;&#x4E0B;&#x8BED;&#x53E5;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cin</span>.clear(<span class="built_in">cin</span>.rdstate() &amp; ~<span class="built_in">cin</span>.failbit &amp; ~<span class="built_in">cin</span>.badbit);</span><br></pre></td></tr></table></figure>
+<h3 id="managing-the-output-buffer">Managing the Output Buffer</h3>
+<p>&#x5BF9;&#x4E8E;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x800C;&#x8A00;&#xFF0C;&#x5C06;&#x6570;&#x636E;&#x5199;&#x5165;&#x8BBE;&#x5907;&#xFF0C;&#x53EF;&#x80FD;&#x662F;&#x4E00;&#x4E2A;&#x8017;&#x65F6;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x6240;&#x4EE5;&#x901A;&#x5E38;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x4F1A;&#x5C06;&#x6570;&#x636E;&#x5148;&#x7F13;&#x5B58;&#x8D77;&#x6765;&#xFF0C;&#x4E4B;&#x540E;&#x5C06;&#x591A;&#x4E2A;&#x6570;&#x636E;&#x5408;&#x5E76;&#x518D;&#x4E00;&#x8D77;&#x5199;&#x5165;&#x8BBE;&#x5907;&#x3002;</p>
+<p>&#x4F46;&#x8FD9;&#x79CD;&#x7F13;&#x5B58;&#x673A;&#x5236;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;Debug&#x65F6;&#x7684;&#x56F0;&#x6270;&#xFF0C;&#x5982;&#x7A0B;&#x5E8F;&#x610F;&#x5916;&#x7EC8;&#x6B62;&#x65F6;&#xFF0C;&#x7F13;&#x5B58;&#x7684;&#x6570;&#x636E;&#x5E76;&#x6CA1;&#x6709;&#x88AB;&#x8F93;&#x51FA;&#xFF0C;&#x4E8E;&#x662F;&#x660E;&#x660E;&#x67D0;&#x4E2A;Debug&#x8BED;&#x53E5;&#x5DF2;&#x7ECF;&#x8FD0;&#x884C;&#xFF0C;&#x4F46;&#x56E0;&#x4E3A;&#x6570;&#x636E;&#x6CA1;&#x6709;&#x5237;&#x65B0;&#xFF0C;&#x5BFC;&#x81F4;&#x88AB;&#x8BEF;&#x4EE5;&#x4E3A;&#x5E76;&#x6CA1;&#x6709;&#x8FD0;&#x884C;&#x3002;</p>
+<p>&#x4EE5;&#x4E0B;&#x51E0;&#x79CD;&#x60C5;&#x51B5;&#x4F1A;&#x8BA9;&#x5B58;&#x50A8;&#x7684;&#x6570;&#x636E;&#x88AB;&#x5237;&#x65B0;&#xFF0C;&#x8F93;&#x51FA;&#x7ED9;&#x8BBE;&#x5907;&#xFF1A;</p>
+<ol type="1">
+<li>&#x5F53;&#x6574;&#x4E2A;&#x7A0B;&#x5E8F;&#x6B63;&#x5E38;&#x7ED3;&#x675F;&#x65F6;&#x3002;&#x5728;main return&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x8F93;&#x51FA;&#x7F13;&#x5B58;&#x88AB;&#x5237;&#x65B0;&#x3002;</li>
+<li>&#x5F53;&#x7F13;&#x5B58;&#x6EE1;&#x65F6;&#xFF0C;&#x4F1A;&#x8FDB;&#x884C;&#x5237;&#x65B0;&#x3002;</li>
+<li>&#x5F53;&#x4F7F;&#x7528;&#x5237;&#x65B0;&#x64CD;&#x4F5C;&#x7B26;&#x65F6;&#xFF0C;&#x5982;<code>endl</code>&#xFF0C;<code>flush</code>,<code>ends</code>&#x3002;</li>
+<li>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x64CD;&#x4F5C;&#x7B26;<code>unitbuf</code>&#x8BBE;&#x7F6E;IO&#x5BF9;&#x8C61;&#xFF0C;&#x8BA9;&#x8F93;&#x51FA;IO&#x5BF9;&#x8C61;&#x7684;&#x6BCF;&#x4E00;&#x6B21;&#x64CD;&#x4F5C;&#x90FD;&#x5237;&#x65B0;&#x7F13;&#x5B58;&#x3002;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;<code>cerr</code>&#x662F;&#x5DF2;&#x7ECF;&#x88AB;&#x8BBE;&#x7F6E;&#x4E86;<code>unitbuf</code>&#x7684;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x8F93;&#x51FA;IO&#x5BF9;&#x8C61;&#x88AB;&#x7ED1;&#x5B9A;&#x81F3;&#x53E6;&#x4E00;&#x4E2A;IO&#x5BF9;&#x8C61;&#xFF0C;&#x90A3;&#x4E48;&#x53E6;&#x4E00;&#x4E2A;IO&#x5BF9;&#x8C61;&#x65E0;&#x8BBA;&#x8FDB;&#x884C;&#x4E86;&#x8BFB;&#x8FD8;&#x662F;&#x5199;&#x64CD;&#x4F5C;&#xFF0C;&#x90FD;&#x4F1A;&#x5237;&#x65B0;&#x8F93;&#x51FA;IO&#x5BF9;&#x8C61;&#x3002;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;<code>cin</code>&#x548C;<code>cerr</code>&#x90FD;&#x7ED1;&#x5B9A;&#x4E86;<code>cout</code>&#xFF0C;&#x6240;&#x4EE5;&#x65E0;&#x8BBA;&#x662F;&#x8BFB;&#x548C;&#x5199;&#x8FD9;&#x4E24;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x90FD;&#x4F1A;&#x5237;&#x65B0;<code>cout</code>&#x7684;&#x7F13;&#x5B58;&#x3002;</li>
+</ol>
+<h4 id="flushing-the-output-buffer">Flushing the Output Buffer</h4>
+<p>&#x64CD;&#x4F5C;&#x7B26;<code>endl</code>&#x4F1A;&#x5237;&#x65B0;&#x7F13;&#x5B58;&#xFF0C;&#x5E76;&#x5728;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x6362;&#x884C;&#x7B26;&#x3002; &#x64CD;&#x4F5C;&#x7B26;<code>ends</code>&#x4F1A;&#x5237;&#x65B0;&#x7F13;&#x5B58;&#xFF0C;&#x5E76;&#x5728;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x7A7A;&#x767D;&#x5B57;&#x7B26;&#x3002; &#x64CD;&#x4F5C;&#x7B26;<code>flush</code>&#x5355;&#x7EAF;&#x5237;&#x65B0;&#x7F13;&#x5B58;&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;hi!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;hi!&quot;</span> &lt;&lt; flush;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;hi!&quot;</span> &lt;&lt; ends;</span><br></pre></td></tr></table></figure>
+<h4 id="the-unitbuf-manipulator">The unitbuf Manipulator</h4>
+<p><code>unitbuf</code>&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x4E00;&#x4E2A;&#x5F00;&#x5173;&#xFF0C;&#x5F53;&#x8BBE;&#x4E0A;&#x65F6;&#xFF0C;&#x6BCF;&#x4E00;&#x6B21;&#x7684;&#x8F93;&#x51FA;&#x64CD;&#x4F5C;&#x90FD;&#x4F1A;&#x7ACB;&#x523B;&#x7684;&#x5237;&#x65B0;&#x7F13;&#x5B58;&#x3002;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; unitbuf;</span><br></pre></td></tr></table></figure>
+<p>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<code>nounitbuf</code>&#x5173;&#x95ED;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; nounitbuf;</span><br></pre></td></tr></table></figure>
+<h4 id="tying-input-and-output-streams-together">Tying Input and Output Streams Together</h4>
+<p>&#x5F53;&#x4E00;&#x4E2A;&#x8F93;&#x5165;IO&#x5BF9;&#x8C61;&#x7ED1;&#x5B9A;&#x8F93;&#x51FA;IO&#x5BF9;&#x8C61;&#x65F6;&#xFF0C;&#x4EFB;&#x4F55;&#x5BF9;&#x4E8E;&#x8F93;&#x5165;IO&#x5BF9;&#x8C61;&#x7684;&#x8BFB;&#x53D6;&#xFF0C;&#x90FD;&#x4F1A;&#x5237;&#x65B0;&#x8F93;&#x51FA;IO&#x5BF9;&#x8C61;&#x7684;&#x7F13;&#x5B58;&#x3002;</p>
+<p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;<code>cin</code>&#x7ED1;&#x5B9A;&#x7ED9;&#x4E86;<code>cout</code>&#xFF0C;&#x6240;&#x4EE5;&#x6267;&#x884C;&#x4EFB;&#x4F55;&#x7684;<code>cin &gt;&gt; xxx</code>&#x64CD;&#x4F5C;&#x90FD;&#x4F1A;&#x5148;&#x5237;&#x65B0;<code>cout</code>&#x5BF9;&#x8C61;</p>
+<p>&#x5173;&#x4E8E;&#x7ED1;&#x5B9A;&#x6709;&#x4E24;&#x4E2A;&#x64CD;&#x4F5C;&#x51FD;&#x6570;&#xFF0C;<code>tie()</code>&#x548C;<code>tie(&amp; o)</code>&#xFF0C;&#x524D;&#x8005;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x7ED1;&#x5B9A;&#x7684;IO&#x8F93;&#x51FA;&#x5BF9;&#x8C61;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x540E;&#x8005;&#x4E5F;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x7ED1;&#x5B9A;&#x7684;IO&#x8F93;&#x51FA;&#x5BF9;&#x8C61;&#x7684;&#x6307;&#x9488;&#xFF0C;&#x7136;&#x540E;&#x5C06;<code>o</code>&#x4F5C;&#x4E3A;&#x65B0;&#x7684;&#x7ED1;&#x5B9A;IO&#x8F93;&#x51FA;&#x5BF9;&#x8C61;&#x3002;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cin</span>.tie(&amp;<span class="built_in">cout</span>); <span class="comment">//System already do</span></span><br><span class="line"></span><br><span class="line">ostream *old_tie = <span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line"><span class="comment">//old_tie is pointer to cout</span></span><br><span class="line"><span class="comment">//Now cin is tied to nothing</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cin</span>.tie(&amp;<span class="built_in">cerr</span>);</span><br><span class="line"><span class="built_in">cin</span>.tie(old_tie);</span><br><span class="line"><span class="comment">//cin is tied to cout</span></span><br></pre></td></tr></table></figure>
+<p>&#x6CE8;&#x610F;&#xFF0C;&#x6BCF;&#x4E2A;IO&#x5BF9;&#x8C61;&#x53EA;&#x80FD;&#x7ED1;&#x5B9A;&#x7ED9;&#x4E00;&#x4E2A;&#x8F93;&#x51FA;&#x5BF9;&#x8C61;&#xFF0C;&#x6240;&#x4EE5;&#x4E0A;&#x793A;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;<code>cin</code>&#x6700;&#x7EC8;&#x7ED1;&#x5B9A;&#x7ED9;&#x4E86;<code>old_tie</code>&#x3002;&#x4F46;&#x662F;&#x4E00;&#x4E2A;&#x8F93;&#x51FA;&#x5BF9;&#x8C61;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x88AB;&#x591A;&#x4E2A;IO&#x5BF9;&#x8C61;&#x7ED1;&#x5B9A;&#xFF0C;&#x5982;<code>cout</code>&#x540C;&#x65F6;&#x88AB;<code>cin</code>&#x548C;<code>cerr</code>&#x7ED1;&#x5B9A;&#x3002;</p>
+<h2 id="file-input-and-output">File Input and Output</h2>
+<p>&#x5BF9;&#x4E8E;&#x6587;&#x4EF6;&#x7684;&#x6D41;&#x64CD;&#x4F5C;&#x5305;&#x542B;&#x6709;&#x4E09;&#x4E2A;&#x7C7B;&#x578B;&#xFF1A; 1. <code>ifstream</code>&#xFF1A;&#x8BFB;&#x53D6;&#x7ED9;&#x5B9A;&#x6587;&#x4EF6; 2. <code>ofstream</code>&#xFF1A;&#x5199;&#x5165;&#x7ED9;&#x5B9A;&#x6587;&#x4EF6; 3. <code>fstream</code>&#xFF1A;&#x8BFB;&#x53D6;&#x6216;&#x5199;&#x5165;&#x7ED9;&#x5B9A;&#x6587;&#x4EF6;</p>
+<p>&#x5982;&#x4E4B;&#x524D;&#x6240;&#x8FF0;&#xFF0C;&#x5BF9;&#x4E8E;<code>iostream</code>&#x7684;&#x6240;&#x6709;&#x64CD;&#x4F5C;&#x90FD;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;<code>fstream</code>&#xFF0C;&#x800C;<code>fstream</code>&#x8FD8;&#x6709;&#x4E00;&#x4E9B;&#x7279;&#x5B9A;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<table>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 79%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>&#x64CD;&#x4F5C;</th>
+<th>&#x8BF4;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>fstream fstrm;</td>
+<td>fstream&#x662F;fstream&#x5934;&#x6587;&#x4EF6;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x7C7B;&#x578B;&#xFF0C;fstrm&#x662F;&#x5B9E;&#x4F8B;&#xFF0C;&#x4E14;&#x6CA1;&#x6709;&#x6253;&#x5F00;&#x4EFB;&#x4F55;&#x7684;&#x6587;&#x4EF6;</td>
+</tr>
+<tr class="even">
+<td>fstream fstrm(s, mode);</td>
+<td>fstrm&#x6253;&#x5F00;&#x5730;&#x5740;&#x4E3A;s&#x7684;&#x6587;&#x4EF6;&#xFF0C;s&#x53EF;&#x4EE5;&#x662F;string&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;C&#x98CE;&#x683C;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x9ED8;&#x8BA4;&#x7684;mode&#x4E0E;fstream&#x7684;&#x7C7B;&#x578B;&#x76F8;&#x5173;</td>
+</tr>
+<tr class="odd">
+<td>fstream fstrm(s, mode);</td>
+<td>&#x6307;&#x5B9A;&#x6253;&#x5F00;&#x6587;&#x4EF6;&#x7684;&#x6A21;&#x5F0F;&#x4E3A;mode</td>
+</tr>
+<tr class="even">
+<td>fstrm.open(s)</td>
+<td>&#x6253;&#x5F00;&#x5730;&#x5740;&#x4E3A;s&#x7684;&#x6587;&#x4EF6;&#xFF0C;mode&#x4E0E;&#x7C7B;&#x578B;&#x76F8;&#x5173;&#xFF0C;&#x8FD4;&#x56DE;&#x7A7A;</td>
+</tr>
+<tr class="odd">
+<td>fstrm.open(s,mode)</td>
+<td>&#x6253;&#x5F00;&#x5730;&#x5740;&#x4E3A;s&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x6307;&#x5B9A;mode&#xFF0C;&#x8FD4;&#x56DE;&#x7A7A;</td>
+</tr>
+<tr class="even">
+<td>fstrm.close()</td>
+<td>&#x5173;&#x95ED;&#x5F53;&#x524D;&#x7ED1;&#x5B9A;&#x7684;&#x6587;&#x4EF6;</td>
+</tr>
+<tr class="odd">
+<td>fstrm.is_open()</td>
+<td>&#x68C0;&#x67E5;&#x7ED1;&#x5B9A;&#x7684;&#x6587;&#x4EF6;&#x662F;&#x5426;&#x88AB;&#x6B63;&#x786E;&#x6253;&#x5F00;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="using-file-stream-objects">Using File Stream Objects</h3>
+<p>&#x65E0;&#x8BBA;&#x662F;&#x8981;&#x5199;&#x5165;&#x8FD8;&#x662F;&#x8BFB;&#x53D6;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x90FD;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x6D41;&#xFF0C;&#x7136;&#x540E;&#x4F7F;&#x7528;&#x8BE5;&#x6587;&#x4EF6;&#x6D41;&#x6253;&#x5F00;&#x6587;&#x4EF6;&#x3002;</p>
+<p>&#x5F53;&#x4F7F;&#x7528;&#x5E26;&#x6709;&#x6587;&#x4EF6;&#x5730;&#x5740;&#x7684;&#x6587;&#x4EF6;&#x6D41;&#x6784;&#x9020;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x6587;&#x4EF6;&#x4F1A;&#x88AB;&#x81EA;&#x52A8;&#x6253;&#x5F00;&#x3002;&#x5982;<code>ifstream in(file)</code>&#x3002;</p>
+<p>file&#x4E3A;C&#x98CE;&#x683C;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x5728;C++11&#x4E0B;&#xFF0C;file&#x8FD8;&#x53EF;&#x4EE5;&#x662F;string&#x3002;</p>
+<h4 id="using-an-fstream-in-place-of-an-iostream">Using an fstream in Place of an iostream&amp;</h4>
+<p>fstream&#x4F5C;&#x4E3A;iostream&#x7684;&#x6D3E;&#x751F;&#x7C7B;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x5F62;&#x53C2;&#x4E3A;<code>iostream&amp;</code>&#xFF0C;&#x5219;&#x4E5F;&#x53EF;&#x4EE5;&#x4F20;&#x9012;<code>fstream</code>&#x3002;</p>
+<p>&#x6CE8;&#x610F;&#xFF0C;&#x56E0;&#x4E3A;IO&#x64CD;&#x4F5C;&#x4E0D;&#x652F;&#x6301;&#x62F7;&#x8D1D;&#x548C;&#x8D4B;&#x503C;&#xFF0C;&#x6240;&#x4EE5;&#x51FD;&#x6570;&#x7684;&#x5F62;&#x53C2;&#x5FC5;&#x7136;&#x4E3A;&#x5F15;&#x7528;&#x3002;</p>
+<h4 id="the-open-and-close-members">The open and close Members</h4>
+<p><code>open</code>&#x64CD;&#x4F5C;&#x5E76;&#x4E0D;&#x4E00;&#x5B9A;&#x6210;&#x529F;&#xFF0C;&#x5F53;&#x5931;&#x8D25;&#x65F6;&#x5176;&#x4E2D;&#x7684;<code>failbit</code>&#x4F4D;&#x4F1A;&#x88AB;&#x7F6E;&#x4E0A;&#xFF0C;&#x6240;&#x4EE5;&#x901A;&#x5E38;&#x6765;&#x8BF4;&#xFF0C;&#x6700;&#x597D;&#x4F7F;&#x7528;&#x4EE3;&#x7801;&#x68C0;&#x67E5;&#x6587;&#x4EF6;&#x6D41;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ofstream out;</span><br><span class="line">out.open(file);</span><br><span class="line"><span class="keyword">if</span> (out)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>&#x5F53;&#x6587;&#x4EF6;&#x6D41;&#x5DF2;&#x7ECF;&#x6253;&#x5F00;&#x4E86;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x5219;&#x8BE5;&#x6587;&#x4EF6;&#x6D41;&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x6253;&#x5F00;&#x5176;&#x4ED6;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x5FC5;&#x987B;&#x5148;&#x5173;&#x95ED;&#x524D;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x624D;&#x884C;&#xFF0C;&#x5982;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ofstream out;</span><br><span class="line">out.open(file);</span><br><span class="line">out.close();</span><br><span class="line">out.open(file2);</span><br></pre></td></tr></table></figure>
+<p>&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x4E5F;&#x65E0;&#x6CD5;&#x88AB;&#x591A;&#x4E2A;&#x6587;&#x4EF6;&#x6D41;&#x6253;&#x5F00;&#xFF0C;&#x5F53;&#x9700;&#x8981;&#x53E6;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x6D41;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;&#x9700;&#x8981;&#x5148;&#x8BA9;&#x4F7F;&#x7528;&#x8BE5;&#x6587;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#x6D41;&#x5173;&#x95ED;&#x6587;&#x4EF6;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">out1.open(<span class="string">&quot;./Test.txt&quot;</span>);</span><br><span class="line">out1.close();</span><br><span class="line">in.open(<span class="string">&quot;./Test.txt&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="automatic-construction-and-destruction">Automatic Construction and Destruction</h4>
+<p>&#x5F53;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x6D41;&#x5BF9;&#x8C61;&#x79BB;&#x5F00;&#x4E86;&#x4F5C;&#x7528;&#x57DF;&#x65F6;&#xFF0C;&#x5B83;&#x4F1A;&#x88AB;&#x9500;&#x6BC1;&#xFF0C;&#x5728;&#x9500;&#x6BC1;&#x65F6;&#x4F1A;&#x81EA;&#x52A8;&#x7684;&#x7ED9;&#x5173;&#x95ED;&#x5F53;&#x524D;&#x7ED1;&#x5B9A;&#x7684;&#x6587;&#x4EF6;&#x3002;</p>
+<h3 id="file-modes">File Modes</h3>
+<p>&#x6587;&#x4EF6;&#x6D41;&#x7684;&#x6253;&#x5F00;&#x6A21;&#x5F0F;&#x6709;&#x4EE5;&#x4E0B;&#x51E0;&#x79CD;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x6A21;&#x5F0F;</th>
+<th>&#x8BF4;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>in</td>
+<td>&#x4F5C;&#x4E3A;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x5165;&#x6253;&#x5F00;&#xFF08;&#x8BFB;&#x53D6;&#x6587;&#x4EF6;&#xFF09;</td>
+</tr>
+<tr class="even">
+<td>out</td>
+<td>&#x4F5C;&#x4E3A;&#x7A0B;&#x5E8F;&#x8F93;&#x51FA;&#x6253;&#x5F00;&#xFF08;&#x5199;&#x5165;&#x6587;&#x4EF6;&#xFF09;</td>
+</tr>
+<tr class="odd">
+<td>app</td>
+<td>&#x6BCF;&#x4E00;&#x6B21;&#x5199;&#x5165;&#x524D;&#xFF0C;&#x5B9A;&#x4F4D;&#x5230;&#x6587;&#x4EF6;&#x7684;&#x6700;&#x540E;</td>
+</tr>
+<tr class="even">
+<td>ate</td>
+<td>&#x5728;&#x6587;&#x4EF6;&#x6253;&#x5F00;&#x65F6;&#xFF0C;&#x76F4;&#x63A5;&#x5B9A;&#x4F4D;&#x5230;&#x6587;&#x4EF6;&#x7684;&#x6700;&#x540E;</td>
+</tr>
+<tr class="odd">
+<td>trunc</td>
+<td>&#x5220;&#x9664;&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;</td>
+</tr>
+<tr class="even">
+<td>binary</td>
+<td>&#x4EE5;&#x4F4D;&#x6A21;&#x5F0F;&#x8FDB;&#x884C;IO&#x64CD;&#x4F5C;</td>
+</tr>
+</tbody>
+</table>
+<p><code>ifstream</code>&#x9ED8;&#x8BA4;&#x4EE5;<code>in</code>&#x6A21;&#x5F0F;&#x6253;&#x5F00;&#x3002;<code>ofstream</code>&#x9ED8;&#x8BA4;&#x4EE5;<code>out</code>&#x6A21;&#x5F0F;&#x6253;&#x5F00;&#xFF0C;&#x4E14;<code>trunc</code>&#x4F4D;&#x88AB;&#x7F6E;&#x4E0A;&#xFF0C;&#x5373;&#x8F93;&#x51FA;&#x65F6;&#x9ED8;&#x8BA4;&#x5C06;&#x6587;&#x4EF6;&#x5185;&#x5DF2;&#x6709;&#x7684;&#x5185;&#x5BB9;&#x5220;&#x9664;&#x7684;&#x3002;<code>fstream</code>&#x9ED8;&#x8BA4;&#x540C;&#x65F6;&#x4EE5;in&#x548C;out&#x6A21;&#x5F0F;&#x6253;&#x5F00;&#x6587;&#x4EF6;</p>
+<p>&#x4E3B;&#x52A8;&#x8BBE;&#x5B9A;&#x6A21;&#x5F0F;&#xFF0C;&#x8981;&#x4EE5;&#x4E0B;&#x9650;&#x5236;&#xFF1A;</p>
+<ol type="1">
+<li><code>out</code>&#x53EA;&#x80FD;&#x5728;<code>ofsteram</code>&#x548C;<code>fstream</code>&#x7C7B;&#x578B;&#x65F6;&#x88AB;&#x7F6E;&#x4E0A;</li>
+<li><code>in</code>&#x53EA;&#x80FD;&#x5728;<code>ifsteram</code>&#x548C;<code>fstream</code>&#x7C7B;&#x578B;&#x65F6;&#x88AB;&#x7F6E;&#x4E0A;</li>
+<li><code>trunc</code>&#x53EA;&#x6709;&#x5728;<code>out</code>&#x6A21;&#x5F0F;&#x4E0B;&#x624D;&#x80FD;&#x7F6E;&#x4E0A;</li>
+<li><code>app</code>&#x53EA;&#x80FD;&#x5728;<code>trunc</code>&#x6CA1;&#x6709;&#x88AB;&#x7F6E;&#x4E0A;&#x65F6;&#x624D;&#x80FD;&#x7F6E;&#x4E0A;</li>
+<li><code>ate</code>&#x548C;<code>binary</code>&#x53EF;&#x4EE5;&#x5728;&#x4EFB;&#x4F55;&#x6587;&#x4EF6;&#x6D41;&#x7C7B;&#x578B;&#x7F6E;&#x4E0A;&#xFF0C;&#x4E14;&#x53EF;&#x4EE5;&#x4E0E;&#x5176;&#x4ED6;&#x7684;&#x7C7B;&#x578B;&#x4EFB;&#x610F;&#x642D;&#x914D;&#x3002;</li>
+</ol>
+<h4 id="opening-a-file-in-out-mode-discards-existing-data">Opening a File in out Mode Discards Existing Data</h4>
+<p><code>ofstream</code>&#x6A21;&#x5F0F;&#x9ED8;&#x8BA4;&#x662F;&#x4EE5;<code>out</code>&#x6A21;&#x5F0F;&#x6253;&#x5F00;&#xFF0C;&#x4E14;&#x7F6E;&#x4E0A;<code>trunc</code>&#x4F4D;&#xFF0C;&#x6240;&#x4EE5;&#x5982;&#x4E0B;&#x7684;&#x51E0;&#x79CD;&#x5B9A;&#x4E49;&#x65B9;&#x5F0F;&#x6CA1;&#x6709;&#x533A;&#x522B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ofstream <span class="title">out</span><span class="params">(<span class="string">&quot;file1&quot;</span>)</span></span>;</span><br><span class="line"><span class="function">ofstream <span class="title">out2</span><span class="params">(<span class="string">&quot;file1&quot;</span>, ofstream::out)</span></span>; <span class="comment">// outand truncare implicit</span></span><br><span class="line"><span class="function">ofstream <span class="title">out3</span><span class="params">(<span class="string">&quot;file1&quot;</span>, ofstream::out | ofstream::trunc)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>&#x5982;&#x679C;&#x8981;&#x4FDD;&#x62A4;&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;&#x4E0D;&#x88AB;&#x5220;&#x9664;&#xFF0C;&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x6CD5;&#xFF0C;&#x4E00;&#x662F;&#x7F6E;&#x4E0A;<code>app</code>&#x4F4D;&#xFF0C;&#x4E8C;&#x662F;&#x540C;&#x65F6;&#x7F6E;&#x4E0A;<code>in</code>&#x548C;<code>out</code>&#x4F4D;&#x3002;&#x5982;&#x4E0B;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// to preserve the file&#x2019;s contents, we must explicitly specify appmode </span></span><br><span class="line"><span class="function">ofstream <span class="title">app</span><span class="params">(<span class="string">&quot;file2&quot;</span>, ofstream::app)</span></span>; <span class="comment">// out is implicit</span></span><br><span class="line"><span class="function">ofstream <span class="title">app2</span><span class="params">(<span class="string">&quot;file2&quot;</span>, ofstream::out | ofstream::app)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>&#x6CE8;&#x610F;<code>in</code>&#x6A21;&#x5F0F;&#x53EA;&#x80FD;&#x8D4B;&#x7ED9;<code>ifstream</code>&#x548C;<code>fstream</code>&#xFF0C;&#x6240;&#x4EE5;&#x4E0A;&#x793A;&#x4EE3;&#x7801;&#x4E2D;&#x662F;&#x901A;&#x8FC7;&#x7F6E;&#x4E0A;<code>app</code>&#x4F4D;&#x3002;</p>
+<h4 id="file-mode-is-determined-each-time-open-is-called">File Mode is Determined Each Time open Is Called</h4>
+<p>&#x6587;&#x4EF6;&#x6D41;&#x7684;mode&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x662F;&#x4E0E;&#x6587;&#x4EF6;&#x7ED3;&#x5408;&#x7684;&#xFF0C;&#x6587;&#x4EF6;&#x6D41;&#x7684;mode&#x4F1A;&#x5728;&#x6BCF;&#x6B21;&#x6253;&#x5F00;&#x6587;&#x4EF6;&#x65F6;&#x91CD;&#x65B0;&#x6307;&#x5B9A;&#x3002;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5728;&#x91CD;&#x65B0;&#x6253;&#x5F00;&#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x6CA1;&#x6709;&#x663E;&#x793A;&#x7684;&#x8BBE;&#x7F6E;mode&#xFF0C;&#x5219;&#x8BE5;&#x6587;&#x4EF6;&#x4F1A;&#x91CD;&#x65B0;&#x4EE5;&#x9ED8;&#x8BA4;&#x7684;mode&#x6253;&#x5F00;&#xFF08;&#x4E0D;&#x4F1A;&#x4FDD;&#x7559;&#x6253;&#x5F00;&#x524D;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x65F6;&#x6307;&#x5B9A;&#x7684;mode&#xFF09;&#x3002;</p>
+<p>&#x5982;&#x4E0B;&#x6D4B;&#x8BD5;&#xFF0C;&#x6587;&#x4EF6;&#x5DF2;&#x6709;&#x5185;&#x5BB9;&#x4E3A;<code>123\456</code>&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ofstream <span class="title">out1</span><span class="params">(<span class="string">&quot;./Test.txt&quot;</span>, ostream::app)</span></span>;</span><br><span class="line">out1 &lt;&lt; <span class="string">&quot;\n789&quot;</span>;</span><br><span class="line">out1.close();</span><br><span class="line">in.open(<span class="string">&quot;./Test.txt&quot;</span>);</span><br><span class="line"><span class="keyword">while</span> (in.good())</span><br><span class="line">{</span><br><span class="line">    in &gt;&gt; content;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Read Content with good is &quot;</span> &lt;&lt; content &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">in.close();</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">out1.open(<span class="string">&quot;./Test.txt&quot;</span>);</span><br><span class="line">out1 &lt;&lt; <span class="string">&quot;\n666&quot;</span>;</span><br><span class="line">out1.close();</span><br><span class="line">in.open(<span class="string">&quot;./Test.txt&quot;</span>);</span><br><span class="line"><span class="keyword">while</span> (in.good())</span><br><span class="line">{</span><br><span class="line">    in &gt;&gt; content;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Read Content with good is &quot;</span> &lt;&lt; content &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">Read Content with good is 123</span></span><br><span class="line"><span class="comment">Read Content with good is 456</span></span><br><span class="line"><span class="comment">Read Content with good is 789</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">Read Content with good is 666</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;<code>out1</code>&#xFF0C;&#x5728;&#x521B;&#x5EFA;&#x65F6;&#x8BBE;&#x7F6E;&#x4E0A;&#x4E86;<code>app</code>&#x4F4D;&#xFF0C;&#x6240;&#x4EE5;&#x6CA1;&#x6709;&#x64E6;&#x9664;&#x6587;&#x4EF6;&#x5DF2;&#x6709;&#x5185;&#x5BB9;&#x3002;&#x4F46;&#x5F53;&#x5176;&#x91CD;&#x65B0;&#x6253;&#x5F00;&#x6587;&#x4EF6;&#x65F6;&#xFF0C;<code>app</code>&#x4F4D;&#x88AB;&#x6E05;&#x7A7A;&#xFF0C;&#x4ECD;&#x7136;&#x662F;<code>trunc</code>&#x88AB;&#x7F6E;&#x4E0A;&#xFF0C;&#x6587;&#x4EF6;&#x5DF2;&#x6709;&#x5185;&#x5BB9;&#x88AB;&#x5220;&#x9664;&#x3002;</p>
+<h2 id="string-streams">string Streams</h2>
+<p>String&#x6D41;&#x662F;&#x628A;String&#x770B;&#x4F5C;&#x4E00;&#x4E2A;IO&#x6D41;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x5B9A;&#x4E49;&#x5728;<code>sstream</code>&#x5934;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x62EC;<code>istringstream</code>&#x8BFB;&#x53D6;string&#xFF0C;<code>ostringstream</code>&#x5199;&#x5165;string&#xFF0C;<code>stringstream</code>&#x53EF;&#x540C;&#x65F6;&#x8BFB;&#x53D6;&#x548C;&#x5199;string&#x3002;string&#x6D41;&#x6709;&#x4EE5;&#x4E0B;&#x7279;&#x6709;&#x7684;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>&#x64CD;&#x4F5C;</th>
+<th>&#x8BF4;&#x660E;</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>sstream strm</td>
+<td>&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x672A;&#x7ED1;&#x5B9A;&#x7684;string&#x6D41;</td>
+</tr>
+<tr class="even">
+<td>sstream stream(s)</td>
+<td>&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x7ED1;&#x5B9A;s&#x62F7;&#x8D1D;&#x7684;string&#x6D41;&#xFF0C;s&#x662F;string&#x7C7B;&#x578B;&#xFF0C;&#x8BE5;&#x6784;&#x9020;&#x51FD;&#x6570;&#x662F;explicit&#x7684;</td>
+</tr>
+<tr class="odd">
+<td>strm.str()</td>
+<td>&#x8FD4;&#x56DE;strm&#x7ED1;&#x5B9A;&#x7684;string&#x7684;&#x62F7;&#x8D1D;</td>
+</tr>
+<tr class="even">
+<td>strm.str(s)</td>
+<td>&#x5C06;s&#x7684;&#x62F7;&#x8D1D;&#x7ED1;&#x5B9A;&#x81F3;strm&#xFF0C;&#x8FD4;&#x56DE;&#x7A7A;</td>
+</tr>
+</tbody>
+</table>
+<h3 id="using-an-istringstream">Using an istringstream</h3>
+<p>&#x56E0;&#x4E3A;sstringstream&#x7EE7;&#x627F;&#x81EA;iostream&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x6240;&#x4EE5;istringstream&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&gt;&gt;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x4E14;&#x5982;&#x540C;cin&#x4E2D;&#x7684;&gt;&gt;&#x4E00;&#x6837;&#xFF0C;&#x4E00;&#x6B21;&#x8BFB;&#x53D6;&#x662F;&#x4EE5;&#x7A7A;&#x767D;&#x5B57;&#x7B26;&#x4E3A;&#x7ED3;&#x675F;&#x7684;&#x3002;&#x5982;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#x5C31;&#x662F;&#x901A;&#x8FC7;stringstream&#x6765;&#x4ECE;&#x8F93;&#x5165;&#x4E2D;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//morgan 2015 86255</span></span><br><span class="line"><span class="keyword">while</span> (getline(<span class="built_in">cin</span>, line))</span><br><span class="line">{</span><br><span class="line">    PersonInfo info;</span><br><span class="line">    <span class="function"><span class="built_in">istringstream</span> <span class="title">record</span><span class="params">(line)</span></span>; <span class="comment">//Bind line to record</span></span><br><span class="line">    record &gt;&gt; info.name;        <span class="comment">//Read one word,in this case, it&apos;s name</span></span><br><span class="line">    <span class="comment">// Read one word,in this case, it&apos;s phone,</span></span><br><span class="line">    <span class="comment">//If condition is false, means that there is no content</span></span><br><span class="line">    <span class="keyword">while</span> (record &gt;&gt; word)</span><br><span class="line">    {</span><br><span class="line">        info.phones.push_back(word);</span><br><span class="line">    }</span><br><span class="line">    people.push_back(info);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="using-ostringstreams">Using ostringstreams</h3>
+<p>&#x540C;&#x6837;&#x7684;&#xFF0C;ostringstream&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&lt;&lt;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x5BF9;ostringstream&#x4F7F;&#x7528;&lt;&lt;&#x64CD;&#x4F5C;&#x7B26;&#x7C7B;&#x4F3C;&#x4E8E;&#x5BF9;string&#x4F7F;&#x7528;+=&#x3002;&#x5982;&#xFF1A;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ostringstream</span> ssf;</span><br><span class="line">ssf &lt;&lt; <span class="string">&quot;123&quot;</span></span><br><span class="line">    &lt;&lt; <span class="string">&quot; 456&quot;</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; ssf.str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">123 456</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<div class="note primary">
+            <p>&#x5F15;&#x7528;&#xFF1A;</p><ol type="1"><li><em>Cpp Primer</em> 5th Aug.2012</li></ol>
+          </div>
+<hr>
+
+    </div>
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #636363;font-size:20px;letter-spacing: 10px; ">-----------本文结束，感谢您的阅读-----------</div>
+    
+</div> 
+      
+    </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>三叔
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xuejiaw.github.io/CPPPrimer-Chapter8-Notes/" title="《C++ Primer》 第八章笔记">https://xuejiaw.github.io/CPPPrimer-Chapter8-Notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/" rel="prev" title="《3D数学基础：图形和游戏开发》第九章笔记">
+      <i class="fa fa-chevron-left"></i> 《3D数学基础：图形和游戏开发》第九章笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/LearnOpenGL-Notes-1/" rel="next" title="《LearnOpenGL》 笔记 (一)">
+      《LearnOpenGL》 笔记 (一) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-8-the-io-library"><span class="nav-number">1.</span> <span class="nav-text">Chapter 8 The IO Library</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-io-classes"><span class="nav-number">1.1.</span> <span class="nav-text">The IO Classes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#relationships-among-the-io-types"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Relationships among the IO Types</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#no-copy-or-assign-for-io-objects"><span class="nav-number">1.1.1.</span> <span class="nav-text">No Copy or Assign for IO Objects</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#condition-states"><span class="nav-number">1.1.2.</span> <span class="nav-text">Condition States</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#interrogating-the-state-of-a-stream"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Interrogating the State of a Stream</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#managing-the-condition-state"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">Managing the Condition State</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#managing-the-output-buffer"><span class="nav-number">1.1.3.</span> <span class="nav-text">Managing the Output Buffer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#flushing-the-output-buffer"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">Flushing the Output Buffer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-unitbuf-manipulator"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">The unitbuf Manipulator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tying-input-and-output-streams-together"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">Tying Input and Output Streams Together</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file-input-and-output"><span class="nav-number">1.2.</span> <span class="nav-text">File Input and Output</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#using-file-stream-objects"><span class="nav-number">1.2.1.</span> <span class="nav-text">Using File Stream Objects</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#using-an-fstream-in-place-of-an-iostream"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Using an fstream in Place of an iostream&amp;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#the-open-and-close-members"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">The open and close Members</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#automatic-construction-and-destruction"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">Automatic Construction and Destruction</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#file-modes"><span class="nav-number">1.2.2.</span> <span class="nav-text">File Modes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#opening-a-file-in-out-mode-discards-existing-data"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Opening a File in out Mode Discards Existing Data</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#file-mode-is-determined-each-time-open-is-called"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">File Mode is Determined Each Time open Is Called</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string-streams"><span class="nav-number">1.3.</span> <span class="nav-text">string Streams</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#using-an-istringstream"><span class="nav-number">1.3.1.</span> <span class="nav-text">Using an istringstream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#using-ostringstreams"><span class="nav-number">1.3.2.</span> <span class="nav-text">Using ostringstreams</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="三叔"
+      src="/uploads/blackCat.jpg">
+  <p class="site-author-name" itemprop="name">三叔</p>
+  <div class="site-description" itemprop="description">To see the world as it is, and to love it.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xuejiaW" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xuejiaW" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.weibo.com/u/2810133491/home?wvr=5" title="微博 → https:&#x2F;&#x2F;www.weibo.com&#x2F;u&#x2F;2810133491&#x2F;home?wvr&#x3D;5" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>微博</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/wang-xue-jia-20/activities" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;wang-xue-jia-20&#x2F;activities" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">三叔</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">571k</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.7.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    url = encodeURI(url);
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              })
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.getAttribute('id'));
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+            'X-LC-Key'    : 'z1vCYavVUbCGuMjNMcrsvShN',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey     : 'z1vCYavVUbCGuMjNMcrsvShN',
+      placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
