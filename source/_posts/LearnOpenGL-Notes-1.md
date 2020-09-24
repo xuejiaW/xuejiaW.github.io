@@ -7,6 +7,7 @@ categories:
   - 图形学
 tags:
   - 读书笔记
+  - 图形学
   - OpenGL
 ---
 
