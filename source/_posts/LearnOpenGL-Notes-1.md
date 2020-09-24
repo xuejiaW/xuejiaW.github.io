@@ -12,7 +12,7 @@ tags:
 
 {% cq %}
 
-![Creating a Window](LearnOpenGL-Notes-1/CreatingaWindow.png)
+<img src="LearnOpenGL-Notes-1/CreatingaWindow.png" alt="Creating a Window" style="zoom:50%;" />
 
 {% endcq %}
 

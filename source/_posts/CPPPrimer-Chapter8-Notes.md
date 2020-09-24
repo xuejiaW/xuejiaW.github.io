@@ -14,7 +14,7 @@ tags:
 
 《C++ Primer》 第八章笔记。
 
-![第八章内容](CPPPrimer-Chapter8-Notes/Ch_8.png)
+<img src="CPPPrimer-Chapter8-Notes/Ch_8.png" alt="第八章内容" style="zoom:50%;" />
 
 {% endcq %}
 
