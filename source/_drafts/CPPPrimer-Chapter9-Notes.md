@@ -102,7 +102,7 @@ vector<NoDefault> v1(10, 2);
 3. `reverse_iterator`：相反的迭代器，reverse_iterator--相当于iterator++，forward_list中没有该类型
 4. `const_reverse_iterator`：const的相反迭代器
 5. `size_type`：表示容器大小的伴随类型，unsigned int类型，其数值范围保证可以容纳容器中元素的大小
-6. `difference_type`：表示两个迭代器插值的伴随类型，int类型，其数值范围保证可以容纳两个迭代器位置的插值
+6. `difference_type`：表示两个迭代器插值的伴随类型，int类型，其数值范围保证可以容纳两个迭代器位置的差值
 7. `value_type`: 容器内元素的类型
 8. `reference`: 容器内元素的引用
 9. `const_reference`: 容器内元素的const引用
@@ -221,7 +221,7 @@ intArray = {4, 5, 6};
 
 #### Using assign (Sequential Containers Only)
 
-直接使用`=`符号进行赋值的话，容器的类型和元素的类型都必须匹配，而在不匹配的情况下，可以通过`assign`函数。`assign`函数有三个版本，一是通过另一个容器的两个迭代器来赋值，二是直接通过另一个容器赋值，三是通过两个分别表示数量和数值的int值来赋值。只有第二个版本可以使用类型不一样的容器进行赋值，如下所示：
+直接使用`=`符号进行赋值的话，容器的类型和元素的类型都必须匹配，而在不匹配的情况下，可以通过`assign`函数。`assign`函数有三个版本，一是通过另一个容器的两个迭代器来赋值，二是直接通过另一个容器赋值，三是通过两个分别表示数量和数值的int值来赋值。只有通过迭代器版本可以使用类型不一样的容器进行赋值，如下所示：
 
 ```cpp
 // intList.assign(intArray);    //error, container type not match
@@ -386,7 +386,7 @@ iter = lst.insert (iter, word);
 
 #### Using the Emplace Operations
 
-在C++11的标准下，还有一个与`insert`相对应的函数`emplace`，同意还有`emplace_front`，`emplace_back`版本。
+在C++11的标准下，还有一个与`insert`相对应的函数`emplace`，同样还有`emplace_front`，`emplace_back`版本。
 
 `emplace_front`和`empalce_back`的形参为需要插入元素的构造函数的形参，所以形参的数目和类型是不固定的，与要插入元素类型有关。如下所示：
 
@@ -456,7 +456,7 @@ Segmentation fault  (Crash)
 
 #### The pop_front and pop_back Memebers
 
-如果要从容器的开头或结尾处删去一个元素，应该使用`pop_front`或者`pop_back`，如同`vector`和`string`没有`push_front`操作一样，这两个类型也没有`pop_front`，同意的`forward_list`容器也没有`pop_back`操作。注意`pop_front`操作和`pop_back`操作并不会返回弹出的值，它们返回值是空。
+如果要从容器的开头或结尾处删去一个元素，应该使用`pop_front`或者`pop_back`，如同`vector`和`string`没有`push_front`操作一样，这两个类型也没有`pop_front`，`forward_list`容器也没有`pop_back`操作。注意`pop_front`操作和`pop_back`操作并不会返回弹出的值，它们返回值是空。
 
 #### Removing an Element or Multiple Elements from within the Container
 
