@@ -244,7 +244,7 @@ while(condition)
 
 ## Jump Statements
 
-C++中一共有四种跳转语句，`break`,`continue`,`goto`,`return`，`return`会再6.3节介绍。
+C++中一共有四种跳转语句，`break`,`continue`,`goto`,`return`，`return`会在6.3节介绍。
 
 ### The break Statement
 

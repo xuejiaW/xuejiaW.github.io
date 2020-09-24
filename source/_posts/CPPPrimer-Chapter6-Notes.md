@@ -1117,11 +1117,7 @@ pf为指向两个形参都是`const string&`，返回值为bool的函数的指�
 bool lengthCompare(const string &, const string &);
 ```
 
-但是并不能指向类内成员函数，即使形参和返回值类型一样，因为类内函数实际上有一个this指针的传递，如
-
-```cpp
-bool lengthCompare(const string &, const string &);
-```
+但是并不能指向类内成员函数，即使形参和返回值类型一样，因为类内函数实际上有一个this指针的传递
 
 注意，定义pf时，外面的括号不能缺少，不然变成
 
@@ -1157,7 +1153,7 @@ b3: 0
 当使用函数指针时，赋值给函数指针的函数的类型必须与函数指针的类型完全一致。
 
 ```cpp
-void ff(nt val);
+void ff(int val);
 void (*p1)(unsigned int) = ff;
 // void (*p2)(int) = ff; //error, can't convert unsigned int to int
 ```
