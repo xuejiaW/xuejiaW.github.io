@@ -89,8 +89,6 @@ $$\mathbf{M}=\left[\begin{array}{ccc}
 
 而代数余子式，是为余子式再加上一个系数，该系数由子矩阵所删除的行列决定，即
 
-$$C^{\{i j\}}=(-1)^{i+j} M^{\{i j\}}$$
-
 ### Determinants of Arbitary $n\times n$ Matrices
 
 任意$n\times n$矩阵的行列式计算过程如下：
@@ -100,8 +98,6 @@ $$C^{\{i j\}}=(-1)^{i+j} M^{\{i j\}}$$
 3. 将第二步中的所有结果累加
 
 即：
-
-$$|\mathbf{M}|=\sum_{j=1}^{n} m_{i j} C^{\{i j\}}=\sum_{j=1}^{n} m_{i j}(-1)^{i+j} M^{\{i j\}}$$
 
 如果一个三维矩阵通过上述方法计算：
 
