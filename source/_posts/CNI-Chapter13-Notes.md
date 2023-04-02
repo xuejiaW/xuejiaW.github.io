@@ -10,13 +10,13 @@ tags:
 date: 2019-12-09 11:44:17
 ---
 
-{% cq %}
+
 
 《计算机网络与因特网》 第十三章笔记
 
 主要讨论了分组交换，包的概念，局域网中的拓扑等。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -194,12 +194,12 @@ IEEE定义了三种对应包传递的方法：
 
 ![字节装填](CNI-Chapter13-Notes/2019-12-09-11-22-32.png)
 
-{% note primary %}
+{% message color:info %}
 
 1. *Computer Networks and Internets* 6th
 2. [Switching technology](https://web.archive.org/web/20171217042848/http://www.cs.virginia.edu/~mngroup/projects/mpls/documents/thesis/node8.html)
 3. [【计算机网络】数据交换技术和多路复用技术的正（nao）确(can)打开方式](https://www.cnblogs.com/penghuwan/p/7686059.html#_label3_1)
 
-{% endnote %}
+{% endmessage %}
 
 ***

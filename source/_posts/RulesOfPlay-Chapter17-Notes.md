@@ -10,7 +10,7 @@ tags:
   - 游戏设计
 ---
 
-{% cq %}
+
 
 《Rules of Play》 第十七章笔记
 
@@ -22,7 +22,7 @@ tags:
 
 同时，作者用桌游*魔法森林*作为例子，讲述了信息是如何运用在游戏中的。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -89,12 +89,12 @@ tags:
 同时信息应该是逐渐被揭露给玩家的，否则玩家会一下子突如其来的信息吓到，而且无从下手。
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1.*Rules of Play* 2003
 
-{% endnote %}
+{% endmessage %}
 
 ***

@@ -8,11 +8,11 @@ tags:
 - 读书笔记
 - C++
 ---
-{% cq %}
+
 
 《C++ Primer》 第十章笔记。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -1107,8 +1107,8 @@ copy(ivec.begin(), ivec.end(), out_iter);
 
 
 
-{% note primary %}
+{% message color:info %}
 
-{% endnote %}
+{% endmessage %}
 
 ***

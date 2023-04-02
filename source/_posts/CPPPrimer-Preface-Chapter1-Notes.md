@@ -10,7 +10,7 @@ tags:
   - C++
 ---
 
-{% cq %}
+
 
 《C++ Primer》 序言与第一章笔记
 
@@ -18,7 +18,7 @@ tags:
 
 ![第一章与序章内容](CPPPrimer-Preface-Chapter1-Notes/2020-04-15-22-10-51.png)
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -191,12 +191,12 @@ c++基本上是`free-format`语言，即语言编译过程并不会在意大括�
 通常类的定义放在`.h`文件中，文件的名字与其中的类名字相同。也有程序员会使用`.H`，`.hpp`，`.hxx`来表示头文件，编译器通常不会在意文件后缀名，但是IDE有时会。
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 
-{% endnote %}
+{% endmessage %}
 
 ***

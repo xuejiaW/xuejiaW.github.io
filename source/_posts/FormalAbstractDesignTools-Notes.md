@@ -9,7 +9,7 @@ tags:
   - 游戏设计
 ---
 
-{% cq %}
+
 
 该文是作者Doug Church在1999年发布在GAMASUTRA上的文章。
 
@@ -19,7 +19,7 @@ tags:
 
 在文章中作者着重讨论了`目的`，`可预测结果`和`故事`三个工具。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -168,13 +168,13 @@ FADT是一个帮助分析的词汇工具，他帮助游戏设计师们专注于�
 
 作者在这篇文章中提到了`目的`,`可预测结果`,`故事`三个工具，而整个工具集应该有许许多多的其他工具，如`资源经济`，`玩家学习`、`玩家能力曲线`、`奖惩关系`等等。每一个主题都能专门写一篇文章来从特定角度对游戏进行分析。
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. [Formal Abstract Design Tool](https://www.gamasutra.com/view/feature/3357/formal_abstract_design_tools.php?print=1)
 2. [怎样去设计一款优秀的现代电子游戏？](https://zhuanlan.zhihu.com/p/26853170)
 
-{% endnote %}
+{% endmessage %}
 
 ***

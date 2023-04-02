@@ -10,7 +10,7 @@ tags:
   - C++
 ---
 
-{% cq %}
+
 
 《C++ Primer》 第四章笔记
 
@@ -18,7 +18,7 @@ tags:
 
 ![第四章内容](CPPPrimer-Chapter4-Notes/Ch4.png)
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -757,12 +757,12 @@ pv = (void *)ps;
 ![操作符2](CPPPrimer-Chapter4-Notes/2020-02-17-23-17-07.png)
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 
-{% endnote %}
+{% endmessage %}
 
 ***

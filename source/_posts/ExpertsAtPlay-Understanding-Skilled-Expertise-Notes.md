@@ -9,7 +9,7 @@ tags:
   - 游戏设计
 ---
 
-{% cq %}
+
 
 《Experts at Play：Understanding Skilled Expertise》论文笔记
 
@@ -17,7 +17,7 @@ tags:
 
 这些因素包括，对于地形的理解，与队友的合作，对方位的感知等等。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -110,13 +110,13 @@ tags:
 
 FPS与其他游戏不同的是，在FPS中玩家的行为反馈会非常的快，如果做了一个错误的行为，可能下一秒就会因此输掉游戏。
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
  1. Reeves, S., Brown, B., & Laurier, E. (2009). Experts at Play: Understanding Skilled Expertise. Games and Culture, 4(3), 205–227. https://doi.org/10.1177/1555412009339730
 
 
-{% endnote %}
+{% endmessage %}
 
 ***

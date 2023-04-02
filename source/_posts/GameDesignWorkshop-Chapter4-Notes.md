@@ -10,7 +10,7 @@ tags:
   - 游戏设计
 ---
 
-{% cq %}
+
 
 《Game Design Workshop》 第四章笔记
 
@@ -22,7 +22,7 @@ tags:
 
 之后是两个更为复杂和高级的概念，世界创建和戏剧化曲线。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -272,12 +272,12 @@ Crikszentmihalyi说：当一个情况结果是未知时，只有这个人`有能
 
 对于游戏设计师而言，要更好的设计戏剧系统，同时需要对传统戏剧的理解和对游戏本身的理解。
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1.**Game Design Workshop** 4th 2019 by Tracy Fullerton
 
-{% endnote %}
+{% endmessage %}
 
 ***

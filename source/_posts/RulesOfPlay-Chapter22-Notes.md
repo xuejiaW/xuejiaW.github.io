@@ -10,7 +10,7 @@ tags:
   - 游戏设计
 ---
 
-{% cq %}
+
 
 《Rules of Play》 第二十二章笔记
 
@@ -20,7 +20,7 @@ tags:
 22.4节作者解释了Transformative Play的概念
 22.5-22.7节，作者分别对玩的三个定义进行分析。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -142,12 +142,12 @@ Coilois的分类方法可以成为一个有价值的游戏设计工具，因为�
 
 之后的章节会讨论游戏的体验品质，包括玩的心理学，对于情感的表达，游戏促进个人玩耍风格方式等。
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1.*Rules of Play* 2003
 
-{% endnote %}
+{% endmessage %}
 
 ***

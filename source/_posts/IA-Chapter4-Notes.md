@@ -10,12 +10,12 @@ tags:
 - 数据结构与算法
 ---
 
-{% cq %}
+
 
 《算法导论》第四章笔记。包括分治法的介绍，最大子数组问题算法与分析，矩阵相乘问题问题算法与分析，代入法、递归树法、主方法求时间复杂度。
 4.6节尚未整理。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -699,12 +699,12 @@ $$
 
 //TODO
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endnote %}
+{% endmessage %}
 
 ***

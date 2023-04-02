@@ -10,7 +10,7 @@ tags:
   - 3D数学
 ---
 
-{% cq %}
+
 
 《3D数学基础：图形和游戏开发》第八章笔记
 
@@ -28,7 +28,7 @@ tags:
 
 8.7节 介绍了各个表示方法如何相互转换。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -1309,12 +1309,12 @@ $$b=\left\{\begin{array}{ll}
 
 书中给出了四元数到欧拉角的转换的代码
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *3D Math Primer for Graphics and Game Development* 2nd 2011 
 
-{% endnote %}
+{% endmessage %}
 
 ***

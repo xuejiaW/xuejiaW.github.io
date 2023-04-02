@@ -10,7 +10,7 @@ tags:
   - C++
 ---
 
-{% cq %}
+
 
 《C++ Primer》 第六章笔记。
 
@@ -18,7 +18,7 @@ tags:
 
 ![第六章内容](CPPPrimer-Chapter6-Notes/Ch_6.png)
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -1228,12 +1228,12 @@ int func1(int*,int);
 decltype(func1)* f1(int);
 ```
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 
-{% endnote %}
+{% endmessage %}
 
 ***

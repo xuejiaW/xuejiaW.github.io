@@ -10,7 +10,7 @@ tags:
   - C++
 ---
 
-{% cq %}
+
 
 《C++ Primer》 第五章笔记
 
@@ -18,7 +18,7 @@ tags:
 
 ![第五章内容](CPPPrimer-Chapter5-Notes/Ch_5.png)
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -392,12 +392,12 @@ C++库中所有的异常类型定义在四个头文件中：
 所有的异常都有且只有一个函数`what`，该函数返回值类型为`const char*`，用来说明异常的信息。对于`stdexcept`中的异常类，返回的信息即是在初始化异常对象时传入的信息，对于其他的异常类，返回的内容由编译器决定。
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 
-{% endnote %}
+{% endmessage %}
 
 ***

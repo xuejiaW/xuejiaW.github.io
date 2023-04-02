@@ -10,13 +10,13 @@ tags:
 date: 2019-10-25 01:32:56
 ---
 
-{% cq %}
+
 
 《漫画数据库》 第四、五、六章笔记。
 
 包括介绍SQL环境的配置，SQL语言的基本操作，事物的概念，数据库部分优化概念及分布式数据库。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -553,12 +553,12 @@ AND product.product_code = sales.product_code
 复制数据库分为`读取专用`和`可更新`两种，前者复制服务器仅能读取主数据库的信息，后者可以对数据进行修改并且同步给主数据库以及其他数据库。
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *The Manga Guide to Databases* 2009
 
-{% endnote %}
+{% endmessage %}
 
 ***

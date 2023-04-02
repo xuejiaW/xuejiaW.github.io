@@ -10,7 +10,7 @@ tags:
   - 游戏设计
 ---
 
-{% cq %}
+
 
 《Rules of Play》 第十五章笔记
 
@@ -22,7 +22,7 @@ tags:
 
 最后提出了数学层面上的概率与玩家体会到的概率之间是存在差距的。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -164,12 +164,12 @@ tags:
 
 几率存在的意义并不是单纯的增加不确定性。它是要给玩家好处，或者坏处，或者某种信念，如“我希望得到xxx”，“我猜我能得到XXX”等等。
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1.*Rules of Play* 2003
 
-{% endnote %}
+{% endmessage %}
 
 ***

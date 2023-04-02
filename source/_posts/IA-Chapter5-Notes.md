@@ -10,7 +10,7 @@ tags:
   - 数据结构与算法
 ---
 
-{% cq %}
+
 《算法导论》 第五章笔记。
 
 5.1节介绍了整章中作为例子的雇佣问题，并简单介绍了两个分析随机问题的方法，概率分析和随机化算法。
@@ -21,7 +21,7 @@ tags:
 
 5.4节尚未整理。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -250,12 +250,12 @@ $$
 
 //TODO 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endnote %}
+{% endmessage %}
 
 ***

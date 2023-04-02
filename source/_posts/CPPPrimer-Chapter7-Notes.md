@@ -10,13 +10,13 @@ tags:
   - C++
 ---
 
-{% cq %}
+
 
 《C++ Primer》 第七章笔记
 
 ![第七章内容](CPPPrimer-Chapter7-Notes/Ch_7.png)
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -1305,12 +1305,12 @@ private:
 }
 ```
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 
-{% endnote %}
+{% endmessage %}
 
 ***

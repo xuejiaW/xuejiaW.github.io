@@ -10,11 +10,11 @@ tags:
 - 数据结构与算法
 ---
 
-{% cq %}
+
 
 《算法导论》第十章笔记，包括栈，队列，链表的实现。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -537,12 +537,12 @@ free=x;
 ![分支无限制有根树](IA-Chapter10-Notes/2019-10-26-15-40-32.png)
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endnote %}
+{% endmessage %}
 
 ***

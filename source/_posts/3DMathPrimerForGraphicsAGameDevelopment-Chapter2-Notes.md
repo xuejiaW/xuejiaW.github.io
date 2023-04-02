@@ -10,13 +10,13 @@ tags:
   - 3D数学
 ---
 
-{% cq %}
+
 
 《3D数学基础：图形和游戏开发》第二章笔记。
 
 介绍了向量的数学计算以及对应的几何意义，在每一节的第一部分是数学计算，第二部分是几何意义。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -46,14 +46,14 @@ $$
 \end{bmatrix}
 $$
 
-{% note info %}
+{% message color:info %}
 
 在这本书中：
 1. 标量用小写斜体表示：*a,b,x,y*
 2. 向量用小写粗体表示：**a,b,u,v**
 3. 矩阵用大写粗体表示：**A,B,M,R**
    
-{% endnote%}
+{% endmessage %}
 
 研究向量和矩阵的数学称为线性代数（linear algebra）。在线性代数中，$n$维度的向量和矩阵是用来求解有$n$个未知数的方程的。而在这本书中解释了向量和与矩阵的几何与几何意义。
 
@@ -448,12 +448,12 @@ $$
 
 ![向量计算定律](3DMathPrimerForGraphicsAGameDevelopment-Chapter2-Notes/2020-02-25-14-37-40.png)
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *3D Math Primer for Graphics and Game Development* 2nd 2011 
 
-{% endnote %}
+{% endmessage %}
 
 ***

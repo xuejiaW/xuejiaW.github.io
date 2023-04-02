@@ -10,7 +10,7 @@ tags:
 date: 2020-02-29 21:18:12
 ---
 
-{% cq %}
+
 
 《3D数学基础：图形和游戏开发》第三章笔记
 
@@ -20,7 +20,7 @@ date: 2020-02-29 21:18:12
 3.4节讨论了嵌套坐标系存在的目的。
 3.5节讨论了作者引入直立坐标系的初衷。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -185,12 +185,12 @@ $$
 
 作者在这里提出的直立坐标系（Upright Space）则是另一种表达，设想是，当使用世界坐标系时，则表示这个操作是需要进行位移的，而使用直立坐标系时，则是不需要位移。
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *3D Math Primer for Graphics and Game Development* 2nd 2011 
 
-{% endnote %}
+{% endmessage %}
 
 ***

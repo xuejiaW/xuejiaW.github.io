@@ -11,11 +11,11 @@ tags:
   - OpenGL
 ---
 
-{% cq %}
+
 
 <img src="LearnOpenGL-Notes-1/CreatingaWindow.png" alt="Creating a Window" style="zoom:50%;" />
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -173,13 +173,13 @@ int main()
 至此整个学习OpenGL的环境设置完成。
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. [vscode OpenGL环境搭建](https://blog.csdn.net/sarono/article/details/86564726)
 2. [Creating a window](https://learnopengl.com/Getting-started/Creating-a-window)
 
-{% endnote %}
+{% endmessage %}
 
 ***

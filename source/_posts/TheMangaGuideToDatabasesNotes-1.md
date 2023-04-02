@@ -10,13 +10,13 @@ tags:
 date: 2019-10-23 00:09:08
 ---
 
-{% cq %}
+
 
 《漫画数据库》 第一、二、三章笔记。
 
 包括介绍数据库的一些术语限定，关系运算，E—R模型介绍，以及表格规范化。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -319,12 +319,12 @@ DBMS-Database management system
 3. 外部模式：外部模式是从用户和应用角度来考虑，设计目的是让用户和程序可以方便使用。
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *The Manga Guide to Databases* 2009
 
-{% endnote %}
+{% endmessage %}
 
 ***
