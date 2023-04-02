@@ -10,7 +10,7 @@ tags:
   - 游戏设计
 ---
 
-{% cq %}
+
 
 《Rules of Play》 第十八章笔记
 
@@ -18,7 +18,7 @@ tags:
 
 主要介绍了游戏中的正反馈和负反馈。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -149,12 +149,12 @@ tags:
 这一章中提到的控制系统为第一类控制系统，但如果考虑到了游戏的文化层面或其他社会层面，则控制系统可能会受外界因素的干扰，成为第二类控制系统。
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1.*Rules of Play* 2003
 
-{% endnote %}
+{% endmessage %}
 
 ***

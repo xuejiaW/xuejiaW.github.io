@@ -10,7 +10,7 @@ tags:
   - C++
 ---
 
-{% cq %}
+
 
 《C++ Primer》 第三章笔记。
 
@@ -18,7 +18,7 @@ tags:
 
 ![第三章内容](CPPPrimer-Chapter3-Notes/Ch3.png)
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -1085,12 +1085,12 @@ cout << endl;
 示例中，将长度为4的int数组称为int_array。示例中使用using和typedef是等效的。
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 
-{% endnote %}
+{% endmessage %}
 
 ***

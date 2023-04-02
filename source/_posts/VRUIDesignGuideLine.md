@@ -6,9 +6,9 @@ date: 2019-02-17 20:53:20
 categories:
 ---
 
-{% cq %}
+
 Google I/O 2017，DayDream团队提出的UI设计规范。
-{% endcq %}
+
 
 <!--more-->
 
@@ -32,9 +32,9 @@ Google I/O 2017，DayDream团队提出的UI设计规范。
 
 # Unity中使用
 
-{% note info %}
+{% message color:info %}
 Unity中Scale为1表示为1米
-{% endnote %}
+{% endmessage %}
 
 建立一个Demo场景，首先存在根物体`ParentUI`，Z轴值为1，表示距离我们1米远，Scale为1
 
@@ -61,11 +61,11 @@ Unity中Scale为1表示为1米
    ![舒适范围](VRUIDesignGuideLine/2019-02-17-20-50-16.png)
 
 
-{% note primary %}
+{% message color:info %}
 引用：
 1. [Google I/O 视频](https://www.youtube.com/watch?v=ES9jArHRFHQ)
 2. [Google Design Sticker Sheet](https://developers.google.com/vr/design/sticker-sheet)
 3. [如何 VR 界面设计规范与实操](https://www.jianshu.com/p/c21addac9b0e)
-{% endnote %}
+{% endmessage %}
 
 ***

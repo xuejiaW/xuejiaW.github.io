@@ -10,13 +10,13 @@ tags:
 date: 2019-11-26 13:51:03
 ---
 
-{% cq %}
+
 
 《算法导论》 第十五章笔记，介绍动态规划的概念及一些运用了动态规划的算法。
 
 15.4及15.5节尚未整理
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -900,12 +900,12 @@ int LookupChain(int* matrixSizeArray, Matrix* minMultiplications, int i, int j)
 
 //TODO
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endnote %}
+{% endmessage %}
 
 ***

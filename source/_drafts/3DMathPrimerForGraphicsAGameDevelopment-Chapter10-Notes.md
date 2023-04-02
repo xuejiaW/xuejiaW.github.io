@@ -9,11 +9,11 @@ tags:
   - 3D数学
 ---
 
-{% cq %}
+
 
 《3D数学基础：图形和游戏开发》第十章笔记
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -106,8 +106,8 @@ L_{\text {out }}\left(\mathbf{x}, \hat{\boldsymbol{\omega}}_{\text {out }}, \lam
 简单渲染管线解决的问题都是从光源出来的直接光。而解决反射光线（间接光）效果，期望与完美求解渲染方程的技术技术称为全局光（global illumination）。
 
 
-{% note primary %}
+{% message color:info %}
 
-{% endnote %}
+{% endmessage %}
 
 ***

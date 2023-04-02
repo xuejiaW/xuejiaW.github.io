@@ -10,13 +10,13 @@ tags:
   - C++
 ---
 
-{% cq %}
+
 
 《C++ Primer》 第二章笔记，关于变量与基本类型。
 
 ![第二章内容](CPPPrimer-Chapter2-Notes/2020-04-15-22-06-48.png)
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -984,12 +984,12 @@ struct Sales_data
 
 * 虽然不是强制规定，但建议每个头文件都带有文件保护符。
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 2. [Latin-1字符集](CPPPrimer-Chapter2-Notes/"https://kb.iu.edu/d/aepu")
-{% endnote %}
+{% endmessage %}
 
 ***

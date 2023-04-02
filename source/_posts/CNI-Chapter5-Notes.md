@@ -10,13 +10,13 @@ tags:
 - 计算机网络
 ---
 
-{% cq %}
+
 
 《计算机网络与因特网》 第五章笔记。
 
 这一章简单定义了数据通信的概念，给出了数据通信的概念模型，并简单介绍了其中的一些关键领域的概念。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -83,12 +83,12 @@ tags:
 8. `物理通道与传输(Physical Channel and Transmission)`。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Computer Networks and Internets* 6th
 
-{% endnote %}
+{% endmessage %}
 
 ***

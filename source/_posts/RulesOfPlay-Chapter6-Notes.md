@@ -11,7 +11,7 @@ tags:
 ---
 
 
-{% cq %}
+
 
 《Rules of Play》 第六章笔记
 
@@ -25,7 +25,7 @@ tags:
 
 最后阐述游戏设计者并不能直接的限定所有的交互可能，而是通过设计的规则创建一个“可能性空间”。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -168,12 +168,12 @@ tags:
 2. *Formal Abstract Design Tools* by Doug Church
 3. *The Art of Interactive Design: A Euphorious and Illuminating Guide to Building Successful Software*  by Chris Crawford
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1.*Rules of Play* 2003
 
-{% endnote %}
+{% endmessage %}
 
 ***

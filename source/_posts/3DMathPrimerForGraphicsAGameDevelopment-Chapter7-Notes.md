@@ -10,7 +10,7 @@ tags:
   - 3D数学
 ---
 
-{% cq %}
+
 
 《3D数学基础：图形和游戏开发》第七章笔记
 
@@ -22,7 +22,7 @@ tags:
 
 7.4节 介绍在极坐标系中点和线段的关系
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -227,12 +227,12 @@ $$
 一切上述的极坐标的点的描述，都可以直接转换为对线段的描述。
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *3D Math Primer for Graphics and Game Development* 2nd 2011 
 
-{% endnote %}
+{% endmessage %}
 
 ***

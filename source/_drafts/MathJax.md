@@ -5,9 +5,9 @@ categories:
 tags:
 ---
 
-{% cq %}
+
 MathJax是一个让前端支持数学公式显示的JavaScript库。这里介绍常用的数学公式用Mathjax表达方式。
-{% endcq %}
+
 
 <!--more-->
 
@@ -220,8 +220,8 @@ $$
    
 2. 在公式中的空格是不显示的，如果想要显示空格，可以使用`\text{ }`，大括号内的内容当文字处理，所以会计算空格。
 
-{% note primary %}
+{% message color:info %}
 
-{% endnote %}
+{% endmessage %}
 
 ***

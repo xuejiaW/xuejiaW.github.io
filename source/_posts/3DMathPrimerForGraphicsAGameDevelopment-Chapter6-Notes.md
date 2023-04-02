@@ -10,7 +10,7 @@ tags:
   - 3D数学
 ---
 
-{% cq %}
+
 
 《3D数学基础：图形和游戏开发》第六章笔记
 
@@ -24,7 +24,7 @@ tags:
 
 6.5 介绍了齐次矩阵与透视投影的关系
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -405,11 +405,11 @@ $$\begin{array}{lll}
 
 如果一个矩阵是正交矩阵，它的转置也必然是正交矩阵。因此无论矩阵的每一行还是每一列满足上述条件，都能证明它是正交矩阵。
 
-{% note warning %}
+{% message color:warning %}
 
 在英语中有些术语会造成困扰。`orthogonal basis vectors`是描述一系列相互垂直的向量，但并没有限定它们的长度。如果它们满足长度为1，则称为`orthnormal basis verctors`。但是`orthogonal matrices`需要基本向量不仅相互垂直，而且长度为1。即`orthogonal basis vectores`不能构成`orthogonal matrices`，必须是`orthonormal basis vectores`才行。
 
-{% endnote %}
+{% endmessage %}
 
 
 ### Orthogonalizing a Matrix
@@ -749,12 +749,12 @@ x & y & z & z / d
 1. 在远剪切平面会保证$w=1$。这样做保证了深度检测的精确性（//TODO why？）。
 2. 还需要对$x，y$进行缩放来满足摄像机的视野（Field of view）要求。
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *3D Math Primer for Graphics and Game Development* 2nd 2011 
 
-{% endnote %}
+{% endmessage %}
 
 ***

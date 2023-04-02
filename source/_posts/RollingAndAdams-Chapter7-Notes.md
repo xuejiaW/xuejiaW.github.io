@@ -10,7 +10,7 @@ tags:
   - 游戏设计
 ---
 
-{% cq %}
+
 
 《Andrew Rollings and Ernest Adams on Game Design chapters》 第七章笔记
 
@@ -18,7 +18,7 @@ tags:
 
 作者给出了一系列纯粹的挑战类型，和应用挑战的方法。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -180,12 +180,12 @@ tags:
 
 侦探游戏可以看作是一种概念上挑战的游戏，玩家收集到的新证据就是新事物，而玩家需要能理解其背后隐藏的信息。
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. Andrew Rollings and Ernest Adams on Game Design. Andrew Rollings and Ernest Adams (2003)
 
-{% endnote %}
+{% endmessage %}
 
 ***

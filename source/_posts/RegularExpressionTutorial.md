@@ -10,13 +10,13 @@ tags:
 - 效率提升
 ---
 
-{% cq %}
+
 
 介绍了正则表达式的元字符、缩写、前后预查、标记位、贪婪与惰性匹配和捕捉模式一系列概念。
 
 主要是[Github](https://github.com/ziishaned/learn-regex#learn-regex)上教程的学习笔记。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -98,7 +98,7 @@ tags:
 
 捕捉模式相当于将模式匹配的字符组保存到内存中，方便之后引用。这个严格意义上超脱了正则表达式本身的功能，是在其他语言使用正则表达式时的一个功能。默认的`(<Pattern>)`操作符就是开启了捕捉模式，如要关闭的话，在括号后跟上?:即可，如`(?:<Pattern>)`
 
-{% note primary %}
+{% message color:info %}
 
 1. Github正则表达式教程 ： https://github.com/ziishaned/learn-regex#learn-regex
 
@@ -106,7 +106,7 @@ tags:
 
 3. 模式匹配图解 :  https://regexper.com/
 
-{% endnote %}
+{% endmessage %}
 
 ***
 

@@ -10,11 +10,11 @@ tags:
 - 软件推荐
 ---
 
-{% cq %}
+
 
 简单介绍V2Ray以及如何通过V2Ray搭建梯子。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -86,9 +86,9 @@ wget –N —no–check–certificate https://raw.githubusercontent.com/91yun/se
 
 因为我并没有苹果设备，所以这两个版本未进行过验证。但搜寻下来，普遍推荐MAC上使用V2RayX软件，IOS上使用Shadowrocket软件。两者都要注意在添加服务器时需要选择VMess类型，剩下的就是服务器地址，端口，ID的填写，这个与安卓与Windows版本并无差异，这里就不详细说明了。
 
-{% note info %}
+{% message color:info %}
 V2Ray官方版本并没有一个可视化的UI界面，以上推荐的软件都是针对V2Ray官方提供的`v2ray-core`项目的外部封装。我们可以在[v2ray-core项目地址](https://github.com/v2ray/v2ray-core/releases)上下载该版本，下载对应的压缩包并解压后，在目录下的`config.json`填写入相应的参数，并运行`v2ray.exe`即完成了客户端的运行。但对于绝大部分用户来说仍然更熟悉可视化界面，所以我在这里还是推荐了不同平台上对应的第三方软件。
-{% endnote %}
+{% endmessage %}
 
 ## V2Ray基本原理
 
@@ -250,9 +250,9 @@ vi /etc/v2ray/config.json
 关于匹配的其他规则如何写，如按IP进行匹配等，可以看官网上`路由配置`这一章节。
 
 
-{% note primary %}
+{% message color:info %}
 1. V2Ray官网 https://v2ray.com/
 2. V2Ray白话教程 https://toutyrater.github.io/
-{% endnote %}
+{% endmessage %}
 
 ***

@@ -11,11 +11,11 @@ tags:
   - OpenGL
 ---
 
-{% cq %}
+
 
 <img src="LearnOpenGL-Notes-2/2020-09-24-23-08-27.png" alt="Hello Window" style="zoom:50%;" />
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -130,12 +130,12 @@ glfwTerminate();
 
 [CPP]("https://raw.githubusercontent.com/xuejiaW/Study-Notes/master/LearnOpenGL_VSCode/src/1.HelloWindow/main.cpp")
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. [Hello Window](https://learnopengl.com/Getting-started/Creating-a-window)
 
-{% endnote %}
+{% endmessage %}
 
 ***

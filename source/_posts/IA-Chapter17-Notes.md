@@ -10,13 +10,13 @@ tags:
   - 数据结构与算法
 ---
 
-{% cq %}
+
 
 《算法导论》 第十七章笔记，关于平摊分析。
 
 第17.4节尚未整理
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -230,12 +230,12 @@ $$
 
 所以实际操作的总体花费复杂度为$O(n)$。
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endnote %}
+{% endmessage %}
 
 ***

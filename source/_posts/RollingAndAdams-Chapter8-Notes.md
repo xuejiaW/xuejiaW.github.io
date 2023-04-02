@@ -10,11 +10,11 @@ tags:
   - 游戏设计
 ---
 
-{% cq %}
+
 
 《Andrew Rollings and Ernest Adams on Game Design chapters》 第八章笔记
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -279,12 +279,12 @@ RTS游戏中也存在许多细小的决定，如决定每个单位如何行走�
 
 因为手动的进行参数的平衡并不高效，未来可能会有自动手机玩家数据，然后进行参数调整的平衡方法。如发现某一个英雄被玩家使用的过多，且胜率很高，自动下调这个英雄的一些属性。
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1.*Rules of Play* 2003
 
-{% endnote %}
+{% endmessage %}
 
 ***

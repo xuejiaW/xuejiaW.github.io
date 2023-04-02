@@ -9,9 +9,9 @@ categories:
 - 设计模式
 ---
 
-{% cq %}
+
 这一篇将会介绍单例模式，命令模式，适配器模式，外观模式，迭代器模式及组合模式。
-{% endcq %}
+
 
 <!--more-->
 
@@ -464,9 +464,9 @@ public abstract class CaffeineBeverage
 }
 ```
 
-{% note info %}
+{% message color:info %}
 例子中`brew`和`addCondiments`即为模版函数，而`NeedCondiments`这种提供了基本实现，但派生类中仍然可以重写的函数被称为钩子（`Hook`）。
-{% endnote%}
+{% endmessage %}
 
 #### 咖啡因饮料实现
 
@@ -771,9 +771,9 @@ menu.Debug();
 
 ![组合模式运行结果](HeadFirstDesignPatternNotes-2/2019-02-06-16-23-58.png)
 
-{% note primary %}
+{% message color:info %}
 引用：
 1. https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/behavioral.html
-{% endnote %}
+{% endmessage %}
 
 ***

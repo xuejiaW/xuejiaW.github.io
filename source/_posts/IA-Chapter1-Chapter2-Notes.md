@@ -10,13 +10,13 @@ tags:
 - 数据结构与算法
 ---
 
-{% cq %}
+
 
 《算法导论》中第一章与第二章阅读笔记。
 
 介绍了插入排序即归并排序的算法及复杂度。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -345,12 +345,12 @@ $$
 * 书中的$\lg n$表示$\log_2n$，而非一般数学书中的$\log_{10}n$，因为计算机讨论的是二进制而非现实生活中常用的十进制。
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endnote %}
+{% endmessage %}
 
 ***

@@ -9,7 +9,7 @@ tags:
   - 图形学
 ---
 
-{% cq %}
+
 
 这篇论文中，作者表达了希望可以通过游戏来帮助图形学教学，并探讨了以下几个问题：
 
@@ -18,19 +18,19 @@ tags:
 3. 电子游戏对于高等教育的帮助
 4. 目前图形学课程中，交互式游戏的例子
 
-{% endcq %}
+
 
 <!--more-->
 
 # The Use of Digital Games to Teaching Computer Graphics: an Open Opportunity
 
-{% note info %}
+{% message color:info %}
 
 原文中有大量source作为例子，在这里不会将所有的被引用source的内容整理再次。
 
 但会通过类似于`[2]`这样的标记，这个说明该部分内容在原文的第二篇引用中有详细说明。
 
-{% endnote %}
+{% endmessage %}
 
 
 ## Introduction
@@ -165,12 +165,12 @@ GDBL都是使用类似于OpenGL，Direct3D这样的框架让学生进行开发�
 GBL很少，所以作者认为在GBL的方面，还能有很多工作进行开展。
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. González-Campos, J. S., Arnedo-Moreno, J., & Sánchez-Navarro, J. (2018, April). The use of digital games to teaching computer graphics: An open opportunity. In 2018 IEEE Global Engineering Education Conference (EDUCON) (pp. 1988-1996). IEEE.
 
-{% endnote %}
+{% endmessage %}
 
 ***

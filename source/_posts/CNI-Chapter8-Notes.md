@@ -10,13 +10,13 @@ tags:
 date: 2019-12-07 00:18:54
 ---
 
-{% cq %}
+
 
 《计算机网络与因特网》 第八章笔记。
 
 给出了可能出现的错误，以及控制错误的信道编码方法，包括检测错误和修复错误。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -271,12 +271,12 @@ TODO：为什么这么设计的原因。
 
 自动重传请求技术适合只能检测错误，但不能修复错误的系统。当接收方检测出数据有错误后，将数据丢弃并不传递回执，那么发送方就会再次发送数据。
 
-{% note primary %}
+{% message color:info %}
 
 1. *Computer Networks and Internets* 6th
 2. [多项式除法](https://en.wikipedia.org/wiki/Polynomial_long_division)
 3. [1's Complement Arithmetic](https://heasarc.gsfc.nasa.gov/docs/heasarc/ofwg/docs/general/checksum/node11.html)
 
-{% endnote %}
+{% endmessage %}
 
 ***

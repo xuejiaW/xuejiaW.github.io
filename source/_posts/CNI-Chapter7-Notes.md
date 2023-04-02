@@ -10,7 +10,7 @@ tags:
 date: 2019-12-03 17:24:21
 ---
 
-{% cq %}
+
 
 《计算机网络与因特网》 第七章笔记。
 
@@ -20,7 +20,7 @@ date: 2019-12-03 17:24:21
 
 最后介绍了信道容量的概念。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -298,7 +298,7 @@ $$
 
 香农定理给出了真实环境下，数据速率的上限，即无论编码多么高效，在非理想环境（有噪声）下，每秒最大的比特传输量
 
-{% note primary %}
+{% message color:info %}
 
 1. Xianping, W.M.L.R.T., 2002. Simple Certification of Nyquist Rule. Journal of Beijing Institufe of Petrochemical Technology, (2), p.12.
 
@@ -306,6 +306,6 @@ $$
 
 3. *Computer Networks and Internets* 6th
 
-{% endnote %}
+{% endmessage %}
 
 ***

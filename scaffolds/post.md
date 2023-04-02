@@ -6,14 +6,14 @@ categories:
 tags:
 ---
 
-{% cq %}
 
-{% endcq %}
+
+
 
 <!--more-->
 
-{% note primary %}
+{% message color:info %}
 
-{% endnote %}
+{% endmessage %}
 
 ***

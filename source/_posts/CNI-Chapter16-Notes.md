@@ -10,11 +10,11 @@ tags:
 date: 2019-12-30 23:58:24
 ---
 
-{% cq %}
+
 
 《计算机网络与因特网》 第十六章笔记
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -254,10 +254,10 @@ GPS系统通过三颗卫星计算出终端的位置。首先要计算终端距�
 通过软件来设定通信特性也有一定的危险性，如用户可以选择被政府限制的频率来发送数据或者占据为紧急服务预留的频道。因此这个技术也需要严格规范。
 
 
-{% note primary %}
+{% message color:info %}
 
 1. *Computer Networks and Internets* 6th
 
-{% endnote %}
+{% endmessage %}
 
 ***

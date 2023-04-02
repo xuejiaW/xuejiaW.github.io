@@ -8,11 +8,11 @@ tags:
 - 读书笔记
 - C++
 ---
-{% cq %}
+
 
 《C++ Primer》 第九章笔记。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -973,8 +973,6 @@ q.push(item); //将一个元素的拷贝以较低优先级压入容器头部
 q.emplace(args);//用args创建一个较低优先级的元素压入容器头部
 ```
 
-{%note primary %}
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
-{% endnote %}

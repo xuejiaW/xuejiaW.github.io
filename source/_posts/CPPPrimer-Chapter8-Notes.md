@@ -10,13 +10,13 @@ tags:
   - C++
 ---
 
-{% cq %}
+
 
 《C++ Primer》 第八章笔记。
 
 <img src="CPPPrimer-Chapter8-Notes/Ch_8.png" alt="第八章内容" style="zoom:50%;" />
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -389,12 +389,12 @@ cout << ssf.str() << endl;
 */
 ```
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 
-{% endnote %}
+{% endmessage %}
 
 ***

@@ -10,13 +10,13 @@ tags:
   - 游戏设计
 ---
 
-{% cq %}
+
 
 《Game Design Workshop》 第三章笔记，这一章关于游戏中的常规元素。
 
 包括，玩家、目标、流程、规则、资源、冲突、边界、结果。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -348,12 +348,12 @@ Huizinga将玩家同意游戏的规则，开始游戏的行为称为，进入“
 也可以通过分析游戏中的这些元素来学习游戏设计。
 
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1.*Game Design Workshop* 4th 2019 by Tracy Fullerton
 
-{% endnote %}
+{% endmessage %}
 
 ***

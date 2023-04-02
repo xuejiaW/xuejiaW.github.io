@@ -10,11 +10,11 @@ tags:
 - 数据结构与算法
 ---
 
-{% cq %}
+
 
 《算法导论》 第十三章笔记 红黑树实现
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -43,11 +43,11 @@ tags:
 将除了叶子结点外的所有结点成为`内部结点(internal nodes)`，否则为外部结点`external nodes`
 
 
-{% note info %}
+{% message color:info %}
 
 定理：一个有$n$个内部结点的红黑树，其高度最多为$2\lg (n+1)$
 
-{% endnote %}
+{% endmessage %}
 
 定理证明如下：
 
@@ -860,12 +860,12 @@ void RBTree::DeleteFixUp(RBTreeNode* toReplaceTrack)
 }
 ```
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endnote %}
+{% endmessage %}
 
 ***

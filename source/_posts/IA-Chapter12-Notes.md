@@ -10,13 +10,13 @@ tags:
 - 数据结构与算法
 ---
 
-{% cq %}
+
 
 《算法导论》 第十二章笔记，线性二叉树的实现。
 
 12.4节尚未整理
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -288,11 +288,11 @@ BSTreeNode* BinarySearchTree::Predecessor(int value)
 }
 ```
 
-{% note primary %}
+{% message color:info %}
 
 可以看到，无论是Search,Minimum,Maximum,Successor,Predecessor，在最坏的情况下，都是遍历树的每一层，所以时间复杂度为$O(h)$
 
-{% endnote %}
+{% endmessage %}
 
 ### Insertion and deletion
 
@@ -498,12 +498,12 @@ void BinarySearchTree::Delete(int value)
 
 //TODO
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endnote %}
+{% endmessage %}
 
 ***

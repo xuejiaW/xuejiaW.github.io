@@ -10,7 +10,7 @@ tags:
   - 3D数学
 ---
 
-{% cq %}
+
 
 《3D数学基础：图形和游戏开发》第五章笔记
 
@@ -18,7 +18,7 @@ tags:
 5.6 介绍了线性变化的结合。
 5.7 介绍了变换的种类，包括线性变换和仿射变换。还有各种其他的分类方式，如可逆变换，保角变换等。
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -545,12 +545,12 @@ $$
 
 ![变换总结](3DMathPrimerForGraphicsAGameDevelopment-Chapter5-Notes/image-20200306141537944.png)
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *3D Math Primer for Graphics and Game Development* 2nd 2011 
 
-{% endnote %}
+{% endmessage %}
 
 ***

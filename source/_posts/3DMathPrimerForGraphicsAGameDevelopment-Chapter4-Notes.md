@@ -10,7 +10,7 @@ tags:
   - 3D数学
 ---
 
-{% cq %}
+
 
 《3D数学基础：图形和游戏开发》第四章笔记
 
@@ -19,7 +19,7 @@ tags:
 4.2 关于矩阵是用来表达线性变换的几何意义
 4.3 介绍了矩阵在线性代数中还可以用于解方程组
 
-{% endcq %}
+
 
 <!--more-->
 
@@ -320,13 +320,13 @@ $$
 
 线性代数在解方程组方面的应用在这本书中不多，但在一些更深入的主题，如物理引擎和渲染方面则有很多应用。
 
-{% note primary %}
+{% message color:info %}
 
 引用：
 
 1. *3D Math Primer for Graphics and Game Development* 2nd 2011 
    
 
-{% endnote %}
+{% endmessage %}
 
 ***
