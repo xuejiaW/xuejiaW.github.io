@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《计算机网络与因特网》 第七章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《计算机网络与因特网》 第七章笔记。 这一章是关于传播媒介的，首先给出了传播媒介的分类。 然后依次介绍各种媒介，包括线，光纤，红外线等。 最后介绍了信道容量的概念。"><meta property="og:type" content="blog"><meta property="og:title" content="《计算机网络与因特网》 第七章笔记"><meta property="og:url" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《计算机网络与因特网》 第七章笔记。 这一章是关于传播媒介的，首先给出了传播媒介的分类。 然后依次介绍各种媒介，包括线，光纤，红外线等。 最后介绍了信道容量的概念。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-01-15-46-54.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-01-15-06-05.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-01-15-19-14.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-01-15-45-39.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-08-31-03.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-08-36-42.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-09-54-25.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-14-44-01.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-15-52-33.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-16-17-36.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-16-23-46.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-17-06-01.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-17-07-06.png"><meta property="article:published_time" content="2019-12-03T09:24:21.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.009Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="计算机网络"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-01-15-46-54.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xuejiaw.github.io/CNI-Chapter7-Notes/"},"headline":"《计算机网络与因特网》 第七章笔记","image":["https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-01-15-46-54.png","https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-01-15-06-05.png","https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-01-15-19-14.png","https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-01-15-45-39.png","https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-08-31-03.png","https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-08-36-42.png","https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-09-54-25.png","https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-14-44-01.png","https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-15-52-33.png","https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-16-17-36.png","https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-16-23-46.png","https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-17-06-01.png","https://xuejiaw.github.io/CNI-Chapter7-Notes/CNI-Chapter7-Notes/2019-12-03-17-07-06.png"],"datePublished":"2019-12-03T09:24:21.000Z","dateModified":"2023-04-02T12:21:20.009Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《计算机网络与因特网》 第七章笔记。 这一章是关于传播媒介的，首先给出了传播媒介的分类。 然后依次介绍各种媒介，包括线，光纤，红外线等。 最后介绍了信道容量的概念。"}</script><link rel="canonical" href="https://xuejiaw.github.io/CNI-Chapter7-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-12-03T09:24:21.000Z" title="2019/12/3 17:24:21">2019-12-03</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.009Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span><span class="level-item">34 分钟读完 (大约5163个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《计算机网络与因特网》 第七章笔记</h1><div class="content"><p>《计算机网络与因特网》 第七章笔记。</p>
+<p>这一章是关于传播媒介的，首先给出了传播媒介的分类。</p>
+<p>然后依次介绍各种媒介，包括线，光纤，红外线等。</p>
+<p>最后介绍了信道容量的概念。</p>
+<span id="more"></span>
+<h1>Chapter 7 Transmission Media</h1>
+<h2 id="Introduction">Introduction</h2>
+<p>这一章将会给出传播媒介的分类，介绍电磁传播的基本概念以及展示干扰和噪音是如何被屏蔽的，最后会解释容量的概念。</p>
+<h2 id="Guided-And-Unguided-Transmission">Guided And Unguided Transmission</h2>
+<p>有两种重要的将传输媒介分类的方法：</p>
+<ol>
+<li>
+<p>按传播路径：使用<code>有向（Guided）</code>和<code>无向（Unguided）</code>来描述传播路径。像铜线和光纤这种提供特定路径的方式称为有向。而像无线电这样的传输称为无向。工程师会通俗的将这两种称为<code>有线(wired)</code>和<code>无线(wireless)</code>，因此光纤也算在有线的范畴。</p>
+</li>
+<li>
+<p>按能的形式：分为三种类型，在线缆上的<code>电信号（Electrical Energy）</code>，无线上使用的<code>无线电（Radio）</code>和光纤中使用的<code>光（Light）</code>。</p>
+</li>
+</ol>
+<h2 id="Taxonomy-By-Forms-Of-Energy">Taxonomy By Forms Of Energy</h2>
+<p>下图展示了按能的形式分类的图，这个分类图也不是完美的，例如在无线电部分分为<code>陆地无线电（Terrestrial Radio）</code>和<code>卫星无线电（Satellite）</code>，但实际上太空空间站的无线电部分两者都不符合。</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-01-15-46-54.png" alt="能力形式分类"></p>
+<h2 id="Background-Radiation-And-Electrical-Noise">Background Radiation And Electrical Noise</h2>
+<p>所有用电信号传输的电路都需要两根线，一根用来将信号传递给接收方，一根用来将反馈还给发送方。最简单的电传输方式就是使用两根铜线，每根线都用塑料包裹住，来防止相互之间的电干扰，在两根线外还有一层整个包裹起来，为了人方便使用。</p>
+<p>但在线缆形式下有许多改进，这主要是因为电信号有以下特征：</p>
+<ol>
+<li>环境中有随机的电磁辐射，称为<code>噪音（Noise）</code>，如霓虹灯和电机就会发出随机的辐射。一般来说通信系统在正常运行状态下就会产生少量的噪音。</li>
+<li>当电磁辐射遇到金属会被吸收进而产生细微的信号，这些信号会对正常的信号造成干扰。</li>
+<li>正因为金属能吸收电磁辐射，所以可以用足够的金属放在噪声源和通信系统间，将其作为<code>防护（Shield）</code>。</li>
+</ol>
+<h2 id="Twisted-Pair-Coppter-Wiring">Twisted Pair Coppter Wiring</h2>
+<p>有三种形式的电缆可以减少电磁噪音的干扰：</p>
+<ol>
+<li>非屏蔽双绞线（Unshielded Twisted Pair,UTP）</li>
+<li>同轴电缆（Coaxial cable）</li>
+<li>屏蔽双绞线（Shielded Twisted Pair,STP）</li>
+</ol>
+<p>第一个形式，非屏蔽双绞线在通信中被广泛应用。如名字一样，双绞线是将两根铜线缠绕在一起的形式，这种相互缠绕的形式比两根线平行排布有更好的抗干扰性。如下图所示，（a）为平行排列，蓝线更接近辐射源，于是它相对于灰线吸收了更多的能量，而在（b）图的缠绕形式中，两根线都各有一部分更靠近辐射源，所以整体来说，两者收到的能量是相同的。</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-01-15-06-05.png" alt="双绞线"></p>
+<h2 id="Shielding：Coaxial-Cable-And-Shielded-Twisted-Pair">Shielding：Coaxial Cable And Shielded Twisted Pair</h2>
+<p>因为非屏蔽双绞线只是让两根线吸收了相同的能量，但噪音还是被吸收了，所以在一些情况下，非屏蔽双绞线仍然会产生问题，如有特别强的电噪音环境，或者特别接近噪声源，或者通信系统中的信号频率很高（频率越高对噪音越敏感）。为了解决这些问题，只能尽量的屏蔽噪声。</p>
+<p>一种方法就是<code>同轴电缆（Coaxial Cable）</code>，它在线材的外层增加了一层<code>编织金属屏蔽(Braided metal shield)</code>（如网状）。使用编织样的金属层而非一整块金属层主要是处于便携性的考虑（后者的屏蔽性更好），但相对于非屏蔽双绞线，同轴电缆的便携性还是差的。如电视的信号线，一般都是同轴电缆，同轴电缆如下图所示：</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-01-15-19-14.png" alt="同轴电缆"></p>
+<p>屏蔽双绞线则是非屏蔽双绞线和同轴电缆的混合，是两者形式的折中，他在一对或多对双绞线的外层使用了更薄的金属屏蔽层，很多情况下用铝来作为金属屏蔽层（铝更软）。</p>
+<p>如之前节所述，为了避免铜线间的电干扰，铜线外层会包裹一层塑料。双绞线是将两个两个包裹着塑料的铜线绞在一起，同轴电缆则是在一根包裹住塑料的导线外包裹金属屏蔽层，屏蔽双绞线是在两根包裹着塑料的铜线绞在一起后再包裹金属层。</p>
+<h2 id="Categories-Of-Twisted-Pair-Cable">Categories Of Twisted Pair Cable</h2>
+<p>一些标准机构为用于计算机网络的双绞线定义了标准，这些机构包括<code>美国国家标准组织（American National Standards Institute，ANSI）</code>，<code>通信产业联合（Telecommunications Industry Association，TIA）</code>，<code>电子产业联合（Electronic Industries Alliance，EIA）</code>，下图为主要分类：</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-01-15-45-39.png" alt="双绞线分类"></p>
+<h2 id="Media-Using-Light-Energy-And-Optical-Fibers">Media Using Light Energy And Optical Fibers</h2>
+<p>有三种形式的媒介是用光能携带数据的：<code>光纤（Optical Fibers）</code>，<code>红外线传输（Infrared transmission）</code>，<code>点对点激光（Point to Point lasers）</code>。</p>
+<p>其中最重要的类型是光纤：</p>
+<ol>
+<li>
+<p>每根光纤都是一根包裹在塑料外层中的细玻璃线或者透明塑料。</p>
+</li>
+<li>
+<p>光纤是用于单项传播的。在光纤的一段是一个激光或者LED，用来发射光，另一端是连接一个感光设备用来检测光。如果数据需要双向传播，则需要用到两根光纤。多根光纤用塑料封壳包裹在一起生成光纤电缆。</p>
+</li>
+</ol>
+<p>光纤无法被弯折成直角，但光纤仍然可以弯曲，甚至可以弯曲成一个直径小于2英寸的圆，让光纤在弯折状态下仍然可以正常工作，主要是因为光的传播特性。</p>
+<p>光从一个低密度物质照射入另一个高密度物质，随着入射的角度不同，光的反应也会不同。存在一个特定的角度，当光以这个角度入射时，光会随着两个物质的交界处传播。当光的入射角大于这个角度时，光会被反射。当光的入射角小于这个角度时，光会发生折射。如下图所示：</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-03-08-31-03.png" alt="光的反射"></p>
+<p>光纤运用的是光的反射，有一个特殊的镀层（Cladding）与光纤共同形成一个边界，在传输过程中，光会在上下两个边界内反射前进。</p>
+<p>但反射的过程中是存在能量损耗的，而且因为光的反射，光传播的路径是比光的直线传播要长的，因此光在光纤一段发射后，抵达另一端时能量会更低，而且会更分散（Dispersed），如下图所示：</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-03-08-36-42.png" alt="光分散"></p>
+<p>上图中，因为接受时的能量更低，所以Y轴值更低，且因为能量更分散，所以接受的时间也会拖长，因此在X轴上如同被拉伸。</p>
+<h2 id="Types-Of-Fiber-And-Light-Transmission">Types Of Fiber And Light Transmission</h2>
+<p>因为光在传输中的反射导致的分散在长距离使用光纤时会成为严重问题，因此有三个种类的光纤，不同的在性能与价格上权衡，</p>
+<ol>
+<li>
+<p>跃变型多模光纤（Multimode，step index fiber）：这种类型的光纤，光纤与镀层中的边界很陡峭，因此光会在边界内频繁的反射，造成大量的能量分散，但是这种光纤价格最便宜。</p>
+</li>
+<li>
+<p>渐变型多模光纤（Multimode，graded index fiber）：这种类型比跃变型多模稍贵，但是能减少反射进而有更少的能量分散。</p>
+</li>
+<li>
+<p>单模光纤（Single mode fiber）：这种类型的光纤最贵，但也有最低能量分散。通常用于长距离传输和高比特率的传输。</p>
+</li>
+</ol>
+<p>如之前节所述光纤的一端会用来发射光，另一端会用来接收光。在发射端，可以通过<code>发光二极管（Light Emitting Diode，LED）</code>，或者<code>激光二极管（Injection Laser Diode，ILD）</code>。在 接收端可以用<code>感光细胞（Phote-sensitive）</code>或者<code>光敏二极管（Photodiode）</code>。</p>
+<h2 id="Optical-Fiber-Compared-To-Copper-Wiring">Optical Fiber Compared To Copper Wiring</h2>
+<p>光纤的优势：</p>
+<ol>
+<li>对电噪音免疫</li>
+<li>更少的衰减（相对于铜线而言）</li>
+<li>更高的带宽</li>
+</ol>
+<p>铜线的优势：</p>
+<ol>
+<li>更低的价格</li>
+<li>更少的设备要求（光纤的接收端必须被有效的抛光）</li>
+<li>更不易被损坏</li>
+</ol>
+<h2 id="Infrared-Communication-Technologies">Infrared Communication Technologies</h2>
+<p><code>红外线通信（Infrared Communication）</code>也是光能通信的一种，也是点对点技术的一种,电视遥控机就是红外线通信的应用。红外线的频率在人眼可见光的范围外，但是红外线仍然表现的如同可见光，它会很快的消散，可以在坚硬光滑表面反射，会被不透明物体阻挡，薄如纸片的物体会阻挡信号，甚至大气中的水气都会阻碍信号。</p>
+<p>因此红外线通信适用于室内使用，适用于距离短且无阻挡的通信。</p>
+<p>下图是三种红外线通信的常见技术：</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-03-09-54-25.png" alt="红外线通信技术"></p>
+<h2 id="Point-To-Point-Laser-Communication">Point-To-Point Laser Communication</h2>
+<p><code>激光通信（Laser Communication）</code>是另一种点对点通信，如红外线通信一样，激光通信也需要一个无阻挡的路径。</p>
+<p>但与红外线通信不同的是，激光通信只能覆盖很小的一片区域，激光的宽度通常只有几厘米（这里是宽度，并不是指长度），也正是因为激光的宽度很窄，所以激光传输的接收条件是比较苛刻的，通常是被永久的固定安装。</p>
+<p>激光通信的典型应用是楼与楼之间的信号传输，通常在相邻大楼的外墙或者顶楼安装部署用于激光通信的发射和接收装置。</p>
+<h2 id="Electronmagnetic-Radio-Communication">Electronmagnetic(Radio) Communication</h2>
+<p>常用<code>无向性（unguided）</code>来描述不需要任何介质来传播能量的通信方式。在计算机网络中最常用的依赖于电磁能的无向性技术是无线电传播（Radio Frequency Transmission）。无线电传播相较于光传播有个显著的优势，即可以长距离传播且可穿透阻碍物。</p>
+<p>电磁能的使用依赖于他的频率属性，常用<code>波谱（Spectrum）</code>来描述可能的频率范围。全球的各政府分配不同频率的使用权，例如在美国是<code>联邦通信委员会（Federal Communications Commission）</code>。下图是主要的能量频率波谱，其中无线电的范围基本是$3KHZ$到$300GHZ$。</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-03-14-44-01.png" alt="波谱"></p>
+<h2 id="Signal-Progagation">Signal Progagation</h2>
+<p>电磁波的频率也决定它传播时的特性，下表是波传播的三大类型：</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>频率范围</th>
+<th>传播类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>低频</td>
+<td>&lt; 2 MHZ</td>
+<td>沿地球表面传输，可能会被地形阻挡</td>
+</tr>
+<tr>
+<td>中频</td>
+<td>2 到 30 MHZ</td>
+<td>在大气层中反射传播，尤其是在电离层</td>
+</tr>
+<tr>
+<td>高频</td>
+<td>&gt;30 MHZ</td>
+<td>直线传播，会被障碍物阻挡</td>
+</tr>
+</tbody>
+</table>
+<p>无线技术也可被分为以下两类：</p>
+<ol>
+<li>地表（Terrestrial）：依赖相对贴近地表的设备通信，例如无线电发射器和微博发射器。这些设备一般安装在山顶，人造塔或建筑上。</li>
+<li>非地表（Nonterrestrial）：依赖于大气层外的设备，例如轨道卫星</li>
+</ol>
+<h2 id="Types-Of-Satellites">Types Of Satellites</h2>
+<p>通信卫星可以根据距离地表的距离分为三类：</p>
+<ol>
+<li><code>近地轨道卫星（Low Earth Orbit,LEO）</code>：</li>
+</ol>
+<p>有低延迟的优点，但是与地球的相对位置变化的较快，接收端需要追踪卫星。</p>
+<ol start="2">
+<li><code>中地球轨道卫星（Medium Earth Orbit,MEO）</code>：</li>
+</ol>
+<p>为地球南北极提供信号的椭圆轨道卫星。</p>
+<ol start="3">
+<li><code>对地静止轨道卫星（Geostationary Earth Orbit,GEO）</code>：</li>
+</ol>
+<p>与地面可以保持固定角度，缺点是离地球较远，延迟大。</p>
+<h2 id="Geostationary-Earth-Orbit-GEO-Satellites">Geostationary Earth Orbit(GEO) Satellites</h2>
+<p>从上节对于通信卫星的描述可以看出，通信卫星的权衡主要是在延迟和与轨道周期的权衡（轨道周期与地球自转相差越远，追踪卫星越难）。</p>
+<p>这里以<code>对地静止轨道卫星（Geostationary Earth Orbit,GEO）</code>为例，对地静止轨道卫星的距离地表距离约为35805千米，计算过程如下：</p>
+<p>因为卫星保持在轨道上，所以离心力与万有引力相等，即</p>
+<p>$$<br>
+{\omega}^2mr=\frac{GMm}{r^2} \\<br>
+化简为：\\<br>
+r^3=\frac{GM}{w^2}\\<br>
+其中，G是万有引力常数为6.67\times 10^-20 {km}^3/kg\cdot {s^2}，M是地球质量为5.976\times 10^{24} kg\\<br>
+\omega 为角速度，如果要求对地静止，即角速度与地球自转相同，即\\<br>
+\omega = \frac{2\pi}{3600*24}=7.29\times10^{-5} rad/s\\<br>
+都代入上式，求得r=42172 km，减去地球半径6376km，得对地静止轨道卫星的距离地表距离约为35805千米。<br>
+$$</p>
+<p>卫星距离如果不足这个数值，其旋转速度就会比地球快，在这个距离下，卫星与地表以相同的速度转动，所以地表上的卫星追踪装置在追踪到卫星后就不需要再次运动，因为两者的角度不会发生变化。但对地静止轨道卫星的最大缺陷是信号的延迟，信号的速度以光速计算，信号的一次来回需要：</p>
+<p>$$<br>
+2\times \frac{35.8\times 10^6 \text{ meters}}{3\times 10^8 \text{meters/sec}}=0.238 sec<br>
+$$</p>
+<p>0.2秒的延迟在许多领域上是无法被接受的。</p>
+<h2 id="GEO-Coverage-Of-The-Earth">GEO Coverage Of The Earth</h2>
+<p>在对地静止轨道上的卫星数量是由限制的。为了避免星号键的相互干扰，卫星与卫星间必须有间隔，间隔的大小与信号的强度相关，但通常而言是4-8度，因为整个轨道是360度，所以对地静止轨道上最多有45-90颗卫星。</p>
+<p>最少则需要三颗卫星来覆盖整个地球，如下图所示：</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-03-15-52-33.png" alt="最少三颗卫星"></p>
+<p>证明如下，首先根据透视原理，距离一个球体越近，能看到球体的部分越少。在距离球体无限远的距离，最多也只能看到球体的50%，如下图所示：</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-03-16-17-36.png" alt="透视原理"></p>
+<p>将能看到球体的百分比设为X，离球体的距离设为d，求的半径设为R，表达式为：</p>
+<p>$$<br>
+X=\frac{50%}{1+\frac{R}{d}}<br>
+$$</p>
+<p>式子是由等比三角形得出的，如下图：</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-03-16-23-46.png" alt="等比证明"></p>
+<p>将地球半径6376KM及对地静止轨道距离35805KM代入，得能看到的范围是约为42.45%，所以最少需要三颗卫星才能覆盖地球。</p>
+<h2 id="Low-Earch-Orbit-LEO-Satellites-And-Clusters">Low Earch Orbit(LEO) Satellites And Clusters</h2>
+<p>近地轨道卫星的高度最多为2000千米，其主要的缺点在于无法与地面保持相同速度，因此地面上的天线必须旋转来追踪卫星。最低的近地轨道卫星在大约90分钟就可以环绕一遍地球，移动速度还是将对较快的，因此对于地面天线来说追踪有一定难度。</p>
+<p>通常的解决方式是用卫星群（Clustering）或者阵列部署（Array Deployment）的卫星来解决追踪问题。一系列卫星一同工作来覆盖较大的区域。</p>
+<p>如一条信息需要从欧洲传到北美，欧洲的地面基站向此时他上方的卫星发送数据，上方的卫星将信息在卫星群之间传播，一直传送到北美上方的卫星，北美上方的卫星再将信息传送给北美的地面基站。</p>
+<h2 id="Tradeoffs-Among-Media-Types">Tradeoffs Among Media Types</h2>
+<p>通信媒介的选择是复杂的，通常需要从以下几个方面权衡：</p>
+<ol>
+<li>花费（Cost）：材料，安装，操作，维护等的开销</li>
+<li>数据速率（Data rate）：每秒可以传送多少数据</li>
+<li>延迟（Delay）：数据传播和处理的延迟</li>
+<li>信号影响（Affect on signal）：信号是否会衰减和失真</li>
+<li>环境（Environment）：对干扰的敏感性和电子噪音</li>
+<li>安全性（Security）：是否容易被窃听</li>
+</ol>
+<h2 id="Measuring-Transmission-Media">Measuring Transmission Media</h2>
+<p>可以从两个方面来评判传输媒介：<code>传播延迟（Progagation Delay）</code>和<code>信道容量（Channel Capacity）</code>。</p>
+<p><code>奈奎斯特第一准则（Nyquist Theorem）</code>表明在理想低通信道下的最高码元速率速率是带宽的2倍。假设有K个电平，则一个码元能传输的bit数为$log_2K$，B表示信道的带宽，因此数据速率可以表达为：</p>
+<p>$$<br>
+D=2Blog_2K \text{ bits /s}<br>
+$$</p>
+<p>下面证明奈奎斯特准则：</p>
+<p>一个有限带宽的低通滤波器，如果其截至频率为$\omega_g$其频域图如下：</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-03-17-06-01.png" alt="低通滤波器频域"></p>
+<p>该滤波器的时域相应图为：</p>
+<p><img src="CNI-Chapter7-Notes/2019-12-03-17-07-06.png" alt="低通滤波器时域"></p>
+<p>时域的相应波形时一个拖尾的连续信号，这个拖尾会干扰后续信号。但是从波形上可以看出，在$t=\frac{\pi}{\omega_s},\frac{2pi}{\omega_s}…$处是0，所以如果在这些间隔点发送码元，则不会被干扰。这些点的间隔时间为$T_s=\frac{\pi}{\omega_s}=\frac{1}{2f_m}$，所以码元速率为$R=\frac{1}{T_s}=2f_m$</p>
+<h2 id="The-Effect-of-Noise-On-Communication">The Effect of Noise On Communication</h2>
+<p>奈奎斯特定理提供了了理论上的最高码元速率，因为他并没有将噪音纳入考虑， 而实际中噪音不可避免。香农在此基础上给出了考虑噪音的数据速率，称为香农定理（Shannon’s Theorem）：</p>
+<p>$$<br>
+C=B\log_2(1+S/N) bits/s<br>
+$$</p>
+<p>其中$S/N$称为信噪比，式子中并没有给出电平数量K，这是因为实际上在考虑噪声时，电平数量是受噪声影响的，噪声越大，为了避免干扰，电平的间隔就只能越大，因此电平数量就越少。</p>
+<h2 id="The-Significance-Of-Channel-Capacity">The Significance Of Channel Capacity</h2>
+<p>奈奎斯特定律鼓励工程师探索更高效的编码方式，因为在最高码元速率受信道带宽限制时，编码方式越高效，一个码元携带的数据就越多，单位时间内就能传输更多的比特。</p>
+<p>香农定理给出了真实环境下，数据速率的上限，即无论编码多么高效，在非理想环境（有噪声）下，每秒最大的比特传输量</p>
+<article class="message is-info">
+        
+        <div class="message-body">
+            <ol>
+<li>
+<p>Xianping, W.M.L.R.T., 2002. Simple Certification of Nyquist Rule. Journal of Beijing Institufe of Petrochemical Technology, (2), p.12.</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%9C%B0%E7%90%83%E9%9D%9C%E6%AD%A2%E8%BB%8C%E9%81%93">https://zh.wikipedia.org/wiki/地球靜止軌道</a></p>
+</li>
+<li>
+<p><em>Computer Networks and Internets</em> 6th</p>
+</li>
+</ol>
+
+        </div>
+    </article>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>《计算机网络与因特网》 第七章笔记</p><p><a href="https://xuejiaw.github.io/CNI-Chapter7-Notes/">https://xuejiaw.github.io/CNI-Chapter7-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-12-03</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/CNI-Chapter8-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《计算机网络与因特网》 第八章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/CNI-Chapter6-Notes/"><span class="level-item">《计算机网络与因特网》 第六章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
+            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
+            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: true,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

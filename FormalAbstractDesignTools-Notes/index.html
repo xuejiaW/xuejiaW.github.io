@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《Formal ABstract Design Tools》 笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="该文是作者Doug Church在1999年发布在GAMASUTRA上的文章。 作者认为当前阻碍游戏设计发展的是没有足够的词汇去描述游戏中的设计。 因此他提出了Formal Abstract Design Tool框架，作为一个词汇工具集。 在文章中作者着重讨论了目的，可预测结果和故事三个工具。"><meta property="og:type" content="blog"><meta property="og:title" content="《Formal ABstract Design Tools》 笔记"><meta property="og:url" content="https://xuejiaw.github.io/FormalAbstractDesignTools-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="该文是作者Doug Church在1999年发布在GAMASUTRA上的文章。 作者认为当前阻碍游戏设计发展的是没有足够的词汇去描述游戏中的设计。 因此他提出了Formal Abstract Design Tool框架，作为一个词汇工具集。 在文章中作者着重讨论了目的，可预测结果和故事三个工具。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xuejiaw.github.io/img/og_image.png"><meta property="article:published_time" content="2020-03-14T07:54:04.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.011Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="游戏设计"><meta property="article:tag" content="博文笔记"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://xuejiaw.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xuejiaw.github.io/FormalAbstractDesignTools-Notes/"},"headline":"《Formal ABstract Design Tools》 笔记","image":["https://xuejiaw.github.io/img/og_image.png"],"datePublished":"2020-03-14T07:54:04.000Z","dateModified":"2023-04-02T12:21:20.011Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"该文是作者Doug Church在1999年发布在GAMASUTRA上的文章。 作者认为当前阻碍游戏设计发展的是没有足够的词汇去描述游戏中的设计。 因此他提出了Formal Abstract Design Tool框架，作为一个词汇工具集。 在文章中作者着重讨论了目的，可预测结果和故事三个工具。"}</script><link rel="canonical" href="https://xuejiaw.github.io/FormalAbstractDesignTools-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-03-14T07:54:04.000Z" title="2020/3/14 15:54:04">2020-03-14</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.011Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/">博文笔记</a></span><span class="level-item">30 分钟读完 (大约4445个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《Formal ABstract Design Tools》 笔记</h1><div class="content"><p>该文是作者Doug Church在1999年发布在GAMASUTRA上的文章。</p>
+<p>作者认为当前阻碍游戏设计发展的是没有足够的词汇去描述游戏中的设计。</p>
+<p>因此他提出了<code>Formal Abstract Design Tool</code>框架，作为一个词汇工具集。</p>
+<p>在文章中作者着重讨论了<code>目的</code>，<code>可预测结果</code>和<code>故事</code>三个工具。</p>
+<span id="more"></span>
+<h1>Formal Abstract Design Tools</h1>
+<p>游戏在科技方面的发展很迅速，但是在设计方面的发展却不尽如人意。</p>
+<p>游戏设计是关于玩家的目标和节奏，是游戏设计让游戏成为了游戏。否则游戏光盘中装的只是数据而没有关于游戏的体验。</p>
+<h2 id="How-Do-We-Talk-About-Games">How Do We Talk About Games</h2>
+<p>游戏设计最大的障碍在于，缺少一个通用的设计词汇。</p>
+<p>对于技术而言，又非常多的专业词汇来描述技术问题，但是对于游戏设计，往往讨论就只停留在有趣和不有趣。</p>
+<hr>
+<h2 id="A-Language-Without-Boarders">A Language Without Boarders</h2>
+<p>目前游戏设计中的设计词汇大多限定在特定的游戏分类中，如可以去谈论RTS游戏中，每个单位该如何平衡。但是很少有去谈论如何汲取RTS游戏的优点，然后运用在RPGs游戏中的。</p>
+<p>因此作者提出了&quot;Formal Abstract Design Tools&quot;（后简称FADT）这一概念，他实际上是一个针对于游戏专业词汇的框架。</p>
+<p><code>Formal</code>表示它是一个精确的，形式化（即可以运用到别的种类游戏上）的描述。如“有趣的东西”就不是一个Formal的描述，它不够精确，这一个并不精确的描述也无法运用在其他游戏上，而“玩家奖励”就是一个Formal的描述。</p>
+<p><code>Abstract</code>表示它是一个抽象的描述。如“+2攻击力的巨人之剑”就不是一个抽象描述，对应的是抽象描述是“玩家能力提升曲线”。</p>
+<h2 id="Let’s-Create-a-Design-Vocabulary——What-Could-Possibly-Go-Wrong？">Let’s Create a Design Vocabulary——What Could Possibly Go Wrong？</h2>
+<p>要注意FADT本质上还是只是工具，作为设计师，还是需要判断出什么是有趣的，游戏是关于什么的，你想展现给玩家的是什么，这才是构建出游戏的关键。这就如同房子不是由工具建成的，房子是由砖瓦构建而成的，工具之hi是帮助作用。</p>
+<p>FADT只是一个工具，一个关于词汇的工具。设计师们只是用他来挑选出游戏中值得注意且能运用到自己游戏中的部分，并用合理的词汇将其描述出来。如上述的“玩家能力提升曲线”就是工具箱中的一个工具，一个FADT，设计师可以考虑将其运用到自己的游戏中，或不运用。</p>
+<h2 id="Tools-Would-Be-Useful——Where-Do-We-Find-Them">Tools Would Be Useful——Where Do We Find Them?</h2>
+<p>使用FADT最好的例子就是找一个优秀的游戏，从中抽离出一些概念并将其抽象化和形式化，让他可以运用到别的种类的游戏上。</p>
+<hr>
+<h2 id="Mario-64-Game-Play">Mario 64 Game Play</h2>
+<blockquote>
+<p>这一节是作者对于《超级马里奥64》的描述</p>
+</blockquote>
+<p>在《超级马里奥64》中，玩家始终有很多事去做，但他们同时被给予了大量的选择（要去探索世界的哪一块，要去拿哪个额外的星星）。因此在游戏中，玩家花了大量的时间去决定“接下来要去做什么”，而不是去“找”要做什么。</p>
+<p>这个游戏还有个重要特征是，在每个世界中，玩家会同时有多个目标。通常在进入每个世界后的第一个星星，是会鼓励玩家探索世界中的绝大部分区域。</p>
+<p>马里奥的游戏世界是统一且可预测的。玩家能做的基本操作很少，很简单（移动，跳跃和一些简单交互）。但是这些简单的操作可以做出非常多的交互（跳跃踩怪兽等）。更重要的是所有的结果是恒定的，如三段跳的高度是固定的，跳到怪兽头顶上，怪兽就会死。一些额外能力的引入也是缓慢但同时恒定的，如钢铁马里奥一定能在水下走。</p>
+<p>这些简单，恒定操作构建出了一个可预测的的物理世界，玩家在尝试些新鲜事物前通常可以准确的猜出会发生什么。怪物和游戏环境会增加游戏的复杂度，但他们也是缓慢的被引入，而且是在已有的交互原则上。这些都会让游戏内发生的情况是可预测的，当玩家遇到高强，新的怪物，新的地形，他们都能开始如何用已有的技能去解决，并且基本能猜出结果。</p>
+<p>这些也会让玩家在游戏过程中有一个复杂的游戏计划过程（sophisticated planning process）。他们被潜移默化的告知了游戏中的规律，而且也直到他们的目标是什么。因此他们通常在潜意识中就已经构建了接下来要去做什么的计划。在游戏中，玩家在没有意识到情况下就已经做出了几千个要去做什么的计划。</p>
+<p>更重要的是，玩家在做出计划并得到结果后，他能理解为什么成功或失败。如果必要的话，他们可以基于前一次尝试得到的经验去做进一步的计划。</p>
+<p>玩家在游戏中很少有被欺骗感（觉得游戏是假的），他们很少有想要尝试某些东西，但是游戏不支持的情况。虽然马里奥的世界中支持的行为不多，但是它们都被实现的非常完整。这个世界是简单的，但却是统一的，如果它提供给了你一些东西，那么它们就是能被使用的。因此不会有玩家做出“为什么没法在游戏中生火做饭”之类的抱怨（游戏中根本就没有火这个素材，玩家在游戏体验中不会意识到）。</p>
+<hr>
+<h2 id="Great-But-I’m-not-Writing-Mario-64-I-Mean-It’s-Already-Been-Written">Great! But I’m not Writing Mario 64. I Mean, It’s Already Been Written</h2>
+<blockquote>
+<p>作者在上一节中描述了《超级马里奥64》游戏，在这一节中他会对其进行分析。即抽取出FADT</p>
+</blockquote>
+<p>首先，可以看到玩家在游戏中是被鼓励构建出自己的目标并且对它们做出行为的。关键点在于玩家知道在游戏世界中可以发生什么，因此他们对于发生的情况是有掌控感的。目标和控制是可以从不同的层面去实现的，从“小而快速”的目标“穿过面前的桥”到“复杂而长期的”目标“获得额外的红色星星”。</p>
+<p>这个“收集目标，理解世界，做出决策，行动”的过程，是很能帮助玩家融入游戏世界的。作者在这里将这个过程形式化并抽象称为<code>目的（Intention）</code>，如之前所述，目的可以是不同层面的，从小而快速到复杂而长期。这是作者给出的第一个FDAT，定义如下：</p>
+<p><code>目的</code>：玩家根据当前游戏世界的情况和已知的可选行为，做出一个可行的计划</p>
+<p>马里奥世界的简单而统一，让玩家觉得他们对于自己的行为是负责的，即当一个错误情况发生时，他们也能知道其发生的原因。作者将其称为<code>可预料结果（Perceivable Consequence）</code>，这是第二个FDAT，定义如下：</p>
+<p><code>可预料结果</code>：游戏世界可以对玩家的行为做出清晰的反馈。</p>
+<hr>
+<h2 id="Same-Tools，Different-Games">Same Tools，Different Games</h2>
+<blockquote>
+<p>这一节作者讨论上述两个FDAT如何用在别的游戏中，如RPGs</p>
+</blockquote>
+<p>在RPGs中，当一个事件发生时，背后的逻辑就是“因为X，所以Y发生了”，这无疑是可预料结果的一种应用。</p>
+<p>但是RPGs游戏中对于结果的展示并不如马里奥那样直接。如玩家选择在一个旅店住宿，设计师们为了避免玩家一直待在旅店中，会让某些早上玩家出旅店后遇到盗贼。对于设计师而言，玩家遇见盗贼是一个可预料的结果，但是对于玩家而言，却是一个随机事件。</p>
+<p>同样的，还有些结果是玩家“认为”可预料的，但是却有不同的结果。如玩家在交叉路口选择走的方向，然后走上了一条路，但意外的遇到了盗贼。这确实是对玩家行为的结果，但并不是玩家所预想的结果，玩家选择某条路通常是认为这条路会有好处，但结果却是坏的。这种情况类似于“做X其实会导致Z，但是你并不知道”。</p>
+<p>在RPG中最好的方法就是让<code>可预料结果</code>和<code>目的</code>结合在一起。如上述交叉路口选方向的例子，结果的确不是如玩家所想的一样，但是这是玩家玩家自己做出的选择，即玩家在他的<code>目的</code>中采取的行为，这同样给玩家提供了可控感。相反，如果这个结果是设计师提供的，即“你必须走这条路，然后收到盗贼的攻击”，对于玩家而言可能就是一个恼怒的事了，而且对于游戏的参与感也会明显降低。</p>
+<h2 id="Same-Game，Different-Tool">Same Game，Different Tool</h2>
+<p>在RPGs中可能有时候会强迫玩家进入某种情况，即是这样做会让玩家失去对游戏的控制感。通常会发生这种情况，是因为设计师需要控制游戏剧情的走向。<code>故事（Story）</code>表示在游戏过程中的叙事线索。</p>
+<p>这个线索可能是设计师驱动的，即设计师有一个预先存在剧本。</p>
+<p>同样线索也可能是玩家驱动的，如马里奥中，玩家在游戏中的行为构成了故事，故事从游玩开始，到游玩结束。像<em>NBA live</em>这种偏竞技的游戏中，更为如此。其中还有如赛季模式等东西，一定程度上加深了玩家对于故事的把控能力。</p>
+<p>故事是第三个FADT，定义如下：</p>
+<p><code>故事</code>：一个将游戏中的事件结合在一起，并推动游戏进程的叙事线索，该线索可以是设计师驱动的，也可以是玩家驱动的。</p>
+<hr>
+<h2 id="Using-Multiple-Tools-Cooperation-Conflict-Confusion">Using Multiple Tools:Cooperation,Conflict,Confusion</h2>
+<blockquote>
+<p>这一节作者谈论了多个工具之间可能造成的冲突和取舍。</p>
+</blockquote>
+<p>冒险游戏通常有比较少的<code>可预测结果</code>和<code>目的</code>。玩家做的是去各个地方，捡取各种东西，和人交流来找寻“设计师的目的”。在较低的层面上，玩家会有“我去拿这个东西，我认为这个东西对我有用”和足够的关于“果然有用”然后让剧情推进的反馈。但这其中不是玩家设立目标和表达欲望的过程，这行为本质上是测试设计师提供的几个选项，玩家必须找出其中工作的一个选项，否则剧情无法推进。</p>
+<p>相交而言，马里奥世界中的一些行为则是纯粹的玩家目的，如“收集额外的星星”，玩家不去进行也完全不影响游戏进度。</p>
+<p>而冒险游戏之所以做出较少的<code>可预测结果</code>和<code>目的</code>，是为了获得更多的<code>故事</code>。在这些游戏中，会有设计师所设计的那些激动人心的关键时刻，一些重要剧情，设计师们想要用这些来吸引玩家。</p>
+<p>所以这就是<code>目的</code>和<code>故事</code>之间的冲突，当设计师越想要创建特定的<code>故事</code>，让玩家自定义<code>目的</code>的可能性就越小。</p>
+<h2 id="Concrete-Cases-of-Multiple-Tool-Use">Concrete Cases of Multiple Tool Use</h2>
+<blockquote>
+<p>这一节作者给出了<code>故事</code>和<code>目的</code>冲突的具体例子</p>
+</blockquote>
+<p>例如游戏<em>最终幻想</em>中，故事的主线是由设计师决定的，在这一部分玩家并不能进行太多的计划和实现自己的目的。但是游戏中的角色和战斗策略却是完全自由的，玩家完全可以通过自己的策略，用的东西，combo来实现完全的控制。另外这探索故事的时候，探索的节奏也是玩家自我掌控的。</p>
+<p>概括来说，虽然故事情节是固定的，但是其中的其他细节是玩家可控的。例如情节会强迫你与过去的盟友发生战斗，但是战斗的方式策略则是完全自定义的。</p>
+<p>即在最终幻想的战斗系统中，设计师使用了<code>目的</code>和<code>结果</code>两个工具，而在情节框架中使用了<code>故事</code>和<code>结果</code>，设计师并没有盲目的尝试一下子将所有的工具都放在一起。</p>
+<p>而所有的战斗和体育游戏，不太严谨地说，都是将三个元素合在了一起，但是稍微有些区别。</p>
+<p>战斗和体育游戏的故事是完全交由玩家控制的。玩家的选择会导致游戏走向一个玩家自己决定的结局（大比分胜利，小比分胜利等等）。</p>
+<p>两个游戏也都能看到自己行为的固定结果。当玩家学会操作后，他就会因为游戏给他的反馈（可预测的结果）做出自己的计划（目的）。</p>
+<p>但两者略微不同的在于，在战斗游戏中，所有的结果都是直接的。因此当看到一个玩家比自己打的好的时候，你能明显的感受到他更优秀的原因。而在体育游戏中，还有一个数值层面（Statistical Layer），即概率或角色的能力，玩家相同的操作并不一定导致相同的结果。因此在体育游戏中，虽然玩家同样有计划，但是结果并不像战斗游戏那样的直接和可预测。</p>
+<hr>
+<h2 id="Tool-Based-Analysis">Tool-Based Analysis</h2>
+<p>上述的战斗游戏，他提供了一个简单的故事，故事是由玩家完全掌握的。对于体育游戏而言，他同样有目的和结果，但不像战斗游戏那样直接和可预测。因此，战斗游戏对玩家而言产生了一个更真实的故事，但是体育游戏却提供了一个更有传奇性的故事，毕竟故事中是需要不确定因素的。很难说这两者谁更好。</p>
+<h2 id="Ahhh，So-What？">Ahhh，So What？</h2>
+<p>FADT是一个帮助分析的词汇工具，他帮助游戏设计师们专注于要提供玩家怎么样的体验（更精确，抽象的表达）。</p>
+<p>游戏与书，电影或其他媒体不同的是，那些媒体是通过技术让观众们感受到作者想要他们感受的情感，让观众做出作者们想要他们做出的反应。而游戏一定程度上是要玩家沉浸在游戏中，做出<br>
+自己的决定，这一定程度上是让玩家探索自己，这也就是游戏媒体的独特性。</p>
+<p>因此作者用FADT作为自己理解游戏设计每一个部分的工具，用它来最大化玩家对于游戏和自己的沉浸感。</p>
+<p>作者在这篇文章中提到了<code>目的</code>,<code>可预测结果</code>,<code>故事</code>三个工具，而整个工具集应该有许许多多的其他工具，如<code>资源经济</code>，<code>玩家学习</code>、<code>玩家能力曲线</code>、<code>奖惩关系</code>等等。每一个主题都能专门写一篇文章来从特定角度对游戏进行分析。</p>
+<article class="message is-info">
+        
+        <div class="message-body">
+            <p>引用：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.gamasutra.com/view/feature/3357/formal_abstract_design_tools.php?print=1">Formal Abstract Design Tool</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26853170">怎样去设计一款优秀的现代电子游戏？</a></li>
+</ol>
+
+        </div>
+    </article>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>《Formal ABstract Design Tools》 笔记</p><p><a href="https://xuejiaw.github.io/FormalAbstractDesignTools-Notes/">https://xuejiaw.github.io/FormalAbstractDesignTools-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-03-14</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/">游戏设计</a><a class="link-muted mr-2" rel="tag" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/">博文笔记</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/ExpertsAtPlay-Understanding-Skilled-Expertise-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《Experts at Play：Understanding Skilled Expertise》 笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/GameDesignWorkshop-Chapter4-Notes/"><span class="level-item">《Game Design Workshop》 第四章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
+            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
+            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: true,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

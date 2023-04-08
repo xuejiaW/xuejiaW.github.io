@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《算法导论》 第十七章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《算法导论》 第十七章笔记，关于平摊分析。 第17.4节尚未整理"><meta property="og:type" content="blog"><meta property="og:title" content="《算法导论》 第十七章笔记"><meta property="og:url" content="https://xuejiaw.github.io/IA-Chapter17-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《算法导论》 第十七章笔记，关于平摊分析。 第17.4节尚未整理"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter17-Notes/IA-Chapter17-Notes/2020-01-18-17-19-30.png"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter17-Notes/IA-Chapter17-Notes/2020-01-18-18-08-28.png"><meta property="article:published_time" content="2020-01-18T11:30:22.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.016Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="数据结构与算法"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://xuejiaw.github.io/IA-Chapter17-Notes/IA-Chapter17-Notes/2020-01-18-17-19-30.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xuejiaw.github.io/IA-Chapter17-Notes/"},"headline":"《算法导论》 第十七章笔记","image":["https://xuejiaw.github.io/IA-Chapter17-Notes/IA-Chapter17-Notes/2020-01-18-17-19-30.png","https://xuejiaw.github.io/IA-Chapter17-Notes/IA-Chapter17-Notes/2020-01-18-18-08-28.png"],"datePublished":"2020-01-18T11:30:22.000Z","dateModified":"2023-04-02T12:21:20.016Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《算法导论》 第十七章笔记，关于平摊分析。 第17.4节尚未整理"}</script><link rel="canonical" href="https://xuejiaw.github.io/IA-Chapter17-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-01-18T11:30:22.000Z" title="2020/1/18 19:30:22">2020-01-18</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.016Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span><span class="level-item">18 分钟读完 (大约2741个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《算法导论》 第十七章笔记</h1><div class="content"><p>《算法导论》 第十七章笔记，关于平摊分析。</p>
+<p>第17.4节尚未整理</p>
+<span id="more"></span>
+<h1>Chapter 17 Amortized Analysis</h1>
+<p>平摊算法是计算一系列对数据结构的操作的平均时间，平摊算法分析保证了最坏情况下每个操作的平均性能。</p>
+<p>这一节中会首先介绍三个平摊分析的方法：</p>
+<p>17.1节介绍聚集分析，这个分析可以知道N个操作的累计花费时间的上限。</p>
+<p>17.2节介绍记账方法，这个分析可以知道N个操作中，不同类型的操作的平均花费。</p>
+<p>17.3节介绍势能方法，这个分许也可以知道N个操作中，不同类型的操作的平均花费。</p>
+<p>势能方法与记账方法不同的是，记账操作是对每一个操作进行分析，如有的操作计算的时间比实际要花的时间更长，这些称之为预付，而有些操作计算的时间比实际时间更短，这些操作就是在使用之前的预付。而势能方法本质上也是预付和使用预付，但他的统计是针对于整个一系列操作，而不是针对每个操作，所以在势能方法中的预付是整体的。</p>
+<h2 id="Aggregrate-analysis">Aggregrate analysis</h2>
+<p>在聚集分析（Aggregrate analysis）中，对一系列（n个）操作在最坏情况下总共花费的时间称为$T(n)$，因此对每个操作的平摊花费（amortized cost）为$T(n)/n$。</p>
+<h3 id="Stack-operation">Stack operation</h3>
+<p>以栈操作为例，对于一个栈而言，Push和Pop的操作时间复杂度都是$O(1)$。定义一个新函数$Multipop(S,k)$，该操作会弹出栈上头K个元素，<code>S</code>为需要操作的堆栈，$K$为需要弹出的元素个数。如果栈上的元素数小于$k$，则该操作弹出所有的元素。</p>
+<p>如下图所示：</p>
+<p><img src="IA-Chapter17-Notes/2020-01-18-17-19-30.png" alt="Multipop展示"></p>
+<p>MultiPop函数的伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MULTIPOP(S,k)</span><br><span class="line">while not STACK_EMPTY(S) and k &gt; 0</span><br><span class="line">    POP(S)</span><br><span class="line">    k = k-1</span><br></pre></td></tr></table></figure>
+<p>MultiPop函数的时间复杂度与它真正执行的Pop函数数量成线性关系。</p>
+<p>如果对栈有n个操作。那么最差情况下，MultiPop的时间复杂度为$O(n)$，即前面所有的操作都是Push，最后调用Multipop时它需要弹出所有的操作。最差情况下n个操作的时间复杂度为$nO(n)=O(n^2)$。尽管$O(n^2)$的确是n个操作的时间上限，但这个上限并不是紧密的。</p>
+<p>使用聚合分析可以得到一个更紧密的上限。实际上对于一个栈而言，如果有n个操作，那么pop的数量最多和push一样，即n个操作的时间复杂度总和为$O(n)$，因此每个操作的平摊花费为$O(n)/n$。在聚合分析分析中，不关心不同类型的操作，因此将每个操作的平摊花费定义为$O(n)/n$即$O(1)$。</p>
+<h3 id="Incrementing-a-binary-counter">Incrementing a binary counter</h3>
+<p>这里举另外一个例子来讨论聚合分析。如使用一个二进制数的数组来做计数器，将数组命名为A，设数组中一共有k个元素，将A[0]定义为最低位，将A[k-1]定义为最高位。整个数组表示一个十进制数，则这个数的值为$x=\sum^{k-1}_{i=0}A[i]\dot{2^i}$。</p>
+<p>Increment(A)的伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">i = 0;</span><br><span class="line">while i &lt; A.length and A[i] == 1</span><br><span class="line">    A[i] = 0;</span><br><span class="line">    i++</span><br><span class="line">if i &lt; A.length</span><br><span class="line">    A[i] = 1</span><br></pre></td></tr></table></figure>
+<p>While循环中处理的是进位问题，从最低位开始，如果是1则将其变为0（进位），直到发现某一位是0（出循环）后加1。所以Increment函数的时间复杂度与翻转（1变0或0变1）的位数有关。</p>
+<p>在最坏的情况下，加1前，数组中的每个元素都是1，因此所有的元素值都需要反转（1变0，这种情况下是超过了数组所能累加的上线）。这种情况下时间复杂度为$O(k)$。一系列有n个操作，所以总体时间复杂度为$O(nk)$。但这样分析出来的时间复杂度同样也是不紧密的。</p>
+<p>下图，展示了累加时数组每一位的变化情况。</p>
+<p><img src="IA-Chapter17-Notes/2020-01-18-18-08-28.png" alt="Increment展示"></p>
+<p>可以看到，A[0]每次操作都发生变化，A[1]每两次操作发生变化，A[2]每四次操作发生变化…A[i]每$2^i$次操作发生变化。所以对于n次操作而言，A[i]发生了$n/2^i$次变化。因此，从第0位到第k-1位，反转的总计为：</p>
+<p>$$<br>
+\sum_{i=0}^{k-1}\lfloor \frac{n}{2^i} \rfloor \\<br>
+&lt; n \sum_{i=0}^{\infty}\frac{1}{2^i} \\<br>
+=2n<br>
+$$</p>
+<p>因此，整个操作的时间复杂度为$O(n)$，每个操作的平摊花费为$O(n)/n=O(1)$</p>
+<h2 id="The-accounting-method">The accounting method</h2>
+<p>记账方法（Accounting method），对不同的操作计算不同的时间，这个时间称为平摊花费(amortized cost)。如果某一个操作，计算的时间大于其真实的运行时间，对于操作的对象，存放一个特殊的数据称为<code>credit</code>。</p>
+<p>对于一系列n个操作，操作平摊花费的累加是要大于等于操作真实花费的累加，这样平摊花费的总和才能表示一系列操作的时间上限。</p>
+<p>$$<br>
+\sum_{i=1}^{n}\hat{c_i}\geq\sum_{i=1}^{n} c_i<br>
+$$</p>
+<p>所有操作的credit总和即为$\sum_{i=1}^{n} \hat{c_i} - \sum_{i=1}^{n} c_i$。为了保证平摊花费的总和代表上限，这个值必须是非负的。</p>
+<h3 id="Stack-Operations">Stack Operations</h3>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>真实花费</th>
+<th>平摊花费</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Push</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Pop</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>MultiPop</td>
+<td>min(k,s)</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>其中$min(k,s)$中，$k$表示Multipop传入的$k$值，$s$表示目标数组的大小。</p>
+<p>可以看到对于Push操作，平摊花费比真实花费要多1，这个1即使<code>credit</code>。即栈中的每个元素都有一个值为1的credit，之后的Pop操作和Multipop操作平摊花费都为0，相当于是使用一个<code>credit</code>。因为在Pop前都必须调用了相应数量的Push，所以总和的<code>credit</code>永远不会小于0</p>
+<p>因此对于一系列n个操作而言，其总共的平摊花费也是$O(n)$。</p>
+<h3 id="Incrementing-a-binary-counter-2">Incrementing a binary counter</h3>
+<p>如之前所述，Increment函数的时间复杂度与翻转（1变0或0变1）的位数有关。实际上无论是从0变成1，还是从1变成0，其真实花费都是1。但是在这里认为对从0变成1，平摊花费为2，对与从1变成0，平摊花费为0。因为如果进行从1变为0的操作，这一位在之前一定经历过从0变为1，所以总和的<code>credit</code>也永远不会小于0。</p>
+<p>因此对于n个Increment操作，其总平摊花费为$O(n)$。</p>
+<h2 id="The-potential-method">The potential method</h2>
+<p>势能方法（potential method）中势能是对整个一系列操作而言的，即一些操作会增加整体势能，而一些操作会减少整体的势能。</p>
+<p>我们假设数据$D_{i-1}$在进行了第$i$个操作后，变为了数据$D_{i}$，其中第$i$个操作的真实花费为$c_i$，数据$D_{i}$的势能为$\Phi(D_{i})$，数据$D_{i-1}$的势能为$\Phi(D_{i-1})$。定义第$i$个操作的平摊花费为</p>
+<p>$$<br>
+\hat{c_i} = c_i + \Phi(D_{i})-\Phi(D_{i-1})<br>
+$$</p>
+<p>即真实的操作花费加上势能的变化，这个变化可能是正数，也可能是负数。</p>
+<p>那么对于一系列操作而言，其总体的平均花费为</p>
+<p>$$<br>
+\sum_{i=0}^{n} \hat{c_i} \\<br>
+=\sum_{i=0}^{n}(c_i+\Phi(D_{i})-\Phi(D_{i-1})) \\<br>
+=\sum_{i=0}^{n}c_i + \Phi(D_{n}) - \Phi(D_{0})<br>
+$$</p>
+<p>为了平均花费的总和是真实花费总和的上界限，必须保证$\Phi(D_{n})\geq \Phi(D_{0})$。在实际中，并不能知道$n$的值是多少，所以我们要保证$\Phi(D_{i})\geq \Phi(D_{0})$。</p>
+<p>为了满足这个式子，经常在定义势能函数时保证，$\Phi(D_{0})=0$而且$\Phi(D_{i})\geq0$。</p>
+<p>势能分析的关键在于定义势能的计算函数。</p>
+<h3 id="Stack-Operation">Stack Operation</h3>
+<p>在栈操作中，定义势能函数为栈中元素的个数，则对于Push操作，操作后势能的变化为</p>
+<p>$$<br>
+\Phi(D_{i})- \Phi(D_{i-1})\\<br>
+(s+1) -s \\<br>
+=1<br>
+$$</p>
+<p>因此Push操作的平摊花费为</p>
+<p>$$<br>
+\hat{c_i} = c_i + \Phi(D_{i})-\Phi(D_{i-1})\\<br>
+= 1 +1 \\<br>
+=2<br>
+$$</p>
+<p>而对于Multipop函数而言，操作后的势能变化为</p>
+<p>$$<br>
+\Phi(D_{i})- \Phi(D_{i-1})\\<br>
+=(s-k^{‘}) -s \\<br>
+=-k^{’}<br>
+$$</p>
+<p>其中$k^{'}$为$min(k,s)$。因此Multipop的平摊花费为</p>
+<p>$$<br>
+\hat{c_i} = c_i + \Phi(D_{i})-\Phi(D_{i-1})\\<br>
+= k^{‘} -k^{’} \\<br>
+=0<br>
+$$</p>
+<p>同理可证明$\hat{c_i}=0$，因此三个操作的均摊时间复杂度都是$O(1)$，总体的均摊时间复杂度为$O(n)$。</p>
+<h3 id="Incrementing-a-binary-counter-3">Incrementing a binary counter</h3>
+<p>这里，定义势能为操作后数组中值为1的元素数，表达为$b_i$。假设第$i$个操作，把$t_i$位从1变为0，其真实花费最多为$t_i+1$，即再加上一个退出循环后的从0到1的操作（也可能在退出循环后，已经大于了数组的边界，也就不会有从0到1的操作了）。</p>
+<p>如果操作后$b_i$=0，说明上一个累加操作时超越了边界的，即操作前整个数组都是1，进行了$k$个从1到0，k为数组长度，即$b_{i-1}=t_i=k$。如果操作后$b_i&gt;0$，则$b_i=b_{i-1}-t_i+1$，总之$b_i\leq b_{i-1}-t_i+1$。</p>
+<p>因此势能的变化为:</p>
+<p>$$<br>
+\Phi(D_{i})- \Phi(D_{i-1})\\<br>
+\leq (b_{i-1}-t_i+1) - b_{i-1}\\<br>
+=1-t_i<br>
+$$</p>
+<p>平摊花费为</p>
+<p>$$<br>
+\hat{c_i} = c_i + \Phi(D_{i})-\Phi(D_{i-1})\\<br>
+\leq t_i +1 +1 - t_i \\<br>
+=2<br>
+$$</p>
+<p>如果计数器从0开始，即$\Phi(D_{0})=0$，且有$\Phi(D_{i})\geq 0$，因此一系列n个操作的总共平摊时间复杂度为$O(n)$。</p>
+<p>如果计数器不是从0开始，一开始有$b_0$个1，最后有$b_n$个1，这两个数满足$0\leq b_0$和$b_n \leq k$。势能方法的表达式可变形为：</p>
+<p>$$<br>
+\sum_{i=0}^{n}c_i \\<br>
+=\sum_{i=0}^{n}\hat{c_i}-\Phi(D_{n})+\Phi(D_{0})<br>
+$$</p>
+<p>因为已经证明了$\hat{c_i} \leq 2$，所以可得</p>
+<p>$$<br>
+\sum_{i=0}^{n}c_i<br>
+\leq 2n-b_n+b_o<br>
+$$</p>
+<p>所以实际操作的总体花费复杂度为$O(n)$。</p>
+<article class="message is-info">
+        
+        <div class="message-body">
+            <p>引用：</p>
+<ol>
+<li><em>Introduction to Algorithms</em> 3rd Sep.2009</li>
+</ol>
+
+        </div>
+    </article>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>《算法导论》 第十七章笔记</p><p><a href="https://xuejiaw.github.io/IA-Chapter17-Notes/">https://xuejiaw.github.io/IA-Chapter17-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-01-18</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/IA-Chapter6-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《算法导论》 第六章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/CNI-Chapter17-Notes/"><span class="level-item">《计算机网络与因特网》 第十七章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
+            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
+            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: true,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

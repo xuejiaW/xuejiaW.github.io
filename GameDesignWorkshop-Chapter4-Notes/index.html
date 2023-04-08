@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《Game Design Workshop》 第四章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《Game Design Workshop》 第四章笔记 这一章主要关于游戏的戏剧元素的设计。 作者首先介绍的常规的与游戏概念结合比较深的两个元素，挑战和玩耍。 之后介绍了三个在戏剧上更为复杂的元素，前提，角色，故事。 之后是两个更为复杂和高级的概念，世界创建和戏剧化曲线。"><meta property="og:type" content="blog"><meta property="og:title" content="《Game Design Workshop》 第四章笔记"><meta property="og:url" content="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《Game Design Workshop》 第四章笔记 这一章主要关于游戏的戏剧元素的设计。 作者首先介绍的常规的与游戏概念结合比较深的两个元素，挑战和玩耍。 之后介绍了三个在戏剧上更为复杂的元素，前提，角色，故事。 之后是两个更为复杂和高级的概念，世界创建和戏剧化曲线。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/GameDesignWorkshop-Chapter4-notes/image-20200311212101483.png"><meta property="og:image" content="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/GameDesignWorkshop-Chapter4-notes/image-20200312112050925.png"><meta property="og:image" content="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/GameDesignWorkshop-Chapter4-notes/image-20200312115742695.png"><meta property="og:image" content="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/GameDesignWorkshop-Chapter4-notes/image-20200312121637342.png"><meta property="article:published_time" content="2020-03-12T04:24:37.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.013Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="游戏设计"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/GameDesignWorkshop-Chapter4-notes/image-20200311212101483.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/"},"headline":"《Game Design Workshop》 第四章笔记","image":["https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/GameDesignWorkshop-Chapter4-notes/image-20200311212101483.png","https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/GameDesignWorkshop-Chapter4-notes/image-20200312112050925.png","https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/GameDesignWorkshop-Chapter4-notes/image-20200312115742695.png","https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/GameDesignWorkshop-Chapter4-notes/image-20200312121637342.png"],"datePublished":"2020-03-12T04:24:37.000Z","dateModified":"2023-04-02T12:21:20.013Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《Game Design Workshop》 第四章笔记 这一章主要关于游戏的戏剧元素的设计。 作者首先介绍的常规的与游戏概念结合比较深的两个元素，挑战和玩耍。 之后介绍了三个在戏剧上更为复杂的元素，前提，角色，故事。 之后是两个更为复杂和高级的概念，世界创建和戏剧化曲线。"}</script><link rel="canonical" href="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-03-12T04:24:37.000Z" title="2020/3/12 12:24:37">2020-03-12</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.013Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/">游戏设计</a></span><span class="level-item">42 分钟读完 (大约6248个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《Game Design Workshop》 第四章笔记</h1><div class="content"><p>《Game Design Workshop》 第四章笔记</p>
+<p>这一章主要关于游戏的戏剧元素的设计。</p>
+<p>作者首先介绍的常规的与游戏概念结合比较深的两个元素，挑战和玩耍。</p>
+<p>之后介绍了三个在戏剧上更为复杂的元素，前提，角色，故事。</p>
+<p>之后是两个更为复杂和高级的概念，世界创建和戏剧化曲线。</p>
+<span id="more"></span>
+<h1>Chapter 4 Working  with Dramatic Elements</h1>
+<p>第三章中提到的常规元素构创造了玩家体验，正是常规元素构成了游戏。戏剧元素（Dramatic Elements）定义了游戏的上下文，它将常规元素融合在系统中并产生了一个更有意义的体验，让玩家有了情感上的体验。</p>
+<p>常规的戏剧元素有挑战（Challenge）和玩耍（Play），更复杂的戏剧化元素包括前提（Premise）、角色（Character）、故事（Story）。</p>
+<h2 id="Challenge">Challenge</h2>
+<p>许多人都会同意游戏吸引他们的部分就是挑战。</p>
+<p>当玩家谈及挑战时，他们谈及的是那些他们乐于完成的任务，这些任务需要一定的工作，而且能给他们带来满足感和愉悦感。</p>
+<p>因此挑战是一个很个人化的因素，年轻人觉得是挑战的事情，老年人并一定觉得。</p>
+<p>同样挑战也是一个动态的因素，一个事情在刚开始可能很有挑战性，但随着熟练度提升就逐渐失去了难度。所以游戏设计者必须要保持游戏的挑战性，用此来吸引玩家的注意。</p>
+<p>当设计游戏时，设计师考虑的是如何让玩家更愉悦，这个问题是与挑战性相关的。虽然挑战性是个人化的因素，但是愉悦感却有相同点。根据心理学家Mihaly Crikszentmihalyi的研究，无论年纪，性别，社会阶层等等区别，让人们预约的活动都有以下特点</p>
+<ol>
+<li>当解决人们有能力解决的问题时</li>
+<li>人们必须集中于正在做的事情上</li>
+<li>
+<ol start="4">
+<li>因为任务有清晰的目标和及时的反馈，所以人们可以集中在这件事上。</li>
+</ol>
+</li>
+<li>事物有一个深入但轻松的参与感，让人们忘记日常生活中的担忧和困扰</li>
+<li>让人们对正在发生的事物有可控感</li>
+<li>在事物进行时有无我的感觉，但是当事物结束后又能更加充分的感觉到自己的存在</li>
+<li>感到时间的速度发生了变化，数小时可能变得像几分钟一样，几分钟又可能变得像数小时一样。</li>
+</ol>
+<p>Crikszentmihalyi根据发现，发明了一个理论叫做心流（Flow），如下图所示：</p>
+<img src="GameDesignWorkshop-Chapter4-notes/image-20200311212101483.png" alt="心流" style="zoom:50%;" />
+<p>如果一个活动的挑战远低于人的能力，那么就会觉得无聊，而如果挑战远高于人的能力，则会感到困扰。在心流中，一个活动是在挑战和能力之间平衡地带，给人带来愉悦感和满足感。</p>
+<p>在游戏设计中期望达到的就是心流的区域。以下是一些能帮助达到心流的元素</p>
+<h3 id="A-Challenging-Activity-That-Requires-Skill">A Challenging Activity That Requires Skill</h3>
+<p>根据Crikszentmihalyi的描述，心流发生的情况通常是一个活动是目标导向的，而且被规则所约束同时完成它需要有合适的技能。</p>
+<p>如果一个人没有任务所要求的任何能力，那么这个任务对于他来说是没有意义的，只有这个人拥有部分能力，但又不足以完成这个人任务时，这个任务才能称为是有挑战性的。</p>
+<h3 id="The-Merging-of-Action-and-Awareness">The Merging of Action and Awareness</h3>
+<p>Crikszentmihalyi说，当心流发生时，人们是非常沉浸入他们正在做的事情中，因此变得非常主动，他们也不会意识到自己是作为一个个体正在“做这件事”，即行为和感知结合在了一起，变成了无我的状态。</p>
+<h3 id="Clear-Goals-and-Feedback">Clear Goals and Feedback</h3>
+<p>在心流的体验中，需要知道要达成什么，且要及时的得到该如何达成目标的反馈。</p>
+<p>当一个游戏有明确的目标时，玩家知道他们要做些什么才能赢，才能前往下一关等等，而且他们也收到了明确的关于他们行动让他们离目标更近还是更远的反馈。</p>
+<h3 id="Concentration-on-the-Task-at-Hand">Concentration on the Task at Hand</h3>
+<p>另一个心流的元素是，人们只意识到此时此刻发生的事。他们不会再意识到其他的问题，出现了另一个世界，在这个世界中只有当下的事情，只有参与者在其中。</p>
+<h3 id="The-Paradox-of-Control">The Paradox of Control</h3>
+<p>人们享受在困难情况时候的掌控感，但是只有一个事情的结果是未知的时候，才会有掌控感。这有一定矛盾的感觉：人们只有在完全控制情况的下才会有掌控感。<br>
+Crikszentmihalyi说：当一个情况结果是未知时，只有这个人<code>有能力</code>去掌控结果，他才会有掌控感。</p>
+<h3 id="The-Loss-of-Self-Consciousness">The Loss of Self-Consciousness</h3>
+<p>在心流中，人们会过度的关注于正在做的事情，忘记了自己的存在。但是在心流结束时，人们又会有更强的自我意识，如音乐家感受到了自己音乐的和谐，游戏玩家对自己策略或技能的满足。</p>
+<p>这一点同样乍一看同样有点矛盾，自我感觉的强化来自于自我感觉的丢失。</p>
+<h3 id="The-Transformation-of-Time">The Transformation of Time</h3>
+<p>在心流中，一个常发生的现象就是感觉时间流动的速度发生了变化。如人们真正沉浸在某个时期时，会觉得时间过得很快，同样有的时候又会觉得时间很慢，如芭蕾舞者在做一些高难度动作时，会觉得几秒钟的事情仿佛发生了几分钟。</p>
+<h3 id="Experience-Becomes-an-End-in-Itself">Experience Becomes an End in Itself</h3>
+<p>在心流中，做这件事变得是内在的，主动的。</p>
+<p>生活中的大部分事情都是外在的，做那些事的原因是因为能满足某些目标。</p>
+<p>但是像音乐，体育和游戏都是内在的，他们本身就是存在的意义。</p>
+<p>总之在设计游戏时，需要考虑以下几个问题：</p>
+<ol>
+<li>希望玩家要掌握什么技能。</li>
+<li>希望玩家要掌握这个技能到什么程度。</li>
+<li>如果给玩家清晰的，重要的目标，有意义的选择和清晰的反馈？</li>
+<li>如何将玩家需要做的事情，和他们需要思考的事情结合在一起？</li>
+<li>如何消除玩家的不专心，对失败的恐惧。即如何给玩家一个足够安全的环境，让他们可能达到无我的境界。</li>
+<li>如何让游戏有趣到其本身就是意义</li>
+</ol>
+<h2 id="Play">Play</h2>
+<p>玩是在一个限定的框架内做自由的活动，对于游戏而言这个框架就是规则和流程所限定的。</p>
+<h3 id="The-Nature-of-Play">The Nature of Play</h3>
+<p>需要知道玩耍有很多面： 它帮助人们学习技能和获取知识，让人更社交化，帮助人们解决问题，让人们放松，让人从不同的角度去思考问题。玩可以是不严肃的，让人开怀大小，玩也可能是严肃的，让其作为一个实验的存在，去尝试新鲜事物，去探索一个事物的边界。玩被认为是引导改革和创造力的方法。</p>
+<p>但最重要的一点，玩是一种精神层面的东西。即使对于最严肃和最难的事情，也能用一种玩笑的方法去面对。</p>
+<p>这里同样作者同样提到了关于玩的分类，即在Roger Caillois的<em>Man,Play,and Games</em>中提到的$Ag\hat{o}n$,$Alea$,$Mimicry$,$Ilinx$。</p>
+<p>这部分在<code>Rules Of Play</code>的第22章有详细描述，这里就不再赘述。</p>
+<p>对于游戏设计者而言，知道对于玩的分类是为了帮助他们了解对于某一种的玩耍方式什么才是核心的愉悦感，这样可以帮助他们决定在特定的系统中对玩家的体验该设定怎样的目标。</p>
+<h3 id="Types-of-Players">Types of Players</h3>
+<p>如同能区分玩耍的不同类型，也能从人的角度对玩家的类型进行区分：</p>
+<ol>
+<li>The Competitor：<br>
+竞争者是无论游戏类型是什么，他们的目标都是做最出色的玩家</li>
+<li>The Explorer:<br>
+探索者是对游戏世界感到好奇，喜欢冒险，回去探索游戏世界的边界（无论是精神层面还是物理层面的边界）。</li>
+<li>The Collector:<br>
+收集者会喜欢收集游戏世界内的元素，或者知识，如设定，历史等。</li>
+<li>The Achiever:<br>
+成就者关心游戏中的成就和天梯等成就系统。</li>
+<li>The Joker:<br>
+玩笑者对游戏不会太严肃，玩游戏只是为了单纯的快乐。硬核玩家可能会被玩笑者惹怒，但是玩笑者可以让游戏更加的有社会性，会推动游戏的流行。</li>
+<li>The Artist:<br>
+艺术家是被游戏的设计和创意所吸引。</li>
+<li>The Director:<br>
+引领者喜欢在游戏中带领游戏故事的推动，或称为别的玩家的领袖。</li>
+<li>The Storyteller:<br>
+故事者会被游戏的故事所吸引。</li>
+<li>The Performer:<br>
+表现者喜欢在别人玩家前表演，例如各种游戏主播。</li>
+<li>The Craftsman:<br>
+工匠喜欢在游戏中建造，制作东西，或者解决游戏内的难题。</li>
+</ol>
+<p>对于游戏玩家的分类可以帮助游戏设计师从不同的角度去思考该如何从情感上吸引玩家。</p>
+<h3 id="Levels-of-Engagement">Levels of Engagement</h3>
+<p>除了从玩耍本身和玩家角度考虑，不同玩家对于游戏的参与度也是不一样的。</p>
+<p>例如一些玩家相比于自己玩游戏，更喜欢看别人玩游戏。通常来说，游戏设计师并不会从游戏的观看者角度出发去设计游戏。但是不可否认的是有非常的多人都喜欢称为游戏的观众，而且这个对于游戏的流行会产生很大的影响，所有游戏设计者或许也应该将观察者纳入考量的范围。</p>
+<p>真正的游戏参与者无疑是设计师们最应该考虑的目标。某些情况下，游戏参与者会体验转型游玩（Transformational play），即玩游戏的过程一定程度上影响了玩家的人生。一些游戏的设计师也会从希望玩家体验转型游玩的角度去设计游戏，让游戏有更深层的意义，如通过让玩家体验到现实世界中战争的残酷来反战等。</p>
+<h2 id="Premise">Premise</h2>
+<p>除了挑战和玩耍，游戏也有一些传统戏剧中包含的元素。如果没有这些戏剧元素，游戏对玩家而言会变得过于抽象，让玩家无法从情感上融入游戏。</p>
+<p>如竞赛游戏，从常规元素角度上来说就是数值的比较，谁数值更大谁就获胜。为了让玩家在情感上能融入游戏，通常需要使用情感元素来包装常规元素。</p>
+<p>在传统的戏剧中，前提是用来解释一个故事的，包括故事的时间，地点，人物，关系，现状等，还有两个格外重要的元素，<code>问题（Problem）</code>和<code>攻击点（Point of attack）</code>。问题是让现状不再稳定的事件，并且问题创造了矛盾。攻击点是问题被引出的时刻，也是一场戏剧真正开始的时刻。</p>
+<p>在游戏中，问题和攻击点对应常规元素中的目标（objective）和流程中的开始时刻（starting action）。</p>
+<p>在游戏中，前提可以是像传统戏剧中那样复杂，如魔兽世界，也可以非常简单，只是作为一个简单的比喻来包装抽象的常规系统，例如雷电，仅仅是战机攻击外星飞船。</p>
+<p>前提的首要任务就是让游戏的常规系统对于玩家而言是可玩的，而不是完全对抽象概念的操作（玩家不是发出一个无意义的射线，而是对外星飞船的开火）。</p>
+<p>前提更复杂的任务就是让游戏能从情感上吸引玩家。通过用前提来将游戏的常规系统和戏剧系统结合在一起，是游戏设计师提升玩家体验的一个机会。</p>
+<h2 id="Character">Character</h2>
+<p>角色是戏剧中采取行动的人。通过定义角色和他的目标，观众可以内化故事的事件，对故事的发展感同身受。</p>
+<p>角色可以从很多角度去解释。最常见的是角色是心理的表现，如为了体现观众的恐惧或渴望。更深一层，角色可以是有象征意义的，代表一个远大的想法，例如美国梦，民主等。角色也可以是有历史含义的，或者描述真实世界的现象。一个角色该如何使用是由故事本身决定的，例如没必要在一个低俗戏剧中，让一个角色代表严肃深刻的含义。</p>
+<p>角色是由他所说的话，他做的事，他的外貌和别人眼中的他来决定的。如果一个角色有明显的特征，有真实的人格，而且在故事的发展中人格会发生变换，那么这就是个丰满的人物（round character）。相反，如果一个人只有很少的特征和人格，那么就会认为这个人物是扁平的（Flat）。一个扁平化的人物通常不会在故事中有人格上的变化，他们只是用来作为一个象征含义，如懒惰的人，邪恶的人。</p>
+<p>无论一个角色复杂与否，在设计一个角色时都需要考虑以下几个问题：</p>
+<ol>
+<li>角色想要什么？</li>
+<li>角色需要什么？</li>
+<li>观众希望看到什么?</li>
+<li>观众害怕看到什么？</li>
+</ol>
+<p>在游戏中特殊的一点是，游戏角色的设计要考虑在代理（Agency）和同情（Empathy）间的平衡。代理指的是游戏角色完全是玩家的体现，游戏角色只是作为一个命令的执行者。而同情指的是玩家将自己的情感投射入角色中，让角色的目标成为了自己的目标。</p>
+<p>对于早期的游戏角色而言，他们都是扁平的，主要区别在于角色的外观。他们的存在同样是为了包装常规系统，让一个戏剧化的目标代替游戏的常规元素，如在马里奥中，用拯救公主这个具体的目标代替抽象的“营救目标”这一常规游戏目标。但是这些角色完全是受玩家控制的，他们不会有人格上的变化。</p>
+<p>而现在许多的游戏角色有了更深的背景故事和更丰富的人格特征，这些都会影响玩家的游戏体验。如战胜中的奎托斯，在游戏进度推进的过程中，可以看到角色的情感发生了变化，有自己的人格变化和发展，而不是单纯的作为玩家控制的体现。</p>
+<p>还有一种角色是化身（Avatar），如魔兽世界中玩家创建的角色。玩家对于这种角色也同样有非常深得共鸣。</p>
+<p>在游戏中还需要设计师考虑的一点是，自由意志和玩家控制之间的平衡（Free will vs. Player control）。</p>
+<p>游戏角色是代理玩家的体现，这限定了游戏角色展示自己的个性和思考。但是在游戏过程中，并非每分每秒玩家都对角色有着控制。在这种情况下AI控制的角色在玩家的意志和游戏角色自己的意志中创建了一个灰色地带。</p>
+<p>例如在早期游戏中，世嘉的游戏角色索尼克，在玩家不控制他时，他会不耐心的用脚点地。这种自由行为与索尼克抓紧每分每秒，高速移动的角色的设定是符合的。</p>
+<p>同时AI的控制也能运用到非玩家控制的角色中，如NPC和敌人，这些都可以让游戏变得更加的有趣和可信。</p>
+<p>现在的发展趋势是游戏角色变得越来越丰满，如何合理有效的运用传统戏剧元素和AI让游戏角色变得更加真实，是游戏设计师需要考虑的工作。</p>
+<h2 id="Story">Story</h2>
+<p>如在第三章中所述，游戏的结果必须是不确定的。一个故事的结局同样是不确定的，最起码在第一遍阅读时时这样的。在电影和戏剧中，故事的不确定性是由作者或者演员来逐渐消除的，在游戏中则需要通过玩家逐渐消除。</p>
+<p>在许多游戏中，故事是由背景故事限制的。背景故事给了游戏的上下文了冲突，它创造了游戏角色的动机。但是故事的推进并不是由玩家来决定的，玩家的行为只是触发要进入故事下一个片段的因素，实际上故事的走向已经是确定了的。</p>
+<p>但也有一些游戏设计师希望玩家的行为能改变故事的走向。最简单的实现就是故事树，玩家的选择就让故事的走向走进预先设定的某一种可能中。故事树如下图所示：</p>
+<img src="GameDesignWorkshop-Chapter4-notes/image-20200312112050925.png" alt="故事树" style="zoom:50%;" />
+<p>但这种方法下，故事仍然是被预先决定的，同样它也限定了玩家可做的选择。还有一种实现就是像模拟人生一样，玩家可以用常规系统提供的元素，来自己创造出无限可能的故事。</p>
+<p>故事在游戏中，最常见的用法就是用来在单机游戏中推动玩家的冒险，如<em>最后的生还者</em>和<em>行尸走肉</em>。两者都是用故事来推动玩家的游戏，故事中的人物也同样都是饱满的，会随着故事的发展和发生情感的变化，同样能在情感上吸引玩家。但是不同的是，最后的生还者中故事的发展是完全限定了的，而行尸走肉中玩家的对话和行为会改变故事的结局。</p>
+<p>对于游戏设计师，要考虑的就是在不牺牲玩家体验的情况下，让游戏中的故事更好的与游戏结合，让故事更有深度。</p>
+<h2 id="World-Building">World Building</h2>
+<p>世界构建（World building）是一个复杂且深入的虚拟世界创造过程，通常是由创建地图和历史开始，但也可以变得更加复杂，如包含语言，文化，宗教，政治，经济等。</p>
+<p>目前最成功的世界构建可能是J.R.R Tolkien创造的中世纪这一概念。魔兽世界一定程度上就是基于这个概念创建的。</p>
+<p>媒体理论学家Henry Jenkins提到，“限制越来越多的故事变成世界构建，艺术家们创建了一个复杂的世界，复杂到无法用单一的媒体来完全的展现出来。”</p>
+<p>而对于游戏设计来说，最重要的是让游戏的规则与虚拟世界的规则是匹配的，无论是从交互层面还是从故事层面。</p>
+<h2 id="The-Dramatic-Arc">The Dramatic Arc</h2>
+<p>对于所有的戏剧元素中，最重要的就是冲突，这一概念在常规元素中同样有出现。</p>
+<p>冲突是一个优秀的剧情的核心，同样也是一个游戏系统的核心。</p>
+<p>一个有意义的冲突不仅仅是防止玩家太容易的达成目标，还要让玩家对游戏的结果产生紧张感，让玩家能被游戏所吸引。</p>
+<p>当从变换的角度来思考冲突时，冲突通常是通过逐渐扩大来创造紧张感。在大部分的戏剧中，紧张感会先逐渐加剧然后逐渐放缓，这就是经典的戏剧性弧线，如下图所示：</p>
+<img src="GameDesignWorkshop-Chapter4-notes/image-20200312115742695.png" alt="戏剧性弧线" style="zoom:50%;" />
+<p>如之前章节中所述，在解释（Exposition）部分会介绍故事的角色，背景以及冲突等各种重要概念。而主角尝试去解决冲突的过程，构成了故事铺陈（Rising Action）。在铺陈的重点是故事的高潮（Climax），在这个时刻会有某些决定性的因素或事件发生，故事的高潮决定了故事的最终结局。高潮过后即是收尾阶段（Falling Action），在这个阶段冲突逐渐被解决。直到结尾（Resolution），冲突最终被解决。</p>
+<p>在游戏中，故事铺陈的阶段会与常规系统和戏剧系统联系在一起。游戏通常会被设计成挑战逐渐增加（常规系统），这时候可以与故事的冲突（戏剧系统）逐渐加剧结合在一起。</p>
+<p>一个反面例子是马里奥，在马里奥的常规系统中，每一关的难度逐渐增加，但是从戏剧角度来看，马里奥的目标从未动摇过，他也没有对救出公主有任何的内心冲突。即戏剧系统和常规系统发生了发生了割裂。</p>
+<p>游戏相对于戏剧还有一个重要区别在于，推动冲突解决的是玩家自己。如马里奥中，玩家直到需要救出公主，于是玩家的常规目标——过关会为了这个戏剧社的目标结合在一起。当冲突解决后，不仅有冲突解决后情绪上紧张感的释放，还有个人成就感的提升。</p>
+<p>在现代游戏中，游戏设计师会从更深刻的角度去思考玩家在游戏过程中的情绪变化。如风之旅人，是参考了Joseph Campbell的英雄之旅（Hero‘s Journey），其作者陈星汉根据英雄之旅的灵魂创造了一种情绪上的变换弧线，如下图所示：</p>
+<img src="GameDesignWorkshop-Chapter4-notes/image-20200312121637342.png" alt="风之旅人" style="zoom:50%;" />
+<p>//TODO 玩风之旅人</p>
+<h2 id="Conclusion">Conclusion</h2>
+<p>所有的戏剧元素都是为了引出玩家情绪上的反应。</p>
+<p>目前游戏在情绪上的影响还不够深刻，因此无法被认为是另一种戏剧艺术形式。</p>
+<p>对于游戏设计师而言，要更好的设计戏剧系统，同时需要对传统戏剧的理解和对游戏本身的理解。</p>
+<article class="message is-info">
+        
+        <div class="message-body">
+            <p>引用：</p>
+<p>1.<strong>Game Design Workshop</strong> 4th 2019 by Tracy Fullerton</p>
+
+        </div>
+    </article>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>《Game Design Workshop》 第四章笔记</p><p><a href="https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/">https://xuejiaw.github.io/GameDesignWorkshop-Chapter4-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-03-12</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/">游戏设计</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/FormalAbstractDesignTools-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《Formal ABstract Design Tools》 笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/GameDesignWorkshop-Chapter3-Notes/"><span class="level-item">《Game Design Workshop》 第三章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
+            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
+            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: true,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

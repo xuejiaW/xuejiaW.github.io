@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《计算机网络与因特网》 第十一章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《计算机网络与因特网》 第十一章笔记 这一章主要是关于复用的概念。"><meta property="og:type" content="blog"><meta property="og:title" content="《计算机网络与因特网》 第十一章笔记"><meta property="og:url" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《计算机网络与因特网》 第十一章笔记 这一章主要是关于复用的概念。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-10-56-05.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-11-15-01.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-12-06-55.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-12-15-12.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-12-18-29.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-14-34-28.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-14-42-09.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-14-46-19.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-14-50-26.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-14-54-27.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-15-04-52.png"><meta property="article:published_time" content="2019-12-08T07:43:19.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.004Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="计算机网络"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-10-56-05.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xuejiaw.github.io/CNI-Chapter11-Notes/"},"headline":"《计算机网络与因特网》 第十一章笔记","image":["https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-10-56-05.png","https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-11-15-01.png","https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-12-06-55.png","https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-12-15-12.png","https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-12-18-29.png","https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-14-34-28.png","https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-14-42-09.png","https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-14-46-19.png","https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-14-50-26.png","https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-14-54-27.png","https://xuejiaw.github.io/CNI-Chapter11-Notes/CNI-Chapter11-Notes/2019-12-08-15-04-52.png"],"datePublished":"2019-12-08T07:43:19.000Z","dateModified":"2023-04-02T12:21:20.004Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《计算机网络与因特网》 第十一章笔记 这一章主要是关于复用的概念。"}</script><link rel="canonical" href="https://xuejiaw.github.io/CNI-Chapter11-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-12-08T07:43:19.000Z" title="2019/12/8 15:43:19">2019-12-08</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.004Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span><span class="level-item">22 分钟读完 (大约3318个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《计算机网络与因特网》 第十一章笔记</h1><div class="content"><p>《计算机网络与因特网》 第十一章笔记</p>
+<p>这一章主要是关于复用的概念。</p>
+<span id="more"></span>
+<h1>Multiplexing And Demultiplexing（Channelization）</h1>
+<h2 id="Introduction">Introduction</h2>
+<p>这一章介绍复用的概念，包括为什么要复用，复用的类型等。</p>
+<h2 id="The-Comcept-Of-Multiplexing">The Comcept Of Multiplexing</h2>
+<p><code>复用(Multiplexing)</code>是将多个信源的数据流合并在一起，并通过一个共享的媒介进行传输。<code>复用器（Multiplexor）</code>是用来进行复用的设备。<code>解复用（Demultiplexing）</code>是将合并后的数据流拆分还原成一个个信源的信息，<code>解复用器（Demultiplexor）</code>是用来进行解复用的设备。下图是复用与解复用的使用简图：</p>
+<p><img src="CNI-Chapter11-Notes/2019-12-08-10-56-05.png" alt="复用与解复用"></p>
+<p>复用与解复用在日常的计算机网络使用中一直在进行，如多台电脑使用同一根网线等。</p>
+<h2 id="The-Basic-Types-Of-Multiplexing">The Basic Types Of Multiplexing</h2>
+<p>在物理层，有四大类的复用方式：</p>
+<ol>
+<li>频分复用（Frequency Division Multiplexing）</li>
+<li>波分复用（Wavelength Division Multiplexing）</li>
+<li>时分复用（Time Division Multiplexing）</li>
+<li>码分复用（Code Division Multiplexing）</li>
+</ol>
+<p>频分复用和波分复用使用比较广泛。波分复用可以看作是频分复用的一种特殊形式（波长与波的频率是相关的），波分复用用于光纤中。码分复用是没有使用物理特性，而是用数学原理，在一些电话系统中有运用。</p>
+<h2 id="Frequency-Division-Multiplexing（FDM）">Frequency Division Multiplexing（FDM）</h2>
+<p><code>频分复用（Frequency Division Multiplexing）</code>是无线电广播的基础。在频分复用下，一个有大频率带宽的信道将拆分成许多小部分，每个信源都有一个自己单独的信道（占据一定频率的范围，相当于每个信源的载波频率都不同），每个信道间不会相互干扰，所有的信源都将使用一个共同的媒介进行传输。在频分复用下，每个信道都可以选择各自的方式进行调制。</p>
+<p>频分复用最大的优点在于多个发送端和接收端都可以同时使用传输媒介。</p>
+<p>为了避免在频分复用下，每个信源都有自己的信道，如果这些信道间的频率太过于接近则会产生干扰。为了避免干扰的的产生，信道之间需要由间隔（Gap），称为<code>防护频带（Guard band）</code>。</p>
+<p>下图是频分复用的示意图，每个小块代表一个可供信源使用的单独信道，可以看到每个信道间都有一个小间隔作为防护频带。</p>
+<p><img src="CNI-Chapter11-Notes/2019-12-08-11-15-01.png" alt="频分复用"></p>
+<h2 id="Using-A-Range-Of-Frequency-Per-Channel">Using A Range Of Frequency Per Channel</h2>
+<p>在上节的例子中，每个信道都有一个频率范围，但载波是固定频率的，信道之所欲选择一个频率范围而非单一的频率，主要是考虑便捷性，因为划分出的信道可能会以各种方式被使用。大多数频分复用系统都给发送端和接收端一个频率范围，系统可以选择最适用的频率作为载波，选择的评判标准通常是数据速率和对噪音的敏感性。</p>
+<p>因为频分复用通常的频率较高，对噪声敏感，因此通常使用同轴电缆来作为传输媒介。</p>
+<p>有的时候为了进一步增加数据速率，被分配给一个信源的信道会被再次的分割成更小的信道，如一个信源将分配给它的信道再分割成$K$个小信道，则每个小信道只要传输$1/k$的数据即可，这技术称为<code>子信道（Subchannel）</code>。</p>
+<p>有的时候为了进一步增加对噪声的抵抗性，会使用称为<code>展频(Spread Spectrum)</code>的技术。这个方法同样将信源的信道再切割成$k$个小信道，但每个信道都传输一样的数据，接收端收到信息后，从这$k$个小信道中找寻错误最少的数据作为接收数据。</p>
+<h2 id="Hierarchical-FDM">Hierarchical FDM</h2>
+<p><code>分层频分复用（Hierarchical FDM）</code>是将频分复用后的总数据再作为一个频率更高的频分复用的输入进行再次复用。如下图所示：</p>
+<p><img src="CNI-Chapter11-Notes/2019-12-08-12-06-55.png" alt="分层频分复用"></p>
+<p>虽然上图中每一级的单一信道带宽是上一级所有信道带宽的总和。但在实际运用中，下一级的单一信道带宽是要略大于上一级所有信道带宽的总和的，因为还需要携带额外的同步帧。</p>
+<h2 id="Wavelength-Division-Multiplexing（WDM）">Wavelength Division Multiplexing（WDM）</h2>
+<p><code>波分复用（Wavelength Division Multiplexing，WDM）</code>是在使用光纤作为媒介时的频分复用。当波分复用使用了许多不同频率的光时，可称为<code>密集波分复用（Dense Wavelength Division Multiplexing）</code>。</p>
+<p>波分复用的原理可以参考物理上的三棱镜实验，即白光可以拆分为不同颜色的光，而光的颜色是由光的频率决定的。棱柱为波分复用与解复用提供了基础。波分复用的复用器是接受一系列不同波长的光，然后通过一个棱柱将它们合并成一束光，然后接收端的解复用器再次通过棱镜将它们还原成不同波长的光。示意图如下：</p>
+<p><img src="CNI-Chapter11-Notes/2019-12-08-12-15-12.png" alt="波分复用"></p>
+<h2 id="Time-Division-Multiplexing（TDM）">Time Division Multiplexing（TDM）</h2>
+<p><code>时分复用（Time Division Multiplexing，TDM）</code>的原理很简单，即每个信源使用共同的媒介一段时间，然后供下一个信源使用。示意图如下：</p>
+<p><img src="CNI-Chapter11-Notes/2019-12-08-12-18-29.png" alt="时分复用"></p>
+<h2 id="Synchronous-TDM">Synchronous TDM</h2>
+<p>时分复用在计算机网络中是一个比较宽泛的概念。因此在实际运用中，上节中的概念图会在细节上有变化。例如有些时分复用系统并不是所有信源按顺序一个个发送。有些时分复用的系统中，每个信源发送间也并不像上图一样有时间间隔，一个信源发送后另一个信源会马上发送，这种系统称为<code>同步时间复用系统（Synchronous TDM）</code>。如下图所示：</p>
+<p><img src="CNI-Chapter11-Notes/2019-12-08-14-34-28.png" alt="同步TDM"></p>
+<h2 id="Framing-Used-In-The-Telephone-System-Version-Of-TDM">Framing Used In The Telephone System Version Of TDM</h2>
+<p>如之前所述，电话系统的两端是模拟信号，中间传输的是数字信号。对于中间使用同一个媒介传输的数字信号是通过同步时间复用系统来进行复用的。在电话系统中在时间复用系统中用了一个特殊技术来保证接收端和发送端的时间是对齐的，因为一旦接收端的时间出现了偏差，则可能将错误的信号传递给错误的目的地。为了解决这个问题，电话系统中的时间复用系统需要额外传输一个<code>信道帧（Framing Channel）</code>来表示一轮传输的开始，如下图所示：</p>
+<p><img src="CNI-Chapter11-Notes/2019-12-08-14-42-09.png" alt="信道帧"></p>
+<h2 id="Hierarchical-TDM">Hierarchical TDM</h2>
+<p>如同频分复用，时间复用也可以是分层的。不同的是，在频分复用系统中，每一级增加的是频率，在时分复用系统中每一级增加的是数据速率（减少时间切分间隔）。另外每一级的数据速率略大于前一级所有数据速率的总和，这是因为要传输额外帧数据。分层时间复用如下图：</p>
+<p><img src="CNI-Chapter11-Notes/2019-12-08-14-46-19.png" alt=""></p>
+<h2 id="The-Problem-With-Synchronous-TDM-Unfilled-Slots">The Problem With Synchronous TDM: Unfilled Slots</h2>
+<p>同步时间复用对与每个信源都平均的提供时间，即将整个信道的容量（容量可看作一秒能传输的数据量）平分。但如果一个信源在某一段是空白数据，那么当轮到这个信源发送数据时，只能往信道内填空白数据（通常填0），且额外增加一位表示该数据是无效的，而不是正好全是0。这样会造成信道容量的浪费。如下图所示：</p>
+<p><img src="CNI-Chapter11-Notes/2019-12-08-14-50-26.png" alt="未填充数据时间复用"></p>
+<h2 id="Statistical-TDM">Statistical TDM</h2>
+<p>为了解决同步TDM这个问题，有个称为<code>统计时间复用（Statistical TDM）</code>，或称为异步时间复用（Asynchronous）的技术。这个技术仍然是所有信源轮询的传输数据，但是当信源没有数据时，并非像同步时间同步那样装填空白数据，而是直接跳过。如下图所示：</p>
+<p><img src="CNI-Chapter11-Notes/2019-12-08-14-54-27.png" alt="统计时间复用"></p>
+<p>尽管这个方法解决了空白数据造成的信道容量浪费，但需要引入额外的数据来表明每个数据块是哪个信源的。</p>
+<h2 id="Inverse-Multiplexing">Inverse Multiplexing</h2>
+<p><code>逆复用（Inverse Multiplexing）</code>技术是用类似于复用的思维方式，但解决是只有两个信源，但其中有多个传输媒介，且两信源有大量的数据需要传输，但中间媒介没有一个有足够的足够的比特率。逆复用技术就是将原数据拆分成多份，然后通过中间的低容量媒介进行传输，最后在接收端再将数据合并在一起。示意图如下图所示：</p>
+<p><img src="CNI-Chapter11-Notes/2019-12-08-15-04-52.png" alt="逆复用"></p>
+<p>虽然逆复用看着很像复用的反向使用，即将复用的输出端变成输入，输入端变成输出，但在实际使用时，不能简单的将复用器反向设计得到逆复用器。逆复用器在发射端必须考虑如何将数据拆分后分配给多个低速率媒介。在接收端也必须考虑多个媒介的传输速率不同，可能造成某些媒介中的数据到达特别缓慢，这时候该如何处理。</p>
+<h2 id="Code-Division-Multiplexing">Code Division Multiplexing</h2>
+<p><code>码分复用（Code Division Multiplexing）</code>是在蜂窝电话（Cellular telephone）和卫星通信中使用的复用方法。与频分复用和时分复用不同的是，码分复用并不依赖与物理特性，而是利用数学特性：两个正交的线段可以被结合在一起而不会互相干扰。</p>
+<p>每个信源都有一个不同的二进制码$C_i$，每个信源的二进制码都必须与其他信源的二进制码正交。即将这些二进制码看作是线段（1保持1，0看成-1），这些线段间必须两两垂直。每个信源都将原数据与二进制码叉乘，然后传输结果，复用的过程即是将所有的结果都累加在一起，在接收端每个信源的目的地再相应的将接受到的复用数据再次与对应信源的二进制码点乘，结果即为该信源应该收到的数据。</p>
+<p>下面以一个例子方便理解。</p>
+<p>假设有两个信源，两个信源的$C_i$分别是$(1,0)和(1,1)$，需要传输的数据分别是$(1,0,1,0)$和$(0,1,1,0)$。传输过程如下：</p>
+<p>将原数据和二进制码改为向量，即1为1，0变-1。<br>
+信源1：$C_1=(1,-1)$，$V_1=(1,-1,1,-1)$<br>
+信源2：$C_2=(1,1)$，$V_2=(-1,1,1,-1)$</p>
+<p>可以看到$C_1$和$C_2$是正交的。</p>
+<p>复用过程即为:<br>
+$$<br>
+(C_1 \times V_1) + (C_2\times V_2)= \\<br>
+((1,-1),(-1,1),(1,-1),(-1,1))+((-1,-1),(1,1),(1,1),(-1,-1))\\<br>
+=((0,-2),(0,2),(2,0),(-2,0))<br>
+$$</p>
+<p>((0,-2),(0,2),(2,0),(-2,0))即为复用后的结果。</p>
+<p>对于信源1的接收端而言，解复用过程为：</p>
+<p>$$(1,-1)\cdot((0,-2),(0,2),(2,0),(-2,0))\\<br>
+=((0+2),(0-2),(2+0),(-2+0))\\<br>
+=(2,-2,2,-2)<br>
+$$</p>
+<p>负数变为0，正数变为1，即接收端1收到数据为(1,-1,1,-1)，与信源1发送数据相同。</p>
+<p>对于信源2的接收端来说，解复用过程如下：</p>
+<p>$$(1,1)\cdot((0,-2),(0,2),(2,0),(-2,0))\\<br>
+=((0-2),(0+2),(2+0),(-2+0))\\<br>
+=(-2,2,2,-2)<br>
+$$</p>
+<p>负数变为0，正数变为1，即接收端2收到数据为(-1,1,1,-1)，与信源2发送数据相同。</p>
+<p>上述例子中，每个信源的二进制码$c_i$都比较小，但在实际运用中$c_i$可能会很大，这就导致了计算量的上升。如果数据本身并不多，但是花费了大量时间计算，效率比较低，因此在数据量不高的网络中CDM并不适用，</p>
+<p>但是高数据量网络中，码分复用非常常见，因为相对于时间复用，码分复用的延迟较低。因为码分复用可以将多个信源的数据一次性同时发送给发送端，而时分复用则必须等待轮询到自己才能发送一部分。</p>
+<article class="message is-info">
+        
+        <div class="message-body">
+            <ol>
+<li><em>Computer Networks and Internets</em> 6th</li>
+</ol>
+
+        </div>
+    </article>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>《计算机网络与因特网》 第十一章笔记</p><p><a href="https://xuejiaw.github.io/CNI-Chapter11-Notes/">https://xuejiaw.github.io/CNI-Chapter11-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-12-08</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/CNI-Chapter14-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《计算机网络与因特网》 第十四章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/CNI-Chapter10-Notes/"><span class="level-item">《计算机网络与因特网》 第十章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
+            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
+            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: true,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

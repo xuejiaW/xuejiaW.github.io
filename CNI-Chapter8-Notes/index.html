@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《计算机网络与因特网》 第八章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《计算机网络与因特网》 第八章笔记。 给出了可能出现的错误，以及控制错误的信道编码方法，包括检测错误和修复错误。"><meta property="og:type" content="blog"><meta property="og:title" content="《计算机网络与因特网》 第八章笔记"><meta property="og:url" content="https://xuejiaw.github.io/CNI-Chapter8-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《计算机网络与因特网》 第八章笔记。 给出了可能出现的错误，以及控制错误的信道编码方法，包括检测错误和修复错误。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter8-Notes/CNI-Chapter8-Notes/2019-12-05-14-46-47.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter8-Notes/CNI-Chapter8-Notes/2019-12-06-17-25-08.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter8-Notes/CNI-Chapter8-Notes/2019-12-07-00-01-18.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter8-Notes/CNI-Chapter8-Notes/2019-12-07-00-06-02.png"><meta property="article:published_time" content="2019-12-06T16:18:54.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.008Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="计算机网络"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://xuejiaw.github.io/CNI-Chapter8-Notes/CNI-Chapter8-Notes/2019-12-05-14-46-47.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xuejiaw.github.io/CNI-Chapter8-Notes/"},"headline":"《计算机网络与因特网》 第八章笔记","image":["https://xuejiaw.github.io/CNI-Chapter8-Notes/CNI-Chapter8-Notes/2019-12-05-14-46-47.png","https://xuejiaw.github.io/CNI-Chapter8-Notes/CNI-Chapter8-Notes/2019-12-06-17-25-08.png","https://xuejiaw.github.io/CNI-Chapter8-Notes/CNI-Chapter8-Notes/2019-12-07-00-01-18.png","https://xuejiaw.github.io/CNI-Chapter8-Notes/CNI-Chapter8-Notes/2019-12-07-00-06-02.png"],"datePublished":"2019-12-06T16:18:54.000Z","dateModified":"2023-04-02T12:21:20.008Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《计算机网络与因特网》 第八章笔记。 给出了可能出现的错误，以及控制错误的信道编码方法，包括检测错误和修复错误。"}</script><link rel="canonical" href="https://xuejiaw.github.io/CNI-Chapter8-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-12-06T16:18:54.000Z" title="2019/12/7 00:18:54">2019-12-07</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.008Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span><span class="level-item">23 分钟读完 (大约3451个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《计算机网络与因特网》 第八章笔记</h1><div class="content"><p>《计算机网络与因特网》 第八章笔记。</p>
+<p>给出了可能出现的错误，以及控制错误的信道编码方法，包括检测错误和修复错误。</p>
+<span id="more"></span>
+<h1>Chapter 8 Reliability And Channel Coding</h1>
+<h2 id="Introduction">Introduction</h2>
+<p>这一章介绍在通信过程中会出现的错误，以及控制错误的技术。</p>
+<p>其中的一部分也被纳入了因特网的协议中，这也会在本章中介绍。</p>
+<h2 id="The-Three-Main-Sources-Of-Transmission-Errors">The Three Main Sources Of Transmission Errors</h2>
+<p>传输中发生的错误可以分为三大类：</p>
+<ol>
+<li>干扰（Interference）：如第七章所述，环境中存在许多电磁干扰，这些电磁干扰会阻碍无线电传输和线缆中的信号传输。</li>
+<li>失真（Distortion）：所有的物理系统都会造成信号的失真。光纤中的光因为移动距离的增加，时域会发生扩张（频域也因此变化）。信道容量会导致一些频率的信号被过滤掉。放在线缆旁边的金属可能会改变线缆内信号的频率，金属也能干扰无线电信号。</li>
+<li>衰弱（Attenuation）：信号在媒介中传输的过程中，信号会逐渐衰弱。</li>
+</ol>
+<p>香农定理给出了介绍错误的思路：提高信噪比。</p>
+<p>但无论如何噪声不可能被完全的消除，所以许多方法致力于检测错误，在某些情况下自动修复错误。</p>
+<p>但是错误的监测机制无疑是会为系统增加开销的，因此系统设计时要考虑在错误影响与错误检测开销间做权衡，如金融系统，1bit的错误可能会造成很严重的错误，但是在图片中1bit的错误可能根本无法被识别到。</p>
+<h2 id="Effect-Of-Transmission-Errors-On-Data">Effect Of Transmission Errors On Data</h2>
+<p>这里要区分传输错误与数据错误，数据是由传输信号在经过例如解码，解调后得到的。传输错误最后都会导致最后的数据出错。主要有三类传输造成的数据错误：</p>
+<ol>
+<li>
+<p>单元位错误（Single Bit Error）：即一系列数据中，只有一位数据被改变了。这通常是因为传输信号的短时间（称为脉冲，Spike）干扰造成的。</p>
+</li>
+<li>
+<p>突发性错误：一系列数据中有多位数据被改变，通常是由长时间的干扰造成的。错误长度是由错误开始位到错误结束位直接的位数决定。如下表，错误的数据由加粗表示，错误长度是7：</p>
+<table>
+<thead>
+<tr>
+<th>发送</th>
+<th>1</th>
+<th>0</th>
+<th>1</th>
+<th>1</th>
+<th>0</th>
+<th>0</th>
+<th>0</th>
+<th>1</th>
+<th>0</th>
+<th>1</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>接收</td>
+<td>1</td>
+<td>0</td>
+<td><strong>0</strong></td>
+<td>1</td>
+<td><strong>1</strong></td>
+<td>0</td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<h2 id="Two-Strategies-For-Handling-Channel-Errors">Two Strategies For Handling Channel Errors</h2>
+<p>有一系列的方法解决数据错误并增加数据的可靠性，这些方法统称为<code>信道编码(Channel Coding)</code>，这些方法可以被分为两类：<code>前向错误纠正技术（Forward Error Correction，FEC）</code>，<code>自动重传请求技术（Automatic Repeat reQuest，ARQ）</code>。</p>
+<p>前向错误纠正技术的主题思想是在发送的数据中增加额外的信息，接收端可以根据这些额外信息来判断是否有错误发生，有些方法可以检测出究竟是哪一位数据发生了错误，并在可能的情况下纠正错误。</p>
+<p>自动重传请求技术是让接收端和发送端互换数据来保证数据被正确的传递。</p>
+<h2 id="Block-And-Convolutional-Error-Codes">Block And Convolutional Error Codes</h2>
+<p>前向错误纠正技术可以再细分为两类：</p>
+<ol>
+<li>分组错误码（Block Error Codes）：分组错误码是将数据分成一块块的，然后对每一块都增加额外信息。每一块的额外信息只针对于该块数据本身。</li>
+<li>卷积错误码（Convolutional Error Codes）：卷积错误码是将数据看作一系列bits，增加的额外信息是由当前的bit和之前的bit共同决定的。</li>
+</ol>
+<p>卷积错误码相对于分组错误码需要更多的计算，但是也更能检测出错误。</p>
+<h2 id="An-Example-Block-Error-Code：Single-Parity-Checking">An Example Block Error Code：Single Parity Checking</h2>
+<p>单一奇偶校验检查（Single Parity Checking）是分组错误码检测的一个例子，可以再分为偶校验检查和奇校验检查。如果将数据分为$n$ bit一组，那么每一组增加一位数据，当是偶校验时，$n$位数据+1位额外数据应该一共有偶数个1，当是奇校验时，$n$位数据+1位额外数据应该一共有奇数个1。下表为8位数据时的例子：</p>
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>偶校验</th>
+<th>奇校验</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00000000</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>01011011</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>01010101</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>单一奇偶校验是一个比较弱的信道编码，他只能检测错误，但无法检测出错误具体出现在哪一位，也无法纠正错误。而且当有偶数个位发生错误时，错误就无法被检测出来。</p>
+<h2 id="The-Methematics-of-Block-Error-Codes-And-n-k-Notation">The Methematics of Block Error Codes And (n,k) Notation</h2>
+<p>如有$k$位bit的数据，我们将所有$2^k$种可能出现的数据称为<code>数据字(Datawords)</code>，在这些数据中增加$r$位额外数据，一共有$n=k+r$个数据，所有$2^n$种可能称为<code>编码字(codeworks)</code>，其中编码字中合法的部分，即额外添加的数据与原数据时符合规则的部分，称为<code>码书(Codebook)</code>，并将这种方法标记为$(n,k)$</p>
+<p>如单一奇偶校验中,$k=8,r=1$，因此一共有256个数据字，也对应了有256个合法的编码字，一共有512个编码字。</p>
+<p>在理想状态下，合法编码字中的任一一位被改变了，改变后的编码字就不是合法编码字。但是在单一奇偶校验的例子中，如果同时改变了合法编码字中的两位，那么结果仍然是一个合法编码字。</p>
+<p>没有一个信道编码可以达到理想状态，所以要考虑的就是，合法编码字最少多少位数据要被同时改变，才能产生另一个合法编码字。在单一数字编码中，这个位数为2。</p>
+<h2 id="Hamming-Distance：A-Measure-Of-A-Code’s-Strength">Hamming Distance：A Measure Of A Code’s Strength</h2>
+<p>汉明距离（Hamming Distance）是用来测量一个合法编码字要转换为另一个合法编码字最少要改变的数据位数的方法中需要用到的概念。如果给定两个$n$长度的字符，两个字符的汉明距离就是两个字符间不同的数据数量。</p>
+<p>如$d(000,001)=1,d(000,101)=2,d(000,111)=3,d(101,001)=1$。</p>
+<p>可以先对两个字符求异或，然后计算异或出来的字符1的总数，即为汉明距离。</p>
+<h2 id="The-Hamming-Distance-Among-String-In-A-Codebook">The Hamming Distance Among String In A Codebook</h2>
+<p>为了计算出一个合法编码字要转换为另一个合法编码字最少要改变的数据位数，先要计算出码书中所有编码字组合的汉明距离。如对2位bit数据进行单一奇校验检测：</p>
+<table>
+<thead>
+<tr>
+<th>数据字</th>
+<th>编码字</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>001</td>
+</tr>
+<tr>
+<td>01</td>
+<td>010</td>
+</tr>
+<tr>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td>11</td>
+<td>111</td>
+</tr>
+</tbody>
+</table>
+<p>一共有4个编码字，4个编码字一一配对一共有6种可能，$d(001,010)=2,d(010,100)=2,d(001,100)=2,d(010,111)=2,d(001,111)=2,d(100,111)=2$。6种可能中最小的汉明距离是2，所以最少需要更改2位数据才能从一个合法编码字变为另一个合法编码字。</p>
+<p>因此计算从一个合法编码字转换为另一个合法编码字最少要改变的数据位数过程是，计算出所有码书中的编码字（即合法编码字）两两配对后的所有汉明距离$d_{min}$，其中的最小值即为所求值。</p>
+<h2 id="The-Tradeoff-Between-Error-Detection-And-Overhead">The Tradeoff Between Error Detection And Overhead</h2>
+<p>对于一个编码，最多的能被检测出来的错误位数为$e=d_{min}-1$，如单一奇偶校验，因为$d_{min}=2$，所以最多能正确检测出来的错误位数为1。</p>
+<p>虽然$d_{min}$越大能检测出来的错误位数越多，但这也意味着要增加更多的额外数据，对于$(n,k)$的编码，工程师用编码率（Code Rate）$R=\frac{k}{n}$来表示为了检测出错误信息的编码开销。</p>
+<h2 id="Error-Correction-With-Row-And-Column-RAC-Parity">Error Correction With Row And Column(RAC) Parity</h2>
+<p>奇偶校验本身是不能进行错误纠正的，但是通过<code>行列奇偶校验（Row And Column Parity）</code>就可以做到。如一共有12个bit的原始数据，即$k=12$，排成三行四列每一列每一行都进行奇偶校验，增加一个额外位，则一共8个额外位，即$r=8，n=k+r=20$，因此这是一个$(20,12)$的编码，如下图所示：</p>
+<p><img src="CNI-Chapter8-Notes/2019-12-05-14-46-47.png" alt="行列奇偶校验"></p>
+<p>因此如果一位数据出错，会同时在对应的行和列校验位感知到，因此就可以定位到错误的数据，取反后就能纠正数据。</p>
+<p>奇偶校验数据的$d_{min}$还是2，因此如果错误的位数大于1，当是偶数时无法被检测到，当是奇数时虽然能检测出错误，但无法纠正。</p>
+<h2 id="The-16-Bit-Checksum-Used-In-The-Internet">The 16-Bit Checksum Used In The Internet</h2>
+<p>有个称为<code>因特网校验和（Internet checksum）</code>的信道编码方法在网络中扮演了重要角色。这个算法的输入可以是任意长度，将输入拆分为一段段16字节的的部分，如果不能长度不能被16整除，则最后补0。如下图所示：</p>
+<p><img src="CNI-Chapter8-Notes/2019-12-06-17-25-08.png" alt="拆分为16字节"></p>
+<p>算法的流程如下：</p>
+<ol>
+<li>将输入拆分为以16-bit为一组</li>
+<li>定义一个32-bit的变量（这里称为$C$）作为结果。</li>
+<li>将每一组16-bit的数据累加给$C$</li>
+<li>将$C$的前16位累加给后16位</li>
+<li>将$C$的后16位取反，如果取反后全是0，则将其改为全是1</li>
+<li>此时$C$的16位即为校验和。</li>
+</ol>
+<p>可以看出最后的校验和也是16位的数据，将校验和作为新的一组16-bit放在原数据后（经过了补0的原数据）发送出去。接收端接受信息后重复算法流程，如果数据没有发生错误，最后接收端计算出的校验和应该是FFFF。</p>
+<p>下面以两个例子进行说明：</p>
+<ol>
+<li>
+<p>例子1<br>
+如果发送端输入数据为<code>0100 1000 0110 0101</code>，<code>0110 1100 0110 1100</code>，<code>0110 1111 0010 0001</code>，计算过程如下：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">+  0110 1111 0010 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  0010 0011 1111 0010</span><br></pre></td></tr></table></figure>
+<p>将高16位移到后16位</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  0010 0011 1111 0010</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  0010 0011 1111 0011 </span><br></pre></td></tr></table></figure>
+<p>取反后得到：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1101 1100 0000 1100</span><br></pre></td></tr></table></figure>
+<p>这即为校验和</p>
+<p>对于接收端，因为将校验和也一并发送了过去，所以接收端的计算过程如下：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">   0110 1111 0010 0001</span><br><span class="line">+  1101 1100 0000 1100</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
+<p>将高16位移到后16位</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  1111 1111 1111 1111 </span><br></pre></td></tr></table></figure>
+<p>取反后得到：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
+<p>因为全为0，所以改为全为1</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>例子2<br>
+如果发送端输入数据为<code>1111 1111 1111 1111</code>，<code>1111 1111 1111 1111</code>，<code>0000 0000 0000 0001</code>，计算过程如下：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">+  0000 0000 0000 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+<p>将高16位移到后16位</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  1111 1111 1111 1111</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000 </span><br></pre></td></tr></table></figure>
+<p>此时虽然高16仍然有数值，但不需要再次累加，后16位取反后得到：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1111 1111 1111 11111</span><br></pre></td></tr></table></figure>
+<p>这即为校验和</p>
+<p>对于接收端，因为将校验和也一并发送了过去，所以接收端的计算过程如下：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">   0000 0000 0000 0001</span><br><span class="line">+  1111 1111 1111 1111</span><br><span class="line">----------------------------</span><br><span class="line">10 1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
+<p>将高16位移到后16位</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                  10</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000 </span><br></pre></td></tr></table></figure>
+<p>取反后得到：</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Cyclic-Redundancy-Codes-CRCs">Cyclic Redundancy Codes(CRCs)</h2>
+<p>在高速网络中，有一个称为<code>循环冗余码(Cyclic Redundancy Codes,CRCs)</code>的信道编码方法。循环冗余码有三个主要优点：</p>
+<ol>
+<li>可以对任意长度的数据进行计算</li>
+<li>可以充分的检测出错误</li>
+<li>可以通过硬件实现，所以非常的高效</li>
+</ol>
+<p>求$CRC$的计算过程可以看作是两个二进制数的相除，一个代表原数据，一个代表一个特定的除数（可根据不同的情况设置，除数的设置决定错误检测的能力），如果需要求得$N$长度的$CRC$，则需要$N+1$长度的被除数。二进制数相除的过程可以看作是多项式相除，如果原数据是$1010$，除数设置为$1011$，则计算过程如下图：</p>
+<p><img src="CNI-Chapter8-Notes/2019-12-07-00-01-18.png" alt="CRC计算过程"></p>
+<h2 id="An-Efficient-Hardware-Implementation-Of-CRC">An Efficient Hardware Implementation Of CRC</h2>
+<p>CRC算法的实现硬件是由<code>移位寄存器(Shift Register)</code>和<code>异或门(Exclusive or gates)</code>构成的。在计算CRC前，硬件会初始化将移位寄存器中的所有位改为0，上例中的除数$1011$，对应的硬件图如下：</p>
+<p><img src="CNI-Chapter8-Notes/2019-12-07-00-06-02.png" alt="1011硬件"></p>
+<p>TODO：为什么这么设计的原因。</p>
+<h2 id="Automatic-Repeat-Request-ARQ-Mechanisms">Automatic Repeat Request(ARQ) Mechanisms</h2>
+<p>自动重传请求技术（Automatic Repeat Request,ARQ）需要发送端和接收端传递信息来检测错误。当一方发送数据给另一方时，接收方需要传递一个回执给发送方。如果在一段时间后发送方仍然没有收到回执，则认为数据丢失，重新发送数据。</p>
+<p>自动重传请求技术适合只能检测错误，但不能修复错误的系统。当接收方检测出数据有错误后，将数据丢弃并不传递回执，那么发送方就会再次发送数据。</p>
+<article class="message is-info">
+        
+        <div class="message-body">
+            <ol>
+<li><em>Computer Networks and Internets</em> 6th</li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Polynomial_long_division">多项式除法</a></li>
+<li><a target="_blank" rel="noopener" href="https://heasarc.gsfc.nasa.gov/docs/heasarc/ofwg/docs/general/checksum/node11.html">1’s Complement Arithmetic</a></li>
+</ol>
+
+        </div>
+    </article>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>《计算机网络与因特网》 第八章笔记</p><p><a href="https://xuejiaw.github.io/CNI-Chapter8-Notes/">https://xuejiaw.github.io/CNI-Chapter8-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-12-07</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/CNI-Chapter10-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《计算机网络与因特网》 第十章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/CNI-Chapter7-Notes/"><span class="level-item">《计算机网络与因特网》 第七章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
+            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
+            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: true,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

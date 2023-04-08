@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《算法导论》 第六章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《算法导论》中第六章笔记。 关于堆与堆排序。"><meta property="og:type" content="blog"><meta property="og:title" content="《算法导论》 第六章笔记"><meta property="og:url" content="https://xuejiaw.github.io/IA-Chapter6-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《算法导论》中第六章笔记。 关于堆与堆排序。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-00-04-02.png"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-14-00-33.png"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-14-10-18.png"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-15-53-17.png"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-15-55-14.png"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-16-25-30.png"><meta property="article:published_time" content="2020-01-29T05:42:54.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.017Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="数据结构与算法"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-00-04-02.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xuejiaw.github.io/IA-Chapter6-Notes/"},"headline":"《算法导论》 第六章笔记","image":["https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-00-04-02.png","https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-14-00-33.png","https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-14-10-18.png","https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-15-53-17.png","https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-15-55-14.png","https://xuejiaw.github.io/IA-Chapter6-Notes/IA-Chapter6-Notes/2020-01-28-16-25-30.png"],"datePublished":"2020-01-29T05:42:54.000Z","dateModified":"2023-04-02T12:21:20.017Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《算法导论》中第六章笔记。 关于堆与堆排序。"}</script><link rel="canonical" href="https://xuejiaw.github.io/IA-Chapter6-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-01-29T05:42:54.000Z" title="2020/1/29 13:42:54">2020-01-29</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.017Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span><span class="level-item">23 分钟读完 (大约3442个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《算法导论》 第六章笔记</h1><div class="content"><p>《算法导论》中第六章笔记。</p>
+<p>关于堆与堆排序。</p>
+<span id="more"></span>
+<h1>Chapter 6 Heapsort</h1>
+<p>如归并排序一样，堆排序的时间复杂度为$O(nlgn)$，但与归并排序不同的是，堆排序在运行过程中仅需要固定大小的外部空间，即运行时所需的内存不会因为输入规模的上升而上升，这一点与插入排序一样。</p>
+<p>所以堆排序是结合了插入排序和归并排序两者的优点。</p>
+<p>“堆”（Heap）这一称呼最早就是针对于堆排序的，但是在一些语言的垃圾回收概念中存在堆栈的概念。这两者虽然名字相同，但实际上是完全不同的存在。</p>
+<h2 id="Heap">Heap</h2>
+<p><code>堆（Heap）</code>或称<code>二叉堆（Binary Heap）</code>是一种用数组来表示近似完全二叉树的数据结构。树中的每一个元素都对应数组中的一个元素，树除了最下面一层，其余层都是满的。</p>
+<p>二叉堆与二叉树如下图所示：</p>
+<p><img src="IA-Chapter6-Notes/2020-01-28-00-04-02.png" alt="二叉树与二叉堆"></p>
+<p>在数组中，用一个变量<code>heap-size</code>来表示数组中真正元素的个数。如一个数组可能长度为10，但其中真正的元素个数为5，剩下的都为空，即$0\leq A.heap-size \leq A.length$。</p>
+<p>树的根节点用$A[1]$表示，所有结点可根据以下伪代码计算其父结点，左子树以及右子树。这些操作都是单纯的乘二或除二，因此可以用位运算来实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PARENT(i)</span><br><span class="line">return i/2</span><br><span class="line"></span><br><span class="line">LEFT(i)</span><br><span class="line">return 2i</span><br><span class="line"></span><br><span class="line">RIGHT(i)</span><br><span class="line">return 2i+1</span><br></pre></td></tr></table></figure>
+<p>c++ 实现如下，注意因为c++中的索引是从0开始，所以index值需要做相应调整：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">parent</span><span class="params">(<span class="type">int</span> index)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">ceil</span>(index / <span class="number">2.0</span>) - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">left</span><span class="params">(<span class="type">int</span> index)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> index * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">right</span><span class="params">(<span class="type">int</span> index)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> index * <span class="number">2</span> + <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有两种二叉堆：<code>最大堆（max-heaps）</code>与<code>最小堆（min-heaps）</code>。对于最大堆，每个结点都需要满足<code>最大特性（max-heap property）</code>，即</p>
+<p>$$<br>
+A[Parent(i)] \geq A[i]<br>
+$$</p>
+<p>可以因此判断出在最大堆中最大的元素存储在根结点。同理最小堆需要满足$A[Parent(i)] \leq A[i]$，最小的元素存储在根结点。</p>
+<ul>
+<li>之后的几个章节都默认以最大堆作为对象进行分析</li>
+</ul>
+<p>将一个堆看作一棵树后，将一个结点的高度定义为这个结点到叶子的最长单一路径，一棵树的高度定义为根节点的高度。因为堆是近似完全二叉树，所以对于有$n$个结点的堆来说，其高度为$\Omega(\log n)$。</p>
+<h2 id="Maintaining-the-heap-property">Maintaining the heap property</h2>
+<p>通过函数<code>MAX-HEAPIFY</code>来保持堆的特性，该函数需要传入需要处理的数组$A$和需要进行处理的元素索引值$i$。</p>
+<p>调用前默认元素$i$的左树$LEFT(i)$和右树$RIGHT(i)$都满足最大特性，但元素$i$本身可能违背，即元素$i$可能小于它的子结点。</p>
+<p><code>MAX-HEAPIFY</code>操作是将值$A[i]$“向下沉”，即将更小的$A[i]$值向树的更底层传递，伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">MAX-HEAPIFY(A,i)</span><br><span class="line">l = LEFT(i)</span><br><span class="line">r = RIGHT(i)</span><br><span class="line">if l &lt;= A.heapSize and A[l] &gt; A[i]</span><br><span class="line">    largest = l;</span><br><span class="line">else</span><br><span class="line">    largest = i;</span><br><span class="line">if r &lt;= A.heapSize and A[r] &gt; A[largest]</span><br><span class="line">    largest = r;</span><br><span class="line"></span><br><span class="line">if (largest != i)</span><br><span class="line">    exchange A[i] with A[largest]</span><br><span class="line">    MAX-HEAPIFY(A,largest)</span><br></pre></td></tr></table></figure>
+<p>c++代码实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MaxHeapify</span><span class="params">(<span class="type">int</span> index, <span class="type">int</span> dataLength)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (index &gt;= dataLength)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;Invalid index &quot;</span> &lt;&lt; index &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> largest = index;</span><br><span class="line">	<span class="type">int</span> lIndex = <span class="built_in">left</span>(index);</span><br><span class="line">	<span class="type">int</span> rIndex = <span class="built_in">right</span>(index);</span><br><span class="line">	<span class="keyword">if</span> (lIndex &lt; dataLength)</span><br><span class="line">		largest = dataArray[index] &gt; dataArray[lIndex] ? index : lIndex;</span><br><span class="line">	<span class="keyword">if</span> (rIndex &lt; dataLength)</span><br><span class="line">		largest = dataArray[rIndex] &gt; dataArray[largest] ? rIndex :largest;</span><br><span class="line">	<span class="keyword">if</span> (largest != index)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> temp = dataArray[index];</span><br><span class="line">		dataArray[index] = dataArray[largest];</span><br><span class="line">		dataArray[largest] = temp;</span><br><span class="line">		<span class="built_in">MaxHeapify</span>(largest, dataLength);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>伪代码中的<code>exchange</code>操作的结果就是值更大的结点向树的上方传递，值小的结点向树的下方下沉。</p>
+<p>算法的图解如下：</p>
+<p><img src="IA-Chapter6-Notes/2020-01-28-14-00-33.png" alt="MAX-HEAPIFY算法图解"></p>
+<p>(a)图到(b)中，值为14的结点向上移动，值为4的结点向下移动。(b)到©图，值为8的结点向上移动，值为4的结点向下移动。</p>
+<p>该算法实际上是一个递归，对结点(i)调用后，会对原先拥有最大结点的子树进一步调用（<code>MAX-HEAPIFY（A，largest）</code>）。</p>
+<p>如果一个树的结点数目为$n$，其子树最多拥有$2n/3$个结点。首先因为二叉堆需要满足近似完全二叉树，即只有最下一层的结点可能是不满的。因此最大比例情况发生在最下层结点一半是空的时候，此时非空另一半的子树拥有最大比例的子结点。</p>
+<p>如下图所示，此时树中一共有11个结点，根节点的左子树此时拥有的结点比例是最大的，为7/11。</p>
+<p><img src="IA-Chapter6-Notes/2020-01-28-14-10-18.png" alt="最大比例子树"></p>
+<p>一个树的结点数目为$n$，其子树最多拥有$2n/3$个结点。证明如下：</p>
+<p>首先如果树的每一层结点数是上一层的两倍，根据等比数列公式可以求得，高度为$h$的树，其结点总数为：</p>
+<p>$$<br>
+\frac{a_1-a_nq}{1-q} \\<br>
+=\frac{1- 2^{h-1}2}{1-2} \\<br>
+=2^h-1<br>
+$$</p>
+<p>最大比例情况下，即最底层的结点一半为空的情况下，最大子树所占结点数目的比例计算如下：</p>
+<p>$$<br>
+\frac{2^{h-1}-1}{2^h-1 - \frac{2^{h-1}}{2}}<br>
+$$</p>
+<p>该式子的分子是子树的结点总数，在最大情况下子树可以看作是一颗层数小1的满树($2^{h-1}-1$)。分母是整棵树的结点数，为满树($2^h-1$)减去最下一层结点的一半（$\frac{2^{h-1}}{2}$）.</p>
+<p>对上式求极限可得：</p>
+<p>$$<br>
+\lim_{n\rightarrow \infty} \frac{2^{h-1}-1}{2^h-1 - \frac{2^{h-1}}{2}} \\<br>
+=\lim_{n\rightarrow \infty} \frac{2^{-1}-\frac{1}{2^h}}{1-\frac{1}{2^h}-2^{-2}}\\<br>
+=\frac{\frac{1}{2}-0}{1-0-\frac{1}{4}} \\<br>
+= \frac{2}{3}<br>
+$$</p>
+<p>因此<code>MAX-HEAPIFY(A,i)</code>的时间复杂度递归表达式可以写作<br>
+$$<br>
+T(n)\leq T(2n/3) +\Theta(1)<br>
+$$</p>
+<p>该式子满足主方法的第二种情况，因此可以算出时间复杂度为$T(n)=O(\lg n)$</p>
+<h2 id="Building-a-heap">Building a heap</h2>
+<p>可以通过自底向上（即从树的第一个非叶子结点开始向上调用直到根结点）的调用<code>MAX_HEAPIFY</code>方法将一个普通数组转换为满足最大特性的数组。将这个方法称为<code>BUILD-MAX-HEAP(A)</code></p>
+<p>对于一个数组$A$，索引值从$\lfloor n/2 \rfloor +1$到$n$都是这个树的叶子。</p>
+<p>证明如下：</p>
+<p>如果一个结点的索引值为$\lfloor n/2 \rfloor +1$，求这个结点的左结点，可得：</p>
+<p>$$<br>
+LEFT(\lfloor n/2 \rfloor +1)\\<br>
+=2(\lfloor n/2 \rfloor +1)\\&gt;2( (\frac{n}{2}-1)+1)\\<br>
+=n-2+2 =n<br>
+$$</p>
+<p>即他的左子树的结点索引值已经大于了$n$，所以他的左子树是不存在的。</p>
+<p>使用的同样的方法，也可以证明对于索引值为$\lfloor n/2 \rfloor$的结点，其左结点是存在的。</p>
+<p><code>BUILD-MAX-HEAP(A)</code>的伪代码如下，其核心为自底向上对所有的非叶子结点进行MAX-HEAPIFY</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BUILD-MAX-HEAP(A)</span><br><span class="line">A.heap-size=A.length</span><br><span class="line">for i = A.length/2 downto 1</span><br><span class="line">    MAX-HEAPIFY(A,i)</span><br></pre></td></tr></table></figure>
+<p>c++代码实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">BuildMaxHeap</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = dataLength / <span class="number">2</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">		<span class="built_in">MaxHeapify</span>(i, dataLength);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>算法图解如下，从(a)到(e)分别表示每一次的循环，(f)为最终结果。</p>
+<p><img src="IA-Chapter6-Notes/2020-01-28-15-53-17.png" alt="BUILD-MAX-HEAP算法"></p>
+<p>该算法会调用$O(n)$次MAX-HEAPIFY算法，所以复杂度为$O(n\lg n)$。但这个复杂度并不是紧密的上限。</p>
+<p>考虑到对于一个拥有$n$个结点的树，其树高为$\lfloor \lg n \rfloor$。</p>
+<p>且可以证明对于高度为$h$的层（这里的高度0是指最下面一层，高度1为倒数第二层，依次类推），节点数最多为$\lceil n/2^{h+1}\rceil$。</p>
+<p>证明如下：</p>
+<p>在前面已经得知，对于一个数组$A$，索引值从$\lfloor n/2 \rfloor +1$到$n$都是这个树的叶子。那么可以计算出，一棵树的叶子结点个数为$n-(\lfloor n/2 \rfloor +1)+1=\lceil n/2 \rceil$。非叶子结点个数为$n-\lceil n/2 \rceil= \lfloor n/2 \rfloor$</p>
+<p>用数学归纳法证明</p>
+<p>对于高度为0的层，即叶子层，其结点个数为$\lceil n/2 \rceil$，满足$\lceil n/2^{h+1}\rceil$。</p>
+<p>对于高度为h-1的层，条件满足。对于高度为$h-1$的层到顶部的结点个数即为一棵树非叶子结点的个数，即$\lfloor n/2 \rfloor$。</p>
+<p>因此式子为</p>
+<p>$$<br>
+\lceil \frac{\lfloor n/2 \rfloor}{2^{h-1+1}} \rceil \\<br>
+&lt; \lceil \frac{n/2}{2^{h-1+1}} \rceil \\<br>
+= \lceil \frac{n}{2^{h+1}} \rceil<br>
+$$</p>
+<p>即可推导出原式，因此原式得证。</p>
+<p>对于<code>BUILD-MAX-HEAP(A)</code>而言，每一次调用<code>MAX-HEAPIFY</code>都与调用时的高度相关，即每个<code>MAX-HEAPIFY</code>的时间复杂度为$O(h)$。</p>
+<p>因此整个算法的时间复杂度可表示为</p>
+<p>$$<br>
+\sum_{h=0} ^{\lfloor \lg n \rfloor} \lceil \frac{n}{2^{h+1}} O(h) \rceil \\<br>
+= O( n \sum_{h=0} ^{\lfloor \lg n \rfloor}\frac{h}{2^h} )\\<br>
+=  O( n \sum_{h=0} ^{\infty}\frac{h}{2^h} )<br>
+$$</p>
+<p>套用公式</p>
+<p>$$<br>
+\sum_{k=0}^{\infty} kx^k=\frac{x}{(1-x)^2}<br>
+$$</p>
+<p>得</p>
+<p>$$<br>
+O( n \sum_{h=0} ^{\infty}\frac{h}{2^h} \\<br>
+=O(2n)=O(n)<br>
+$$</p>
+<p>所以<code>BUILD-MAX-HEAP(A)</code>的紧密时间复杂度为$O(n)$</p>
+<h2 id="The-heapsort-algorithm">The heapsort algorithm</h2>
+<p>对排序算法，首先需要调用<code>BUILD-MAX-HEAP(A)</code>算法将数组转换为满足最大特性的数组。满足最大特性后，数组的第一个元素即为最大值，将数组的最后一个值与第一个值进行交换，然后将数组的有效大小缩小（相当于不再追踪最后一个元素，因为此时最后一个元素是原第一个元素即最大元素）。然后再针对新的第一个元素调用<code>MAX-HEAPIFY(A,1)</code>即可。</p>
+<p>伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HEAPSORT(A)</span><br><span class="line">BUILD-MAX-HEAP(A)</span><br><span class="line">for i = A.length downto 2</span><br><span class="line">    exchange A[1] with A[i]</span><br><span class="line">    A.heapSize = A.heapSize - 1</span><br><span class="line">    MAX-HEAPIFY(A,1)</span><br></pre></td></tr></table></figure>
+<p>c++代码实现如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">heapSort</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">BuildMaxHeap</span>();</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> tempDataLength = dataLength; tempDataLength &gt; <span class="number">1</span>;tempDataLength--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> temp = dataArray[<span class="number">0</span>];</span><br><span class="line">		dataArray[<span class="number">0</span>] = dataArray[tempDataLength - <span class="number">1</span>];</span><br><span class="line">		dataArray[tempDataLength - <span class="number">1</span>] = temp;</span><br><span class="line">		<span class="built_in">MaxHeapify</span>(<span class="number">0</span>, tempDataLength - <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//This part is not related to the heapsort</span></span><br><span class="line">	<span class="comment">//Output the sort result and recover the heap </span></span><br><span class="line">	<span class="built_in">HeapDebug</span>();</span><br><span class="line">	<span class="built_in">BuildMaxHeap</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>算法图解如下，(a)为初始状态，(b)到(j)每次循环调用完MAX-HEAPIFY后的结果，(k)为最终结果：</p>
+<p><img src="IA-Chapter6-Notes/2020-01-28-15-55-14.png" alt="HEAPSORT图解"></p>
+<p>该算法的时间复杂度为$O(n\lg n)$。因为BUILD-MAX-HEAP的复杂度为$O(n)$，且调用了$O(n)$次复杂度为$O(\lg n)$的<code>MAX-HEAPIFY</code>算法。</p>
+<h2 id="Priority-Queue">Priority Queue</h2>
+<p><code>优先队列（Priority queues）</code>是二叉堆排序的一个应用。</p>
+<p>如有一系列任务，每个任务有不同的优先级，每次任务处理完后需要在剩下的任务中选取优先级最高的任务进行处理。可以将一个任务看作是一个结点，任务的优先级看作是结点的值，因此每次选取任务时只要从<code>最大堆</code>中取第一个元素即可。存放这些任务的队列即为优先队列。</p>
+<p>也可以通过二叉堆来实现事件的回放，每一个事件作为树中的一个结点，事件的时间作为结点的值。因此在回放事件时，每次只要取<code>最小堆</code>中的第一个元素即可。</p>
+<p>一个优先队列需要实现如下几个命令：</p>
+<ol>
+<li>INSERT(S,x) 将元素x插入队列S中</li>
+<li>MAXIMUM（S）返回S中的最大元素</li>
+<li>EXTRACT—MAX(S)返回并取出S中的最大元素</li>
+<li>INCREASE-KEY(S,x,k)增加S中的元素x的值至k，k必须大于原先x的值。</li>
+</ol>
+<p>MAXIMUM伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HEAP-MAXIMUM(A)</span><br><span class="line">return A[1]</span><br></pre></td></tr></table></figure>
+<p>c++代码实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Maximum</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> dataArray[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>EXTRACT-MAX(S)的伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HEAP-EXTRACT-MAX(A)</span><br><span class="line">if A.heap-size &lt; 1</span><br><span class="line">    error &quot;heap under flow&quot;</span><br><span class="line">max = A[1]</span><br><span class="line">A[1] = A[A.heapSize]</span><br><span class="line">A.heapSize--</span><br><span class="line">MAX-HEAPIFY(A,1)</span><br><span class="line">return max;</span><br></pre></td></tr></table></figure>
+<p>c++代码实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">ExtractMaximum</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> max = dataArray[<span class="number">0</span>];</span><br><span class="line">	dataArray[<span class="number">0</span>] = dataArray[--dataLength];</span><br><span class="line">	<span class="keyword">if</span> (dataLength != <span class="number">0</span>)</span><br><span class="line">		<span class="built_in">MaxHeapify</span>(<span class="number">0</span>, dataLength);</span><br><span class="line">	<span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>EXTRACT-MAX的时间复杂度为$O(\lg n)$</p>
+<p>INCREASE-KEY的伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HEAP-INCREASE-KEY(A,i,key)</span><br><span class="line">if key &lt; A[i]</span><br><span class="line">    error &quot;new key is smaller than current key&quot;</span><br><span class="line">A[i] = key</span><br><span class="line">while i &gt; 1 and A[PARENT(i)] &lt; A[i]</span><br><span class="line">    exchange A[i] with A[PARENT(i)]</span><br><span class="line">    i = PARENT(i)</span><br></pre></td></tr></table></figure>
+<p>c++代码实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">IncreaseKey</span><span class="params">(<span class="type">int</span> index, <span class="type">int</span> newValue)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (index &gt;= dataLength)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;Invalid index in IncreaseKey&quot;</span> &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (dataArray[index] &gt;= newValue)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;No need to update&quot;</span> &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	dataArray[index] = newValue;</span><br><span class="line">	<span class="type">int</span> parentIndex = <span class="built_in">parent</span>(index);</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;parent index is &quot;</span> &lt;&lt; parentIndex &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">while</span> (index &gt; <span class="number">0</span> &amp;&amp; dataArray[parentIndex] &lt; newValue)</span><br><span class="line">	&#123;</span><br><span class="line">		dataArray[index] = dataArray[parentIndex];</span><br><span class="line">		dataArray[parentIndex] = newValue;</span><br><span class="line">		index = <span class="built_in">parent</span>(index);</span><br><span class="line">		parentIndex = <span class="built_in">parent</span>(index);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>INCREASE-KEY的算法主要思想是将更大数值的结点与父结点比较，如果更大则向上移动。这里的操作与MAX-HEAPIFY实际上是相反的，MAX-HEAPIFY是将更小的数值向下沉。最坏情况下循环的次数与堆的高度相同，即时间复杂度为$O(\lg n)$</p>
+<p>算法图解如下,(a)图是原先的值，(b)图是将值改为15后，©和(d)为循环过程：</p>
+<p><img src="IA-Chapter6-Notes/2020-01-28-16-25-30.png" alt="INCREASE-KEY图解"></p>
+<p>INSERT的伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MAX-HEAP-INSERT(A.key)</span><br><span class="line">A.heapSize = A.heapSize+1</span><br><span class="line">A[A.heapSize] = -MAX</span><br><span class="line">HEAP-INCREASE-KEY(A,A.heapSize,key)</span><br></pre></td></tr></table></figure>
+<p>c++代码实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Insert</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	dataLength++;</span><br><span class="line">	<span class="keyword">if</span> (dataLength &gt; arrayLength)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;The heap is full&quot;</span> &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	dataArray[dataLength - <span class="number">1</span>] = -INT_MAX;</span><br><span class="line">	<span class="built_in">IncreaseKey</span>(dataLength - <span class="number">1</span>, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>INSERT算法是先加入一个无限小的结点，再通过INCREASE-KEY方法将这个结点的值改为需要的值。该算法的时间复杂度与INCREASE-KEY相同，即$O(\lg n)$</p>
+<article class="message is-info">
+        
+        <div class="message-body">
+            <p>引用：</p>
+<ol>
+<li><em>Introduction to Algorithms</em> 3rd Sep.2009</li>
+</ol>
+
+        </div>
+    </article>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>《算法导论》 第六章笔记</p><p><a href="https://xuejiaw.github.io/IA-Chapter6-Notes/">https://xuejiaw.github.io/IA-Chapter6-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-01-29</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/CPPPrimer-Preface-Chapter1-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《C++ Primer》 序言与第一章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/IA-Chapter17-Notes/"><span class="level-item">《算法导论》 第十七章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
+            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
+            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: true,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

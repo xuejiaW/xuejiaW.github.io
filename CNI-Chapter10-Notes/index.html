@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《计算机网络与因特网》 第十章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《计算机网络与因特网》 第十章笔记 调制与调制器相关内容。"><meta property="og:type" content="blog"><meta property="og:title" content="《计算机网络与因特网》 第十章笔记"><meta property="og:url" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《计算机网络与因特网》 第十章笔记 调制与调制器相关内容。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-07-23-21-31.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-07-23-28-45.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-07-23-36-37.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-00-05-53.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-00-11-28.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-00-18-17.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-00-18-54.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-10-04-32.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-10-13-14.png"><meta property="og:image" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-10-28-37.png"><meta property="article:published_time" content="2019-12-08T02:38:32.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.005Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="计算机网络"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-07-23-21-31.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xuejiaw.github.io/CNI-Chapter10-Notes/"},"headline":"《计算机网络与因特网》 第十章笔记","image":["https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-07-23-21-31.png","https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-07-23-28-45.png","https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-07-23-36-37.png","https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-00-05-53.png","https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-00-11-28.png","https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-00-18-17.png","https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-00-18-54.png","https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-10-04-32.png","https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-10-13-14.png","https://xuejiaw.github.io/CNI-Chapter10-Notes/CNI-Chapter10-Notes/2019-12-08-10-28-37.png"],"datePublished":"2019-12-08T02:38:32.000Z","dateModified":"2023-04-02T12:21:20.005Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《计算机网络与因特网》 第十章笔记 调制与调制器相关内容。"}</script><link rel="canonical" href="https://xuejiaw.github.io/CNI-Chapter10-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-12-08T02:38:32.000Z" title="2019/12/8 10:38:32">2019-12-08</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.005Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span><span class="level-item">13 分钟读完 (大约1969个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《计算机网络与因特网》 第十章笔记</h1><div class="content"><p>《计算机网络与因特网》 第十章笔记</p>
+<p>调制与调制器相关内容。</p>
+<span id="more"></span>
+<h1>Chapter 10 Modulation And Modems</h1>
+<h2 id="Introduction">Introduction</h2>
+<p>这一章讨论数据通信中的调制与调制器相关的内容。</p>
+<p>调制是利用高频的信息来携带原始数据，将分别讨论当原始数据是模拟信号和数字信号的情况。</p>
+<h2 id="Carriers-Frequency-And-Propagation">Carriers,Frequency,And Propagation</h2>
+<p>许多通信系统会利用一个持续震荡的电磁波来作为信息的载波（Carrier），通常这个信号都是一个高频信号。在第七章有提到，信号的频率会影响信号的传播特性，如穿透性，对噪声的敏感性等。</p>
+<h2 id="Analog-Modulation-Schemes">Analog Modulation Schemes</h2>
+<p><code>调制（Modulation）</code>意为根据原始信号来改变载波的特性。调制有两个输入，一个是载波，一个是原信号，然后产生一个调制后的载波作为输出。调制的原理图如下：</p>
+<p><img src="CNI-Chapter10-Notes/2019-12-07-23-21-31.png" alt="调制原理图"></p>
+<p>输入的原信号必须改变载波的一个特性，根据特性的不同可以分为<code>振幅调制（Amplitude modulation）</code>，<code>频移调制（Frequency modulation）</code>，<code>移相调制（Phase shift modulation）</code>。其中前两种最为普遍。</p>
+<h2 id="Amplitude-Modulation">Amplitude Modulation</h2>
+<p><code>振幅调制（Amplitude modulation）</code>是根据原信号改变载波的振幅。从时域图上看，调制后的波形的轮廓与原信号基本相同，如下图所示，（a）是高频载波，（b）是原信号，（c）是调制后的信号。</p>
+<p><img src="CNI-Chapter10-Notes/2019-12-07-23-28-45.png" alt="振幅调制"></p>
+<h2 id="Frequency-Modulation">Frequency Modulation</h2>
+<p><code>频移调制（Frequency modulation）</code>是根据原信号改变载波的频率，当信号强是，载波的频率增加，反之减少。如下图即为频移调制后的样子：</p>
+<p><img src="CNI-Chapter10-Notes/2019-12-07-23-36-37.png" alt="频移调制"></p>
+<h2 id="Phase-Shift-Modulation">Phase Shift Modulation</h2>
+<p><code>移相调制（Phase shift modulation）</code>是根据原信号改变载波的相位。经过理论上可行，但对于模拟信号来说，很少用移相调制，因为模拟信号采样点的数据可能比较接近，导致移相的大小不明显，很容易被误认为是频率的改变。但对于数字信号来说移相调制因为可以一个码元传递多个Bit的字节，所以经常被使用。</p>
+<h2 id="Amplitude-Modulation-And-Shannon’s-Theorem">Amplitude Modulation And Shannon’s Theorem</h2>
+<p>在之前解释振幅调制的示意图中，调制后信号变化幅度较大，最低处的强度接近于0。但实际运用时，基本上振幅调制的幅度变化很小。因为考虑到有噪声的存在，如果信号的变化幅度较大，在信号最弱时的信噪比会很低，则几乎无法传递有效信息。</p>
+<h2 id="Modulation-Digital-Input-And-Shift-Keying">Modulation,Digital Input,And Shift Keying</h2>
+<p>为了区分模拟信号和数字信号的调制，使用属于<code>移位键控（Shift Keying）</code>来表示数字信号的调制。数字信号的调制与模拟信号调制基本原理类似，只不过作为原信号的模拟信号是连续的数值变化，而数字信号是离散的几个特定的数值。振幅与频率移位键控如下图，(a)是载波，(b)是原信号，©是振幅移位键控，(d)是频率移位键控</p>
+<p><img src="CNI-Chapter10-Notes/2019-12-08-00-05-53.png" alt="振幅，频率移位键控"></p>
+<h2 id="Phase-Shift-Keying">Phase Shift Keying</h2>
+<p><code>相位移位键控(Phase Shift Keying)</code>是根据原信号突然的改变载波的相位，如下图所示，即为相位移位键控的示意图。</p>
+<p><img src="CNI-Chapter10-Notes/2019-12-08-00-11-28.png" alt="相位移位键控"></p>
+<h2 id="Phase-Shift-And-A-Constellation-Diagram">Phase Shift And A Constellation Diagram</h2>
+<p>如之前所示，相位移位键控最大的优势在于可以用一个码元传递多个bit。可通过$2^n$个相位来使一个码元可携带$n$ bit数据。使用星座图来表示相位变化大小与该大小与对应数据的关系。星座图如下图所示，图（1）是只有两个相位变化，即表示0和1，图（2）是有四个相位变化，可代表两个bit,即00,01,10,11。</p>
+<p><img src="CNI-Chapter10-Notes/2019-12-08-00-18-17.png" alt="两个相位的相位移位键控"></p>
+<p><img src="CNI-Chapter10-Notes/2019-12-08-00-18-54.png" alt="四个相位的相位移位键控"></p>
+<h2 id="Quadrature-Amplitude-Modulation">Quadrature Amplitude Modulation</h2>
+<p>如上节所述，可以在使用相位移位键控时采用多个相位间隔使一个码元传递多个bit。但某些情况下，硬件无法检测过于精细的相位变化。这时候可以通过降相位移位键控和振幅移位键控结合在一起使一个码元可携带更多的数据，这方法称为<code>正交振幅调制（Quadrature Amplitude Modulation）</code>。如下图所示：</p>
+<p><img src="CNI-Chapter10-Notes/2019-12-08-10-04-32.png" alt="正交振幅调制"></p>
+<p>如上图，一共有四个相位区分，每个点距离原点的距离代表振幅，一共有四个电压，因此一共有16种组合，一个码元可以携带4个bit。</p>
+<h2 id="Modem-Hardware-For-Modulation-And-Demodulation">Modem Hardware For Modulation And Demodulation</h2>
+<p>将一系列的数据bit作为输入，然后根据这些原数据对载波进行调制的设备称为<code>调制器（Modulator）</code>，反之根据调制后的载波重新解析出原信号的机器称为<code>解调器（Demodulator）</code>。在实际中，大部分的通信设备同时包含调制器和解调器，这种设备被称为<code>调制解调器（Modem）</code>。下图是两个计算机的通信简图，在两者将数据传给中间的电缆媒介前，都经过了调制解调器</p>
+<p><img src="CNI-Chapter10-Notes/2019-12-08-10-13-14.png" alt="调制解调器"></p>
+<h2 id="Optical-And-Radio-Frequency-Modems">Optical And Radio Frequency Modems</h2>
+<p>调制解调器不仅可用于电缆的传输，对于无线电波和光纤也同样适用，原理也一样，在发送端调制解调器对载波进行调制，在接收端，数据从被调制后的载波中会提取。</p>
+<h2 id="Dialup-Modems">Dialup Modems</h2>
+<p>在语音电话系统中，使用的调制解调器称为<code>拨号调制解调器（Dialup Modems）</code>，其与普通的调制解调器最大的区别在于，前者用的是语音信号，后者用的是电信号，而且拨号调制解调器占用的带宽更小。</p>
+<p>因为电话系统接受的是模拟信号，所以拨号调制解调器也是一个对模拟信号进行调制的设备。但讽刺的是现代电话系统的中间传输部分是数字信号，于是发送端在调制后，需要将模拟信号转换为数字信号。而在接收端，在进行解调前也需要先将中间传输来的数字信号转换为模拟信号。</p>
+<h2 id="QAM-Applied-To-Dialup">QAM Applied To Dialup</h2>
+<p>正交振幅调制也同样可用于拨号调制解调器中。因为大部分语音频率本身是从$300HZ\sim 3300HZ$，但拨号调制解调器只能提供$600HZ\sim 3000HZ$，所以同样需要正交振幅调制来使一个码元能携带更多的数据。</p>
+<h2 id="V-32-And-V-32bis-Dialup-Modems">V.32 And V.32bis Dialup Modems</h2>
+<p>V.32和V.32bis是两个拨号调制解调器用正交振幅调制的标准。</p>
+<p>V.32使用32个振幅和相位的组合来表示数据，可以达到单向每秒9600个bit的数据速率。</p>
+<p><img src="CNI-Chapter10-Notes/2019-12-08-10-28-37.png" alt="V.32"></p>
+<p>V.32bis使用128个振幅和相位的组合来表数据，可以达到单向每秒14400个bit的数据速率。</p>
+<article class="message is-info">
+        
+        <div class="message-body">
+            <ol>
+<li><em>Computer Networks and Internets</em> 6th</li>
+</ol>
+
+        </div>
+    </article>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>《计算机网络与因特网》 第十章笔记</p><p><a href="https://xuejiaw.github.io/CNI-Chapter10-Notes/">https://xuejiaw.github.io/CNI-Chapter10-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-12-08</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/CNI-Chapter11-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《计算机网络与因特网》 第十一章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/CNI-Chapter8-Notes/"><span class="level-item">《计算机网络与因特网》 第八章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
+            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
+            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: true,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

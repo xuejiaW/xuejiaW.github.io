@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《算法导论》 第十五章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《算法导论》 第十五章笔记，介绍动态规划的概念及一些运用了动态规划的算法。 15.4及15.5节尚未整理"><meta property="og:type" content="blog"><meta property="og:title" content="《算法导论》 第十五章笔记"><meta property="og:url" content="https://xuejiaw.github.io/IA-Chapter15-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《算法导论》 第十五章笔记，介绍动态规划的概念及一些运用了动态规划的算法。 15.4及15.5节尚未整理"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2020-01-20-02-17-36.png"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2019-11-19-19-33-22.png"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2019-11-22-11-25-54.png"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2019-11-22-11-32-00.png"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2019-11-22-12-00-59.png"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2019-11-26-10-35-55.png"><meta property="og:image" content="https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2019-11-26-11-28-09.png"><meta property="article:published_time" content="2019-11-26T05:51:03.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.013Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="数据结构与算法"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2020-01-20-02-17-36.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xuejiaw.github.io/IA-Chapter15-Notes/"},"headline":"《算法导论》 第十五章笔记","image":["https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2020-01-20-02-17-36.png","https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2019-11-19-19-33-22.png","https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2019-11-22-11-25-54.png","https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2019-11-22-11-32-00.png","https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2019-11-22-12-00-59.png","https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2019-11-26-10-35-55.png","https://xuejiaw.github.io/IA-Chapter15-Notes/IA-Chapter15-Notes/2019-11-26-11-28-09.png"],"datePublished":"2019-11-26T05:51:03.000Z","dateModified":"2023-04-02T12:21:20.013Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《算法导论》 第十五章笔记，介绍动态规划的概念及一些运用了动态规划的算法。 15.4及15.5节尚未整理"}</script><link rel="canonical" href="https://xuejiaw.github.io/IA-Chapter15-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-11-26T05:51:03.000Z" title="2019/11/26 13:51:03">2019-11-26</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.013Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span><span class="level-item">1 小时读完 (大约8112个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《算法导论》 第十五章笔记</h1><div class="content"><p>《算法导论》 第十五章笔记，介绍动态规划的概念及一些运用了动态规划的算法。</p>
+<p>15.4及15.5节尚未整理</p>
+<span id="more"></span>
+<h1>Chapter 15. Dynamic Programming</h1>
+<p>动态规划(Dynamic Programming)如分治法(divide-and-conquer method)一样都是通过组合子问题的解答来解决问题。两者的区别在于：</p>
+<ol>
+<li>分治法的子问题是互相独立的，不存在重叠</li>
+<li>动态规划的子问题是相互重叠的，不同的子问题可能存在重叠子问题。若对于每个子问题都求解一次，则会出现重复计算</li>
+</ol>
+<p>动态规划常被用来解决最优问题（optimization problems），这种问题通常有许多可能的解答，动态规划的目标是求得一个最优解（通常是众多解答中的最大值或最小值）。</p>
+<p>动态规划的步骤如下：</p>
+<ol>
+<li>找到最优解的结构</li>
+<li>递归定义最优解的值</li>
+<li>计算出最优解的值，通常是通过一个自下而上的递归方式解决</li>
+<li>使用计算得出的数据构建出最优解</li>
+</ol>
+<p>步骤1-3是动态规划解决问题的基础，如果只需要求得最优解的值而非最优解本身，可以忽略步骤4。</p>
+<h2 id="Rod-cutting">Rod cutting</h2>
+<p>钢条切割问题(Rod cutting)是假设存在一个钢条，切割成不同长度可以卖不同的钱，设切割出的长度为$i$，对应这一段长度的卖价为$P_i$。假设钢条长度从1-10的卖价如下</p>
+<table>
+<thead>
+<tr>
+<th>长度</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>价格</td>
+<td>1</td>
+<td>5</td>
+<td>8</td>
+<td>9</td>
+<td>10</td>
+<td>17</td>
+<td>17</td>
+<td>20</td>
+<td>24</td>
+<td>30</td>
+</tr>
+</tbody>
+</table>
+<p>一段长度为$i$的钢条，一共有$2^{n-1}$个切割方法。因为将长度为$i$的钢条看作是有$i$个长度为1的结点进行分类，一共有$n-1$个连接点，每个连接点都可以选择切或者不切，所以有$2^{n-1}$个可能。</p>
+<ul>
+<li>如有3个结点，1-2的切分和2-1的切分看作是两种可能。</li>
+</ul>
+<p>设一段钢条在卖价最大化的情况下要切分成$k$块，则总长度为$n$的钢条可以表示为 $n=i_1+i_2+…+i_k$，最大化的总价为为$r_n$，可表示为$r_n=p_{i_1}+p_{i_2}+…+p_{i_k}$</p>
+<p>对于上面假设的卖价，对应钢条的长度从1-10，各自的最佳卖价和切割方法如下</p>
+<ul>
+<li>如切割方式$2+2$表示写成两半，一块为长度为2，另一块也为2.如果切割方式与总长度相同，如都为3,则表示不切割即为最佳切割方式。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>钢条总长度</th>
+<th>最大化卖价</th>
+<th>最佳切割方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>8</td>
+<td>3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>10</td>
+<td>2+2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>13</td>
+<td>2+3</td>
+</tr>
+<tr>
+<td>6</td>
+<td>17</td>
+<td>6</td>
+</tr>
+<tr>
+<td>7</td>
+<td>18</td>
+<td>1+6 / 2+2+3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>22</td>
+<td>2+6</td>
+</tr>
+<tr>
+<td>9</td>
+<td>25</td>
+<td>3+6</td>
+</tr>
+<tr>
+<td>10</td>
+<td>30</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>表格中的最佳切割方式是钢条切割问题的最佳解，而最大化卖价是最佳切割方式的数值。</li>
+</ul>
+<p>可以把求得$r_n$，即整个钢条的最大化过程看作先切割一刀，这时候钢条变成了两部分，左部分就不再动了，对右部分继续切割，找到右部分的最佳切割方式，即对右部分求最佳解。数学可表示为</p>
+<p>$$<br>
+r_n= \max_{1\leq i \leq n}(p_i + r_{n-i})<br>
+$$</p>
+<p>这就是钢条切割问题的最佳解结构：整个问题的最佳解是与子问题的最佳解相关的。如上式中，最佳解的值是依赖于子问题的最佳解的值得到的。</p>
+<h3 id="递归解法">递归解法</h3>
+<p>递归解法的伪代码如下，这个方法就是对式子$r_n=\max_{1\leq i \leq n}(p_i + r_{n-i})$的实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CUT-ROD(p,n)</span><br><span class="line">if n == 0</span><br><span class="line">    return 0</span><br><span class="line"></span><br><span class="line">q = -MAX</span><br><span class="line">for i = 1 to n</span><br><span class="line">    q = max (q, p[i] + CUT-ROD(p,n-i))</span><br><span class="line">return q</span><br></pre></td></tr></table></figure>
+<p>但这个运算是非常低效的，因为它存在许多的重复计算，如对于$n=4$，算法会在循环中分别以$n=0,n=1,n=2,n=3$调用CUT-ROD算法，而在以$n=3$调用时又会在循环中以$n=0,n=1,n=2$调用，这就造成了重复运算。调用时的计算如下图</p>
+<p><img src="IA-Chapter15-Notes/2020-01-20-02-17-36.png" alt="递归解法图解"></p>
+<p>图中的每个结点表示一次调用，结点中的数值表示$n$的取值，可以看到有非常多重复的结点。</p>
+<p>设$T(n)$为该算法的执行时间，可以表示为</p>
+<p>$$<br>
+T(n)= 1 + \sum _{i=1}^{n} T(n-i)<br>
+$$</p>
+<p>可取$j=n-1$，将式子转换为</p>
+<p>$$<br>
+T(n)= 1 + \sum _{j=0}^{n-1} T(j)<br>
+$$</p>
+<p>可通过数学归纳法证明该式子的时间复杂度为$T(n)=2^n$，是一个指数型增长的式子，所以该算法的效率十分低下。</p>
+<p>$T(n)=1 + \sum _{j=0}^{n-1} T(j)=2^n$的证明如下：</p>
+<ol>
+<li>
+<p>当n=0时$T(0)=2^0=1$，满足式子，得证</p>
+</li>
+<li>
+<p>当n&gt;0时<br>
+$$<br>
+T(n)=1+\sum _{j=0}^{n-1} 2^{j} \\<br>
+=1 + 2^0 \cdot \frac{1-2^{n}}{1-2} \\<br>
+= 1 + (2^n -1) \\<br>
+= 2^n<br>
+$$</p>
+<p>满足原式子，得证。</p>
+</li>
+</ol>
+<p>递归解法的c++实现如下:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">CutRod</span><span class="params">(<span class="type">int</span>* priceTable, <span class="type">int</span> rodLength)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (rodLength == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span> price = INT_MIN;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= rodLength; i++) <span class="comment">//cut from 1 to length(equals to no cuts)</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> tempPrice = priceTable[i] + <span class="built_in">CutRod</span>(priceTable, rodLength - i);</span><br><span class="line">		<span class="keyword">if</span> (tempPrice &gt; price)</span><br><span class="line">			price = tempPrice;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> price;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="using-dynamic-programming-for-optimal-rod-cutting">using dynamic programming for optimal rod cutting</h3>
+<p>在上一节的递归算法中，因为大量重复的计算导致了算法的低效。在动态规划的解法中，实际上是通过将计算过的子问题的解存储下来，之后再次遇到直接返回结果即可，所以动态规划本质上是一个空间与时间的权衡(time-memory trade-off)。</p>
+<p>通过动态规划，基本可以将一个时间复杂度为指数型的算法（如$2^n$）转换为一个多项式型的算法（如$n^2$）</p>
+<p>动态规划一般有两种解法，一种是<code>自顶向下备忘录法（top-down with memoization）</code>，一种是<code>自底而上法(bottom-up method)</code>。下面会以钢铁切割问题分别说明两种方法：</p>
+<ol>
+<li>
+<p>自顶向下备忘录法</p>
+<p>这种方法与之前的递归法结构几乎相同，也是严格按照动态规划解法的定义，即将运算过的子问题答案记录下来。切割钢条问题使用自顶向下的备忘录法伪代码如下：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">MEMOIZED-CUT-ROD(p,n):</span><br><span class="line"></span><br><span class="line">r = new array[n+1]</span><br><span class="line">for i =0 to n</span><br><span class="line">    r[i] = -MAX</span><br><span class="line">return MEMOIZED-CUT-ROD-AUX(p,r,n)</span><br><span class="line"></span><br><span class="line">MEMOIZED-CUT-ROD-AUX(p,r,n):</span><br><span class="line"></span><br><span class="line">if r[n] &gt; 0 //means there are record for this subproblem</span><br><span class="line">    return r[n]</span><br><span class="line">if n == 0</span><br><span class="line">    q = 0</span><br><span class="line">else</span><br><span class="line">    q = -MAX</span><br><span class="line">    for i = 1 to n</span><br><span class="line">    q = max (q, p[i] + MEMOIZED-CUT-ROD-AUX(p,r,n-i))</span><br><span class="line">r[n] = q</span><br><span class="line">return q</span><br></pre></td></tr></table></figure>
+<p><code>MEMOIZED-CUT-ROD</code>主要功能是初始化一个数组$r$，这个数组存储了所有计算过的子问题的答案，<code>MEMOIZED-CUT-ROD-AUX</code>实际对应之前的递归算法<code>CUTROD</code>，不同点只是当发现答案记录过就直接返回。</p>
+<p>c++ 代码如下:</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">MemoizedCutRod</span><span class="params">(<span class="type">int</span>* priceTable, <span class="type">int</span> rodLength)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//create an array from 0 to rodLength, array length is (rodLength+1)</span></span><br><span class="line">    <span class="comment">//array[0] = 0, array[rodLength] means the max PriceMemo for rod of rodLength</span></span><br><span class="line">    <span class="type">int</span>* maxPriceMemo = <span class="keyword">new</span> <span class="type">int</span>[rodLength + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; rodLength + <span class="number">1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        maxPriceMemo[i] = INT_MIN;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> maxPrice = <span class="built_in">MemoizedCutRodAux</span>(priceTable, maxPriceMemo, rodLength);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//for (int i = 1; i &lt; rodLength + 1; i++)</span></span><br><span class="line">    <span class="comment">//&#123;</span></span><br><span class="line">    <span class="comment">//    cout &lt;&lt; &quot;Max price for &quot; &lt;&lt; i &lt;&lt; &quot; is &quot; &lt;&lt; maxPriceMemo[i] &lt;&lt; endl;</span></span><br><span class="line">    <span class="comment">//&#125;</span></span><br><span class="line">    <span class="keyword">return</span> maxPrice;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">MemoizedCutRodAux</span><span class="params">(<span class="type">int</span>* priceTable, <span class="type">int</span>* maxPriceMemo, <span class="type">int</span> rodLength)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (maxPriceMemo[rodLength] &gt; <span class="number">0</span>)<span class="comment">//has record</span></span><br><span class="line">        <span class="keyword">return</span> maxPriceMemo[rodLength];</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> price = INT_MIN;</span><br><span class="line">    <span class="keyword">if</span> (rodLength == <span class="number">0</span>)</span><br><span class="line">        price = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= rodLength; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> tempPrice = priceTable[i] + <span class="built_in">MemoizedCutRodAux</span>(priceTable, maxPriceMemo, rodLength - i);</span><br><span class="line">            <span class="keyword">if</span> (tempPrice &gt; price)</span><br><span class="line">                price = tempPrice;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    maxPriceMemo[rodLength] = price;</span><br><span class="line">    <span class="keyword">return</span> price;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>priceTable</code>表示不同长度的钢条的价格数组，初始化定义为：</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> priceTable[] = &#123; <span class="number">0</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">17</span>,<span class="number">17</span>,<span class="number">20</span>,<span class="number">24</span>,<span class="number">30</span> &#125;;</span><br></pre></td></tr></table></figure>
+<p>注意这里的数组长度都为$rodLength+1$，这是为了将长度与Index对齐，如长度为1的钢板的最大售价，则使用$maxPriceMemo[1]$即可。</p>
+</li>
+<li>
+<p>自底而上法</p>
+<p>自底而上法形式上更为简单，但它利用了动态规划的一个特性：较大的子问题包含较小的子问题。</p>
+<p>因此如果从最小的子问题开始解决，那么在解决后面更大的子问题时，它所依赖的所有小子问题都已经有了解答，也就不需要像自顶向下备忘法那样去检查是否子问题已经有了答案。</p>
+<p>所以如果要求长度为$n$的钢条的最大售价，只要从长度为1开始求起，依次求到长度为$n$</p>
+<p>伪代码如下：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">BOTTOM-UP-CUT-ROD(p,n)</span><br><span class="line"></span><br><span class="line">r = new array[n+1]</span><br><span class="line">for i =0 to n</span><br><span class="line">    r[i] = -MAX</span><br><span class="line">r[0] = 0</span><br><span class="line"></span><br><span class="line">for i = 1 to n</span><br><span class="line">    q = -MAX</span><br><span class="line">    for j = 1 to i</span><br><span class="line">        q = MAX(q , p[j] + r[i-j])</span><br><span class="line">    r[i]=q</span><br><span class="line"></span><br><span class="line">return r[n]</span><br></pre></td></tr></table></figure>
+<p>c++代码如下：</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BottomUpCutRod</span><span class="params">(<span class="type">int</span>* priceTable, <span class="type">int</span> rodLength)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//Init for maxPriceMemo</span></span><br><span class="line">    <span class="type">int</span>* maxPriceMemo = <span class="keyword">new</span> <span class="type">int</span>[rodLength + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; rodLength + <span class="number">1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        maxPriceMemo[i] = INT_MIN;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    maxPriceMemo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Calculate the MaxPriceMemo for length from 1 to length</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= rodLength; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//Calculate cutRod for length = i</span></span><br><span class="line">        <span class="type">int</span> price = INT_MIN;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= i; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> tempPrice = priceTable[j] + maxPriceMemo[i - j];</span><br><span class="line">            <span class="keyword">if</span> (tempPrice &gt; price)</span><br><span class="line">                price = tempPrice;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        maxPriceMemo[i] = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; rodLength + <span class="number">1</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Max price for &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; is &quot;</span> &lt;&lt; maxPriceMemo[i] &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> maxPriceMemo[rodLength];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>两个方法的时间复杂度实际上都是$\Theta(n^2)$。<code>BOTTOM-UP-CUT-ROD</code>中因为有个双重循环，所以时间复杂度为$\Theta(n^2)$，<code>MemoizedCutRod</code>中虽然只有一个循环，但在每次的循环中，可能会递归调用并需要解决子问题，子问题并不会重复调用，因此一共解决$n$个子问题，循环加上解决子问题的时间可得到时间复杂度同样为$\Theta(n^2)$。</p>
+<p>虽然两个方法的时间复杂度都是$\Theta(n^2)$，但是<code>BOTTOM-UP-CUT-ROD</code>在实际使用中因为减少了函数的递归调用时间，所以更为高效。</p>
+<h3 id="Subproblem-graphs">Subproblem graphs</h3>
+<p>子问题图（subproblem graphs）是一个有向图，每一个顶点都对应一个子问题。如果代表子问题$x$的结点指向代表子结点$y$的结点，则说明$x$问题的解依赖于$y$。</p>
+<p>子问题图如下,它可以看作是表示递归解法的图的精简版，删除了所有重复的点，也表示子问题并不会被重复的计算：</p>
+<p><img src="IA-Chapter15-Notes/2019-11-19-19-33-22.png" alt="子问题图"></p>
+<p>子问题图可以用来获知动态规划问题的时间复杂度，因为图中的一个结点表示一个子问题，图中连接结点的边表示用来组合两个子问题答案的时间，因此用来解决整个动态规划问题的时间基本上与子问题图的顶点数+边数是呈线性关系的。</p>
+<h3 id="Reconstructing-a-solution">Reconstructing a solution</h3>
+<p>上面的所有关于钢条切割问题的算法都只计算了钢条的最大售价（最佳解的值），而对于这个问题真正的解，如何切割钢条（最后钢条要切成几块，每块多长），并没有得出。所以上面的所有步骤都只完成了解动态规划问题四步骤的前三步。</p>
+<p>为了得到最佳解需要对上面的步骤进行调整，调整有非常简单，在计算中再多保留一些数据即可。</p>
+<p>以自底向上的<code>BOTTOM-UP-CUT-ROD</code>为例，在算法中，在算法中用了<code>p[j] + r[i-j]</code>来表示第一刀砍的长度$j$与剩下部分$i-j$。在售价最大的情况下，记录下第一刀砍的长度$j$即能获得动态规划的最佳解，因为在每一次的循环中，都将当前长度下第一刀砍的长度保存了下来，那么在剩下的长度越来越小的过程中，整个切割过程的每一刀长度都被记录了下来。</p>
+<p>伪代码如下，这里的数组$s$即为记录第一刀长度的数组：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">EXTENDED-BOTTOM-UP-CUT-ROD(p,n)</span><br><span class="line"></span><br><span class="line">r = new array[n+1]</span><br><span class="line">s = new array[n+1]</span><br><span class="line"></span><br><span class="line">for i =0 to n</span><br><span class="line">    r[i] = -MAX</span><br><span class="line">r[0] = 0</span><br><span class="line"></span><br><span class="line">for i = 1 to n</span><br><span class="line">    q = -MAX</span><br><span class="line">    for j = 1 to i</span><br><span class="line">        q = MAX(q , p[j] + r[i-j])</span><br><span class="line">    r[i]=q</span><br><span class="line">    s[i]=j</span><br><span class="line"></span><br><span class="line">return s and s</span><br></pre></td></tr></table></figure>
+<p>c++代码如下，形参中的<code>cutLength</code>即表示不同长度下第一刀要砍的距离：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">ExtendedBottomUpCutRod</span><span class="params">(<span class="type">int</span>* priceTable, <span class="type">int</span> rodLength, <span class="type">int</span>* maxPriceMemo, <span class="type">int</span>* cutLength)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; rodLength + <span class="number">1</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		maxPriceMemo[i] = INT_MIN;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	maxPriceMemo[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Calculate the MaxPriceMemo for length from 1 to length</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= rodLength; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//Calculate cutRod for length = i</span></span><br><span class="line">		<span class="type">int</span> price = INT_MIN;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= i; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">int</span> tempPrice = priceTable[j] + maxPriceMemo[i - j];</span><br><span class="line">			<span class="keyword">if</span> (tempPrice &gt; price)</span><br><span class="line">			&#123;</span><br><span class="line">				price = tempPrice;</span><br><span class="line">				cutLength[i] = j;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		maxPriceMemo[i] = price;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//for (int i = 1; i &lt; rodLength + 1; i++)</span></span><br><span class="line">	<span class="comment">//&#123;</span></span><br><span class="line">	<span class="comment">//	//cout &lt;&lt; &quot;Max price for &quot; &lt;&lt; i &lt;&lt; &quot; is &quot; &lt;&lt; maxPriceMemo[i] &lt;&lt; endl;</span></span><br><span class="line">	<span class="comment">//	cout &lt;&lt; &quot;First cut length for &quot; &lt;&lt; i &lt;&lt; &quot; is &quot; &lt;&lt; cutLength[i] &lt;&lt; endl;</span></span><br><span class="line">	<span class="comment">//&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>获得了最佳解后就可打印出对于长度为$n$的钢条，每一刀需要砍的长度，伪代码算法如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PRINT-CUT-ROD-SOLUTION(p,n)</span><br><span class="line"></span><br><span class="line">(r,s) = EXTENDED-EXTENDED-BOTTOM-UP-CUT-ROD(p,n)</span><br><span class="line">while n &gt; 0</span><br><span class="line">    print s[n]</span><br><span class="line">    n = s - n</span><br></pre></td></tr></table></figure>
+<p>c++实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">CutRodSolution</span><span class="params">(<span class="type">int</span>* priceTable, <span class="type">int</span> rodLength)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span>* maxPriceMemo = <span class="keyword">new</span> <span class="type">int</span>[rodLength + <span class="number">1</span>];</span><br><span class="line">	<span class="type">int</span>* cutLength = <span class="keyword">new</span> <span class="type">int</span>[rodLength + <span class="number">1</span>];</span><br><span class="line">	<span class="built_in">ExtendedBottomUpCutRod</span>(priceTable, rodLength, maxPriceMemo, cutLength);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="type">int</span> remainLength = rodLength;</span><br><span class="line">	<span class="keyword">while</span> (remainLength &gt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> length = cutLength[remainLength];</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;to Cut &quot;</span> &lt;&lt; length &lt;&lt; endl;</span><br><span class="line">		remainLength = remainLength - length;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> maxPriceMemo[rodLength];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Matrix-chain-multiplication">Matrix-chain multiplication</h2>
+<p>定义有一系列的矩阵$&lt;A_1,A_2,…,A_n&gt;$，要计算这一些矩阵的乘积即$A_1A_2…A_n$。因为矩阵满足乘法合并律，所以可以决定哪一部分先相乘。</p>
+<p>如一共有三个矩阵$&lt;A_1,A_2,A_3&gt;$，则$((A_1A_2)A_3)$与$(A_1(A_2A_3))$两种计算顺序最后得到的结果是相同的，但是这两种顺序花费的时间是不同的。</p>
+<p>这里先给出矩阵相乘的算法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MATRIX-MULTIPLY(A,B)</span><br><span class="line"></span><br><span class="line">if A.columns != B.rows</span><br><span class="line">    error &quot;incompatible dimensions&quot;</span><br><span class="line">else</span><br><span class="line">    let C be a new A.rows X B.columns matrix</span><br><span class="line">    for i = 1 to A.rows</span><br><span class="line">        for j = 1 to B.columns</span><br><span class="line">            c[i][j] = 0 </span><br><span class="line">            for k = 1 to A.columns</span><br><span class="line">                c[i][j] = c[i][j] + a[i][k] * b[k][j]</span><br><span class="line">    return C</span><br></pre></td></tr></table></figure>
+<p>c++实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Matrix* <span class="title">Matrix::multiply</span><span class="params">(Matrix* mat)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> matColumn = mat-&gt;column;</span><br><span class="line">	Matrix* result = <span class="keyword">new</span> <span class="built_in">Matrix</span>(row, matColumn);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; row; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; matColumn; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			result-&gt;data[i][j] = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; column; k++)</span><br><span class="line">			&#123;</span><br><span class="line">				result-&gt;data[i][j] = result-&gt;data[i][j] + data[i][k] * mat-&gt;data[k][j];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>设两个相乘的矩阵分别为$A$和$B$，从上面的算法实现中可以看出，矩阵相乘的时间复杂度为$O(A.row\times B.column\times A.column)$。</p>
+<p>在三个矩阵$&lt;A_1,A_2,A_3&gt;$的例子中,假设$A_1$的大小为$10\times100$，$100\times 5$，$5\times50$。</p>
+<ol>
+<li>
+<p>如果计算顺序为$((A_1A_2)A_3)$，则整个计算需要进行的操作数为$10\times5\times100 +10\times50\times5=7500$。</p>
+</li>
+<li>
+<p>如果计算顺序为$(A_1(A_2A_3))$，则整个计算需要进行的操作数为$100\times50\times5+10\times50\times100=75000$</p>
+</li>
+</ol>
+<p>两种计算顺序的计算量差距在10倍。</p>
+<p><code>将矩阵乘法问题（matrix-chain multiplication problem）</code>定义为：对于数目为$n$的一些列矩阵$&lt;A_1,A_2,…,A_n&gt;$，为了满足矩阵相乘的要求，矩阵$A_i$的大小都为$p_{i-1}\times p_i$，要求的使相乘计算量最小的矩阵相乘顺序。</p>
+<h3 id="Counting-the-number-of-parenthesizations">Counting the number of parenthesizations</h3>
+<p>首先确认暴力枚举所有可能的顺序这个方法是很低效的，用$P(n)$来表示所有可能的计算顺序。设有$n$个矩阵，当$n=1$的情况下，只有一种可能，当$n\geq 2$的情况下，可以将$n$拆成两部分，$k$和$n-k$，所有的可能为这两部分可能的乘积，即$P(k)P(n-k)$。所以,</p>
+<p>$$<br>
+P(n)=<br>
+\begin{cases}<br>
+1 &amp; \text{ if } n=1 \\<br>
+\sum_{k=1}^{n-1} P(k)P(n-k) &amp;\text{ if } n \geq 2<br>
+\end{cases}<br>
+$$</p>
+<p>可以用数学归纳法证明$P(n)$的时间复杂度为$\Omega(2^n)$：</p>
+<ol>
+<li>
+<p>在$n=1$的情况下，$P(n)=1$，得证</p>
+</li>
+<li>
+<p>在$n\geq2$的情况下，假设$p(n)=c2^n$代入式子得</p>
+<p>$$<br>
+P(n)=\sum_{k=1}^{n-1} c2^k\cdot c2^{n-k} \\<br>
+=\sum_{k=1}^{n-1} c^2 2^n\\<br>
+=c^2(n-1)2^n\\<br>
+\geq c_1 2^n<br>
+$$</p>
+<p>即$P(n)\geq c_1 2^n$，也得证。</p>
+</li>
+</ol>
+<p>因此暴力枚举所有可能的顺序时间复杂度是一个指数型的函数， 效率是十分低下的。</p>
+<h3 id="Applying-dynamic-programming">Applying dynamic programming</h3>
+<p>可以用动态规划来解决这个问题，这里根据之前定义的动态规划四步骤来解决答案：</p>
+<ol>
+<li>找到最优解的结构</li>
+<li>递归定义最优解的值</li>
+<li>计算出最优解的值，通常是通过一个自下而上的递归方式解决</li>
+<li>使用计算得出的数据构建出最优解</li>
+</ol>
+<h4 id="Step-1-The-structure-of-an-optimal-parethesization">Step 1:The structure of an optimal parethesization</h4>
+<p>用符号$A_{i…j}$表示矩阵序列$A_i,A_{i+1},…,A_{j}$的乘积，在$i\neq j$的情况下，可以将矩阵序列拆成两部分，$A_i,A_{i+1},…,A_{k}$和$A_{k+1},A_{k+2},…,A_{j}$，其中$i\leq k &lt; j$。</p>
+<p>整个$A_{i…j}$的花费变成了$A_{i…k}$的花费加上$A_{k+1…j}$的花费再加上将两部分结果相乘的时间。</p>
+<p>在按两部分分割下，如果$A_{i…j}$是最佳解，那么分出的$A_{i…k}$和$A_{k+1…j}$两部分也必然是各自的最佳解，因为如果其中一个可以更优的话，那么$A_{i…j}$则也可以变得更优。</p>
+<p>因此矩阵相乘问题的最优解也变为了先求得两个子问题的最优解，再将两个最优解合并起来。</p>
+<h4 id="Step2-A-recursive-solution">Step2: A recursive solution</h4>
+<p>用$m[i,j]$来表示$A_{i…j}$的操作量，根据Step1中的解释，$A_{i…j}$的花费变成了$A_{i…k}$的花费加上$A_{k+1…j}$的花费再加上将两部分结果相乘的时间。</p>
+<p>因为矩阵$A_i$的尺寸为$p_{i-1}\times p_i$，所以矩阵$A_{i…k}$为$p_{i-1}\times p_k$，矩阵$A_{k+1…j}$的尺寸为$p_{k}\times p_j$。因此将两部分合并的操作数为$p_{i-1}p_kp_j$。</p>
+<p>当$i=j$时，只有一个矩阵即不需要相乘，这种情况下$m[i,j]$为0，综上</p>
+<p>$$<br>
+m[i,j] = \begin{cases}<br>
+0 &amp; \text{ if } i=j \\<br>
+\min_{i\leq k &lt;j} {m[i,k]+m[k+1,j]+p_{i-1}p_kp_j} &amp; \text { if } i &lt;j<br>
+\end{cases}<br>
+$$</p>
+<p>但$m[i,j]$表示的只是最佳解的值，为了获得最佳解，需要定义一个$s[i,j]$，它记录每个子问题的最佳解时$k$的值。</p>
+<h4 id="Step-3-Computing-the-optimal-costs">Step 3: Computing the optimal costs</h4>
+<p>$m[i,j]$的计算依赖于矩阵的尺寸$p_{i-1} \times p_i$，如果存在$n$个矩阵，则表示数据尺寸的数组有$n+1$个元素，因为对于$A_1$而言，尺寸为$p_0 \times p_1$，所以$p$的数组是从0到$n$。</p>
+<p>使用数组$m[i,j]$来表示$A_i…A_j$的最少操作数。其中$i$的取值范围是$1\sim n$，$j$的取值范围是$1\sim n$。当$i=j$时，$m[i,j]=0$</p>
+<p>使用数组$s[i,j]$表示$A_i…A_j$有最少操作数时，$k$的取值。其中$i$的取值范围是$1\sim {n-1}$，$j$的取值范围是$2\sim n$。这是因为如果$i$必须小于$j$，如果$i=j$，那么根本就没有$k$的存在。</p>
+<p>对于矩阵序列$A_i…A_j$，一共有$l$个元素，$l=i-j+1$</p>
+<p>计算矩阵序列最佳解的算法伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">MATRIX-CHAIN-ORDER(p)</span><br><span class="line"></span><br><span class="line">n = p.length -1</span><br><span class="line">m = new matrix[1~n][1~n]</span><br><span class="line">s = new matrix[1~n-1][2~n]</span><br><span class="line">for i = 1 to n //matrix chain only has one matrix</span><br><span class="line">    m[i,i] = 0</span><br><span class="line">for l = 2 to n</span><br><span class="line">    for i = 1 to n-l+1 // set i&#x27;s arrange according to the length</span><br><span class="line">         j = i + l -1 //we can calculated the j according to the i and l</span><br><span class="line">         m[i,j]= MAX</span><br><span class="line">        for k = i to j-1</span><br><span class="line">            q = m[j,k] + m[k+1,j] + p[i-1]p[k]p[j]</span><br><span class="line">            if q &lt; m[j,k]</span><br><span class="line">                m[i,j] = q</span><br><span class="line">                s[i,j] = k </span><br><span class="line">return m and s</span><br></pre></td></tr></table></figure>
+<p>上述伪代码的第6-7行，即对于<code>m[i,i] = 0</code>的处理，实际上就是表示整个矩阵序列只有一个矩阵的情况。</p>
+<p>算法的核心是从第八行开始的三重循环，最外层循环<code>l = 2 to n</code>，表示矩阵序列中的矩阵数量从$2\sim n$的情况。因为算法使用了自底向上的方法，所以从矩阵数量为$2$开始计算直到矩阵数量为$n$。</p>
+<p>第二层循环<code>i =1 to n-l+1</code>，是对于$i$数值的循环，因为矩阵序列的长度为$l$，所以$i$最大为$n-l+1$，否则$j=i+l-1$会大于$n$。</p>
+<p>因为$l$和$i$都已经确认，所以在第二层循环中，可以算出$j=i+l-1$，至此$m[i,j]$中的$i$和$j$都已经确认，剩下要求的就是分割点$k$。</p>
+<p>第三层循环<code>k=i to j-1</code>是循环$k$取值的每一个可能，并检查其是否是最佳值，如果是则填入$m[i,j]$和$s[i,j]$</p>
+<p>c++实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MatrixChainOrder</span><span class="params">(<span class="type">int</span>* matrixSizeArray, Matrix* minMultiplications, Matrix* minMultiplicationCut)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="type">int</span> totalMatrixLength = minMultiplications-&gt;row;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; totalMatrixLength; i++)</span><br><span class="line">			minMultiplications-&gt;data[i][i] = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> matrixLength = <span class="number">2</span>; matrixLength &lt;= totalMatrixLength; matrixLength++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; totalMatrixLength - matrixLength + <span class="number">1</span>; i++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="type">int</span> j = matrixLength + i - <span class="number">1</span>;</span><br><span class="line">				minMultiplications-&gt;data[i][j] = INT_MAX;</span><br><span class="line">				<span class="keyword">for</span> (<span class="type">int</span> k = i; k &lt;= j - <span class="number">1</span>; k++)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="type">int</span> tempMin = minMultiplications-&gt;data[i][k] + minMultiplications-&gt;data[k + <span class="number">1</span>][j] +</span><br><span class="line">						matrixSizeArray[i] * matrixSizeArray[k + <span class="number">1</span>] * matrixSizeArray[j + <span class="number">1</span>];</span><br><span class="line">					<span class="keyword">if</span> (tempMin &lt; minMultiplications-&gt;data[i][j])</span><br><span class="line">					&#123;</span><br><span class="line">						minMultiplications-&gt;data[i][j] = tempMin;</span><br><span class="line">						minMultiplicationCut-&gt;data[i][j] = k;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		minMultiplications-&gt;<span class="built_in">PrintMatrix</span>(<span class="number">15</span>);</span><br><span class="line">		cout &lt;&lt; endl;</span><br><span class="line">		minMultiplicationCut-&gt;<span class="built_in">PrintMatrix</span>(<span class="number">15</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>c++实现中，<code>matrixSizeArray</code>表示存有矩阵尺寸的数组，如有$n$个矩阵，则该数组大小为$n+1$。<code>minMultiplications</code>等同于伪代码中的$m[i,j]$，<code>minMultiplicationCut</code>等同于伪代码中的$s[i,j]$。这两个都用了<code>Matrix</code>进行表示，两个<code>Matrix</code>尺寸都为$n$。虽然在伪代码中，$s[i,j]$的尺寸只要是$n-1$即可，但这里为了实现方便，还是用了$n$。</p>
+<p>如果输入的<code>matrixSizeArray</code>数据有7个数据，即表示有6个矩阵，且初始化为:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> matrixSizeArray[] = &#123; <span class="number">30</span>,<span class="number">35</span>,<span class="number">15</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">25</span> &#125;;</span><br></pre></td></tr></table></figure>
+<p>则C++运算结果如下：</p>
+<p><img src="IA-Chapter15-Notes/2019-11-22-11-25-54.png" alt="MatrixChainMultiplicationResult"></p>
+<p>结果中的<code>-842150451</code>是<code>Int</code>数值的默认值，在不同电脑上可能不一样。</p>
+<p><code>minMultiplications</code>的对角线表示长度为1的情况，这时候不需要操作了，即为0。从对角线向右上角，每一条都长度+1的情况。右上角顶点$15125$即表示长度为6时的结果。</p>
+<p>同理，<code>minMultiplicationCut</code>的对角线有表示长度为<code>1</code>的情况，但因为长度只有1，所以没法分割，也就是没法定义<code>k</code>，因此这个矩阵的对角线值是未定义的即<code>-842450451</code>。同样的从对角线向右上角，每一条都长度+1的情况。</p>
+<p>将两个矩阵结果的未定义部分删去，并进行一个旋转，让对角线变成水平，则结果如下图所示，左边是$m[i,j]$，右边是$s[i,j]$：</p>
+<p><img src="IA-Chapter15-Notes/2019-11-22-11-32-00.png" alt="旋转后的运行结果"></p>
+<p>算法是从最底部逐渐向上运行。</p>
+<ul>
+<li>图中的$s[i,j]$与代码运行的结果不同，每一个数值都大了1，这是因为代码中矩阵位置是从0开始，而图解中是从1开始。</li>
+</ul>
+<p>因为算法有三种循环，所以时间复杂度为$O(n^3)$，且算法需要$\Theta(n^2)$的空间复杂度。</p>
+<h4 id="Step-4-Constructing-an-optimal-solution">Step 4: Constructing an optimal solution</h4>
+<p>在步骤三中求得的$m[i,j]$只是最佳解的值。如例子中如果要求6个矩阵的最小工作量，可以从$m[i,j]$的最顶部获得，为$15125$。但如果要求6个矩阵最佳情况下该以怎样的顺序进行计算，步骤三并没有直接给出。这里可以通过步骤三中获得的$s[i,j]$矩阵获取矩阵相乘最佳情况下的顺序。</p>
+<p>伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PRINT-OPTIMAL-PARENS(s,i,j)</span><br><span class="line"></span><br><span class="line">if i == j</span><br><span class="line">    print &quot;A_&quot;i</span><br><span class="line">else</span><br><span class="line">    print &quot;(&quot;</span><br><span class="line">    PRINT-OPTIMAL-PARENS(s,i,s[i,j])</span><br><span class="line">    PRINT-OPTIMAL-PARENS(s,s[i,j]+1,j)</span><br><span class="line">    print &quot;)&quot;</span><br></pre></td></tr></table></figure>
+<p>这里利用了步骤三中求得的$s[i,j]$，如果输入值为$0 \sim 5$（以C++实现的数据为准，所以不是$1\sim6$），则算法的图解如下：</p>
+<p><img src="IA-Chapter15-Notes/2019-11-22-12-00-59.png" alt="打印矩阵最佳解图解"></p>
+<p>黑色表示$(i,j)$，蓝色表示$s[i,j]$的取值，红色表示算法中的输出。</p>
+<p>最后树以中序打印则为结果(因为算法中都是在递归左树和右树前先打印了数据，所以是中序)</p>
+<p>c++实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PrintOptimalParens</span><span class="params">(Matrix* minMultiplicationsCut, <span class="type">int</span> i, <span class="type">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (i == j)</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;A_&quot;</span> &lt;&lt; i;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;(&quot;</span>;</span><br><span class="line">		<span class="type">int</span> k = minMultiplicationsCut-&gt;data[i][j];</span><br><span class="line">		<span class="built_in">PrintOptimalParens</span>(minMultiplicationsCut, i, k);</span><br><span class="line">		<span class="built_in">PrintOptimalParens</span>(minMultiplicationsCut, k + <span class="number">1</span>, j);</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;)&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输入值为$0\sim5$的话，最终结果为$((A_0(A_1A_2))((A_3A_4)A_5))$。</p>
+<h2 id="Elements-of-dynamic-programming">Elements of dynamic programming</h2>
+<p>一个优化问题可以用动态规划解决必须有两个关键因素：<code>最优子结构（Optimal substructure）</code>和<code>重叠的子问题（overlapping subproblems）</code>。</p>
+<h3 id="Optimal-substructure">Optimal substructure</h3>
+<p>如果一个问题具有最优子结构，那么这个问题的最优解一定是伴随着他的子问题的最优解。</p>
+<p>可以从以下步骤找寻问题的最优结构：</p>
+<ol>
+<li>
+<p>问题的第一部分首先可以通过一个选择进行切分。切分后会产生一个或多个子问题。</p>
+<p>这一步相当于先确定最内层的循环表达形式，如在切割钢条问题中是选择第一刀切割的长度$l$，矩阵乘法问题中是分割矩阵的位置(求$k$)。</p>
+</li>
+<li>
+<p>在步骤一的选择中，假设已经知道最优解的选择是什么。</p>
+<p>步骤一中的值是需要一个循环来遍历每个可能的值并找到最佳值的，步骤二即假设已经找到了最佳解。</p>
+</li>
+<li>
+<p>限定子问题空间，即运用最优解的子问题（在步骤二中假设已经知道了解决每个问题的最优解）。限定子问题空间时尽可能简单。</p>
+<p>例如对于钢条切割问题，子问题空间包含的问题是长度为$i$的钢条的最优切割问题，$i$取值从$1\sim n$。因此钢条切割问题外部只有一层循环。</p>
+<p>但对于矩阵乘法问题，求$A_1A_2…A_n$的最佳分割方式，分割并不一定是从$A_1$开始的，所以需要子问题的两端都需要变化，即$A_i…A_j$，其中$i$的取值是$1\sim n$，$j$的取值是$i$到$n$。（$i$和$j$决定了矩阵序列的长度，在实际算法中，取$i$和长度$l$变量，$j$根据$i$和$l$算出）。因此矩阵乘法问题的子问题空间包含两个变量，外部有双层循环。</p>
+</li>
+<li>
+<p>证明用来构成问题最优解的子问题本身必须是最优解。可以通过反证法，如果子问题不是最优解，那么将问题中的这一部分子问题替换为最优解，原问题能获取到更优的解。这个证明方法称为<code>“剪切-黏贴”（Cut-and-Paste）</code>方法</p>
+</li>
+</ol>
+<p>对于不同的问题，最优子结构的不同体现在两个方面（这里关注的是循环最内层的表达式）</p>
+<ol>
+<li>
+<p>原问题的最优解包含多少个子问题</p>
+</li>
+<li>
+<p>在确定最优解使用哪些子问题时，要考察多少种可能。</p>
+</li>
+</ol>
+<p>对于钢条切割问题，最优解只需要包含一个子问题，求钢条切割一刀后，剩下部分的最佳切割方式。对于长度为$n$的钢条，第一刀长度一共有$n$种可能性。</p>
+<p>对于矩阵乘法问题，最优解需要包含两个子问题，切割后的$A_i…A_k$与$A_k…A_j$各自的最佳切分方式。对于$A_i…A_j$，$k$的取值一共有$j-i$种可能性。</p>
+<p>可以从一个问题一共可能的子问题个数和每个子问题需要考察的可能性数量两方面来确定一个问题的时间复杂度。</p>
+<p>例如钢条切割问题，长度为$n$的钢条，一共有$\Theta(n)$个子问题，每个子问题最多有$n$个可能性，所以时间复杂度为$O(n^2)$。对于矩阵乘法问题，因为$i$和$j$的变化，一共有$\Theta(n^2)$个子问题，每个子问题最多有$n-1$个可能性，所以时间复杂度为$O(n^3)$。</p>
+<h4 id="Subtitles">Subtitles</h4>
+<p>需要注意不要在不是最优子结构的时候使用动态规划。</p>
+<p>如求有向图的最短路径可以使用动态规划，但求最长路径就无法使用动态规划。这里的最长路径限定没有闭环，不然可以通过无限次闭环来增加路径。</p>
+<p>以结点$u$到结点$v$为例子，在最短路径问题下是<strong>存在</strong>最佳子结构的。假设在$u$到$v$的最短路径上存在结点$w$，$u$到$w$和$w$到$v$都必然是最短路径。否则应用剪切黏贴法，如果有$u$到$w$的更短路径，那么用更短的路径替换则能得到$u$到$v$的更优解。</p>
+<p>但在最长路径问题下是<strong>不存在</strong>最佳子结构的，即$u$到$v$的最长路径上存在结点$w$，$u$到$w$和$w$到$v$不一定是各自的最长路径。以下图为例</p>
+<p><img src="IA-Chapter15-Notes/2019-11-26-10-35-55.png" alt="最长路径反例">。</p>
+<p>如果求$q$到$t$的的最长路径，那么应该是$q\rightarrow r \rightarrow t$。但是$q\rightarrow r$并不是$q$到$r$的最长路径，其最长路径为$q \rightarrow s \rightarrow t \rightarrow r$，$r$到$t$的最长路径为$r \rightarrow q \rightarrow s \rightarrow t$。而$q$到$r$和$r$到$t$不能取各自最长路径的原因是，如果这么做了就会形成闭环回路。</p>
+<p>虽然最长路径和最短路径都是将原问题拆分为了两个子问题，但是因为最长路径的两个子问题是<strong>相关</strong>的，所以不能用动态规划。例如在求$q$到$r$的最长路径的子问题时，因为用了$q \rightarrow s \rightarrow t$,在求$r$到$t$的时候就不能使用$q \rightarrow s \rightarrow t$，否则就存在了闭。即一个子问题的解会干扰到另一个子问题的求解，这就是<code>子问题相关</code>。</p>
+<p>在最短路径问题下，不存在子问题相关，在两个子问题中也不会出现相同的结点。证明如下：</p>
+<p>如果从$u$到$w$和从$w$到$v$两个子问题中都需要经过结点$x$，即路径时$u\rightarrow x\rightarrow w$和$w \rightarrow x \rightarrow v$，那么$x \rightarrow w$和$w \rightarrow x$可以相互抵消，最终路径为$u \rightarrow x \rightarrow v$。这又与经过$w$的假设不匹配，所以两端路径不可能都经过$x$。</p>
+<h3 id="Overlapping-subproblems">Overlapping subproblems</h3>
+<p>另一个动态规划需要满足的要求是重叠子问题，即在递归子问题空间中的问题时，子问题是需要是重复出现的，而不是一直出现新的子问题。与动态规划相对的是分治法，在分治法中，解决的每个的子问题都是全新的子问题，其中也不包含已经解决的小子问题。</p>
+<p>如矩阵乘法问题中，$m[3,4]$这个子问题的求解，在求$m[2,4]$,$m[1,4]$,$m[3,5]$等中都会出现。下图展示了在求解$m[1,4]$的过程中，出现的子问题，其中深色部分为已经出现过的子问题。</p>
+<p><img src="IA-Chapter15-Notes/2019-11-26-11-28-09.png" alt="重叠子问题"></p>
+<p>因为使用了自底向上法或者备忘录法来规避了子问题的重复计算时间，动态规划的时间复杂度才能是多项式级别的，否则是指数形式。</p>
+<p>在切割钢条问题的一节中，已经从数学上证明了迭代求解切割钢条问题复杂度为$O(2^n)$，也可证明矩阵乘法问题，迭代求解的复杂度也为$O(2^n)$。迭代法的伪代码为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">RECURSIVE-MATRIX-CHAIN(p,i,j)</span><br><span class="line">if i == j</span><br><span class="line">    return 0</span><br><span class="line"></span><br><span class="line">m[i,j] = MAX</span><br><span class="line"></span><br><span class="line">for k = i to j-1</span><br><span class="line">    q = RECURSIVE-MATRIX-CHAIN(p,i,k) + RECURSIVE-MATRIX-CHAIN(p,k+1,j) +</span><br><span class="line">        p[i-1]p[k]p[j]</span><br><span class="line">    if q &lt; m[i,j]</span><br><span class="line">        m[i,j] = q</span><br><span class="line"></span><br><span class="line">return m[i,j]</span><br></pre></td></tr></table></figure>
+<p>c++代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">RecursiveMatrixChain</span><span class="params">(<span class="type">int</span>* matrixSizeArray, Matrix* minMultiplications, <span class="type">int</span> i, <span class="type">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (i == j)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	minMultiplications-&gt;data[i][j] = INT_MAX;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> k = i; k &lt; j; k++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> tempMin = <span class="built_in">RecursiveMatrixChain</span>(matrixSizeArray, minMultiplications, i, k) +</span><br><span class="line">			<span class="built_in">RecursiveMatrixChain</span>(matrixSizeArray, minMultiplications, k + <span class="number">1</span>, j) + matrixSizeArray[i] * matrixSizeArray[k + <span class="number">1</span>] * matrixSizeArray[j + <span class="number">1</span>];</span><br><span class="line">		<span class="keyword">if</span> (tempMin &lt; minMultiplications-&gt;data[i][j])</span><br><span class="line">			minMultiplications-&gt;data[i][j] = tempMin;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> minMultiplications-&gt;data[i][j];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>时间复杂为</p>
+<p>$$<br>
+T(n)\geq<br>
+\begin{cases}<br>
+1 &amp; n=1 \\<br>
+1 + \sum_{k=1}^{n-1}(T(k)+T(n-k)+1) &amp; n &gt; 1<br>
+\end{cases}<br>
+$$</p>
+<p>可以用数学归纳法证明$T(n)=O(2^n)$</p>
+<p>假设$T(n)=\Omega(2^n)$，可取$T(n)\geq 2^{n-1}，$当$n=1$时，$T(n)\geq 1 = 2^0$，得证。</p>
+<p>当$n\geq 2$时，</p>
+<p>$$<br>
+T(n) \geq 1 + \sum_{k=1}^{n-1}(T(k)+T(n-k)+1) \\<br>
+= 1 +  \sum_{k=1}^{n-1} T(k) +\sum_{k=1}^{n-1}T(n-k) +\sum_{k=1}^{n-1} 1 \\<br>
+= 1 +  \sum_{k=1}^{n-1} T(k) + \sum_{i = n-1}^{1} T(i) +(n-1) \\<br>
+= 2\sum_{i=1}^{n-1}2^{i-1}+n \\<br>
+= 2(2^{n-1}-1)+n \\<br>
+= 2^n -2 +n \\<br>
+\geq 2^{n-1}<br>
+$$</p>
+<p>得证。而使用动态递归的方法，将时间复杂度变味了$n^3$，大幅提升了算法的效率。</p>
+<h3 id="Reconstructing-an-optimal-solution">Reconstructing an optimal solution</h3>
+<p>为了重构出最佳解（在写算法时，关注的是最佳解的值），需要在计算过程中保留一些关键数据，如在矩阵乘法问题中保存每一步的$k$值，即矩阵$s[i,j]$</p>
+<h3 id="Memoization">Memoization</h3>
+<p>如在求解钢条切割问题一样，矩阵乘法问题也可以通过自顶向下的备忘录法解决，伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">MEMOIZED-MATRIX-CHAIN(p)</span><br><span class="line">n = p.length - 1</span><br><span class="line">m = new matrix[1~n][1~n]</span><br><span class="line">for i = 1 to n</span><br><span class="line">    for j = i to n</span><br><span class="line">        m[i,j] = MAX</span><br><span class="line">return LOOKUP-CHAIN(m,p,1,n)</span><br><span class="line"></span><br><span class="line">LOOKUP-CHAIN(m,p,i,j)</span><br><span class="line"></span><br><span class="line">if m[i,j] &lt; MAX</span><br><span class="line">    return m[i,j]</span><br><span class="line">else</span><br><span class="line">    for k = i to j-1</span><br><span class="line">        q = LOOKUP-CHAIN(m,p,i,k) + LOOKUP-CHAIN(m,p,k+1,j)</span><br><span class="line">        + p[i-1]p[k]p[j]</span><br><span class="line">    if q &lt; m[i,j]</span><br><span class="line">        m[i,j] = q</span><br><span class="line">return m[i,j]</span><br></pre></td></tr></table></figure>
+<p>c++代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MemoizedMatrixChain</span><span class="params">(<span class="type">int</span>* matrixSizeArray, Matrix* minMultiplications)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; minMultiplications-&gt;row; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; minMultiplications-&gt;column; j++)</span><br><span class="line">			minMultiplications-&gt;data[i][j] = INT_MAX;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">LookupChain</span>(matrixSizeArray, minMultiplications, <span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">LookupChain</span><span class="params">(<span class="type">int</span>* matrixSizeArray, Matrix* minMultiplications, <span class="type">int</span> i, <span class="type">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (minMultiplications-&gt;data[i][j] &lt; INT_MAX)</span><br><span class="line">		<span class="keyword">return</span> minMultiplications-&gt;data[i][j];</span><br><span class="line">	<span class="keyword">if</span> (i == j)</span><br><span class="line">		minMultiplications-&gt;data[i][j] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		minMultiplications-&gt;data[i][j] = INT_MAX;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> k = i; k &lt; j; k++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">int</span> tempMin = <span class="built_in">RecursiveMatrixChain</span>(matrixSizeArray, minMultiplications, i, k) +</span><br><span class="line">				<span class="built_in">RecursiveMatrixChain</span>(matrixSizeArray, minMultiplications, k + <span class="number">1</span>, j) + matrixSizeArray[i] * matrixSizeArray[k + <span class="number">1</span>] * matrixSizeArray[j + <span class="number">1</span>];</span><br><span class="line">			<span class="keyword">if</span> (tempMin &lt; minMultiplications-&gt;data[i][j])</span><br><span class="line">				minMultiplications-&gt;data[i][j] = tempMin;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> minMultiplications-&gt;data[i][j];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该算法的时间复杂度同样为$O(n^3)$</p>
+<p>如果一个问题的子问题空间中的所有问题都必须被解决，那么自底向上法的效率更高，因为它减少了函数调用堆栈的花销。但如果子问题空间的问题并一定需要全部被解决，那么自顶向下备忘法可能效率更高，因为他只会计算需要用到的子问题。</p>
+<h2 id="Longest-common-subsequence">Longest common subsequence</h2>
+<p>//TODO</p>
+<h2 id="Optimal-binary-search-trees">Optimal binary search trees</h2>
+<p>//TODO</p>
+<article class="message is-info">
+        
+        <div class="message-body">
+            <p>引用：</p>
+<ol>
+<li><em>Introduction to Algorithms</em> 3rd Sep.2009</li>
+</ol>
+
+        </div>
+    </article>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>《算法导论》 第十五章笔记</p><p><a href="https://xuejiaw.github.io/IA-Chapter15-Notes/">https://xuejiaw.github.io/IA-Chapter15-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-11-26</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/CNI-Chapter6-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《计算机网络与因特网》 第六章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/CNI-Chapter5-Notes/"><span class="level-item">《计算机网络与因特网》 第五章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
+            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
+            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: true,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

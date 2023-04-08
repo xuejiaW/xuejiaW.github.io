@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《漫画数据库》 笔记 （二） - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《漫画数据库》 第四、五、六章笔记。 包括介绍SQL环境的配置，SQL语言的基本操作，事物的概念，数据库部分优化概念及分布式数据库。"><meta property="og:type" content="blog"><meta property="og:title" content="《漫画数据库》 笔记 （二）"><meta property="og:url" content="https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《漫画数据库》 第四、五、六章笔记。 包括介绍SQL环境的配置，SQL语言的基本操作，事物的概念，数据库部分优化概念及分布式数据库。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-23-11-54-54.png"><meta property="og:image" content="https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-23-11-56-45.png"><meta property="og:image" content="https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-23-11-58-30.png"><meta property="og:image" content="https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-23-12-30-42.png"><meta property="og:image" content="https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-25-01-25-02.png"><meta property="og:image" content="https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-25-01-25-17.png"><meta property="article:published_time" content="2019-10-24T17:32:56.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.022Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="数据库"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-23-11-54-54.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/"},"headline":"《漫画数据库》 笔记 （二）","image":["https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-23-11-54-54.png","https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-23-11-56-45.png","https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-23-11-58-30.png","https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-23-12-30-42.png","https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-25-01-25-02.png","https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/TheMangaGuideToDatabasesNotes-2/2019-10-25-01-25-17.png"],"datePublished":"2019-10-24T17:32:56.000Z","dateModified":"2023-04-02T12:21:20.022Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《漫画数据库》 第四、五、六章笔记。 包括介绍SQL环境的配置，SQL语言的基本操作，事物的概念，数据库部分优化概念及分布式数据库。"}</script><link rel="canonical" href="https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-10-24T17:32:56.000Z" title="2019/10/25 01:32:56">2019-10-25</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.022Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span><span class="level-item">34 分钟读完 (大约5165个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《漫画数据库》 笔记 （二）</h1><div class="content"><p>《漫画数据库》 第四、五、六章笔记。</p>
+<p>包括介绍SQL环境的配置，SQL语言的基本操作，事物的概念，数据库部分优化概念及分布式数据库。</p>
+<span id="more"></span>
+<h2 id="MySQL环境配置">MySQL环境配置</h2>
+<p>《漫画数据库》一书没有说明如何配置MYSQL环境，而在第四章中却开始说明一些SQL语句，这就导致读者没地方实践语句。</p>
+<p>在这里先简单介绍如何配置MySQL环境，主要参考网上的<a target="_blank" rel="noopener" href="http://www.mysqltutorial.org/">MySQL教程</a>。</p>
+<ol>
+<li>
+<p>MySQL程序安装</p>
+<p>Windows系统上可以直接安装<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/windows/installer/8.0.html">MySQL全家桶</a>来完成SQL环境的配置。</p>
+<p>安装过程基本傻瓜式，但需要注意在安装中有设置密码的步骤，这个密码在之后登陆服务器时会用到。</p>
+<p>安装过程并没有直接将<code>MySQL Server</code>添加到系统环境中，<code>MySQL Server</code>的安装地址默认在于<code>C:\Program Files\MySQL\MySQL Server 8.0\bin</code>，将这个地址默认添加到系统环境中即可，关于如何添加系统环境这里不赘述。</p>
+</li>
+<li>
+<p>通过Shell连接MySQL</p>
+<p>配置完成后，可以通过命令<code>mysql -u &lt;userName&gt; -p</code>登陆Server，这里需要输入密码，密码即为安装过程中设置的那个。</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\wxj&gt; mysql -u root -p</span><br><span class="line">Enter password: *********                                                      Welcome to the MySQL monitor.  Commands end with ; or \g</span><br></pre></td></tr></table></figure>
+<p>可以使用命令 show databases来查看目前的数据库</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| sakila             |</span><br><span class="line">| sys                |</span><br><span class="line">| world              |</span><br><span class="line">+--------------------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>通过MYSQL WorkBench连接MySQL</p>
+<p><img src="TheMangaGuideToDatabasesNotes-2/2019-10-23-11-54-54.png" alt="workBench连接MySQL"></p>
+<p>如图打开workBench后依次点击，操作分别是增加连接，设置连接名字（任取），设置密码，确认密码设置，确认连接设置。添加完成后效果如下图所示，</p>
+<p><img src="TheMangaGuideToDatabasesNotes-2/2019-10-23-11-56-45.png" alt="添加连接后"></p>
+<p>双击连接便能打开数据库界面。</p>
+<p><img src="TheMangaGuideToDatabasesNotes-2/2019-10-23-11-58-30.png" alt="数据库界面"></p>
+<p>注意红框处的数据库名称与我们通过shell所展现的是一样的。在右侧的Query窗口可以编写SQL语句</p>
+</li>
+<li>
+<p>使用MySQL Workbench新建数据库</p>
+<p>在SCHEMAS界面邮件，选择新建数据库，然后设置新数据名字并Apply即可</p>
+<p><img src="TheMangaGuideToDatabasesNotes-2/2019-10-23-12-30-42.png" alt="新建数据库"></p>
+<p>创建完成后，同样在SCHEMAS界面，双击新形成的数据库将他设置为默认的数据库即可。</p>
+</li>
+<li>
+<p>执行SQL文件</p>
+<p>在设置完默认的数据库后，运行的SQL文本会自动基于当前的数据库。可以只用快捷键<code>Ctrl+Shift+Enter</code>执行整个SQL文件的命令，或使用<code>CTRL+ENTER</code>执行当前语句的命令。</p>
+</li>
+</ol>
+<h2 id="Chapter-4-Let-us-learn-about-SQL">Chapter 4. Let us learn about SQL</h2>
+<ol>
+<li>数据定义语言（Data Definition Language，DDL）<br>
+用来创建、更改和删除表</li>
+<li>数据操作语言（Data Manipulation Language，DML）<br>
+用来操作数据，如插入，更改，删除数据</li>
+<li>数据控制语言（Data Control Language，DCL）<br>
+用来控制数据库，如保护多人同时使用数据库也不会有冲突</li>
+</ol>
+<p>SQL的<code>命令(Statement)</code>是由<code>短语(Phrase)</code>组成的，如<code>SELECT</code>,<code>WHERE</code>都为短语。</p>
+<h3 id="创建表格">创建表格</h3>
+<p>使用短语<code>CREATE TABLE</code>创建表格</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="operator">&lt;</span>TableName<span class="operator">&gt;</span></span><br><span class="line">(</span><br><span class="line">    <span class="operator">&lt;</span>FieldName<span class="operator">&gt;</span> <span class="operator">&lt;</span>FieldType<span class="operator">&gt;</span></span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY(<span class="operator">&lt;</span>FieldName<span class="operator">&gt;</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">如</span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> if <span class="keyword">not</span> <span class="keyword">exists</span> `SALES_TABLE`</span><br><span class="line">(</span><br><span class="line">`REPORT_CODE` <span class="type">int</span> <span class="keyword">Not</span> <span class="keyword">NULL</span>,</span><br><span class="line">`EXPORT_DATE` <span class="type">date</span>,</span><br><span class="line">`EXPORT_DESTINATION_CODE` <span class="type">int</span>,</span><br><span class="line"></span><br><span class="line"><span class="keyword">primary</span> key(REPORT_CODE) <span class="comment">-- set primary Key</span></span><br><span class="line">);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>使用短语<code>ALTER</code>修改表格</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="operator">&lt;</span>TableName<span class="operator">&gt;</span></span><br><span class="line"><span class="operator">&lt;</span>Phrase<span class="operator">&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 为product_table 表格增加DISTRICT列，且让他排在`UNIT_PRICE`后</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> product_table</span><br><span class="line"><span class="keyword">add</span> <span class="keyword">column</span> `DISTRICT`  <span class="type">VARCHAR</span>(<span class="number">45</span>) <span class="keyword">null</span></span><br><span class="line">after `UNIT_PRICE`;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="表格添加及删除数据">表格添加及删除数据</h3>
+<p>使用短语<code>Insert into</code>及<code>values</code>来添加数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="operator">&lt;</span>TableName<span class="operator">&gt;</span>(<span class="operator">&lt;</span>FieldName1<span class="operator">&gt;</span>,<span class="operator">&lt;</span>FieldName2<span class="operator">&gt;</span>)</span><br><span class="line"><span class="keyword">values</span></span><br><span class="line">    (<span class="operator">&lt;</span>Field1Data<span class="operator">&gt;</span>,<span class="operator">&lt;</span>Field2Data<span class="operator">&gt;</span>),</span><br><span class="line">    (<span class="operator">&lt;</span>Field1Data<span class="operator">&gt;</span>,<span class="operator">&lt;</span>Field2Data<span class="operator">&gt;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 如</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span></span><br><span class="line">	sales_table(REPORT_CODE,EXPORT_DATE,EXPORT_DESTINATION_CODE)</span><br><span class="line"><span class="keyword">values</span></span><br><span class="line">	(<span class="number">1101</span>,<span class="string">&#x27;2019-03-05&#x27;</span>,<span class="number">12</span>),</span><br><span class="line">    (<span class="number">1102</span>,<span class="string">&#x27;2019-03-07&#x27;</span>,<span class="number">23</span>),</span><br><span class="line">    (<span class="number">1103</span>,<span class="string">&#x27;2019-03-08&#x27;</span>,<span class="number">25</span>),</span><br><span class="line">    (<span class="number">1104</span>,<span class="string">&#x27;2019-03-10&#x27;</span>,<span class="number">12</span>),</span><br><span class="line">    (<span class="number">1105</span>,<span class="string">&#x27;2019-03-12&#x27;</span>,<span class="number">25</span>);</span><br></pre></td></tr></table></figure>
+<p>使用<code>delete from</code>及<code>where</code>短语删除数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> <span class="operator">&lt;</span>TableName<span class="operator">&gt;</span></span><br><span class="line"><span class="keyword">where</span> <span class="operator">&lt;</span>condtion<span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 如</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> product_table</span><br><span class="line"><span class="keyword">where</span> PRODUCT_CODE<span class="operator">=</span><span class="number">101</span>;</span><br></pre></td></tr></table></figure>
+<p>使用<code>update</code>,<code>set</code>,<code>where</code>更新数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> <span class="operator">&lt;</span>tableName<span class="operator">&gt;</span></span><br><span class="line"><span class="keyword">set</span> <span class="operator">&lt;</span>FieldName<span class="operator">&gt;=</span><span class="operator">&lt;</span>FieldData<span class="operator">&gt;</span></span><br><span class="line"><span class="keyword">where</span> <span class="operator">&lt;</span><span class="keyword">Condition</span><span class="operator">&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 如</span></span><br><span class="line"><span class="keyword">update</span> product_table <span class="keyword">set</span> DISTRICT<span class="operator">=</span><span class="string">&#x27;South Sea&#x27;</span> <span class="keyword">where</span> PRODUCT_CODE<span class="operator">=</span><span class="number">101</span> <span class="keyword">or</span> PRODUCT_CODE<span class="operator">=</span><span class="number">104</span>;</span><br><span class="line"><span class="keyword">update</span> product_table <span class="keyword">set</span> DISTRICT<span class="operator">=</span><span class="string">&#x27;Middle&#x27;</span> <span class="keyword">where</span> PRODUCT_CODE<span class="operator">=</span><span class="number">102</span>;</span><br><span class="line"><span class="keyword">update</span> product_table <span class="keyword">set</span> DISTRICT<span class="operator">=</span><span class="string">&#x27;North Sea&#x27;</span> <span class="keyword">where</span> PRODUCT_CODE<span class="operator">=</span><span class="number">103</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="查看数据">查看数据</h3>
+<p>使用短语<code>SELECT FROM</code>，<code>WHERE</code>，以及<code>比较运算符</code>,<code>关系运算符</code>以及<code>通配符</code>来选择数据，SQL支持的比较运算符和关系运算符如下：</p>
+<table>
+<thead>
+<tr>
+<th>比较运算符</th>
+<th>含义</th>
+<th>关系运算符</th>
+<th>含义</th>
+<th>通配符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A = B</td>
+<td>A等于B</td>
+<td>AND</td>
+<td>与</td>
+<td>*</td>
+<td>匹配任意长度的任意字符</td>
+</tr>
+<tr>
+<td>A &gt; B</td>
+<td>A大于B</td>
+<td>OR</td>
+<td>或</td>
+<td>-</td>
+<td>匹配长度为1的任意字符</td>
+</tr>
+<tr>
+<td>A &gt;= B</td>
+<td>A大于等于B</td>
+<td>NOT</td>
+<td>非</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A &lt; B</td>
+<td>A小于B</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A &lt;= B</td>
+<td>A小于等于B</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>语句形式如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">&lt;</span>FieldName<span class="operator">&gt;</span></span><br><span class="line"><span class="keyword">from</span> <span class="operator">&lt;</span>TableName<span class="operator">&gt;</span></span><br><span class="line"><span class="keyword">where</span> <span class="operator">&lt;</span><span class="keyword">condition</span><span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 如搜索数量大于1000的产品,且显示表中所有数据</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> sales_statement_table</span><br><span class="line"><span class="keyword">where</span> QUANTITY<span class="operator">&gt;</span><span class="number">1000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 这里使用了*来表示所有数据，如果我们仅想显示一个PRODUCT_CODE</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> PRODUCT_CODE <span class="keyword">from</span> sales_statement_table</span><br><span class="line"><span class="keyword">where</span> QUANTITY<span class="operator">&gt;</span><span class="number">1000</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 取所有产品名以n结尾的产品</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> product_table</span><br><span class="line"><span class="keyword">where</span> PRODUCT_NAME <span class="keyword">like</span> <span class="string">&#x27;%n&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>SQL还自带了一些函数帮助计算，如求最大值，求行数等</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>COUNT(*)</td>
+<td>求行数</td>
+</tr>
+<tr>
+<td>COUNT(<code>FieldName</code>)</td>
+<td>求非空值行的行数</td>
+</tr>
+<tr>
+<td>COUNT( Distinct <code>FieldName</code>)</td>
+<td>求除了空值和重复值的行数</td>
+</tr>
+<tr>
+<td>SUM(<code>FieldName</code>)</td>
+<td>求各行总和</td>
+</tr>
+<tr>
+<td>AVG(<code>FieldName</code>)</td>
+<td>求各行平均</td>
+</tr>
+<tr>
+<td>MAX(<code>FieldName</code>)</td>
+<td>求各行最大</td>
+</tr>
+<tr>
+<td>MIN(<code>FieldName</code>)</td>
+<td>求各行最小</td>
+</tr>
+</tbody>
+</table>
+<p>如</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">-- 求一共有几个数量大于1000的销售产品</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">from</span> sales_statement_table</span><br><span class="line"><span class="keyword">where</span> QUANTITY<span class="operator">&gt;</span><span class="number">1000</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="分组计算">分组计算</h3>
+<p>使用短语<code>group by</code>进行分组</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">&lt;</span>FieldName<span class="operator">&gt;</span></span><br><span class="line"><span class="keyword">from</span> <span class="operator">&lt;</span>TableName<span class="operator">&gt;</span></span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> <span class="operator">&lt;</span>FieldName<span class="operator">&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如有列表</p>
+<table>
+<thead>
+<tr>
+<th>PRODUCT_CODE</th>
+<th>PRODUCT_NAME</th>
+<th>UNIT_PRICE</th>
+<th>DISTRICT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>101</td>
+<td>MELON</td>
+<td>800</td>
+<td>South Sea</td>
+</tr>
+<tr>
+<td>102</td>
+<td>STRAWBERRY</td>
+<td>150</td>
+<td>Middle</td>
+</tr>
+<tr>
+<td>103</td>
+<td>APPLE</td>
+<td>120</td>
+<td>North Sea</td>
+</tr>
+<tr>
+<td>104</td>
+<td>LEMON</td>
+<td>200</td>
+<td>South Sea</td>
+</tr>
+<tr>
+<td>201</td>
+<td>Chestnut</td>
+<td>100</td>
+<td>North Sea</td>
+</tr>
+<tr>
+<td>202</td>
+<td>Persimmon</td>
+<td>160</td>
+<td>Middle</td>
+</tr>
+<tr>
+<td>301</td>
+<td>Peach</td>
+<td>130</td>
+<td>South Sea</td>
+</tr>
+<tr>
+<td>302</td>
+<td>Kiwi</td>
+<td>200</td>
+<td>South Sea</td>
+</tr>
+</tbody>
+</table>
+<p>想通过DISTRICT进行分组，可以使用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> DISTRICT,<span class="built_in">AVG</span>(UNIT_PRICE),UNIT_PRICE</span><br><span class="line"><span class="keyword">from</span> product_table</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> DISTRICT;</span><br></pre></td></tr></table></figure>
+<p>这里选择的是分组完后价格的平均值，输出结果为</p>
+<table>
+<thead>
+<tr>
+<th>DISTRICT</th>
+<th>AVG(UNIT_PRICE)</th>
+<th>UNIT_PRICE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>South Sea</td>
+<td>332.5</td>
+<td>800</td>
+</tr>
+<tr>
+<td>Middle</td>
+<td>155</td>
+<td>150</td>
+</tr>
+<tr>
+<td>North Sea</td>
+<td>110</td>
+<td>120</td>
+</tr>
+</tbody>
+</table>
+<p>因为表的一项只能显示一个数值，所以在分组后的<code>UNIT_PRICE</code>项，只能显示这个分组的第一个数值。</p>
+<p>分组完后的数据如果需要筛选，应该使用短语<code>having</code>而非<code>where</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> DISTRICT,<span class="built_in">AVG</span>(UNIT_PRICE),UNIT_PRICE</span><br><span class="line"><span class="keyword">from</span> product_table</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> DISTRICT</span><br><span class="line"><span class="keyword">having</span> <span class="built_in">AVG</span>(UNIT_PRICE)<span class="operator">&gt;=</span><span class="number">200</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> DISTRICT,<span class="built_in">COUNT</span>(<span class="operator">*</span>)</span><br><span class="line"><span class="keyword">from</span> product_table</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> DISTRICT</span><br><span class="line"><span class="keyword">having</span> <span class="built_in">count</span>(<span class="operator">*</span>)<span class="operator">&gt;=</span><span class="number">3</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>结果为</p>
+<table>
+<thead>
+<tr>
+<th>DISTRICT</th>
+<th>AVG(UNIT_PRICE)</th>
+<th>UNIT_PRICE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>South Sea</td>
+<td>332.5</td>
+<td>800</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>DISTRICT</th>
+<th>COUNT(*)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>South Sea</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<h3 id="使用子查询检索">使用子查询检索</h3>
+<p>例如我们需要打印出销售额大于1000的产品名称，销售额是在销售表中，产品名称是在产品表中，这时就需要用到子查询。先重销售表中查询处满足条件的记录，再基于得到的记录查询名称。<code>子查询(Subquery)</code>使用短语<code>In</code>即可，这里是相当于先运行了括号内的内容，再执行外部的查询。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> product_table</span><br><span class="line"><span class="keyword">where</span> PRODUCT_CODE <span class="keyword">IN</span></span><br><span class="line">(<span class="keyword">select</span> PRODUCT_CODE <span class="keyword">from</span> sales_statement_table</span><br><span class="line"><span class="keyword">where</span> QUANTITY<span class="operator">&gt;=</span><span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+<p>另外还有<code>相关子查询(CORRELATED SUBQUERY)</code>，相关子查询最大的区别是先运行括号外的内容，再将结果一条条传递给括号内的查询，如</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> sales_statement_table U</span><br><span class="line"><span class="keyword">where</span> QUANTITY <span class="operator">&gt;</span></span><br><span class="line">(</span><br><span class="line">	<span class="keyword">select</span> <span class="built_in">avg</span>(QUANTITY)</span><br><span class="line">    <span class="keyword">from</span> sales_statement_table</span><br><span class="line">    <span class="keyword">where</span> PRODUCT_CODE<span class="operator">=</span>U.PRODUCT_CODE</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>这里将外部查询的表<code>sales_statement_table</code>命名为U，并将查询的结果传递给内部查询。例如<code>sales_statement_table</code>表中的第一个元素的PRODUCT_CODE为101，那么实际上在第一次运行时，内部查询相当于</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">avg</span>(QUANTITY)</span><br><span class="line">   <span class="keyword">from</span> sales_statement_table</span><br><span class="line">   <span class="keyword">where</span> PRODUCT_CODE<span class="operator">=</span><span class="number">101</span></span><br></pre></td></tr></table></figure>
+<p>得到结果后，再将结果（这里是平均值）传递给外部查询。这个相关子查询的工作是找出订单产品销售额大于该产品平均销售额的订单。</p>
+<h3 id="制作视图">制作视图</h3>
+<p><code>视图(View)</code>相当于是一个虚拟表，它仅是用来被用户查看。生成视图的表成为<code>基表(Base table)</code>，使用短语<code>Create view</code>创建</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> <span class="operator">&lt;</span>ViewName<span class="operator">&gt;</span>(<span class="operator">&lt;</span>ViewField<span class="operator">&gt;</span>) <span class="comment">-- 如果Field完全与BaseTable一样，可忽略</span></span><br><span class="line"><span class="keyword">as</span> <span class="keyword">select</span> <span class="operator">*</span> </span><br><span class="line"><span class="keyword">from</span> <span class="operator">&lt;</span>BaseTableName<span class="operator">&gt;</span></span><br><span class="line"><span class="keyword">where</span> <span class="operator">&lt;</span><span class="keyword">Condition</span><span class="operator">&gt;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 如</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> expensive_product_table</span><br><span class="line"><span class="keyword">as</span> <span class="keyword">select</span> <span class="operator">*</span> </span><br><span class="line"><span class="keyword">from</span> product_table</span><br><span class="line"><span class="keyword">where</span> UNIT_PRICE<span class="operator">&gt;=</span><span class="number">200</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="删除视图与表">删除视图与表</h3>
+<p>使用短语<code>drop</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">view</span> <span class="operator">&lt;</span>ViewName<span class="operator">&gt;</span>;</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> <span class="operator">&lt;</span>TableName<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="Chapter-5-Let-us-operate-a-databases">Chapter 5. Let us operate a databases</h2>
+<h3 id="事物">事物</h3>
+<p>用户的一系列成功操作成为<code>事物(Transaction)</code>。数据库必须保证即使多个事物同时执行，也不会发生矛盾，和即使事物处理过程中发生了意外，数据也不允许发生矛盾。数据库事物通过具有<code>ACID</code>属性来保证不会产生数据矛盾。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A（Atomicity），原子性</td>
+<td>事物必须结束于提交或回滚</td>
+</tr>
+<tr>
+<td>C（Consistency），一致性</td>
+<td>执行数据库事物时不能损坏数据库的一致性</td>
+</tr>
+<tr>
+<td>I（Isolation），隔离性</td>
+<td>多个事物的执行时互不干扰的</td>
+</tr>
+<tr>
+<td>D（Durability），持久性</td>
+<td>事物完成后，事物对于数据的更改会持久的保留在数据库中</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p>Atomicity，原子性</p>
+<p>事物必须以<code>提交(Commit)</code>或者<code>回滚(Rollback)</code>作为结束，提交是确定数据库事物的处理，回滚是取消事物处理的指令。提交和回滚是自动执行，但也能通过命令<code>COMMIT</code>和<code>ROLLBACK</code>来显示执行。</p>
+</li>
+<li>
+<p>Consistency，一致性</p>
+<p>如描述，数据库需要保证不会损坏数据库数据的一致性</p>
+</li>
+<li>
+<p>Isolation，隔离性</p>
+<p>如果多个事物同时执行并返回了同样的结果，将这一些列事物称为<code>安排（Schedule）</code>，并称这些安排是<code>可序列化(Serializable)</code>的。事物的隔离性要求安排必须是可序列化的。</p>
+<p>通常我们使用<code>锁(Lock)</code>来满足可序列化，锁又分为<code>共享锁(shared lock)</code>和<code>独占锁(exclusive lock)</code>，前者是读取数据时使用，后者是写入数据时使用。使用共享锁时，其他事务可以假设共享锁，但是不能加设独占锁。使用独占锁时，其他事务不能加设任何锁。</p>
+<p>为了确保事务可以序列化，需要遵守一定的规则，规则其中一项就是<code>两阶段封锁(two-phase locking)</code>（书中未做详细解释）。</p>
+<p>另外还需要注意锁的<code>粒度(Granularity)</code>。粒度越大表示锁控制的数据就越大，这样一个事务设锁的次数会减少可以减少CPU负担，但是因为加锁的数据大，导致等等的对象会增多且等待时间上，所以同时可以执行的事务就减少了。反之同理。</p>
+<p>除了加锁外，还有其他的控制方法。如<code>时间戳控制(Timestamp control)</code>和<code>乐观控制(Optimistic control)</code>。<br>
+（1） 时间戳控制是在执行一个事务时指定一个时间戳，当有另一个事务以更新的时间戳更新数据时，之前时间戳的事务将会被静止并回滚。</p>
+<pre><code> （2） 乐观控制允许读操作，而在写操作时会检查是否有其他的事务已经更新了数据，如果有回滚该操作。
+</code></pre>
+<p>在实际运用中，实际上可以设定<code>隔离等级(Levels of islation)</code>,隔离等级分为四个,<code>READ UNCOMMITTED</code>，<code>READ COMMITEED</code>,<code>REPEATABLE READ</code>,<code>SERIALIZABLE</code>,默认为<code>SERIALIZABLE</code>。</p>
+<p>根据隔离等级的不同，可能发生以下现象</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>脏读</th>
+<th>非重复读</th>
+<th>虚读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>READ UNCOMMITTED</td>
+<td>可能发生</td>
+<td>可能发生</td>
+<td>可能发生</td>
+</tr>
+<tr>
+<td>READ COMMITEED</td>
+<td>不发生</td>
+<td>可能发生</td>
+<td>可能发生</td>
+</tr>
+<tr>
+<td>REPEATABLE READ</td>
+<td>不发生</td>
+<td>不发生</td>
+<td>可能发生</td>
+</tr>
+<tr>
+<td>SERIALIZABLE</td>
+<td>不发生</td>
+<td>不发生</td>
+<td>不发生</td>
+</tr>
+</tbody>
+</table>
+<p><code>脏读（Dirty Read）</code>表示在事物1提交前，事物2就读取了某数据。</p>
+<p><code>非重复读(Non-repeatable Read) </code>表示一个事务重复读取了两次数据，然后得到了不一样的值。可能原因就是其他的事务并行的更新了数值。</p>
+<p><code>虚读（Phantom Read）</code>表示一个事务搜索匹配某模式的数据时返回了错误值但是因为其他的事务在并行的更新数据，所以搜索到了错误数据。</p>
+</li>
+<li>
+<p>持久性（Durability）</p>
+<p>可以使用命令<code>GRANT</code>指定用户访问数据库或者表的权限,被授权的用户也可以附带<code>WITH GRANT OTION</code>信息来给其他用户权限，在取消某用户权限时，可以使用<code>REVOKE</code>。可设定的权限包括<code>SELECT</code>,<code>INSERT</code>,<code>UPDATE</code>,<code>DELETE</code>,<code>ALL</code>。</p>
+<p>另外可以使用视图来管理权限，如将表格中的一部分数据生成视图，然后针对视图给用户权限。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="operator">&lt;</span>Privileges<span class="operator">&gt;</span> <span class="keyword">ON</span> <span class="operator">&lt;</span>TableName <span class="keyword">or</span> viewName<span class="operator">&gt;</span> <span class="keyword">TO</span> <span class="operator">&lt;</span><span class="keyword">User</span><span class="operator">&gt;</span> (<span class="keyword">WITH</span> <span class="keyword">GRANT</span> OPTION);</span><br><span class="line"></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">SELECT</span>,<span class="keyword">UPDATE</span> <span class="keyword">ON</span> product_table <span class="keyword">TO</span> business_department;</span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">SELECT</span>,<span class="keyword">UPDATE</span> <span class="keyword">ON</span> product_table <span class="keyword">TO</span> overseas_business_department <span class="keyword">with</span> <span class="keyword">grant</span> option;</span><br><span class="line"><span class="keyword">REVOKE</span> <span class="keyword">SELECT</span>,<span class="keyword">UPDATE</span> <span class="keyword">ON</span> product_table <span class="keyword">FROM</span> business_department;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="异常处理">异常处理</h3>
+<p>数据库必须包含某种机制来保证意外发生时数据仍然正确。可能的意外包括</p>
+<ol>
+<li>
+<p>事务错误（Transaction failure）</p>
+<p>当事务错误发生时，事务将无法被提交，将会进行回滚处理。</p>
+</li>
+<li>
+<p>系统错误（System failure）</p>
+<p>如发生断电等情况，将发生系统错误，在系统重启后，未提交的事务将会被<code>回滚(Roll backward)</code>，已经提交的事务将会进行<code>前滚（Roll forward）</code>。</p>
+<p>这里已经被提交的事务限定在上一个<code>检查点(CheckPoints)</code>后的提交。检查点的生成与缓存数据相关，在数据库写入数据时会被短暂的存储在缓存中，当缓存内的数据和数据库同步后，将会生成一个检查点。</p>
+</li>
+<li>
+<p>介质错误（Media failure）</p>
+<p>包含数据的硬盘发生损坏时称为介质错误。在这种情况下，将会恢复备份数据且在备份数据生效后，事务将会被前滚。</p>
+</li>
+</ol>
+<h3 id="索引">索引</h3>
+<p>当数据库非常庞大时，搜索特定数据可能会需要花费很长的时间，这时候就需要用到<code>索引(Indexes)</code>。索引有两种方式，<code>B树</code>和<code>散列（Hash）</code>。</p>
+<ol>
+<li>
+<p>B树<br>
+B树相当于用树形结构来存储数据，每个节点都是经过了排序的，每个父节点都包含了子节点中最大值和最小值的信息，这样就可以加快节点的搜索。</p>
+</li>
+<li>
+<p>散列</p>
+<p>散列通过一个散列函数来求得数据的存储地址，但散列只适用于完全一致的搜索，如<code>找寻编码为101的数据</code>，而类似<code>找寻值大于XX</code> 这样的搜索就不匹配。</p>
+</li>
+</ol>
+<h3 id="搜索优化">搜索优化</h3>
+<p>如存在一个搜索命令</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> dates,product_name</span><br><span class="line"><span class="keyword">FROM</span> product,sales</span><br><span class="line"><span class="keyword">WHERE</span> unit_price <span class="operator">&gt;=</span> <span class="number">200</span></span><br><span class="line"><span class="keyword">AND</span> product.product_code <span class="operator">=</span> sales.product_code</span><br></pre></td></tr></table></figure>
+<p>这个操作可以看作由三个步骤组成</p>
+<ol>
+<li>将产品表和销售表两个表组合在一起</li>
+<li>找出单价大于200的产品</li>
+<li>抽出日期和产品名两列</li>
+</ol>
+<p>但这样的三个步骤可以有两种排列方式（1）按上述的步骤进行执行（2）先在两个表中各自抽出相关列，然后在产品表中找出满足条件的产品，然后在将两列结合在一起。</p>
+<p>第二种方式有更高的效率，因为先抽取了列然后选择可以减少最后合并的工作量。</p>
+<p>通常数据库的操作按照，先选择，在投影，最后合并的操作顺序，这样可以减少相关的工作量。</p>
+<h4 id="合并操作优化">合并操作优化</h4>
+<p>对于合并操作来说，也有三种合并实现方式</p>
+<ol>
+<li>
+<p>嵌套循环</p>
+<p>即先从需要合并的表一找出需要合并的一行，然后遍历搜寻表二中符合的行。然后在表一中寻找需要合并的下一行</p>
+</li>
+<li>
+<p>排序合并</p>
+<p>即先对两个表各自排序，然后再合并。因为排序后两个表都可以按照一个顺序来合并，所以会提升效率。但需要考虑排序的时间。</p>
+</li>
+<li>
+<p>散列</p>
+<p>即通过散列函数快速的找到需要合并的两个表匹配的数据。</p>
+</li>
+</ol>
+<h4 id="优化原则">优化原则</h4>
+<ol>
+<li>
+<p>规则导向</p>
+<p>因为对于一个操作，可以有不同的执行顺序但能获取一样的结果。所以可以预先多个规则来指定步骤的执行顺序，如之前的<code>先选择，在投影,最后合并</code>就是一个规则。</p>
+</li>
+<li>
+<p>成本导向</p>
+<p>成本导向是根据数据库内的统计数据，再根据这些数据来选择优化的方式。成本导向相对于规则导向更灵活，但需要定期生成统计数据，统计数据的生成和分析都需要花费额外的时间。</p>
+</li>
+</ol>
+<h2 id="Chapter-6-Databases-are-everywhere">Chapter 6. Databases are everywhere</h2>
+<h3 id="网络与数据库">网络与数据库</h3>
+<p>当网页与数据库一起工作时，整个系统由三层组成，称为三层客户端服务器(threetier client/server system)，包括<code>表示层(presentation layer)</code>，<code>逻辑层(logic layer)</code>和<code>数据层(data layer)</code>。</p>
+<ol>
+<li>
+<p>表示层</p>
+<p>表示层接受用户输入，并会显示数据库检索结果。</p>
+</li>
+<li>
+<p>逻辑层</p>
+<p>逻辑层对SQL命令进整合，对数据进行加工</p>
+</li>
+<li>
+<p>数据层</p>
+<p>数据层由数据库服务器处理，对数据库进行查询，并返回检索结果。</p>
+</li>
+</ol>
+<h3 id="使用存储程序">使用存储程序</h3>
+<p>为了避免网络的数据传输，数据库有存储程序，可以存储一些高频的SQL查询命令。有三种存储程序，<code>存储过程（Stored procedure）</code>，<code>存储功能(Stored function)</code>和<code>触发器（Trigger）</code>。分别用来，存储没有返回值的才做，存储拥有返回值的操作，和在操作完成后自动存储。</p>
+<h3 id="分布式数据库">分布式数据库</h3>
+<p>数据库本身可以被分散到不同的地点而通过网络相连接。尽管数据库被分散了，但是用户仍然可以把它当作一个数据库来进行处理。</p>
+<p>数据库可分为<code>水平分布</code>和<code>垂直分布</code>两种，前者指的是使用多个同级别的数据库服务器的存储方式，这些服务器各自可以使用别的服务器的数据。后者指的是每个数据库服务器具有不同功能的分布方式，由承担主要任务的主服务器和承担其他处理任务的服务器构成。</p>
+<p>分布式数据库的数据也必然是由各数据库服务器各自存储，而数据的分配方式也同样分为<code>水平分配</code>和<code>垂直分配</code>两种。水平分配指的是不同的服务器各自存储表的不同行（记录），而垂直分配则是不同的服务器各自存储表的不同列（字段）。</p>
+<p>为了避免不同的数据库服务器同时操作而导致数据冲突，分布式数据库采用名为<code>两阶段提交(two-phase commit)</code>的方法。</p>
+<p>两阶段提交包括有<code>协调者(coordinator)</code>和<code>参与者(participant)</code>且由两个阶段组成</p>
+<ol>
+<li>
+<p>第一个阶段由协调者询问各参与者是否可以提交事物</p>
+</li>
+<li>
+<p>第二阶段是协调者根据参与者返回的结论，进行相关操作，如果所有参与者都返回可以提交，则进行提交，反之有任何一个参与者拒绝了提交，则回滚事物。</p>
+</li>
+</ol>
+<p>下图分别为成功提交和失败提交的例子。</p>
+<p><img src="TheMangaGuideToDatabasesNotes-2/2019-10-25-01-25-02.png" alt="提交成功"><br>
+<img src="TheMangaGuideToDatabasesNotes-2/2019-10-25-01-25-17.png" alt="提交失败"></p>
+<h3 id="数据库复制">数据库复制</h3>
+<p>在分布式数据库中为了减少网络的负载，数据库设置了复制功能。我们将主要的数据库服务器称为<code>主数据库(Primary database)</code>，以及存有复制数据的服务器成为<code>复制数据库(replica)</code>。</p>
+<p>复制数据库分为<code>读取专用</code>和<code>可更新</code>两种，前者复制服务器仅能读取主数据库的信息，后者可以对数据进行修改并且同步给主数据库以及其他数据库。</p>
+<article class="message is-info">
+        
+        <div class="message-body">
+            <p>引用：</p>
+<ol>
+<li><em>The Manga Guide to Databases</em> 2009</li>
+</ol>
+
+        </div>
+    </article>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>《漫画数据库》 笔记 （二）</p><p><a href="https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/">https://xuejiaw.github.io/TheMangaGuideToDatabasesNotes-2/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-10-25</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/IA-Chapter1-Chapter2-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《算法导论》 第一、二章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/TheMangaGuideToDatabasesNotes-1/"><span class="level-item">《漫画数据库》 笔记 （一）</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
+            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
+            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: true,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

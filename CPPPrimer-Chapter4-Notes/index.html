@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《C++ Primer》 第四章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《C++ Primer》 第四章笔记 主要关于对内建类型的操作。"><meta property="og:type" content="blog"><meta property="og:title" content="《C++ Primer》 第四章笔记"><meta property="og:url" content="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《C++ Primer》 第四章笔记 主要关于对内建类型的操作。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/CPPPrimer-Chapter4-Notes/Ch4.png"><meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/CPPPrimer-Chapter4-Notes/2020-02-17-23-16-54.png"><meta property="og:image" content="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/CPPPrimer-Chapter4-Notes/2020-02-17-23-17-07.png"><meta property="article:published_time" content="2020-02-17T15:19:58.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.011Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="C++"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/CPPPrimer-Chapter4-Notes/Ch4.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/"},"headline":"《C++ Primer》 第四章笔记","image":["https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/CPPPrimer-Chapter4-Notes/Ch4.png","https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/CPPPrimer-Chapter4-Notes/2020-02-17-23-16-54.png","https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/CPPPrimer-Chapter4-Notes/2020-02-17-23-17-07.png"],"datePublished":"2020-02-17T15:19:58.000Z","dateModified":"2023-04-02T12:21:20.011Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《C++ Primer》 第四章笔记 主要关于对内建类型的操作。"}</script><link rel="canonical" href="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-02-17T15:19:58.000Z" title="2020/2/17 23:19:58">2020-02-17</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.011Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></span><span class="level-item">41 分钟读完 (大约6107个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《C++ Primer》 第四章笔记</h1><div class="content"><p>《C++ Primer》 第四章笔记</p>
+<p>主要关于对内建类型的操作。</p>
+<p><img src="CPPPrimer-Chapter4-Notes/Ch4.png" alt="第四章内容"></p>
+<span id="more"></span>
+<h1>Chapter 4 Expressions</h1>
+<h2 id="Fundamentals">Fundamentals</h2>
+<h3 id="Basic-Concepts">Basic Concepts</h3>
+<h4 id="Grouping-Operators-and-Operands">Grouping Operators and Operands</h4>
+<p>多个操作符的顺序是由优先级（Precedence）和结合性（associatively）有时还有求值顺序（order of evaluation）决定的。</p>
+<h4 id="Overloaded-Operators">Overloaded Operators</h4>
+<p>操作符可以被重载，但是操作符接受的参数数量，优先级还有结合性是没法被改变的。</p>
+<h4 id="Lvalues-and-Rvalues">Lvalues and Rvalues</h4>
+<p>左参数（Lvalues）是出现在赋值左侧的参数，右参数(Rvalues)是出现在赋值右侧的参数。当使用右参数时，使用的是右参数的值，当使用左参数时，使用的是参数的地址。</p>
+<p>除了在13.6节会提到一个例外，可以在右参数的地方使用左参数代替，但是在左参数的地方无法使用右参数代替。</p>
+<blockquote>
+<p>赋值操作会返回左参数，取地址操作返回的指针是右参数，前置的<code>++</code>和<code>--</code>返回左参数。</p>
+</blockquote>
+<p>左右参数在使用<code>decltype</code>时也会体现出区别，当传入decltype的是表达式时，且表达式的结果是左参数，那么decltype的结果是引用。</p>
+<p>假设<code>p</code>的类型是<code>int *</code>，那么<code>*p</code>返回的是左参数，因此<code>decltype(*p)</code>结果是int&amp;，而因为取地址符返回的是右参数，即<code>(&amp;p)</code>结果为为右参数，所以<code>decltype(&amp;p)</code>结果是<code>int* *</code>，而不是引用<code>int** &amp;</code></p>
+<h3 id="Precedence-and-Associativity">Precedence and Associativity</h3>
+<p>优先级（Precedence）决定是操作符执行的先后顺序，结合性（Associativity）决定的是同优先级的操作符之间执行的顺序。</p>
+<p>算数操作符是左结合，即计算顺序是从左到右的，如<code>3*4/2</code>，会先计算除法，而赋值操作是右结合。</p>
+<p>可以使用括号来重新决定优先级和结合性。</p>
+<h3 id="Order-of-Evaluation">Order of Evaluation</h3>
+<p>求值顺序决定了操作符的多个参数，哪个还会先进行求值。</p>
+<p>如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="built_in">f1</span>() * <span class="built_in">f2</span>();</span><br></pre></td></tr></table></figure>
+<p>C++标准只能保证在执行乘法操作前，函数f1和f2都会被执行完毕，但是f1和f2的执行顺序是<em>未定义的</em>。</p>
+<p>同理，如下代码的结果也是未定义的，即使在测试中得到了期待答案，也无法保证在其他硬件或编译器下能正常工作：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; i &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; ++i &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
+<p>所有出现在同一个表达式中的未限定求值顺序的操作符的执行顺序都是未定义的。所以尽量不要在同一个表达式中引用或修改同一个对象，这很可能会引发Bug。</p>
+<p>只有四个操作符的执行顺序是指定了的，逻辑与<code>&amp;&amp;</code>，逻辑或<code>||</code>，条件判断<code>?:</code>和逗号<code>,</code>。</p>
+<p>只有一种情况下，在同一个式子中使用未限定求值顺序的操作符对同一个变量多次操作能得到确定的答案，即修改了变量的子表达式本身就是另一个表达式的对象。</p>
+<p>如<code>int*++iter</code>，按优先级会计算<code>++iter</code>，而改变后的<code>iter</code>本身就是<code>int*</code>表达式的对象。但是在之前的式子的<code>f1() * f2()</code>中，乘法操作符的对象是函数运行后的值，而不是函数本身。同理，对于<code>cout &lt;&lt; i &lt;&lt; &quot; &quot; &lt;&lt; ++i</code>，前面的<code>i</code>和<code>i++</code>实际上是不相关的，即<code>&lt;&lt;</code>操作符并不是将它俩链接在一起，所以谁先执行也是不能保证的。</p>
+<h4 id="Order-of-Evaluation-Precedence-and-Associativity">Order of Evaluation,Precedence and Associativity</h4>
+<p>如有式子<code>f()+g()* h()+j()</code>,可以得出以下结论：</p>
+<ol>
+<li>优先级保证了，g()的结果和h()的结果会先相乘</li>
+<li>结合性保证了f()的结果会先和g()和h()相乘的结果相加，然后得到的结果再与j()相加。</li>
+<li>四个函数的执行顺序无法保证。</li>
+</ol>
+<p>如果这四个函数是相关的，如都会在内部对同一个全局变量进行修改或访问，那么结果将是未定义的。</p>
+<h3 id="Arithmetic-Operators">Arithmetic Operators</h3>
+<p>算数操作符的优先级排序如下，所有的算数操作符的结合性都是从左至右：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>操作符</th>
+<th>含义</th>
+<th>使用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>+</td>
+<td>正号</td>
+<td>+ expr</td>
+</tr>
+<tr>
+<td>1</td>
+<td>-</td>
+<td>负号</td>
+<td>- expr</td>
+</tr>
+<tr>
+<td>2</td>
+<td>*</td>
+<td>相乘</td>
+<td>expr * expr</td>
+</tr>
+<tr>
+<td>2</td>
+<td>/</td>
+<td>相除</td>
+<td>expr / expr</td>
+</tr>
+<tr>
+<td>2</td>
+<td>%</td>
+<td>求余</td>
+<td>expr % expr</td>
+</tr>
+<tr>
+<td>3</td>
+<td>+</td>
+<td>相加</td>
+<td>expr + expr</td>
+</tr>
+<tr>
+<td>3</td>
+<td>-</td>
+<td>相减</td>
+<td>expr - expr</td>
+</tr>
+</tbody>
+</table>
+<p>算数操作符的结果都是右参数。</p>
+<h4 id="Arithmetic-Operation-on-Boolean">Arithmetic Operation on Boolean</h4>
+<p>在对布尔值进行算数操作时需要额外的注意，如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> b = <span class="literal">true</span>;</span><br><span class="line"><span class="type">bool</span> b2 = -b;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;b2 is &quot;</span> &lt;&lt; b2;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">b2 is 1</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>因为对b使用了负号操作符，所以b会转换为int，因为b值为true，所以被转换为1，即b2的值为-1,因为非0，所以b2值为true。最后使用cout打印时，又转换为了int，为1。</p>
+<h4 id="Overflow">Overflow</h4>
+<p>如果对整数类型使用了算数操作符且结果超过了类型所能表达的最大值，那么结果是未定义的，如使用short表示一个数，且在某设备上short是16-bits的类型，那么它的表达范围是$-32768\sim 32767$，如有以下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">short</span> short_value = <span class="number">32767</span>;</span><br><span class="line">short_value++;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;short value is &quot;</span> &lt;&lt; short_value &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">b2 is 1short value is -32768</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>结果为-32768，是因为编译器对其进行了<code>wrap around</code>，但因为结果实际上是未定义的，并不能保证所有设备上都是这个结果。</p>
+<h4 id="remainder-operation">remainder(%) operation</h4>
+<p>取余符号的操作对象必须是整数类型，对于<code>m % n</code>，结果的正负与m一样。即<code>m%(-n)</code>的值与<code>m%n</code>相同，<code>(-m)%n</code>的值与<code>-(m%n)</code>相同。</p>
+<h3 id="Logical-and-Relational-Operators">Logical and Relational Operators</h3>
+<p>所有的算数值（整数和浮点数）和指针转换为布尔值的规则相同，值为0为false，值非0为true。</p>
+<p>所有的逻辑和关系运算符优先级如下标：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>结合性</th>
+<th>操作符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Right</td>
+<td>!</td>
+<td>取非</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Left</td>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Left</td>
+<td>&lt;=</td>
+<td>小于等于</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Left</td>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Left</td>
+<td>&gt;=</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Left</td>
+<td>==</td>
+<td>相等</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Left</td>
+<td>!=</td>
+<td>不等</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Left</td>
+<td>&amp;&amp;</td>
+<td>与</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Left</td>
+<td>||</td>
+<td>或</td>
+</tr>
+</tbody>
+</table>
+<p><code>&amp;&amp;</code>操作和<code>||</code>操作都是最短路径求值</p>
+<h4 id="The-Relational-Operators">The Relational Operators</h4>
+<p>因为关系运算符的返回结果是bool值，级联关系运算符的结果通常如期望的不同，如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">3</span>, j = <span class="number">2</span>, k = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">if</span> (i &lt; j &lt; k)</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;enter case 1&quot;</span>;</span><br><span class="line">        </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">enter case 1</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>运算的实际过程是，先判断<code>i&lt;j</code>，结果为false，返回0，然后判断<code>o&lt;k</code>，结果为true。如果要判断i,j,k是否是递增的，应该写为</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(i &lt; j &amp;&amp; j &lt; k)</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;enter case 1&quot;</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="Equality-Tests-and-the-bool-Literals">Equality Tests and the bool Literals</h4>
+<p>可以在condition中直接使用算数值或者指针来判断该参数是否是0，如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(val) &#123;<span class="comment">/* ... */</span>&#125;<span class="comment">//true if val is nonzero value</span></span><br></pre></td></tr></table></figure>
+<p>但上式不能改写为</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(val == <span class="literal">true</span>)  &#123;<span class="comment">/* ... */</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>在这个式子中，true会被转换为val的类型，即变为1，因此式子判断的是val的值是否为1。</p>
+<h2 id="Assignment-Operators">Assignment Operators</h2>
+<h4 id="Assignment-Is-Right-Associative">Assignment Is Right Associative</h4>
+<p>赋值操作的结合性是从右至左的，且赋值的右参数必须与左参数类型相同或者可以转换到左参数的类型，如下代码所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i;</span><br><span class="line"><span class="type">double</span> d;</span><br><span class="line">i = d = <span class="number">3.5</span>;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;i is &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;, d is &quot;</span> &lt;&lt; d &lt;&lt; endl;</span><br><span class="line">d = i = <span class="number">3.5</span>;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;i is &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;, d is &quot;</span> &lt;&lt; d &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">i is 3, d is 3.5</span></span><br><span class="line"><span class="comment">i is 3, d is 3</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h4 id="Assignment-Has-Low-Precedence">Assignment Has Low Precedence</h4>
+<p>在C++中，可以在condition中使用赋值操作，如下两部分代码是等效的，但第二个更简洁：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="built_in">getValue</span>();</span><br><span class="line"><span class="keyword">while</span> ( i != <span class="number">42</span> )</span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// do sth</span></span><br><span class="line">  i = <span class="built_in">getValue</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i;</span><br><span class="line"><span class="keyword">while</span>( (i = <span class="built_in">getValue</span>()) != <span class="number">42</span>)</span><br><span class="line">  <span class="comment">// do sth</span></span><br></pre></td></tr></table></figure>
+<p>注意赋值操作的优先级很低，所以需要使用括号来限定优先操作，如果不使用括号，则i的值会变成getValue返回值与42的比较结果，即只会是0或1。</p>
+<h4 id="Compound-Assignment-Operators">Compound Assignment Operators</h4>
+<p>以下都是复合赋值操作符：<br>
+<code>+=</code>,<code>-=</code>,<code>*=</code>,<code>/=</code>,<code>%=</code>,<code>&lt;&lt;=</code>,<code>&gt;&gt;=</code>,<code>&amp;=</code>,<code>^=</code>,<code>|=</code>。</p>
+<p>以<code>+=</code>为例，下两个式子是等效的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a += <span class="number">1</span>;</span><br><span class="line">a = a+<span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>但是从性能角度考虑，使用复合赋值操作只需要读取一次左参数，而普通的赋值方法则需要读取两次，因此复合赋值操作有更好的性能，虽然之中的差距不是很明显。</p>
+<h2 id="Increment-and-Decrement-Operators">Increment and Decrement Operators</h2>
+<p><code>++</code>和<code>--</code>操作都有两个形式，前置(Prefix)和后置（Postfix），前置返回的是原值加1后的原对象本身，结果是左参数。后置返回的是原对象的原值，结果是右参数。如下代码所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">0</span>, j;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;i is &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;, j is &quot;</span> &lt;&lt; j &lt;&lt; endl;</span><br><span class="line">j = ++i;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;i is &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;, j is &quot;</span> &lt;&lt; j &lt;&lt; endl;</span><br><span class="line">j = i++;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;i is &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;, j is &quot;</span> &lt;&lt; j &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">i is 0, j is 0</span></span><br><span class="line"><span class="comment">i is 1, j is 1</span></span><br><span class="line"><span class="comment">i is 2, j is 1</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>尽量使用前置操作，这样代码更简洁，且因为避免了拷贝也有更好的性能</p>
+</blockquote>
+<h3 id="Combining-Dereference-and-Increment-in-a-Single-Expression">Combining Dereference and Increment in a Single Expression</h3>
+<p>因为累加符号的优先级低于解引用符，所以<code>*p++</code>等同于<code>*(p++)</code></p>
+<h3 id="Remember-That-Operands-Can-Be-Evaluated-in-Any-Order">Remember That Operands Can Be Evaluated in Any Order</h3>
+<p>如之前所述，在同一个表达式内，子表达式的计算顺序是无法保证的（操作符的优先级决定的是子表达式的计算结果在总表达式中计算的顺序）。</p>
+<p>在同一个表达式中，有子表达式使用对象，另一个子表达式修改对象时，结果是未定义的，如下式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">string s = <span class="string">&quot;abcdefg&quot;</span>;</span><br><span class="line"><span class="keyword">auto</span> beg = s.<span class="built_in">begin</span>();</span><br><span class="line"><span class="keyword">while</span> (beg != s.<span class="built_in">end</span>() &amp;&amp; !<span class="built_in">isspace</span>(*beg))</span><br><span class="line">&#123;</span><br><span class="line">    *beg = <span class="built_in">toupper</span>(*beg++);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">aAAAAAA </span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>结果并不是期望的遍历整个字符串并将所有字符换为大写，这是因为语句<code>*beg = toupper(*beg++)</code>是未定义的，它可能被解释为以下任何情况：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*beg = <span class="built_in">toupper</span>(*beg)</span><br><span class="line">*(beg + <span class="number">1</span>) = <span class="built_in">toupper</span>(*beg)</span><br><span class="line"><span class="comment">//Others</span></span><br></pre></td></tr></table></figure>
+<p>右侧的<code>*beg++</code>中的两个操作符的顺序是固定的，即先进行累加，在进行解引用。</p>
+<p>但是左侧的<code>*beg</code>和右侧的<code>*beg++</code>哪个先进行运算结果是不一定的，如果先运行了左侧，则结果对应上述第一种可能，否则对应上述第二种可能。</p>
+<h2 id="The-Member-Access-Operators">The Member Access Operators</h2>
+<p><code>ptr-&gt;mem</code>相当于<code>(*ptr).mem</code></p>
+<p>箭头操作需要对指针对象进行操作，且返回的是左参数，点操作返回的参数是左参数还是右参数由对象本身决定。</p>
+<h2 id="The-Conditional-Operator">The Conditional Operator</h2>
+<p>条件操作符的形式为<code>cond ? expr1 : expr2</code>，和逻辑与和逻辑或一样，条件操作符同样也是最短求值，所以<code>expr1</code>和<code>expr2</code>中只会有一个参数被计算。</p>
+<h3 id="Nesting-Conditional-Operations">Nesting Conditional Operations</h3>
+<p>当有多个条件操作符嵌套时，结合性是从右至左的，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TestConditionalOperations</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> grade;</span><br><span class="line">    cin &gt;&gt; grade;</span><br><span class="line">    string <span class="keyword">final</span> = (grade &gt; <span class="number">90</span>) ? <span class="string">&quot;High Pass&quot;</span> : (grade &lt; <span class="number">60</span>) ? <span class="string">&quot;fail&quot;</span> : <span class="string">&quot;pass&quot;</span>;</span><br><span class="line">    <span class="comment">//Equals to:</span></span><br><span class="line">    <span class="comment">//(grade &gt; 90) ? &quot;High Pass&quot; : ((grade &lt; 60) ? &quot;fail&quot; : &quot;pass&quot;)</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Final is &quot;</span> &lt;&lt; <span class="keyword">final</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结合性是从右至左的，但是计算顺序仍然是从左至右，即会先计算<code>grade &gt; 90</code>的情况，再计算<code>grade &lt;60</code>。</p>
+<h3 id="Using-a-Conditional-Operator-in-an-Output-Expression">Using a Conditional Operator in an Output Expression</h3>
+<p>因为条件操作符（Conditional Operator）的优先级很低，所以在输出表达式中使用条件操作符时往往都需要加上括号，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; ((grade &lt; <span class="number">60</span>) ? <span class="string">&quot;fail&quot;</span> : <span class="string">&quot;pass&quot;</span>);</span><br><span class="line">cout &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; (grade &lt; <span class="number">60</span>) ? <span class="string">&quot;fail&quot;</span> : <span class="string">&quot;pass&quot;</span>;</span><br><span class="line">cout &lt;&lt; endl;</span><br><span class="line"><span class="comment">// cout &lt;&lt; grade &lt; 60 ? &quot;fail&quot; : &quot;pass&quot;; //Error</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">fail</span></span><br><span class="line"><span class="comment">1</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>第三个表达式无法正常编译，第二个表达式输出了1，因为都是因为<code>&lt;&lt;</code>操作比条件操作符有更高的优先级。</p>
+<p>第二个表达式和第三个表达式等效为以下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cout &lt;&lt; (grade &lt; 60) ? &quot;fail&quot; : &quot;pass&quot;;</span></span><br><span class="line">cout &lt;&lt; (grade &lt;<span class="number">60</span>) ;</span><br><span class="line">cout ? <span class="string">&quot;fail&quot;</span> : <span class="string">&quot;pass&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// cout &lt;&lt; grade &lt; 60 ? &quot;fail&quot; : &quot;pass&quot;; //Error</span></span><br><span class="line">cout &lt;&lt; grade;</span><br><span class="line"><span class="comment">// cout &lt; 60 ? &quot;fail&quot; : &quot;pass&quot;; //Error, can not use &lt; on cout</span></span><br></pre></td></tr></table></figure>
+<h2 id="The-Bitwise-Operators">The Bitwise Operators</h2>
+<p>位操作符（Bitwise Operators）使用整数类型来表示一系列的bits。如果操作的对象类型小于操作的结果类型，则会首先将操作的对象转换为结果类型，然后再进行操作。</p>
+<p>位操作符的优先级及描述如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>操作</th>
+<th>含义</th>
+<th>代码实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>~</td>
+<td>位取反</td>
+<td>~expr</td>
+</tr>
+<tr>
+<td>2</td>
+<td>&lt;&lt;</td>
+<td>左移</td>
+<td>expr1 &lt;&lt; expr2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>&gt;&gt;</td>
+<td>右移</td>
+<td>expr1 &gt;&gt; expr2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>&amp;</td>
+<td>与</td>
+<td>expr1 &amp; expr2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>^</td>
+<td>异或</td>
+<td>expr1 ^ expr2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>|</td>
+<td>或</td>
+<td>expr1 \ expr2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Bitwise-Shift-Operators">Bitwise Shift Operators</h3>
+<ol>
+<li>
+<p><code>&lt;&lt;</code>和<code>&gt;&gt;</code>都是位移操作，右侧的参数必须是正整数，而且必须小于左侧操作对象的bit数，否则将是未定义的。</p>
+</li>
+<li>
+<p>位移运算结合性时从左至右的。</p>
+</li>
+<li>
+<p>返回的结果是拷贝的左侧操作对象位移右侧参数后的结果，即位移运算不会影响原变量。</p>
+</li>
+<li>
+<p>位移出边界的bit将被舍弃。</p>
+</li>
+<li>
+<p>对于左移操作，如果操作对象是signed的，那么操作结果是未定义的，如果操作对象是unsigned的，数据左移后，在右侧装填0。<br>
+对于右移操作，如果操作对象是signed的，操作结果是基于实现的，可以实现为操作后左侧插入1，也可以实现为操作后左侧拷贝sign位（即数据的第一位）。如果操作对象是unsigned的，则在操作后在左侧插入0。</p>
+<blockquote>
+<p>在操作对象为signed时，左移和右移操作要么是未定义的，要么是基于实现的，都不可控。所以建议只对unsigned对象进行位移操作。</p>
+</blockquote>
+</li>
+</ol>
+<p>例子1：</p>
+<p>如有一台设备，其中char为8-bits，int为16-bits，一个名为bits的char对象的值为0233（八进制表示），则其二进制表示为</p>
+<p><code>10011011</code></p>
+<p>首先将其，转换为int，拓展的位都为0，如下<br>
+<code>00000000 10011011</code></p>
+<p>如果执行的函数是<code>bits&lt;&lt;8</code>，即将bits左移8位，结果为</p>
+<p><code>10011011 00000000</code>，最左侧的8位移除了范围，所以被丢弃了。</p>
+<p>如果执行的函数是<code>bits &gt;&gt; 3</code>，即将bits右移动3位，结果为<br>
+<code>000000000 00010011</code>，最右侧的三位移出了范围，所以被丢弃了。</p>
+<h3 id="Bitwise-Not-Operator">Bitwise Not Operator</h3>
+<p>同样在操作前，如果操作对象的整数类型较小，需要将其提升为结果的整数类型，如结果为int（16-bits）,对象为char，且值为<code>10010111</code>，则对其进行取反操作的结果为：</p>
+<p><code>11111111 01101000</code></p>
+<h3 id="Bitwise-And-Or">Bitwise And,Or</h3>
+<p>同样在操作前，如果操作对象的整数类型较小，需要将其提升为结果的整数类型。</p>
+<p>对于异或操作，如果两个操作对象中，有且只有一个1，则结果为0，否则结果都为0。</p>
+<p>例子2：</p>
+<p>在一台int为21-bits，char为8-bits的设备上运行<code>~'q' &lt;&lt; 6</code>，该设备用Latin-1字符集，q二进制表示为<code>01110001</code>。</p>
+<p>首先将其转换为int，结果为</p>
+<p><code>00000000 00000000 00000000 01110001</code></p>
+<p>然后进行取反操作，结果为</p>
+<p><code>11111111 11111111 11111111 10001110</code>，</p>
+<p>再左移6位，结果为</p>
+<p><code>11111111 11111111 11100011 10000000</code></p>
+<p>如果要将该结果转换为10进制，首先第一位数据是1，说明为负数，负数的二进制是补码，因此需要将该二进制转换为原码，首先减一，得到</p>
+<p><code>11111111 11111111 11100011 01111111</code></p>
+<p>再取反，得到</p>
+<p><code>00000000 00000000 00011100 10000000</code></p>
+<p>表达为10进制为7296,所以结果为-7296。</p>
+<h3 id="Using-Bitwise-Operators">Using Bitwise Operators</h3>
+<p>如果有一个int值quiz1，需要将其第27位变为1，则可使用以下代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quiz1 |= <span class="number">1UL</span> &lt;&lt; <span class="number">27</span>;</span><br></pre></td></tr></table></figure>
+<p>如果要将其27位变为0，则可使用如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quize1 &amp;= ~(<span class="number">1UL</span> &lt;&lt; <span class="number">27</span>);</span><br></pre></td></tr></table></figure>
+<p>如想要的到第27位的值，可以使用如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> status= quiz1 &amp; (<span class="number">1UL</span> &lt;&lt; <span class="number">27</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Shift-Operators-Are-Left-Associateive">Shift Operators Are Left Associateive</h3>
+<p>位移操作符的结合性是从左至右的，而IO的操作符是继承自位移操作符的，因此IO的操作符的结合性也同样是从左至右的，因此如下代码将会无法通过编译：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="number">10</span> &lt;<span class="number">24</span>;</span><br></pre></td></tr></table></figure>
+<p>因为&lt;&lt;的优先级高于关系操作符，因此上式实际上等于：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="number">10</span>;</span><br><span class="line">cout &lt; <span class="number">24</span></span><br></pre></td></tr></table></figure>
+<p>因此会造成编译错误。</p>
+<h2 id="The-sizeof-Operator">The sizeof Operator</h2>
+<p>sizeof操作符返回类型的大小，单位为byte，该操作符结合性是从右至左的，结果为<code>type_t</code>类型。有以下两种表达方式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sizeof</span> (type)</span><br><span class="line"><span class="keyword">sizeof</span> expr</span><br></pre></td></tr></table></figure>
+<p>sizeof操作符并不会对操作对象求值，因此如果表达式的结果是未定义的也没关系。</p>
+<p>对于sizeof有以下规则：</p>
+<ol>
+<li>对于char或者返回结果为char类型的表达式，sizeof的结果为1</li>
+<li>对引用对象使用sizeof，结果为绑定的对象类型大小</li>
+<li>对指针使用sizeof，结果为该设备上容纳地址需要的字节数（硬件相关）。</li>
+<li>对数组使用sizeof，返回的是整个数组的大小，因为实际上数组的大小是数组类型的一部分</li>
+<li>对string和vector使用sizeof，返回是这两个类的固定部分，即大小是固定的，并不随元素数量而变化。</li>
+</ol>
+<p>sizeof实例代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">string s = <span class="string">&quot;ABCD&quot;</span>, ss = <span class="string">&quot;&quot;</span>, *sp = &amp;s;</span><br><span class="line">cout &lt;&lt; <span class="built_in">sizeof</span>(string) &lt;&lt; endl;<span class="comment">//32</span></span><br><span class="line">cout &lt;&lt; <span class="keyword">sizeof</span> ss &lt;&lt; endl;<span class="comment">//32</span></span><br><span class="line">cout &lt;&lt; <span class="keyword">sizeof</span> s &lt;&lt; endl;<span class="comment">//32</span></span><br><span class="line">cout &lt;&lt; <span class="keyword">sizeof</span> sp &lt;&lt; endl;<span class="comment">//8</span></span><br><span class="line">cout &lt;&lt; <span class="keyword">sizeof</span> *sp &lt;&lt; endl;<span class="comment">//32</span></span><br><span class="line">cout &lt;&lt; <span class="keyword">sizeof</span> s.<span class="built_in">size</span>() &lt;&lt; endl;<span class="comment">//8</span></span><br><span class="line">cout &lt;&lt; <span class="built_in">sizeof</span>(<span class="type">size_t</span>) &lt;&lt; endl;<span class="comment">// 8</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> arr[<span class="number">3</span>]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">cout &lt;&lt; <span class="built_in">sizeof</span>(arr) &lt;&lt; endl;<span class="comment">//12</span></span><br><span class="line"><span class="type">int</span> arrr[<span class="number">4</span>]&#123;&#125;;</span><br><span class="line">cout &lt;&lt; <span class="built_in">sizeof</span>(arrr) &lt;&lt; endl;<span class="comment">//16</span></span><br></pre></td></tr></table></figure>
+<h2 id="Comma-Operator">Comma Operator</h2>
+<p>逗号操作符（Comma Operator）使用两个操作对象，求值顺序是从左至右的，即逗号操作符可以保证操作对象求值的顺序。</p>
+<p>逗号操作符会先对左手边的操作对象求值，然后丢弃结果，再对右手边的操作对象求值，然后返回结果，如果右手边的对象操作对象是左参数，则返回左参数，否则返回右参数。</p>
+<p>如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">1</span>, y = <span class="number">3</span>, i;</span><br><span class="line">cin &gt;&gt; i;</span><br><span class="line">(i &gt; <span class="number">0</span>) ? ++x, ++y : --x, --y;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;x is &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot;, y is &quot;</span> &lt;&lt; y &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">2</span></span><br><span class="line"><span class="comment">x is 2, y is 3</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">-1</span></span><br><span class="line"><span class="comment"> x is 0, y is 2</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>因为逗号操作符的优先级是最低的，所以上式实际上为</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">( (i &gt; <span class="number">0</span>) ? ++x, ++y : --x ), --y;</span><br></pre></td></tr></table></figure>
+<p>无论如何，逗号操作符的右手边参数，<code>--y</code>都会被运行。</p>
+<p>当i&gt;0时，执行的是<code>(++x,++y)</code>，然后再执行<code>--y</code>，因此结果为x=2,y=3。</p>
+<p>当i&lt;0时，执行的是<code>--x</code>，再执行<code>--y</code>，所以结果为x=0,y=2</p>
+<p>也因为逗号操作符的优先级是最低的，因此下式无法正常编译</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = --x , ++y;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Equals to</span></span><br><span class="line"><span class="comment">//int a = --x;</span></span><br><span class="line"><span class="comment">//,++y</span></span><br></pre></td></tr></table></figure>
+<h2 id="Type-Conversions">Type Conversions</h2>
+<p>C++会自动进行隐式转换，如表达式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> ival = <span class="number">3.541</span> + <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<p>表达式中的3会先转换为double类型，然后相加的结果再转换为int类型。</p>
+<p>隐式转换会在以下情况下发生：</p>
+<ol>
+<li>在多数表达式中，小于int的整数类型会被先转换为int类型</li>
+<li>在条件中，非布尔值的表达式会转换为布尔值</li>
+<li>在初始化中，初始化值会被转换为目标类型；在赋值中，等号右手边的参数类型会转换为左手边的参数类型</li>
+<li>在算数和关系表达式中，如果操作数的类型不同，那么会转换为一个通用的类型（在下一节解释）</li>
+</ol>
+<h3 id="The-Arithmetic-Conversions">The Arithmetic Conversions</h3>
+<p>这节阐述的是算数类型的隐式转换，算数表达式中的隐式转换遵循以下规则：</p>
+<ol>
+<li>
+<p>算术类型的转换会尽量保持精度，如<code>3.541+3</code>中是3转换为了double类型，因为这样可以保留结果的精度。</p>
+</li>
+<li>
+<p>小的整数类型会被转换为大的整数类型，如<code>bool</code>, <code>short</code>, <code>unsigned short</code>, <code>char</code>, <code>unsigned char</code>都会默认尝试转换为int，如果int无法容纳参数值，则转换为unsigned int。<br>
+a. 如果与较小的整数类型进行计算的是比int更大的整数类型，则直接转换为该类型，如<code>'a'+12L</code>，会直接将’a’转换为long类型。<br>
+b. 注意这里必须是与较小的整数类型直接连接的，如<code>12+b+12L</code>中，b还是会先转换为int。<br>
+c. 如果更大的类型非整数类型，仍然会先转换为int再转换为目标类型，如<code>3.14L+'a'</code>，'a’会先转换为int。</p>
+</li>
+<li>
+<p>signed和unsigned类型转换<br>
+a. 如果两个类型都是signed或都是unsigned，则较小的类型转换为较大的类型<br>
+b. 如果unsigned的类型大于等于signed的类型（这里比较的是类型，不是参数值），则signed类型转换至unsigned的目标类型。<br>
+c. 如果signed类型大于unsigned类型，则首先尝试将unsigned类型转换至signed的目标类型，如果signed目标类型无法容纳unsigned类型的参数值，则将signed类型转换至unsigned 目标类型。</p>
+</li>
+</ol>
+<h3 id="Other-Implicit-Conversions">Other Implicit Conversions</h3>
+<p>除了算数类型的隐式转换，C++还有其他类型的隐式转换，如</p>
+<ol>
+<li>
+<p>数组到指针的隐式转换：<br>
+如之前所述，在使用数组名称时，会自动转换为指向数组第一个元素的指针。<br>
+这个转换在以下情况不适用：<br>
+a. 使用decltype<br>
+b. 使用取地址符&amp;<br>
+c. 使用sizeof<br>
+d. typeid，在19.2.2节会说明</p>
+</li>
+<li>
+<p>指针转换<br>
+指针转换包含以下几种：<br>
+a. 固定字面值0和字面值nullptr可以被转换至任意类型的指针（空指针）<br>
+b. 指向任何非const类型的指针可以转换至void*<br>
+c. 指向任何类型的指针都可以转换至const void*</p>
+</li>
+<li>
+<p>布尔值转换<br>
+任何在表达式中的算数类型和指针都会被转换至布尔值，如果参数值为0为false，否则为true</p>
+</li>
+<li>
+<p>const转换<br>
+a. 在初始化时，非const的对象可以初始化const对象。<br>
+b. 指向普通类型的指针也可以转换为指向const类型的指针。<br>
+c. 相反的操作，即将const类型转换至非const的隐式转换不存在。</p>
+</li>
+<li>
+<p>类型自定义隐式转换<br>
+a. <code>string s = &quot;abc&quot;</code>就是string类型自定义的隐式转换，将C类型的字符串字面值转换为string类型<br>
+b. <code>while ( cin &gt;&gt; s)</code>也是cin类型自定义的隐式转换，将cin类型转换为布尔值</p>
+</li>
+</ol>
+<h3 id="Explicit-Conversions">Explicit Conversions</h3>
+<p>可以使用cast来进行显示转换，显示转换的格式为：</p>
+<p><code>cast-name&lt;type&gt;(express)</code></p>
+<p>其中<code>cast-name</code>为显示转换的方法，一共有四种，其中<code>dynamic_cast</code>在19.2节会进行详细说明，剩下三种如下：</p>
+<h4 id="static-cast">static_cast</h4>
+<p>任何定义了的转换（除了low-level const）都可以通过静态转换（static_cast）来执行，这里的<code>定义</code>指的是可能存在的转换。如double和int之间存在转换，但vector和int之间不存在转换，因此前者可以使用静态转换，后者不行。</p>
+<p>如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">10</span>, j = <span class="number">3</span>;</span><br><span class="line"><span class="type">double</span> slope = i / j;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;slope is &quot;</span> &lt;&lt; slope &lt;&lt; endl;</span><br><span class="line">slope = <span class="built_in">static_cast</span>&lt;<span class="type">double</span>&gt;(i) / j;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;slope is &quot;</span> &lt;&lt; slope &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">slope is 3</span></span><br><span class="line"><span class="comment">slope is 3.33333</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>直接进行<code>i/j</code>的话，因为两者都是int，所以结果也是int，因此输出的值为3。而通过static_cast将i的类型转换为double，此时j也会被隐式转换为double，因此结果为3.33。</p>
+<p>通常也会用静态转换将<code>void*</code>转换到目标指针，如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> *p = &amp;slope;</span><br><span class="line"><span class="type">double</span> *dp = <span class="built_in">static_cast</span>&lt;<span class="type">double</span> *&gt;(p);</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;slope is &quot;</span> &lt;&lt; (*dp) &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">slope is 3.33333</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p><code>void*</code>转换为的目标指针必须是原先的值匹配，否则结果是未定义的。</p>
+<h4 id="const-cast">const_cast</h4>
+<p>low-level的const只能通过<code>const_cast</code>显示转换，<code>const_cast</code>唯一能做的是也只是转换low-level的const。</p>
+<p>如:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> *value1 = &amp;i;</span><br><span class="line"><span class="comment">// int *valueP = value;</span></span><br><span class="line"><span class="type">int</span> *value2 = <span class="built_in">const_cast</span>&lt;<span class="type">int</span> *&gt;(value1);</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;value1 is &quot;</span> &lt;&lt; (*value1) &lt;&lt; endl;</span><br><span class="line">*value2 = <span class="number">3</span>;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;value1 is &quot;</span> &lt;&lt; (*value1) &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;value2 is &quot;</span> &lt;&lt; (*value2) &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">value1 is 10</span></span><br><span class="line"><span class="comment">value1 is 3</span></span><br><span class="line"><span class="comment">value2 is 3</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>通过了const_cast，上式将<code>const int *</code>赋值给了普通的<code>int*</code>。甚至通过<code>int*</code>修改了参数，但是C++标准中，修改通过const_cast得到的指针结果是未定义的。</p>
+<ul>
+<li>虽然在测试中得到了期望的结果，但是极度不推荐用这样的方法。</li>
+</ul>
+<h4 id="reinterpret-cast">reinterpret_cast</h4>
+<p>reinterpret_cast可以在更低的层次转换类型，因此提供了更多的转换可能。</p>
+<p>但在转换后的类型很可能是无法正常操作的，如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *ip;</span><br><span class="line"><span class="type">char</span>* cstr = <span class="built_in">reinterpret_cast</span>&lt;<span class="type">char</span>*&gt;(ip);</span><br><span class="line">string str = cstr;</span><br></pre></td></tr></table></figure>
+<p>代码中，将<code>int*</code>转换为了<code>char*</code>，并用它来初始化<code>string</code>，在编译过程中代码不会出现任何问题，但在运行时的结果是未定义的，因为实际上<code>char*</code>和<code>int*</code>在bit层面的解释方法是不一样的。</p>
+<ul>
+<li>尽量避免使用reinterpret_cast,该操作太危险了</li>
+</ul>
+<h4 id="Old-Style-Casts">Old-Style Casts</h4>
+<p>在C语言中，可以通过以下两种方式进行显示转换：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">type (expr)</span><br><span class="line">(type) expr</span><br><span class="line"></span><br><span class="line"><span class="comment">//Like,</span></span><br><span class="line"></span><br><span class="line"><span class="type">char</span> *pc;</span><br><span class="line"><span class="type">int</span> i = <span class="type">int</span>(*pc);</span><br><span class="line">i = (<span class="type">int</span>)(*pc);</span><br></pre></td></tr></table></figure>
+<p>old-stype转换与上述的三个显示转换实际上是等效的，它会首先尝试进行<code>static_cast</code>和<code>const_cast</code>，如果是合法的，则进行相应操作，如果这两个都不合法，则进行<code>reinterpret_cast</code>操作。</p>
+<p>如以下两个操作是等效的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> string *ps;</span><br><span class="line"><span class="type">void</span> *pv;</span><br><span class="line">pv = <span class="built_in">static_cast</span>&lt;<span class="type">void</span> *&gt;(<span class="built_in">const_cast</span>&lt;string *&gt;(ps));</span><br><span class="line">pv = (<span class="type">void</span> *)ps;</span><br></pre></td></tr></table></figure>
+<h2 id="Operator-Precedence-Table">Operator Precedence Table</h2>
+<p>下图为C++所有操作符的含义，实例代码，结合性，优先级以双横线区分：</p>
+<p><img src="CPPPrimer-Chapter4-Notes/2020-02-17-23-16-54.png" alt="操作符1"></p>
+<p><img src="CPPPrimer-Chapter4-Notes/2020-02-17-23-17-07.png" alt="操作符2"></p>
+<article class="message is-info">
+        
+        <div class="message-body">
+            <p>引用：</p>
+<ol>
+<li><em>Cpp Primer</em> 5th Aug.2012</li>
+</ol>
+
+        </div>
+    </article>
+<hr>
+</div><div class="article-licensing box"><div class="licensing-title"><p>《C++ Primer》 第四章笔记</p><p><a href="https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/">https://xuejiaw.github.io/CPPPrimer-Chapter4-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-02-17</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/C/">C++</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/CPPPrimer-Chapter5-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《C++ Primer》 第五章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/CPPPrimer-Chapter3-Notes/"><span class="level-item">《C++ Primer》 第三章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread',
+            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
+            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
+            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
+            avatar: "mm",
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            lang: "zh-CN",
+            visitor: true,
+            highlight: true,
+            recordIP: false,
+            
+            
+            
+            enableQQ: true,
+            requiredFields: [],
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
