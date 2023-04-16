@@ -12,8 +12,8 @@ tags:
 
 <!--more-->
 
-{% message color:info %}
+{% note info simple %}
 
-{% endmessage %}
+{% endnote %}
 
 ***

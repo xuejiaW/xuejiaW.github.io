@@ -142,12 +142,12 @@ Coilois的分类方法可以成为一个有价值的游戏设计工具，因为�
 
 之后的章节会讨论游戏的体验品质，包括玩的心理学，对于情感的表达，游戏促进个人玩耍风格方式等。
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1.*Rules of Play* 2003
 
-{% endmessage %}
+{% endnote %}
 
 ***

@@ -319,12 +319,12 @@ DBMS-Database management system
 3. 外部模式：外部模式是从用户和应用角度来考虑，设计目的是让用户和程序可以方便使用。
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *The Manga Guide to Databases* 2009
 
-{% endmessage %}
+{% endnote %}
 
 ***

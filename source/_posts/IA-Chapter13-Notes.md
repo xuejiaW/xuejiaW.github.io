@@ -43,11 +43,11 @@ tags:
 将除了叶子结点外的所有结点成为`内部结点(internal nodes)`，否则为外部结点`external nodes`
 
 
-{% message color:info %}
+{% note info simple %}
 
 定理：一个有$n$个内部结点的红黑树，其高度最多为$2\lg (n+1)$
 
-{% endmessage %}
+{% endnote %}
 
 定理证明如下：
 
@@ -860,12 +860,12 @@ void RBTree::DeleteFixUp(RBTreeNode* toReplaceTrack)
 }
 ```
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endmessage %}
+{% endnote %}
 
 ***

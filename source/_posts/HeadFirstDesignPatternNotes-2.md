@@ -464,9 +464,9 @@ public abstract class CaffeineBeverage
 }
 ```
 
-{% message color:info %}
+{% note info simple %}
 例子中`brew`和`addCondiments`即为模版函数，而`NeedCondiments`这种提供了基本实现，但派生类中仍然可以重写的函数被称为钩子（`Hook`）。
-{% endmessage %}
+{% endnote %}
 
 #### 咖啡因饮料实现
 
@@ -771,9 +771,9 @@ menu.Debug();
 
 ![组合模式运行结果](HeadFirstDesignPatternNotes-2/2019-02-06-16-23-58.png)
 
-{% message color:info %}
+{% note info simple %}
 引用：
 1. https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/behavioral.html
-{% endmessage %}
+{% endnote %}
 
 ***

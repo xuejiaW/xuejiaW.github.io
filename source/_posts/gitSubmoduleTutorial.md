@@ -76,9 +76,9 @@ git add --a
 git commit -s -m"Modify submodule"
 ```
 
-{% message color:danger %}
+{% note danger simple %}
 在子模块提交时，请确认分支是否正确，否则可能会造成提交到远程仓库的commit ID不符，导致其他工程开发者在运行`git submodule update`时出错
-{% endmessage %}
+{% endnote %}
 
 此时回到主工程，再次status查看
 
@@ -124,10 +124,10 @@ git diff themes/next
 
 
 
-{% message color:info %}
+{% note info simple %}
 引用：
 1. Git 工具 - 子模块 https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97 
 2. Git submodule 子模块的管理和使用 https://www.jianshu.com/p/9000cd49822c
-{% endmessage %}
+{% endnote %}
 
 ***

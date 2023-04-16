@@ -553,12 +553,12 @@ AND product.product_code = sales.product_code
 复制数据库分为`读取专用`和`可更新`两种，前者复制服务器仅能读取主数据库的信息，后者可以对数据进行修改并且同步给主数据库以及其他数据库。
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *The Manga Guide to Databases* 2009
 
-{% endmessage %}
+{% endnote %}
 
 ***

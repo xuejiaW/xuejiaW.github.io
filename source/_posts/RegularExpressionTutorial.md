@@ -98,7 +98,7 @@ tags:
 
 捕捉模式相当于将模式匹配的字符组保存到内存中，方便之后引用。这个严格意义上超脱了正则表达式本身的功能，是在其他语言使用正则表达式时的一个功能。默认的`(<Pattern>)`操作符就是开启了捕捉模式，如要关闭的话，在括号后跟上?:即可，如`(?:<Pattern>)`
 
-{% message color:info %}
+{% note info simple %}
 
 1. Github正则表达式教程 ： https://github.com/ziishaned/learn-regex#learn-regex
 
@@ -106,7 +106,7 @@ tags:
 
 3. 模式匹配图解 :  https://regexper.com/
 
-{% endmessage %}
+{% endnote %}
 
 ***
 

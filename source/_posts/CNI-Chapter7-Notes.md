@@ -298,7 +298,7 @@ $$
 
 香农定理给出了真实环境下，数据速率的上限，即无论编码多么高效，在非理想环境（有噪声）下，每秒最大的比特传输量
 
-{% message color:info %}
+{% note info simple %}
 
 1. Xianping, W.M.L.R.T., 2002. Simple Certification of Nyquist Rule. Journal of Beijing Institufe of Petrochemical Technology, (2), p.12.
 
@@ -306,6 +306,6 @@ $$
 
 3. *Computer Networks and Internets* 6th
 
-{% endmessage %}
+{% endnote %}
 
 ***

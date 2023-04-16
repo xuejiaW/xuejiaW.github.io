@@ -65,12 +65,12 @@ Huizinga在很多方面去尝试重新定义玩耍，并找出玩耍的重要意
 meaningful play可以在游戏的多个方面同时运用，在各种层面上提升玩家的体验。如可以在学科上，如围棋中的一步在数学上的考虑，或在社会层面上，如多个玩家组成了一个游戏论坛，甚至在文化层面上，如围棋冠军可以形成一个围棋热潮等。
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1.*Rules of Play* 2003
 
-{% endmessage %}
+{% endnote %}
 
 ***

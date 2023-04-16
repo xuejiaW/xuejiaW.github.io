@@ -258,9 +258,9 @@ proxyIcon.PrintIconWidthAndHeight();
 
 ![代理模式运行结果](HeadFirstDesignPatternNotes-3/2019-02-07-14-10-11.png)
 
-{% message color:info %}
+{% note info simple %}
 代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，`ImageProxyIcon`并没有为`ImageIcon`拓展什么功能，只是用了多线程来访问访问其中的函数。
-{% endmessage %}
+{% endnote %}
 
 ***
 
@@ -426,9 +426,9 @@ view.OnVolumeDownButtonClick();
 9. 一个类应该有且只有一个被改变的理由（A class should have only one reason to change）
 
 
-{% message color:info %}
+{% note info simple %}
 引用：
 1. https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/behavioral.html
-{% endmessage %}
+{% endnote %}
 
 ***

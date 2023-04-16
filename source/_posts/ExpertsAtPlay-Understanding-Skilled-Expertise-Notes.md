@@ -110,13 +110,13 @@ tags:
 
 FPS与其他游戏不同的是，在FPS中玩家的行为反馈会非常的快，如果做了一个错误的行为，可能下一秒就会因此输掉游戏。
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
  1. Reeves, S., Brown, B., & Laurier, E. (2009). Experts at Play: Understanding Skilled Expertise. Games and Culture, 4(3), 205–227. https://doi.org/10.1177/1555412009339730
 
 
-{% endmessage %}
+{% endnote %}
 
 ***

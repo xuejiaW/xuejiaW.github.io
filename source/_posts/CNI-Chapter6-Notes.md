@@ -216,12 +216,12 @@ $\mu-law$算法的主要优势在于它覆盖了更广的频率范围（例如�
 
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Computer Networks and Internets* 6th
 
-{% endmessage %}
+{% endnote %}
 
 ***

@@ -348,12 +348,12 @@ Huizinga将玩家同意游戏的规则，开始游戏的行为称为，进入“
 也可以通过分析游戏中的这些元素来学习游戏设计。
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1.*Game Design Workshop* 4th 2019 by Tracy Fullerton
 
-{% endmessage %}
+{% endnote %}
 
 ***

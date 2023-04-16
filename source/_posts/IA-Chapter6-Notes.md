@@ -443,12 +443,12 @@ void Insert(int value)
 
 INSERT算法是先加入一个无限小的结点，再通过INCREASE-KEY方法将这个结点的值改为需要的值。该算法的时间复杂度与INCREASE-KEY相同，即$O(\lg n)$
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endmessage %}
+{% endnote %}
 
 ***

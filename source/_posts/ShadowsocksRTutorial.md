@@ -63,9 +63,9 @@ tags:
 
 > 如果需要BBR加速的话，建议选择最高的X64版本，因为BBR依赖于4.9以上的Linux内核
 
-{% message color:warning %}
+{% note warning simple %}
 严格意义上，SSR服务端安装脚本并不依赖于特定系统版本，CentOS 6+，Debian 7+，Ubuntu 12+的系统均可。如果在某版本的系统上出现安装错误（如2019年4月前后，Debian服务器访问失效，导致对应依赖库无法安装），可尝试使用其他版本的系统。
-{% endmessage %}
+{% endnote %}
 
 ![安装新OS](ShadowsocksRTutorial/2019-05-06-20-55-11.png)
 
@@ -163,12 +163,12 @@ net.core.default_qdisc = fq
 
 如果在安装过程中遇到任何问题，可以直接在下面评论区提出。
 
-{% message color:info %}
+{% note info simple %}
 1. SS原工程 https://github.com/shadowsocks/shadowsocks
 2. SS作者关于安全性的回复 https://github.com/shadowsocks/shadowsocks/issues/169
 3. https://sphard3.github.io/ssr/ssr.html
 4. SSR服务端安装脚本作者 https://teddysun.com/486.html/comment-page-60#comments
-{% endmessage %}
+{% endnote %}
 
 
 [^1]: [原工程](https://github.com/shadowsocks/shadowsocks)目前只剩下了一条Commit

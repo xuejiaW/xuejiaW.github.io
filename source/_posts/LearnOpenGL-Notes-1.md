@@ -173,13 +173,13 @@ int main()
 至此整个学习OpenGL的环境设置完成。
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. [vscode OpenGL环境搭建](https://blog.csdn.net/sarono/article/details/86564726)
 2. [Creating a window](https://learnopengl.com/Getting-started/Creating-a-window)
 
-{% endmessage %}
+{% endnote %}
 
 ***

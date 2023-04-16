@@ -170,12 +170,12 @@ Gostikyan是唯一一个没有将规则纳入游戏定义的人，他也是唯�
 2. *Man,Play,Games*,Roger Caillois
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1.*Rules of Play* 2003
 
-{% endmessage %}
+{% endnote %}
 
 ***

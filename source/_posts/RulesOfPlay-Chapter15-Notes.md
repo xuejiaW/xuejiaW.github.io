@@ -164,12 +164,12 @@ tags:
 
 几率存在的意义并不是单纯的增加不确定性。它是要给玩家好处，或者坏处，或者某种信念，如“我希望得到xxx”，“我猜我能得到XXX”等等。
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1.*Rules of Play* 2003
 
-{% endmessage %}
+{% endnote %}
 
 ***

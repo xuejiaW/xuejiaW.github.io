@@ -220,8 +220,8 @@ $$
    
 2. 在公式中的空格是不显示的，如果想要显示空格，可以使用`\text{ }`，大括号内的内容当文字处理，所以会计算空格。
 
-{% message color:info %}
+{% note info simple %}
 
-{% endmessage %}
+{% endnote %}
 
 ***
