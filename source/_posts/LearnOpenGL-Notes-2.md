@@ -130,12 +130,12 @@ glfwTerminate();
 
 [CPP]("https://raw.githubusercontent.com/xuejiaW/Study-Notes/master/LearnOpenGL_VSCode/src/1.HelloWindow/main.cpp")
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. [Hello Window](https://learnopengl.com/Getting-started/Creating-a-window)
 
-{% endmessage %}
+{% endnote %}
 
 ***

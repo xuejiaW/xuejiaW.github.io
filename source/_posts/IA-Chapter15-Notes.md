@@ -900,12 +900,12 @@ int LookupChain(int* matrixSizeArray, Matrix* minMultiplications, int i, int j)
 
 //TODO
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endmessage %}
+{% endnote %}
 
 ***

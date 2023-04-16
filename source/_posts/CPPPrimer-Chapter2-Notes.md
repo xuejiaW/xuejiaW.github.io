@@ -984,12 +984,12 @@ struct Sales_data
 
 * 虽然不是强制规定，但建议每个头文件都带有文件保护符。
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 2. [Latin-1字符集](CPPPrimer-Chapter2-Notes/"https://kb.iu.edu/d/aepu")
-{% endmessage %}
+{% endnote %}
 
 ***

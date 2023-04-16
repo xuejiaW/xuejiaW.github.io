@@ -20,9 +20,9 @@ categories:
 
 <!--more-->
 
-{% message color:info %}
+{% note info simple %}
 原书中的示例代码都是Java，而我在工作中C#用的较多，所以这里的测试代码使用的都是C#。
-{% endmessage %}
+{% endnote %}
 
 ## 策略模式
 
@@ -311,11 +311,11 @@ public abstract class CondimentDecorator : Beverage
 }
 ```
 
-{% message color:info %}
+{% note info simple %}
 
 注意装饰类基类继承自被装饰类，并存有一个被装饰类的变量，因为装饰类需要在被装饰类操作的基础上进行一定额外的操作，所以它需要存有对被装饰类的引用，同时对外部而言调用者而言，它与被装饰类相同。
 
-{% endmessage %}
+{% endnote %}
 
 #### 被装饰类实现
 
@@ -531,9 +531,9 @@ pizza.Debug();
 
 我们定义一个抽象的披萨商店，并在其中定义一个抽象函数`createPizza`，并在披萨商店的继承类中重写这个方法来演示工厂方法模式。
 
-{% message color:warning %}
+{% note warning simple %}
 注意这个例子完全可以通过建立多个简单工厂来实现，这里只是为了说明工厂方法模式的结构。
-{% endmessage %}
+{% endnote %}
 
 #### 抽象披萨商店及实例化
 
@@ -643,9 +643,9 @@ pizza.Debug();
 
 另外在工厂方法模式中，因为是通过重写函数的方法来实现，所以一个工厂只能产出一个产品。而在抽象工厂模式中，在一个抽象工厂中却能定义多个制造产品的函数，进而一个抽象工厂可以提供多个产品。
 
-{% message color:info %}
+{% note info simple %}
 生产出一个产品还是多个产品并不是抽象工厂模式和工厂方法模式的主要区别，他们的主要区别在于工厂方法模式是通过继承来实现工厂的多态，而抽象工厂模式是通过组合。
-{% endmessage %}
+{% endnote %}
 
 我们定义一个披萨原料工厂，来体现抽象工厂模式。
 
@@ -700,9 +700,9 @@ public class ChicagoPizzaIngredientFactory : PizzaIngredientFactory
 }
 ```
 
-{% message color:info %}
+{% note info simple %}
 可以看到在抽象工厂的实现时，用到了工厂方法模式。抽象工厂模式与工厂方法模式并非互斥的两种模式，工厂方法模式实际上内嵌与抽象工厂模式中
-{% endmessage %}
+{% endnote %}
 
 #### 抽象披萨商店及实例化
 
@@ -752,9 +752,9 @@ public class ChicagoPizzaStore : PizzaStore
 }
 ```
 
-{% message color:info %}
+{% note info simple %}
 注意，这里披萨商店的实现，仍然是通过工厂方法模式。只是在`createPizza`函数中会实例化一个抽象工厂，并将其传递给对应的`Pizza`对象
-{% endmessage %}
+{% endnote %}
 
 #### 披萨类及其实例化
 
@@ -847,11 +847,11 @@ pizza.Debug();
 运行结果：
 ![抽象工厂模式运行结果](HeadFirstDesignPatternNotes-1/2019-01-24-01-01-50.png)
 
-{% message color:info %}
+{% note info simple %}
 引用：
 1. https://design-patterns.readthedocs.io/zh_CN/latest/
 2. https://dzone.com/articles/factory-method-vs-abstract
 3. https://stackoverflow.com/questions/5739611/differences-between-abstract-factory-pattern-and-factory-method
-{% endmessage %}
+{% endnote %}
 
 ***

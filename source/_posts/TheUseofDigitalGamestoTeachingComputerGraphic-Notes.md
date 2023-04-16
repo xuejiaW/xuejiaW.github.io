@@ -24,13 +24,13 @@ tags:
 
 # The Use of Digital Games to Teaching Computer Graphics: an Open Opportunity
 
-{% message color:info %}
+{% note info simple %}
 
 原文中有大量source作为例子，在这里不会将所有的被引用source的内容整理再次。
 
 但会通过类似于`[2]`这样的标记，这个说明该部分内容在原文的第二篇引用中有详细说明。
 
-{% endmessage %}
+{% endnote %}
 
 
 ## Introduction
@@ -165,12 +165,12 @@ GDBL都是使用类似于OpenGL，Direct3D这样的框架让学生进行开发�
 GBL很少，所以作者认为在GBL的方面，还能有很多工作进行开展。
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. González-Campos, J. S., Arnedo-Moreno, J., & Sánchez-Navarro, J. (2018, April). The use of digital games to teaching computer graphics: An open opportunity. In 2018 IEEE Global Engineering Education Conference (EDUCON) (pp. 1988-1996). IEEE.
 
-{% endmessage %}
+{% endnote %}
 
 ***

@@ -288,11 +288,11 @@ BSTreeNode* BinarySearchTree::Predecessor(int value)
 }
 ```
 
-{% message color:info %}
+{% note info simple %}
 
 可以看到，无论是Search,Minimum,Maximum,Successor,Predecessor，在最坏的情况下，都是遍历树的每一层，所以时间复杂度为$O(h)$
 
-{% endmessage %}
+{% endnote %}
 
 ### Insertion and deletion
 
@@ -498,12 +498,12 @@ void BinarySearchTree::Delete(int value)
 
 //TODO
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endmessage %}
+{% endnote %}
 
 ***

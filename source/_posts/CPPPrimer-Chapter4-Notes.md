@@ -757,12 +757,12 @@ pv = (void *)ps;
 ![操作符2](CPPPrimer-Chapter4-Notes/2020-02-17-23-17-07.png)
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 
-{% endmessage %}
+{% endnote %}
 
 ***

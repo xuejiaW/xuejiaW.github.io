@@ -33,11 +33,11 @@ Markdown语言的设计目标是让编写者可以注重文章的内容，以一
 
 最多可以到六级标题为止
 
-{% message color:warning %}
+{% note warning simple %}
 
 markdown语法符号，比如`#`，后都需要加上一个空格确保生效
 
-{% endmessage %}
+{% endnote %}
 
 ### 引用
 
@@ -57,11 +57,11 @@ markdown语法符号，比如`#`，后都需要加上一个空格确保生效
 > 引用内容
 > 这样没法换行
 
-{% message color:warning %}
+{% note warning simple %}
 
 根据markdown语法，所有都需要中间空一行，但上例中没有空行，在Next上仍然换行了。这可能是Next的Bug或Feature，但仍然推荐严格安装markdown语法规则添加空行。
 
-{% endmessage %}
+{% endnote %}
 
 在引用之中我们仍然可以使用Markdown语言，比如
 
@@ -165,11 +165,11 @@ refernece方式，是用[]包裹住需要加入超链接的文字，再接一个
 
 [google]:(www.google.com)
 
-{% message color:info %}
+{% note info simple %}
 
 超链接的[]和()符号后都不需要跟空格
 
-{% endmessage %}
+{% endnote %}
 
 ### 图片
 
@@ -195,9 +195,9 @@ refernece方式，是用[]包裹住需要加入超链接的文字，再接一个
 | 数据1 | 数据2 |
 | 数据3 | 数据4 |
 
-{% message color:info %}
+{% note info simple %}
  如果表格中的元素需要换行，可加入`<br>`作为\n
- {% endmessage %}
+ {% endnote %}
 
 ## Next特定标签
 
@@ -232,12 +232,12 @@ note:
 ```html
  {% note [class] %}
  内容内容
- {% endmessage %}
+ {% endnote %}
 ```
 
- {% message color:info %}
+ {% note info simple %}
  内容内容
- {% endmessage %}
+ {% endnote %}
 
 支持的class有`default`,`primary`,`success`,`info`,`warning`,`danger`
 
@@ -340,12 +340,12 @@ Markdown本身是一个基于英文设计的标记语言，所以本身对于中
 ```
 &emsp;&emsp;缩进的文字
 
-{% message color:info %}
+{% note info simple %}
 
 参考
 1. https://markdown.tw/
 2. https://almostover.ru/2016-01/hexo-theme-next-test/
 
-{% endmessage %}
+{% endnote %}
 
 ***

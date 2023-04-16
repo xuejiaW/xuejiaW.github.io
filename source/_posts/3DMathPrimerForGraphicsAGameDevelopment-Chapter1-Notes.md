@@ -35,13 +35,13 @@ tags:
 
 对于自然数和整数的研究称作为离散数学（Discrete Mathematics），对于实数的学习称为连续数学（Continuous Mathematics）。
 
-{% message color:info %}
+{% note info simple %}
 
 图形学第一定理：如果看起来结果是对的，那么就是对的
 
 If it looks right, it is right.
 
-{% endmessage %}
+{% endnote %}
 
 ## 2D Cartesian Space
 
@@ -69,11 +69,11 @@ If it looks right, it is right.
 
 左右手坐标系还会影响`旋转的正方向`。在每个坐标系下，如果要绕着某个轴旋转，用大拇指指向该轴的正方向，四指环绕方向即为旋转的正方向。
 
-{% message color:warning %}
+{% note warning simple %}
 
 这本书下的例子都是以左手坐标系为准的。
 
-{% endmessage %}
+{% endnote %}
 
 ## Odds and Ends
 
@@ -184,12 +184,12 @@ $$
    c^2 = a^2 +b^2 -2ab \cos C.
    $$
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *3D Math Primer for Graphics and Game Development* 2nd 2011 
    
-{% endmessage %}
+{% endnote %}
 
 ***

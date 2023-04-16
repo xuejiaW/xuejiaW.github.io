@@ -106,8 +106,8 @@ L_{\text {out }}\left(\mathbf{x}, \hat{\boldsymbol{\omega}}_{\text {out }}, \lam
 简单渲染管线解决的问题都是从光源出来的直接光。而解决反射光线（间接光）效果，期望与完美求解渲染方程的技术技术称为全局光（global illumination）。
 
 
-{% message color:info %}
+{% note info simple %}
 
-{% endmessage %}
+{% endnote %}
 
 ***

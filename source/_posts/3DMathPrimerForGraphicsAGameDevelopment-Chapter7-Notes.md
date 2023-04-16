@@ -227,12 +227,12 @@ $$
 一切上述的极坐标的点的描述，都可以直接转换为对线段的描述。
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *3D Math Primer for Graphics and Game Development* 2nd 2011 
 
-{% endmessage %}
+{% endnote %}
 
 ***

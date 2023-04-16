@@ -89,12 +89,12 @@ tags:
 同时信息应该是逐渐被揭露给玩家的，否则玩家会一下子突如其来的信息吓到，而且无从下手。
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1.*Rules of Play* 2003
 
-{% endmessage %}
+{% endnote %}
 
 ***

@@ -1305,12 +1305,12 @@ private:
 }
 ```
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 
-{% endmessage %}
+{% endnote %}
 
 ***

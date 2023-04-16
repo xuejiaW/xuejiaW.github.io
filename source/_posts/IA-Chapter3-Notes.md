@@ -40,13 +40,13 @@ $$
 
 ![渐进函数_1](IA-Chapter3-Notes/2019-10-18-13-43-15.png)
 
-{% message color:info %}
+{% note info simple %}
 注意$\Theta(g(n))$实际上是一系列函数的集合，所以严格意义上来说应该表达为$f(n)\in \Theta(g(n))$，但在书中为了表达方便，都写为$f(n)=\Theta(g(n))$
-{% endmessage %}
+{% endnote %}
 
-{% message color:info %}
+{% note info simple %}
 这里的所有函数都约定为非负的
-{% endmessage %}
+{% endnote %}
 
 数学证明如下：
 
@@ -98,12 +98,12 @@ $$
 
 $\Omega$标记的证明与$\Theta$类似，且与$O$一样都能描述算法的任何输入。只不过$\Omega$关注的是算法的最好情况，$O$关注的是算法的最差情况，所以通常我们对于$O$的使用较多。
 
-{% message color:info %}
+{% note info simple %}
 
 定理3.1：
 对任意两个函数$f(n)$和$g(n)$，当且仅当$f(n)=O(g(n)$和$f(n)=\Omega(g(n))$时，存在$f(n)=\Theta(g(n))$
 
-{% endmessage %}
+{% endnote %}
 
 #### Asymoptotic notation in equations and inequalities
 
@@ -285,12 +285,12 @@ $$
 
 * 斐波那契数列以指数速率增长。
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endmessage %}
+{% endnote %}
 
 ***

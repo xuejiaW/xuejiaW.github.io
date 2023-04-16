@@ -537,12 +537,12 @@ free=x;
 ![分支无限制有根树](IA-Chapter10-Notes/2019-10-26-15-40-32.png)
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endmessage %}
+{% endnote %}
 
 ***

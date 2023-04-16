@@ -272,12 +272,12 @@ Crikszentmihalyi说：当一个情况结果是未知时，只有这个人`有能
 
 对于游戏设计师而言，要更好的设计戏剧系统，同时需要对传统戏剧的理解和对游戏本身的理解。
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1.**Game Design Workshop** 4th 2019 by Tracy Fullerton
 
-{% endmessage %}
+{% endnote %}
 
 ***

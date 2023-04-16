@@ -320,13 +320,13 @@ $$
 
 线性代数在解方程组方面的应用在这本书中不多，但在一些更深入的主题，如物理引擎和渲染方面则有很多应用。
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *3D Math Primer for Graphics and Game Development* 2nd 2011 
    
 
-{% endmessage %}
+{% endnote %}
 
 ***

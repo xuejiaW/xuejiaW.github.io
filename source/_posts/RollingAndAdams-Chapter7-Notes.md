@@ -180,12 +180,12 @@ tags:
 
 侦探游戏可以看作是一种概念上挑战的游戏，玩家收集到的新证据就是新事物，而玩家需要能理解其背后隐藏的信息。
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. Andrew Rollings and Ernest Adams on Game Design. Andrew Rollings and Ernest Adams (2003)
 
-{% endmessage %}
+{% endnote %}
 
 ***

@@ -545,12 +545,12 @@ $$
 
 ![变换总结](3DMathPrimerForGraphicsAGameDevelopment-Chapter5-Notes/image-20200306141537944.png)
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *3D Math Primer for Graphics and Game Development* 2nd 2011 
 
-{% endmessage %}
+{% endnote %}
 
 ***

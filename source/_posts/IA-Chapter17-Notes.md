@@ -230,12 +230,12 @@ $$
 
 所以实际操作的总体花费复杂度为$O(n)$。
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Introduction to Algorithms* 3rd Sep.2009
 
-{% endmessage %}
+{% endnote %}
 
 ***

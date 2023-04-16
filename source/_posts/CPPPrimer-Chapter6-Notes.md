@@ -1228,12 +1228,12 @@ int func1(int*,int);
 decltype(func1)* f1(int);
 ```
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 
-{% endmessage %}
+{% endnote %}
 
 ***

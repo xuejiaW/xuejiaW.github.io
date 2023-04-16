@@ -168,12 +168,12 @@ tags:
 2. *Formal Abstract Design Tools* by Doug Church
 3. *The Art of Interactive Design: A Euphorious and Illuminating Guide to Building Successful Software*  by Chris Crawford
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1.*Rules of Play* 2003
 
-{% endmessage %}
+{% endnote %}
 
 ***

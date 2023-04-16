@@ -191,12 +191,12 @@ c++基本上是`free-format`语言，即语言编译过程并不会在意大括�
 通常类的定义放在`.h`文件中，文件的名字与其中的类名字相同。也有程序员会使用`.H`，`.hpp`，`.hxx`来表示头文件，编译器通常不会在意文件后缀名，但是IDE有时会。
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 
-{% endmessage %}
+{% endnote %}
 
 ***

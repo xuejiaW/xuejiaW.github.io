@@ -131,12 +131,12 @@ M包括玩家在游戏中可以进行的操作和行为，以及玩家可以看�
 
 综上，MDA是一个形式化的，帮助设计与开发的迭代框架。即游戏设计师通过从玩家的A出发，来推导出该如何设计M，或者从M出发，预测会导致怎么样的A。
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. Hunicke, R., LeBlanc, M. and Zubek, R., 2004, July. MDA: A formal approach to game design and game research. In Proceedings of the AAAI Workshop on Challenges in Game AI (Vol. 4, No. 1, p. 1722).
 
-{% endmessage %}
+{% endnote %}
 
 ***

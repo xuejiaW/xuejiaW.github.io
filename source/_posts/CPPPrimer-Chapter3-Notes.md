@@ -1085,12 +1085,12 @@ cout << endl;
 示例中，将长度为4的int数组称为int_array。示例中使用using和typedef是等效的。
 
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *Cpp Primer* 5th Aug.2012
 
-{% endmessage %}
+{% endnote %}
 
 ***

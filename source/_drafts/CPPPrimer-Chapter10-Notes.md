@@ -1107,8 +1107,8 @@ copy(ivec.begin(), ivec.end(), out_iter);
 
 
 
-{% message color:info %}
+{% note info simple %}
 
-{% endmessage %}
+{% endnote %}
 
 ***

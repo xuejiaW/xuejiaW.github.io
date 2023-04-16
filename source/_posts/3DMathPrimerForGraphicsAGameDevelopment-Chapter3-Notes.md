@@ -185,12 +185,12 @@ $$
 
 作者在这里提出的直立坐标系（Upright Space）则是另一种表达，设想是，当使用世界坐标系时，则表示这个操作是需要进行位移的，而使用直立坐标系时，则是不需要位移。
 
-{% message color:info %}
+{% note info simple %}
 
 引用：
 
 1. *3D Math Primer for Graphics and Game Development* 2nd 2011 
 
-{% endmessage %}
+{% endnote %}
 
 ***
