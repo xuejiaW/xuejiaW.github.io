@@ -1,47 +1,197 @@
-<!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《C++ Primer》 第二章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《C++ Primer》 第二章笔记，关于变量与基本类型。"><meta property="og:type" content="blog"><meta property="og:title" content="《C++ Primer》 第二章笔记"><meta property="og:url" content="https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《C++ Primer》 第二章笔记，关于变量与基本类型。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/CPPPrimer-Chapter2-Notes/2020-04-15-22-06-48.png"><meta property="og:image" content="https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/CPPPrimer-Chapter2-Notes/2020-02-07-16-03-22.png"><meta property="og:image" content="https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/CPPPrimer-Chapter2-Notes/2020-02-07-17-43-40.png"><meta property="og:image" content="https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/CPPPrimer-Chapter2-Notes/2020-02-07-17-59-23.png"><meta property="og:image" content="https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/CPPPrimer-Chapter2-Notes/2020-02-07-18-04-25.png"><meta property="article:published_time" content="2020-02-11T12:51:14.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.008Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="C++"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/CPPPrimer-Chapter2-Notes/2020-04-15-22-06-48.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/"},"headline":"《C++ Primer》 第二章笔记","image":["https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/CPPPrimer-Chapter2-Notes/2020-04-15-22-06-48.png","https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/CPPPrimer-Chapter2-Notes/2020-02-07-16-03-22.png","https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/CPPPrimer-Chapter2-Notes/2020-02-07-17-43-40.png","https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/CPPPrimer-Chapter2-Notes/2020-02-07-17-59-23.png","https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/CPPPrimer-Chapter2-Notes/2020-02-07-18-04-25.png"],"datePublished":"2020-02-11T12:51:14.000Z","dateModified":"2023-04-02T12:21:20.008Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《C++ Primer》 第二章笔记，关于变量与基本类型。"}</script><link rel="canonical" href="https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
-  (function () {
-      function switchTab() {
-          if (!location.hash) {
-            return;
-          }
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>《C++ Primer》 第二章笔记 | 三叔胡言乱语的地方</title><meta name="author" content="三叔"><meta name="copyright" content="三叔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《C++ Primer》 第二章笔记，关于变量与基本类型。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《C++ Primer》 第二章笔记">
+<meta property="og:url" content="https://tuncle.blog/CPPPrimer-Chapter2-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="《C++ Primer》 第二章笔记，关于变量与基本类型。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuncle.blog/img/avatar.jpg">
+<meta property="article:published_time" content="2020-02-11T12:51:14.000Z">
+<meta property="article:modified_time" content="2023-04-16T06:32:59.812Z">
+<meta property="article:author" content="三叔">
+<meta property="article:tag" content="读书笔记">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuncle.blog/img/avatar.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://tuncle.blog/CPPPrimer-Chapter2-Notes/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: 三叔","link":"链接: ","source":"来源: 三叔胡言乱语的地方","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《C++ Primer》 第二章笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-16 14:32:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-          const id = '#' + CSS.escape(location.hash.substring(1));
-          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
-          if (!$tabMenu) {
-            return;
-          }
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
-          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
-          Array.from($tabMenuContainer.querySelectorAll('a'))
-              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
-              .forEach($content => $content.classList.add('is-hidden'));
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-          if ($tabMenu) {
-              $tabMenu.parentElement.classList.add('is-active');
-          }
-          const $activeTab = document.querySelector(id);
-          if ($activeTab) {
-              $activeTab.classList.remove('is-hidden');
-          }
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
-      switchTab();
-      window.addEventListener('hashchange', switchTab, false);
-  })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-02-11T12:51:14.000Z" title="2020/2/11 20:51:14">2020-02-11</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.008Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></span><span class="level-item">1 小时读完 (大约10477个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《C++ Primer》 第二章笔记</h1><div class="content"><p>《C++ Primer》 第二章笔记，关于变量与基本类型。</p>
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="三叔胡言乱语的地方"><span class="site-name">三叔胡言乱语的地方</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">《C++ Primer》 第二章笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-02-11T12:51:14.000Z" title="发表于 2020-02-11 20:51:14">2020-02-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">10.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>38分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/CPPPrimer-Chapter2-Notes/" data-flag-title="《C++ Primer》 第二章笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>《C++ Primer》 第二章笔记，关于变量与基本类型。</p>
 <p><img src="CPPPrimer-Chapter2-Notes/2020-04-15-22-06-48.png" alt="第二章内容"></p>
 <span id="more"></span>
-<h1>Chapter 2 Variables And Basic Types</h1>
-<h2 id="Primitive-Built-in-Types">Primitive Built-in-Types</h2>
-<p>C++的内置类型（Primitive Type）包括算数类型和空（Void）。算数类型可以用来表示字符，整数，布尔值，浮点数。</p>
-<h3 id="Arithmetic-Types">Arithmetic Types</h3>
-<p>算数类型（Arithmetic Types）可以再细分为整数类型（Integral types）和浮点数类型（Floating-point types）。</p>
+<h1 id="Chapter-2-Variables-And-Basic-Types"><a href="#Chapter-2-Variables-And-Basic-Types" class="headerlink" title="Chapter 2 Variables And Basic Types"></a>Chapter 2 Variables And Basic Types</h1><h2 id="Primitive-Built-in-Types"><a href="#Primitive-Built-in-Types" class="headerlink" title="Primitive Built-in-Types"></a>Primitive Built-in-Types</h2><p>C++的内置类型（Primitive Type）包括算数类型和空（Void）。算数类型可以用来表示字符，整数，布尔值，浮点数。</p>
+<h3 id="Arithmetic-Types"><a href="#Arithmetic-Types" class="headerlink" title="Arithmetic Types"></a>Arithmetic Types</h3><p>算数类型（Arithmetic Types）可以再细分为整数类型（Integral types）和浮点数类型（Floating-point types）。</p>
 <blockquote>
 <p>算数类型的大小，即占用多少个bit，在不同的设备上是不同的</p>
 </blockquote>
 <p>C++标准保证了每个类型的最小尺寸，编译器可以给类型分配大于最小尺寸的位数。因为位数的变换，每一个类型所能表示的最大值和最小值也会相应的变换。</p>
 <p>C++有的算数类型如下：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -113,13 +263,10 @@
 </tr>
 </tbody>
 </table>
+</div>
 <blockquote>
 <p>long long 是C++ 11 后才支持的特性</p>
-</blockquote>
-<blockquote>
 <p>一个char的大小应该保证可以容纳一个设备的基础字符集，通常尺寸为8 bits。wchar_t,char16_t和char32_t都是为了扩展字符集。</p>
-</blockquote>
-<blockquote>
 <p>布尔值，字符和各种整数，都是整数类型。</p>
 </blockquote>
 <p>内存可以分配的最小单元是byte，存储的基本单元为word。在c++中，byte的大小是可以容纳机器基本字符集的大小，通常为8 bits。word的大小通常为32 bits或者64 bits，即4到8 bytes。</p>
@@ -129,8 +276,7 @@
 <p>大多数的计算机都会给每个byte分配一个地址。如在一台8-bit byte和 32-bit words的电脑上，一个word的内存如下，可以说是地址在736424的word或地址在736427的byte。</p>
 <p><img src="CPPPrimer-Chapter2-Notes/2020-02-07-16-03-22.png" alt="word内存分布"></p>
 <p>数据的类型决定了编译器会如何处理这些内存，即多少bit的数据会被认为是一个数据以及该如何翻译这些内存。</p>
-<h3 id="Signed-and-Unsigned-Types">Signed and Unsigned Types</h3>
-<p>除了布尔值和扩展字符集的字符（如wchar_t等），所有的整数类型都可以被分类为有符号（signed）与无符号（unsigned）。</p>
+<h3 id="Signed-and-Unsigned-Types"><a href="#Signed-and-Unsigned-Types" class="headerlink" title="Signed and Unsigned Types"></a>Signed and Unsigned Types</h3><p>除了布尔值和扩展字符集的字符（如wchar_t等），所有的整数类型都可以被分类为有符号（signed）与无符号（unsigned）。</p>
 <p>默认的类型，如int，short，long和long long都是有字符的，可以通过加上相应的<code>unsigned</code>关键字得到无字符版本，如<code>unsigned long</code>。<code>unsigned int</code>被缩写为<code>unsigned</code>。</p>
 <p>但是对于char类型，有三个类型<code>char</code>，<code>signed char</code>，<code>unsigned char</code>三个版本。<code>char</code>是<code>signed char</code>或<code>unsigned char</code>中的一种，具体是哪一种由编译器决定。</p>
 <p>标准并没有定义有符号类型如何表示数据，但是定义了正数部分和负数部分应该是均匀的分割，如8-bit的 signed char，应该保证能覆盖$-127 \sim 127$的范围。大多数现代设备的实现下，char表示的范围是$-128\sim127$。</p>
@@ -143,8 +289,7 @@
 <li>使用double进行浮点数计算。一是因为float通常没有足够的精度，二是因为单精度和双精度的开销差距几乎可以忽略不计，三是因为对于一些设备而言，双精度反而会有更高的效率。</li>
 </ol>
 </blockquote>
-<h3 id="Type-Conversions">Type Conversions</h3>
-<p>类型转换会在使用一个类型的对象，但希望得到另一个类型的对象时自动进行。</p>
+<h3 id="Type-Conversions"><a href="#Type-Conversions" class="headerlink" title="Type Conversions"></a>Type Conversions</h3><p>类型转换会在使用一个类型的对象，但希望得到另一个类型的对象时自动进行。</p>
 <p>如下列代码</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> b = <span class="number">42</span>;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; b &lt;&lt; endl;</span><br><span class="line"><span class="type">int</span> i = b;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">i = <span class="number">3.14</span>;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line"><span class="keyword">if</span> (i)</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;result is true&quot;</span> &lt;&lt; endl;</span><br><span class="line"><span class="type">double</span> pi = i;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; pi &lt;&lt; endl;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span> c = <span class="number">-1</span>;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; (<span class="type">int</span>)c &lt;&lt; endl;</span><br><span class="line"><span class="type">signed</span> <span class="type">char</span> c2 = <span class="number">256</span>;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; (<span class="type">int</span>)c2 &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
 <p>结果为</p>
@@ -156,11 +301,9 @@
 <li>如果将浮点数类型赋值给整数类型，整数类型将保留浮点数的整数部分。</li>
 <li>如果将整数类型赋值给浮点数类型，则浮点数的小数部分为0。</li>
 <li>如果给unsigned类型赋值了超过其能表达的范围的数，结果为值与unsigned类型范围的取模。如上例中，<code>unsigned char c = -1</code>，值为最大能表达的数$256-1$（测试电脑char为8-bit）。</li>
-<li>如果给signed类型赋值了超过其能表达的范围的数，结果是未定义的，虽然在这里的测试中，结果为0。<br>
-但结果在不同电脑，不同编译器，甚至不同的运行时间都会不同，结果是不可预知的。</li>
+<li>如果给signed类型赋值了超过其能表达的范围的数，结果是未定义的，虽然在这里的测试中，结果为0。<br>但结果在不同电脑，不同编译器，甚至不同的运行时间都会不同，结果是不可预知的。</li>
 </ol>
-<h4 id="Expression-Involving-Unsigned-Types">Expression Involving Unsigned Types</h4>
-<p>当signed与unsigned数一起计算时，signed会被转换为unsigned，如下面代码所示：</p>
+<h4 id="Expression-Involving-Unsigned-Types"><a href="#Expression-Involving-Unsigned-Types" class="headerlink" title="Expression Involving Unsigned Types"></a>Expression Involving Unsigned Types</h4><p>当signed与unsigned数一起计算时，signed会被转换为unsigned，如下面代码所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> u1 = <span class="number">10</span>, u2 = <span class="number">42</span>;</span><br><span class="line"><span class="type">int</span> i = <span class="number">-42</span>;</span><br><span class="line">cout &lt;&lt; i + i &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; i + u1 &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; u2 - u1 &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; u1 - u2 &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
 <p>结果为：</p>
 <p><img src="CPPPrimer-Chapter2-Notes/2020-02-07-17-59-23.png" alt="signed隐式转换例子"></p>
@@ -174,9 +317,7 @@
 <ul>
 <li>因此不要将signed和unsigned混用，即使是知道隐式转换的规则。因为在不同的设备下，用以表达unsigned类型的字节数是可能是不同的，这将会导致隐式转换后的结果不同。本例子中，int为32-bit表达，但并不保证所有的设备都是用32-bit表达int。</li>
 </ul>
-<h3 id="Literals">Literals</h3>
-<h4 id="Integar-and-Floating-Point-Literals">Integar and Floating-Point Literals</h4>
-<p>可以使用十进制，八进制或者十六进制来写整数字面量。以<code>0</code>开始的字面量会被认为是八进制，以<code>0x</code>或者<code>0X</code>开始的字面量会被认为是十六进制。</p>
+<h3 id="Literals"><a href="#Literals" class="headerlink" title="Literals"></a>Literals</h3><h4 id="Integar-and-Floating-Point-Literals"><a href="#Integar-and-Floating-Point-Literals" class="headerlink" title="Integar and Floating-Point Literals"></a>Integar and Floating-Point Literals</h4><p>可以使用十进制，八进制或者十六进制来写整数字面量。以<code>0</code>开始的字面量会被认为是八进制，以<code>0x</code>或者<code>0X</code>开始的字面量会被认为是十六进制。</p>
 <p>以下的三个表达是等效的，结果都是十进制的20。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i_decimal = <span class="number">20</span>, i_octal = <span class="number">024</span>, i_hexadecimal = <span class="number">0x14</span>;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;i decimal is &quot;</span> &lt;&lt; i_decimal &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;i octal is &quot;</span> &lt;&lt; i_octal &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;i hexadecimal is &quot;</span> &lt;&lt; i_hexadecimal &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
 <p>三个表达是等效的，结果都是十进制的20。</p>
@@ -192,15 +333,14 @@
 <p>浮点数的字面值用十进制的小数点或者用科学计数法（符号E表示），如下:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="number">3.14159</span> &lt;&lt; endl;   <span class="comment">//3.14159</span></span><br><span class="line">cout &lt;&lt; <span class="number">3.14159E0</span> &lt;&lt; endl; <span class="comment">//3.14159</span></span><br><span class="line">cout &lt;&lt; <span class="number">3.14159E1</span> &lt;&lt; endl; <span class="comment">//31.14159</span></span><br><span class="line">cout &lt;&lt; <span class="number">0.</span> &lt;&lt; endl;<span class="comment">//0</span></span><br><span class="line">cout &lt;&lt; <span class="number">0e0</span> &lt;&lt; endl;<span class="comment">//0</span></span><br><span class="line">cout &lt;&lt; <span class="number">.001</span> &lt;&lt; endl;<span class="comment">//0.001</span></span><br><span class="line">cout &lt;&lt; <span class="number">1E-3</span> &lt;&lt; endl;<span class="comment">//0.001</span></span><br></pre></td></tr></table></figure>
 <p>默认的所有浮点数字面值的类型为double。</p>
-<h4 id="Character-and-Character-String-Literals">Character and Character String Literals</h4>
-<p>单引号之间的字符会被认为是char字面值，双引号之间的字符会被认为string字面值。如</p>
+<h4 id="Character-and-Character-String-Literals"><a href="#Character-and-Character-String-Literals" class="headerlink" title="Character and Character String Literals"></a>Character and Character String Literals</h4><p>单引号之间的字符会被认为是char字面值，双引号之间的字符会被认为string字面值。如</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="string">&#x27;a&#x27;</span> &lt;&lt; endl;	   <span class="comment">//a</span></span><br><span class="line">cout &lt;&lt; <span class="string">&quot;Hello&quot;</span> &lt;&lt; endl;   <span class="comment">//Hello</span></span><br></pre></td></tr></table></figure>
-<p>string字面值是const char的数组，编译器会自动在数组的最后加上一个空白字符，即<code>\0</code>，所以string的真实长度比看上去的字符数大1。如’a’长度为1，&quot;a&quot;长度为2。</p>
+<p>string字面值是const char的数组，编译器会自动在数组的最后加上一个空白字符，即<code>\0</code>，所以string的真实长度比看上去的字符数大1。如’a’长度为1，”a”长度为2。</p>
 <p>两个string字面值如果中间只有空格，或tab或者换行符，会被认为是一个string字面值，如</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cout&lt;&lt;<span class="string">&quot;This is first string literal&quot;</span></span><br><span class="line">		<span class="string">&quot;This is second string literal&quot;</span>&lt;&lt;endl;</span><br></pre></td></tr></table></figure>
-<h4 id="Escape-Sequences">Escape Sequences</h4>
-<p>一些无法显示出来的字符（如回车）和一些有特殊含义的字符可以使用转义序列（Escape sequence）表示。</p>
+<h4 id="Escape-Sequences"><a href="#Escape-Sequences" class="headerlink" title="Escape Sequences"></a>Escape Sequences</h4><p>一些无法显示出来的字符（如回车）和一些有特殊含义的字符可以使用转义序列（Escape sequence）表示。</p>
 <p>一些常用转义序列</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -220,24 +360,23 @@
 <tr>
 <td>\v</td>
 <td>纵向tab</td>
-<td>&lt;*&gt;</td>
-<td>打印出特殊符号*，如&quot; ’ \</td>
+<td>\&lt;*&gt;</td>
+<td>打印出特殊符号*，如” ‘ \</td>
 </tr>
 </tbody>
 </table>
-<p>也可以使用数字和转义符来生成转义序列，假设编译器使用的是<a href="CPPPrimer-Chapter2-Notes/%22https://kb.iu.edu/d/aepu%22"><code>Latin-1</code>字符集</a>。可在<code>\x</code>后跟1或多位十六进制数组，或在<code>\</code>后跟着1至3位八进制数字，如以下代码都将显示一样的结果：</p>
+</div>
+<p>也可以使用数字和转义符来生成转义序列，假设编译器使用的是<a href="CPPPrimer-Chapter2-Notes/&quot;https://kb.iu.edu/d/aepu&quot;"><code>Latin-1</code>字符集</a>。可在<code>\x</code>后跟1或多位十六进制数组，或在<code>\</code>后跟着1至3位八进制数字，如以下代码都将显示一样的结果：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="string">&quot;M\n&quot;</span>;	 <span class="comment">//M</span></span><br><span class="line">cout &lt;&lt; <span class="string">&quot;\115\12&quot;</span>; <span class="comment">//M</span></span><br><span class="line">cout &lt;&lt; <span class="string">&quot;\x4d\xA&quot;</span>; <span class="comment">//M</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>
-<p>这里的\115后跟着的是八进制数，转换为十进制为77，可在Latin-1表中得知，77表示为M。同理\12表示十进制10，表示为LF，即换行。</p>
+<li><p>这里的\115后跟着的是八进制数，转换为十进制为77，可在Latin-1表中得知，77表示为M。同理\12表示十进制10，表示为LF，即换行。</p>
 </li>
-<li>
-<p>跟在<code>\</code>后的数字最多只会被计算前三位，如<code>\1234</code>将会被认为是转义序列<code>\123</code>和一个普通的4。而<code>\x</code>之后跟着的所有数字都会被计算,如<code>\x1234</code>会被认为后面跟着16-bits的十六进制数（一个16进制数是4-bits），但是大多数的硬件都是使用8-bits char的，所以通常来说，两位十六进制数就足以表示字符表了。</p>
+<li><p>跟在<code>\</code>后的数字最多只会被计算前三位，如<code>\1234</code>将会被认为是转义序列<code>\123</code>和一个普通的4。而<code>\x</code>之后跟着的所有数字都会被计算,如<code>\x1234</code>会被认为后面跟着16-bits的十六进制数（一个16进制数是4-bits），但是大多数的硬件都是使用8-bits char的，所以通常来说，两位十六进制数就足以表示字符表了。</p>
 </li>
 </ul>
-<h4 id="Specifying-the-Type-of-a-Literal">Specifying the Type of a Literal</h4>
-<p>可以通过前缀或后缀来指定整数、浮点数以及字符字面值的类型。字符字面值用前缀，整数及浮点数字面值用后缀。</p>
+<h4 id="Specifying-the-Type-of-a-Literal"><a href="#Specifying-the-Type-of-a-Literal" class="headerlink" title="Specifying the Type of a Literal"></a>Specifying the Type of a Literal</h4><p>可以通过前缀或后缀来指定整数、浮点数以及字符字面值的类型。字符字面值用前缀，整数及浮点数字面值用后缀。</p>
 <p>字符字面值类型指定如下表所示：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -264,7 +403,9 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>整数字面值指定如下表所示:</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -287,11 +428,12 @@
 </tr>
 </tbody>
 </table>
+</div>
 <blockquote>
-<p>整数字面值设定的是最小类型，即最终的类型还是会根据字面值的大小来调整<br>
-指定有无符号的类型后缀可以和指定长度的类型的混合使用</p>
+<p>整数字面值设定的是最小类型，即最终的类型还是会根据字面值的大小来调整<br>指定有无符号的类型后缀可以和指定长度的类型的混合使用</p>
 </blockquote>
 <p>浮点数字面值指定如下表所示：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -310,22 +452,19 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>指定字面值类型示例代码如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cout &lt;&lt; <span class="number">9223372036854775808ULL</span> &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="string">L&#x27;a&#x27;</span> &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="string">u8&quot;hi&quot;</span> &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="number">1E-3</span>F &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="number">0.001F</span> &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="number">3.14159L</span> &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
-<h2 id="Variables">Variables</h2>
-<p>C++中的每个变量（Variables）都有类型。</p>
-<h3 id="Variable-Definitions">Variable Definitions</h3>
-<p>简单的变量定义由一个类型指示器（Type Specifier）跟着一个或多个由逗号分割的变量名称组成，以分号结束。如：</p>
+<h2 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h2><p>C++中的每个变量（Variables）都有类型。</p>
+<h3 id="Variable-Definitions"><a href="#Variable-Definitions" class="headerlink" title="Variable Definitions"></a>Variable Definitions</h3><p>简单的变量定义由一个类型指示器（Type Specifier）跟着一个或多个由逗号分割的变量名称组成，以分号结束。如：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> sum = <span class="number">0</span>, value, units_sold = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="Initializers">Initializers</h3>
-<p>当变量定义在同个语句中定义多个变量时，每个变量在声明后马上可见，即后续的变量可以用前面的变量来初始化，如：</p>
+<h3 id="Initializers"><a href="#Initializers" class="headerlink" title="Initializers"></a>Initializers</h3><p>当变量定义在同个语句中定义多个变量时，每个变量在声明后马上可见，即后续的变量可以用前面的变量来初始化，如：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> price = <span class="number">109.99</span>, discount = price * <span class="number">0.16</span>;</span><br></pre></td></tr></table></figure>
 <p>在C++中初始化（Initialization）和赋值（assignment）是两个不同的操作，在许多语言中这两者的区别几乎可以忽略。但是在C++中两者的区别却很重要，初始化是一个变量在创建时给予参数的过程，赋值是变量已经生成后由新的参数替代原先参数的过程。</p>
 <ul>
 <li>在后续的章节中会进一步讨论两者的差异。</li>
 </ul>
-<h3 id="List-initialization">List initialization</h3>
-<p>C++有多种方法来初始化变量，如下所示：</p>
+<h3 id="List-initialization"><a href="#List-initialization" class="headerlink" title="List initialization"></a>List initialization</h3><p>C++有多种方法来初始化变量，如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> units_sold = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// int units_sold(0);</span></span><br><span class="line"><span class="comment">// int units_sold = &#123;0&#125;;</span></span><br><span class="line"><span class="comment">// int units_sold&#123;0&#125;;</span></span><br></pre></td></tr></table></figure>
 <p>这四者都是初始化的方法，其中后两种带有大括号的是C++11的新特性，称为列表初始化（list initialization）。</p>
 <p>如果使用列表初始化，那么在初始化变量的过程中不允许出现精度的丢失，如下所示：</p>
@@ -333,13 +472,11 @@
 <blockquote>
 <p>书中描述编译器会禁止丢失精度的赋值，但在gcc 8.1.0的版本测试下，编译器只是给出了warning</p>
 </blockquote>
-<h3 id="Default-Initialization">Default Initialization</h3>
-<p>当定义一个变量但没有给初始化数值时，参数会被赋予默认值。在任何函数外的未赋值变量会被初始化为0，在函数内部的未赋值内置变量则不会被初始化。未初始化的变量值是未定义的（Undefined），访问或拷贝任何未初始化的值都会产生错误。</p>
+<h3 id="Default-Initialization"><a href="#Default-Initialization" class="headerlink" title="Default Initialization"></a>Default Initialization</h3><p>当定义一个变量但没有给初始化数值时，参数会被赋予默认值。在任何函数外的未赋值变量会被初始化为0，在函数内部的未赋值内置变量则不会被初始化。未初始化的变量值是未定义的（Undefined），访问或拷贝任何未初始化的值都会产生错误。</p>
 <blockquote>
 <p>这里的描述仍然是C++的标准定义，但是不同的编译器会有不同的实现，如在gcc 8.1.0版本中，函数内部的未赋值变量仍然会被初始化为0。但要知道未定义的操作在不同的版本或设备下很可能有不同的结果，所以应该尽可能避免。</p>
 </blockquote>
-<h3 id="Variable-Declarations-and-Definitions">Variable Declarations and Definitions</h3>
-<p>C++支持单独编译（Separate Compilation），即可以把整个程序放在多个文件中，每个文件可以独立的被编译。</p>
+<h3 id="Variable-Declarations-and-Definitions"><a href="#Variable-Declarations-and-Definitions" class="headerlink" title="Variable Declarations and Definitions"></a>Variable Declarations and Definitions</h3><p>C++支持单独编译（Separate Compilation），即可以把整个程序放在多个文件中，每个文件可以独立的被编译。</p>
 <p>为支持单独编译，C++需要区分声明（Declaration）和定义（Definition）。</p>
 <p><code>声明</code>是为了让程序知道变量的名称。如果一个文件需要使用在其他地方定义的变量，那么在这个文件中需要对该变量进行声明。声明一个变量需要指定它的类型和名称。</p>
 <p><code>定义</code>是创建相关的变量。定义一个变量首先会先声明该变量，然后再为该变量开辟存储空间，并赋予初始值。</p>
@@ -348,41 +485,31 @@
 <p>如上所属，声明是不包括函数的初始值的，所以如果一个声明包含了对变量的初始化，那么该声明实际上是定义（在后续章节中可以看到，对于const变量会需要同时使用extern和初始化）。如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Declarations and Definitions</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> i;			   <span class="comment">// Declares but does not define i</span></span><br><span class="line"><span class="type">int</span> j;					   <span class="comment">//declare and defines j</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">double</span> pi = <span class="number">3.1416</span>; <span class="comment">// declare and defines pi, same with expression without extern</span></span><br></pre></td></tr></table></figure>
 <p>为了在多个文件中使用同一个变量，必须在<code>一个文件</code>中定义该变量，在其他文件中声明（不包括定义）该变量。</p>
-<h3 id="Identifiers">Identifiers</h3>
-<p>C++中的标识符（变量名称）由字符，数字和下划线构成，C++并没有限制名称的长度。</p>
-<h3 id="Scope-of-a-Name">Scope of a Name</h3>
-<p>作用域（Scope）是指一个变量在程序中存在意义的部分，在C++中绝大部分的作用域都是通过大括号（<code>&#123;  &#125;</code>）进行分割的。</p>
-<h4 id="Nested-scopes">Nested scopes</h4>
-<p>作用域有的时候会形成嵌套，如果产生嵌套的话，外部作用域（Outer scope）中定义的参数可以被内部作用域（Inner scope）使用，如果内部作用域定义了一个与外部作用域中某变量名字相同的新变量，外部作用域中的变量将会被隐藏，但可以使用操作符<code>::</code>来访问被隐藏了的变量。</p>
+<h3 id="Identifiers"><a href="#Identifiers" class="headerlink" title="Identifiers"></a>Identifiers</h3><p>C++中的标识符（变量名称）由字符，数字和下划线构成，C++并没有限制名称的长度。</p>
+<h3 id="Scope-of-a-Name"><a href="#Scope-of-a-Name" class="headerlink" title="Scope of a Name"></a>Scope of a Name</h3><p>作用域（Scope）是指一个变量在程序中存在意义的部分，在C++中绝大部分的作用域都是通过大括号（<code>&#123;  &#125;</code>）进行分割的。</p>
+<h4 id="Nested-scopes"><a href="#Nested-scopes" class="headerlink" title="Nested scopes"></a>Nested scopes</h4><p>作用域有的时候会形成嵌套，如果产生嵌套的话，外部作用域（Outer scope）中定义的参数可以被内部作用域（Inner scope）使用，如果内部作用域定义了一个与外部作用域中某变量名字相同的新变量，外部作用域中的变量将会被隐藏，但可以使用操作符<code>::</code>来访问被隐藏了的变量。</p>
 <p>如下所示，其中定义在所有函数外的变量有<code>全局作用域(Global scope)</code>，否则的话有<code>代码块作用域(block scope)</code>。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> reused = <span class="number">42</span>; <span class="comment">//global scope</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="type">int</span> unique = <span class="number">0</span>;							   <span class="comment">//block scope</span></span><br><span class="line">  cout &lt;&lt; reused &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; unique &lt;&lt; endl;   <span class="comment">//42 0</span></span><br><span class="line">  <span class="type">int</span> reused = <span class="number">0</span>;							   <span class="comment">//local named reused hides global reused</span></span><br><span class="line">  cout &lt;&lt; reused &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; unique &lt;&lt; endl;   <span class="comment">// 0 0</span></span><br><span class="line">  cout &lt;&lt; ::reused &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; unique &lt;&lt; endl; <span class="comment">// 42 0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>其中第二个输出中的reused变量是在内部作用域中新定义的变量，因此值为0。第三个输出中的reused使用了<code>::</code>操作符访问了全局变量中的reused,所以值为42。</p>
-<h2 id="Compound-Types">Compound Types</h2>
-<p>复合类型（Compound Type）是根据其他类型定义的一种类型，C++有多种混合类型，在这里会先介绍两种，引用（Reference）和指针（Points）。</p>
-<h3 id="References">References</h3>
-<blockquote>
+<h2 id="Compound-Types"><a href="#Compound-Types" class="headerlink" title="Compound Types"></a>Compound Types</h2><p>复合类型（Compound Type）是根据其他类型定义的一种类型，C++有多种混合类型，在这里会先介绍两种，引用（Reference）和指针（Points）。</p>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><blockquote>
 <p>在C++11中引入了右引用(rvalue reference)和左引用(lvalue reference)的概念。但通常来说，当提及引用时都是指左引用。</p>
 </blockquote>
 <p>引用（Reference）是一个物体的别名，引用类型指代另一个类型。</p>
 <p>一个引用创建时会绑定至另一个变量，成为它的别名。当引用创建后无法重新绑定至其他变量，因此引用创建的时候必须被初始化。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> ival = <span class="number">1024</span>;</span><br><span class="line"><span class="type">int</span> &amp;refVal = ival;</span><br><span class="line"><span class="comment">// int &amp;refVal2; //error,must be initialized</span></span><br><span class="line"><span class="comment">// &amp;refVal = reused; //error,can not be rebinded</span></span><br><span class="line">refVal = reused;<span class="comment">//Not rebingding, is to change ival&#x27;s value</span></span><br></pre></td></tr></table></figure>
-<h4 id="A-Reference-Is-an-Alias">A Reference Is an Alias</h4>
-<p>如之前所述，引用不是物体，而是另一个物体的别名，所以对引用的任何操作实际上都是对被绑定的物体的操作。如下：</p>
+<h4 id="A-Reference-Is-an-Alias"><a href="#A-Reference-Is-an-Alias" class="headerlink" title="A Reference Is an Alias"></a>A Reference Is an Alias</h4><p>如之前所述，引用不是物体，而是另一个物体的别名，所以对引用的任何操作实际上都是对被绑定的物体的操作。如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> ii = refVal;	   <span class="comment">//Bound to ival</span></span><br><span class="line"><span class="type">int</span> &amp;refVal3 = refVal; <span class="comment">//the same value as ival</span></span><br></pre></td></tr></table></figure>
-<h4 id="Reference-Definitions">Reference Definitions</h4>
-<p>引用符号<code>&amp;</code>是针对变量名称而言的，所以每个引用在定义的时候前面都需要加上引用符号。</p>
+<h4 id="Reference-Definitions"><a href="#Reference-Definitions" class="headerlink" title="Reference Definitions"></a>Reference Definitions</h4><p>引用符号<code>&amp;</code>是针对变量名称而言的，所以每个引用在定义的时候前面都需要加上引用符号。</p>
 <p>另外除了在2.4节（const reference可以绑定至任意可转换的对象）和15.2节(基类的引用可以绑定派生类对象)提到的两个特殊情况，引用类型必须和被捆绑的值类型一致，且引用类型不能捆绑至字面值。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">1024</span>, i2 = <span class="number">2048</span>;</span><br><span class="line"><span class="type">int</span> &amp;r = i, r2 = i2; <span class="comment">//r is int refernece, r2 is int</span></span><br><span class="line"><span class="comment">// int &amp;refVal4 = 10; //error, can&#x27;t be bound to literal</span></span><br><span class="line"><span class="type">double</span> dval = <span class="number">3.14</span>;</span><br><span class="line"><span class="comment">// int &amp;refVal5 = dval; //error, types not match</span></span><br></pre></td></tr></table></figure>
-<h3 id="Pointers">Pointers</h3>
-<p>指针（Pointers）是一个“指向”别的类型的复合类型。</p>
+<h3 id="Pointers"><a href="#Pointers" class="headerlink" title="Pointers"></a>Pointers</h3><p>指针（Pointers）是一个“指向”别的类型的复合类型。</p>
 <p>与引用不同的是，指针是一个物体，因此它可以被拷贝和赋值，在指针的生命周期内，它可以被指向多个不同的物体。而且指针在定义时并不一定要被初始化，但与其他的内建类型一样，在代码块作用域中的指针如果未被初始化赋值，则它的值是未定义的。</p>
 <p>与引用相似的是，在定义每个指针变量的时候，都需要在前面加上指针符号<code>*</code>。</p>
-<h4 id="Taking-the-Address-of-an-Object">Taking the Address of an Object</h4>
-<p>一个指针包含另一个物体的地址，可通过取地址符(&amp;)来获得一个对象的地址。</p>
+<h4 id="Taking-the-Address-of-an-Object"><a href="#Taking-the-Address-of-an-Object" class="headerlink" title="Taking the Address of an Object"></a>Taking the Address of an Object</h4><p>一个指针包含另一个物体的地址，可通过取地址符(&amp;)来获得一个对象的地址。</p>
 <p>与引用类似，除了在2.4节（pointer to const可以绑定至nonconst对象）和15.2节阐述的特殊情况外，指针所指向的对象类型必须与指针类型相同。如下列代码所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Points</span></span><br><span class="line"><span class="type">int</span> *ip1, *ip2; <span class="comment">//define int pointer without initializer</span></span><br><span class="line"><span class="type">double</span> dp, dp2; <span class="comment">//dp is double, dp2 is double pointer</span></span><br><span class="line"><span class="type">int</span> ival = <span class="number">42</span>;</span><br><span class="line"><span class="type">int</span> *p = &amp;ival; <span class="comment">//p hold the address of ival</span></span><br><span class="line"><span class="type">double</span> dval;</span><br><span class="line"><span class="type">double</span> *pd = &amp;dval; <span class="comment">//Initializer is the address of a double</span></span><br><span class="line"><span class="type">double</span> *pd2 = pd;   <span class="comment">//Initializer is a pointer to double</span></span><br><span class="line"><span class="comment">// int *pi = pd;		//error,pointer types not match</span></span><br><span class="line"><span class="comment">// int *pi2 = &amp;dval;   // error,pointer types and object typenot match</span></span><br></pre></td></tr></table></figure>
-<h4 id="Pointer-Value">Pointer Value</h4>
-<p>一个指针的值，可以是以下四种情况：</p>
+<h4 id="Pointer-Value"><a href="#Pointer-Value" class="headerlink" title="Pointer Value"></a>Pointer Value</h4><p>一个指针的值，可以是以下四种情况：</p>
 <ol>
 <li>指向一个对象的地址</li>
 <li>指向一个对象地址后的第一个byte</li>
@@ -392,15 +519,13 @@
 <p>使用非法指针的结果是未定义的，具体的结果由不同的编译器决定。虽然情况2和3是合法的，但是访问这两种情况的指针结果也是未定义的。如</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *ip = &amp;ival;	 <span class="comment">//Pointer to ival</span></span><br><span class="line"><span class="type">int</span> *ipEnd = ip + <span class="number">1</span>; <span class="comment">//Pointer to end of ival</span></span><br><span class="line"><span class="type">int</span> *ipNull = <span class="literal">NULL</span>;</span><br><span class="line">cout &lt;&lt; (*ip) &lt;&lt; <span class="string">&quot;  &quot;</span> &lt;&lt; (*ipEnd) &lt;&lt; endl; <span class="comment">// 42 0</span></span><br></pre></td></tr></table></figure>
 <p>虽然在这里的测试中<code>(*ipEnd)</code>返回的值为0，但实际上这是未定义操作，在不同的编译器会返回不同的结果。</p>
-<h4 id="Using-a-Pointer-to-Access-an-Object">Using a Pointer to Access an Object</h4>
-<p>当使用指针访问变量时，需要使用解引用符号<code>*</code>。如上节代码中的<code>(*ip)</code>。</p>
+<h4 id="Using-a-Pointer-to-Access-an-Object"><a href="#Using-a-Pointer-to-Access-an-Object" class="headerlink" title="Using a Pointer to Access an Object"></a>Using a Pointer to Access an Object</h4><p>当使用指针访问变量时，需要使用解引用符号<code>*</code>。如上节代码中的<code>(*ip)</code>。</p>
 <ul>
 <li>尽可能避免解引用那些非法或者没有指向具体对象的指针。</li>
 </ul>
 <p>&amp;和*符号现在都有多个含义，&amp;既可以表示为引用，又可以表示取地址符号，*既可以表示指针，又可以表示解引用符号。它们在代码中的具体含义由上下文决定：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="type">int</span> &amp;r = i;							 <span class="comment">//reference</span></span><br><span class="line"><span class="type">int</span> *pp;							 <span class="comment">//pointer</span></span><br><span class="line">pp = &amp;r;							 <span class="comment">//address-of operator</span></span><br><span class="line">*pp = i;							 <span class="comment">//dereference</span></span><br><span class="line"><span class="type">int</span> &amp;r2 = *pp;						 <span class="comment">// reference and dereference</span></span><br><span class="line">cout &lt;&lt; (r2) &lt;&lt; <span class="string">&quot;&quot;</span> &lt;&lt; (*pp) &lt;&lt; endl; <span class="comment">//4242</span></span><br></pre></td></tr></table></figure>
-<h4 id="Null-Pointers">Null Pointers</h4>
-<p>空指针（Null Pointers）并不指向任何对象，代码可以在使用指针前检查其是否为空。</p>
+<h4 id="Null-Pointers"><a href="#Null-Pointers" class="headerlink" title="Null Pointers"></a>Null Pointers</h4><p>空指针（Null Pointers）并不指向任何对象，代码可以在使用指针前检查其是否为空。</p>
 <p>有三种方法定义空指针，如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *p1 = <span class="literal">nullptr</span>; <span class="comment">// c++ 11</span></span><br><span class="line"><span class="type">int</span> *p2 = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> *p3 = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
 <p>nullptr是C++11标准中引入的特性，它是一个特殊的字面值，可以转换为任何指针类型。NULL定义在头文件<code>cstdlib</code>中，它使用预处理器(<code>#define</code>)转换为0，所以使用NULL和使用0来定义空指针实际上是等效的。</p>
@@ -409,114 +534,87 @@
 </ul>
 <p>虽然可以用0来表示空指针，但并不能将int变量直接赋值给指针，即使该变量值为0也不行，如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> zero = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// p3 = zero; //error, can&#x27;t assign an int to pointer</span></span><br></pre></td></tr></table></figure>
-<h4 id="Assignment-and-Pointers">Assignment and Pointers</h4>
-<p>指针和引用都是对对象的间接访问，但引用是对象的别名，且引用本身并不是一个对象，但指针是一个对象，它存储另一个对象的地址。</p>
+<h4 id="Assignment-and-Pointers"><a href="#Assignment-and-Pointers" class="headerlink" title="Assignment and Pointers"></a>Assignment and Pointers</h4><p>指针和引用都是对对象的间接访问，但引用是对象的别名，且引用本身并不是一个对象，但指针是一个对象，它存储另一个对象的地址。</p>
 <p>引用在初始化后无法修改其本身绑定的对象，指针可以在生命周期内修改它所指向的对象。</p>
-<h4 id="Other-Pointer-Operations">Other Pointer Operations</h4>
-<p>指针可以用来作为判断条件，如果指针为0（空指针）则为false，任何非空指针都为true。</p>
+<h4 id="Other-Pointer-Operations"><a href="#Other-Pointer-Operations" class="headerlink" title="Other Pointer Operations"></a>Other Pointer Operations</h4><p>指针可以用来作为判断条件，如果指针为0（空指针）则为false，任何非空指针都为true。</p>
 <p>可以比较两个指针是否相同（== 或 !=），如果两个指针包含的地址是一样的，则两者相同。</p>
 <p>如果用了非法的指针来作为判断条件或判断是否相同，结果是<em>未定义的</em>。</p>
-<h4 id="void-Pointers">void* Pointers</h4>
-<p>void*类型是一个可以包含任何类型的对象的地址的特殊类型。如下所示：</p>
+<h4 id="void-Pointers"><a href="#void-Pointers" class="headerlink" title="void* Pointers"></a>void* Pointers</h4><p>void*类型是一个可以包含任何类型的对象的地址的特殊类型。如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> obj = <span class="number">3.14</span>, *pdd = &amp;obj;</span><br><span class="line"><span class="type">void</span> *pv = &amp;obj;<span class="comment">//pv can hold a pointer to any type</span></span><br><span class="line">pv = pdd;</span><br></pre></td></tr></table></figure>
 <p>但无法通过void*对其指向的对象进行操作，因为void*无法得知对象的具体类型，也就无法解释对象，如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cout &lt;&lt; (*pv) &lt;&lt; endl;//error,can&#x27;t operate in the object void* addresses</span></span><br></pre></td></tr></table></figure>
 <p>void*更多的是用来处理内存方面的工作。</p>
-<h3 id="Understanding-Compound-Type-Declarations">Understanding Compound Type Declarations</h3>
-<h4 id="Defining-Multiple-Variables">Defining Multiple Variables</h4>
-<p>如之前所述，引用和指针的定义是跟着变量名字的，因此可以在一个定义中同时定义普通变量，引用和指针。如:</p>
+<h3 id="Understanding-Compound-Type-Declarations"><a href="#Understanding-Compound-Type-Declarations" class="headerlink" title="Understanding Compound Type Declarations"></a>Understanding Compound Type Declarations</h3><h4 id="Defining-Multiple-Variables"><a href="#Defining-Multiple-Variables" class="headerlink" title="Defining Multiple Variables"></a>Defining Multiple Variables</h4><p>如之前所述，引用和指针的定义是跟着变量名字的，因此可以在一个定义中同时定义普通变量，引用和指针。如:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">1024</span>, *p = &amp;i, &amp;r = i</span><br></pre></td></tr></table></figure>
 <p>&amp;和*符号可以写在类型后面，也可以写在变量前面，如下面两个式子是等效的：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>* p;</span><br><span class="line"><span class="type">int</span> *p;</span><br></pre></td></tr></table></figure>
 <p>但为了避免误解，即认为引用和指针的定义是跟着变量类型的，推荐使用第二种方式。</p>
-<h4 id="Pointers-to-Pointers">Pointers to Pointers</h4>
-<p>指针是内存中的一个对象，所以可以创建指针指向另一个指针对象，如下所示：</p>
+<h4 id="Pointers-to-Pointers"><a href="#Pointers-to-Pointers" class="headerlink" title="Pointers to Pointers"></a>Pointers to Pointers</h4><p>指针是内存中的一个对象，所以可以创建指针指向另一个指针对象，如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> ival = <span class="number">1024</span>;</span><br><span class="line"><span class="type">int</span> *pi = &amp;ival;</span><br><span class="line"><span class="type">int</span> **ppi = &amp;pi;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;Direct value is &quot;</span> &lt;&lt; ival &lt;&lt; endl;<span class="comment">//Direct value is1024</span></span><br><span class="line">cout &lt;&lt; <span class="string">&quot;Indirect value is &quot;</span> &lt;&lt; *pi &lt;&lt; endl;<span class="comment">//Indirect valueis 1024</span></span><br><span class="line">cout &lt;&lt; <span class="string">&quot;Double indirect value is &quot;</span> &lt;&lt; **ppi &lt;&lt; endl;<span class="comment">//Doubleindirect value is 1024</span></span><br></pre></td></tr></table></figure>
 <p>C++并没有限定指针的个数，因此可以进一步定义<code>***pppi</code>等。</p>
-<h4 id="Reference-to-Pointers">Reference to Pointers</h4>
-<p>因为引用并不是一个对象，所以不可能存在引用的指针，但可能存在指针的引用，如下：</p>
+<h4 id="Reference-to-Pointers"><a href="#Reference-to-Pointers" class="headerlink" title="Reference to Pointers"></a>Reference to Pointers</h4><p>因为引用并不是一个对象，所以不可能存在引用的指针，但可能存在指针的引用，如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="type">int</span> *p;</span><br><span class="line"><span class="type">int</span> *&amp;r = p;</span><br><span class="line">r = &amp;i; <span class="comment">//make p point to i</span></span><br><span class="line">*r = <span class="number">0</span>; <span class="comment">//make i&#x27;s value to 0</span></span><br></pre></td></tr></table></figure>
 <p>重点是语句<code>int *&amp;r = p</code>，该语句的操作符比较多，为了很好理解，可以从变量名逐渐向外层读。变量名是r，离变量名最近的操作符是<code>&amp;</code>，因此r是一个引用，外层的操作符是<code>*</code>，因此r是指针的引用，再外层是<code>int</code>，所以r是int指针的引用。</p>
-<h2 id="const-Qualifier">const Qualifier</h2>
-<p>可以使用const限定词来限制一个变量在初始化后不会被改变。</p>
-<h4 id="Initialization-and-const">Initialization and const</h4>
-<p>const限定的变量必须被初始化，初始化的语句可以是任何复杂的表达式，且用于初始化的变量并不一定要是const的。</p>
+<h2 id="const-Qualifier"><a href="#const-Qualifier" class="headerlink" title="const Qualifier"></a>const Qualifier</h2><p>可以使用const限定词来限制一个变量在初始化后不会被改变。</p>
+<h4 id="Initialization-and-const"><a href="#Initialization-and-const" class="headerlink" title="Initialization and const"></a>Initialization and const</h4><p>const限定的变量必须被初始化，初始化的语句可以是任何复杂的表达式，且用于初始化的变量并不一定要是const的。</p>
 <p>const变量的初始化如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> kk = <span class="built_in">getSize</span>();</span><br><span class="line"><span class="comment">// const int k; //error, const value must be initialized</span></span><br><span class="line"><span class="type">int</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> ci = i;</span><br><span class="line"><span class="type">int</span> j = ci;</span><br></pre></td></tr></table></figure>
 <p>其中修饰变量$ci$的const限定符，只是表明变量$ci$不能会修改，用于初始化的$i$仍然能被修改，使用$ci$初始化的j也仍然能被修改。</p>
-<h4 id="By-Default-const-Objects-Are-Local-to-a-File">By Default, const Objects Are Local to a File</h4>
-<p>对于const限定的变量，大多数编译器在编译的过程中会将相关的代码直接修改为限定的值，如下代码：</p>
+<h4 id="By-Default-const-Objects-Are-Local-to-a-File"><a href="#By-Default-const-Objects-Are-Local-to-a-File" class="headerlink" title="By Default, const Objects Are Local to a File"></a>By Default, const Objects Are Local to a File</h4><p>对于const限定的变量，大多数编译器在编译的过程中会将相关的代码直接修改为限定的值，如下代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> bufSize = <span class="number">512</span>;</span><br></pre></td></tr></table></figure>
 <p>在代码中使用bufSize的地方在编译后都会被修改为512。</p>
 <p>也因此，在不同的文件中，可以定义多个同名的const变量，因为const的作用域是仅局限在本文件中的。普通的非const的变量则不行，它们只能在某一个文件中被定义一次，其他文件中只能声明。</p>
 <p>而需要在多个文件中公用一个const变量时则需要用到extern关键字，如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//In file Chapter2Const.h</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getSize</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">42</span>; &#125;</span><br><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> bufSize = <span class="built_in">getSize</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">//In file Chapter2_VariablesAndBasicType.cpp</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> bufSize;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;value is: &quot;</span> &lt;&lt; bufSize; <span class="comment">//value is: 42</span></span><br></pre></td></tr></table></figure>
-<h3 id="Reference-to-const">Reference to const</h3>
-<p>将有限定词const的引用成为<code>const reference</code>，但这个称呼有的时候会造成干扰，实际上应该的表达时reference to const。因为严格意义上，所有的引用本身在初始化后都是无法修改的（无法绑定至别人的变量），所以所有的引用都是const的。</p>
+<h3 id="Reference-to-const"><a href="#Reference-to-const" class="headerlink" title="Reference to const"></a>Reference to const</h3><p>将有限定词const的引用成为<code>const reference</code>，但这个称呼有的时候会造成干扰，实际上应该的表达时reference to const。因为严格意义上，所有的引用本身在初始化后都是无法修改的（无法绑定至别人的变量），所以所有的引用都是const的。</p>
 <p>一个const变量的引用必须是const reference，否则就可以通过普通的引用来修改const变量。示例如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> ci = <span class="number">1024</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> &amp;r1 = ci;</span><br><span class="line"><span class="comment">// r1 = 42;	  //error,ri is reference to a const variable</span></span><br><span class="line"><span class="comment">// int &amp;r2 = ci; //error, reference to a const variable mustbe const</span></span><br></pre></td></tr></table></figure>
-<h4 id="Initialization-and-Reference-to-const">Initialization and Reference to const</h4>
-<p>在之前的引用章节中，提到引用类型必须与被引用的对象类型一致。</p>
+<h4 id="Initialization-and-Reference-to-const"><a href="#Initialization-and-Reference-to-const" class="headerlink" title="Initialization and Reference to const"></a>Initialization and Reference to const</h4><p>在之前的引用章节中，提到引用类型必须与被引用的对象类型一致。</p>
 <p>这里将阐述第一个意外，一个const reference可以绑定至任意其他可以被转换的变量和表达式（如非const的变量，字面值，类型不同但可转换的变量等），如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="type">double</span> dval = <span class="number">3.14</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> &amp;r1 = i;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> &amp;r2 = <span class="number">42</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> &amp;r3 = r1 * <span class="number">2</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> &amp;r4 = dval;</span><br><span class="line"><span class="comment">// int &amp;r5 = i * 2;//error, plain,nonconst reference must match type</span></span><br></pre></td></tr></table></figure>
 <p>如语句<code>const int &amp;r4 = dval</code>，编译器实际上将初始化过程转换为了类似于如下的语句：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> temp = dval;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> &amp;r4 = temp;</span><br></pre></td></tr></table></figure>
 <p>因为r4是const reference，所以它不会修改绑定的对象，因此绑定的对象是临时变量也没有问题。而对于普通引用来说，如果执行了同样的操作，那后续对普通引用的操作就变成了操作一个临时变量了。</p>
-<h4 id="A-Reference-to-const-May-Refer-to-an-Object-That-is-not-const">A Reference to const May Refer to an Object That is not const</h4>
-<p>const Refernece只是限定了不能通过该引用来修改绑定的参数，但参数本身是否能修改并不限定，如下代码</p>
+<h4 id="A-Reference-to-const-May-Refer-to-an-Object-That-is-not-const"><a href="#A-Reference-to-const-May-Refer-to-an-Object-That-is-not-const" class="headerlink" title="A Reference to const May Refer to an Object That is not const"></a>A Reference to const May Refer to an Object That is not const</h4><p>const Refernece只是限定了不能通过该引用来修改绑定的参数，但参数本身是否能修改并不限定，如下代码</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">42</span>;</span><br><span class="line"><span class="type">int</span> &amp;r1 = i;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> &amp;r2 = i;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; r2 &lt;&lt; endl; <span class="comment">//value is 42</span></span><br><span class="line">r1 = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// r2=0;//error,can&#x27;t change const reference</span></span><br><span class="line">cout &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; r2 &lt;&lt; endl; <span class="comment">//value is 0</span></span><br></pre></td></tr></table></figure>
-<h3 id="Points-and-const">Points and const</h3>
-<p>指向const变量的指针也必须是const类型的指针。对于指向const变量的指针而言，也可以指向非const的变量，但仍然不能绑定至类型不同的变量和字面值。如下所示：</p>
+<h3 id="Points-and-const"><a href="#Points-and-const" class="headerlink" title="Points and const"></a>Points and const</h3><p>指向const变量的指针也必须是const类型的指针。对于指向const变量的指针而言，也可以指向非const的变量，但仍然不能绑定至类型不同的变量和字面值。如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">double</span> pi = <span class="number">3.14</span>;</span><br><span class="line"><span class="comment">// double *ptr = &amp;pi;//error,pointer must be pointer to const</span></span><br><span class="line"><span class="type">const</span> <span class="type">double</span> *cptr = &amp;pi;</span><br><span class="line"><span class="comment">// *cptr = 42; //error,can&#x27;t modify const value</span></span><br><span class="line"><span class="type">double</span> dval = <span class="number">3.14</span>;</span><br><span class="line">cptr = &amp;dval; <span class="comment">//can pointer to different variable</span></span><br><span class="line"><span class="comment">// const int *iptr = &amp;dval;//error,can&#x27;t point to differnet type</span></span><br></pre></td></tr></table></figure>
 <p>pointer to const只是限制了不能通过该指针对变量进行修改（这一点如同const refernece）。但是对指针本身的值可以修改（reference不行，无论是不是const的）。</p>
-<h4 id="const-Pointers">const Pointers</h4>
-<p>如果要限定指针本身的值不被修改，可以使用const Pointers。const Pointer是在指针符号*后加上const。<br>
-const pointers必须初始化。</p>
-<p>$$<br>
-\begin{cases}<br>
-\text{pointer to const} &amp; \text{不能通过该指针修改绑定的内容} \\<br>
-\text{const pointer} &amp; \text{不能修改指针本身}<br>
-\end{cases}<br>
-$$</p>
-<p>如下代码所示：</p>
+<h4 id="const-Pointers"><a href="#const-Pointers" class="headerlink" title="const Pointers"></a>const Pointers</h4><p>如果要限定指针本身的值不被修改，可以使用const Pointers。const Pointer是在指针符号*后加上const。<br>const pointers必须初始化。</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+  \text{pointer to const} & \text{不能通过该指针修改绑定的内容} \\\\
+  \text{const pointer} & \text{不能修改指针本身}
+\end{cases}</script><p>如下代码所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> errorNum = <span class="number">0</span>, warningNum = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// int *const curErr;//error, must be initialized.</span></span><br><span class="line"><span class="type">int</span> *<span class="type">const</span> curErr = &amp;errorNum;</span><br><span class="line"><span class="comment">// curErr = &amp;warningNum; // can not change pointer value</span></span><br><span class="line">*curErr = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi = <span class="number">3.14</span>;</span><br><span class="line"><span class="type">double</span> p = <span class="number">3.1415</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> *<span class="type">const</span> pip = &amp;pi;</span><br><span class="line"><span class="comment">// pip = &amp;p; //error,can not change pointer value</span></span><br><span class="line"><span class="comment">// *pip = 2.0; //error,can not const variable value</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Top-Level-const">Top-Level const</h3>
-<p>使用术语<code>top-level const</code>来表示本身是const,使用术语<code>low-level const</code>表示指向的值是const类型。</p>
+<h3 id="Top-Level-const"><a href="#Top-Level-const" class="headerlink" title="Top-Level const"></a>Top-Level const</h3><p>使用术语<code>top-level const</code>来表示本身是const,使用术语<code>low-level const</code>表示指向的值是const类型。</p>
 <p>更宽泛的说，任何类型都可以是top-level const的，复合类型如引用和指针可以是low-level const的。而指针与其他类型不同，可以同时是top-level和low-level的const。</p>
 <p>当拷贝top-level const类型的变量时，top-level const属性会被无视。而low-level const则必须满足，即被拷贝的对象和接纳拷贝数据的对象都必须有相同的low-level const属性或者它们的类型可以转换，通常non-const可以转换至const，但是const不能转换至non-const。</p>
 <p>top-level const和low-level const的测试代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> *<span class="type">const</span> pi = &amp;i;  <span class="comment">//pi is top level const</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> ci = <span class="number">42</span>;   <span class="comment">//top level const</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> *p2 = &amp;ci; <span class="comment">//low level const</span></span><br><span class="line"><span class="comment">// int *p3 = p2;	//error,differnt low level const,and const can&#x27;t convert to nonconst</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> *<span class="type">const</span> p4 = p2; <span class="comment">//both top and low level const</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> &amp;r1 = ci;		  <span class="comment">//low level const</span></span><br><span class="line"><span class="comment">// int &amp;r2 = ci;	//error,differnt low level const,and const can&#x27;t convert to nonconst</span></span><br><span class="line">i = ci;			   <span class="comment">//high level const of ci is ignored</span></span><br><span class="line">p2 = p4;		   <span class="comment">//high level of p4 is ignored</span></span><br><span class="line">p2 = &amp;i;		   <span class="comment">//although different low level const,but nonconst can convert to const</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> &amp;r3 = i; <span class="comment">//although different low level const,but nonconst can convert to const</span></span><br></pre></td></tr></table></figure>
-<h3 id="constexpr-and-Constant-Expressions">constexpr and Constant Expressions</h3>
-<p>//TODO</p>
-<h2 id="Dealing-with-Types">Dealing with Types</h2>
-<h3 id="Type-Aliases">Type Aliases</h3>
-<p>类型别名（Type Aliases）是用来给另一个类型定义一个新名字。可以用<code>typedef</code>关键字和<code>using</code>关键字（C++11特性）。</p>
+<h3 id="constexpr-and-Constant-Expressions"><a href="#constexpr-and-Constant-Expressions" class="headerlink" title="constexpr and Constant Expressions"></a>constexpr and Constant Expressions</h3><p>//TODO</p>
+<h2 id="Dealing-with-Types"><a href="#Dealing-with-Types" class="headerlink" title="Dealing with Types"></a>Dealing with Types</h2><h3 id="Type-Aliases"><a href="#Type-Aliases" class="headerlink" title="Type Aliases"></a>Type Aliases</h3><p>类型别名（Type Aliases）是用来给另一个类型定义一个新名字。可以用<code>typedef</code>关键字和<code>using</code>关键字（C++11特性）。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">double</span> wages; <span class="comment">//wages is a synonym for double</span></span><br><span class="line"><span class="keyword">using</span> base = wages;   <span class="comment">//base is a synonym for wages(double)</span></span><br><span class="line">base b = <span class="number">3.14</span>;</span><br><span class="line">wages w = b;</span><br><span class="line">cout &lt;&lt; b &lt;&lt; <span class="string">&quot;  &quot;</span> &lt;&lt; w &lt;&lt; endl;<span class="comment">//3.14  3.14</span></span><br></pre></td></tr></table></figure>
-<h4 id="Pointers-const-and-Type-Aliases">Pointers, const, and Type Aliases</h4>
-<p>也可以对类型的指针使用别名，如下所示：</p>
+<h4 id="Pointers-const-and-Type-Aliases"><a href="#Pointers-const-and-Type-Aliases" class="headerlink" title="Pointers, const, and Type Aliases"></a>Pointers, const, and Type Aliases</h4><p>也可以对类型的指针使用别名，如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> value1 = <span class="number">15</span>, value2 = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> *pInt;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">const</span> <span class="type">int</span> *cpInt;</span><br><span class="line"><span class="type">const</span> pInt p = &amp;value1;<span class="comment">//equals to int *const p=&amp;value1;</span></span><br><span class="line">cpInt cp = &amp;value1;<span class="comment">//equals to const int *cp=&amp;value1;</span></span><br><span class="line"><span class="comment">// *cp = 20; //error, cp is pointer to const int</span></span><br><span class="line">*p = <span class="number">20</span>; <span class="comment">// p is int* const</span></span><br><span class="line"><span class="comment">// p = &amp;value2; //error,p is int * const</span></span><br></pre></td></tr></table></figure>
 <p>需要注意分辨指针别名的类型，如在上例中，定义了<code>pInt</code>类型为pointer to int，那么const pInt还是修饰指针的，即其类型应该是<code>int * const</code>,为const pointer to int</p>
-<h3 id="The-auto-Type-Specifier">The auto Type Specifier</h3>
-<p>auto关键字是C++11的特性，可以使用auto来让编译器自动识别变量的类型。变量的类型是由初始化数值决定的。即使用了auto的话，必须对变量进行初始化。</p>
+<h3 id="The-auto-Type-Specifier"><a href="#The-auto-Type-Specifier" class="headerlink" title="The auto Type Specifier"></a>The auto Type Specifier</h3><p>auto关键字是C++11的特性，可以使用auto来让编译器自动识别变量的类型。变量的类型是由初始化数值决定的。即使用了auto的话，必须对变量进行初始化。</p>
 <ul>
 <li>C++是静态语言，所以auto只是让编译器识别出变量类型，但变量类型在运行时仍然是不可改变的。</li>
 </ul>
 <p>在同一个声明语句中，auto必须指代同一个类型，如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> i = <span class="number">0</span>, *p = &amp;i; <span class="comment">//i is int, p is int*</span></span><br><span class="line"><span class="comment">// auto sz = 0, pi = 3.14; //error, sz is int but pi is double</span></span><br></pre></td></tr></table></figure>
-<h4 id="Compound-Types-const-and-auto">Compound Types,const,and auto</h4>
-<p>在复合类型下，编译器并不能保证auto关键字解析出的数据类型与初始值的类型一致。</p>
+<h4 id="Compound-Types-const-and-auto"><a href="#Compound-Types-const-and-auto" class="headerlink" title="Compound Types,const,and auto"></a>Compound Types,const,and auto</h4><p>在复合类型下，编译器并不能保证auto关键字解析出的数据类型与初始值的类型一致。</p>
 <p>如使用引用来初始化auto类型，会得到引用类型绑定的值的类型。而且auto类型会无视top level const,如果要保留的话需要显示的使用const，但当对top level const使用引用时，top level const不会被无视。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">0</span>, &amp;r = i;</span><br><span class="line"><span class="keyword">auto</span> a = r; <span class="comment">//a is int not int reference because r is alias for i</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> ci = i, &amp;cr = i; <span class="comment">//ci is const int,cr is const int reference</span></span><br><span class="line"><span class="keyword">auto</span> b = ci;			   <span class="comment">//b is int</span></span><br><span class="line"><span class="keyword">auto</span> d = &amp;i;			   <span class="comment">//d is int*</span></span><br><span class="line"><span class="keyword">auto</span> e = &amp;ci;			   <span class="comment">//e is const int *</span></span><br><span class="line"><span class="keyword">auto</span> &amp;g = ci;			   <span class="comment">// g is const int reference</span></span><br><span class="line"><span class="comment">// auto &amp;h=42;//error</span></span><br><span class="line"><span class="type">const</span> <span class="keyword">auto</span> &amp;h = <span class="number">42</span>; <span class="comment">//can bind const reference to literal</span></span><br><span class="line"><span class="keyword">auto</span> &amp;m = i, k = ci;	<span class="comment">//although i is int while ci is const int,but the top-level constis ignored</span></span><br><span class="line"><span class="comment">// auto &amp;n = i, *p2 = &amp;ci; //error,while using reference, top-level const is not ignored</span></span><br></pre></td></tr></table></figure>
 <p>有几个语句需要特别注意，首先是<code>auto e = &amp;ci</code>，这里对const int的ci使用了引用，所以const保留，即e类型为const int，同理还有<code>auto &amp;g = ci</code>,g也同样是const int reference。</p>
 <p>还有语句<code>auto &amp;m = i, k = ci</code>，虽然i和ci的类型不同，但是因为top level const被无视，所以这里仍然可以放在一起被定义。而<code>auto &amp;n = i, *p2 = &amp;ci</code>中因为对ci使用了引用符号，所以top level const被保留，i和ci类型不同，因此无法在一起定义。</p>
-<h3 id="The-decltype-Type-Specifier">The decltype Type Specifier</h3>
-<p>有时希望编译器可以根据一个表达式的返回值来自动判定一个变量的类型，但却不希望用表达式的返回值来初始化变量。这时候可以使用<code>decltype</code>关键字，该关键字是C++11的特性，使用如下</p>
+<h3 id="The-decltype-Type-Specifier"><a href="#The-decltype-Type-Specifier" class="headerlink" title="The decltype Type Specifier"></a>The decltype Type Specifier</h3><p>有时希望编译器可以根据一个表达式的返回值来自动判定一个变量的类型，但却不希望用表达式的返回值来初始化变量。这时候可以使用<code>decltype</code>关键字，该关键字是C++11的特性，使用如下</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">decltype</span>(<span class="built_in">getSize_Literal</span>()) size;</span><br></pre></td></tr></table></figure>
 <p>但需要特别说明的，当decltype传入的是<em>变量</em>时，decltype对top level const和引用的处理与auto不一样，auto默认会无视这些，但是decltype则全部保留，如</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> ci = <span class="number">0</span>, &amp;cj = ci;</span><br><span class="line"><span class="keyword">decltype</span>(ci) x = <span class="number">0</span>; <span class="comment">// x is const int</span></span><br><span class="line"><span class="keyword">auto</span> xx = ci;<span class="comment">//xx is int</span></span><br><span class="line"><span class="keyword">decltype</span>(cj) y = x; <span class="comment">//y is int reference</span></span><br><span class="line"><span class="comment">// decltype(cj) yy; //yy is int reference, must be initialized</span></span><br></pre></td></tr></table></figure>
 <p>上例中的y会被认为是int的引用所以必须要初始化，这也是C++语言中唯一的引用类型不表现为另一个变量的别名，而真的将其视为引用类型的情况。</p>
-<h4 id="decltype-and-Reference">decltype and Reference</h4>
-<p>当decltype传入的是表达式时，如果表达式返回的值可以作为赋值操作的左参数，那么decltype的判断类型将是返回类型的引用，如：</p>
+<h4 id="decltype-and-Reference"><a href="#decltype-and-Reference" class="headerlink" title="decltype and Reference"></a>decltype and Reference</h4><p>当decltype传入的是表达式时，如果表达式返回的值可以作为赋值操作的左参数，那么decltype的判断类型将是返回类型的引用，如：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i = <span class="number">42</span>, *p = &amp;i, &amp;r = i;</span><br><span class="line"><span class="keyword">decltype</span>(r) b = i;  <span class="comment">//b is int reference</span></span><br><span class="line"><span class="keyword">decltype</span>(r + <span class="number">0</span>) bb; <span class="comment">//bb is int,because r + 0 is a expression and result is literal</span></span><br><span class="line"><span class="keyword">decltype</span>(p) c;		<span class="comment">// c is int pointer</span></span><br><span class="line"><span class="comment">// decltype(*p) cc;//error,*p is a expression and *p can be the left hand side of assignment,cc is int&amp;</span></span><br></pre></td></tr></table></figure>
 <p>如上式，如果想通过一个引用类型返回普通类型，将其写成返回字面值的表达式即可。且如上式中，<code>p</code>是参数，所以判断的类型是参数本身的类型即int指针，而*p是表达式，且返回的结果是int，因此最终结果是int &amp;</p>
 <p>注意普通函数返回是字面值，如下函数看起来返回的是一个变量，但实际上是该变量值的字面值：</p>
@@ -524,29 +622,22 @@ $$</p>
 <p>因此形如<code>decltype(getSize_Int()) size;</code>,size的类型为Int,因为返回的字面值无法作为左参数。</p>
 <p>另外在decltype中，如果普通参数外有额外的括号，则也会被认为是表达式，如：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">decltype</span>(i) d; <span class="comment">// d is uninitialized int</span></span><br><span class="line"><span class="comment">// decltype((i)) dd;//error,(i) is expression and i can be left hand side, so dd is int&amp;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Defining-Our-Own-Data-Structures">Defining Our Own Data Structures</h2>
-<h3 id="Defining-the-Sales-Data-Type">Defining the Sales_Data Type</h3>
-<p>在类与结构体的定义主体后可直接声明对象，虽然通常不这样做。如下所示：</p>
+<h2 id="Defining-Our-Own-Data-Structures"><a href="#Defining-Our-Own-Data-Structures" class="headerlink" title="Defining Our Own Data Structures"></a>Defining Our Own Data Structures</h2><h3 id="Defining-the-Sales-Data-Type"><a href="#Defining-the-Sales-Data-Type" class="headerlink" title="Defining the Sales_Data Type"></a>Defining the Sales_Data Type</h3><p>在类与结构体的定义主体后可直接声明对象，虽然通常不这样做。如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Sales_data</span></span><br><span class="line">&#123;</span><br><span class="line">	std::string bookNo;</span><br><span class="line">	<span class="type">unsigned</span> units_sold = <span class="number">0</span>;</span><br><span class="line">	<span class="type">double</span> revenue = <span class="number">0.0</span>;</span><br><span class="line">&#125; accum, trans, *salesptr;</span><br></pre></td></tr></table></figure>
 <p>但通常将类与结构体的定义和相关对象的声明分开，如下所示：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Sales_data</span></span><br><span class="line">&#123;</span><br><span class="line">	std::string bookNo;</span><br><span class="line">	<span class="type">unsigned</span> units_sold = <span class="number">0</span>;</span><br><span class="line">	<span class="type">double</span> revenue = <span class="number">0.0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Sales_data accum, trans, *salesptr;</span><br></pre></td></tr></table></figure>
-<h4 id="Class-Data-Menbers">Class Data Menbers</h4>
-<p>结构体中的变量如果没有初始值，将会默认初始化。</p>
+<h4 id="Class-Data-Menbers"><a href="#Class-Data-Menbers" class="headerlink" title="Class Data Menbers"></a>Class Data Menbers</h4><p>结构体中的变量如果没有初始值，将会默认初始化。</p>
 <p>而如同<code>double revenue = 0.0</code>这样在类的内部定义变量时直接赋予初值，称为类内初始化（in-class initializer）。这也是C++11的特性。</p>
-<h3 id="Using-the-Sales-data-Class">Using the Sales_data Class</h3>
-<p>无重要内容</p>
-<h3 id="Writing-Our-Own-Header-Files">Writing Our Own Header Files</h3>
-<p>通常类是在函数外定义的（在19.7节可以看到在函数内定义类的方法）。</p>
+<h3 id="Using-the-Sales-data-Class"><a href="#Using-the-Sales-data-Class" class="headerlink" title="Using the Sales_data Class"></a>Using the Sales_data Class</h3><p>无重要内容</p>
+<h3 id="Writing-Our-Own-Header-Files"><a href="#Writing-Our-Own-Header-Files" class="headerlink" title="Writing Our Own Header Files"></a>Writing Our Own Header Files</h3><p>通常类是在函数外定义的（在19.7节可以看到在函数内定义类的方法）。</p>
 <p>为了保证类的定义在每个文件中是相同的，在头文件中定义类。通常来说头文件的名字与其中定义的类名字相同。</p>
 <p>因为头文件在多次引用（include），所以必须有一个方式可以保证即使头文件多次被引用，类的定义也不会重复。</p>
-<h3 id="A-Brief-Introduction-to-the-Preprocessor">A Brief Introduction to the Preprocessor</h3>
-<p>通常保证头文件可以被安全多次引用的方法是预处理器（preprocessor）。C++的预处理器继承自C语言，是一个在编译器前运行的程序，它可以修改部分源码内容。</p>
-<p>当预处理器看到<code>#include xxx</code>时，它会将<code>#include xxx</code>替换为指定头文件中的内容。</p>
+<h3 id="A-Brief-Introduction-to-the-Preprocessor"><a href="#A-Brief-Introduction-to-the-Preprocessor" class="headerlink" title="A Brief Introduction to the Preprocessor"></a>A Brief Introduction to the Preprocessor</h3><p>通常保证头文件可以被安全多次引用的方法是预处理器（preprocessor）。C++的预处理器继承自C语言，是一个在编译器前运行的程序，它可以修改部分源码内容。</p>
+<p>当预处理器看到<code>#include xxx</code>时，它会将<code>#include xxx</code>替换为指定头文件中的内容。 </p>
 <p>C++使用预处理器来定义文件保护符（Header guards），预处理器变量有两个可能的状态，定义（define）和未定义（undefined）。</p>
 <p><code>#define</code>关键字加上一个名字可直接将这个名字定义为预处理变量。同样，预处理器还有两个关键字来判断变量是否被定义，<code>#ifndef</code>和<code>#ifdef</code>，前者在变量未定义时为true，后者在变量定义时为true。</p>
 <blockquote>
-<p>注意#define的作用域是文件，所以使用该方法只能保证在同一个文件内，不会多次include同一个文件。但无法保证整个程序只include一次。如程序有多个CPP文件，每个文件都include某h文件，且该文件内有定义（非声明）参数，那么同样会造成重复定义。<br>
-因此，尽量不要在头文件中进行任何函数或变量的定义。除非是内联函数的定义。</p>
+<p>注意#define的作用域是文件，所以使用该方法只能保证在同一个文件内，不会多次include同一个文件。但无法保证整个程序只include一次。如程序有多个CPP文件，每个文件都include某h文件，且该文件内有定义（非声明）参数，那么同样会造成重复定义。<br>因此，尽量不要在头文件中进行任何函数或变量的定义。除非是内联函数的定义。</p>
 </blockquote>
 <p>当<code>#ifndef</code>和<code>#ifdef</code>为true的情况下，它们后面的代码会一直执行，直到遇到<code>#endif</code>关键字。</p>
 <p>如一个带有文件保护符的头文件如下：</p>
@@ -556,94 +647,165 @@ $$</p>
 <ul>
 <li>虽然不是强制规定，但建议每个头文件都带有文件保护符。</li>
 </ul>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>引用：</p>
+<div class="note info simple"><p>引用：</p>
 <ol>
 <li><em>Cpp Primer</em> 5th Aug.2012</li>
-<li><a href="CPPPrimer-Chapter2-Notes/%22https://kb.iu.edu/d/aepu%22">Latin-1字符集</a></li>
+<li><a href="CPPPrimer-Chapter2-Notes/&quot;https://kb.iu.edu/d/aepu&quot;">Latin-1字符集</a></li>
 </ol>
-
-        </div>
-    </article>
+</div>
 <hr>
-</div><div class="article-licensing box"><div class="licensing-title"><p>《C++ Primer》 第二章笔记</p><p><a href="https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/">https://wangxuejia.blog/CPPPrimer-Chapter2-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-02-11</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/C/">C++</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/CPPPrimer-Chapter3-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《C++ Primer》 第三章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/IA-Chapter5-Notes/"><span class="level-item">《算法导论》 第五章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
-            el: '#valine-thread',
-            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
-            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
-            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
-            avatar: "mm",
-            avatarForce: false,
-            meta: ["nick","mail","link"],
-            pageSize: 10,
-            lang: "zh-CN",
-            visitor: true,
-            highlight: true,
-            recordIP: false,
-            
-            
-            
-            enableQQ: true,
-            requiredFields: [],
-        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
-            article: {
-                highlight: {
-                    clipboard: true,
-                    fold: 'unfolded'
-                }
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="Tuncle">三叔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tuncle.blog/CPPPrimer-Chapter2-Notes/">https://tuncle.blog/CPPPrimer-Chapter2-Notes/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tuncle.blog" target="_blank">三叔胡言乱语的地方</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="twitter, wechat, weibo"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/CPPPrimer-Chapter3-Notes/" title="《C++ Primer》 第三章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《C++ Primer》 第三章笔记</div></div></a></div><div class="next-post pull-right"><a href="/IA-Chapter5-Notes/" title="《算法导论》 第五章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《算法导论》 第五章笔记</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-2-Variables-And-Basic-Types"><span class="toc-number">1.</span> <span class="toc-text">Chapter 2 Variables And Basic Types</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Primitive-Built-in-Types"><span class="toc-number">1.1.</span> <span class="toc-text">Primitive Built-in-Types</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Arithmetic-Types"><span class="toc-number">1.1.1.</span> <span class="toc-text">Arithmetic Types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Signed-and-Unsigned-Types"><span class="toc-number">1.1.2.</span> <span class="toc-text">Signed and Unsigned Types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Type-Conversions"><span class="toc-number">1.1.3.</span> <span class="toc-text">Type Conversions</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Expression-Involving-Unsigned-Types"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">Expression Involving Unsigned Types</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Literals"><span class="toc-number">1.1.4.</span> <span class="toc-text">Literals</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Integar-and-Floating-Point-Literals"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">Integar and Floating-Point Literals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Character-and-Character-String-Literals"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">Character and Character String Literals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Escape-Sequences"><span class="toc-number">1.1.4.3.</span> <span class="toc-text">Escape Sequences</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Specifying-the-Type-of-a-Literal"><span class="toc-number">1.1.4.4.</span> <span class="toc-text">Specifying the Type of a Literal</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Variables"><span class="toc-number">1.2.</span> <span class="toc-text">Variables</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Variable-Definitions"><span class="toc-number">1.2.1.</span> <span class="toc-text">Variable Definitions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Initializers"><span class="toc-number">1.2.2.</span> <span class="toc-text">Initializers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#List-initialization"><span class="toc-number">1.2.3.</span> <span class="toc-text">List initialization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Default-Initialization"><span class="toc-number">1.2.4.</span> <span class="toc-text">Default Initialization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Variable-Declarations-and-Definitions"><span class="toc-number">1.2.5.</span> <span class="toc-text">Variable Declarations and Definitions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Identifiers"><span class="toc-number">1.2.6.</span> <span class="toc-text">Identifiers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scope-of-a-Name"><span class="toc-number">1.2.7.</span> <span class="toc-text">Scope of a Name</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Nested-scopes"><span class="toc-number">1.2.7.1.</span> <span class="toc-text">Nested scopes</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Compound-Types"><span class="toc-number">1.3.</span> <span class="toc-text">Compound Types</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#References"><span class="toc-number">1.3.1.</span> <span class="toc-text">References</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-Reference-Is-an-Alias"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">A Reference Is an Alias</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference-Definitions"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">Reference Definitions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pointers"><span class="toc-number">1.3.2.</span> <span class="toc-text">Pointers</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Taking-the-Address-of-an-Object"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">Taking the Address of an Object</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pointer-Value"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">Pointer Value</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Using-a-Pointer-to-Access-an-Object"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">Using a Pointer to Access an Object</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Null-Pointers"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">Null Pointers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Assignment-and-Pointers"><span class="toc-number">1.3.2.5.</span> <span class="toc-text">Assignment and Pointers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Other-Pointer-Operations"><span class="toc-number">1.3.2.6.</span> <span class="toc-text">Other Pointer Operations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#void-Pointers"><span class="toc-number">1.3.2.7.</span> <span class="toc-text">void* Pointers</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Understanding-Compound-Type-Declarations"><span class="toc-number">1.3.3.</span> <span class="toc-text">Understanding Compound Type Declarations</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Defining-Multiple-Variables"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">Defining Multiple Variables</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pointers-to-Pointers"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">Pointers to Pointers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference-to-Pointers"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">Reference to Pointers</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#const-Qualifier"><span class="toc-number">1.4.</span> <span class="toc-text">const Qualifier</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Initialization-and-const"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">Initialization and const</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#By-Default-const-Objects-Are-Local-to-a-File"><span class="toc-number">1.4.0.2.</span> <span class="toc-text">By Default, const Objects Are Local to a File</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reference-to-const"><span class="toc-number">1.4.1.</span> <span class="toc-text">Reference to const</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Initialization-and-Reference-to-const"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">Initialization and Reference to const</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#A-Reference-to-const-May-Refer-to-an-Object-That-is-not-const"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">A Reference to const May Refer to an Object That is not const</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Points-and-const"><span class="toc-number">1.4.2.</span> <span class="toc-text">Points and const</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#const-Pointers"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">const Pointers</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Top-Level-const"><span class="toc-number">1.4.3.</span> <span class="toc-text">Top-Level const</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#constexpr-and-Constant-Expressions"><span class="toc-number">1.4.4.</span> <span class="toc-text">constexpr and Constant Expressions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dealing-with-Types"><span class="toc-number">1.5.</span> <span class="toc-text">Dealing with Types</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Type-Aliases"><span class="toc-number">1.5.1.</span> <span class="toc-text">Type Aliases</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pointers-const-and-Type-Aliases"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">Pointers, const, and Type Aliases</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-auto-Type-Specifier"><span class="toc-number">1.5.2.</span> <span class="toc-text">The auto Type Specifier</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Compound-Types-const-and-auto"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">Compound Types,const,and auto</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-decltype-Type-Specifier"><span class="toc-number">1.5.3.</span> <span class="toc-text">The decltype Type Specifier</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#decltype-and-Reference"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">decltype and Reference</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Defining-Our-Own-Data-Structures"><span class="toc-number">1.6.</span> <span class="toc-text">Defining Our Own Data Structures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Defining-the-Sales-Data-Type"><span class="toc-number">1.6.1.</span> <span class="toc-text">Defining the Sales_Data Type</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Class-Data-Menbers"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">Class Data Menbers</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-the-Sales-data-Class"><span class="toc-number">1.6.2.</span> <span class="toc-text">Using the Sales_data Class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Writing-Our-Own-Header-Files"><span class="toc-number">1.6.3.</span> <span class="toc-text">Writing Our Own Header Files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Brief-Introduction-to-the-Preprocessor"><span class="toc-number">1.6.4.</span> <span class="toc-text">A Brief Introduction to the Preprocessor</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By 三叔</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Keep Writing</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
             }
-        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
-      window.cookieconsent.initialise({
-        type: "info",
-        theme: "edgeless",
-        static: false,
-        position: "bottom-left",
-        content: {
-          message: "此网站使用Cookie来改善您的体验。",
-          dismiss: "知道了！",
-          allow: "允许使用Cookie",
-          deny: "拒绝",
-          link: "了解更多",
-          policy: "Cookie政策",
-          href: "https://www.cookiesandyou.com/",
-        },
-        palette: {
-          popup: {
-            background: "#edeff5",
-            text: "#838391"
-          },
-          button: {
-            background: "#4b81e8"
-          },
-        },
-      });
-    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
-            if (typeof $.fn.lightGallery === 'function') {
-                $('.article').lightGallery({ selector: '.gallery-item' });
-            }
-            if (typeof $.fn.justifiedGallery === 'function') {
-                if ($('.justified-gallery > p > .gallery-item').length) {
-                    $('.justified-gallery > p > .gallery-item').unwrap();
-                }
-                $('.justified-gallery').justifiedGallery();
-            }
-        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
-            'HTML-CSS': {
-                matchFontHeight: false
-            },
-            SVG: {
-                matchFontHeight: false
-            },
-            CommonHTML: {
-                matchFontHeight: false
-            },
-            tex2jax: {
-                inlineMath: [
-                    ['$','$'],
-                    ['\\(','\\)']
-                ]
-            }
-        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
-            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
-        });</script></body></html>
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey: 'z1vCYavVUbCGuMjNMcrsvShN',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

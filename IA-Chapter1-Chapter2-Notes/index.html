@@ -1,361 +1,466 @@
-<!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《算法导论》 第一、二章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《算法导论》中第一章与第二章阅读笔记。 介绍了插入排序即归并排序的算法及复杂度。"><meta property="og:type" content="blog"><meta property="og:title" content="《算法导论》 第一、二章笔记"><meta property="og:url" content="https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《算法导论》中第一章与第二章阅读笔记。 介绍了插入排序即归并排序的算法及复杂度。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/IA-Chapter1-Chapter2-Notes/2019-10-15-09-32-30.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/IA-Chapter1-Chapter2-Notes/2019-10-15-23-14-44.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/IA-Chapter1-Chapter2-Notes/2019-10-15-15-16-31.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/IA-Chapter1-Chapter2-Notes/2019-10-16-00-45-05.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/IA-Chapter1-Chapter2-Notes/2019-10-16-00-46-41.png"><meta property="article:published_time" content="2019-11-05T05:49:34.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.015Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="数据结构与算法"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/IA-Chapter1-Chapter2-Notes/2019-10-15-09-32-30.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/"},"headline":"《算法导论》 第一、二章笔记","image":["https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/IA-Chapter1-Chapter2-Notes/2019-10-15-09-32-30.png","https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/IA-Chapter1-Chapter2-Notes/2019-10-15-23-14-44.png","https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/IA-Chapter1-Chapter2-Notes/2019-10-15-15-16-31.png","https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/IA-Chapter1-Chapter2-Notes/2019-10-16-00-45-05.png","https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/IA-Chapter1-Chapter2-Notes/2019-10-16-00-46-41.png"],"datePublished":"2019-11-05T05:49:34.000Z","dateModified":"2023-04-02T12:21:20.015Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《算法导论》中第一章与第二章阅读笔记。 介绍了插入排序即归并排序的算法及复杂度。"}</script><link rel="canonical" href="https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
-  (function () {
-      function switchTab() {
-          if (!location.hash) {
-            return;
-          }
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>《算法导论》 第一、二章笔记 | 三叔胡言乱语的地方</title><meta name="author" content="三叔"><meta name="copyright" content="三叔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《算法导论》中第一章与第二章阅读笔记。 介绍了插入排序即归并排序的算法及复杂度。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《算法导论》 第一、二章笔记">
+<meta property="og:url" content="https://tuncle.blog/IA-Chapter1-Chapter2-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="《算法导论》中第一章与第二章阅读笔记。 介绍了插入排序即归并排序的算法及复杂度。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuncle.blog/img/avatar.jpg">
+<meta property="article:published_time" content="2019-11-05T05:49:34.000Z">
+<meta property="article:modified_time" content="2023-04-16T06:32:59.818Z">
+<meta property="article:author" content="三叔">
+<meta property="article:tag" content="读书笔记">
+<meta property="article:tag" content="数据结构与算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuncle.blog/img/avatar.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://tuncle.blog/IA-Chapter1-Chapter2-Notes/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: 三叔","link":"链接: ","source":"来源: 三叔胡言乱语的地方","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《算法导论》 第一、二章笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-16 14:32:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-          const id = '#' + CSS.escape(location.hash.substring(1));
-          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
-          if (!$tabMenu) {
-            return;
-          }
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
-          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
-          Array.from($tabMenuContainer.querySelectorAll('a'))
-              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
-              .forEach($content => $content.classList.add('is-hidden'));
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-          if ($tabMenu) {
-              $tabMenu.parentElement.classList.add('is-active');
-          }
-          const $activeTab = document.querySelector(id);
-          if ($activeTab) {
-              $activeTab.classList.remove('is-hidden');
-          }
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
-      switchTab();
-      window.addEventListener('hashchange', switchTab, false);
-  })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-11-05T05:49:34.000Z" title="2019/11/5 13:49:34">2019-11-05</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.015Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span><span class="level-item">21 分钟读完 (大约3178个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《算法导论》 第一、二章笔记</h1><div class="content"><p>《算法导论》中第一章与第二章阅读笔记。</p>
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="三叔胡言乱语的地方"><span class="site-name">三叔胡言乱语的地方</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">《算法导论》 第一、二章笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2019-11-05T05:49:34.000Z" title="发表于 2019-11-05 13:49:34">2019-11-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/IA-Chapter1-Chapter2-Notes/" data-flag-title="《算法导论》 第一、二章笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>《算法导论》中第一章与第二章阅读笔记。</p>
 <p>介绍了插入排序即归并排序的算法及复杂度。</p>
 <span id="more"></span>
-<h2 id="Chapter-1-The-Role-of-Algorithms-in-Computing">Chapter 1. The Role of Algorithms in Computing</h2>
-<h3 id="Algorithms">Algorithms</h3>
-<ol>
+<h2 id="Chapter-1-The-Role-of-Algorithms-in-Computing"><a href="#Chapter-1-The-Role-of-Algorithms-in-Computing" class="headerlink" title="Chapter 1. The Role of Algorithms in Computing"></a>Chapter 1. The Role of Algorithms in Computing</h2><h3 id="Algorithms"><a href="#Algorithms" class="headerlink" title="Algorithms"></a>Algorithms</h3><ol>
 <li>算法是一系列将输入转换为输出的操作步骤。</li>
 <li>数据结构是存储和管理数据的一种方式，这种方式要考虑到方便设备访问和修改数据。</li>
 <li>这本书也介绍了一些设计和分析算法的技术。如设计算法时需要的分治法，动态规划和如何分析算法是否准确是否高效等。</li>
 <li>算法在大多数情况下是找寻高效的方法，但在某些问题无法找到高效的解决方法，如NP问题。目前无人知道对于NP究竟是否存在一个高效的方法，而且NP问题有个特性，一旦找到了一个NP问题的高效解决方案，剩下的也就同样找到了。</li>
 <li>现代芯片的设计已经从提高时钟频率到了提高并行效率，因为芯片的功率提升与时钟频率的提升是一个超线性关系，如果一味的增高频率，很可能芯片就会过热。为了提升计算效率，现在考虑的就是使用多核芯片进行并行运算，书中也会引入一些多线程的算法。</li>
 </ol>
-<h3 id="Algorithms-as-a-technology">Algorithms as a technology</h3>
-<p>不同的算法一般有不同的效率，如插入排序和合并排序，插入排序的效率为$C_1 n^2$,而合并排序的效率为$C_2 n \log n$，虽然$C_1&lt;C_2$，但是在n较大的情况下，$\log ⁡n$ 远小于$n^2$，所以对于大数据来说合并排序更为高效。</p>
-<h2 id="Chapter-2-Getting-Started">Chapter 2. Getting Started</h2>
-<h3 id="Insertion-Sort">Insertion Sort</h3>
-<ol>
-<li>
-<p>插入排序，在对数量较小的元素排序时是一个很高效的算法。</p>
+<h3 id="Algorithms-as-a-technology"><a href="#Algorithms-as-a-technology" class="headerlink" title="Algorithms as a technology"></a>Algorithms as a technology</h3><p>不同的算法一般有不同的效率，如插入排序和合并排序，插入排序的效率为$C_1 n^2$,而合并排序的效率为$C_2 n \log n$，虽然$C_1&lt;C_2$，但是在n较大的情况下，$\log ⁡n$ 远小于$n^2$，所以对于大数据来说合并排序更为高效。</p>
+<h2 id="Chapter-2-Getting-Started"><a href="#Chapter-2-Getting-Started" class="headerlink" title="Chapter 2. Getting Started"></a>Chapter 2. Getting Started</h2><h3 id="Insertion-Sort"><a href="#Insertion-Sort" class="headerlink" title="Insertion Sort"></a>Insertion Sort</h3><ol>
+<li><p>插入排序，在对数量较小的元素排序时是一个很高效的算法。</p>
 </li>
-<li>
-<p>插入排序类似于打牌整理手牌的过程，下为图解<br>
-<img src="IA-Chapter1-Chapter2-Notes/2019-10-15-09-32-30.png" alt="插入排序排列"></p>
-<ol>
-<li>
-<p>首先将数组的某一项作为Key值，然后Key值从右至左的与每一项比较，如果该项的数值比Key值大，则将该值像右侧拷贝 A[i+1]=A[i] ，这相当于牌向右移的过程。</p>
+<li><p>插入排序类似于打牌整理手牌的过程，下为图解<br> <img src="IA-Chapter1-Chapter2-Notes/2019-10-15-09-32-30.png" alt="插入排序排列"></p>
+<p> 1) 首先将数组的某一项作为Key值，然后Key值从右至左的与每一项比较，如果该项的数值比Key值大，则将该值像右侧拷贝 A[i+1]=A[i] ，这相当于牌向右移的过程。</p>
+<p> 2) 如果某一项比Key值小，则将Key值插入在他后方，A[i+1]=key</p>
+<p> 3) 从数组的第二项开始从左至右的作为Key值，重复a,b的操作</p>
 </li>
-<li>
-<p>如果某一项比Key值小，则将Key值插入在他后方，A[i+1]=key</p>
-</li>
-<li>
-<p>从数组的第二项开始从左至右的作为Key值，重复a,b的操作</p>
-</li>
-</ol>
-</li>
-<li>
-<p>伪代码实现</p>
+<li><p>伪代码实现</p>
  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for j=2 to A.length</span><br><span class="line"> key=A[j]</span><br><span class="line"> i=j-1</span><br><span class="line"> while i&gt;0 &amp;&amp; A[i]&gt;key</span><br><span class="line">  A[i+1]=A[i]</span><br><span class="line">  i--;</span><br><span class="line">    A[i+1]=key</span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>C++实现</p>
+<li><p>C++实现</p>
  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">InsertationSort</span><span class="params">(<span class="type">int</span>* array, <span class="type">int</span> arraySize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; arraySize; i++)</span><br><span class="line"> &#123;</span><br><span class="line">  <span class="type">int</span> key = array[i];</span><br><span class="line">  <span class="type">int</span> startIndex = i - <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> (startIndex &gt;= <span class="number">0</span> &amp;&amp; array[startIndex] &gt; key)</span><br><span class="line">  &#123;</span><br><span class="line">   array[startIndex + <span class="number">1</span>] = array[startIndex];</span><br><span class="line">   startIndex--;</span><br><span class="line">  &#125;</span><br><span class="line">  array[++startIndex] = key;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li>
-<p>一些书中伪代码需要注意的点</p>
-<ol>
-<li>
-<p>for循环的变量，在退出循环后，保持最后一个超越循环边界的值</p>
-<p>如 for j=2 to A.length，在退出循环后，j = A.length +1</p>
-</li>
-<li>
-<p>A[ 1……j] 表示A[1]、A[2]…A[j]</p>
-</li>
-<li>
-<p>函数的形参是值传递的</p>
+<li><p>一些书中伪代码需要注意的点</p>
+<p> 1) for循环的变量，在退出循环后，保持最后一个超越循环边界的值</p>
+<pre><code>如 for j=2 to A.length，在退出循环后，j = A.length +1
+</code></pre><p> 2) A[ 1…..j] 表示A[1]、A[2]…A[j]</p>
+<p> 3) 函数的形参是值传递的</p>
 </li>
 </ol>
+<h3 id="Analyzing-algorithms"><a href="#Analyzing-algorithms" class="headerlink" title="Analyzing algorithms"></a>Analyzing algorithms</h3><ol>
+<li><p>分析算法主要是预测算法需要花费的资源，资源通常包括内存、带宽、但我们最关心的还是时间。</p>
+</li>
+<li><p>书中的分析都是基于单核的随机访问机器(random-access machine)。在这个模型中，所有的操作都看作花费一个固定时长，而且我们不考虑内存操作（如分配内存）所占用的时间。</p>
 </li>
 </ol>
-<h3 id="Analyzing-algorithms">Analyzing algorithms</h3>
-<ol>
-<li>
-<p>分析算法主要是预测算法需要花费的资源，资源通常包括内存、带宽、但我们最关心的还是时间。</p>
+<h4 id="Analysis-of-insertion-sort"><a href="#Analysis-of-insertion-sort" class="headerlink" title="Analysis of insertion sort"></a>Analysis of insertion sort</h4><ol>
+<li><p>通常描述一个算法的运行时间都是一个关于输入数据大小的函数。</p>
+<p> 1) 关于输入数据大小的定义根据问题的不同会发生改变。</p>
+<pre><code> a. 对于排序问题，数据的大小通常就是需要排列的数的大小
+
+ b. 对于两个整数相乘问题，数据大小就是这两个整数需要占据的bit数
+
+ c. 有些时候还需要两个数字来描述问题，如关于图的问题就需要顶点数和边数。
+</code></pre><p> 2) 关于算法的运行时间通常是关于算法究竟有多少步骤需要执行。在RAM模型中，我们简化每一步所花费的时间都是同样长且都为一个固定值。</p>
+<p> 3) 循环语句本身比循环体要多一次执行，因为循环语句本身在越界的时候仍然会进行一次判断。</p>
 </li>
-<li>
-<p>书中的分析都是基于单核的随机访问机器(random-access machine)。在这个模型中，所有的操作都看作花费一个固定时长，而且我们不考虑内存操作（如分配内存）所占用的时间。</p>
-</li>
-</ol>
-<h4 id="Analysis-of-insertion-sort">Analysis of insertion sort</h4>
-<ol>
-<li>
-<p>通常描述一个算法的运行时间都是一个关于输入数据大小的函数。</p>
-<ol>
-<li>
-<p>关于输入数据大小的定义根据问题的不同会发生改变。</p>
-<p>a. 对于排序问题，数据的大小通常就是需要排列的数的大小</p>
-<p>b. 对于两个整数相乘问题，数据大小就是这两个整数需要占据的bit数</p>
-<p>c. 有些时候还需要两个数字来描述问题，如关于图的问题就需要顶点数和边数。</p>
-</li>
-<li>
-<p>关于算法的运行时间通常是关于算法究竟有多少步骤需要执行。在RAM模型中，我们简化每一步所花费的时间都是同样长且都为一个固定值。</p>
-</li>
-<li>
-<p>循环语句本身比循环体要多一次执行，因为循环语句本身在越界的时候仍然会进行一次判断。</p>
-</li>
-</ol>
-</li>
-<li>
-<p>插入算法时间复杂度分析</p>
-<table>
-<thead>
-<tr>
-<th>插入排序步骤</th>
-<th>时间花费</th>
-<th>运行次数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>for j=2 to A.length</td>
-<td>$c_1$</td>
-<td>$n$</td>
-<td>将A.Length看作n，因为循环语句本身多执行一次，所以总运行次数为$n$</td>
-</tr>
-<tr>
-<td>  key=A[j]</td>
-<td>$c_2$</td>
-<td>$n-1$</td>
-<td>2-&gt;n，运行$n-1$次</td>
-</tr>
-<tr>
-<td>  i=j-1</td>
-<td>$c_3$</td>
-<td>$n-1$</td>
-<td>2-&gt;n，运行$n-1$次</td>
-</tr>
-<tr>
-<td>  while i&gt;0 &amp;&amp; A[i]&gt;key</td>
-<td>$c_4$</td>
-<td>$\sum_{j=2}^nt_j$</td>
-<td>因为运行次数收到while判断影响，所以不定为$t_j$<br>最好情况下直接满足，只需要判断一次，$t_j=1$<br>最坏情况运行到i=0，运行j次，$t_j=j$</td>
-</tr>
-<tr>
-<td>    A[i+1]=A[i]</td>
-<td>$c_5$</td>
-<td>$\sum_{j=2}^n(t_j-1)$</td>
-<td>比循环判断少运行一次，运行次数为$t_j-1$</td>
-</tr>
-<tr>
-<td>    i–;</td>
-<td>$c_6$</td>
-<td>$\sum_{j=2}^n(t_j-1)$</td>
-<td>比循环判断少运行一次,运行次数为$t_j-1$</td>
-</tr>
-<tr>
-<td>  A[i+1]=key</td>
-<td>$c_7$</td>
-<td>$n-1$</td>
-<td>2-&gt;n，运行$n-1$次</td>
-</tr>
-</tbody>
-</table>
+<li><p>插入算法时间复杂度分析</p>
+<p> | 插入排序步骤                        | 时间花费 | 运行次数              | 说明                                                                                                                                 |<br> | —————————————————- | ———— | ——————————- | —————————————————————————————————————————————————————————————————— |<br> | for j=2 to A.length                 | $c<em>1$    | $n$                   | 将A.Length看作n，因为循环语句本身多执行一次，所以总运行次数为$n$                                                                     |<br> | &emsp;&emsp;key=A[j]                | $c_2$    | $n-1$                 | 2-&gt;n，运行$n-1$次                                                                                                                    |<br> | &emsp;&emsp;i=j-1                   | $c_3$    | $n-1$                 | 2-&gt;n，运行$n-1$次                                                                                                                    |<br> | &emsp;&emsp;while i&gt;0 &amp;&amp; A[i]&gt;key   | $c_4$    | $\sum</em>{j=2}^nt<em>j$     | 因为运行次数收到while判断影响，所以不定为$t_j$<br>最好情况下直接满足，只需要判断一次，$t_j=1$<br>最坏情况运行到i=0，运行j次，$t_j=j$ |<br> | &emsp;&emsp;&emsp;&emsp;A[i+1]=A[i] | $c_5$    | $\sum</em>{j=2}^n(t<em>j-1)$ | 比循环判断少运行一次，运行次数为$t_j-1$                                                                                              |<br> | &emsp;&emsp;&emsp;&emsp;i—;        | $c_6$    | $\sum</em>{j=2}^n(t_j-1)$ | 比循环判断少运行一次,运行次数为$t_j-1$                                                                                               |<br> | &emsp;&emsp;A[i+1]=key              | $c_7$    | $n-1$                 | 2-&gt;n，运行$n-1$次                                                                                                                    |</p>
 </li>
 </ol>
 <p>如表中所示，在最好情况下，$t_j=1$，最坏情况下运行$j$次。通常计算算法的复杂度，我们只考虑算法的最坏情况，因为往往在实际运算中，最坏情况就是最多的情况（如搜索算法，常常搜索的内容不在列表中，那就要搜索整个列表，即最坏情况）。而且纵使我们取平均值，在本例中，我们取运行次数为$j/2$，最终代入式子中计算，结果的最高次幂并不会改变。</p>
 <p>我们以最坏情况计算整个表达式的时间</p>
-<p>$$<br>
-T(n)=c_1n+c_2(n-1)+c_3(n-1)+c_4\sum_{j=2}^nj+c_5\sum_{j=2}^n(j-1)\\+c_6\sum_{j=2}^n(j-1)+c_7(n-1)<br>
-$$<br>
-又有</p>
-<p>$$<br>
-\sum_{j=2}^nj=\frac{(2+n)(n-1)}{2}=\frac{n(n+1)}{2}-1 \\<br>
-\sum_{j=2}^nj-1=\frac{(1+n-1)(n-1)}{2}=\frac{n(n-1)}{2}<br>
-$$<br>
-代入上式得</p>
-<p>$$<br>
-T(n)=c_1n+c_2(n-1)+c_3(n-1)+c_4\frac{n(n+1)}{2}-c_4+\\<br>
-c_5\frac{n(n-1)}{2}+c_6\frac{n(n-1)}{2}+c_7(n-1)<br>
-\\<br>
-=\frac{c_4+c_5+c_6}{2}n^2+(c_1+c_2+c_3+\frac{c_4}{2}<br>
--\frac{c_5}{2}-\frac{c_6}{2}+c_7)n-(c_2+c_3+c_4+c_7)\\<br>
-=an^2+bn+c<br>
-$$</p>
-<p>所以最坏的运行时间可以表达为$an^2+bn+c$，这是个二次幂方程.</p>
-<h4 id="Order-of-growth">Order of growth</h4>
-<p>一个函数的增长极受最高次幂的影响最大，所以我我们也只关注运算时间的最高次幂，在上例中即为$n_2$。我们将最坏情况运行时间成为$\Theta(n_2)$</p>
-<h3 id="Designing-algorithms">Designing algorithms</h3>
-<p>这节中简略介绍了分治法（divide-and-conquer），分治法的一大好处是运算时间比较好估计。</p>
-<h4 id="The-divide-and-conquer-approach">The divide-and-conquer approach</h4>
-<ol>
-<li>
-<p>许多算法都使用了递归，递归算法就是典型的分治法。将一个大问题分解为几个类似的小问题，然后递归的解决各个小问题，然后把结果合并在一起就得到了最终的答案。</p>
+<script type="math/tex; mode=display">
+T(n)=c_1n+c_2(n-1)+c_3(n-1)+c_4\sum_{j=2}^nj+c_5\sum_{j=2}^n(j-1)\\\\+c_6\sum_{j=2}^n(j-1)+c_7(n-1)</script><p>又有</p>
+<script type="math/tex; mode=display">
+\sum_{j=2}^nj=\frac{(2+n)(n-1)}{2}=\frac{n(n+1)}{2}-1 \\\\
+\sum_{j=2}^nj-1=\frac{(1+n-1)(n-1)}{2}=\frac{n(n-1)}{2}</script><p>代入上式得</p>
+<script type="math/tex; mode=display">
+T(n)=c_1n+c_2(n-1)+c_3(n-1)+c_4\frac{n(n+1)}{2}-c_4+\\\\
+c_5\frac{n(n-1)}{2}+c_6\frac{n(n-1)}{2}+c_7(n-1)
+\\\\
+=\frac{c_4+c_5+c_6}{2}n^2+(c_1+c_2+c_3+\frac{c_4}{2}
+-\frac{c_5}{2}-\frac{c_6}{2}+c_7)n-(c_2+c_3+c_4+c_7)\\\\
+=an^2+bn+c</script><p>所以最坏的运行时间可以表达为$an^2+bn+c$，这是个二次幂方程.</p>
+<h4 id="Order-of-growth"><a href="#Order-of-growth" class="headerlink" title="Order of growth"></a>Order of growth</h4><p>一个函数的增长极受最高次幂的影响最大，所以我我们也只关注运算时间的最高次幂，在上例中即为$n_2$。我们将最坏情况运行时间成为$\Theta(n_2)$</p>
+<h3 id="Designing-algorithms"><a href="#Designing-algorithms" class="headerlink" title="Designing algorithms"></a>Designing algorithms</h3><p>这节中简略介绍了分治法（divide-and-conquer），分治法的一大好处是运算时间比较好估计。</p>
+<h4 id="The-divide-and-conquer-approach"><a href="#The-divide-and-conquer-approach" class="headerlink" title="The divide-and-conquer approach"></a>The divide-and-conquer approach</h4><ol>
+<li><p>许多算法都使用了递归，递归算法就是典型的分治法。将一个大问题分解为几个类似的小问题，然后递归的解决各个小问题，然后把结果合并在一起就得到了最终的答案。</p>
 </li>
-<li>
-<p>分治法的解决分为三个步骤：</p>
-<ol>
-<li>分解：将大问题分解为几个小问题</li>
-<li>解决：迭代解决小问题</li>
-<li>合并：将小问题的答案结合成为原始问题的答案。</li>
-</ol>
+<li><p>分治法的解决分为三个步骤：<br>1) 分解：将大问题分解为几个小问题<br>2) 解决：迭代解决小问题<br>3) 合并：将小问题的答案结合成为原始问题的答案。</p>
 </li>
-<li>
-<p>归并排序（Merge sort algorithms）就是一个典型的分治法算法。排序算法的思想是将需要排序的数组二分，先对左半部分进行排序，再对右半部分进行排序，最有把左右半部分合并在一起获得完整的排序好的数组。</p>
+<li><p>归并排序（Merge sort algorithms）就是一个典型的分治法算法。排序算法的思想是将需要排序的数组二分，先对左半部分进行排序，再对右半部分进行排序，最有把左右半部分合并在一起获得完整的排序好的数组。</p>
 </li>
-<li>
-<p>归并排序算法的伪代码</p>
+<li><p>归并排序算法的伪代码</p>
  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Merge-sort(A,p,r)</span><br><span class="line"></span><br><span class="line">//A-&gt;需要排序的数组，p-&gt;需要排序部分的左起点，r-&gt;需要排序部分的右终点</span><br><span class="line"></span><br><span class="line">如果出现了p=r，说明被拆分出的子数组只有一个元素，则不需要计算。只计算p &lt; r的情况</span><br><span class="line"></span><br><span class="line">if p &lt; r </span><br><span class="line">    q = [(p+r)/2] //除不尽的话向下取整</span><br><span class="line"></span><br><span class="line">    //将需要排序的部分等分为两部分，各自进行排序</span><br><span class="line"></span><br><span class="line">    Merge-sort(A,p,q)</span><br><span class="line">    Merge-sort(A,q+1,r)</span><br><span class="line">    Merge(A,p,q,r)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>下图为归并排序图解，先将序列逐渐二分直到最后成为单个元素（单个元素不需要合并），然后再进行合并操作。</p>
-<p><img src="IA-Chapter1-Chapter2-Notes/2019-10-15-23-14-44.png" alt="归并排序图解"></p>
+<p> 下图为归并排序图解，先将序列逐渐二分直到最后成为单个元素（单个元素不需要合并），然后再进行合并操作。</p>
+<p> <img src="IA-Chapter1-Chapter2-Notes/2019-10-15-23-14-44.png" alt="归并排序图解"></p>
 </li>
-<li>
-<p>归并排序中，最重要的就是最终合并的部分。在之前合并函数前，我们假定两个需要被合并的数组已经排序完毕。合并部分的伪代码如下</p>
+</ol>
+<ol>
+<li><p>归并排序中，最重要的就是最终合并的部分。在之前合并函数前，我们假定两个需要被合并的数组已经排序完毕。合并部分的伪代码如下</p>
  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Merge(A,p,q,r)</span><br><span class="line"></span><br><span class="line">// A-&gt; 需要排序的数组</span><br><span class="line">//p,q,r-&gt;数组中的Index，p&lt;q&lt;r，A[p,q]表示一个子数组（下称为左半部分），A[q+1,r]表示另一个子数组（下称为右半部分），左右部分都已经排序完毕。</span><br><span class="line"></span><br><span class="line">n1=q-p+1 //左半部分长度</span><br><span class="line">n2=r-q //右半部分长度</span><br><span class="line"></span><br><span class="line">Make L[1...n1+1],R[1...n2+1] //创建两个新的数组，长度与左右部分长度+1，防止之后遍历时越界。</span><br><span class="line"></span><br><span class="line">for i=1 to n1</span><br><span class="line">    L[i]=A[p+i-1] //将左半部分内容对应拷贝到新建立的左数组中</span><br><span class="line"></span><br><span class="line">for j-1 to n2</span><br><span class="line">    R[i]=A[q+j]  //将右半部分内容对应拷贝到新建立的右数组中</span><br><span class="line"></span><br><span class="line">//将左右数组的最后一个数值都设为无限大，如果遍历时达到了最后一个数值，说明这个数组已经完全装填回了原数组。因为最后的数值为无限大，所以另一个数组的数值始终小于等于这个数值，因此会一直装填另一个数组。</span><br><span class="line"></span><br><span class="line">L[n1+1]=Max </span><br><span class="line">R[n2+1]=Max</span><br><span class="line"></span><br><span class="line">i,j=1</span><br><span class="line"></span><br><span class="line">for k=p to r</span><br><span class="line">    if(L[i]&lt;= R[j]&gt;)</span><br><span class="line">        A[k]=L[i]</span><br><span class="line">        i++</span><br><span class="line">    else</span><br><span class="line">        A[k]=R[j]</span><br><span class="line">        j++</span><br></pre></td></tr></table></figure>
-<p>合并部分算法的图解</p>
-<p><img src="IA-Chapter1-Chapter2-Notes/2019-10-15-15-16-31.png" alt="合并部分算法图解"></p>
+<p> 合并部分算法的图解</p>
+<p> <img src="IA-Chapter1-Chapter2-Notes/2019-10-15-15-16-31.png" alt="合并部分算法图解"></p>
 </li>
-<li>
-<p>C++实现</p>
+<li><p>C++实现</p>
  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MergeSort</span><span class="params">(<span class="type">int</span>* array, <span class="type">int</span> leftStartIndex, <span class="type">int</span> rightEndIndex)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (leftStartIndex == rightEndIndex)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> centerIndex = (leftStartIndex + rightEndIndex) / <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">MergeSort</span>(array, leftStartIndex, centerIndex);</span><br><span class="line">    <span class="built_in">MergeSort</span>(array, centerIndex + <span class="number">1</span>, rightEndIndex);</span><br><span class="line">    <span class="built_in">Merge</span>(array, leftStartIndex, centerIndex, rightEndIndex);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Merge</span><span class="params">(<span class="type">int</span>* array, <span class="type">int</span> leftStartIndex, <span class="type">int</span> middleIndex, <span class="type">int</span> rightEndIndex)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> leftPartLength = middleIndex - leftStartIndex + <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> rightPartLength = rightEndIndex - middleIndex;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span>* leftArray = <span class="keyword">new</span> <span class="type">int</span>[leftPartLength + <span class="number">1</span>];</span><br><span class="line">    <span class="type">int</span>* rightArray = <span class="keyword">new</span> <span class="type">int</span>[rightPartLength + <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; leftPartLength; i++)</span><br><span class="line">        leftArray[i] = array[leftStartIndex + i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; rightPartLength; i++)</span><br><span class="line">        rightArray[i] = array[middleIndex + <span class="number">1</span> + i];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//Make the last index to be max</span></span><br><span class="line">    leftArray[leftPartLength] = INT_MAX;</span><br><span class="line">    rightArray[rightPartLength] = INT_MAX;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> leftArrayIndex = <span class="number">0</span>, rightArrayIndex = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = leftStartIndex; i &lt;= rightEndIndex; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (leftArray[leftArrayIndex] &lt; rightArray[rightArrayIndex])</span><br><span class="line">            array[i] = leftArray[leftArrayIndex++];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            array[i] = rightArray[rightArrayIndex++];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">delete</span>[] leftArray;</span><br><span class="line">    <span class="keyword">delete</span>[] rightArray;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h4 id="Analyzing-divide-and-conquer-algorithms">Analyzing divide-and-conquer algorithms</h4>
-<p>当计算一个迭代问题的时间复杂度时，我们也常用迭代表达式来表示。</p>
+<h4 id="Analyzing-divide-and-conquer-algorithms"><a href="#Analyzing-divide-and-conquer-algorithms" class="headerlink" title="Analyzing divide-and-conquer algorithms"></a>Analyzing divide-and-conquer algorithms</h4><p>当计算一个迭代问题的时间复杂度时，我们也常用迭代表达式来表示。</p>
 <p>我们假定将原问题拆分为$a$个子问题，每个子问题有$\frac{1}{b}$个数据，那么所有这些子问题的花费时间为$aT(\frac{1}{b})$。并且拆分子问题需要$D(n)$的时间，合并子问题需要$C(n)$时间。另外我们需要考虑到如果子问题的输入数据足够小，可能在固定时间内子问题就能解决，例如排序的子问题，如果子数组只有一个变量，那么直接返回即可（固定时间）。所以整体的时间花费为：</p>
-<p>$$<br>
-T(n)=\begin{cases}<br>
-\Theta(1) &amp; \text{if } n \leq c\\<br>
-aT(\frac{1}{b})+D(n)+C(n) &amp; 其他情况条件<br>
-\end{cases}<br>
-$$</p>
-<h4 id="Analysis-of-merge-sort">Analysis of merge sort</h4>
-<p>这里着重讨论归并排序的时间复杂度。</p>
+<script type="math/tex; mode=display">
+T(n)=\begin{cases}
+    \Theta(1) & \text{if } n \leq c\\\\
+    aT(\frac{1}{b})+D(n)+C(n) & 其他情况条件
+\end{cases}</script><h4 id="Analysis-of-merge-sort"><a href="#Analysis-of-merge-sort" class="headerlink" title="Analysis of merge sort"></a>Analysis of merge sort</h4><p>这里着重讨论归并排序的时间复杂度。</p>
 <p><strong>分解时间</strong>：归并排序将数组分为两部分，这一操作只是单纯的二分，所以花费时间为固定值，即$D(n)=\Theta(1)$</p>
 <p><strong>解决时间</strong>：将数组平分为两个部分，所以每一份的数据为$n/2$且有两部分，所以子问题解决时间为$2T(\frac{n}{2})$</p>
 <p><strong>合并时间</strong>： 由合并算法的伪代码可知，整个计算过程只有单层循环，所以时间复杂度$C(n)=\Theta(n)$</p>
 <p>综上，归并排序的时间复杂度为</p>
-<p>$$<br>
-T(n)=\begin{cases}<br>
-\Theta(1) &amp; \text{if } n=1\\<br>
-2T(\frac{n}{2})+\Theta(n) &amp; \text{if } n\geq 1<br>
-\end{cases}<br>
-$$</p>
-<p>目前$T(n)$的表达式是一个递归表达，我们需要根据这个解出$n\geq 1$情况下的$T(n)$单纯对于$n$的表达式。</p>
+<script type="math/tex; mode=display">
+T(n)=\begin{cases}
+    \Theta(1) & \text{if } n=1\\\\
+    2T(\frac{n}{2})+\Theta(n) & \text{if } n\geq 1
+\end{cases}</script><p>目前$T(n)$的表达式是一个递归表达，我们需要根据这个解出$n\geq 1$情况下的$T(n)$单纯对于$n$的表达式。</p>
 <p>我们将$T(n)$用树形结构表示，每个节点都代表一部分时间，所有节点的时间累计即为$T(n)$</p>
-<p>例如式子$T(n)=2T(\frac{n}{2})+\Theta(n)$，使用树形结构表达即为从下图的(a)树转换为(b)树，(b)树中的每个节点即代表等式右边的每小部分。而$T(\frac{n}{2})$又可进一步表达为$2T(\frac{n}{4})+\Theta(\frac{n}{2})$，即为下图中(b)图的叶子进一步转换，变成©图的样子。</p>
+<p>例如式子$T(n)=2T(\frac{n}{2})+\Theta(n)$，使用树形结构表达即为从下图的(a)树转换为(b)树，(b)树中的每个节点即代表等式右边的每小部分。而$T(\frac{n}{2})$又可进一步表达为$2T(\frac{n}{4})+\Theta(\frac{n}{2})$，即为下图中(b)图的叶子进一步转换，变成(c)图的样子。</p>
 <p><img src="IA-Chapter1-Chapter2-Notes/2019-10-16-00-45-05.png" alt="归并排序时间复杂度分析1"></p>
 <p>我们可以重复递归这样的操作，直到属性结构变成下图所示：</p>
 <p><img src="IA-Chapter1-Chapter2-Notes/2019-10-16-00-46-41.png" alt="归并排序时间复杂度分析2"></p>
 <p>整棵树所有叶子所代表的时间总和即为$T(n)$，可以看到每一层叶子的总和都为$cn$。最下一层一共有$n$个节点，每个节点时间花费为$c$，即代表归并排序中分解子数组到数组的元素只有一个的情况，这时候直接返回（花费时间固定）。</p>
 <p>现在问题的解决到了求树一共有多少层，我们知道最下面一层有$n$个元素，每层的数量都是2的次幂，且第一层为一个元素，所以我们设层数为$x$，计算表达式应该为：</p>
-<p>$$<br>
-2^(x-1)=n \\<br>
-x=\lg n+1<br>
-$$</p>
-<p>那么整棵树所有叶子的时间花费总和即为，每层的时间（$cn$）乘以层数($\lg n+1$)，即$T(n)=cn\lg n+cn$。</p>
+<script type="math/tex; mode=display">
+2^(x-1)=n \\\\
+x=\lg n+1</script><p>那么整棵树所有叶子的时间花费总和即为，每层的时间（$cn$）乘以层数($\lg n+1$)，即$T(n)=cn\lg n+cn$。</p>
 <p>所以归并排序最差情况时间复杂度标识为$\Theta(n\lg n)$</p>
 <ul>
-<li>书中的$\lg n$表示$\log_2n$，而非一般数学书中的$\log_{10}n$，因为计算机讨论的是二进制而非现实生活中常用的十进制。</li>
+<li>书中的$\lg n$表示$\log<em>2n$，而非一般数学书中的$\log</em>{10}n$，因为计算机讨论的是二进制而非现实生活中常用的十进制。</li>
 </ul>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>引用：</p>
+<div class="note info simple"><p>引用：</p>
 <ol>
 <li><em>Introduction to Algorithms</em> 3rd Sep.2009</li>
 </ol>
-
-        </div>
-    </article>
+</div>
 <hr>
-</div><div class="article-licensing box"><div class="licensing-title"><p>《算法导论》 第一、二章笔记</p><p><a href="https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/">https://wangxuejia.blog/IA-Chapter1-Chapter2-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-11-05</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/IA-Chapter3-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《算法导论》 第三章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/TheMangaGuideToDatabasesNotes-2/"><span class="level-item">《漫画数据库》 笔记 （二）</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
-            el: '#valine-thread',
-            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
-            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
-            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
-            avatar: "mm",
-            avatarForce: false,
-            meta: ["nick","mail","link"],
-            pageSize: 10,
-            lang: "zh-CN",
-            visitor: true,
-            highlight: true,
-            recordIP: false,
-            
-            
-            
-            enableQQ: true,
-            requiredFields: [],
-        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
-            article: {
-                highlight: {
-                    clipboard: true,
-                    fold: 'unfolded'
-                }
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="Tuncle">三叔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tuncle.blog/IA-Chapter1-Chapter2-Notes/">https://tuncle.blog/IA-Chapter1-Chapter2-Notes/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tuncle.blog" target="_blank">三叔胡言乱语的地方</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="twitter, wechat, weibo"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/IA-Chapter3-Notes/" title="《算法导论》 第三章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《算法导论》 第三章笔记</div></div></a></div><div class="next-post pull-right"><a href="/TheMangaGuideToDatabasesNotes-2/" title="《漫画数据库》 笔记 （二）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《漫画数据库》 笔记 （二）</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-1-The-Role-of-Algorithms-in-Computing"><span class="toc-number">1.</span> <span class="toc-text">Chapter 1. The Role of Algorithms in Computing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Algorithms"><span class="toc-number">1.1.</span> <span class="toc-text">Algorithms</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Algorithms-as-a-technology"><span class="toc-number">1.2.</span> <span class="toc-text">Algorithms as a technology</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-2-Getting-Started"><span class="toc-number">2.</span> <span class="toc-text">Chapter 2. Getting Started</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Insertion-Sort"><span class="toc-number">2.1.</span> <span class="toc-text">Insertion Sort</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analyzing-algorithms"><span class="toc-number">2.2.</span> <span class="toc-text">Analyzing algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Analysis-of-insertion-sort"><span class="toc-number">2.2.1.</span> <span class="toc-text">Analysis of insertion sort</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Order-of-growth"><span class="toc-number">2.2.2.</span> <span class="toc-text">Order of growth</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Designing-algorithms"><span class="toc-number">2.3.</span> <span class="toc-text">Designing algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-divide-and-conquer-approach"><span class="toc-number">2.3.1.</span> <span class="toc-text">The divide-and-conquer approach</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Analyzing-divide-and-conquer-algorithms"><span class="toc-number">2.3.2.</span> <span class="toc-text">Analyzing divide-and-conquer algorithms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Analysis-of-merge-sort"><span class="toc-number">2.3.3.</span> <span class="toc-text">Analysis of merge sort</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By 三叔</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Keep Writing</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
             }
-        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
-      window.cookieconsent.initialise({
-        type: "info",
-        theme: "edgeless",
-        static: false,
-        position: "bottom-left",
-        content: {
-          message: "此网站使用Cookie来改善您的体验。",
-          dismiss: "知道了！",
-          allow: "允许使用Cookie",
-          deny: "拒绝",
-          link: "了解更多",
-          policy: "Cookie政策",
-          href: "https://www.cookiesandyou.com/",
-        },
-        palette: {
-          popup: {
-            background: "#edeff5",
-            text: "#838391"
-          },
-          button: {
-            background: "#4b81e8"
-          },
-        },
-      });
-    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
-            if (typeof $.fn.lightGallery === 'function') {
-                $('.article').lightGallery({ selector: '.gallery-item' });
-            }
-            if (typeof $.fn.justifiedGallery === 'function') {
-                if ($('.justified-gallery > p > .gallery-item').length) {
-                    $('.justified-gallery > p > .gallery-item').unwrap();
-                }
-                $('.justified-gallery').justifiedGallery();
-            }
-        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
-            'HTML-CSS': {
-                matchFontHeight: false
-            },
-            SVG: {
-                matchFontHeight: false
-            },
-            CommonHTML: {
-                matchFontHeight: false
-            },
-            tex2jax: {
-                inlineMath: [
-                    ['$','$'],
-                    ['\\(','\\)']
-                ]
-            }
-        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
-            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
-        });</script></body></html>
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey: 'z1vCYavVUbCGuMjNMcrsvShN',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

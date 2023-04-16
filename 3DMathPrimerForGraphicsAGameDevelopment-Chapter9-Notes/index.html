@@ -1,35 +1,187 @@
-<!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《3D数学基础：图形和游戏开发》第九章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《3D数学基础：图形和游戏开发》第九章笔记 9.1节 关于图形的表示法分类 9.2节 介绍了射线 9.3节 介绍了球和圆 9.4节 介绍了边界盒 9.5节 介绍了平面 9.6节 介绍了三角形 9.7节 介绍了多边形"><meta property="og:type" content="blog"><meta property="og:title" content="《3D数学基础：图形和游戏开发》第九章笔记"><meta property="og:url" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《3D数学基础：图形和游戏开发》第九章笔记 9.1节 关于图形的表示法分类 9.2节 介绍了射线 9.3节 介绍了球和圆 9.4节 介绍了边界盒 9.5节 介绍了平面 9.6节 介绍了三角形 9.7节 介绍了多边形"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-15-50-37.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-16-11-00.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-16-27-22.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-16-31-22.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-09-51-39.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-09-55-40.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-10-01-55.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-10-52-21.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-10-54-02.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-11-21-53.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-11-33-11.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-11-46-08.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-12-11-31.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-12-19-04.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-12-33-31.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-41-55.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-48-35.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-53-04.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-57-07.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-57-57.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-58-58.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-18-04-45.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-21-59-19.png"><meta property="og:image" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-22-05-57.png"><meta property="article:published_time" content="2020-04-13T14:08:54.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.004Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="3D数学"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-15-50-37.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/"},"headline":"《3D数学基础：图形和游戏开发》第九章笔记","image":["https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-15-50-37.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-16-11-00.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-16-27-22.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-16-31-22.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-09-51-39.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-09-55-40.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-10-01-55.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-10-52-21.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-10-54-02.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-11-21-53.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-11-33-11.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-11-46-08.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-12-11-31.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-12-19-04.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-12-33-31.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-41-55.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-48-35.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-53-04.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-57-07.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-57-57.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-58-58.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-18-04-45.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-21-59-19.png","https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-22-05-57.png"],"datePublished":"2020-04-13T14:08:54.000Z","dateModified":"2023-04-02T12:21:20.004Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《3D数学基础：图形和游戏开发》第九章笔记 9.1节 关于图形的表示法分类 9.2节 介绍了射线 9.3节 介绍了球和圆 9.4节 介绍了边界盒 9.5节 介绍了平面 9.6节 介绍了三角形 9.7节 介绍了多边形"}</script><link rel="canonical" href="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
-  (function () {
-      function switchTab() {
-          if (!location.hash) {
-            return;
-          }
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>《3D数学基础：图形和游戏开发》第九章笔记 | 三叔胡言乱语的地方</title><meta name="author" content="三叔"><meta name="copyright" content="三叔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《3D数学基础：图形和游戏开发》第九章笔记 9.1节 关于图形的表示法分类 9.2节 介绍了射线 9.3节 介绍了球和圆 9.4节 介绍了边界盒 9.5节 介绍了平面 9.6节 介绍了三角形 9.7节 介绍了多边形">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《3D数学基础：图形和游戏开发》第九章笔记">
+<meta property="og:url" content="https://tuncle.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="《3D数学基础：图形和游戏开发》第九章笔记 9.1节 关于图形的表示法分类 9.2节 介绍了射线 9.3节 介绍了球和圆 9.4节 介绍了边界盒 9.5节 介绍了平面 9.6节 介绍了三角形 9.7节 介绍了多边形">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuncle.blog/img/avatar.jpg">
+<meta property="article:published_time" content="2020-04-13T14:08:54.000Z">
+<meta property="article:modified_time" content="2023-04-16T06:32:59.809Z">
+<meta property="article:author" content="三叔">
+<meta property="article:tag" content="读书笔记">
+<meta property="article:tag" content="3D数学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuncle.blog/img/avatar.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://tuncle.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: 三叔","link":"链接: ","source":"来源: 三叔胡言乱语的地方","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《3D数学基础：图形和游戏开发》第九章笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-16 14:32:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-          const id = '#' + CSS.escape(location.hash.substring(1));
-          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
-          if (!$tabMenu) {
-            return;
-          }
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
-          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
-          Array.from($tabMenuContainer.querySelectorAll('a'))
-              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
-              .forEach($content => $content.classList.add('is-hidden'));
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-          if ($tabMenu) {
-              $tabMenu.parentElement.classList.add('is-active');
-          }
-          const $activeTab = document.querySelector(id);
-          if ($activeTab) {
-              $activeTab.classList.remove('is-hidden');
-          }
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
-      switchTab();
-      window.addEventListener('hashchange', switchTab, false);
-  })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-04-13T14:08:54.000Z" title="2020/4/13 22:08:54">2020-04-13</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.004Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></span><span class="level-item">1 小时读完 (大约7867个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《3D数学基础：图形和游戏开发》第九章笔记</h1><div class="content"><p>《3D数学基础：图形和游戏开发》第九章笔记</p>
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="三叔胡言乱语的地方"><span class="site-name">三叔胡言乱语的地方</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">《3D数学基础：图形和游戏开发》第九章笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-04-13T14:08:54.000Z" title="发表于 2020-04-13 22:08:54">2020-04-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">7.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>33分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/" data-flag-title="《3D数学基础：图形和游戏开发》第九章笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>《3D数学基础：图形和游戏开发》第九章笔记</p>
 <p>9.1节 关于图形的表示法分类</p>
 <p>9.2节 介绍了射线</p>
 <p>9.3节 介绍了球和圆</p>
@@ -38,19 +190,14 @@
 <p>9.6节 介绍了三角形</p>
 <p>9.7节 介绍了多边形</p>
 <span id="more"></span>
-<h1>Chapter 9 Geometric Primitives</h1>
-<h2 id="Representation-Techniques">Representation Techniques</h2>
-<p>这一节介绍不同的用来表达基本图形的方法：</p>
+<h1 id="Chapter-9-Geometric-Primitives"><a href="#Chapter-9-Geometric-Primitives" class="headerlink" title="Chapter 9 Geometric Primitives"></a>Chapter 9 Geometric Primitives</h1><h2 id="Representation-Techniques"><a href="#Representation-Techniques" class="headerlink" title="Representation Techniques"></a>Representation Techniques</h2><p>这一节介绍不同的用来表达基本图形的方法：</p>
 <p>第一种是隐式表达（Implicit form），即用一个等式或不等式来描述关系，如下式是描述球的，当为等号时，说明点在球面上，如果小于则说明点在球内，大于说明点在球外。</p>
-<p>$$x^{2}+y^{2}+z^{2}=1$$</p>
-<p>第二种表达式为参数化表达（Parametric form），如下式为参数化表达圆，其中$t$为的参数，通常来说参数的数值为$[0,1]$</p>
-<p>$$x(t)=\cos 2 \pi t, \quad y(t)=\sin 2 \pi t$$</p>
-<p>参数化表达圆的示意图如下：</p>
+<script type="math/tex; mode=display">x^{2}+y^{2}+z^{2}=1</script><p>第二种表达式为参数化表达（Parametric form），如下式为参数化表达圆，其中$t$为的参数，通常来说参数的数值为$[0,1]$</p>
+<script type="math/tex; mode=display">x(t)=\cos 2 \pi t, \quad y(t)=\sin 2 \pi t</script><p>参数化表达圆的示意图如下：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-15-50-37.png" alt="参数化圆"></p>
 <p>参数化表达可以进一步细分为一元表达（univariate）， 即只有一个参数，和二元表达（bivariate），即有两个参数。一元表达描述的是一个曲线，二元表达描述的是一个曲面。</p>
 <p>第三种表达方式是直接表达，但这种表达没有统一的形式。如使用两个点来描述一条直线，用半径和圆心来描述一个圆。</p>
-<h2 id="Lines-and-Rays">Lines and Rays</h2>
-<p>从数学角度来说，关于线条有三个定义：</p>
+<h2 id="Lines-and-Rays"><a href="#Lines-and-Rays" class="headerlink" title="Lines and Rays"></a>Lines and Rays</h2><p>从数学角度来说，关于线条有三个定义：</p>
 <ol>
 <li>直线是用来描述一个朝正反方向都无限延伸的线</li>
 <li>线段是用来描述由确切两个点构成的有限长度的线。这两个点并没有起点和终点之分，即不存在方向。</li>
@@ -63,601 +210,531 @@
 <li>射线是用来描述一个有方向的线段，即存在起点和终点的概念。</li>
 </ol>
 <p>在电子游戏中，通常只使用射线，直线和线段的概念很少出现。</p>
-<h3 id="Rays">Rays</h3>
-<ol>
-<li>
-<p>如果用直接方法定义射线，直接给定终点和起点即可，$\mathbf{P}<em>{org}$和$\mathbf{P}</em>{end}$</p>
-</li>
-<li>
-<p>用参数化表达射线，表达式如下<br>
-$$\mathbf{p}(t)=\mathbf{p}_{0}+t \mathbf{d}$$<br>
-其中，$\mathbf{P}_0$为起点，$\mathbf{d}$为射线的有向长度，参数$t$的取值范围是$[0,1]$</p>
-<p>射线的参数化表达也可以进一步拆分为两部分，即分别描述x分量和y分量<br>
-$$x(t)=x_{0}+t \Delta x, \quad y(t)=y_{0}+t \Delta y$$</p>
-<p>可以看出这个表达存在四个自由度，分别是$x_0$和$y_0$表示起点和$\Delta x$和$\Delta y$表示一个分量上的有向长度。</p>
+<h3 id="Rays"><a href="#Rays" class="headerlink" title="Rays"></a>Rays</h3><ol>
+<li>如果用直接方法定义射线，直接给定终点和起点即可，$\mathbf{P}<em>{org}$和$\mathbf{P}</em>{end}$</li>
+<li><p>用参数化表达射线，表达式如下</p>
+<script type="math/tex; mode=display">\mathbf{p}(t)=\mathbf{p}_{0}+t \mathbf{d}</script><p>其中，$\mathbf{P}_0$为起点，$\mathbf{d}$为射线的有向长度，参数$t$的取值范围是$[0,1]$</p>
+<p>射线的参数化表达也可以进一步拆分为两部分，即分别描述x分量和y分量</p>
+<script type="math/tex; mode=display">x(t)=x_{0}+t \Delta x, \quad y(t)=y_{0}+t \Delta y</script><p>可以看出这个表达存在四个自由度，分别是$x_0$和$y_0$表示起点和$\Delta x$和$\Delta y$表示一个分量上的有向长度。</p>
 </li>
 </ol>
-<h3 id="Special-2D-Representation-of-Lines">Special 2D Representation of Lines</h3>
-<p>这一节介绍一些二维射线的特殊表达</p>
+<h3 id="Special-2D-Representation-of-Lines"><a href="#Special-2D-Representation-of-Lines" class="headerlink" title="Special 2D Representation of Lines"></a>Special 2D Representation of Lines</h3><p>这一节介绍一些二维射线的特殊表达</p>
 <ol>
-<li>
-<p>截距形式（Slope-interpret form）</p>
-<p>$$y=m x+y_{0}$$</p>
-<p>其中$m$表示射线的斜率(rise/run)，$y_0$表示截距（y-intercept），如下图所示</p>
-<img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-16-11-00.png" alt="截距形式" style="zoom:67%;" />
+<li><p>截距形式（Slope-interpret form）</p>
+<script type="math/tex; mode=display">y=m x+y_{0}</script><p>其中$m$表示射线的斜率(rise/run)，$y_0$表示截距（y-intercept），如下图所示</p>
+<p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-16-11-00.png" alt="截距形式" style="zoom:67%;" /></p>
 <p>截距形式的问题在于，它无法表达沿着Y轴向上的射线。</p>
 </li>
-<li>
-<p>隐式表达（Implicit definition）</p>
+<li><p>隐式表达（Implicit definition）</p>
 <p>射线的隐式表达实际上相当于截距形式的变形</p>
-<p>$$a x+b y=d$$</p>
-<p>而且隐式表达可以进一步使用向量的点乘表达，</p>
-<p>$$\mathbf{p} \cdot \mathbf{n}=d$$</p>
-<p>其中$\mathbf{n}=[a, b]$表示射线的法线方向，且是一个单位向量。</p>
+<script type="math/tex; mode=display">a x+b y=d</script><p>而且隐式表达可以进一步使用向量的点乘表达，</p>
+<script type="math/tex; mode=display">\mathbf{p} \cdot \mathbf{n}=d</script><p>其中$\mathbf{n}=[a, b]$表示射线的法线方向，且是一个单位向量。</p>
 <p>$\mathbf{p}=[x,y]$表示射线上的点。</p>
 <p>$d$表示射线沿着$\mathbf{n}$方向上离原点的距离。</p>
 <p>如下所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-16-27-22.png" alt="隐式表达"></p>
 </li>
-<li>
-<p>垂直线等分法：<br>
-该方法定义两个点$\mathbf{q,r}$，射线用来描述距离这两个点距离相等的点的几何。如下图所示：</p>
+<li><p>垂直线等分法：<br>该方法定义两个点$\mathbf{q,r}$，射线用来描述距离这两个点距离相等的点的几何。如下图所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-07-16-31-22.png" alt="垂直线等分法"></p>
 </li>
 </ol>
-<h3 id="Converting-between-Representations">Converting between Representations</h3>
-<p>直接表达法：</p>
-<p>$$\mathbf{P}<em>{end}和\mathbf{P}</em>{org}$$</p>
-<p>截距法：</p>
-<p>$$y=m x+y_{0}$$</p>
-<p>隐式表达法：</p>
-<p>$$a x+b y=d$$</p>
-<p>向量表达法：</p>
-<p>$$\mathbf{p} \cdot \mathbf{n}=d$$</p>
-<p>垂直线等分法法：</p>
-<p>$$与点\mathbf{q}和点\mathbf{r}距离相同的点的合集$$</p>
-<p>上述相互之间的转换方法为：</p>
+<h3 id="Converting-between-Representations"><a href="#Converting-between-Representations" class="headerlink" title="Converting between Representations"></a>Converting between Representations</h3><p>直接表达法：</p>
+<script type="math/tex; mode=display">\mathbf{P}_{end}和\mathbf{P}_{org}</script><p>截距法：</p>
+<script type="math/tex; mode=display">y=m x+y_{0}</script><p>隐式表达法：</p>
+<script type="math/tex; mode=display">a x+b y=d</script><p>向量表达法：</p>
+<script type="math/tex; mode=display">\mathbf{p} \cdot \mathbf{n}=d</script><p>垂直线等分法法：</p>
+<script type="math/tex; mode=display">与点\mathbf{q}和点\mathbf{r}距离相同的点的合集</script><p>上述相互之间的转换方法为：</p>
 <ol>
-<li>
-<p>直接表达法与隐式表达法的转换</p>
+<li><p>直接表达法与隐式表达法的转换</p>
 <p>直接表达即为通过两个点$\mathbf{P}<em>{end}$和$\mathbf{P}</em>{org}$来描述一条射线，为了将其转换为隐式表达法首先需要计算出两点之间的有向距离</p>
-<p>$$\mathbf{d}=\mathbf{p}<em>{\text {end }}-\mathbf{p}</em>{\text {org }}$$</p>
-<p>$\mathbf{d}$不仅表示两点间的距离还表示两点间的方向</p>
-<p>因此如果表示为截距法，那么射线的斜率为$m=d_y/d_x$，将点$\mathbf{P}<em>org$代入式子中，可以求得$y_0=y</em>{org}-\frac{d_y}{d_x}x_{org}$</p>
+<script type="math/tex; mode=display">\mathbf{d}=\mathbf{p}_{\text {end }}-\mathbf{p}_{\text {org }}</script><p>$\mathbf{d}$不仅表示两点间的距离还表示两点间的方向</p>
+<p>因此如果表示为截距法，那么射线的斜率为$m=d<em>y/d_x$，将点$\mathbf{P}_org$代入式子中，可以求得$y_0=y</em>{org}-\frac{d<em>y}{d_x}x</em>{org}$</p>
 <p>转换为隐式表达法则有：</p>
-<p>$$a=d_{y}, \quad b=-d_{x}, \quad d=x_{\text {org }} d_{y}-y_{\text {org }} d_{x}$$</p>
+<script type="math/tex; mode=display">a=d_{y}, \quad b=-d_{x}, \quad d=x_{\text {org }} d_{y}-y_{\text {org }} d_{x}</script></li>
+<li><p>隐式表达法和截距法的转换</p>
+<p>使用隐式表达法中的$a,b,d$来描述截距法，则有<br>$y=-\frac{a}{b}x+\frac{d}{b}$</p>
 </li>
-<li>
-<p>隐式表达法和截距法的转换</p>
-<p>使用隐式表达法中的$a,b,d$来描述截距法，则有<br>
-$y=-\frac{a}{b}x+\frac{d}{b}$</p>
-</li>
-<li>
-<p>隐式表达法求射线的法线和距离</p>
+<li><p>隐式表达法求射线的法线和距离</p>
 <p>隐式表达法可以直接转换为向量形式的表达，即</p>
-<p>$$a x+b y=\mathbf{p} \cdot \mathbf{n}=[x \quad y]\cdot[a \quad b]=d$$</p>
-<p>即$\mathbf{n}t[a \quad b]$，如果将其转换为单位向量，即</p>
-<p>$$\hat{\mathbf{n}}=[a \quad b]/\sqrt{a^2+b^2}$$</p>
-<p>如果用$\hat{\mathbf{n}}$作为表达式，则原表达式两边都要等除$\sqrt{a^2+b^2}$，即</p>
-<p>$$<br>
-[x \quad y]\cdot \frac{[a \quad b]}{\sqrt{a^2+b^2}}=\frac{d}{\sqrt{a^2+b^2}}<br>
-$$</p>
-<p>$$<br>
-[x \quad y]\cdot \hat{\mathbf{n}}=distance<br>
-$$</p>
-<p>其中$\hat{\mathbf{n}}$为射线的法线，$distance$为射线沿着法线方向与原点的距离。</p>
+<script type="math/tex; mode=display">a x+b y=\mathbf{p} \cdot \mathbf{n}=[x \quad y]\cdot[a \quad b]=d</script><p>即$\mathbf{n}t[a \quad b]$，如果将其转换为单位向量，即</p>
+<script type="math/tex; mode=display">\hat{\mathbf{n}}=[a \quad b]/\sqrt{a^2+b^2}</script><p>如果用$\hat{\mathbf{n}}$作为表达式，则原表达式两边都要等除$\sqrt{a^2+b^2}$，即</p>
+<script type="math/tex; mode=display">
+[x \quad y]\cdot \frac{[a \quad b]}{\sqrt{a^2+b^2}}=\frac{d}{\sqrt{a^2+b^2}}</script><script type="math/tex; mode=display">
+[x \quad y]\cdot \hat{\mathbf{n}}=distance</script><p>其中$\hat{\mathbf{n}}$为射线的法线，$distance$为射线沿着法线方向与原点的距离。</p>
 </li>
-<li>
-<p>垂直线等分法转换为隐式表达法</p>
+<li><p>垂直线等分法转换为隐式表达法</p>
 <p>有两个点$\mathbf{q}和点\mathbf{r}$，其中$\mathbf{r}$是x轴分量更大的点。</p>
-<p>可以得到由这两个点构成的线段的斜率为$r_{y}-q_{r}/r_{x}-q_{x}$，因为所求的射线，即这两个点中间的垂直线斜率相反，所以可以得到所求射线的斜率$m=q_{r}-r_{y}/r_{x}-q_{x}$</p>
+<p>可以得到由这两个点构成的线段的斜率为$r<em>{y}-q</em>{r}/r<em>{x}-q</em>{x}$，因为所求的射线，即这两个点中间的垂直线斜率相反，所以可以得到所求射线的斜率$m=q<em>{r}-r</em>{y}/r<em>{x}-q</em>{x}$</p>
 <p>转换为隐形表达式，则可得：</p>
-<p>$$\begin{aligned}<br>
-&amp;a=q_{y}-r_{y}\<br>
-&amp;b=r_{x}-q_{x}<br>
-\end{aligned}$$</p>
-<p>点$\mathbf{q}和点\mathbf{r}$的中点在所求射线上，且该中点为$\mathbf{q}+\frac{\mathbf{r-q}}{2}=\frac{\mathbf{q+r}}{2}$，将该点带入隐形表达式，可得</p>
-<p>$$d=\frac{\mathbf{q}+\mathbf{r}}{2} \cdot\left[\begin{array}{ll}<br>
-a &amp; b<br>
-\end{array}\right]$$</p>
-<p>进一步化简得：</p>
-<p>$$\begin{aligned}<br>
-d &amp;=\frac{\mathbf{q}+\mathbf{r}}{2}    \cdot\left[\begin{array}{cc}<br>
-a &amp; b<br>
-\end{array}\right]=\frac{\mathbf{q} +\mathbf{r}}{2} \cdot\left[\begin{array}   {cc}<br>
-q_{y}-r_{y} &amp; r_{x}-q_{x}<br>
-\end{array}\right] \<br>
-&amp;=\frac{\left(q_{x}+r_{x}\right)\left(q_  {y}-r_{y}\right)+\left(q_{y}+r_{y}\right)   \left(r_{x}-q_{x}\right)}{2} \<br>
-&amp;=\frac{\left(q_{x} q_{y}-q_{x} r_{y}+r_  {x} q_{y}-r_{x} r_{y}\right)+\left(q_{y}    r_{x}-q_{y} q_{x}+r_{y} r_{x}-r_{y} q_{x} \right)}{2} \<br>
-&amp;=r_{x} q_{y}-q_{x} r_{y}<br>
-\end{aligned}$$</p>
-</li>
+<script type="math/tex; mode=display">\begin{aligned}
+&a=q_{y}-r_{y}\\
+&b=r_{x}-q_{x}
+\end{aligned}</script><p>点$\mathbf{q}和点\mathbf{r}$的中点在所求射线上，且该中点为$\mathbf{q}+\frac{\mathbf{r-q}}{2}=\frac{\mathbf{q+r}}{2}$，将该点带入隐形表达式，可得</p>
+<script type="math/tex; mode=display">d=\frac{\mathbf{q}+\mathbf{r}}{2} \cdot\left[\begin{array}{ll}
+a & b
+\end{array}\right]</script><p>进一步化简得：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+d &=\frac{\mathbf{q}+\mathbf{r}}{2}    \cdot\left[\begin{array}{cc}
+a & b
+\end{array}\right]=\frac{\mathbf{q} +\mathbf{r}}{2} \cdot\left[\begin{array}   {cc}
+q_{y}-r_{y} & r_{x}-q_{x}
+\end{array}\right] \\
+&=\frac{\left(q_{x}+r_{x}\right)\left(q_  {y}-r_{y}\right)+\left(q_{y}+r_{y}\right)   \left(r_{x}-q_{x}\right)}{2} \\
+&=\frac{\left(q_{x} q_{y}-q_{x} r_{y}+r_  {x} q_{y}-r_{x} r_{y}\right)+\left(q_{y}    r_{x}-q_{y} q_{x}+r_{y} r_{x}-r_{y} q_{x} \right)}{2} \\
+&=r_{x} q_{y}-q_{x} r_{y}
+\end{aligned}</script></li>
 </ol>
-<h2 id="Sphere-and-Circles">Sphere and Circles</h2>
-<p>球常用来作为物体的边框，一是用球作为边框比较简单，二是因为当用球来作为边框时，物体的旋转并不会造成任何的影响，因此物体旋转后的再次计算边框。</p>
+<h2 id="Sphere-and-Circles"><a href="#Sphere-and-Circles" class="headerlink" title="Sphere and Circles"></a>Sphere and Circles</h2><p>球常用来作为物体的边框，一是用球作为边框比较简单，二是因为当用球来作为边框时，物体的旋转并不会造成任何的影响，因此物体旋转后的再次计算边框。</p>
 <p>球的隐式定义如下：</p>
-<p>$$|\mathbf{p}-\mathbf{c}|=r$$</p>
-<p>其中$\mathbf{p}$表示球上的点,$\mathbf{c}$表示球心，两者都是向量。非向量形式的隐式表达如下：</p>
-<p>$$\begin{aligned}<br>
-\left(x-c_{x}\right)^{2}+\left(y-c_{y}\right)^{2} &amp;=r^{2} \<br>
-\left(x-c_{x}\right)^{2}+\left(y-c_{y}\right)^{2}+\left(z-c_{z}\right)^{2} &amp;=r^{2}<br>
-\end{aligned}$$</p>
-<p>球的其他计算数学计算如下：</p>
+<script type="math/tex; mode=display">\|\mathbf{p}-\mathbf{c}\|=r</script><p>其中$\mathbf{p}$表示球上的点,$\mathbf{c}$表示球心，两者都是向量。非向量形式的隐式表达如下：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+\left(x-c_{x}\right)^{2}+\left(y-c_{y}\right)^{2} &=r^{2} \\
+\left(x-c_{x}\right)^{2}+\left(y-c_{y}\right)^{2}+\left(z-c_{z}\right)^{2} &=r^{2}
+\end{aligned}</script><p>球的其他计算数学计算如下：</p>
 <ol>
-<li>直径<br>
-$$D=2 r$$</li>
-<li>周长<br>
-$$C=2 \pi r=\pi D$$</li>
-<li>圆的面积<br>
-$$A=\pi r^{2}$$</li>
-<li>球的表面积<br>
-$$S=4 \pi r^{2} $$</li>
-<li>球的体积<br>
-$$V=\frac{4}{3} \pi r^{3}$$</li>
+<li>直径<script type="math/tex; mode=display">D=2 r</script></li>
+<li>周长<script type="math/tex; mode=display">C=2 \pi r=\pi D</script></li>
+<li>圆的面积<script type="math/tex; mode=display">A=\pi r^{2}</script></li>
+<li>球的表面积<script type="math/tex; mode=display">S=4 \pi r^{2}</script></li>
+<li>球的体积<script type="math/tex; mode=display">V=\frac{4}{3} \pi r^{3}</script></li>
 </ol>
-<h2 id="Bounding-Boxes">Bounding Boxes</h2>
-<p><code>AABB（Axially aligned bounding box）</code>通常用来表示立方体形状的边框，而且立方体的边必须与当前坐标系下坐标轴相平行。</p>
+<h2 id="Bounding-Boxes"><a href="#Bounding-Boxes" class="headerlink" title="Bounding Boxes"></a>Bounding Boxes</h2><p><code>AABB（Axially aligned bounding box）</code>通常用来表示立方体形状的边框，而且立方体的边必须与当前坐标系下坐标轴相平行。</p>
 <p>另一种不太常用的立方体边框为OBB（Oriented bounding box），这里立方体的边与坐标系的轴没有任何约束。相对来说，AABB更容易创建，而且OBB仅仅是AABB在一个坐标系下旋转，所以这一节只会讨论AABB。</p>
 <p>OBB和AABB的区别并不在于边框本身，而是在于坐标系。如果一个边框用于在世界坐标中旋转了的物体，那么这个边框从物体坐标系角度看是AABB，但是从世界坐标系角度看是OBB</p>
-<h3 id="Representing-AABBs">Representing AABBs</h3>
-<p>一种表达方式是限定三个坐标系的范围，即</p>
-<p>$$x_{\min } \leq x \leq x_{\max }, \quad y_{\min } \leq y \leq y_{\max }, \quad z_{\min } \leq z \leq z_{\max }$$</p>
-<p>也可以通过两个对角线的点来进行表达，即</p>
-<p>$$\mathbf{p}<em>{\min }=\left[\begin{array}{lll}<br>
-x</em>{\min } &amp; y_{\min } &amp; z_{\min }<br>
-\end{array}\right], \quad \mathbf{p}<em>{\max }=\left[\begin{array}{ccc}<br>
-x</em>{\max } &amp; y_{\max } &amp; z_{\max }<br>
-\end{array}\right]$$</p>
-<p>其中边框的中点可以表示为：</p>
-<p>$$\mathbf{c}=\left(\mathbf{p}<em>{\min }+\mathbf{p}</em>{\max }\right) / 2$$</p>
-<p>边框的尺寸向量（Size vector）用$\mathbf{s}$表示，值为对角线两个点间的有向距离：</p>
-<p>$$\mathbf{s}=\mathbf{p}<em>{\max }-\mathbf{p}</em>{\min }$$</p>
-<p>同样也可以计算半径向量，如下所示：</p>
-<p>$$\mathbf{r}=\mathbf{p}_{\max }-\mathbf{c}=\mathbf{s} / 2$$</p>
-<p>关于边框的值$P_{min}, P_{\max }, \mathbf{c}, \mathbf{s}, \text {和} \mathbf{r}$，除了$\mathbf{s}和\mathbf{r}$这两个值的搭配，通过其他任意搭配都可以求出边框的其他值。</p>
-<h3 id="Computing-AABBs">Computing AABBs</h3>
-<p>//TODO</p>
+<h3 id="Representing-AABBs"><a href="#Representing-AABBs" class="headerlink" title="Representing AABBs"></a>Representing AABBs</h3><p>一种表达方式是限定三个坐标系的范围，即</p>
+<script type="math/tex; mode=display">x_{\min } \leq x \leq x_{\max }, \quad y_{\min } \leq y \leq y_{\max }, \quad z_{\min } \leq z \leq z_{\max }</script><p>也可以通过两个对角线的点来进行表达，即</p>
+<script type="math/tex; mode=display">\mathbf{p}_{\min }=\left[\begin{array}{lll}
+x_{\min } & y_{\min } & z_{\min }
+\end{array}\right], \quad \mathbf{p}_{\max }=\left[\begin{array}{ccc}
+x_{\max } & y_{\max } & z_{\max }
+\end{array}\right]</script><p>其中边框的中点可以表示为：</p>
+<script type="math/tex; mode=display">\mathbf{c}=\left(\mathbf{p}_{\min }+\mathbf{p}_{\max }\right) / 2</script><p>边框的尺寸向量（Size vector）用$\mathbf{s}$表示，值为对角线两个点间的有向距离：</p>
+<script type="math/tex; mode=display">\mathbf{s}=\mathbf{p}_{\max }-\mathbf{p}_{\min }</script><p>同样也可以计算半径向量，如下所示：</p>
+<script type="math/tex; mode=display">\mathbf{r}=\mathbf{p}_{\max }-\mathbf{c}=\mathbf{s} / 2</script><p>关于边框的值$P<em>{min}, P</em>{\max }, \mathbf{c}, \mathbf{s}, \text {和} \mathbf{r}$，除了$\mathbf{s}和\mathbf{r}$这两个值的搭配，通过其他任意搭配都可以求出边框的其他值。</p>
+<h3 id="Computing-AABBs"><a href="#Computing-AABBs" class="headerlink" title="Computing AABBs"></a>Computing AABBs</h3><p>//TODO</p>
 <p>// 书中给出了关于AABB的类</p>
-<h3 id="AABBs-versus-Bounding-Spheres">AABBs versus Bounding Spheres</h3>
-<p>AABB对于球边框的优势：</p>
+<h3 id="AABBs-versus-Bounding-Spheres"><a href="#AABBs-versus-Bounding-Spheres" class="headerlink" title="AABBs versus Bounding Spheres"></a>AABBs versus Bounding Spheres</h3><p>AABB对于球边框的优势：</p>
 <ol>
 <li>计算由一系列的点构成的AABB面只需要线性时间（比较出最小的点和最大的点即可），而计算出由一系列的点构成的球相对复杂。</li>
-<li>通常来说，对于同一个物体AABB边框会更小，最坏的情况下，AABB也只比球边框大不到两倍（当物体本身是一个球时），而最坏情况下球边框可能会比AABB大很多。<br>
-如下所示，蓝色为球边框，红色为AABB<br>
-<img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-09-51-39.png" alt="立方体边框与球边框比较"></li>
+<li>通常来说，对于同一个物体AABB边框会更小，最坏的情况下，AABB也只比球边框大不到两倍（当物体本身是一个球时），而最坏情况下球边框可能会比AABB大很多。<br>如下所示，蓝色为球边框，红色为AABB<br><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-09-51-39.png" alt="立方体边框与球边框比较"></li>
 </ol>
 <p>球边框对于AABB边框的优势：</p>
 <ol>
-<li>物体的变换不会造成球边框的变化，如下图所示：<br>
-<img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-09-55-40.png" alt="物体变换对边框的变化"></li>
+<li>物体的变换不会造成球边框的变化，如下图所示：<br><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-09-55-40.png" alt="物体变换对边框的变化"></li>
 </ol>
-<h4 id="Transforming-AABBs">Transforming AABBs</h4>
-<p>如之前所述，AABB边框在物体变换后也会发生变化，这一节介绍如何计算变换后的AABB边框。</p>
+<h4 id="Transforming-AABBs"><a href="#Transforming-AABBs" class="headerlink" title="Transforming AABBs"></a>Transforming AABBs</h4><p>如之前所述，AABB边框在物体变换后也会发生变化，这一节介绍如何计算变换后的AABB边框。</p>
 <p>通常有两种思路，一种是对变换后的物体再次求解AABB边框，第二种是直接对AABB边框进行同样的变换。通常第二种方法比第一种计算更快，因为无论物体本身多复杂，计算AABB的变换只需要计算8个顶点，所以通常第二种方法用的较多。</p>
 <p>第二种方法中直接将AABB变换后的结果作为新的AABB是不行的，因为可能旋转会导致原先的$\mathbf{P}<em>{max}$变得比$\mathbf{P}</em>{min}$更小。所以直接对AABB边框进行同样的变换后，根据变换后的8个顶点，得出新AABB框，如下图所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-10-01-55.png" alt="AABB变换"></p>
-<p>上图的右半部分是旋转后的物体和ABBB，图中蓝色的部分是直接对AABB进行了旋转，此时在世界坐标系下，它已经变成了OBB。<br>
-内部的红色边框为第一种方法，是根据旋转后的图形再次求解AABB。该方法准确但效率较低。<br>
-外部的红色边框为第二种方法，它是由旋转后的原AABB（蓝色部分）计算得到的，它比理想上的AABB框要更大。该方法迅速，只需要计算AABB的顶点，但通常会造成计算出的边框更大。</p>
+<p>上图的右半部分是旋转后的物体和ABBB，图中蓝色的部分是直接对AABB进行了旋转，此时在世界坐标系下，它已经变成了OBB。<br>内部的红色边框为第一种方法，是根据旋转后的图形再次求解AABB。该方法准确但效率较低。<br>外部的红色边框为第二种方法，它是由旋转后的原AABB（蓝色部分）计算得到的，它比理想上的AABB框要更大。该方法迅速，只需要计算AABB的顶点，但通常会造成计算出的边框更大。</p>
 <p>第二种方法的计算如下，假设$[x \quad y \quad z]$是原先AABB的顶点，变换后的顶点为$[x^{\prime} \quad y^{\prime} \quad z^{\prime}]$，则转换果然如下：</p>
-<p>$$\begin{aligned}<br>
-\left[\begin{array}{ll}<br>
-x^{\prime} &amp; y^{\prime} &amp; z^{\prime}<br>
-\end{array}\right] &amp;=\left[\begin{array}{lll}<br>
-x &amp; y &amp; z<br>
-\end{array}\right]\left[\begin{array}{lll}<br>
-m_{11} &amp; m_{12} &amp; m_{13} \<br>
-m_{21} &amp; m_{22} &amp; m_{23} \<br>
-m_{31} &amp; m_{32} &amp; m_{33}<br>
-\end{array}\right] \<br>
-x^{\prime} &amp;=m_{11} x+m_{21} y+m_{31} z \<br>
-y^{\prime} &amp;=m_{12} x+m_{22} y+m_{32} z \<br>
-z^{\prime} &amp;=m_{13} x+m_{23} y+m_{33} z<br>
-\end{aligned}$$</p>
-<p>其中矩阵表示进行的变换。</p>
+<script type="math/tex; mode=display">\begin{aligned}
+\left[\begin{array}{ll}
+x^{\prime} & y^{\prime} & z^{\prime}
+\end{array}\right] &=\left[\begin{array}{lll}
+x & y & z
+\end{array}\right]\left[\begin{array}{lll}
+m_{11} & m_{12} & m_{13} \\
+m_{21} & m_{22} & m_{23} \\
+m_{31} & m_{32} & m_{33}
+\end{array}\right] \\
+x^{\prime} &=m_{11} x+m_{21} y+m_{31} z \\
+y^{\prime} &=m_{12} x+m_{22} y+m_{32} z \\
+z^{\prime} &=m_{13} x+m_{23} y+m_{33} z
+\end{aligned}</script><p>其中矩阵表示进行的变换。</p>
 <p>通常的的方式是将八个顶点分别通过上式进行计算，然后找出最小点和最大点。</p>
 <p>但是观察后发现，可以直接通过矩阵中的元素正负号来直接求出最大点和最小点，下面以二维平面的变换作为例子，即变换为：</p>
-<p>$$\begin{aligned}<br>
-\left[\begin{array}{ll}<br>
-x^{\prime} &amp; y^{\prime}<br>
-\end{array}\right] &amp;=\left[\begin{array}{lll}<br>
-x &amp; y<br>
-\end{array}\right]\left[\begin{array}{lll}<br>
-m_{11} &amp; m_{12} \<br>
-m_{21} &amp; m_{22}<br>
-\end{array}\right] \<br>
-x^{\prime} &amp;=m_{11} x+m_{21} y\<br>
-y^{\prime} &amp;=m_{12} x+m_{22} y \<br>
-\end{aligned}$$</p>
-<p>在二维平面下中，AABB有四个顶点，$[x_{min},y_{min}],[x_{min},y_{max}],[x_{max},y_{min}],[x_{max},y_{max}]$</p>
-<p>所以$x^{\prime}$也相对有四种可能，即$m_{11} x_{min}+m_{21} y_{min}$，$m_{11} x_{min}+m_{21} y_{max}$，$m_{11} x_{max}+m_{21} y_{min}$，$m_{11} x_{max}+m_{21} y_{max}$，</p>
-<p>如果将$x^{\prime}$拆分成两部分来看，即$m_{11}x$和$m_{21}y$，如果$m_{11}$是正数，那么要求得更小的$x^{\prime}$，x是$x_{min}$时更合适，反之$x_{max}$更合适。对于$m_{21}$也是同理，$y_{min}$适合$m_{21}$是正数的情况，$y_{max}$适合$m_{21}$是负数的情况</p>
-<p>因此求$x_{min}^{\prime}$，只需要判断$m_{11}$和$m_{21}$的大小，然后直接选取对应的x和y分量，进行累加就行，不需要求出所有的$x^{\prime}$可能进行比较。</p>
-<p>//TODO<br>
-//书中有对应的求新AABB算法</p>
-<h2 id="Planes">Planes</h2>
-<p>3D中的平面对应2D中的射线，其定义也与在2D中的射线类似：与给定的两个点距离相同的所有的点的集合。</p>
-<h3 id="The-Plane-Equation：An-Implicit-Definnition-of-a-plane">The Plane Equation：An Implicit Definnition of a plane</h3>
-<p>隐式表达法：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+\left[\begin{array}{ll}
+x^{\prime} & y^{\prime} 
+\end{array}\right] &=\left[\begin{array}{lll}
+x & y
+\end{array}\right]\left[\begin{array}{lll}
+m_{11} & m_{12} \\
+m_{21} & m_{22}
+\end{array}\right] \\
+x^{\prime} &=m_{11} x+m_{21} y\\
+y^{\prime} &=m_{12} x+m_{22} y \\
+\end{aligned}</script><p>在二维平面下中，AABB有四个顶点，$[x<em>{min},y</em>{min}],[x<em>{min},y</em>{max}],[x<em>{max},y</em>{min}],[x<em>{max},y</em>{max}]$</p>
+<p>所以$x^{\prime}$也相对有四种可能，即$m<em>{11} x</em>{min}+m<em>{21} y</em>{min}$，$m<em>{11} x</em>{min}+m<em>{21} y</em>{max}$，$m<em>{11} x</em>{max}+m<em>{21} y</em>{min}$，$m<em>{11} x</em>{max}+m<em>{21} y</em>{max}$，</p>
+<p>如果将$x^{\prime}$拆分成两部分来看，即$m<em>{11}x$和$m</em>{21}y$，如果$m<em>{11}$是正数，那么要求得更小的$x^{\prime}$，x是$x</em>{min}$时更合适，反之$x<em>{max}$更合适。对于$m</em>{21}$也是同理，$y<em>{min}$适合$m</em>{21}$是正数的情况，$y<em>{max}$适合$m</em>{21}$是负数的情况</p>
+<p>因此求$x<em>{min}^{\prime}$，只需要判断$m</em>{11}$和$m_{21}$的大小，然后直接选取对应的x和y分量，进行累加就行，不需要求出所有的$x^{\prime}$可能进行比较。</p>
+<p>//TODO<br>//书中有对应的求新AABB算法</p>
+<h2 id="Planes"><a href="#Planes" class="headerlink" title="Planes"></a>Planes</h2><p>3D中的平面对应2D中的射线，其定义也与在2D中的射线类似：与给定的两个点距离相同的所有的点的集合。</p>
+<h3 id="The-Plane-Equation：An-Implicit-Definnition-of-a-plane"><a href="#The-Plane-Equation：An-Implicit-Definnition-of-a-plane" class="headerlink" title="The Plane Equation：An Implicit Definnition of a plane"></a>The Plane Equation：An Implicit Definnition of a plane</h3><p>隐式表达法：</p>
 <ol>
-<li>
-<p>用标量<br>
-$$a x+b y+c z=d$$</p>
-</li>
-<li>
-<p>用向量<br>
-$$\mathbf{p} \cdot \mathbf{n}=d$$<br>
-其中$\mathbf{p}$为在平面上的点，$\mathbf{n}=[a \quad b \quad c]$为垂直平面的线。<br>
-证明如下，假设平面上还有一个点$\mathbf{q}$：</p>
-<p>$$\begin{aligned}<br>
-\mathbf{n} \cdot \mathbf{p} &amp;=d \<br>
-\mathbf{n} \cdot \mathbf{q} &amp;=d \<br>
-\mathbf{n} \cdot \mathbf{p} &amp;=\mathbf{n}  \cdot \mathbf{q} \<br>
-\mathbf{n} \cdot \mathbf{p}-\mathbf{n}    \cdot \mathbf{q} &amp;=0 \<br>
-\mathbf{n} \cdot(\mathbf{p}-\mathbf{q}) &amp; =0<br>
-\end{aligned}$$</p>
-<p>如果要求平面的法线，对$n$进行归一化即可<br>
-$$<br>
-\hat{\mathbf{n}}=\frac{[a \quad b \quad c]}{\sqrt{a^2+b^2+c^2}}<br>
-$$</p>
-<p>用法线表示平面为：</p>
-<p>$$<br>
-\mathbf{p}\cdot \hat{\mathbf{n}}=\frac{d}{\sqrt{a^2+b^2+c^2}}=distance<br>
-$$</p>
-<p>其中distance为平面距离原点的距离</p>
+<li>用标量<script type="math/tex; mode=display">a x+b y+c z=d</script></li>
+<li><p>用向量</p>
+<script type="math/tex; mode=display">\mathbf{p} \cdot \mathbf{n}=d</script><p>其中$\mathbf{p}$为在平面上的点，$\mathbf{n}=[a \quad b \quad c]$为垂直平面的线。<br>证明如下，假设平面上还有一个点$\mathbf{q}$：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+\mathbf{n} \cdot \mathbf{p} &=d \\
+\mathbf{n} \cdot \mathbf{q} &=d \\
+\mathbf{n} \cdot \mathbf{p} &=\mathbf{n}  \cdot \mathbf{q} \\
+\mathbf{n} \cdot \mathbf{p}-\mathbf{n}    \cdot \mathbf{q} &=0 \\
+\mathbf{n} \cdot(\mathbf{p}-\mathbf{q}) & =0
+\end{aligned}</script><p>如果要求平面的法线，对$n$进行归一化即可</p>
+<script type="math/tex; mode=display">
+\hat{\mathbf{n}}=\frac{[a \quad b \quad c]}{\sqrt{a^2+b^2+c^2}}</script><p>用法线表示平面为：</p>
+<script type="math/tex; mode=display">
+\mathbf{p}\cdot \hat{\mathbf{n}}=\frac{d}{\sqrt{a^2+b^2+c^2}}=distance</script><p>其中distance为平面距离原点的距离</p>
 </li>
 </ol>
 <p>平面分正反面，沿着法线方向看，看到的是背面，法线指向的方向是正面，如下图所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-10-52-21.png" alt="平面的正反面"></p>
-<h3 id="Defining-a-Plane-by-Using-Three-Points">Defining a Plane by Using Three Points</h3>
-<p>假设有三个在平面上的点$\mathbf{p}<em>{1}, \mathbf{p}</em>{2}$和$\mathbf{p}_{3}$，且他们按顺时针方向排列，如下图所示：</p>
+<h3 id="Defining-a-Plane-by-Using-Three-Points"><a href="#Defining-a-Plane-by-Using-Three-Points" class="headerlink" title="Defining a Plane by Using Three Points"></a>Defining a Plane by Using Three Points</h3><p>假设有三个在平面上的点$\mathbf{p}<em>{1}, \mathbf{p}</em>{2}$和$\mathbf{p}_{3}$，且他们按顺时针方向排列，如下图所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-10-54-02.png" alt="平面上三个点"></p>
 <p>可以按照下式，求出法线：</p>
-<p>$$\mathbf{e}<em>{3}=\mathbf{p}</em>{2}-\mathbf{p}<em>{1}, \quad \mathbf{e}</em>{1}=\mathbf{p}<em>{3}-\mathbf{p}</em>{2}, \quad \hat{\mathbf{n}}=\frac{\mathbf{e}<em>{3} \times \mathbf{e}</em>{1}}{\left|\mathbf{e}<em>{3} \times \mathbf{e}</em>{1}\right|}$$</p>
-<p>将任意一个点带入法线表达式，既能求出distance<br>
-，如$distance=\hat{\mathbf{n}}\cdot \mathbf{p}_1$</p>
+<script type="math/tex; mode=display">\mathbf{e}_{3}=\mathbf{p}_{2}-\mathbf{p}_{1}, \quad \mathbf{e}_{1}=\mathbf{p}_{3}-\mathbf{p}_{2}, \quad \hat{\mathbf{n}}=\frac{\mathbf{e}_{3} \times \mathbf{e}_{1}}{\left\|\mathbf{e}_{3} \times \mathbf{e}_{1}\right\|}</script><p>将任意一个点带入法线表达式，既能求出distance<br>，如$distance=\hat{\mathbf{n}}\cdot \mathbf{p}_1$</p>
 <p>即最终表达式为</p>
-<p>$$\mathbf{P}\cdot \hat{\mathbf{n}}=\hat{\mathbf{n}}\cdot \mathbf{p}_1$$</p>
-<h3 id="“Best-Fit”-Plane-for-More-than-Three-Points">“Best Fit” Plane for More than Three Points</h3>
-<p>当给定了多个点，要根据多个点求平面时，不能简单的从多个点中任意选取出三个点，因为：</p>
+<script type="math/tex; mode=display">\mathbf{P}\cdot \hat{\mathbf{n}}=\hat{\mathbf{n}}\cdot \mathbf{p}_1</script><h3 id="“Best-Fit”-Plane-for-More-than-Three-Points"><a href="#“Best-Fit”-Plane-for-More-than-Three-Points" class="headerlink" title="“Best Fit” Plane for More than Three Points"></a>“Best Fit” Plane for More than Three Points</h3><p>当给定了多个点，要根据多个点求平面时，不能简单的从多个点中任意选取出三个点，因为：</p>
 <ol>
 <li>选取的三个点可能在一条线上</li>
 <li>多个点构成的多边形可能是凹的，即虽然按顺时针在多边形上取了三个点，但实际上它们是逆时针的</li>
 <li>由于精度或各种原因，三个点可能实际上并不在一个平面上。</li>
 </ol>
 <p>所以解法是用所有的点来计算，如有以下点：</p>
-<p>$$\begin{aligned}<br>
-&amp;\mathbf{p}<em>{1}=\left[\begin{array}{lll}<br>
-x</em>{1} &amp; y_{1} &amp; z_{1}<br>
-\end{array}\right]\<br>
-&amp;\mathbf{p}<em>{2}=\left[\begin{array}{lll}<br>
-x</em>{2} &amp; y_{2} &amp; z_{2}<br>
-\end{array}\right]\<br>
-&amp;\vdots\<br>
-&amp;\mathbf{p}<em>{n-1}=\left[\begin{array}{lll}<br>
-x</em>{n-1} &amp; y_{n-1} &amp; z_{n-1}<br>
-\end{array}\right] \<br>
-&amp;\mathbf{p}<em>{n} =\left[\begin{array}{lll}<br>
-x</em>{n} &amp; y_{n} &amp; z_{n}\end{array}\right]<br>
-\end{aligned}$$</p>
-<p>则法线为：</p>
-<p>$$\begin{aligned}<br>
-n_{x}=&amp;\left(z_{1}+z_{2}\right)\left(y_{1}-y_{2}\right)+\left(z_{2}+z_{3}\right)\left(y_{2}-y_{3}\right)+\cdots \<br>
-&amp; \cdots+\left(z_{n-1}+z_{n}\right)\left(y_{n-1}-y_{n}\right)+\left(z_{n}+z_{1}\right)\left(y_{n}-y_{1}\right) \<br>
-n_{y}=&amp;\left(x_{1}+x_{2}\right)\left(z_{1}-z_{2}\right)+\left(x_{2}+x_{3}\right)\left(z_{2}-z_{3}\right)+\cdots \<br>
-&amp; \cdots+\left(x_{n-1}+x_{n}\right)\left(z_{n-1}-z_{n}\right)+\left(x_{n}+x_{1}\right)\left(z_{n}-z_{1}\right) \<br>
-n_{z}=&amp;\left(y_{1}+y_{2}\right)\left(x_{1}-x_{2}\right)+\left(y_{2}+y_{3}\right)\left(x_{2}-x_{3}\right)+\cdots \<br>
-&amp; \cdots+\left(y_{n-1}+y_{n}\right)\left(x_{n-1}-x_{n}\right)+\left(y_{n}+y_{1}\right)\left(x_{n}-x_{1}\right)<br>
-\end{aligned}$$</p>
-<p>即</p>
-<p>$$\begin{aligned}<br>
-&amp;n_{x}=\sum_{i=1}^{n}\left(z_{i}+z_{i+1}\right)\left(y_{i}-y_{i+1}\right)\<br>
-&amp;n_{y}=\sum_{i=1}^{n}\left(x_{i}+x_{i+1}\right)\left(z_{i}-z_{i+1}\right)\<br>
-&amp;n_{z}=\sum_{i=1}^{n}\left(y_{i}+y_{i+1}\right)\left(x_{i}-x_{i+1}\right)<br>
-\end{aligned}$$</p>
-<p>//TODO: 推导该公式</p>
+<script type="math/tex; mode=display">\begin{aligned}
+&\mathbf{p}_{1}=\left[\begin{array}{lll}
+x_{1} & y_{1} & z_{1}
+\end{array}\right]\\
+&\mathbf{p}_{2}=\left[\begin{array}{lll}
+x_{2} & y_{2} & z_{2}
+\end{array}\right]\\
+&\vdots\\
+&\mathbf{p}_{n-1}=\left[\begin{array}{lll}
+x_{n-1} & y_{n-1} & z_{n-1}
+\end{array}\right] \\
+&\mathbf{p}_{n} =\left[\begin{array}{lll}
+x_{n} & y_{n} & z_{n}\end{array}\right]
+\end{aligned}</script><p>则法线为：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+n_{x}=&\left(z_{1}+z_{2}\right)\left(y_{1}-y_{2}\right)+\left(z_{2}+z_{3}\right)\left(y_{2}-y_{3}\right)+\cdots \\
+& \cdots+\left(z_{n-1}+z_{n}\right)\left(y_{n-1}-y_{n}\right)+\left(z_{n}+z_{1}\right)\left(y_{n}-y_{1}\right) \\
+n_{y}=&\left(x_{1}+x_{2}\right)\left(z_{1}-z_{2}\right)+\left(x_{2}+x_{3}\right)\left(z_{2}-z_{3}\right)+\cdots \\
+& \cdots+\left(x_{n-1}+x_{n}\right)\left(z_{n-1}-z_{n}\right)+\left(x_{n}+x_{1}\right)\left(z_{n}-z_{1}\right) \\
+n_{z}=&\left(y_{1}+y_{2}\right)\left(x_{1}-x_{2}\right)+\left(y_{2}+y_{3}\right)\left(x_{2}-x_{3}\right)+\cdots \\
+& \cdots+\left(y_{n-1}+y_{n}\right)\left(x_{n-1}-x_{n}\right)+\left(y_{n}+y_{1}\right)\left(x_{n}-x_{1}\right)
+\end{aligned}</script><p>即</p>
+<script type="math/tex; mode=display">\begin{aligned}
+&n_{x}=\sum_{i=1}^{n}\left(z_{i}+z_{i+1}\right)\left(y_{i}-y_{i+1}\right)\\
+&n_{y}=\sum_{i=1}^{n}\left(x_{i}+x_{i+1}\right)\left(z_{i}-z_{i+1}\right)\\
+&n_{z}=\sum_{i=1}^{n}\left(y_{i}+y_{i+1}\right)\left(x_{i}-x_{i+1}\right)
+\end{aligned}</script><p>//TODO: 推导该公式</p>
 <p>在求出了$n$后，将所有的点都带入公式，然后求出平均的$d$，如下：</p>
-<p>$$d=\frac{1}{n} \sum_{i=1}^{n}\left(\mathbf{p}<em>{i} \cdot \mathbf{n}\right)=\frac{1}{n}\left(\sum</em>{i=1}^{n} \mathbf{p}_{i}\right) \cdot \mathbf{n}$$</p>
-<h3 id="Distance-from-Point-to-Plane">Distance from Point to Plane</h3>
-<p>要求平面外点$\mathbf{q}$距离平面的距离，可找出平面上离该点最近的点$\mathbf{p}$，有向距离$\mathbf{pq}$即为距离，当$\mathbf{q}$处于平面的正方向，则距离为正数，否则为负数，如下图所示：</p>
+<script type="math/tex; mode=display">d=\frac{1}{n} \sum_{i=1}^{n}\left(\mathbf{p}_{i} \cdot \mathbf{n}\right)=\frac{1}{n}\left(\sum_{i=1}^{n} \mathbf{p}_{i}\right) \cdot \mathbf{n}</script><h3 id="Distance-from-Point-to-Plane"><a href="#Distance-from-Point-to-Plane" class="headerlink" title="Distance from Point to Plane"></a>Distance from Point to Plane</h3><p>要求平面外点$\mathbf{q}$距离平面的距离，可找出平面上离该点最近的点$\mathbf{p}$，有向距离$\mathbf{pq}$即为距离，当$\mathbf{q}$处于平面的正方向，则距离为正数，否则为负数，如下图所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-09-11-21-53.png" alt="求点距离"></p>
 <p>如果$\mathbf{n}$是单位向量法线，即$\hat{\mathbf{n}}$，那么$a$即是有向距离。</p>
 <p>在实际求解的过程中，实际上并不需要算出$\mathbf{p}$的位置，如下所示：</p>
-<p>$$\begin{aligned}<br>
-\mathbf{p}+a \hat{\mathbf{n}} &amp;=\mathbf{q} \<br>
-(\mathbf{p}+a \hat{\mathbf{n}}) \cdot \hat{\mathbf{n}} &amp;=\mathbf{q} \cdot \hat{\mathbf{n}} \<br>
-\mathbf{p} \cdot \hat{\mathbf{n}}+(a \hat{\mathbf{n}}) \cdot \hat{\mathbf{n}} &amp;=\mathbf{q} \cdot \hat{\mathbf{n}} \<br>
-d+a &amp;=\mathbf{q} \cdot \hat{\mathbf{n}} \<br>
-a &amp;=\mathbf{q} \cdot \hat{\mathbf{n}}-d<br>
-\end{aligned}$$</p>
-<h2 id="Triangles">Triangles</h2>
-<h3 id="Notation">Notation</h3>
-<p>三角形是通过三个顶点定义的。通常在左手坐标系下，三个顶点的顺序为顺时针。</p>
+<script type="math/tex; mode=display">\begin{aligned}
+\mathbf{p}+a \hat{\mathbf{n}} &=\mathbf{q} \\
+(\mathbf{p}+a \hat{\mathbf{n}}) \cdot \hat{\mathbf{n}} &=\mathbf{q} \cdot \hat{\mathbf{n}} \\
+\mathbf{p} \cdot \hat{\mathbf{n}}+(a \hat{\mathbf{n}}) \cdot \hat{\mathbf{n}} &=\mathbf{q} \cdot \hat{\mathbf{n}} \\
+d+a &=\mathbf{q} \cdot \hat{\mathbf{n}} \\
+a &=\mathbf{q} \cdot \hat{\mathbf{n}}-d
+\end{aligned}</script><h2 id="Triangles"><a href="#Triangles" class="headerlink" title="Triangles"></a>Triangles</h2><h3 id="Notation"><a href="#Notation" class="headerlink" title="Notation"></a>Notation</h3><p>三角形是通过三个顶点定义的。通常在左手坐标系下，三个顶点的顺序为顺时针。</p>
 <p>三角形的边和顶点的定义如下图所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-11-33-11.png" alt="三角形三边和顶点"></p>
-<p>$$\begin{aligned}<br>
-&amp;\mathbf{e}<em>{1}=\mathbf{v}</em>{3}-\mathbf{v}<em>{2}, \quad \mathbf{e}</em>{2}=\mathbf{v}<em>{1}-\mathbf{v}</em>{3}, \quad \mathbf{e}<em>{3}=\mathbf{v}</em>{2}-\mathbf{v}<em>{1}\<br>
-&amp;l</em>{1}=\left|\mathbf{e}<em>{1}\right|, \quad l</em>{2}=\left|\mathbf{e}<em>{2}\right|, \quad l</em>{3}=\left|\mathbf{e}_{3}\right|<br>
-\end{aligned}$$</p>
-<p>根据顶点，边，角的关系，有正弦和余弦定理，如下所示：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+&\mathbf{e}_{1}=\mathbf{v}_{3}-\mathbf{v}_{2}, \quad \mathbf{e}_{2}=\mathbf{v}_{1}-\mathbf{v}_{3}, \quad \mathbf{e}_{3}=\mathbf{v}_{2}-\mathbf{v}_{1}\\
+&l_{1}=\left\|\mathbf{e}_{1}\right\|, \quad l_{2}=\left\|\mathbf{e}_{2}\right\|, \quad l_{3}=\left\|\mathbf{e}_{3}\right\|
+\end{aligned}</script><p>根据顶点，边，角的关系，有正弦和余弦定理，如下所示：</p>
 <p>正弦定理为：</p>
-<p>$$\frac{\sin \theta_{1}}{l_{1}}=\frac{\sin \theta_{2}}{l_{2}}=\frac{\sin \theta_{3}}{l_{3}}$$</p>
-<p>余弦定理为：</p>
-<p>$$\begin{array}{l}<br>
-l_{1}^{2}=l_{2}^{2}+l_{3}^{2}-2 l_{2} l_{3} \cos \theta_{1} \<br>
-l_{2}^{2}=l_{1}^{2}+l_{3}^{2}-2 l_{1} l_{3} \cos \theta_{2} \<br>
-l_{3}^{2}=l_{1}^{2}+l_{2}^{2}-2 l_{1} l_{2} \cos \theta_{3}<br>
-\end{array}$$</p>
-<h3 id="Area-of-a-Triangle">Area of a Triangle</h3>
-<p>最普通的求三角形面积为通过底和高，即</p>
-<p>$$A=b h / 2$$</p>
-<p>海拉公式，可以通过三角形的三边长度来求得三角形面积：</p>
-<p>$$\begin{aligned}<br>
-&amp;s=\frac{l_{1}+l_{2}+l_{3}}{2}=\frac{p}{2}\<br>
-&amp;A=\sqrt{s\left(s-l_{1}\right)\left(s-l_{2}\right)\left(s-l_{3}\right)}<br>
-\end{aligned}$$</p>
-<p>还可以通过三角形的顶点本身来求得三角形面积，首先需要对三个顶点相减，获得三条边的向量$e_1,e_2,e_3$，然后再任意取其中两条求面积如下所示：</p>
-<p>$$A=\frac{\left|\mathbf{e}<em>{1} \times \mathbf{e}</em>{2}\right|}{2}$$</p>
-<p>该公式推导如下：</p>
+<script type="math/tex; mode=display">\frac{\sin \theta_{1}}{l_{1}}=\frac{\sin \theta_{2}}{l_{2}}=\frac{\sin \theta_{3}}{l_{3}}</script><p>余弦定理为：</p>
+<script type="math/tex; mode=display">\begin{array}{l}
+l_{1}^{2}=l_{2}^{2}+l_{3}^{2}-2 l_{2} l_{3} \cos \theta_{1} \\
+l_{2}^{2}=l_{1}^{2}+l_{3}^{2}-2 l_{1} l_{3} \cos \theta_{2} \\
+l_{3}^{2}=l_{1}^{2}+l_{2}^{2}-2 l_{1} l_{2} \cos \theta_{3}
+\end{array}</script><h3 id="Area-of-a-Triangle"><a href="#Area-of-a-Triangle" class="headerlink" title="Area of a Triangle"></a>Area of a Triangle</h3><p>最普通的求三角形面积为通过底和高，即</p>
+<script type="math/tex; mode=display">A=b h / 2</script><p>海拉公式，可以通过三角形的三边长度来求得三角形面积：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+&s=\frac{l_{1}+l_{2}+l_{3}}{2}=\frac{p}{2}\\
+&A=\sqrt{s\left(s-l_{1}\right)\left(s-l_{2}\right)\left(s-l_{3}\right)}
+\end{aligned}</script><p>还可以通过三角形的顶点本身来求得三角形面积，首先需要对三个顶点相减，获得三条边的向量$e_1,e_2,e_3$，然后再任意取其中两条求面积如下所示：</p>
+<script type="math/tex; mode=display">A=\frac{\left\|\mathbf{e}_{1} \times \mathbf{e}_{2}\right\|}{2}</script><p>该公式推导如下：</p>
 <p>首先三角形的三条边都与X轴形成了一个梯形，如下图所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-11-46-08.png" alt="三角形边构成梯形"></p>
 <p>对该梯形的面积定义正负，如果边的顶点是由左到右，则梯形面积为正，否则面积为负，三边构成的梯形面积如下：</p>
-<p>$$\begin{aligned}<br>
-&amp;A\left(\mathbf{e}<em>{1}\right)=\frac{\left(y</em>{3}+y_{2}\right)\left(x_{3}-x_{2}\right)}{2}\<br>
-&amp;A\left(\mathbf{e}<em>{2}\right)=\frac{\left(y</em>{1}+y_{3}\right)\left(x_{1}-x_{3}\right)}{2}\<br>
-&amp;A\left(\mathbf{e}<em>{3}\right)=\frac{\left(y</em>{2}+y_{1}\right)\left(x_{2}-x_{1}\right)}{2}<br>
-\end{aligned}$$</p>
-<p>三角形的面积为三个梯形的累加，如下所示：</p>
-<p>$$\begin{aligned}<br>
-A &amp;=A\left(\mathbf{e}<em>{1}\right)+A\left(\mathbf{e}</em>{2}\right)+A\left(\mathbf{e}<em>{3}\right) \<br>
-&amp;=\frac{\left(y</em>{3}+y_{2}\right)\left(x_{3}-x_{2}\right)+\left(y_{1}+y_{3}\right)\left(x_{1}-x_{3}\right)+\left(y_{2}+y_{1}\right)\left(x_{2}-x_{1}\right)}{2} \<br>
-&amp;=\frac{\left(\begin{array}{c}<br>
-\left(y_{3} x_{3}-y_{3} x_{2}+y_{2} x_{3}-y_{2} x_{2}\right) \<br>
-+\left(y_{1} x_{1}-y_{1} x_{3}+y_{3} x_{1}-y_{3} x_{3}\right) \<br>
-+\left(y_{2} x_{2}-y_{2} x_{1}+y_{1} x_{2}-y_{1} x_{1}\right)<br>
-\end{array}\right)}{2} \<br>
-&amp;=\frac{-y_{3} x_{2}+y_{2} x_{3}-y_{1} x_{3}+y_{3} x_{1}-y_{2} x_{1}+y_{1} x_{2}}{2} \<br>
-&amp;=\frac{y_{1}\left(x_{2}-x_{3}\right)+y_{2}\left(x_{3}-x_{1}\right)+y_{3}\left(x_{1}-x_{2}\right)}{2}<br>
-\end{aligned}$$</p>
-<p>将上式中的$y_1,y_2,y_3$都减去$y_3$，相当于三角形向下平移了一部分，所以结果不会变，即如下所示：</p>
-<p>$$\begin{aligned}<br>
-&amp;\begin{aligned}<br>
-A &amp;=\frac{y_{1}\left(x_{2}-x_{3}\right)+y_{2}\left(x_{3}-x_{1}\right)+y_{3}\left(x_{1}-x_{2}\right)}{2} \<br>
-&amp;=\frac{\left(y_{1}-y_{3}\right)\left(x_{2}-x_{3}\right)+\left(y_{2}-y_{3}\right)\left(x_{3}-x_{1}\right)+\left(y_{3}-y_{3}\right)\left(x_{1}-x_{2}\right)}{2}<br>
-\end{aligned}\<br>
-&amp;=\frac{\left(y_{1}-y_{3}\right)\left(x_{2}-x_{3}\right)+\left(y_{2}-y_{3}\right)\left(x_{3}-x_{1}\right)}{2}<br>
-\end{aligned}$$</p>
-<p>上述结果即为点乘，即</p>
-<p>$$A=\frac{\left|\mathbf{e}<em>{1} \times \mathbf{e}</em>{2}\right|}{2}$$</p>
-<h3 id="Barycentric-Space">Barycentric Space</h3>
-<p><code>重心系统（Barycentric Space）</code>是用三角形的三个顶点来描述三角形的位置，表达式为：</p>
-<p>$$\left(b_{1}, b_{2}, b_{3}\right) \equiv b_{1} \mathbf{v}<em>{1}+b</em>{2} \mathbf{v}<em>{2}+b</em>{3} \mathbf{v}_{3}$$</p>
-<p>其中</p>
-<p>$$b_{1}+b_{2}+b_{3}=1$$</p>
-<p>重心系统实例如下：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+&A\left(\mathbf{e}_{1}\right)=\frac{\left(y_{3}+y_{2}\right)\left(x_{3}-x_{2}\right)}{2}\\
+&A\left(\mathbf{e}_{2}\right)=\frac{\left(y_{1}+y_{3}\right)\left(x_{1}-x_{3}\right)}{2}\\
+&A\left(\mathbf{e}_{3}\right)=\frac{\left(y_{2}+y_{1}\right)\left(x_{2}-x_{1}\right)}{2}
+\end{aligned}</script><p>三角形的面积为三个梯形的累加，如下所示：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+A &=A\left(\mathbf{e}_{1}\right)+A\left(\mathbf{e}_{2}\right)+A\left(\mathbf{e}_{3}\right) \\
+&=\frac{\left(y_{3}+y_{2}\right)\left(x_{3}-x_{2}\right)+\left(y_{1}+y_{3}\right)\left(x_{1}-x_{3}\right)+\left(y_{2}+y_{1}\right)\left(x_{2}-x_{1}\right)}{2} \\
+&=\frac{\left(\begin{array}{c}
+\left(y_{3} x_{3}-y_{3} x_{2}+y_{2} x_{3}-y_{2} x_{2}\right) \\
++\left(y_{1} x_{1}-y_{1} x_{3}+y_{3} x_{1}-y_{3} x_{3}\right) \\
++\left(y_{2} x_{2}-y_{2} x_{1}+y_{1} x_{2}-y_{1} x_{1}\right)
+\end{array}\right)}{2} \\
+&=\frac{-y_{3} x_{2}+y_{2} x_{3}-y_{1} x_{3}+y_{3} x_{1}-y_{2} x_{1}+y_{1} x_{2}}{2} \\
+&=\frac{y_{1}\left(x_{2}-x_{3}\right)+y_{2}\left(x_{3}-x_{1}\right)+y_{3}\left(x_{1}-x_{2}\right)}{2}
+\end{aligned}</script><p>将上式中的$y_1,y_2,y_3$都减去$y_3$，相当于三角形向下平移了一部分，所以结果不会变，即如下所示：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+&\begin{aligned}
+A &=\frac{y_{1}\left(x_{2}-x_{3}\right)+y_{2}\left(x_{3}-x_{1}\right)+y_{3}\left(x_{1}-x_{2}\right)}{2} \\
+&=\frac{\left(y_{1}-y_{3}\right)\left(x_{2}-x_{3}\right)+\left(y_{2}-y_{3}\right)\left(x_{3}-x_{1}\right)+\left(y_{3}-y_{3}\right)\left(x_{1}-x_{2}\right)}{2}
+\end{aligned}\\
+&=\frac{\left(y_{1}-y_{3}\right)\left(x_{2}-x_{3}\right)+\left(y_{2}-y_{3}\right)\left(x_{3}-x_{1}\right)}{2}
+\end{aligned}</script><p>上述结果即为点乘，即</p>
+<script type="math/tex; mode=display">A=\frac{\left\|\mathbf{e}_{1} \times \mathbf{e}_{2}\right\|}{2}</script><h3 id="Barycentric-Space"><a href="#Barycentric-Space" class="headerlink" title="Barycentric Space"></a>Barycentric Space</h3><p><code>重心系统（Barycentric Space）</code>是用三角形的三个顶点来描述三角形的位置，表达式为：</p>
+<script type="math/tex; mode=display">\left(b_{1}, b_{2}, b_{3}\right) \equiv b_{1} \mathbf{v}_{1}+b_{2} \mathbf{v}_{2}+b_{3} \mathbf{v}_{3}</script><p>其中</p>
+<script type="math/tex; mode=display">b_{1}+b_{2}+b_{3}=1</script><p>重心系统实例如下：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-12-11-31.png" alt="重心系统"></p>
 <p>注意其中三个顶点的数值，即</p>
-<p>$$(1,0,0) \equiv \mathbf{v}<em>{1}, \quad(0,1,0) \equiv \mathbf{v}</em>{2}, \quad(0,0,1) \equiv \mathbf{v}_{3}$$</p>
-<p>三角形内的点，数值会在$[0,1]$之间，三角形外的点最少会有一个负数。</p>
+<script type="math/tex; mode=display">(1,0,0) \equiv \mathbf{v}_{1}, \quad(0,1,0) \equiv \mathbf{v}_{2}, \quad(0,0,1) \equiv \mathbf{v}_{3}</script><p>三角形内的点，数值会在$[0,1]$之间，三角形外的点最少会有一个负数。</p>
 <p>下图是重心系统的镶嵌，可以看出重心系统中值的运算规律：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-12-19-04.png" alt="重心系统"></p>
 <p>如第一个数值表示顶点$\mathbf{V}_1$对面的边所平行的部分，即$\mathbf{V}_2$和$\mathbf{V}_3$构成的边。因此可以看到该边上的点，值都为$(0,x,x)$，而平行于该边且经过$\mathbf{v}_1$的边上面的点都为$(1,x,x)$，$\mathbf{v}_1$点为$(1,0,0)$。同理顶点$\mathbf{v}_2$对面，由$\mathbf{v}_1$和$\mathbf{v}_3$构成的边，表示第二个参数，即$(x,0,x)$。第三个参数的数值也同理可得。</p>
 <p>重心系统的维度不是由参考点的维度决定的，而是由参考点的数量决定的。如三角形的重心系统，无论三角形的点是二维还是三维的，只要是三角形就需要三个参考点，所以该重心系统是二维的。</p>
 <p>在图形学中，重心系统常应用在在计算顶点插值时，如计算片段的颜色。还被应用在计算相交问题时，一根射线可以根据与各个三角形片元的重心值判断是与哪个片元相交。</p>
-<h3 id="Calculating-Barycentric-Coordinates">Calculating Barycentric Coordinates</h3>
-<p>如果通过重心系统计算笛卡尔坐标系，可以通过上述公式：</p>
-<p>$$\left(b_{1}, b_{2}, b_{3}\right) \equiv b_{1} \mathbf{v}<em>{1}+b</em>{2} \mathbf{v}<em>{2}+b</em>{3} \mathbf{v}_{3}$$</p>
-<p>由笛卡尔坐标系计算重心表达如下：</p>
+<h3 id="Calculating-Barycentric-Coordinates"><a href="#Calculating-Barycentric-Coordinates" class="headerlink" title="Calculating Barycentric Coordinates"></a>Calculating Barycentric Coordinates</h3><p>如果通过重心系统计算笛卡尔坐标系，可以通过上述公式：</p>
+<script type="math/tex; mode=display">\left(b_{1}, b_{2}, b_{3}\right) \equiv b_{1} \mathbf{v}_{1}+b_{2} \mathbf{v}_{2}+b_{3} \mathbf{v}_{3}</script><p>由笛卡尔坐标系计算重心表达如下：</p>
 <p>已知三个点和所求点的笛卡尔坐标系，如下图所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-12-33-31.png" alt="顶点与所求点"></p>
 <p>对于二维空间中的三角形，根据三角形重心的定义，可得：</p>
-<p>$$\begin{aligned}<br>
-b_{1} x_{1}+b_{2} x_{2}+b_{3} x_{3} &amp;=p_{x} \<br>
-b_{1} y_{1}+b_{2} y_{2}+b_{3} y_{3} &amp;=p_{y} \<br>
-b_{1}+b_{2}+b_{3} &amp;=1<br>
-\end{aligned}$$</p>
-<p>三个表达式对应三个未知数$b_1,b_2,b_3$，因此这是一个三元一次方程的求解，结果为：</p>
-<p>$$\begin{array}{l}<br>
-b_{1}=\frac{\left(p_{y}-y_{3}\right)\left(x_{2}-x_{3}\right)+\left(y_{2}-y_{3}\right)\left(x_{3}-p_{x}\right)}{\left(y_{1}-y_{3}\right)\left(x_{2}-x_{3}\right)+\left(y_{2}-y_{3}\right)\left(x_{3}-x_{1}\right)} \<br>
-b_{2}=\frac{\left(p_{y}-y_{1}\right)\left(x_{3}-x_{1}\right)+\left(y_{3}-y_{1}\right)\left(x_{1}-p_{x}\right)}{\left(y_{1}-y_{3}\right)\left(x_{2}-x_{3}\right)+\left(y_{2}-y_{3}\right)\left(x_{3}-x_{1}\right)} \<br>
-b_{3}=\frac{\left(p_{y}-y_{2}\right)\left(x_{1}-x_{2}\right)+\left(y_{1}-y_{2}\right)\left(x_{2}-p_{x}\right)}{\left(y_{1}-y_{3}\right)\left(x_{2}-x_{3}\right)+\left(y_{2}-y_{3}\right)\left(x_{3}-x_{1}\right)}<br>
-\end{array}$$</p>
-<p>根据上节中，通过顶点求三角形面积的方法，可以看出上式的分子和分母都是面积公式的两倍，因此也可以化简为：</p>
-<p>$$b_{1}=A\left(T_{1}\right) / A(T), \quad b_{2}=A\left(T_{2}\right) / A(T), \quad b_{3}=A\left(T_{3}\right) / A(T)$$</p>
-<p>对于三维空间中的三角形，也可以通过类似的方法求得结果。但是因为是三维空间，所以可以列出四个表达式（x,y,z三个表达式+一个和为1的限制），但是未知数还是三个（$b_1,b_2,b_3$）。因此需要删除一个表达式。</p>
+<script type="math/tex; mode=display">\begin{aligned}
+b_{1} x_{1}+b_{2} x_{2}+b_{3} x_{3} &=p_{x} \\
+b_{1} y_{1}+b_{2} y_{2}+b_{3} y_{3} &=p_{y} \\
+b_{1}+b_{2}+b_{3} &=1
+\end{aligned}</script><p>三个表达式对应三个未知数$b_1,b_2,b_3$，因此这是一个三元一次方程的求解，结果为：</p>
+<script type="math/tex; mode=display">\begin{array}{l}
+b_{1}=\frac{\left(p_{y}-y_{3}\right)\left(x_{2}-x_{3}\right)+\left(y_{2}-y_{3}\right)\left(x_{3}-p_{x}\right)}{\left(y_{1}-y_{3}\right)\left(x_{2}-x_{3}\right)+\left(y_{2}-y_{3}\right)\left(x_{3}-x_{1}\right)} \\
+b_{2}=\frac{\left(p_{y}-y_{1}\right)\left(x_{3}-x_{1}\right)+\left(y_{3}-y_{1}\right)\left(x_{1}-p_{x}\right)}{\left(y_{1}-y_{3}\right)\left(x_{2}-x_{3}\right)+\left(y_{2}-y_{3}\right)\left(x_{3}-x_{1}\right)} \\
+b_{3}=\frac{\left(p_{y}-y_{2}\right)\left(x_{1}-x_{2}\right)+\left(y_{1}-y_{2}\right)\left(x_{2}-p_{x}\right)}{\left(y_{1}-y_{3}\right)\left(x_{2}-x_{3}\right)+\left(y_{2}-y_{3}\right)\left(x_{3}-x_{1}\right)}
+\end{array}</script><p>根据上节中，通过顶点求三角形面积的方法，可以看出上式的分子和分母都是面积公式的两倍，因此也可以化简为：</p>
+<script type="math/tex; mode=display">b_{1}=A\left(T_{1}\right) / A(T), \quad b_{2}=A\left(T_{2}\right) / A(T), \quad b_{3}=A\left(T_{3}\right) / A(T)</script><p>对于三维空间中的三角形，也可以通过类似的方法求得结果。但是因为是三维空间，所以可以列出四个表达式（x,y,z三个表达式+一个和为1的限制），但是未知数还是三个（$b_1,b_2,b_3$）。因此需要删除一个表达式。</p>
 <p>但是不能随便删除一个表达式，因为删去一个表达式的操作相当于将三维空间中的三角形投影至一个平面上，而如果三角形是垂直或者接近垂直于该平面，那么就会有问题。因此要选择投影面积最大的平面。</p>
 <p>可以根据法线判断出投影面积最大的平面，如果法线为$[0,1,0]$，那么法线垂直于$xz$平面，即$xz$平面最大，即删除$y$，也因此法线上哪个分量最大，删除哪个表达式。</p>
 <p>上述已经求得重心可以通过三角形的面积得到：</p>
-<p>$$b_{1}=A\left(T_{1}\right) / A(T), \quad b_{2}=A\left(T_{2}\right) / A(T), \quad b_{3}=A\left(T_{3}\right) / A(T)$$</p>
-<p>同时由之前公式可知，面积可以通过叉乘求得，即：</p>
-<p>$$A=\frac{\left|\mathbf{e}<em>{1} \times \mathbf{e}</em>{2}\right|}{2}$$</p>
-<p>因此理论上可以通过用顶点获取三角形的各边，再通过边的叉乘的得到结果。但存在的问题是，上述公式中的求模永远返回的是正数，因此这样就无法计算三角形外的点。</p>
+<script type="math/tex; mode=display">b_{1}=A\left(T_{1}\right) / A(T), \quad b_{2}=A\left(T_{2}\right) / A(T), \quad b_{3}=A\left(T_{3}\right) / A(T)</script><p>同时由之前公式可知，面积可以通过叉乘求得，即：</p>
+<script type="math/tex; mode=display">A=\frac{\left\|\mathbf{e}_{1} \times \mathbf{e}_{2}\right\|}{2}</script><p>因此理论上可以通过用顶点获取三角形的各边，再通过边的叉乘的得到结果。但存在的问题是，上述公式中的求模永远返回的是正数，因此这样就无法计算三角形外的点。</p>
 <p>解决方法是再通过一个点积，如下所示：</p>
-<p>$$\begin{aligned}<br>
-\mathbf{c} \cdot \hat{\mathbf{n}} &amp;=|\mathbf{c}||\hat{\mathbf{n}}| \cos \theta \<br>
-&amp;=|\mathbf{c}|(1)(\pm 1) \<br>
-&amp;=\pm|\mathbf{c}|<br>
-\end{aligned}$$</p>
-<p>其中$\mathbf{c}$为叉乘的结果，$\hat{\mathbf{n}}$为法线，因此$\mathbf{c}$必然平行于$\hat{\mathbf{n}}$。如果两者同向则返回正数，否则返回负数。</p>
+<script type="math/tex; mode=display">\begin{aligned}
+\mathbf{c} \cdot \hat{\mathbf{n}} &=\|\mathbf{c}\|\|\hat{\mathbf{n}}\| \cos \theta \\
+&=\|\mathbf{c}\|(1)(\pm 1) \\
+&=\pm\|\mathbf{c}\|
+\end{aligned}</script><p>其中$\mathbf{c}$为叉乘的结果，$\hat{\mathbf{n}}$为法线，因此$\mathbf{c}$必然平行于$\hat{\mathbf{n}}$。如果两者同向则返回正数，否则返回负数。</p>
 <p>整个计算如下图所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-41-55.png" alt="叉乘求重心空间"></p>
 <p>其中：</p>
-<p>$$\begin{aligned}<br>
-&amp;\mathbf{e}<em>{1}=\mathbf{v}</em>{3}-\mathbf{v}<em>{2}, \quad \mathbf{e}</em>{2}=\mathbf{v}<em>{1}-\mathbf{v}</em>{3}, \quad \mathbf{e}<em>{3}=\mathbf{v}</em>{2}-\mathbf{v}<em>{1}\<br>
-&amp;\mathbf{d}</em>{1}=\mathbf{p}-\mathbf{v}<em>{1}, \quad \mathbf{d}</em>{2}=\mathbf{p}-\mathbf{v}<em>{2}, \quad \mathbf{d}</em>{3}=\mathbf{p}-\mathbf{v}_{3}<br>
-\end{aligned}$$</p>
-<p>$$\hat{\mathbf{n}}=\frac{\mathbf{e}<em>{1} \times \mathbf{e}</em>{2}}{\left|\mathbf{e}<em>{1} \times \mathbf{e}</em>{2}\right|}$$</p>
-<p>$$\begin{aligned}<br>
-&amp;b_{1}=A\left(T_{1}\right) / A(T)=\frac{\left(\mathbf{e}<em>{1} \times \mathbf{d}</em>{3}\right) \cdot \hat{\mathbf{n}}}{\left(\mathbf{e}<em>{1} \times \mathbf{e}</em>{2}\right) \cdot \hat{\mathbf{n}}}\<br>
-&amp;b_{2}=A\left(T_{2}\right) / A(T)=\frac{\left(\mathbf{e}<em>{2} \times \mathbf{d}</em>{1}\right) \cdot \hat{\mathbf{n}}}{\left(\mathbf{e}<em>{1} \times \mathbf{e}</em>{2}\right) \cdot \hat{\mathbf{n}}}\<br>
-&amp;b_{3}=A\left(T_{3}\right) / A(T)=\frac{\left(\mathbf{e}<em>{3} \times \mathbf{d}</em>{2}\right) \cdot \hat{\mathbf{n}}}{\left(\mathbf{e}<em>{1} \times \mathbf{e}</em>{2}\right) \cdot \hat{\mathbf{n}}}<br>
-\end{aligned}$$</p>
-<h3 id="Special-Points">Special Points</h3>
-<ol>
-<li>
-<p>质心（center of gravity）<br>
-质心为三角形三个顶点位置的平均值，即：</p>
-<p>$$\mathbf{c}<em>{\mathrm{Grav}}=\frac{\mathbf{v}</em>{1}+\mathbf{v}<em>{2}+\mathbf{v}</em>{3}}{3}$$</p>
-<p>其重心坐标值为：<br>
-$$\left(\frac{1}{3}, \frac{1}{3}, \frac{1}{3}\right)$$</p>
-</li>
-<li>
-<p>内心（incenter）<br>
-内心距离三角形三条边的距离相等，也因此是三角形内切圆的圆心，如下图所示：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+&\mathbf{e}_{1}=\mathbf{v}_{3}-\mathbf{v}_{2}, \quad \mathbf{e}_{2}=\mathbf{v}_{1}-\mathbf{v}_{3}, \quad \mathbf{e}_{3}=\mathbf{v}_{2}-\mathbf{v}_{1}\\
+&\mathbf{d}_{1}=\mathbf{p}-\mathbf{v}_{1}, \quad \mathbf{d}_{2}=\mathbf{p}-\mathbf{v}_{2}, \quad \mathbf{d}_{3}=\mathbf{p}-\mathbf{v}_{3}
+\end{aligned}</script><script type="math/tex; mode=display">\hat{\mathbf{n}}=\frac{\mathbf{e}_{1} \times \mathbf{e}_{2}}{\left\|\mathbf{e}_{1} \times \mathbf{e}_{2}\right\|}</script><script type="math/tex; mode=display">\begin{aligned}
+&b_{1}=A\left(T_{1}\right) / A(T)=\frac{\left(\mathbf{e}_{1} \times \mathbf{d}_{3}\right) \cdot \hat{\mathbf{n}}}{\left(\mathbf{e}_{1} \times \mathbf{e}_{2}\right) \cdot \hat{\mathbf{n}}}\\
+&b_{2}=A\left(T_{2}\right) / A(T)=\frac{\left(\mathbf{e}_{2} \times \mathbf{d}_{1}\right) \cdot \hat{\mathbf{n}}}{\left(\mathbf{e}_{1} \times \mathbf{e}_{2}\right) \cdot \hat{\mathbf{n}}}\\
+&b_{3}=A\left(T_{3}\right) / A(T)=\frac{\left(\mathbf{e}_{3} \times \mathbf{d}_{2}\right) \cdot \hat{\mathbf{n}}}{\left(\mathbf{e}_{1} \times \mathbf{e}_{2}\right) \cdot \hat{\mathbf{n}}}
+\end{aligned}</script><h3 id="Special-Points"><a href="#Special-Points" class="headerlink" title="Special Points"></a>Special Points</h3><ol>
+<li><p>质心（center of gravity）<br>质心为三角形三个顶点位置的平均值，即：</p>
+<script type="math/tex; mode=display">\mathbf{c}_{\mathrm{Grav}}=\frac{\mathbf{v}_{1}+\mathbf{v}_{2}+\mathbf{v}_{3}}{3}</script><p>其重心坐标值为：</p>
+<script type="math/tex; mode=display">\left(\frac{1}{3}, \frac{1}{3}, \frac{1}{3}\right)</script></li>
+<li><p>内心（incenter）<br>内心距离三角形三条边的距离相等，也因此是三角形内切圆的圆心，如下图所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-48-35.png" alt="三角形内心"></p>
 <p>计算方法如下：</p>
-<p>$$\mathbf{c}<em>{\mathrm{In}}=\frac{l</em>{1} \mathbf{v}<em>{1}+l</em>{2} \mathbf{v}<em>{2}+l</em>{3} \mathbf{v}_{3}}{p}$$</p>
-<p>其重心坐标值为：</p>
-<p>$$\left(\frac{l_{1}}{p}, \frac{l_{2}}{p}, \frac{l_{3}}{p}\right)$$</p>
-<p>内心与三角形边的距离为：</p>
-<p>$$r_{\mathrm{In}}=\frac{2 A}{p}$$</p>
-</li>
-<li>
-<p>外心（circumcenter）<br>
-外心是距离三角形三个顶点距离相同的点，如下图所示：</p>
+<script type="math/tex; mode=display">\mathbf{c}_{\mathrm{In}}=\frac{l_{1} \mathbf{v}_{1}+l_{2} \mathbf{v}_{2}+l_{3} \mathbf{v}_{3}}{p}</script><p>其重心坐标值为：</p>
+<script type="math/tex; mode=display">\left(\frac{l_{1}}{p}, \frac{l_{2}}{p}, \frac{l_{3}}{p}\right)</script><p>内心与三角形边的距离为：</p>
+<script type="math/tex; mode=display">r_{\mathrm{In}}=\frac{2 A}{p}</script></li>
+</ol>
+<ol>
+<li><p>外心（circumcenter）<br>外心是距离三角形三个顶点距离相同的点，如下图所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-53-04.png" alt="外心"></p>
-<p>计算过程如下：</p>
-<p>先根据上图中的标识算出如下的中间变量：</p>
-<p>$$\begin{aligned}<br>
-&amp;\begin{array}{l}<br>
-d_{1}=-\mathbf{e}<em>{2} \cdot   \mathbf{e}</em>{3} \<br>
-d_{2}=-\mathbf{e}<em>{3} \cdot   \mathbf{e}</em>{1} \<br>
-d_{3}=-\mathbf{e}<em>{1} \cdot   \mathbf{e}</em>{2}<br>
-\end{array}\<br>
-&amp;c_{1}=d_{2} d_{3}\<br>
-&amp;c_{2}=d_{3} d_{1}\<br>
-&amp;c_{3}=d_{1} d_{2}\<br>
-&amp;c=c_{1}+c_{2}+c_{3}<br>
-\end{aligned}$$</p>
-<p>其中外心的点为：</p>
-<p>$$\mathbf{c}<em>{\mathrm{Circ}}=\frac{\left(c</em>{2}+c_{3}\right) \mathbf{v}<em>{1}+\left(c</em>{3}+c_{1}\right) \mathbf{v}<em>{2}+\left(c</em>{1}+c_{2}\right) \mathbf{v}_{3}}{2 c}$$</p>
-<p>重心坐标值为：</p>
-<p>$$\left(\frac{c_{2}+c_{3}}{2 c}, \frac{c_{3}+c_{1}}{2 c}, \frac{c_{1}+c_{2}}{2 c}\right)$$</p>
-<p>距离三角形三个顶点的值为：</p>
-<p>$$r_{\mathrm{Circ}}=\frac{\sqrt{\left(d_{1}+d_{2}\right)\left(d_{2}+d_{3}\right)\left(d_{3}+d_{1}\right) / c}}{2}$$</p>
 </li>
 </ol>
-<h2 id="Polygons">Polygons</h2>
-<p>通常来说，多边形是一个由顶点和边组成的平面图形。</p>
-<h3 id="Simple-versus-Complex-Polygons">Simple versus Complex Polygons</h3>
-<p>简单多边形不存在洞，复杂多边形存在洞，如下所示：</p>
+<p>   计算过程如下：</p>
+<p>   先根据上图中的标识算出如下的中间变量：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+   &\begin{array}{l}
+   d_{1}=-\mathbf{e}_{2} \cdot   \mathbf{e}_{3} \\
+   d_{2}=-\mathbf{e}_{3} \cdot   \mathbf{e}_{1} \\
+   d_{3}=-\mathbf{e}_{1} \cdot   \mathbf{e}_{2}
+   \end{array}\\
+   &c_{1}=d_{2} d_{3}\\
+   &c_{2}=d_{3} d_{1}\\
+   &c_{3}=d_{1} d_{2}\\
+   &c=c_{1}+c_{2}+c_{3}
+   \end{aligned}</script><p>   其中外心的点为：</p>
+<script type="math/tex; mode=display">\mathbf{c}_{\mathrm{Circ}}=\frac{\left(c_{2}+c_{3}\right) \mathbf{v}_{1}+\left(c_{3}+c_{1}\right) \mathbf{v}_{2}+\left(c_{1}+c_{2}\right) \mathbf{v}_{3}}{2 c}</script><p>   重心坐标值为：</p>
+<script type="math/tex; mode=display">\left(\frac{c_{2}+c_{3}}{2 c}, \frac{c_{3}+c_{1}}{2 c}, \frac{c_{1}+c_{2}}{2 c}\right)</script><p>   距离三角形三个顶点的值为：</p>
+<script type="math/tex; mode=display">r_{\mathrm{Circ}}=\frac{\sqrt{\left(d_{1}+d_{2}\right)\left(d_{2}+d_{3}\right)\left(d_{3}+d_{1}\right) / c}}{2}</script><h2 id="Polygons"><a href="#Polygons" class="headerlink" title="Polygons"></a>Polygons</h2><p>通常来说，多边形是一个由顶点和边组成的平面图形。</p>
+<h3 id="Simple-versus-Complex-Polygons"><a href="#Simple-versus-Complex-Polygons" class="headerlink" title="Simple versus Complex Polygons"></a>Simple versus Complex Polygons</h3><p>简单多边形不存在洞，复杂多边形存在洞，如下所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-57-07.png" alt="简单复杂多边形"></p>
 <p>可以通过加上一对缝合边将简单多边形转换为复杂多边形，如下所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-57-57.png" alt="简单多边形转换为复杂多边形"></p>
 <p>还有一种自相交多边形（Self-intersecting polygon），如下所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-17-58-58.png" alt="自相交多边形"></p>
-<h3 id="Convex-versus-Concava-Polygons">Convex versus Concava Polygons</h3>
-<p>关于凹多边形(Concave)和凸多边形(Convex)有多种区分方法：</p>
+<h3 id="Convex-versus-Concava-Polygons"><a href="#Convex-versus-Concava-Polygons" class="headerlink" title="Convex versus Concava Polygons"></a>Convex versus Concava Polygons</h3><p>关于凹多边形(Concave)和凸多边形(Convex)有多种区分方法：</p>
 <ol>
-<li>
-<p>凹多边形至少有一个凹点（concavity），如下所示：</p>
+<li><p>凹多边形至少有一个凹点（concavity），如下所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-18-04-45.png" alt="凹点"></p>
 </li>
-<li>
-<p>凹多边形至少有一对顶点的连线是在多边形外的。</p>
+<li><p>凹多边形至少有一对顶点的连线是在多边形外的。</p>
 </li>
-<li>
-<p>凹多边形沿着所有顶点走，顶点的旋转顺序会发生变化（顺逆时针）。<br>
-这个可以通过对每两边进行叉乘来判断，如果叉乘的结果与法线方向不一致，说明顺序为逆时针，否则为顺时针。如果按顺时针顺序来取两边进行叉乘，突然出现了结果与法线相反的情况，则该两边中间为凹点。</p>
-</li>
-<li>
-<p>无论是凸多边形还是凹多边形，其内角和都是$(n-2)360^{\circ}$。但是通过点积求得的是较小角的角度。如果对凸多边形的每两边都点积，则结果和为$(n-2)360^{\circ}$，而凹多边形不是。<br>
-如下图所示：<br>
-<img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-21-59-19.png" alt="内角判断凹凸"></p>
-</li>
+<li>凹多边形沿着所有顶点走，顶点的旋转顺序会发生变化（顺逆时针）。<br>这个可以通过对每两边进行叉乘来判断，如果叉乘的结果与法线方向不一致，说明顺序为逆时针，否则为顺时针。如果按顺时针顺序来取两边进行叉乘，突然出现了结果与法线相反的情况，则该两边中间为凹点。</li>
+<li>无论是凸多边形还是凹多边形，其内角和都是$(n-2)360^{\circ}$。但是通过点积求得的是较小角的角度。如果对凸多边形的每两边都点积，则结果和为$(n-2)360^{\circ}$，而凹多边形不是。<br>如下图所示：<br><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-21-59-19.png" alt="内角判断凹凸"></li>
 </ol>
-<h3 id="Triangulation-and-Fanning">Triangulation and Fanning</h3>
-<p>每一个$n$条边的凸多边形都能分为$n-2$个三角形。如下图所示：</p>
+<h3 id="Triangulation-and-Fanning"><a href="#Triangulation-and-Fanning" class="headerlink" title="Triangulation and Fanning"></a>Triangulation and Fanning</h3><p>每一个$n$条边的凸多边形都能分为$n-2$个三角形。如下图所示：</p>
 <p><img src="3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/2020-04-13-22-05-57.png" alt="分割三角形"></p>
 <p>但这样切分的问题在于，可能会切出一条非常细的三角形。</p>
 <p>解决方法为每次切分前，先找出能使内角最大的切割方法，然后切一刀，将图形分为两部分。再对每一个部分迭代使用上述方法，直到只剩下三角形。这样可以一定程度避免出现细长三角形，但效率不如直接切分高。</p>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>引用：</p>
+<div class="note info simple"><p>引用：</p>
 <ol>
-<li><em>3D Math Primer for Graphics and Game Development</em> 2nd 2011</li>
+<li><em>3D Math Primer for Graphics and Game Development</em> 2nd 2011 </li>
 </ol>
-
-        </div>
-    </article>
+</div>
 <hr>
-</div><div class="article-licensing box"><div class="licensing-title"><p>《3D数学基础：图形和游戏开发》第九章笔记</p><p><a href="https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">https://wangxuejia.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-04-13</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/3D%E6%95%B0%E5%AD%A6/">3D数学</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/CPPPrimer-Chapter8-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《C++ Primer》 第八章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/"><span class="level-item">《3D数学基础：图形和游戏开发》第八章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
-            el: '#valine-thread',
-            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
-            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
-            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
-            avatar: "mm",
-            avatarForce: false,
-            meta: ["nick","mail","link"],
-            pageSize: 10,
-            lang: "zh-CN",
-            visitor: true,
-            highlight: true,
-            recordIP: false,
-            
-            
-            
-            enableQQ: true,
-            requiredFields: [],
-        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
-            article: {
-                highlight: {
-                    clipboard: true,
-                    fold: 'unfolded'
-                }
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="Tuncle">三叔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tuncle.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">https://tuncle.blog/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tuncle.blog" target="_blank">三叔胡言乱语的地方</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="post-meta__tags" href="/tags/3D%E6%95%B0%E5%AD%A6/">3D数学</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="twitter, wechat, weibo"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/CPPPrimer-Chapter8-Notes/" title="《C++ Primer》 第八章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《C++ Primer》 第八章笔记</div></div></a></div><div class="next-post pull-right"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/" title="《3D数学基础：图形和游戏开发》第八章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《3D数学基础：图形和游戏开发》第八章笔记</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-9-Geometric-Primitives"><span class="toc-number">1.</span> <span class="toc-text">Chapter 9 Geometric Primitives</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Representation-Techniques"><span class="toc-number">1.1.</span> <span class="toc-text">Representation Techniques</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lines-and-Rays"><span class="toc-number">1.2.</span> <span class="toc-text">Lines and Rays</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Rays"><span class="toc-number">1.2.1.</span> <span class="toc-text">Rays</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Special-2D-Representation-of-Lines"><span class="toc-number">1.2.2.</span> <span class="toc-text">Special 2D Representation of Lines</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Converting-between-Representations"><span class="toc-number">1.2.3.</span> <span class="toc-text">Converting between Representations</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sphere-and-Circles"><span class="toc-number">1.3.</span> <span class="toc-text">Sphere and Circles</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bounding-Boxes"><span class="toc-number">1.4.</span> <span class="toc-text">Bounding Boxes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Representing-AABBs"><span class="toc-number">1.4.1.</span> <span class="toc-text">Representing AABBs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Computing-AABBs"><span class="toc-number">1.4.2.</span> <span class="toc-text">Computing AABBs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AABBs-versus-Bounding-Spheres"><span class="toc-number">1.4.3.</span> <span class="toc-text">AABBs versus Bounding Spheres</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Transforming-AABBs"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">Transforming AABBs</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Planes"><span class="toc-number">1.5.</span> <span class="toc-text">Planes</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Plane-Equation%EF%BC%9AAn-Implicit-Definnition-of-a-plane"><span class="toc-number">1.5.1.</span> <span class="toc-text">The Plane Equation：An Implicit Definnition of a plane</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Defining-a-Plane-by-Using-Three-Points"><span class="toc-number">1.5.2.</span> <span class="toc-text">Defining a Plane by Using Three Points</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9CBest-Fit%E2%80%9D-Plane-for-More-than-Three-Points"><span class="toc-number">1.5.3.</span> <span class="toc-text">“Best Fit” Plane for More than Three Points</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Distance-from-Point-to-Plane"><span class="toc-number">1.5.4.</span> <span class="toc-text">Distance from Point to Plane</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Triangles"><span class="toc-number">1.6.</span> <span class="toc-text">Triangles</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Notation"><span class="toc-number">1.6.1.</span> <span class="toc-text">Notation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Area-of-a-Triangle"><span class="toc-number">1.6.2.</span> <span class="toc-text">Area of a Triangle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Barycentric-Space"><span class="toc-number">1.6.3.</span> <span class="toc-text">Barycentric Space</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Calculating-Barycentric-Coordinates"><span class="toc-number">1.6.4.</span> <span class="toc-text">Calculating Barycentric Coordinates</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Special-Points"><span class="toc-number">1.6.5.</span> <span class="toc-text">Special Points</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Polygons"><span class="toc-number">1.7.</span> <span class="toc-text">Polygons</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Simple-versus-Complex-Polygons"><span class="toc-number">1.7.1.</span> <span class="toc-text">Simple versus Complex Polygons</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Convex-versus-Concava-Polygons"><span class="toc-number">1.7.2.</span> <span class="toc-text">Convex versus Concava Polygons</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Triangulation-and-Fanning"><span class="toc-number">1.7.3.</span> <span class="toc-text">Triangulation and Fanning</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By 三叔</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Keep Writing</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
             }
-        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
-      window.cookieconsent.initialise({
-        type: "info",
-        theme: "edgeless",
-        static: false,
-        position: "bottom-left",
-        content: {
-          message: "此网站使用Cookie来改善您的体验。",
-          dismiss: "知道了！",
-          allow: "允许使用Cookie",
-          deny: "拒绝",
-          link: "了解更多",
-          policy: "Cookie政策",
-          href: "https://www.cookiesandyou.com/",
-        },
-        palette: {
-          popup: {
-            background: "#edeff5",
-            text: "#838391"
-          },
-          button: {
-            background: "#4b81e8"
-          },
-        },
-      });
-    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
-            if (typeof $.fn.lightGallery === 'function') {
-                $('.article').lightGallery({ selector: '.gallery-item' });
-            }
-            if (typeof $.fn.justifiedGallery === 'function') {
-                if ($('.justified-gallery > p > .gallery-item').length) {
-                    $('.justified-gallery > p > .gallery-item').unwrap();
-                }
-                $('.justified-gallery').justifiedGallery();
-            }
-        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
-            'HTML-CSS': {
-                matchFontHeight: false
-            },
-            SVG: {
-                matchFontHeight: false
-            },
-            CommonHTML: {
-                matchFontHeight: false
-            },
-            tex2jax: {
-                inlineMath: [
-                    ['$','$'],
-                    ['\\(','\\)']
-                ]
-            }
-        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
-            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
-        });</script></body></html>
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey: 'z1vCYavVUbCGuMjNMcrsvShN',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

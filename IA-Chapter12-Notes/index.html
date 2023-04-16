@@ -1,42 +1,192 @@
-<!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《算法导论》 第十二章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《算法导论》 第十二章笔记，线性二叉树的实现。 12.4节尚未整理"><meta property="og:type" content="blog"><meta property="og:title" content="《算法导论》 第十二章笔记"><meta property="og:url" content="https://wangxuejia.blog/IA-Chapter12-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《算法导论》 第十二章笔记，线性二叉树的实现。 12.4节尚未整理"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter12-Notes/IA-Chapter12-Notes/2019-10-26-16-21-45.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter12-Notes/IA-Chapter12-Notes/2019-11-05-17-12-58.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter12-Notes/IA-Chapter12-Notes/2019-11-06-13-46-14.png"><meta property="article:published_time" content="2019-11-06T06:10:37.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.015Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="数据结构与算法"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://wangxuejia.blog/IA-Chapter12-Notes/IA-Chapter12-Notes/2019-10-26-16-21-45.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://wangxuejia.blog/IA-Chapter12-Notes/"},"headline":"《算法导论》 第十二章笔记","image":["https://wangxuejia.blog/IA-Chapter12-Notes/IA-Chapter12-Notes/2019-10-26-16-21-45.png","https://wangxuejia.blog/IA-Chapter12-Notes/IA-Chapter12-Notes/2019-11-05-17-12-58.png","https://wangxuejia.blog/IA-Chapter12-Notes/IA-Chapter12-Notes/2019-11-06-13-46-14.png"],"datePublished":"2019-11-06T06:10:37.000Z","dateModified":"2023-04-02T12:21:20.015Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《算法导论》 第十二章笔记，线性二叉树的实现。 12.4节尚未整理"}</script><link rel="canonical" href="https://wangxuejia.blog/IA-Chapter12-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
-  (function () {
-      function switchTab() {
-          if (!location.hash) {
-            return;
-          }
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>《算法导论》 第十二章笔记 | 三叔胡言乱语的地方</title><meta name="author" content="三叔"><meta name="copyright" content="三叔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《算法导论》 第十二章笔记，线性二叉树的实现。 12.4节尚未整理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《算法导论》 第十二章笔记">
+<meta property="og:url" content="https://tuncle.blog/IA-Chapter12-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="《算法导论》 第十二章笔记，线性二叉树的实现。 12.4节尚未整理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuncle.blog/img/avatar.jpg">
+<meta property="article:published_time" content="2019-11-06T06:10:37.000Z">
+<meta property="article:modified_time" content="2023-04-16T06:32:59.818Z">
+<meta property="article:author" content="三叔">
+<meta property="article:tag" content="读书笔记">
+<meta property="article:tag" content="数据结构与算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuncle.blog/img/avatar.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://tuncle.blog/IA-Chapter12-Notes/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: 三叔","link":"链接: ","source":"来源: 三叔胡言乱语的地方","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《算法导论》 第十二章笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-16 14:32:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-          const id = '#' + CSS.escape(location.hash.substring(1));
-          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
-          if (!$tabMenu) {
-            return;
-          }
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
-          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
-          Array.from($tabMenuContainer.querySelectorAll('a'))
-              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
-              .forEach($content => $content.classList.add('is-hidden'));
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-          if ($tabMenu) {
-              $tabMenu.parentElement.classList.add('is-active');
-          }
-          const $activeTab = document.querySelector(id);
-          if ($activeTab) {
-              $activeTab.classList.remove('is-hidden');
-          }
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
-      switchTab();
-      window.addEventListener('hashchange', switchTab, false);
-  })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-11-06T06:10:37.000Z" title="2019/11/6 14:10:37">2019-11-06</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.015Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span><span class="level-item">20 分钟读完 (大约3013个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《算法导论》 第十二章笔记</h1><div class="content"><p>《算法导论》 第十二章笔记，线性二叉树的实现。</p>
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="三叔胡言乱语的地方"><span class="site-name">三叔胡言乱语的地方</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">《算法导论》 第十二章笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2019-11-06T06:10:37.000Z" title="发表于 2019-11-06 14:10:37">2019-11-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/IA-Chapter12-Notes/" data-flag-title="《算法导论》 第十二章笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>《算法导论》 第十二章笔记，线性二叉树的实现。</p>
 <p>12.4节尚未整理</p>
 <span id="more"></span>
-<h2 id="Chapter-12-Binary-Search-Trees">Chapter 12. Binary Search Trees</h2>
-<p><code>搜索树(Search tree)</code>结构支持许多动态数组的操作，包括SEARCH，MINIMUM，MAXIMUM，PREDESCESSOR，SUCESSOR，INSERT和DELETE。</p>
+<h2 id="Chapter-12-Binary-Search-Trees"><a href="#Chapter-12-Binary-Search-Trees" class="headerlink" title="Chapter 12. Binary Search Trees"></a>Chapter 12. Binary Search Trees</h2><p><code>搜索树(Search tree)</code>结构支持许多动态数组的操作，包括SEARCH，MINIMUM，MAXIMUM，PREDESCESSOR，SUCESSOR，INSERT和DELETE。</p>
 <p>对于一个有$n$个结点的完全二叉树，这些操作在最坏情况下的时间复杂度应该为$\Theta(n)$，而如果是一个随机建立的二叉树，复杂度应该为$\Theta(\lg n)$</p>
-<h3 id="What-is-a-binary-search-tree">What is a binary search tree?</h3>
-<p>二叉搜索树的每一个结点（下使用<code>x</code>来表示）都包含一个$key$值以及三个指针$p$、$left$和$right$分别表示结点的父结点，左子结点和右子结点。</p>
+<h3 id="What-is-a-binary-search-tree"><a href="#What-is-a-binary-search-tree" class="headerlink" title="What is a binary search tree?"></a>What is a binary search tree?</h3><p>二叉搜索树的每一个结点（下使用<code>x</code>来表示）都包含一个$key$值以及三个指针$p$、$left$和$right$分别表示结点的父结点，左子结点和右子结点。</p>
 <p>对于一个二叉搜索树而言，一个结点的所有左子结点一定小于等于该结点值，结点的所有右子结点一定大于等于该结点值。</p>
 <p>大部分搜索树的操作都与树的高度有关，下图是两个搜索二叉树的情况：</p>
 <p><img src="IA-Chapter12-Notes/2019-10-26-16-21-45.png" alt="二叉搜索树"></p>
@@ -48,31 +198,24 @@
 <p>证明如下：首先因为中序遍历需要访问所有n个结点，所以时间复杂度最少为$\Omega(n)$，所以只要证明时间复杂度为$T(n)=O(n)$即能满足情况。</p>
 <p>在空树的情况下，因为需要判断<code>x!=null</code>，所以也是存在一些时间花费的，以$T(0)=c$来表示。设左树有$k$个结点，则右树有$n-k-1$个结点，那么遍历时间可表达为$T(n)\leq T(k) + T(n-k+1) +d$。这个$d$表示是一个常数，用来控制右式为遍历时间的上限。</p>
 <p>后面我们可以通过<code>4.3</code>节中的替代法来证明，为了证明$T(n)=O(n)$，假设$T(n)\leq (c+d)n+c$。对于$n=0$,$(c+d)0+c=c=T(n)$，满足情况，对于$n&gt;0$来说</p>
-<p>$$<br>
-T(n)\leq T(k) + T(n-k+1) +d \\<br>
-=( (c+d)k + c ) + ( (c+d)(n-k-1) +c ) +d \\<br>
-=c + (c+d)n  -(c+d) +c +d\\<br>
-=(c+d)n +c<br>
-$$</p>
-<p>满足猜测，所以证明得$T(n)=O(n)$。因此结合$T(n)=\Omega(n)$可得$T(n)=\Theta(n)$</p>
-<h3 id="Querying-a-binary-search-tree">Querying a binary search tree</h3>
-<p>二叉树的一系列操作，如<code>MINIMUM</code>，<code>MAXIMUM</code>,<code>SUCCESSOR</code>,<code>PREDECESSOR</code>的时间复杂度都与树的高度有关，对一个高度为$h$的数，这些操作的复杂度为$O(h)$</p>
-<h4 id="Searching">Searching</h4>
-<p>根据二叉搜索树的特性，我们只要判断目标值是否与当前值相同，如果相同则返回当前节点，如果小于则在当前节点的左树搜索，否则在右树搜索</p>
+<script type="math/tex; mode=display">
+T(n)\leq T(k) + T(n-k+1) +d \\\\
+=( (c+d)k + c ) + ( (c+d)(n-k-1) +c ) +d \\\\
+=c + (c+d)n  -(c+d) +c +d\\\\
+=(c+d)n +c</script><p>满足猜测，所以证明得$T(n)=O(n)$。因此结合$T(n)=\Omega(n)$可得$T(n)=\Theta(n)$</p>
+<h3 id="Querying-a-binary-search-tree"><a href="#Querying-a-binary-search-tree" class="headerlink" title="Querying a binary search tree"></a>Querying a binary search tree</h3><p>二叉树的一系列操作，如<code>MINIMUM</code>，<code>MAXIMUM</code>,<code>SUCCESSOR</code>,<code>PREDECESSOR</code>的时间复杂度都与树的高度有关，对一个高度为$h$的数，这些操作的复杂度为$O(h)$</p>
+<h4 id="Searching"><a href="#Searching" class="headerlink" title="Searching"></a>Searching</h4><p>根据二叉搜索树的特性，我们只要判断目标值是否与当前值相同，如果相同则返回当前节点，如果小于则在当前节点的左树搜索，否则在右树搜索</p>
 <p>搜索递归伪代码</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">TREE-SEARCH(x,k)</span><br><span class="line"></span><br><span class="line">if x==NULL or k==x.key</span><br><span class="line">    return x</span><br><span class="line"></span><br><span class="line">if k &lt; x.key</span><br><span class="line">    return TREE-SEARCH(x.left,k)</span><br><span class="line"></span><br><span class="line">return TREE-SEARCH(x.right,k)</span><br></pre></td></tr></table></figure>
 <p>这个递归代码也可以通过循环方式来写，通常来说通过循环迭代方法实现的效率更高，因为少了函数的压栈与出栈操作。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">TREE-SEARCH(x,k)</span><br><span class="line"></span><br><span class="line">while(x != NULl and k != x.key)</span><br><span class="line">&#123;</span><br><span class="line">    if k &lt; x.key</span><br><span class="line">        x = x.left</span><br><span class="line">    else</span><br><span class="line">        x= x.right</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">return x</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>两种方法的C++实现如下</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">TreeNode* <span class="title">BinarySearchTree::Search</span><span class="params">(TreeNode* rootNode, <span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (rootNode == <span class="literal">nullptr</span> || rootNode-&gt;value == value)</span><br><span class="line">		<span class="keyword">return</span> rootNode;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> value &lt; rootNode-&gt;value ? <span class="built_in">Search</span>(rootNode-&gt;leftChild, value) : <span class="built_in">Search</span>(rootNode-&gt;rightChild, value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">TreeNode* <span class="title">BinarySearchTree::Search</span><span class="params">(TreeNode* rootNode, <span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (rootNode != <span class="literal">nullptr</span> &amp;&amp; rootNode-&gt;value != value)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (value &lt; rootNode-&gt;value)</span><br><span class="line">			rootNode = rootNode-&gt;leftChild;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			rootNode = rootNode-&gt;rightChild;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> rootNode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Minimum-and-Maximum">Minimum and Maximum</h4>
-<p>最大最小值的获取很简单，找到最左的节点即为最小值，找到最右的节点即为最大值，伪代码如下</p>
+<h4 id="Minimum-and-Maximum"><a href="#Minimum-and-Maximum" class="headerlink" title="Minimum and Maximum"></a>Minimum and Maximum</h4><p>最大最小值的获取很简单，找到最左的节点即为最小值，找到最右的节点即为最大值，伪代码如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">TREE-MINIMUM(x)</span><br><span class="line"></span><br><span class="line">while x.left != NULL</span><br><span class="line">    x = x.left</span><br><span class="line">return x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">TREE-MAXIMUM(x)</span><br><span class="line"></span><br><span class="line">while x.right !=NULL</span><br><span class="line">    x = x.right</span><br><span class="line">return x</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>c++ 实现如下</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">TreeNode* <span class="title">BinarySearchTree::Maximum</span><span class="params">(TreeNode* node)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (node == <span class="literal">nullptr</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;Tree is empty&quot;</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (node-&gt;rightChild != <span class="literal">nullptr</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		node = node-&gt;rightChild;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">TreeNode* <span class="title">BinarySearchTree::Minimum</span><span class="params">(TreeNode* node)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (node == <span class="literal">nullptr</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;Tree is empty&quot;</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (node-&gt;leftChild != <span class="literal">nullptr</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		node = node-&gt;leftChild;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Successor-and-predecessor">Successor and predecessor</h4>
-<p><code>Successor</code>函数是找比当前结点值大的所有结点中，最小的一个<br>
-<code>Predecessor</code>函数值找比当前结点值小的所有结点中，最大的一个</p>
+<h4 id="Successor-and-predecessor"><a href="#Successor-and-predecessor" class="headerlink" title="Successor and predecessor"></a>Successor and predecessor</h4><p><code>Successor</code>函数是找比当前结点值大的所有结点中，最小的一个<br><code>Predecessor</code>函数值找比当前结点值小的所有结点中，最大的一个</p>
 <p><code>Successor</code>算法的思路是：</p>
 <p>（1） 如果一个节点的右子树不为空，那么右子树中的最小值即为比当前结点值刚好大的节点。</p>
 <p>（2） 如果右子树为空，则需要从父节点中找寻比自己刚好大的节点，使用x.p遍历逐渐向上寻找祖先节点，直到遇到第一个祖先结点让当前结点或当前节点的祖先是它的左子树，这个父结点就是刚好大的节点。如下图中，我们以结点13为例子，7是13的父节点，但13是是它的右子树，所以不满足。继续向上找到6结点，但结点7是结点6的右子树，所以仍然不满足。再向上找到结点15，结点6是他的左子树，所以满足条件。即15为节点13的Successoor。</p>
@@ -84,46 +227,35 @@ $$</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">TREE-SUCCESSOR(x)</span><br><span class="line"></span><br><span class="line">if x.right != NULL</span><br><span class="line">    return TREE-MINIMUM(x.right)</span><br><span class="line"></span><br><span class="line">y = x.p</span><br><span class="line"></span><br><span class="line">while( y != NULL &amp;&amp; x == y.right )</span><br><span class="line">    x = y;</span><br><span class="line">    y = y.p;</span><br><span class="line"></span><br><span class="line">return y;</span><br><span class="line"></span><br><span class="line">TREE-PREDECESSOR(x)</span><br><span class="line"></span><br><span class="line">if x.left != NULL</span><br><span class="line">    return TREE-MAXIMUM(x.left)</span><br><span class="line"></span><br><span class="line">y = x.p</span><br><span class="line"></span><br><span class="line">while( y != NULL &amp;&amp; x == y.left )</span><br><span class="line">    x = y;</span><br><span class="line">    y = y.p;</span><br><span class="line"></span><br><span class="line">return y;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>c++实现如下</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BSTreeNode* <span class="title">BinarySearchTree::Successor</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	BSTreeNode* node = <span class="built_in">Search</span>(root, value);</span><br><span class="line">	<span class="keyword">if</span> (node == <span class="literal">nullptr</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;Can&#x27;t find node with &quot;</span> &lt;&lt; value &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (node-&gt;rightChild != <span class="literal">nullptr</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">Minimum</span>(node-&gt;rightChild);</span><br><span class="line"></span><br><span class="line">	BSTreeNode* nodeParent = node-&gt;parent;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (nodeParent != <span class="literal">nullptr</span> &amp;&amp; node == nodeParent-&gt;rightChild)</span><br><span class="line">	&#123;</span><br><span class="line">		node = nodeParent;</span><br><span class="line">		nodeParent = node-&gt;parent;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> nodeParent;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">BSTreeNode* <span class="title">BinarySearchTree::Predecessor</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	BSTreeNode* node = <span class="built_in">Search</span>(root, value);</span><br><span class="line">	<span class="keyword">if</span> (node == <span class="literal">nullptr</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;Can&#x27;t find node with &quot;</span> &lt;&lt; value &lt;&lt; endl;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (node-&gt;leftChild != <span class="literal">nullptr</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">Maximum</span>(node-&gt;leftChild);</span><br><span class="line"></span><br><span class="line">	BSTreeNode* nodeParent = node-&gt;parent;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (nodeParent != <span class="literal">nullptr</span> &amp;&amp; node == nodeParent-&gt;leftChild)</span><br><span class="line">	&#123;</span><br><span class="line">		node = nodeParent;</span><br><span class="line">		nodeParent = node-&gt;parent;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> nodeParent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>可以看到，无论是Search,Minimum,Maximum,Successor,Predecessor，在最坏的情况下，都是遍历树的每一层，所以时间复杂度为$O(h)$</p>
-
-        </div>
-    </article>
-<h3 id="Insertion-and-deletion">Insertion and deletion</h3>
-<p>二叉搜索树的插入和删除操作都需要保证改变的结点不会影响二叉搜索树的特性。</p>
-<h4 id="Insertion">Insertion</h4>
-<p>插入算法的思想是用一个变量（伪代码中是变量$x$）来找寻插入结点(伪代码中被插入结点为$z$)的位置，用另一个变量（伪代码中为$y$）来记录第一个变量的父节点。</p>
+<div class="note info simple"><p>可以看到，无论是Search,Minimum,Maximum,Successor,Predecessor，在最坏的情况下，都是遍历树的每一层，所以时间复杂度为$O(h)$</p>
+</div>
+<h3 id="Insertion-and-deletion"><a href="#Insertion-and-deletion" class="headerlink" title="Insertion and deletion"></a>Insertion and deletion</h3><p>二叉搜索树的插入和删除操作都需要保证改变的结点不会影响二叉搜索树的特性。</p>
+<h4 id="Insertion"><a href="#Insertion" class="headerlink" title="Insertion"></a>Insertion</h4><p>插入算法的思想是用一个变量（伪代码中是变量$x$）来找寻插入结点(伪代码中被插入结点为$z$)的位置，用另一个变量（伪代码中为$y$）来记录第一个变量的父节点。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">TREE-INSERT(T,z)</span><br><span class="line"></span><br><span class="line">//T-&gt;被插入树，z-&gt;需要插入的结点</span><br><span class="line"></span><br><span class="line">y = NULL</span><br><span class="line">x = T.root</span><br><span class="line">//出循环时，X为空，即为z将要插入的位置，y是x的父节点</span><br><span class="line">while x != NULL </span><br><span class="line">    y = x</span><br><span class="line">    if z.key &lt; x.key</span><br><span class="line">        x = x.left</span><br><span class="line">    else</span><br><span class="line">        x = x.right</span><br><span class="line">z.p = y;</span><br><span class="line">if (y == NULL)</span><br><span class="line">    T.root = z;</span><br><span class="line">else if ( z.key &lt; y.key)</span><br><span class="line">    y.left = z</span><br><span class="line">else</span><br><span class="line">    y.right = z</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
 <p>c++实现为：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">BinarySearchTree::Insert</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	BSTreeNode* node = (BSTreeNode*)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(BSTreeNode));</span><br><span class="line">	node-&gt;value = value;</span><br><span class="line">	node-&gt;leftChild = <span class="literal">nullptr</span>;</span><br><span class="line">	node-&gt;rightChild = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">	BSTreeNode* target = root;</span><br><span class="line">	BSTreeNode* targetParent = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (target != <span class="literal">nullptr</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		targetParent = target;</span><br><span class="line">		target = value &lt; target-&gt;value ? target-&gt;leftChild : target-&gt;rightChild;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (targetParent == <span class="literal">nullptr</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		root = node;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (value &lt; targetParent-&gt;value)</span><br><span class="line">		targetParent-&gt;leftChild = node;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		targetParent-&gt;rightChild = node;</span><br><span class="line"></span><br><span class="line">	node-&gt;parent = targetParent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>插入算法需要从上到下遍历整棵树，所以时间复杂度为$O(h)$</p>
-<h4 id="Delete">Delete</h4>
-<p>删除操作相比插入操作更复杂一些，需要考虑三种情况。将需要删除的结点称为$z$</p>
+<h4 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h4><p>删除操作相比插入操作更复杂一些，需要考虑三种情况。将需要删除的结点称为$z$</p>
 <ol>
-<li>
-<p>$z$没有子结点</p>
+<li><p>$z$没有子结点</p>
 <p>可直接删除</p>
 </li>
-<li>
-<p>$z$只有一个子结点</p>
-<p>用存在的节点<code>替换</code>$z$</p>
+<li><p>$z$只有一个子结点</p>
+<p> 用存在的节点<code>替换</code>$z$</p>
 </li>
-<li>
-<p>$z$有两个子结点</p>
-<p>找到$z$的<code>Successor</code>，这里称为$y$，然后需要再细分为两种情况讨论。</p>
-<p>注意这两种情况下$y$的左树不需要管，因为左树必然为空，否则<code>Successor</code>将出现在$y$的左树中。</p>
-<p>(1) $y$是$z$的右子节点</p>
-<p>用$y$替换$z$</p>
-<p>(2) $y$不是$z$的右子节点</p>
-<p>用$y$的右树替换$y$的位置。将$z$的右树作为$y$的右树，再用$y$替换$z$</p>
+<li><p>$z$有两个子结点</p>
+<p> 找到$z$的<code>Successor</code>，这里称为$y$，然后需要再细分为两种情况讨论。</p>
+<p> 注意这两种情况下$y$的左树不需要管，因为左树必然为空，否则<code>Successor</code>将出现在$y$的左树中。</p>
+<p> (1) $y$是$z$的右子节点</p>
+<p> 用$y$替换$z$</p>
+<p> (2) $y$不是$z$的右子节点</p>
+<p> 用$y$的右树替换$y$的位置。将$z$的右树作为$y$的右树，再用$y$替换$z$</p>
 </li>
 </ol>
 <ul>
 <li>因为$z$有两个子节点，所以<code>Successor</code>必然是$z$右子树中的最小值</li>
 </ul>
-<p>删除的示意图如下，其中图(a)(b)表示$z$只有一个子结点的情况，©(d)表示存在两个子结点的情况，其中©表示$y$即为$z$的右子树，(d)表示$y$不是$z$的右子树。</p>
+<p>删除的示意图如下，其中图(a)(b)表示$z$只有一个子结点的情况，(c)(d)表示存在两个子结点的情况，其中(c)表示$y$即为$z$的右子树，(d)表示$y$不是$z$的右子树。</p>
 <ul>
 <li>$z$没有子结点的情况，也可以用(a)(b)表示，即将存在的结点看作为空。</li>
 </ul>
@@ -140,95 +272,165 @@ $$</p>
 <p>c++代码实现如下</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">BinarySearchTree::Delete</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	BSTreeNode* toDeleteNode = <span class="built_in">Search</span>(root, value);</span><br><span class="line">	<span class="keyword">if</span> (toDeleteNode == <span class="literal">nullptr</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//cout &lt;&lt; &quot;There is no node with value &quot; &lt;&lt; value &lt;&lt; endl;</span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (toDeleteNode-&gt;leftChild == <span class="literal">nullptr</span>)</span><br><span class="line">		<span class="built_in">transplant</span>(toDeleteNode, toDeleteNode-&gt;rightChild);</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (toDeleteNode-&gt;rightChild == <span class="literal">nullptr</span>)</span><br><span class="line">		<span class="built_in">transplant</span>(toDeleteNode, toDeleteNode-&gt;leftChild);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		BSTreeNode* successorNode = <span class="built_in">Minimum</span>(toDeleteNode-&gt;rightChild);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (successorNode-&gt;parent != toDeleteNode)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">transplant</span>(successorNode, successorNode-&gt;rightChild);</span><br><span class="line">			<span class="comment">//Handle toDeleteNode&#x27;s right child</span></span><br><span class="line">			<span class="comment">//因为successorNode不是toDelete的子节点，所以toDeleteNode的右节点一定比他大，所以作为它的右子树。</span></span><br><span class="line">			successorNode-&gt;rightChild = toDeleteNode-&gt;rightChild;</span><br><span class="line">			toDeleteNode-&gt;rightChild-&gt;parent = successorNode;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">transplant</span>(toDeleteNode, successorNode);</span><br><span class="line">		<span class="comment">//Handle toDeleteNode&#x27;s left child</span></span><br><span class="line">		successorNode-&gt;leftChild = toDeleteNode-&gt;leftChild;</span><br><span class="line">		toDeleteNode-&gt;leftChild-&gt;parent = successorNode;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">free</span>(toDeleteNode);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>删除操作算法并不存在循环，所以大部分操作都是固定时间，除了用来找<code>Successor</code>的MINIMUM算法，因为MINIMUM算法的复杂度为$O(h)$，所以删除算法的复杂度也为$O(h)$</p>
-<h3 id="Randomly-built-binary-search-trees">Randomly built binary search trees</h3>
-<p>//TODO</p>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>引用：</p>
+<h3 id="Randomly-built-binary-search-trees"><a href="#Randomly-built-binary-search-trees" class="headerlink" title="Randomly built binary search trees"></a>Randomly built binary search trees</h3><p>//TODO</p>
+<div class="note info simple"><p>引用：</p>
 <ol>
 <li><em>Introduction to Algorithms</em> 3rd Sep.2009</li>
 </ol>
-
-        </div>
-    </article>
+</div>
 <hr>
-</div><div class="article-licensing box"><div class="licensing-title"><p>《算法导论》 第十二章笔记</p><p><a href="https://wangxuejia.blog/IA-Chapter12-Notes/">https://wangxuejia.blog/IA-Chapter12-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-11-06</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/IA-Chapter13-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《算法导论》 第十三章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/IA-Chapter10-Notes/"><span class="level-item">《算法导论》 第十章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
-            el: '#valine-thread',
-            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
-            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
-            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
-            avatar: "mm",
-            avatarForce: false,
-            meta: ["nick","mail","link"],
-            pageSize: 10,
-            lang: "zh-CN",
-            visitor: true,
-            highlight: true,
-            recordIP: false,
-            
-            
-            
-            enableQQ: true,
-            requiredFields: [],
-        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
-            article: {
-                highlight: {
-                    clipboard: true,
-                    fold: 'unfolded'
-                }
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="Tuncle">三叔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tuncle.blog/IA-Chapter12-Notes/">https://tuncle.blog/IA-Chapter12-Notes/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tuncle.blog" target="_blank">三叔胡言乱语的地方</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="twitter, wechat, weibo"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/IA-Chapter13-Notes/" title="《算法导论》 第十三章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《算法导论》 第十三章笔记</div></div></a></div><div class="next-post pull-right"><a href="/IA-Chapter10-Notes/" title="《算法导论》 第十章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《算法导论》 第十章笔记</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-12-Binary-Search-Trees"><span class="toc-number">1.</span> <span class="toc-text">Chapter 12. Binary Search Trees</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-a-binary-search-tree"><span class="toc-number">1.1.</span> <span class="toc-text">What is a binary search tree?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Querying-a-binary-search-tree"><span class="toc-number">1.2.</span> <span class="toc-text">Querying a binary search tree</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Searching"><span class="toc-number">1.2.1.</span> <span class="toc-text">Searching</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Minimum-and-Maximum"><span class="toc-number">1.2.2.</span> <span class="toc-text">Minimum and Maximum</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Successor-and-predecessor"><span class="toc-number">1.2.3.</span> <span class="toc-text">Successor and predecessor</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Insertion-and-deletion"><span class="toc-number">1.3.</span> <span class="toc-text">Insertion and deletion</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Insertion"><span class="toc-number">1.3.1.</span> <span class="toc-text">Insertion</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Delete"><span class="toc-number">1.3.2.</span> <span class="toc-text">Delete</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Randomly-built-binary-search-trees"><span class="toc-number">1.4.</span> <span class="toc-text">Randomly built binary search trees</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By 三叔</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Keep Writing</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
             }
-        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
-      window.cookieconsent.initialise({
-        type: "info",
-        theme: "edgeless",
-        static: false,
-        position: "bottom-left",
-        content: {
-          message: "此网站使用Cookie来改善您的体验。",
-          dismiss: "知道了！",
-          allow: "允许使用Cookie",
-          deny: "拒绝",
-          link: "了解更多",
-          policy: "Cookie政策",
-          href: "https://www.cookiesandyou.com/",
-        },
-        palette: {
-          popup: {
-            background: "#edeff5",
-            text: "#838391"
-          },
-          button: {
-            background: "#4b81e8"
-          },
-        },
-      });
-    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
-            if (typeof $.fn.lightGallery === 'function') {
-                $('.article').lightGallery({ selector: '.gallery-item' });
-            }
-            if (typeof $.fn.justifiedGallery === 'function') {
-                if ($('.justified-gallery > p > .gallery-item').length) {
-                    $('.justified-gallery > p > .gallery-item').unwrap();
-                }
-                $('.justified-gallery').justifiedGallery();
-            }
-        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
-            'HTML-CSS': {
-                matchFontHeight: false
-            },
-            SVG: {
-                matchFontHeight: false
-            },
-            CommonHTML: {
-                matchFontHeight: false
-            },
-            tex2jax: {
-                inlineMath: [
-                    ['$','$'],
-                    ['\\(','\\)']
-                ]
-            }
-        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
-            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
-        });</script></body></html>
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey: 'z1vCYavVUbCGuMjNMcrsvShN',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

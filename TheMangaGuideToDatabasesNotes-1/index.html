@@ -1,39 +1,190 @@
-<!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《漫画数据库》 笔记 （一） - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《漫画数据库》 第一、二、三章笔记。 包括介绍数据库的一些术语限定，关系运算，E—R模型介绍，以及表格规范化。"><meta property="og:type" content="blog"><meta property="og:title" content="《漫画数据库》 笔记 （一）"><meta property="og:url" content="https://wangxuejia.blog/TheMangaGuideToDatabasesNotes-1/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《漫画数据库》 第一、二、三章笔记。 包括介绍数据库的一些术语限定，关系运算，E—R模型介绍，以及表格规范化。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://wangxuejia.blog/TheMangaGuideToDatabasesNotes-1/TheMangaGuideToDatabasesNotes-1/2019-10-21-15-02-09.png"><meta property="og:image" content="https://wangxuejia.blog/TheMangaGuideToDatabasesNotes-1/TheMangaGuideToDatabasesNotes-1/2019-10-21-15-02-48.png"><meta property="og:image" content="https://wangxuejia.blog/TheMangaGuideToDatabasesNotes-1/TheMangaGuideToDatabasesNotes-1/2019-10-21-15-03-19.png"><meta property="article:published_time" content="2019-10-22T16:09:08.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.022Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="数据库"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://wangxuejia.blog/TheMangaGuideToDatabasesNotes-1/TheMangaGuideToDatabasesNotes-1/2019-10-21-15-02-09.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://wangxuejia.blog/TheMangaGuideToDatabasesNotes-1/"},"headline":"《漫画数据库》 笔记 （一）","image":["https://wangxuejia.blog/TheMangaGuideToDatabasesNotes-1/TheMangaGuideToDatabasesNotes-1/2019-10-21-15-02-09.png","https://wangxuejia.blog/TheMangaGuideToDatabasesNotes-1/TheMangaGuideToDatabasesNotes-1/2019-10-21-15-02-48.png","https://wangxuejia.blog/TheMangaGuideToDatabasesNotes-1/TheMangaGuideToDatabasesNotes-1/2019-10-21-15-03-19.png"],"datePublished":"2019-10-22T16:09:08.000Z","dateModified":"2023-04-02T12:21:20.022Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《漫画数据库》 第一、二、三章笔记。 包括介绍数据库的一些术语限定，关系运算，E—R模型介绍，以及表格规范化。"}</script><link rel="canonical" href="https://wangxuejia.blog/TheMangaGuideToDatabasesNotes-1/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
-  (function () {
-      function switchTab() {
-          if (!location.hash) {
-            return;
-          }
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>《漫画数据库》 笔记 （一） | 三叔胡言乱语的地方</title><meta name="author" content="三叔"><meta name="copyright" content="三叔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《漫画数据库》 第一、二、三章笔记。 包括介绍数据库的一些术语限定，关系运算，E—R模型介绍，以及表格规范化。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《漫画数据库》 笔记 （一）">
+<meta property="og:url" content="https://tuncle.blog/TheMangaGuideToDatabasesNotes-1/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="《漫画数据库》 第一、二、三章笔记。 包括介绍数据库的一些术语限定，关系运算，E—R模型介绍，以及表格规范化。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuncle.blog/img/avatar.jpg">
+<meta property="article:published_time" content="2019-10-22T16:09:08.000Z">
+<meta property="article:modified_time" content="2023-04-16T06:32:59.823Z">
+<meta property="article:author" content="三叔">
+<meta property="article:tag" content="读书笔记">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuncle.blog/img/avatar.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://tuncle.blog/TheMangaGuideToDatabasesNotes-1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: 三叔","link":"链接: ","source":"来源: 三叔胡言乱语的地方","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《漫画数据库》 笔记 （一）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-16 14:32:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-          const id = '#' + CSS.escape(location.hash.substring(1));
-          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
-          if (!$tabMenu) {
-            return;
-          }
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
-          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
-          Array.from($tabMenuContainer.querySelectorAll('a'))
-              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
-              .forEach($content => $content.classList.add('is-hidden'));
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-          if ($tabMenu) {
-              $tabMenu.parentElement.classList.add('is-active');
-          }
-          const $activeTab = document.querySelector(id);
-          if ($activeTab) {
-              $activeTab.classList.remove('is-hidden');
-          }
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
-      switchTab();
-      window.addEventListener('hashchange', switchTab, false);
-  })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-10-22T16:09:08.000Z" title="2019/10/23 00:09:08">2019-10-23</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.022Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span><span class="level-item">19 分钟读完 (大约2831个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《漫画数据库》 笔记 （一）</h1><div class="content"><p>《漫画数据库》 第一、二、三章笔记。</p>
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="三叔胡言乱语的地方"><span class="site-name">三叔胡言乱语的地方</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">《漫画数据库》 笔记 （一）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2019-10-22T16:09:08.000Z" title="发表于 2019-10-23 00:09:08">2019-10-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/TheMangaGuideToDatabasesNotes-1/" data-flag-title="《漫画数据库》 笔记 （一）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>《漫画数据库》 第一、二、三章笔记。</p>
 <p>包括介绍数据库的一些术语限定，关系运算，E—R模型介绍，以及表格规范化。</p>
 <span id="more"></span>
-<h2 id="Chapter-1-What-is-a-database">Chapter 1. What is a database</h2>
-<ol>
+<h2 id="Chapter-1-What-is-a-database"><a href="#Chapter-1-What-is-a-database" class="headerlink" title="Chapter 1. What is a database"></a>Chapter 1. What is a database</h2><ol>
 <li>一个所有数据被每个人共享的系统称为数据库，数据不共享会导致很多问题如内存浪费和数据不同步。</li>
 <li>数据库是被多人使用的，所以它必须提供方便的输入和输出接口。</li>
 <li>数据库的安全性和权限需要被关注。</li>
@@ -41,9 +192,8 @@
 <li>数据库需要有错误恢复机制来处理异常情况，如磁盘损坏，数据意外丢失等。</li>
 </ol>
 <p>DBMS-Database management system</p>
-<h2 id="Chapter-2-What-is-a-relational-detabase">Chapter 2.What is a relational detabase?</h2>
-<h3 id="术语限定">术语限定</h3>
-<p>如有一个表</p>
+<h2 id="Chapter-2-What-is-a-relational-detabase"><a href="#Chapter-2-What-is-a-relational-detabase" class="headerlink" title="Chapter 2.What is a relational detabase?"></a>Chapter 2.What is a relational detabase?</h2><h3 id="术语限定"><a href="#术语限定" class="headerlink" title="术语限定"></a>术语限定</h3><p>如有一个表</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -76,33 +226,31 @@
 <td>104</td>
 <td>柠檬</td>
 <td>200 G</td>
-<td></td>
 </tr>
 </tbody>
 </table>
+</div>
 <p>表中每一列称为<code>字段（Field）</code>，每一行称为<code>记录（Record）</code>。可以理解为一个产品就是一个<code>记录</code>，产品的一个属性称为<code>字段</code>。每一个<code>记录</code>都有一系列相同类型的<code>字段</code>。</p>
 <p>表中每一个<code>记录</code>的产品ID都是不同的，而类似于单价这样的字段可能存在重复，我们称这些不会有重复的字段为<code>唯一（Unique）</code>。</p>
 <p>像字段备注中，有一些数据为空，这些空的数值称为<code>空值（Null）</code></p>
-<h3 id="不同类型的数据库">不同类型的数据库</h3>
+<h3 id="不同类型的数据库"><a href="#不同类型的数据库" class="headerlink" title="不同类型的数据库"></a>不同类型的数据库</h3><ol>
+<li><p>有宛如树形结构的数据库，称为<code>层次数据模型（Hierarchical Data Model）</code>，在层次数据模型中，每个字子数据都只有一个母数据。</p>
+<p> <img src="TheMangaGuideToDatabasesNotes-1/2019-10-21-15-02-09.png" alt="层次数据模型"></p>
+</li>
+<li><p>有网状结构的数据库，称为<code>网状数据模型（Network Data Model）</code>，在网状数据模型中，每个子数据都有多个母数据</p>
+<p> <img src="TheMangaGuideToDatabasesNotes-1/2019-10-21-15-02-48.png" alt="网状数据模型"></p>
+</li>
+</ol>
 <ol>
-<li>
-<p>有宛如树形结构的数据库，称为<code>层次数据模型（Hierarchical Data Model）</code>，在层次数据模型中，每个字子数据都只有一个母数据。</p>
-<p><img src="TheMangaGuideToDatabasesNotes-1/2019-10-21-15-02-09.png" alt="层次数据模型"></p>
-</li>
-<li>
-<p>有网状结构的数据库，称为<code>网状数据模型（Network Data Model）</code>，在网状数据模型中，每个子数据都有多个母数据</p>
-<p><img src="TheMangaGuideToDatabasesNotes-1/2019-10-21-15-02-48.png" alt="网状数据模型"></p>
-</li>
-<li>
-<p>还有二元表状的数据库， 称为<code>关系数据模型（Relational Data Model）</code></p>
+<li><p>还有二元表状的数据库， 称为<code>关系数据模型（Relational Data Model）</code></p>
 <p><img src="TheMangaGuideToDatabasesNotes-1/2019-10-21-15-03-19.png" alt="关系数据模型"></p>
 </li>
 </ol>
 <p>在关系数据模型中，称表格为<code>关系（Relation）</code>，之前的<code>记录</code>也称为<code>行</code>，之前的<code>字段</code>也称为<code>列</code>。像产品ID这样关键的，作为记录标识的字段，称为<code>主键(Primary key)</code>。</p>
-<h3 id="关系运算">关系运算</h3>
-<p>关系数据模型可以用数学概念来处理数据。</p>
+<h3 id="关系运算"><a href="#关系运算" class="headerlink" title="关系运算"></a>关系运算</h3><p>关系数据模型可以用数学概念来处理数据。</p>
 <p>关系数据模型一共有8个操作，分别为<code>并（Union）</code>,<code>差（Difference）</code>,<code>笛卡尔积（Cartesian Product）</code>,<code>除（Division）</code>,<code>交（Intersection）</code>,<code>投影（Projection）</code>,<code>选择（Selection）</code>,<code>连接（Join）</code>，这些操作都可以相互组合。</p>
 <p>如存在两个表</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -129,6 +277,8 @@
 </tr>
 </tbody>
 </table>
+</div>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -155,694 +305,262 @@
 </tr>
 </tbody>
 </table>
+</div>
 <ol>
-<li>
-<p>并（Union）</p>
-<p>并操作，就是将两个表的记录合并在一起，形成一个总表。并操作结果为：</p>
-<table>
-<thead>
-<tr>
-<th>商品名称</th>
-<th>单价</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>西瓜</td>
-<td>800G</td>
-</tr>
-<tr>
-<td>草莓</td>
-<td>150G</td>
-</tr>
-<tr>
-<td>苹果</td>
-<td>120G</td>
-</tr>
-<tr>
-<td>柠檬</td>
-<td>200G</td>
-</tr>
-<tr>
-<td>栗子</td>
-<td>200G</td>
-</tr>
-<tr>
-<td>柿子</td>
-<td>350G</td>
-</tr>
-</tbody>
-</table>
+<li><p>并（Union）</p>
+<p> 并操作，就是将两个表的记录合并在一起，形成一个总表。并操作结果为：</p>
+<p> | 商品名称 | 单价 |<br> | ———— | —— |<br> | 西瓜     | 800G |<br> | 草莓     | 150G |<br> | 苹果     | 120G |<br> | 柠檬     | 200G |<br> | 栗子     | 200G |<br> | 柿子     | 350G |</p>
 </li>
-<li>
-<p>差（Difference）</p>
-<p>差是求两个表差异的记录，如表一差表二，结果为</p>
-<table>
-<thead>
-<tr>
-<th>商品名称</th>
-<th>单价</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>苹果</td>
-<td>120G</td>
-</tr>
-<tr>
-<td>柠檬</td>
-<td>200G</td>
-</tr>
-</tbody>
-</table>
-<p>表二差表一，结果为</p>
-<table>
-<thead>
-<tr>
-<th>商品名称</th>
-<th>单价</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>栗子</td>
-<td>200G</td>
-</tr>
-<tr>
-<td>柿子</td>
-<td>350G</td>
-</tr>
-</tbody>
-</table>
+<li><p>差（Difference）</p>
+<p> 差是求两个表差异的记录，如表一差表二，结果为</p>
+<p> | 商品名称 | 单价 |<br> | ———— | —— |<br> | 苹果     | 120G |<br> | 柠檬     | 200G |</p>
+<p> 表二差表一，结果为</p>
+<p> | 商品名称 | 单价 |<br> | ———— | —— |<br> | 栗子     | 200G |<br> | 柿子     | 350G |</p>
 </li>
-<li>
-<p>交（Intersection）</p>
-<p>交是求两表相同的记录，交的结果为</p>
-<table>
-<thead>
-<tr>
-<th>商品名称</th>
-<th>单价</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>西瓜</td>
-<td>800G</td>
-</tr>
-<tr>
-<td>草莓</td>
-<td>150G</td>
-</tr>
-</tbody>
-</table>
+</ol>
+<ol>
+<li><p>交（Intersection）</p>
+<p> 交是求两表相同的记录，交的结果为</p>
+<p> | 商品名称 | 单价 |<br> | ———— | —— |<br> | 西瓜     | 800G |<br> | 草莓     | 150G |</p>
 </li>
-<li>
-<p>笛卡尔积（Cartesion Product）</p>
-<p>笛卡尔积是求两个表所有行的排列组合，如有商品表和出口国表</p>
-<table>
-<thead>
-<tr>
-<th>商品编码</th>
-<th>商品名称</th>
-<th>单价</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>101</td>
-<td>西瓜</td>
-<td>800G</td>
-</tr>
-<tr>
-<td>102</td>
-<td>草莓</td>
-<td>150G</td>
-</tr>
-<tr>
-<td>103</td>
-<td>苹果</td>
-<td>120G</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>出口国编码</th>
-<th>出口国名称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>12</td>
-<td>米纳米王国</td>
-</tr>
-<tr>
-<td>23</td>
-<td>阿尔法王国</td>
-</tr>
-<tr>
-<td>25</td>
-<td>理陀儿王国</td>
-</tr>
-</tbody>
-</table>
-<p>两表笛卡尔积的结果为：</p>
-<table>
-<thead>
-<tr>
-<th>商品编码</th>
-<th>商品名称</th>
-<th>单价</th>
-<th>出口编码</th>
-<th>出口国名称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>101</td>
-<td>西瓜</td>
-<td>800G</td>
-<td>12</td>
-<td>米纳米王国</td>
-</tr>
-<tr>
-<td>101</td>
-<td>西瓜</td>
-<td>800G</td>
-<td>23</td>
-<td>阿尔法王国</td>
-</tr>
-<tr>
-<td>101</td>
-<td>西瓜</td>
-<td>800G</td>
-<td>25</td>
-<td>理陀儿王国</td>
-</tr>
-<tr>
-<td>102</td>
-<td>草莓</td>
-<td>150G</td>
-<td>12</td>
-<td>米纳米王国</td>
-</tr>
-<tr>
-<td>102</td>
-<td>草莓</td>
-<td>150G</td>
-<td>23</td>
-<td>阿尔法王国</td>
-</tr>
-<tr>
-<td>102</td>
-<td>草莓</td>
-<td>150G</td>
-<td>25</td>
-<td>理陀儿王国</td>
-</tr>
-<tr>
-<td>103</td>
-<td>苹果</td>
-<td>120G</td>
-<td>12</td>
-<td>米纳米王国</td>
-</tr>
-<tr>
-<td>103</td>
-<td>苹果</td>
-<td>120G</td>
-<td>23</td>
-<td>阿尔法王国</td>
-</tr>
-<tr>
-<td>103</td>
-<td>苹果</td>
-<td>120G</td>
-<td>25</td>
-<td>理陀儿王国</td>
-</tr>
-</tbody>
-</table>
-<p>笛卡尔表的结果就是将原先两个表的记录都排列组合。</p>
+<li><p>笛卡尔积（Cartesion Product）</p>
+<p> 笛卡尔积是求两个表所有行的排列组合，如有商品表和出口国表</p>
+<p> | 商品编码 | 商品名称 | 单价 |<br> | ———— | ———— | —— |<br> | 101      | 西瓜     | 800G |<br> | 102      | 草莓     | 150G |<br> | 103      | 苹果     | 120G |</p>
+<p> | 出口国编码 | 出口国名称 |<br> | ————— | ————— |<br> | 12         | 米纳米王国 |<br> | 23         | 阿尔法王国 |<br> | 25         | 理陀儿王国 |</p>
+<p> 两表笛卡尔积的结果为：</p>
+<p> | 商品编码 | 商品名称 | 单价 | 出口编码 | 出口国名称 |<br> | ———— | ———— | —— | ———— | ————— |<br> | 101      | 西瓜     | 800G | 12       | 米纳米王国 |<br> | 101      | 西瓜     | 800G | 23       | 阿尔法王国 |<br> | 101      | 西瓜     | 800G | 25       | 理陀儿王国 |<br> | 102      | 草莓     | 150G | 12       | 米纳米王国 |<br> | 102      | 草莓     | 150G | 23       | 阿尔法王国 |<br> | 102      | 草莓     | 150G | 25       | 理陀儿王国 |<br> | 103      | 苹果     | 120G | 12       | 米纳米王国 |<br> | 103      | 苹果     | 120G | 23       | 阿尔法王国 |<br> | 103      | 苹果     | 120G | 25       | 理陀儿王国 |</p>
+<p> 笛卡尔表的结果就是将原先两个表的记录都排列组合。</p>
 </li>
 </ol>
 <blockquote>
 <p>并、差、交和笛卡尔积都为集合运算</p>
 </blockquote>
-<ol start="5">
-<li>
-<p>投影（Projection）</p>
-<p>投影是求表中的某列（可以一列或多列），结果如</p>
-<table>
-<thead>
-<tr>
-<th>产品名</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>西瓜</td>
-</tr>
-<tr>
-<td>草莓</td>
-</tr>
-<tr>
-<td>苹果</td>
-</tr>
-<tr>
-<td>柠檬</td>
-</tr>
-</tbody>
-</table>
+<ol>
+<li><p>投影（Projection）</p>
+<p> 投影是求表中的某列（可以一列或多列），结果如</p>
+<p> | 产品名 |<br> | —— |<br> | 西瓜 |<br> | 草莓 |<br> | 苹果 |<br> | 柠檬 |</p>
 </li>
-<li>
-<p>选择（Selection）</p>
+<li><p>选择（Selection）</p>
 <p>选择是求表中的某行（可以一行或多行），结果如</p>
-<table>
-<thead>
-<tr>
-<th>商品名称</th>
-<th>单价</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>香瓜</td>
-<td>800G</td>
-</tr>
-</tbody>
-</table>
+<p>| 商品名称 | 单价 |<br>| ———— | —— |<br>| 香瓜     | 800G |</p>
 </li>
-<li>
-<p>连接（Join）</p>
+<li><p>连接（Join）</p>
 <p>如存在两个表，商品表和销售表</p>
-<table>
-<thead>
-<tr>
-<th>商品编码</th>
-<th>商品名称</th>
-<th>单价</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>101</td>
-<td>西瓜</td>
-<td>800G</td>
-</tr>
-<tr>
-<td>102</td>
-<td>草莓</td>
-<td>150G</td>
-</tr>
-<tr>
-<td>103</td>
-<td>苹果</td>
-<td>120G</td>
-</tr>
-<tr>
-<td>104</td>
-<td>柠檬</td>
-<td>200G</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>日期</th>
-<th>商品编码</th>
-<th>数量</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>11/1</td>
-<td>102</td>
-<td>1100</td>
-</tr>
-<tr>
-<td>11/1</td>
-<td>101</td>
-<td>300</td>
-</tr>
-<tr>
-<td>11/5</td>
-<td>103</td>
-<td>1700</td>
-</tr>
-<tr>
-<td>11/8</td>
-<td>101</td>
-<td>500</td>
-</tr>
-</tbody>
-</table>
+<p>| 商品编码 | 商品名称 | 单价 |<br>| ———— | ———— | —— |<br>| 101      | 西瓜     | 800G |<br>| 102      | 草莓     | 150G |<br>| 103      | 苹果     | 120G |<br>| 104      | 柠檬     | 200G |</p>
+<p>| 日期 | 商品编码 | 数量 |<br>| —— | ———— | —— |<br>| 11/1 | 102      | 1100 |<br>| 11/1 | 101      | 300  |<br>| 11/5 | 103      | 1700 |<br>| 11/8 | 101      | 500  |</p>
 <p>连接操作是将两个表通过相同的字段连接起来，这里的字段即为<code>商品编码</code>。结果为</p>
-<table>
-<thead>
-<tr>
-<th>日期</th>
-<th>商品编码</th>
-<th>商品名称</th>
-<th>单价</th>
-<th>数量</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>11/1</td>
-<td>102</td>
-<td>草莓</td>
-<td>150G</td>
-<td>1100</td>
-</tr>
-<tr>
-<td>11/1</td>
-<td>101</td>
-<td>香瓜</td>
-<td>800G</td>
-<td>300</td>
-</tr>
-<tr>
-<td>11/5</td>
-<td>103</td>
-<td>苹果</td>
-<td>120G</td>
-<td>1700</td>
-</tr>
-<tr>
-<td>11/8</td>
-<td>101</td>
-<td>香瓜</td>
-<td>800G</td>
-<td>500</td>
-</tr>
-</tbody>
-</table>
-<p>我们将销售表中的商品编码称为<code>外键(foreign key)</code>，外键参照其他表中的<code>主键</code>进行联合。</p>
+<p> | 日期 | 商品编码 | 商品名称 | 单价 | 数量 |<br> | —— | ———— | ———— | —— | —— |<br> | 11/1 | 102      | 草莓     | 150G | 1100 |<br> | 11/1 | 101      | 香瓜     | 800G | 300  |<br> | 11/5 | 103      | 苹果     | 120G | 1700 |<br> | 11/8 | 101      | 香瓜     | 800G | 500  |</p>
+<p> 我们将销售表中的商品编码称为<code>外键(foreign key)</code>，外键参照其他表中的<code>主键</code>进行联合。</p>
 </li>
-<li>
-<p>除（division）</p>
-<p>除运算就是在<code>被除表格</code>中找到<code>除表格</code>中所包含的行，并将<code>除表格</code>中的字段去除的操作。如有两个表销售表和出口国表，前者为被除表格，后者为除表格</p>
-<table>
-<thead>
-<tr>
-<th>出口国编码</th>
-<th>出口国名称</th>
-<th>日期</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>12</td>
-<td>米纳米王国</td>
-<td>3/5</td>
-</tr>
-<tr>
-<td>12</td>
-<td>米纳米王国</td>
-<td>3/10</td>
-</tr>
-<tr>
-<td>23</td>
-<td>阿尔法王国</td>
-<td>3/5</td>
-</tr>
-<tr>
-<td>25</td>
-<td>理陀儿王国</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>出口国编码</th>
-<th>出口国名称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>12</td>
-<td>米纳米王国</td>
-</tr>
-<tr>
-<td>23</td>
-<td>阿尔法王国</td>
-</tr>
-</tbody>
-</table>
-<p>结果为</p>
-<table>
-<thead>
-<tr>
-<th>日期</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>3/5</td>
-</tr>
-<tr>
-<td>3/10</td>
-</tr>
-</tbody>
-</table>
+<li><p>除（division）</p>
+<p> 除运算就是在<code>被除表格</code>中找到<code>除表格</code>中所包含的行，并将<code>除表格</code>中的字段去除的操作。如有两个表销售表和出口国表，前者为被除表格，后者为除表格</p>
+<p>  | 出口国编码 | 出口国名称 | 日期 |<br>  | ————— | ————— | —— |<br>  | 12         | 米纳米王国 | 3/5  |<br>  | 12         | 米纳米王国 | 3/10 |<br>  | 23         | 阿尔法王国 | 3/5  |<br>  | 25         | 理陀儿王国 |</p>
+<p>  | 出口国编码 | 出口国名称 |<br>  | ————— | ————— |<br>  | 12         | 米纳米王国 |<br>  | 23         | 阿尔法王国 |</p>
+<p>  结果为</p>
+<p>  |日期|<br>  | —- |<br>  | 3/5 |<br>  |3/10 |</p>
 <blockquote>
 <p>注意，除的结果不包含重复行</p>
 </blockquote>
 </li>
 </ol>
-<h2 id="Chapter-3-Let-us-Design-a-databases">Chapter 3. Let us Design a databases</h2>
-<h3 id="E-R模型">E-R模型</h3>
-<p>可以使用E-R模型帮助分析问题和设计数据库，E表示<code>实体（Entity）</code>，R表示<code>关系（Relationship）</code>。</p>
+<h2 id="Chapter-3-Let-us-Design-a-databases"><a href="#Chapter-3-Let-us-Design-a-databases" class="headerlink" title="Chapter 3. Let us Design a databases"></a>Chapter 3. Let us Design a databases</h2><h3 id="E-R模型"><a href="#E-R模型" class="headerlink" title="E-R模型"></a>E-R模型</h3><p>可以使用E-R模型帮助分析问题和设计数据库，E表示<code>实体（Entity）</code>，R表示<code>关系（Relationship）</code>。</p>
 <p>现实生活中物体可以标识为<code>实体</code>，如水果和出口目的地，<code>实体</code>间的交互称为<code>关系</code>，如我们将水果卖到出口目的地，“卖”就是<code>关系</code>。</p>
 <p>有多种水果也有多个出口目的地，所以这个例子中的两个实体都代表多个对象，这个关系称为<code>多对多关系</code>。在<code>E-R模型</code>中实体的数量也需要被考虑。如果只将一种水果卖给多个地方，就为<code>一对多关系</code>。这种实体间对应的个数称为<code>基数(Cardinality)</code>。</p>
-<h3 id="规范化表格">规范化表格</h3>
-<p>为了避免数据冲突（同一个数据在不同表中不一样，可能因为部分未更新而造成）而将表格拆分开的过程称为<code>规范化（Normalized）</code>。</p>
+<h3 id="规范化表格"><a href="#规范化表格" class="headerlink" title="规范化表格"></a>规范化表格</h3><p>为了避免数据冲突（同一个数据在不同表中不一样，可能因为部分未更新而造成）而将表格拆分开的过程称为<code>规范化（Normalized）</code>。</p>
 <ol>
-<li>
-<p><code>非范式（Unnormalized）</code>表格存在一个记录的一个字段存在多个数值，如</p>
-<table>
-<thead>
-<tr>
-<th>报表编码</th>
-<th>日期</th>
-<th>出口国编码</th>
-<th>出口国名称</th>
-<th>商品编码</th>
-<th>商品名称</th>
-<th>单价</th>
-<th>数量</th>
-</tr>
-</thead>
-</table>
-<p>因为一次报表可以买多个商品，所以一个报表编码可以对应多个商品编码，因此该表为非范式表格。</p>
+<li><p><code>非范式（Unnormalized）</code>表格存在一个记录的一个字段存在多个数值，如<br> | 报表编码 | 日期 | 出口国编码 | 出口国名称 | 商品编码 | 商品名称 | 单价 | 数量 |<br> | ———— | —— | ————— | ————— | ———— | ———— | —— | —— |</p>
+<p> 因为一次报表可以买多个商品，所以一个报表编码可以对应多个商品编码，因此该表为非范式表格。</p>
 </li>
-<li>
-<p><code>第一范式（First Normal）</code>的表格满足一栏中只有一个项目，每一列都是不可分割的基本数据项。我们将上表拆分，可以得到第一范式表格，主要就是将商品编码与报表编码拆分。</p>
-<table>
-<thead>
-<tr>
-<th>报表编码</th>
-<th>日期</th>
-<th>出口国编码</th>
-<th>出口国名称</th>
-</tr>
-</thead>
-</table>
-<table>
-<thead>
-<tr>
-<th>报表编码</th>
-<th>商品编码</th>
-<th>商品名称</th>
-<th>单价</th>
-<th>数量</th>
-</tr>
-</thead>
-</table>
-<p>表一中，报表编码为主键<br>
-表二中，报表编码和商品编码的<strong>组合</strong>为主键。并不是表示表二存在两个主键。</p>
+<li><p><code>第一范式（First Normal）</code>的表格满足一栏中只有一个项目，每一列都是不可分割的基本数据项。我们将上表拆分，可以得到第一范式表格，主要就是将商品编码与报表编码拆分。</p>
+<p> | 报表编码 | 日期 | 出口国编码 | 出口国名称 |<br> | ———— | —— | ————— | ————— |</p>
+<p> | 报表编码 | 商品编码 | 商品名称 | 单价 | 数量 |<br> | ———— | ———— | ———— | —— | —— |</p>
+<p> 表一中，报表编码为主键<br> 表二中，报表编码和商品编码的<strong>组合</strong>为主键。并不是表示表二存在两个主键。</p>
 </li>
-<li>
-<p>满足主键值可以确认其他列的表格称为<code>第二范式</code>表格。如果主键是多个字段的组合，那么其他列必须同时受这多个字段的控制。</p>
+<li><p>满足主键值可以确认其他列的表格称为<code>第二范式</code>表格。如果主键是多个字段的组合，那么其他列必须同时受这多个字段的控制。</p>
 <p>本例中，如果关注<code>第一范式中</code>的表二，可以发现商品的名称和单价也存在与表格中，但实际上这两者只受<code>商品编码</code>控制（即使我们只知道<code>商品编码</code>，我们也能知道单价和名称），而表二的主键是<code>商品编码</code>和<code>报表编码</code>的组合，因此表二并不符合<code>第二范式</code>要求。我们可以将表二进行拆分。</p>
-<p>表一保持不变</p>
-<table>
-<thead>
-<tr>
-<th>报表编码</th>
-<th>日期</th>
-<th>出口国编码</th>
-<th>出口国名称</th>
-</tr>
-</thead>
-</table>
-<p>表二拆分为</p>
-<table>
-<thead>
-<tr>
-<th>报表编码</th>
-<th>商品编码</th>
-<th>数量</th>
-</tr>
-</thead>
-</table>
-<table>
-<thead>
-<tr>
-<th>商品编码</th>
-<th>商品名称</th>
-<th>单价</th>
-</tr>
-</thead>
-</table>
+<p>表一保持不变<br>| 报表编码 | 日期 | 出口国编码 | 出口国名称 |<br>| ———— | —— | ————— | ————— |</p>
+<p>表二拆分为<br>| 报表编码 | 商品编码 | 数量 |<br>| ———— | ———— | —— |</p>
+<p>| 商品编码 | 商品名称 | 单价 |<br>| ———— | ———— | —— |</p>
 <p>拆分出的第一个表，主键为<code>报表编码</code>和<code>商品编码</code>的组合。第二个表格，主键为<code>商品编码</code>。</p>
 </li>
-<li>
-<p>满足主键值唯一确定其他列（即不存在间接性确认）的表格称为<code>第三范式</code>表格。</p>
-<p>在上面的表一中，存在间接性确认。<code>出口国名称</code>虽然受<code>报表编码</code>的控制，但实际上是出口国名称受<code>出口国编码</code>影响，出口国编码受<code>报表编码</code>控制。所以存在间接控制，不满足<code>第三范式</code>。</p>
-<p>因此将表一进行拆分为两个表格</p>
-<table>
-<thead>
-<tr>
-<th>报表编码</th>
-<th>日期</th>
-<th>出口国编码</th>
-</tr>
-</thead>
-</table>
-<table>
-<thead>
-<tr>
-<th>出口国编码</th>
-<th>出口国名称</th>
-</tr>
-</thead>
-</table>
-<p>表一的主键为报表编码，表二的主键为出口国编码。<br>
-剩下的表格保持不变，即</p>
-<table>
-<thead>
-<tr>
-<th>报表编码</th>
-<th>商品编码</th>
-<th>数量</th>
-</tr>
-</thead>
-</table>
-<table>
-<thead>
-<tr>
-<th>商品编码</th>
-<th>商品名称</th>
-<th>单价</th>
-</tr>
-</thead>
-</table>
+</ol>
+<ol>
+<li><p>满足主键值唯一确定其他列（即不存在间接性确认）的表格称为<code>第三范式</code>表格。</p>
+<p> 在上面的表一中，存在间接性确认。<code>出口国名称</code>虽然受<code>报表编码</code>的控制，但实际上是出口国名称受<code>出口国编码</code>影响，出口国编码受<code>报表编码</code>控制。所以存在间接控制，不满足<code>第三范式</code>。</p>
+<p> 因此将表一进行拆分为两个表格</p>
+<p> | 报表编码 | 日期 | 出口国编码 |<br> | ———— | —— | ————— |</p>
+<p> | 出口国编码 | 出口国名称 |<br> | ————— | ————— |</p>
+<p> 表一的主键为报表编码，表二的主键为出口国编码。<br> 剩下的表格保持不变，即</p>
+<p> | 报表编码 | 商品编码 | 数量 |<br> | ———— | ———— | —— |</p>
+<p> | 商品编码 | 商品名称 | 单价 |<br> | ———— | ———— | —— |</p>
 </li>
 </ol>
 <p>现在我们一共有四个表，表一中的<code>出口国编码</code>参照表二的主键<code>出口国编码</code>，表一与表二连接。同理表三中的<code>报表编码</code>参照表一的主键<code>报表编码</code>，表三与表一连接。表三中的<code>商品编码</code>参照表四的主键<code>商品编码</code>，表三与表四连接。</p>
 <p>不同表格建立相互联系的键叫做<code>外键（Foreign Key）</code>，外键用来参照其他表格的主键。表一中的<code>出口国编码</code>，表三中的<code>报表编码</code>,<code>商品编码</code>，三者都是<code>外键</code>。</p>
-<h3 id="设计数据库">设计数据库</h3>
-<p>设计数据库的步骤可以分为<code>概念模式</code>，<code>内部模式</code>,<code>外部模式</code>三部分</p>
+<h3 id="设计数据库"><a href="#设计数据库" class="headerlink" title="设计数据库"></a>设计数据库</h3><p>设计数据库的步骤可以分为<code>概念模式</code>，<code>内部模式</code>,<code>外部模式</code>三部分</p>
 <ol>
 <li>概念模式：将现实世界模型化确认数据库理论结构的阶段。概念模式是通过E-R模型描述现实世界，并进一步规范化表格实现的。</li>
 <li>内部模式：内部模式从计算机内部物理构造考虑，设计目的是让数据库可以被高速检索。</li>
 <li>外部模式：外部模式是从用户和应用角度来考虑，设计目的是让用户和程序可以方便使用。</li>
 </ol>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>引用：</p>
+<div class="note info simple"><p>引用：</p>
 <ol>
 <li><em>The Manga Guide to Databases</em> 2009</li>
 </ol>
-
-        </div>
-    </article>
+</div>
 <hr>
-</div><div class="article-licensing box"><div class="licensing-title"><p>《漫画数据库》 笔记 （一）</p><p><a href="https://wangxuejia.blog/TheMangaGuideToDatabasesNotes-1/">https://wangxuejia.blog/TheMangaGuideToDatabasesNotes-1/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-10-23</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/TheMangaGuideToDatabasesNotes-2/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《漫画数据库》 笔记 （二）</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/RegularExpressionTutorial/"><span class="level-item">正则表达式教程</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
-            el: '#valine-thread',
-            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
-            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
-            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
-            avatar: "mm",
-            avatarForce: false,
-            meta: ["nick","mail","link"],
-            pageSize: 10,
-            lang: "zh-CN",
-            visitor: true,
-            highlight: true,
-            recordIP: false,
-            
-            
-            
-            enableQQ: true,
-            requiredFields: [],
-        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
-            article: {
-                highlight: {
-                    clipboard: true,
-                    fold: 'unfolded'
-                }
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="Tuncle">三叔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tuncle.blog/TheMangaGuideToDatabasesNotes-1/">https://tuncle.blog/TheMangaGuideToDatabasesNotes-1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tuncle.blog" target="_blank">三叔胡言乱语的地方</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="twitter, wechat, weibo"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/TheMangaGuideToDatabasesNotes-2/" title="《漫画数据库》 笔记 （二）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《漫画数据库》 笔记 （二）</div></div></a></div><div class="next-post pull-right"><a href="/RegularExpressionTutorial/" title="正则表达式教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">正则表达式教程</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-1-What-is-a-database"><span class="toc-number">1.</span> <span class="toc-text">Chapter 1. What is a database</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-2-What-is-a-relational-detabase"><span class="toc-number">2.</span> <span class="toc-text">Chapter 2.What is a relational detabase?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AF%E8%AF%AD%E9%99%90%E5%AE%9A"><span class="toc-number">2.1.</span> <span class="toc-text">术语限定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">2.2.</span> <span class="toc-text">不同类型的数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97"><span class="toc-number">2.3.</span> <span class="toc-text">关系运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-3-Let-us-Design-a-databases"><span class="toc-number">3.</span> <span class="toc-text">Chapter 3. Let us Design a databases</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#E-R%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.1.</span> <span class="toc-text">E-R模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E8%8C%83%E5%8C%96%E8%A1%A8%E6%A0%BC"><span class="toc-number">3.2.</span> <span class="toc-text">规范化表格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">3.3.</span> <span class="toc-text">设计数据库</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By 三叔</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Keep Writing</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
             }
-        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
-      window.cookieconsent.initialise({
-        type: "info",
-        theme: "edgeless",
-        static: false,
-        position: "bottom-left",
-        content: {
-          message: "此网站使用Cookie来改善您的体验。",
-          dismiss: "知道了！",
-          allow: "允许使用Cookie",
-          deny: "拒绝",
-          link: "了解更多",
-          policy: "Cookie政策",
-          href: "https://www.cookiesandyou.com/",
-        },
-        palette: {
-          popup: {
-            background: "#edeff5",
-            text: "#838391"
-          },
-          button: {
-            background: "#4b81e8"
-          },
-        },
-      });
-    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
-            if (typeof $.fn.lightGallery === 'function') {
-                $('.article').lightGallery({ selector: '.gallery-item' });
-            }
-            if (typeof $.fn.justifiedGallery === 'function') {
-                if ($('.justified-gallery > p > .gallery-item').length) {
-                    $('.justified-gallery > p > .gallery-item').unwrap();
-                }
-                $('.justified-gallery').justifiedGallery();
-            }
-        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
-            'HTML-CSS': {
-                matchFontHeight: false
-            },
-            SVG: {
-                matchFontHeight: false
-            },
-            CommonHTML: {
-                matchFontHeight: false
-            },
-            tex2jax: {
-                inlineMath: [
-                    ['$','$'],
-                    ['\\(','\\)']
-                ]
-            }
-        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
-            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
-        });</script></body></html>
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey: 'z1vCYavVUbCGuMjNMcrsvShN',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

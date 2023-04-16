@@ -1,294 +1,426 @@
-<!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《算法导论》 第三章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《算法导论》 第三章笔记，包括时间复杂度符号即一些基本的数学公式"><meta property="og:type" content="blog"><meta property="og:title" content="《算法导论》 第三章笔记"><meta property="og:url" content="https://wangxuejia.blog/IA-Chapter3-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《算法导论》 第三章笔记，包括时间复杂度符号即一些基本的数学公式"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter3-Notes/IA-Chapter3-Notes/2019-10-18-13-43-15.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter3-Notes/IA-Chapter3-Notes/2019-10-18-14-22-25.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter3-Notes/IA-Chapter3-Notes/2019-10-18-15-44-11.png"><meta property="article:published_time" content="2019-11-05T05:55:48.000Z"><meta property="article:modified_time" content="2023-04-02T12:23:06.545Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="数据结构与算法"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://wangxuejia.blog/IA-Chapter3-Notes/IA-Chapter3-Notes/2019-10-18-13-43-15.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://wangxuejia.blog/IA-Chapter3-Notes/"},"headline":"《算法导论》 第三章笔记","image":["https://wangxuejia.blog/IA-Chapter3-Notes/IA-Chapter3-Notes/2019-10-18-13-43-15.png","https://wangxuejia.blog/IA-Chapter3-Notes/IA-Chapter3-Notes/2019-10-18-14-22-25.png","https://wangxuejia.blog/IA-Chapter3-Notes/IA-Chapter3-Notes/2019-10-18-15-44-11.png"],"datePublished":"2019-11-05T05:55:48.000Z","dateModified":"2023-04-02T12:23:06.545Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《算法导论》 第三章笔记，包括时间复杂度符号即一些基本的数学公式"}</script><link rel="canonical" href="https://wangxuejia.blog/IA-Chapter3-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
-  (function () {
-      function switchTab() {
-          if (!location.hash) {
-            return;
-          }
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>《算法导论》 第三章笔记 | 三叔胡言乱语的地方</title><meta name="author" content="三叔"><meta name="copyright" content="三叔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《算法导论》 第三章笔记，包括时间复杂度符号即一些基本的数学公式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《算法导论》 第三章笔记">
+<meta property="og:url" content="https://tuncle.blog/IA-Chapter3-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="《算法导论》 第三章笔记，包括时间复杂度符号即一些基本的数学公式">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuncle.blog/img/avatar.jpg">
+<meta property="article:published_time" content="2019-11-05T05:55:48.000Z">
+<meta property="article:modified_time" content="2023-04-16T06:32:59.817Z">
+<meta property="article:author" content="三叔">
+<meta property="article:tag" content="读书笔记">
+<meta property="article:tag" content="数据结构与算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuncle.blog/img/avatar.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://tuncle.blog/IA-Chapter3-Notes/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: 三叔","link":"链接: ","source":"来源: 三叔胡言乱语的地方","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《算法导论》 第三章笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-16 14:32:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-          const id = '#' + CSS.escape(location.hash.substring(1));
-          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
-          if (!$tabMenu) {
-            return;
-          }
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
-          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
-          Array.from($tabMenuContainer.querySelectorAll('a'))
-              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
-              .forEach($content => $content.classList.add('is-hidden'));
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-          if ($tabMenu) {
-              $tabMenu.parentElement.classList.add('is-active');
-          }
-          const $activeTab = document.querySelector(id);
-          if ($activeTab) {
-              $activeTab.classList.remove('is-hidden');
-          }
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
-      switchTab();
-      window.addEventListener('hashchange', switchTab, false);
-  })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-11-05T05:55:48.000Z" title="2019/11/5 13:55:48">2019-11-05</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:23:06.545Z" title="2023/4/2 20:23:06">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span><span class="level-item">11 分钟读完 (大约1676个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《算法导论》 第三章笔记</h1><div class="content"><p>《算法导论》 第三章笔记，包括时间复杂度符号即一些基本的数学公式</p>
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="三叔胡言乱语的地方"><span class="site-name">三叔胡言乱语的地方</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">《算法导论》 第三章笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2019-11-05T05:55:48.000Z" title="发表于 2019-11-05 13:55:48">2019-11-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/IA-Chapter3-Notes/" data-flag-title="《算法导论》 第三章笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>《算法导论》 第三章笔记，包括时间复杂度符号即一些基本的数学公式</p>
 <span id="more"></span>
-<h2 id="Chapter-3-Growth-of-Functions">Chapter 3. Growth of Functions</h2>
-<h3 id="Asymptotic-notation">Asymptotic notation</h3>
-<h4 id="Asymptotic-notation-functions-and-running-time">Asymptotic notation,functions,and running time</h4>
-<p>书中所有的渐进符号都是用来用来表达算法的运算时间的，虽然渐进符号也能用来表示算法的其他资源，如内存，硬盘空间等。</p>
-<h4 id="Theta-notation">$\Theta$-notation</h4>
-<p>在第二章中，描述插入算法的最坏情况下$T(n)=\Theta(n^2)$，但没有详细解释$\Theta$含义，<br>
-这一节给出了定义。</p>
-<p>对函数$f(n)$，如果存在常数$c_1$，$c_2$和$n_0$使得对于任意$n\geq n_0$，满足<br>
-$$<br>
-0\leq c_1g(n)\leq f(n) \leq c_2g(n)<br>
-$$</p>
-<p>则称$f(n)=\Theta(g(n))$，$g(n)$称为$f(b)$的渐进紧确界，函数下图表示</p>
+<h2 id="Chapter-3-Growth-of-Functions"><a href="#Chapter-3-Growth-of-Functions" class="headerlink" title="Chapter 3. Growth of Functions"></a>Chapter 3. Growth of Functions</h2><h3 id="Asymptotic-notation"><a href="#Asymptotic-notation" class="headerlink" title="Asymptotic notation"></a>Asymptotic notation</h3><h4 id="Asymptotic-notation-functions-and-running-time"><a href="#Asymptotic-notation-functions-and-running-time" class="headerlink" title="Asymptotic notation,functions,and running time"></a>Asymptotic notation,functions,and running time</h4><p>书中所有的渐进符号都是用来用来表达算法的运算时间的，虽然渐进符号也能用来表示算法的其他资源，如内存，硬盘空间等。</p>
+<h4 id="Theta-notation"><a href="#Theta-notation" class="headerlink" title="$\Theta$-notation"></a>$\Theta$-notation</h4><p>在第二章中，描述插入算法的最坏情况下$T(n)=\Theta(n^2)$，但没有详细解释$\Theta$含义，<br>这一节给出了定义。</p>
+<p>对函数$f(n)$，如果存在常数$c_1$，$c_2$和$n_0$使得对于任意$n\geq n_0$，满足</p>
+<script type="math/tex; mode=display">
+0\leq c_1g(n)\leq f(n) \leq c_2g(n)</script><p>则称$f(n)=\Theta(g(n))$，$g(n)$称为$f(b)$的渐进紧确界，函数下图表示</p>
 <p><img src="IA-Chapter3-Notes/2019-10-18-13-43-15.png" alt="渐进函数_1"></p>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>注意$\Theta(g(n))$实际上是一系列函数的集合，所以严格意义上来说应该表达为$f(n)\in \Theta(g(n))$，但在书中为了表达方便，都写为$f(n)=\Theta(g(n))$</p>
-
-        </div>
-    </article>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>这里的所有函数都约定为非负的</p>
-
-        </div>
-    </article>
+<div class="note info simple"><p>注意$\Theta(g(n))$实际上是一系列函数的集合，所以严格意义上来说应该表达为$f(n)\in \Theta(g(n))$，但在书中为了表达方便，都写为$f(n)=\Theta(g(n))$</p>
+</div>
+<div class="note info simple"><p>这里的所有函数都约定为非负的</p>
+</div>
 <p>数学证明如下：</p>
 <p>如我们要证明函数$\frac{1}{2}n^2-3n=\Theta(n^2)$，那么按定义，应该证明</p>
-<p>$$<br>
-0\leq c_1n^2\leq \frac{1}{2}n^2-3n \leq c_2n^2<br>
-$$</p>
-<p>不等式各边都除去$n^2$，得到</p>
-<p>$$<br>
-c_1 \leq \frac{1}{2}-\frac{3}{n} \leq c_2<br>
-$$</p>
-<p>那么当$n$足够大时（大于$n_0$）,则逼近于$c_1 \leq \frac{1}{2}\leq c_2$，明显可以可以找到$c_1$和$c_2$满足该不等式是。这里的$c_1$和$c_2$取值可以有无数种组合。</p>
-<h4 id="O-notation">$O$-notation</h4>
-<p>$O$标记表示渐进上边界，定义为对函数$f(n)$，如果存在常数$c$和$n_0$使得对于任意$n\geq n_0$，满足</p>
-<p>$$<br>
-0\leq f(n) \leq cg(n)<br>
-$$</p>
-<p>函数图如下：</p>
+<script type="math/tex; mode=display">
+0\leq c_1n^2\leq \frac{1}{2}n^2-3n \leq c_2n^2</script><p>不等式各边都除去$n^2$，得到</p>
+<script type="math/tex; mode=display">
+c_1 \leq \frac{1}{2}-\frac{3}{n} \leq c_2</script><p>那么当$n$足够大时（大于$n_0$）,则逼近于$c_1 \leq \frac{1}{2}\leq c_2$，明显可以可以找到$c_1$和$c_2$满足该不等式是。这里的$c_1$和$c_2$取值可以有无数种组合。</p>
+<h4 id="O-notation"><a href="#O-notation" class="headerlink" title="$O$-notation"></a>$O$-notation</h4><p>$O$标记表示渐进上边界，定义为对函数$f(n)$，如果存在常数$c$和$n_0$使得对于任意$n\geq n_0$，满足</p>
+<script type="math/tex; mode=display">
+0\leq f(n) \leq cg(n)</script><p>函数图如下：</p>
 <p><img src="IA-Chapter3-Notes/2019-10-18-14-22-25.png" alt="渐进函数_2"></p>
 <p>因为$O$标记定义的表达式实际上是$\Theta$标记表达式的一部分，所以可以用同样的方法证明$O$标记的合理性。</p>
 <p>要注意的是，按照定义，$O$标记仅仅是定义了上边界，而没有具体的确认这个边界与原函数需要多么的紧密。如$n=O(n^2)$仍然也是成立的，即使对于函数$f(n)=n$来说，紧密的上边界应该为$O(n)$。</p>
 <p>也正是因为如此，对于算法来说，无论输入情况是什么样的，都可以用$O$标记来描述。以插入函数举例：我们针对插入函数的最差输入情况（每次插入的数都需要插入到已有列表的第一个），紧密上边界表达式为$O(n^2)$；对于最佳输入情况（每次插入的数都可直接插入已有列表的最后），紧密的上边界应该表达为$O(n)$，但是表达式$O(n^2)$按定义仍然是可以用来描述最好情况的。</p>
 <p>而渐进紧确界$\Theta$则不满足上述情况，在插入算法中，最坏和最好情况下，表达式分别为$\Theta(n^2)$和$\Theta(n)$。这里不同的是$\Theta(n^2)$不能用于描述最好情况，因为你无法找到一个常量$c$，在$n$足够大的情况下，仍然满足$n^2&lt;cn$。</p>
-<h4 id="Omega-notation">$\Omega$-notation</h4>
-<p>$\Omega$标记提供了符号渐进下边界，定义为存在常数$c$和$n_0$使得对于任意$n\geq n_0$，满足</p>
-<p>$$<br>
-0\leq cg(n)\leq f(n)<br>
-$$</p>
-<p>函数图像如下：</p>
+<h4 id="Omega-notation"><a href="#Omega-notation" class="headerlink" title="$\Omega$-notation"></a>$\Omega$-notation</h4><p>$\Omega$标记提供了符号渐进下边界，定义为存在常数$c$和$n_0$使得对于任意$n\geq n_0$，满足</p>
+<script type="math/tex; mode=display">
+0\leq cg(n)\leq f(n)</script><p>函数图像如下：</p>
 <p><img src="IA-Chapter3-Notes/2019-10-18-15-44-11.png" alt="逼近函数_3"></p>
 <p>$\Omega$标记的证明与$\Theta$类似，且与$O$一样都能描述算法的任何输入。只不过$\Omega$关注的是算法的最好情况，$O$关注的是算法的最差情况，所以通常我们对于$O$的使用较多。</p>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>定理3.1：<br>
-对任意两个函数$f(n)$和$g(n)$，当且仅当$f(n)=O(g(n)$和$f(n)=\Omega(g(n))$时，存在$f(n)=\Theta(g(n))$</p>
-
-        </div>
-    </article>
-<h4 id="Asymoptotic-notation-in-equations-and-inequalities">Asymoptotic notation in equations and inequalities</h4>
-<p>在书中，有时会在表达式和不等式中用渐进表达式来省去一些不关注的细节，如表达式$2n^2+3n+1=2n^2+\Theta(n)$表示$2n^2+3n+1=2n^2+f(n)$，其中$f(n)\in \Theta(n)$</p>
-<h4 id="o-notation">$o$-notation</h4>
-<p>如之前在$O$标记一节中描述的，$O$标记可以表示紧密上边界和非紧密上边界，如对于函数$2n^2$,$O(n^2)$即为紧密上边界，而$O(n^3)$则不是。</p>
+<div class="note info simple"><p>定理3.1：<br>对任意两个函数$f(n)$和$g(n)$，当且仅当$f(n)=O(g(n)$和$f(n)=\Omega(g(n))$时，存在$f(n)=\Theta(g(n))$</p>
+</div>
+<h4 id="Asymoptotic-notation-in-equations-and-inequalities"><a href="#Asymoptotic-notation-in-equations-and-inequalities" class="headerlink" title="Asymoptotic notation in equations and inequalities"></a>Asymoptotic notation in equations and inequalities</h4><p>在书中，有时会在表达式和不等式中用渐进表达式来省去一些不关注的细节，如表达式$2n^2+3n+1=2n^2+\Theta(n)$表示$2n^2+3n+1=2n^2+f(n)$，其中$f(n)\in \Theta(n)$</p>
+<h4 id="o-notation"><a href="#o-notation" class="headerlink" title="$o$-notation"></a>$o$-notation</h4><p>如之前在$O$标记一节中描述的，$O$标记可以表示紧密上边界和非紧密上边界，如对于函数$2n^2$,$O(n^2)$即为紧密上边界，而$O(n^3)$则不是。</p>
 <p>这里我们定义$o$标记来单独表示非紧密上边界：对于任意正常量$c$，都存在一个对应的常量$n_0$使得在$n\geq n_0$时满足</p>
-<p>$$<br>
-0\leq f(n) &lt; cg(n)<br>
-$$</p>
-<p>则称$f(n)=o(g(n))$</p>
+<script type="math/tex; mode=display">
+0\leq f(n) < cg(n)</script><p>则称$f(n)=o(g(n))$</p>
 <p>$o$标记和$O$标记在定义上的区别在于，$O$是存在常量$c$和$n_0$使表达式成立即可，而$o$定义是对于任意常量$c$，都要存在$n_0$使得表达式成立(且表达式为&lt;而非$\leq$)，例如$2n=o(n^2)$但$2n\neq o(n)$。如果后者成立，那么当$c$取2时，无论$n_0$取值为多少，都无法满足$f(n)&lt;2n$。</p>
 <p>关于$o$标记还有一个等效的定义表达式：因为是$o$标记非紧密的上边界，所以当$n$足够大，$g(n)$会远大于$f(n)$</p>
-<p>$$<br>
-\lim_{n\rightarrow \infty}\frac{f(n)}{g(n)}=0<br>
-$$</p>
-<h4 id="omega-notation">$\omega$ -notation</h4>
-<p>$\omega$标记对于$\Omega$标记就如同$o$标记对于$O$标记。$\omega$标记的定义为，对于任意正常量$c$，都存在一个对应的常量$n_0$使得在$n\geq n_0$时满足</p>
-<p>$$<br>
-0\leq cg(n) &lt; f(n)<br>
-$$</p>
-<p>则称$f(n)=\omega(g(n))$。例如，$n^2/2=\omega(n)$但$n^2/2 \neq \omega(n^2)$。且同样存在另一个定义。</p>
-<p>$$<br>
-\lim_{n\rightarrow \infty}\frac{f(n)}{g(n)}=\infty<br>
-$$</p>
-<p>$o$标记和$\omega$标记的关系可以表达为：当且仅当$g(n)\in o(f(n))$时，$f(n)\in \omega(g(n))$</p>
-<h4 id="Comparing-functions">Comparing functions</h4>
-<p>渐进标记与数学中的不等式有点类似，同样都满足传递法，如a&lt;b，b&lt;c，则a&lt;c。</p>
+<script type="math/tex; mode=display">
+\lim_{n\rightarrow \infty}\frac{f(n)}{g(n)}=0</script><h4 id="omega-notation"><a href="#omega-notation" class="headerlink" title="$\omega$ -notation"></a>$\omega$ -notation</h4><p>$\omega$标记对于$\Omega$标记就如同$o$标记对于$O$标记。$\omega$标记的定义为，对于任意正常量$c$，都存在一个对应的常量$n_0$使得在$n\geq n_0$时满足</p>
+<script type="math/tex; mode=display">
+0\leq cg(n) < f(n)</script><p>则称$f(n)=\omega(g(n))$。例如，$n^2/2=\omega(n)$但$n^2/2 \neq \omega(n^2)$。且同样存在另一个定义。</p>
+<script type="math/tex; mode=display">
+\lim_{n\rightarrow \infty}\frac{f(n)}{g(n)}=\infty</script><p>$o$标记和$\omega$标记的关系可以表达为：当且仅当$g(n)\in o(f(n))$时，$f(n)\in \omega(g(n))$</p>
+<h4 id="Comparing-functions"><a href="#Comparing-functions" class="headerlink" title="Comparing functions"></a>Comparing functions</h4><p>渐进标记与数学中的不等式有点类似，同样都满足传递法，如a&lt;b，b&lt;c，则a&lt;c。</p>
 <p>$f(n)=O(g(n))$ 类似于 $a\leq b$</p>
 <p>$f(n)=\Omega(g(n))$ 类似于 $a\geq b$</p>
 <p>$f(n)=\Theta(g(n))$ 类似于 $a= b$</p>
 <p>$f(n)=o(g(n))$ 类似于 $a &lt; b$</p>
 <p>$f(n)=\omega(g(n))$ 类似于 $a &gt; b$</p>
 <p>但与不等式不同的是，对于两个数字，关系要么满足大于等于，要么满足小于等于。但对于渐进标记，存在两个函数$f(n)$和$g(n)$，可能即不满足$f(n)=O(g(n))$，也不满足$f(n)=\Omega(g(n))$，如函数$n$与$n^{1+\sin n}$，因为$n^{1+\sin n}$的次幂始终在变化，在0-2之间摇摆。</p>
-<h3 id="Standard-notations-and-common-functions">Standard notations and common functions</h3>
-<p>这一节主要是介绍一些数学内容，这里只列出关键的结论，定理和公式，并没有完整证明。</p>
-<h4 id="Floors-and-ceilings（向上取整与向下取整）">Floors and ceilings（向上取整与向下取整）</h4>
-<p>一些定理及公式</p>
-<p>$$\lceil n/2 \rceil + \lfloor n/2 \rfloor = n$$</p>
-<p>$$ \lceil \frac{\lceil x/a \rceil}{b} \rceil = \lceil \frac{x}{ab} \rceil$$</p>
-<p>$$ \lfloor \frac{\lfloor x/a \rfloor}{b} \rfloor = \lfloor \frac{x}{ab} \rfloor$$</p>
-<p>$$ \lceil \frac{a}{b} \rceil \leq \frac{a+(b-1)}{b} $$</p>
-<p>$$ \lfloor \frac{a}{b} \rfloor \geq \frac{a-(b-1)}{b} $$</p>
-<h4 id="Modular-arithmetic（求余）">Modular arithmetic（求余）</h4>
-<p>$$ a mod n =a -n\lfloor a/n \rfloor$$</p>
-<p>如果存在$(a mod n ) = (b mod n)$，可写作$a\equiv b \text { (mod n)}$</p>
-<h4 id="Polunomials-多项式">Polunomials(多项式)</h4>
-<p>对于某个常量$k$，如果有$f(n)=O(n^k)$则称函数$f(n)$是多项式有界的</p>
-<h4 id="Exponentials（指数）">Exponentials（指数）</h4>
-<p>$$(a^m)^n=a^{mn}$$</p>
-<p>$$(a^m)+a^n=a^{m+n}$$</p>
-<p>对所有实数有，<br>
-$$ e^x=\sum_{i=0}^{\infty}\frac{x^i}{i!} $$<br>
-$$ e^x\geq1+x$$<br>
-$$ e^x=\lim_{n\rightarrow \infty}(1+\frac{x}{n})^n$$</p>
-<p>指数增长速度比多项式快得多，可表达为</p>
-<p>$$ \lim_{n\rightarrow \infty}\frac{n^b}{a^n}=0$$</p>
-<p>用渐进标记，则表达为</p>
-<p>$$n^b=o(a^n)$$</p>
-<h4 id="Logarithms（对数）">Logarithms（对数）</h4>
-<p>$$ \lg ^kn=(\lg n)^k$$<br>
-$$ a=b^{\log_ba} $$<br>
-$$ \log_c(ab)=\log_ca+\log_cb$$<br>
-$$ \log_ba^n=n\log_ba$$<br>
-$$ \log_ba= \frac{\log_ca}{\log_cb} $$<br>
-$$ \log_b(1/a)=-\log_ba$$<br>
-$$ \log_ba=\frac{1}{\log_ab}$$<br>
-$$ a^{\log_bc}=c^{\log_ba}$$</p>
-<p>如果满足$f(n)=O(\lg^kn)$，则称$f(n)$是多对数有界的。</p>
+<h3 id="Standard-notations-and-common-functions"><a href="#Standard-notations-and-common-functions" class="headerlink" title="Standard notations and common functions"></a>Standard notations and common functions</h3><p>这一节主要是介绍一些数学内容，这里只列出关键的结论，定理和公式，并没有完整证明。</p>
+<h4 id="Floors-and-ceilings（向上取整与向下取整）"><a href="#Floors-and-ceilings（向上取整与向下取整）" class="headerlink" title="Floors and ceilings（向上取整与向下取整）"></a>Floors and ceilings（向上取整与向下取整）</h4><p>一些定理及公式</p>
+<script type="math/tex; mode=display">\lceil n/2 \rceil + \lfloor n/2 \rfloor = n</script><script type="math/tex; mode=display">\lceil \frac{\lceil x/a \rceil}{b} \rceil = \lceil \frac{x}{ab} \rceil</script><script type="math/tex; mode=display">\lfloor \frac{\lfloor x/a \rfloor}{b} \rfloor = \lfloor \frac{x}{ab} \rfloor</script><script type="math/tex; mode=display">\lceil \frac{a}{b} \rceil \leq \frac{a+(b-1)}{b}</script><script type="math/tex; mode=display">\lfloor \frac{a}{b} \rfloor \geq \frac{a-(b-1)}{b}</script><h4 id="Modular-arithmetic（求余）"><a href="#Modular-arithmetic（求余）" class="headerlink" title="Modular arithmetic（求余）"></a>Modular arithmetic（求余）</h4><script type="math/tex; mode=display">a mod n =a -n\lfloor a/n \rfloor</script><p>如果存在$(a mod n ) = (b mod n)$，可写作$a\equiv b \text { (mod n)}$</p>
+<h4 id="Polunomials-多项式"><a href="#Polunomials-多项式" class="headerlink" title="Polunomials(多项式)"></a>Polunomials(多项式)</h4><p>对于某个常量$k$，如果有$f(n)=O(n^k)$则称函数$f(n)$是多项式有界的</p>
+<h4 id="Exponentials（指数）"><a href="#Exponentials（指数）" class="headerlink" title="Exponentials（指数）"></a>Exponentials（指数）</h4><script type="math/tex; mode=display">(a^m)^n=a^{mn}</script><script type="math/tex; mode=display">(a^m)+a^n=a^{m+n}</script><p>对所有实数有，</p>
+<script type="math/tex; mode=display">e^x=\sum_{i=0}^{\infty}\frac{x^i}{i!}</script><script type="math/tex; mode=display">e^x\geq1+x</script><script type="math/tex; mode=display">e^x=\lim_{n\rightarrow \infty}(1+\frac{x}{n})^n</script><p>指数增长速度比多项式快得多，可表达为</p>
+<script type="math/tex; mode=display">\lim_{n\rightarrow \infty}\frac{n^b}{a^n}=0</script><p>用渐进标记，则表达为</p>
+<script type="math/tex; mode=display">n^b=o(a^n)</script><h4 id="Logarithms（对数）"><a href="#Logarithms（对数）" class="headerlink" title="Logarithms（对数）"></a>Logarithms（对数）</h4><script type="math/tex; mode=display">\lg ^kn=(\lg n)^k</script><script type="math/tex; mode=display">a=b^{\log_ba}</script><script type="math/tex; mode=display">\log_c(ab)=\log_ca+\log_cb</script><script type="math/tex; mode=display">\log_ba^n=n\log_ba</script><script type="math/tex; mode=display">\log_ba= \frac{\log_ca}{\log_cb}</script><script type="math/tex; mode=display">\log_b(1/a)=-\log_ba</script><script type="math/tex; mode=display">\log_ba=\frac{1}{\log_ab}</script><script type="math/tex; mode=display">a^{\log_bc}=c^{\log_ba}</script><p>如果满足$f(n)=O(\lg^kn)$，则称$f(n)$是多对数有界的。</p>
 <p>多项式的增长速度比对数快得多，可以表达为</p>
-<p>$$ \lim_{n\rightarrow \infty}\frac{\lg^bn}{n^a}=0$$</p>
-<p>用渐进标记，则表达为</p>
-<p>$$\lg^bn=o(n^a)$$</p>
-<h4 id="Factorials-阶乘">Factorials(阶乘)</h4>
-<p>$$n!\leq n^n \text{ 即 }n!=o(n^n)$$<br>
-$$ n!=\omega 2^n$$<br>
-$$ \lg(n^!)=\Theta(n\lg n)$$</p>
-<h4 id="Functional-iteration-多重函数">Functional iteration (多重函数)</h4>
-<p>可看作是函数的递归嵌套，递归次数用括号包裹的次幂表示，如$f^{(i)}(n)$，表示递归$i$次</p>
-<p>$$<br>
-f^{(i)}(n)=<br>
-\begin{cases}<br>
-n &amp; \text{if }i=0 \\<br>
-f(f^{(i-1)}(n)) &amp; \text{if } i &gt;0<br>
-\end{cases}<br>
-$$</p>
-<p>如函数$f(n)=2n$，$f^{(i)}(n)=2^in$</p>
+<script type="math/tex; mode=display">\lim_{n\rightarrow \infty}\frac{\lg^bn}{n^a}=0</script><p>用渐进标记，则表达为</p>
+<script type="math/tex; mode=display">\lg^bn=o(n^a)</script><h4 id="Factorials-阶乘"><a href="#Factorials-阶乘" class="headerlink" title="Factorials(阶乘)"></a>Factorials(阶乘)</h4><script type="math/tex; mode=display">n!\leq n^n \text{ 即 }n!=o(n^n)</script><script type="math/tex; mode=display">n!=\omega 2^n</script><script type="math/tex; mode=display">\lg(n^!)=\Theta(n\lg n)</script><h4 id="Functional-iteration-多重函数"><a href="#Functional-iteration-多重函数" class="headerlink" title="Functional iteration (多重函数)"></a>Functional iteration (多重函数)</h4><p>可看作是函数的递归嵌套，递归次数用括号包裹的次幂表示，如$f^{(i)}(n)$，表示递归$i$次</p>
+<script type="math/tex; mode=display">
+f^{(i)}(n)=
+\begin{cases}
+    n & \text{if }i=0 \\\\
+    f(f^{(i-1)}(n)) & \text{if } i >0
+\end{cases}</script><p>如函数$f(n)=2n$，$f^{(i)}(n)=2^in$</p>
 <p>注意区分$\lg^in$与$\lg^{(i)}n$，前者是$\lg n$的$i$次幂，后者是对$n$连续使用$i$次对数函数。</p>
-<h4 id="The-iterated-logarithm-function-多重对数函数">The iterated logarithm function (多重对数函数)</h4>
-<p>使用$lg*n$表示多重对数函数，定义为</p>
-<p>$$ \lg^*n=min{i\geq 0:lg^{(i)}n\leq 1} $$</p>
-<p>意思是求得最小的可以满足$lg^{(i)}n\leq 1$的$i$是多少</p>
-<p>如$lg^*16=3$、$lg^*65536=4$，因为</p>
-<p>$$\log_216=4 \rightarrow \log_24=2 \rightarrow \log_22=1$$<br>
-$$\log_265536=16 \rightarrow \log_216=4 \rightarrow \log_24=2 \rightarrow \log_22=1$$</p>
-<p>即分别需要三次和四次运算才能满足条件。</p>
-<h4 id="斐波那契数列">斐波那契数列</h4>
-<p>斐波那契数列定义为：</p>
-<p>$$F_0=0$$<br>
-$$F_1=1$$<br>
-$$F_i=F_{i-1}+F_{i-2} $$</p>
-<p>还有一个定义</p>
-<p>$$<br>
-F_i=\frac{\phi ^ i - \hat{\phi}^i}{\sqrt{5}}<br>
-$$</p>
-<p>其中$\phi$和$\hat{\phi}$为方程$x^2=x+1$的两个解。</p>
+<h4 id="The-iterated-logarithm-function-多重对数函数"><a href="#The-iterated-logarithm-function-多重对数函数" class="headerlink" title="The iterated logarithm function (多重对数函数)"></a>The iterated logarithm function (多重对数函数)</h4><p>使用$lg*n$表示多重对数函数，定义为</p>
+<script type="math/tex; mode=display">\lg^*n=min\{i\geq 0:lg^{(i)}n\leq 1\}</script><p>意思是求得最小的可以满足$lg^{(i)}n\leq 1$的$i$是多少</p>
+<p>如$lg^<em>16=3$、$lg^</em>65536=4$，因为</p>
+<script type="math/tex; mode=display">\log_216=4 \rightarrow \log_24=2 \rightarrow \log_22=1</script><script type="math/tex; mode=display">\log_265536=16 \rightarrow \log_216=4 \rightarrow \log_24=2 \rightarrow \log_22=1</script><p>即分别需要三次和四次运算才能满足条件。</p>
+<h4 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h4><p>斐波那契数列定义为：</p>
+<script type="math/tex; mode=display">F_0=0</script><script type="math/tex; mode=display">F_1=1</script><script type="math/tex; mode=display">F_i=F_{i-1}+F_{i-2}</script><p>还有一个定义</p>
+<script type="math/tex; mode=display">
+F_i=\frac{\phi ^ i - \hat{\phi}^i}{\sqrt{5}}</script><p>其中$\phi$和$\hat{\phi}$为方程$x^2=x+1$的两个解。</p>
 <ul>
 <li>斐波那契数列以指数速率增长。</li>
 </ul>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>引用：</p>
+<div class="note info simple"><p>引用：</p>
 <ol>
 <li><em>Introduction to Algorithms</em> 3rd Sep.2009</li>
 </ol>
-
-        </div>
-    </article>
+</div>
 <hr>
-</div><div class="article-licensing box"><div class="licensing-title"><p>《算法导论》 第三章笔记</p><p><a href="https://wangxuejia.blog/IA-Chapter3-Notes/">https://wangxuejia.blog/IA-Chapter3-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-11-05</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/IA-Chapter4-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《算法导论》 第四章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/IA-Chapter1-Chapter2-Notes/"><span class="level-item">《算法导论》 第一、二章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
-            el: '#valine-thread',
-            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
-            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
-            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
-            avatar: "mm",
-            avatarForce: false,
-            meta: ["nick","mail","link"],
-            pageSize: 10,
-            lang: "zh-CN",
-            visitor: true,
-            highlight: true,
-            recordIP: false,
-            
-            
-            
-            enableQQ: true,
-            requiredFields: [],
-        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
-            article: {
-                highlight: {
-                    clipboard: true,
-                    fold: 'unfolded'
-                }
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="Tuncle">三叔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tuncle.blog/IA-Chapter3-Notes/">https://tuncle.blog/IA-Chapter3-Notes/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tuncle.blog" target="_blank">三叔胡言乱语的地方</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="twitter, wechat, weibo"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/IA-Chapter4-Notes/" title="《算法导论》 第四章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《算法导论》 第四章笔记</div></div></a></div><div class="next-post pull-right"><a href="/IA-Chapter1-Chapter2-Notes/" title="《算法导论》 第一、二章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《算法导论》 第一、二章笔记</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-3-Growth-of-Functions"><span class="toc-number">1.</span> <span class="toc-text">Chapter 3. Growth of Functions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Asymptotic-notation"><span class="toc-number">1.1.</span> <span class="toc-text">Asymptotic notation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Asymptotic-notation-functions-and-running-time"><span class="toc-number">1.1.1.</span> <span class="toc-text">Asymptotic notation,functions,and running time</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Theta-notation"><span class="toc-number">1.1.2.</span> <span class="toc-text">$\Theta$-notation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#O-notation"><span class="toc-number">1.1.3.</span> <span class="toc-text">$O$-notation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Omega-notation"><span class="toc-number">1.1.4.</span> <span class="toc-text">$\Omega$-notation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Asymoptotic-notation-in-equations-and-inequalities"><span class="toc-number">1.1.5.</span> <span class="toc-text">Asymoptotic notation in equations and inequalities</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#o-notation"><span class="toc-number">1.1.6.</span> <span class="toc-text">$o$-notation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#omega-notation"><span class="toc-number">1.1.7.</span> <span class="toc-text">$\omega$ -notation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Comparing-functions"><span class="toc-number">1.1.8.</span> <span class="toc-text">Comparing functions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Standard-notations-and-common-functions"><span class="toc-number">1.2.</span> <span class="toc-text">Standard notations and common functions</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Floors-and-ceilings%EF%BC%88%E5%90%91%E4%B8%8A%E5%8F%96%E6%95%B4%E4%B8%8E%E5%90%91%E4%B8%8B%E5%8F%96%E6%95%B4%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">Floors and ceilings（向上取整与向下取整）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Modular-arithmetic%EF%BC%88%E6%B1%82%E4%BD%99%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">Modular arithmetic（求余）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Polunomials-%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">1.2.3.</span> <span class="toc-text">Polunomials(多项式)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Exponentials%EF%BC%88%E6%8C%87%E6%95%B0%EF%BC%89"><span class="toc-number">1.2.4.</span> <span class="toc-text">Exponentials（指数）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Logarithms%EF%BC%88%E5%AF%B9%E6%95%B0%EF%BC%89"><span class="toc-number">1.2.5.</span> <span class="toc-text">Logarithms（对数）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Factorials-%E9%98%B6%E4%B9%98"><span class="toc-number">1.2.6.</span> <span class="toc-text">Factorials(阶乘)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Functional-iteration-%E5%A4%9A%E9%87%8D%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.7.</span> <span class="toc-text">Functional iteration (多重函数)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-iterated-logarithm-function-%E5%A4%9A%E9%87%8D%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.8.</span> <span class="toc-text">The iterated logarithm function (多重对数函数)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97"><span class="toc-number">1.2.9.</span> <span class="toc-text">斐波那契数列</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By 三叔</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Keep Writing</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
             }
-        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
-      window.cookieconsent.initialise({
-        type: "info",
-        theme: "edgeless",
-        static: false,
-        position: "bottom-left",
-        content: {
-          message: "此网站使用Cookie来改善您的体验。",
-          dismiss: "知道了！",
-          allow: "允许使用Cookie",
-          deny: "拒绝",
-          link: "了解更多",
-          policy: "Cookie政策",
-          href: "https://www.cookiesandyou.com/",
-        },
-        palette: {
-          popup: {
-            background: "#edeff5",
-            text: "#838391"
-          },
-          button: {
-            background: "#4b81e8"
-          },
-        },
-      });
-    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
-            if (typeof $.fn.lightGallery === 'function') {
-                $('.article').lightGallery({ selector: '.gallery-item' });
-            }
-            if (typeof $.fn.justifiedGallery === 'function') {
-                if ($('.justified-gallery > p > .gallery-item').length) {
-                    $('.justified-gallery > p > .gallery-item').unwrap();
-                }
-                $('.justified-gallery').justifiedGallery();
-            }
-        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
-            'HTML-CSS': {
-                matchFontHeight: false
-            },
-            SVG: {
-                matchFontHeight: false
-            },
-            CommonHTML: {
-                matchFontHeight: false
-            },
-            tex2jax: {
-                inlineMath: [
-                    ['$','$'],
-                    ['\\(','\\)']
-                ]
-            }
-        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
-            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
-        });</script></body></html>
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey: 'z1vCYavVUbCGuMjNMcrsvShN',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

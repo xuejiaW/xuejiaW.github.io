@@ -1,117 +1,247 @@
-<!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《算法导论》 第五章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《算法导论》 第五章笔记。 5.1节介绍了整章中作为例子的雇佣问题，并简单介绍了两个分析随机问题的方法，概率分析和随机化算法。 5.2节介绍了分析随机问题中的重要工具，指标随机变量，并使用概率分析方法分析了雇佣问题的平均花费。 5.3节使用随机化算法分析雇佣问题的期望花费，并且介绍了两种实现随机值产生器的方法。 5.4节尚未整理。"><meta property="og:type" content="blog"><meta property="og:title" content="《算法导论》 第五章笔记"><meta property="og:url" content="https://wangxuejia.blog/IA-Chapter5-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《算法导论》 第五章笔记。 5.1节介绍了整章中作为例子的雇佣问题，并简单介绍了两个分析随机问题的方法，概率分析和随机化算法。 5.2节介绍了分析随机问题中的重要工具，指标随机变量，并使用概率分析方法分析了雇佣问题的平均花费。 5.3节使用随机化算法分析雇佣问题的期望花费，并且介绍了两种实现随机值产生器的方法。 5.4节尚未整理。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://wangxuejia.blog/img/og_image.png"><meta property="article:published_time" content="2020-02-05T05:03:30.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.016Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="数据结构与算法"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://wangxuejia.blog/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://wangxuejia.blog/IA-Chapter5-Notes/"},"headline":"《算法导论》 第五章笔记","image":["https://wangxuejia.blog/img/og_image.png"],"datePublished":"2020-02-05T05:03:30.000Z","dateModified":"2023-04-02T12:21:20.016Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《算法导论》 第五章笔记。 5.1节介绍了整章中作为例子的雇佣问题，并简单介绍了两个分析随机问题的方法，概率分析和随机化算法。 5.2节介绍了分析随机问题中的重要工具，指标随机变量，并使用概率分析方法分析了雇佣问题的平均花费。 5.3节使用随机化算法分析雇佣问题的期望花费，并且介绍了两种实现随机值产生器的方法。 5.4节尚未整理。"}</script><link rel="canonical" href="https://wangxuejia.blog/IA-Chapter5-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
-  (function () {
-      function switchTab() {
-          if (!location.hash) {
-            return;
-          }
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>《算法导论》 第五章笔记 | 三叔胡言乱语的地方</title><meta name="author" content="三叔"><meta name="copyright" content="三叔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《算法导论》 第五章笔记。 5.1节介绍了整章中作为例子的雇佣问题，并简单介绍了两个分析随机问题的方法，概率分析和随机化算法。 5.2节介绍了分析随机问题中的重要工具，指标随机变量，并使用概率分析方法分析了雇佣问题的平均花费。 5.3节使用随机化算法分析雇佣问题的期望花费，并且介绍了两种实现随机值产生器的方法。 5.4节尚未整理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《算法导论》 第五章笔记">
+<meta property="og:url" content="https://tuncle.blog/IA-Chapter5-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="《算法导论》 第五章笔记。 5.1节介绍了整章中作为例子的雇佣问题，并简单介绍了两个分析随机问题的方法，概率分析和随机化算法。 5.2节介绍了分析随机问题中的重要工具，指标随机变量，并使用概率分析方法分析了雇佣问题的平均花费。 5.3节使用随机化算法分析雇佣问题的期望花费，并且介绍了两种实现随机值产生器的方法。 5.4节尚未整理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuncle.blog/img/avatar.jpg">
+<meta property="article:published_time" content="2020-02-05T05:03:30.000Z">
+<meta property="article:modified_time" content="2023-04-16T06:32:59.819Z">
+<meta property="article:author" content="三叔">
+<meta property="article:tag" content="读书笔记">
+<meta property="article:tag" content="数据结构与算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuncle.blog/img/avatar.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://tuncle.blog/IA-Chapter5-Notes/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: 三叔","link":"链接: ","source":"来源: 三叔胡言乱语的地方","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《算法导论》 第五章笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-16 14:32:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-          const id = '#' + CSS.escape(location.hash.substring(1));
-          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
-          if (!$tabMenu) {
-            return;
-          }
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
-          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
-          Array.from($tabMenuContainer.querySelectorAll('a'))
-              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
-              .forEach($content => $content.classList.add('is-hidden'));
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-          if ($tabMenu) {
-              $tabMenu.parentElement.classList.add('is-active');
-          }
-          const $activeTab = document.querySelector(id);
-          if ($activeTab) {
-              $activeTab.classList.remove('is-hidden');
-          }
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
-      switchTab();
-      window.addEventListener('hashchange', switchTab, false);
-  })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2020-02-05T05:03:30.000Z" title="2020/2/5 13:03:30">2020-02-05</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.016Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span><span class="level-item">22 分钟读完 (大约3228个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《算法导论》 第五章笔记</h1><div class="content"><p>《算法导论》 第五章笔记。</p>
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="三叔胡言乱语的地方"><span class="site-name">三叔胡言乱语的地方</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">《算法导论》 第五章笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-02-05T05:03:30.000Z" title="发表于 2020-02-05 13:03:30">2020-02-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/IA-Chapter5-Notes/" data-flag-title="《算法导论》 第五章笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>《算法导论》 第五章笔记。</p>
 <p>5.1节介绍了整章中作为例子的雇佣问题，并简单介绍了两个分析随机问题的方法，概率分析和随机化算法。</p>
 <p>5.2节介绍了分析随机问题中的重要工具，指标随机变量，并使用概率分析方法分析了雇佣问题的平均花费。</p>
 <p>5.3节使用随机化算法分析雇佣问题的期望花费，并且介绍了两种实现随机值产生器的方法。</p>
 <p>5.4节尚未整理。</p>
 <span id="more"></span>
-<h1>Chapter 5 Probabilistic Analysis and Randomized Algorithms</h1>
-<h2 id="The-hiring-problem">The hiring problem</h2>
-<p>雇佣问题（Hiring Problem）是假设一个雇佣公司与一家HR服务公司签订协议帮助它雇佣一位秘书。HR服务公司会每天向雇佣公司提供一个候选人，雇佣公司将面试该候选人，如果候选人比现在的秘书优秀，则解雇现在的秘书，雇佣候选人。这个操作是每天都在进行的，即如果每天来的候选人都比前一天的更优秀，则会每天解雇昨天雇佣的人，然后再雇佣新的候选人。整个过程的伪代码实现如下：</p>
+<h1 id="Chapter-5-Probabilistic-Analysis-and-Randomized-Algorithms"><a href="#Chapter-5-Probabilistic-Analysis-and-Randomized-Algorithms" class="headerlink" title="Chapter 5 Probabilistic Analysis and Randomized Algorithms"></a>Chapter 5 Probabilistic Analysis and Randomized Algorithms</h1><h2 id="The-hiring-problem"><a href="#The-hiring-problem" class="headerlink" title="The hiring problem"></a>The hiring problem</h2><p>雇佣问题（Hiring Problem）是假设一个雇佣公司与一家HR服务公司签订协议帮助它雇佣一位秘书。HR服务公司会每天向雇佣公司提供一个候选人，雇佣公司将面试该候选人，如果候选人比现在的秘书优秀，则解雇现在的秘书，雇佣候选人。这个操作是每天都在进行的，即如果每天来的候选人都比前一天的更优秀，则会每天解雇昨天雇佣的人，然后再雇佣新的候选人。整个过程的伪代码实现如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HIRE-ASSISTANT(n)</span><br><span class="line">best = 0;</span><br><span class="line">for i = 1 to n</span><br><span class="line">    interview candidate i</span><br><span class="line">    if candidate i better than candidate best</span><br><span class="line">        best = i</span><br><span class="line">        hire candidate i</span><br></pre></td></tr></table></figure>
 <p>雇佣公司需要为每一个候选人向HR服务公司付一笔钱，记为$C_i$，在正式雇佣员工时需要再额外付给HR服务公司一笔钱，这笔钱款项较大，记为$C_h$。在这个算法中，关心的复杂度<strong>不再是时间复杂度</strong>而是最终需要付给HR服务公司的钱的多少，如果候选人一共有$n$人，一共雇佣过其中$m$人，则算法的复杂度为$O(C_in+C_hm)$，其中$C_in$是固定的，主要需要关心的就是$C_hm$。</p>
 <p>可以明显看出，$m$越大，即雇佣过的人越多，复杂度越高。而$m$的大小是与候选人的情况相关的。</p>
-<h3 id="Worst-case-analysis">Worst-case analysis</h3>
-<p>最坏情况下，即候选人是从最差到最好的顺序给的，那么$m=n$。在最好情况下，即候选人是从最好到最坏的顺序下给的，那么$m=1$。</p>
+<h3 id="Worst-case-analysis"><a href="#Worst-case-analysis" class="headerlink" title="Worst-case analysis"></a>Worst-case analysis</h3><p>最坏情况下，即候选人是从最差到最好的顺序给的，那么$m=n$。在最好情况下，即候选人是从最好到最坏的顺序下给的，那么$m=1$。</p>
 <p>但是最好和最差情况是很少出现的，所以需要真正关心的是通常情况下的花费，或者说各个情况下平均需要的花费。</p>
 <p>这里先简单的阐述下概率分析方法和随机化算法方法，在6.2和6.3节会进行更详细的分析。</p>
-<h3 id="Probabilistic-analysis">Probabilistic analysis</h3>
-<p>概率分析（Probabilistic analysis）是通过概率来分析问题，通常使用概率分析来分析算法的运行时间，但这里用概率分析来分析雇佣的花费。</p>
+<h3 id="Probabilistic-analysis"><a href="#Probabilistic-analysis" class="headerlink" title="Probabilistic analysis"></a>Probabilistic analysis</h3><p>概率分析（Probabilistic analysis）是通过概率来分析问题，通常使用概率分析来分析算法的运行时间，但这里用概率分析来分析雇佣的花费。</p>
 <p>为了实施概率分析，需要知道所有输入情况的概率分布，或者猜测出一个所有输入情况的概率分布，然后根据这些输入情况的分布来计算出所有情况下的平均花费，将其称为<code>平均情况运行时间（Average-case running time）</code>。</p>
 <p>对于雇佣问题而言，所有输入可能的概率是相同的，即这是个<code>均匀概率分布（Unifrom random permutation）</code>。对于一共有$n$个候选人，第一个候选人一共$n$种可能，第二个候选人有$n-1$种…依次类推，最后一个候选人就只有1种可能，综合起来看，$n$个候选人的排列组合有$n!$种可能，因此每个排列的可能性为$1/n!$</p>
-<h3 id="Randomized-algorithms">Randomized algorithms</h3>
-<p>为了使用概率分析的方法，需要知道输入的分布可能或者对分布可能进行一个猜测，在<code>随机化算法（Randomized algorithms）</code>中则不需要。可以使用随机函数<em>主动</em>的让算法中的一部分成为随机。</p>
+<h3 id="Randomized-algorithms"><a href="#Randomized-algorithms" class="headerlink" title="Randomized algorithms"></a>Randomized algorithms</h3><p>为了使用概率分析的方法，需要知道输入的分布可能或者对分布可能进行一个猜测，在<code>随机化算法（Randomized algorithms）</code>中则不需要。可以使用随机函数<em>主动</em>的让算法中的一部分成为随机。</p>
 <p>在雇佣问题中，无论输入是什么情况，每天都是随机的从输入中抽取一个候选人，这样无论输入是什么情况，算法的结果都由算法中随机函数部分决定。</p>
 <p>称一个算法被<code>随机化（Randomized）</code>了，如果算法的结果不仅由输入决定，还由一个被<code>随机数生成器（Random-Nunmber generator）</code>产生的数值决定。</p>
 <p>对于随机化算法的复杂度分析，是根据随机数生成器生成的数值的概率分布来计算出运行时间，将其称为<code>期望运行时间（Expected running time）</code>。</p>
-<h2 id="Indicator-random-variables">Indicator random variables</h2>
-<p>指标随机变量（Indicator random variables）提供一个在概率（probabilities）和期望（expectations）之间转换的方法。事件$A$的指标随机变量$I{A}$定义为：</p>
-<p>$$<br>
-I{A}=\begin{cases}<br>
-1 &amp; \text{if A occurs,}\\<br>
-0 &amp; \text{if A does not occur.}<br>
-\end{cases}<br>
-$$</p>
-<p>举一个简单的例子说明指标随机变量与期望值的关系。假设翻转一枚硬币，将结果是正面称为事件$H$，是反面称为事件$T$，即样本空间为$S={H,T}$，其中两个事件的概率都为0.5，即$Pr{H}=Pr{T}=1/2$。</p>
+<h2 id="Indicator-random-variables"><a href="#Indicator-random-variables" class="headerlink" title="Indicator random variables"></a>Indicator random variables</h2><p>指标随机变量（Indicator random variables）提供一个在概率（probabilities）和期望（expectations）之间转换的方法。事件$A$的指标随机变量$I{A}$定义为：</p>
+<script type="math/tex; mode=display">
+I\{A\}=\begin{cases}
+    1 & \text{if A occurs,}\\\\
+    0 & \text{if A does not occur.}
+\end{cases}</script><p>举一个简单的例子说明指标随机变量与期望值的关系。假设翻转一枚硬币，将结果是正面称为事件$H$，是反面称为事件$T$，即样本空间为$S={H,T}$，其中两个事件的概率都为0.5，即$Pr{H}=Pr{T}=1/2$。</p>
 <p>将事件$H$的指标随机变量定义为$X_H$，即</p>
-<p>$$<br>
-X_H=I{H}= \begin{cases}<br>
-1 &amp; \text{if H occurs,}\\<br>
-0 &amp; \text{if T occurs.}<br>
-\end{cases}<br>
-$$</p>
-<p>事件$H$的期望值为$E[X_H]$：</p>
-<p>$$<br>
-E[X_H]=E[I{H}]\\<br>
-= 1 \cdot Pr{H} + 0\cdot Pr{T} \\<br>
-= 1\cdot (1/2)+0\cdot(1/2)\\<br>
-=1/2<br>
-$$</p>
-<p>定理5.1： 给定一个样本空间$S$和一个事件$A$在样本空间中，定义$X_A=I{A}$，则$E[X_A]=Pr{A}$</p>
+<script type="math/tex; mode=display">
+X_H=I\{H\}= \begin{cases}
+    1 & \text{if H occurs,}\\\\
+    0 & \text{if T occurs.}
+\end{cases}</script><p>事件$H$的期望值为$E[X_H]$：</p>
+<script type="math/tex; mode=display">
+E[X_H]=E[I\{H\}]\\\\
+= 1 \cdot Pr\{H\} + 0\cdot Pr\{T\} \\\\
+= 1\cdot (1/2)+0\cdot(1/2)\\\\
+=1/2</script><p>定理5.1： 给定一个样本空间$S$和一个事件$A$在样本空间中，定义$X_A=I{A}$，则$E[X_A]=Pr{A}$</p>
 <p>证明如下：</p>
-<p>$$<br>
-E[X_A]=E[I{A}]\\<br>
-= 1 \cdot Pr{A} + 0\cdot Pr{\bar{A}} \\<br>
-= Pr{A}<br>
-$$</p>
-<h3 id="Analysis-of-hiring-problem-using-indicator-random-variables">Analysis of hiring problem using indicator random variables</h3>
-<p>为了使用概率分析，假设候选人都是以一个随机的顺序出现（在5.3节使用随机化算法的话将不再需要这个假设）。将X作为随机变量，其值表示为整个面试过程中总计录用的次数。</p>
+<script type="math/tex; mode=display">
+E[X_A]=E[I\{A\}]\\\\
+= 1 \cdot Pr\{A\} + 0\cdot Pr\{\bar{A}\} \\\\
+= Pr\{A\}</script><h3 id="Analysis-of-hiring-problem-using-indicator-random-variables"><a href="#Analysis-of-hiring-problem-using-indicator-random-variables" class="headerlink" title="Analysis of hiring problem using indicator random variables"></a>Analysis of hiring problem using indicator random variables</h3><p>为了使用概率分析，假设候选人都是以一个随机的顺序出现（在5.3节使用随机化算法的话将不再需要这个假设）。将X作为随机变量，其值表示为整个面试过程中总计录用的次数。</p>
 <p>根据期望随机变量的定义，可X的期望值可表示为：</p>
-<p>$$<br>
-E[X]=\sum_{x=1}^{n} x \cdot Pr{\ X=x}<br>
-$$</p>
-<p>该式子需要计算，$x=1,x=2\dotsc x=n$情况下的概率。这个概率的计算较为复杂，可以使用指标随机变量来简化上式。</p>
+<script type="math/tex; mode=display">
+E[X]=\sum_{x=1}^{n} x \cdot Pr\{\ X=x\}</script><p>该式子需要计算，$x=1,x=2\dotsc x=n$情况下的概率。这个概率的计算较为复杂，可以使用指标随机变量来简化上式。</p>
 <p>将第$i$位候选人被录用的随机变量定义为$X_i$，则</p>
-<p>$$<br>
-X_i = I{\text{candidate i is hired} } =\\<br>
-=\begin{cases}<br>
-1 &amp; \text{if candidate i is hired} \\<br>
-0 &amp; \text{if candidate i is not hired}<br>
-\end{cases}<br>
-$$</p>
-<p>可知所有候选人录取的总次数是各个候选人被录取随机变量的总和，即$X=X_1+X_2+\dotsc + X_n$。</p>
+<script type="math/tex; mode=display">
+X_i = I\{\text{candidate i is hired} \} =\\\\
+=\begin{cases}
+    1 & \text{if candidate i is hired} \\\\
+    0 & \text{if candidate i is not hired}
+\end{cases}</script><p>可知所有候选人录取的总次数是各个候选人被录取随机变量的总和，即$X=X_1+X_2+\dotsc + X_n$。</p>
 <p>由根据定理5.1可知，$E[X_i]=Pr{\text{candidate i is hired} }$</p>
 <p>第$i$个候选人前已经出现了$i-1$个候选人，加上第$i$个自己，一共有$i$个候选人且每个候选人被录取的概率相同，因此第$i$个候选人被录取的概率为$1/i$。</p>
 <p>综上，可得</p>
-<p>$$<br>
-E[X] = E[\sum_{i=1}^{n}X_i] \\<br>
-= \sum_{i=1}^{n} E[X_i] \\<br>
-= \sum_{i=1}^{n} 1/i \\<br>
-= \ln n + O(1)<br>
-$$</p>
-<p>因此，使用概率分析可得平均情况下录取候选人的成本为$O(C_h \ln n)$</p>
-<h2 id="Randomized-algorithms-2">Randomized algorithms</h2>
-<p>随机化算法与概率分析两个方法的不同点在于，概率分析是假设一个输入的分布，而随机化算法是<strong>引入</strong>输入的分布。</p>
+<script type="math/tex; mode=display">
+E[X] = E[\sum_{i=1}^{n}X_i] \\\\
+= \sum_{i=1}^{n} E[X_i] \\\\
+= \sum_{i=1}^{n} 1/i \\\\
+= \ln n + O(1)</script><p>因此，使用概率分析可得平均情况下录取候选人的成本为$O(C_h \ln n)$</p>
+<h2 id="Randomized-algorithms-1"><a href="#Randomized-algorithms-1" class="headerlink" title="Randomized algorithms"></a>Randomized algorithms</h2><p>随机化算法与概率分析两个方法的不同点在于，概率分析是假设一个输入的分布，而随机化算法是<strong>引入</strong>输入的分布。</p>
 <p>概率分析下，对于一个算法，如果输入值是不变的，则结果也是不变的，不同的输入产生不同的值。</p>
 <p>但是在随机化算法下，输入值不变也可能产生不同的结果，因为算法内部有随机生成器。也因此，没有特定的输入会产生最差情况。</p>
 <p>随机化算法的伪代码如下：</p>
@@ -121,8 +251,7 @@ $$</p>
 <li>上节的输入分布是猜测出来的，而这里的输入分布则是通过该语句生成出来的。</li>
 </ul>
 <p>因此通过随机化算法也同样可以得到结论，录取候选人的成本为$O(C_h \ln n)$。但使用概率分析的时候，将结果称为<code>平均情况下的结果</code>，在使用随机化算法的时候，将结果称为<code>期望结果</code>。两者实际上非常相似，更多的是命名方面的区分。</p>
-<h3 id="Randomly-permuting-arrays">Randomly permuting arrays</h3>
-<p>许多随机化算法都是通过随机排列输入数组来引入随机化的。</p>
+<h3 id="Randomly-permuting-arrays"><a href="#Randomly-permuting-arrays" class="headerlink" title="Randomly permuting arrays"></a>Randomly permuting arrays</h3><p>许多随机化算法都是通过随机排列输入数组来引入随机化的。</p>
 <p>一个通常的随机排列数组的方法是给数组中的每个元素$A[i]$一个随机的优先级值$P[i]$，然后根据优先级值排列元素次序。如原始数组为${1,2,3,4}$，随即优先级值为${36,3,62,29}$，则原始数组排列为${2,4,1,3}$。</p>
 <p>该方法伪代码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PERMUTE-BY_SORTING(A)</span><br><span class="line">n = A.length</span><br><span class="line">let P[1..n] be a new array</span><br><span class="line">for i = 1 to n</span><br><span class="line">    P[i] = RANDOM(1,n^3)</span><br><span class="line">sort A using P as sort keys</span><br></pre></td></tr></table></figure>
@@ -133,13 +262,11 @@ $$</p>
 <p>还需要证明该算法产生的是均匀随机排列(<code>unifrom random permutation</code>)。在雇佣问题下，即证明每个排列的可能性是$1/n!$。</p>
 <p>假设需要求所有候选人水平是递增的排列，第一个候选人有$n$种可能，他水平最低的可能性为$1/n$，第二个候选人在剩下的人（$n-1$）中水平最低的概率为$1/(n-1)$，之后的候选人概率依次类推。</p>
 <p>将$E_i$定义为事件，第$i$个候选人水平第$i$低，则所有候选人水平是递增的概率为：</p>
-<p>$$<br>
-Pr{E_1 \cap E_2 \cap E_3 \cap \dotsi \cap E_n}\\<br>
-= Pr{E_1} \cdot Pr{ E_2 | E_1} \cdot Pr{E3 | E_2 \cap E_1} \cdot \dotsb Pr{E_i | E_{i-1} \cap E_{i-1} \cap \dotsb \cap E_1 }\\\dotsb Pr{E_n | E_{n-1} \cap E_{i-1} \cap \dotsb \cap E_1 } \\<br>
-= \frac{1}{n} \cdot \frac{1}{n-1} \cdot \dotsb \cdot \frac{1}{1}\\<br>
-= \frac{1}{n!}<br>
-$$</p>
-<p>这里是证明了所有候选人水平递增的排列出现概率为$1/n!$，用同样的方法可以证明其他的排列下概率也都为$1/n!$，因此得证。</p>
+<script type="math/tex; mode=display">
+Pr\{E_1 \cap E_2 \cap E_3 \cap \dotsi \cap E_n\}\\\\
+= Pr\{E_1\} \cdot Pr\{ E_2 | E_1\} \cdot Pr\{E3 | E_2 \cap E_1\} \cdot \dotsb Pr\{E_i | E_{i-1} \cap E_{i-1} \cap \dotsb \cap E_1 \}\\\\\dotsb Pr\{E_n | E_{n-1} \cap E_{i-1} \cap \dotsb \cap E_1 \} \\\\
+= \frac{1}{n} \cdot \frac{1}{n-1} \cdot \dotsb \cdot \frac{1}{1}\\\\
+= \frac{1}{n!}</script><p>这里是证明了所有候选人水平递增的排列出现概率为$1/n!$，用同样的方法可以证明其他的排列下概率也都为$1/n!$，因此得证。</p>
 <p>还由一种随机排列的方法，是通过将$A[i]$与$A[i]\sim A[n]$间的一个元素互换生成随机数组排列，伪代码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RANDOMIZE-IN-PLACE(A)</span><br><span class="line">n = A.length</span><br><span class="line">for i = 1 to n</span><br><span class="line">    swap A[i] with A[RaNDOM(i,n)]</span><br></pre></td></tr></table></figure>
 <p>该算法的时间复杂度为$O(n)$。</p>
@@ -148,102 +275,170 @@ $$</p>
 <p>需要检测该算法是否满足此特性。</p>
 <p>根据上式，对于第$i$个候选人，前面$i-1$个候选人的排列有$n!/(n-i+1)!$种可能，将前$i-1$个候选人的排列称为事件$E_1$。将第$i$个候选人的选人概率定义为$E_2$，因为第$i$个候选人是从$A[i \dotsb n]$中选取的，所以概率为$1/(n-i+1)$。</p>
 <p>前$i$的候选人的排列是在事件$E_1$和事件$E_2$同时发生的情况下产生的，即</p>
-<p>$$<br>
-Pr{E_2 \cap E_1 } = Pr{E_2 |E_1 } \cdot Pr{E_1 } \\<br>
-= \frac{1}{n-i+1} \cdot \frac{n-i+1}{n!} \\<br>
-= \frac{(n-i)!}{n!}<br>
-$$</p>
-<p>满足均匀随机排列特性，因此得证。</p>
+<script type="math/tex; mode=display">
+Pr\{E_2 \cap E_1 \} = Pr\{E_2 |E_1 \} \cdot Pr\{E_1 \} \\\\
+= \frac{1}{n-i+1} \cdot \frac{n-i+1}{n!} \\\\
+= \frac{(n-i)!}{n!}</script><p>满足均匀随机排列特性，因此得证。</p>
 <p>当取$i=n$时，即$n$个候选人时某个排列组合的概率，可得$(n-i)!/n!=1/n!$，与概率分析的结果相同。</p>
-<h2 id="Probabilistic-analysis-and-further-uses-of-indicator-random-variables">Probabilistic analysis and further uses of indicator random variables</h2>
-<p>//TODO</p>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>引用：</p>
+<h2 id="Probabilistic-analysis-and-further-uses-of-indicator-random-variables"><a href="#Probabilistic-analysis-and-further-uses-of-indicator-random-variables" class="headerlink" title="Probabilistic analysis and further uses of indicator random variables"></a>Probabilistic analysis and further uses of indicator random variables</h2><p>//TODO </p>
+<div class="note info simple"><p>引用：</p>
 <ol>
 <li><em>Introduction to Algorithms</em> 3rd Sep.2009</li>
 </ol>
-
-        </div>
-    </article>
+</div>
 <hr>
-</div><div class="article-licensing box"><div class="licensing-title"><p>《算法导论》 第五章笔记</p><p><a href="https://wangxuejia.blog/IA-Chapter5-Notes/">https://wangxuejia.blog/IA-Chapter5-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-02-05</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/CPPPrimer-Chapter2-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《C++ Primer》 第二章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/CPPPrimer-Preface-Chapter1-Notes/"><span class="level-item">《C++ Primer》 序言与第一章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
-            el: '#valine-thread',
-            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
-            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
-            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
-            avatar: "mm",
-            avatarForce: false,
-            meta: ["nick","mail","link"],
-            pageSize: 10,
-            lang: "zh-CN",
-            visitor: true,
-            highlight: true,
-            recordIP: false,
-            
-            
-            
-            enableQQ: true,
-            requiredFields: [],
-        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
-            article: {
-                highlight: {
-                    clipboard: true,
-                    fold: 'unfolded'
-                }
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="Tuncle">三叔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tuncle.blog/IA-Chapter5-Notes/">https://tuncle.blog/IA-Chapter5-Notes/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tuncle.blog" target="_blank">三叔胡言乱语的地方</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="twitter, wechat, weibo"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/CPPPrimer-Chapter2-Notes/" title="《C++ Primer》 第二章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《C++ Primer》 第二章笔记</div></div></a></div><div class="next-post pull-right"><a href="/CPPPrimer-Preface-Chapter1-Notes/" title="《C++ Primer》 序言与第一章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《C++ Primer》 序言与第一章笔记</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-5-Probabilistic-Analysis-and-Randomized-Algorithms"><span class="toc-number">1.</span> <span class="toc-text">Chapter 5 Probabilistic Analysis and Randomized Algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-hiring-problem"><span class="toc-number">1.1.</span> <span class="toc-text">The hiring problem</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Worst-case-analysis"><span class="toc-number">1.1.1.</span> <span class="toc-text">Worst-case analysis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Probabilistic-analysis"><span class="toc-number">1.1.2.</span> <span class="toc-text">Probabilistic analysis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Randomized-algorithms"><span class="toc-number">1.1.3.</span> <span class="toc-text">Randomized algorithms</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Indicator-random-variables"><span class="toc-number">1.2.</span> <span class="toc-text">Indicator random variables</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis-of-hiring-problem-using-indicator-random-variables"><span class="toc-number">1.2.1.</span> <span class="toc-text">Analysis of hiring problem using indicator random variables</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Randomized-algorithms-1"><span class="toc-number">1.3.</span> <span class="toc-text">Randomized algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Randomly-permuting-arrays"><span class="toc-number">1.3.1.</span> <span class="toc-text">Randomly permuting arrays</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Probabilistic-analysis-and-further-uses-of-indicator-random-variables"><span class="toc-number">1.4.</span> <span class="toc-text">Probabilistic analysis and further uses of indicator random variables</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By 三叔</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Keep Writing</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
             }
-        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
-      window.cookieconsent.initialise({
-        type: "info",
-        theme: "edgeless",
-        static: false,
-        position: "bottom-left",
-        content: {
-          message: "此网站使用Cookie来改善您的体验。",
-          dismiss: "知道了！",
-          allow: "允许使用Cookie",
-          deny: "拒绝",
-          link: "了解更多",
-          policy: "Cookie政策",
-          href: "https://www.cookiesandyou.com/",
-        },
-        palette: {
-          popup: {
-            background: "#edeff5",
-            text: "#838391"
-          },
-          button: {
-            background: "#4b81e8"
-          },
-        },
-      });
-    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
-            if (typeof $.fn.lightGallery === 'function') {
-                $('.article').lightGallery({ selector: '.gallery-item' });
-            }
-            if (typeof $.fn.justifiedGallery === 'function') {
-                if ($('.justified-gallery > p > .gallery-item').length) {
-                    $('.justified-gallery > p > .gallery-item').unwrap();
-                }
-                $('.justified-gallery').justifiedGallery();
-            }
-        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
-            'HTML-CSS': {
-                matchFontHeight: false
-            },
-            SVG: {
-                matchFontHeight: false
-            },
-            CommonHTML: {
-                matchFontHeight: false
-            },
-            tex2jax: {
-                inlineMath: [
-                    ['$','$'],
-                    ['\\(','\\)']
-                ]
-            }
-        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
-            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
-        });</script></body></html>
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey: 'z1vCYavVUbCGuMjNMcrsvShN',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

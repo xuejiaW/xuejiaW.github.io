@@ -1,46 +1,194 @@
-<!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《计算机网络与因特网》 第一章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《计算机网络与因特网》 第一章笔记 笼统的介绍了网络的五个关键领域，一些网络基本概念，TCP&amp;#x2F;IP分组模型，OSI模型等。"><meta property="og:type" content="blog"><meta property="og:title" content="《计算机网络与因特网》 第一章笔记"><meta property="og:url" content="https://wangxuejia.blog/CNI-Chapter1-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《计算机网络与因特网》 第一章笔记 笼统的介绍了网络的五个关键领域，一些网络基本概念，TCP&amp;#x2F;IP分组模型，OSI模型等。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://wangxuejia.blog/CNI-Chapter1-Notes/CNI-Chapter1-Notes/2019-11-22-20-21-21.png"><meta property="og:image" content="https://wangxuejia.blog/CNI-Chapter1-Notes/CNI-Chapter1-Notes/2019-11-22-20-59-21.png"><meta property="og:image" content="https://wangxuejia.blog/CNI-Chapter1-Notes/CNI-Chapter1-Notes/2019-11-22-21-08-20.png"><meta property="og:image" content="https://wangxuejia.blog/CNI-Chapter1-Notes/CNI-Chapter1-Notes/2019-11-22-23-01-16.png"><meta property="article:published_time" content="2019-11-22T15:12:01.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.005Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="计算机网络"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://wangxuejia.blog/CNI-Chapter1-Notes/CNI-Chapter1-Notes/2019-11-22-20-21-21.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://wangxuejia.blog/CNI-Chapter1-Notes/"},"headline":"《计算机网络与因特网》 第一章笔记","image":["https://wangxuejia.blog/CNI-Chapter1-Notes/CNI-Chapter1-Notes/2019-11-22-20-21-21.png","https://wangxuejia.blog/CNI-Chapter1-Notes/CNI-Chapter1-Notes/2019-11-22-20-59-21.png","https://wangxuejia.blog/CNI-Chapter1-Notes/CNI-Chapter1-Notes/2019-11-22-21-08-20.png","https://wangxuejia.blog/CNI-Chapter1-Notes/CNI-Chapter1-Notes/2019-11-22-23-01-16.png"],"datePublished":"2019-11-22T15:12:01.000Z","dateModified":"2023-04-02T12:21:20.005Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《计算机网络与因特网》 第一章笔记 笼统的介绍了网络的五个关键领域，一些网络基本概念，TCP&#x2F;IP分组模型，OSI模型等。"}</script><link rel="canonical" href="https://wangxuejia.blog/CNI-Chapter1-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
-  (function () {
-      function switchTab() {
-          if (!location.hash) {
-            return;
-          }
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>《计算机网络与因特网》 第一章笔记 | 三叔胡言乱语的地方</title><meta name="author" content="三叔"><meta name="copyright" content="三叔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《计算机网络与因特网》 第一章笔记 笼统的介绍了网络的五个关键领域，一些网络基本概念，TCP&#x2F;IP分组模型，OSI模型等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《计算机网络与因特网》 第一章笔记">
+<meta property="og:url" content="https://tuncle.blog/CNI-Chapter1-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="《计算机网络与因特网》 第一章笔记 笼统的介绍了网络的五个关键领域，一些网络基本概念，TCP&#x2F;IP分组模型，OSI模型等。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuncle.blog/img/avatar.jpg">
+<meta property="article:published_time" content="2019-11-22T15:12:01.000Z">
+<meta property="article:modified_time" content="2023-04-16T06:32:59.810Z">
+<meta property="article:author" content="三叔">
+<meta property="article:tag" content="读书笔记">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuncle.blog/img/avatar.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://tuncle.blog/CNI-Chapter1-Notes/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: 三叔","link":"链接: ","source":"来源: 三叔胡言乱语的地方","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《计算机网络与因特网》 第一章笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-16 14:32:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-          const id = '#' + CSS.escape(location.hash.substring(1));
-          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
-          if (!$tabMenu) {
-            return;
-          }
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
-          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
-          Array.from($tabMenuContainer.querySelectorAll('a'))
-              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
-              .forEach($content => $content.classList.add('is-hidden'));
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-          if ($tabMenu) {
-              $tabMenu.parentElement.classList.add('is-active');
-          }
-          const $activeTab = document.querySelector(id);
-          if ($activeTab) {
-              $activeTab.classList.remove('is-hidden');
-          }
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
-      switchTab();
-      window.addEventListener('hashchange', switchTab, false);
-  })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-11-22T15:12:01.000Z" title="2019/11/22 23:12:01">2019-11-22</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.005Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span><span class="level-item">22 分钟读完 (大约3261个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《计算机网络与因特网》 第一章笔记</h1><div class="content"><p>《计算机网络与因特网》 第一章笔记</p>
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="三叔胡言乱语的地方"><span class="site-name">三叔胡言乱语的地方</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">《计算机网络与因特网》 第一章笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2019-11-22T15:12:01.000Z" title="发表于 2019-11-22 23:12:01">2019-11-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/CNI-Chapter1-Notes/" data-flag-title="《计算机网络与因特网》 第一章笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>《计算机网络与因特网》 第一章笔记</p>
 <p>笼统的介绍了网络的五个关键领域，一些网络基本概念，TCP/IP分组模型，OSI模型等。</p>
 <span id="more"></span>
-<h1>Chapter1 Introduction And Overview</h1>
-<h2 id="Growth-Of-Computer-Networking">Growth Of Computer Networking</h2>
-<p>计算机网络正在持续的爆炸性成长。在1970年代它只是一个非常小范围的研究课题，在1980年也只有几个网站，但到现在计算机网络已经成为了生活中的一部分。</p>
-<h2 id="Why-Networking-Seems-Complex">Why Networking Seems Complex</h2>
-<p>计算机网络是一个高速发展的领域。</p>
+<h1 id="Chapter1-Introduction-And-Overview"><a href="#Chapter1-Introduction-And-Overview" class="headerlink" title="Chapter1 Introduction And Overview"></a>Chapter1 Introduction And Overview</h1><h2 id="Growth-Of-Computer-Networking"><a href="#Growth-Of-Computer-Networking" class="headerlink" title="Growth Of Computer Networking"></a>Growth Of Computer Networking</h2><p>计算机网络正在持续的爆炸性成长。在1970年代它只是一个非常小范围的研究课题，在1980年也只有几个网站，但到现在计算机网络已经成为了生活中的一部分。</p>
+<h2 id="Why-Networking-Seems-Complex"><a href="#Why-Networking-Seems-Complex" class="headerlink" title="Why Networking Seems Complex"></a>Why Networking Seems Complex</h2><p>计算机网络是一个高速发展的领域。</p>
 <p>对于初学者而言，他可能让人觉得很困惑，因为并没有一个最基础的理论来将计算机网络的所有部分联系在一起。有许多组织都定义了计算机网络的标准，而有时这些标准相互之间并不兼容。</p>
 <p>计算机网络用语也并没有一个统一的标准，许多组织都定义过自己一套用语规范，这又很容易让初学者们感到困惑。</p>
-<h2 id="The-Five-Key-ASpects-of-Networking">The Five Key ASpects of Networking</h2>
-<p>计算机网络包括五个关键领域：</p>
+<h2 id="The-Five-Key-ASpects-of-Networking"><a href="#The-Five-Key-ASpects-of-Networking" class="headerlink" title="The Five Key ASpects of Networking"></a>The Five Key ASpects of Networking</h2><p>计算机网络包括五个关键领域：</p>
 <ol>
 <li>网络应用与网络编程</li>
 <li>数据通信</li>
@@ -48,32 +196,24 @@
 <li>TCP/IP的网络互联</li>
 <li>附加的网络概念和技术</li>
 </ol>
-<h3 id="Network-Applications-and-network-programming">Network Applications and network programming</h3>
-<p>用户使用网络服务和设施是基于一个安装在电脑上的应用程序，这个程序可以与其他电脑上的程序通过网络进行交流。网络程序有很多种类，包括邮件，下载器，游览器等。</p>
+<h3 id="Network-Applications-and-network-programming"><a href="#Network-Applications-and-network-programming" class="headerlink" title="Network Applications and network programming"></a>Network Applications and network programming</h3><p>用户使用网络服务和设施是基于一个安装在电脑上的应用程序，这个程序可以与其他电脑上的程序通过网络进行交流。网络程序有很多种类，包括邮件，下载器，游览器等。</p>
 <p>所有这些程序都是构建在一个单一的、共享的网络上，因此开发者可以使用同一套接口来进行开发。</p>
 <p>计算机网络的只是可以帮助开发者更好的开发网络应用。</p>
-<h3 id="Data-Communications">Data Communications</h3>
-<p>数据通信是电子工程的主要领域，它基于一些物理现象来传输数据，是一个较底层的方法。</p>
+<h3 id="Data-Communications"><a href="#Data-Communications" class="headerlink" title="Data Communications"></a>Data Communications</h3><p>数据通信是电子工程的主要领域，它基于一些物理现象来传输数据，是一个较底层的方法。</p>
 <p>因为数据通信是基于物理概念，所以乍看起来它与计算机网络的学习并没有太深的关系，但数据通信中的一些关键概念影响了通信规范的制定。例如调制中带宽的概念直接影响了网络的吞吐量。</p>
 <p>数据通信也引入了复用的概念，即多个来源的数据可以被组合在一起通过一个共享的媒介进行传输，然后再分开传递给不同的目的地。</p>
 <p>数据通信包含了许多底层的细节，他为计算机网络构建了基础。</p>
-<h3 id="Packet-Switching-And-Networking-Technologies">Packet Switching And Networking Technologies</h3>
-<p>通信网络已经从早期的依赖于物理点线进行的点对点电报或电话系统转换为一个通信电路。早期的通过线连接已经转换为通过电交换。</p>
+<h3 id="Packet-Switching-And-Networking-Technologies"><a href="#Packet-Switching-And-Networking-Technologies" class="headerlink" title="Packet Switching And Networking Technologies"></a>Packet Switching And Networking Technologies</h3><p>通信网络已经从早期的依赖于物理点线进行的点对点电报或电话系统转换为一个通信电路。早期的通过线连接已经转换为通过电交换。</p>
 <p><code>分组交换（Packet switching）</code>从最底层的方式改变了网络，是现代网络的基础。多个信息发送者不再需要依赖于专用网络，通过分组交换他们可以通过一个共享的网络来传输数据。</p>
 <p>分组交换将数据分为许多小块，称为包<code>Packets</code>，包中都包含一个目的地的信息。网络中的设备都包含了如何抵达其他地址的信息，当设备接收到一个包后他会解析包中的数据，并选择一个通路将其送给正确的目的地。</p>
 <p>因为计算机网络在设计时有许多不同的需求，例如速度，距离，经济成本等，有许多分组交换技术被发明出来，他们针对不同的需求在细节上存在着一些差异。</p>
-<h3 id="Internetworking-with-TCP-IP">Internetworking with TCP/IP</h3>
-<p>在一段时间内，许多研究者都致力于找到一个可以满足所有需求的分组交换技术。在1973年，Vinton Cerf 和 Pobert Kahn认为不存在一种分组交换技术可以满足所有的需求，因此他们致力于将不同的技术融合在一起。他们发展了一系列的标准，并最终成为了<code>TCP/IP协议族(TCP/IP Internet Protocol)</code>(简称为TCP/IP)。这最终成为了全球网络的基础，并称为计算机网络的一个重要组成部分。</p>
+<h3 id="Internetworking-with-TCP-IP"><a href="#Internetworking-with-TCP-IP" class="headerlink" title="Internetworking with TCP/IP"></a>Internetworking with TCP/IP</h3><p>在一段时间内，许多研究者都致力于找到一个可以满足所有需求的分组交换技术。在1973年，Vinton Cerf 和 Pobert Kahn认为不存在一种分组交换技术可以满足所有的需求，因此他们致力于将不同的技术融合在一起。他们发展了一系列的标准，并最终成为了<code>TCP/IP协议族(TCP/IP Internet Protocol)</code>(简称为TCP/IP)。这最终成为了全球网络的基础，并称为计算机网络的一个重要组成部分。</p>
 <p>TCP/IP标准成功的一个重要原因是它宽容的异质性。TCP/IP使用了一个虚拟的方法来定义网络不相关的包好网络不相关的检测方法。因此即使分组技术在持续的发展，因为TCP/IP始终可以与新的分组技术共存。</p>
-<h3 id="Additional-Networking-Concepts-And-Technologies">Additional Networking Concepts And Technologies</h3>
-<p>除了构造网络的硬件和协议，还有大量的其他技术为网络提供了不同偶给你能。</p>
+<h3 id="Additional-Networking-Concepts-And-Technologies"><a href="#Additional-Networking-Concepts-And-Technologies" class="headerlink" title="Additional Networking Concepts And Technologies"></a>Additional Networking Concepts And Technologies</h3><p>除了构造网络的硬件和协议，还有大量的其他技术为网络提供了不同偶给你能。</p>
 <p>例如<code>软件定义网络(Software Defined Networking(SDN))</code>允许管理者定义和控制网络，<code>物联网(Internet to Thing)</code>让嵌入式系统可以通过网络进行交流。</p>
-<h2 id="Public-and-Private-Parts-Of-The-Internet">Public and Private Parts Of The Internet</h2>
-<p>计算机网络是由<code>公共网络(Public network)</code>和<code>私人网络(Private network)</code>构成的。</p>
-<h3 id="Public-Network">Public Network</h3>
-<p>公共网络是<code>服务提供商(Service Provider)</code>所拥有的服务，服务商会将服务提供给任何订阅了的个人或组织。这里的公共指的是大众都可以订阅这个服务，并不意味着公共网络传输的数据是被暴露在外，所有人都可以获取的。</p>
-<h3 id="Private-Network">Private Network</h3>
-<p>私人网络是指网络的使用权被限制在一个组间。如果服务商将服务租赁给了个人或公司，个人或公司仅在自己的范围内使用这个网络，那么它就是私人网络。</p>
+<h2 id="Public-and-Private-Parts-Of-The-Internet"><a href="#Public-and-Private-Parts-Of-The-Internet" class="headerlink" title="Public and Private Parts Of The Internet"></a>Public and Private Parts Of The Internet</h2><p>计算机网络是由<code>公共网络(Public network)</code>和<code>私人网络(Private network)</code>构成的。</p>
+<h3 id="Public-Network"><a href="#Public-Network" class="headerlink" title="Public Network"></a>Public Network</h3><p>公共网络是<code>服务提供商(Service Provider)</code>所拥有的服务，服务商会将服务提供给任何订阅了的个人或组织。这里的公共指的是大众都可以订阅这个服务，并不意味着公共网络传输的数据是被暴露在外，所有人都可以获取的。</p>
+<h3 id="Private-Network"><a href="#Private-Network" class="headerlink" title="Private Network"></a>Private Network</h3><p>私人网络是指网络的使用权被限制在一个组间。如果服务商将服务租赁给了个人或公司，个人或公司仅在自己的范围内使用这个网络，那么它就是私人网络。</p>
 <p>私人网络按其大小可以被分类为以下四种：</p>
 <ol>
 <li>消费者(Consumer)</li>
@@ -81,143 +221,203 @@
 <li>中小型商用(small-medium Business，SMB)</li>
 <li>大型企业(Large enterprise)</li>
 </ol>
-<h2 id="Networks-Interoperability-And-Standards">Networks,Interoperability,And Standards</h2>
-<p>通信至少包含两个实体，信息发送者和信息接受者。为了保证网络中的所有实体都能正确的交流，需要有一个共同的标准。</p>
+<h2 id="Networks-Interoperability-And-Standards"><a href="#Networks-Interoperability-And-Standards" class="headerlink" title="Networks,Interoperability,And Standards"></a>Networks,Interoperability,And Standards</h2><p>通信至少包含两个实体，信息发送者和信息接受者。为了保证网络中的所有实体都能正确的交流，需要有一个共同的标准。</p>
 <p>使用<code>互操作性(Interoperability)</code>来表示两个实体是否可以无误的彼此通信。</p>
 <p>为了保证实体可以正确的彼此交流，他们需要遵守一系列共同的规则，这些规则被称为<code>通信协议(Communication protocol/Network protocol/Protocol)</code>。</p>
 <ol>
 <li>在通信发生错误的时候需要采取的行动也是由通信协议来指定。</li>
 <li>通信协议可以是底层的，例如电压或信号的制定，也可以高层的，如软件传输的数据类型。</li>
 </ol>
-<h2 id="Protocol-Suites-And-Layering-Models">Protocol Suites And Layering Models</h2>
-<p>为了避免重复工作，每个协议应该只负责其他协议未包含的部分，因此协议的制定并非是相互独立的。将一系列合作的协议称为<code>族(Suites/Families)</code>。族中的每个协议都只关注通信中的一部分，族中的所有协议组合起来就覆盖了整个通信的所有方面。</p>
+<h2 id="Protocol-Suites-And-Layering-Models"><a href="#Protocol-Suites-And-Layering-Models" class="headerlink" title="Protocol Suites And Layering Models"></a>Protocol Suites And Layering Models</h2><p>为了避免重复工作，每个协议应该只负责其他协议未包含的部分，因此协议的制定并非是相互独立的。将一系列合作的协议称为<code>族(Suites/Families)</code>。族中的每个协议都只关注通信中的一部分，族中的所有协议组合起来就覆盖了整个通信的所有方面。</p>
 <p>一个用来将协议分组的基本抽象是<code>分组模型(Layering model)</code>，分组模型将所有通信问题分为几个部分，每个部分称为<code>一层(Layer)</code>。将所有协议按层分组帮助协议的设计者和实现者有效的控制了问题的复杂度，因为他们只需要关注与网络的一个方面即可。</p>
 <p>下图展示了因特网的分组模型，也成为TCP/IP分组模型：</p>
 <p><img src="CNI-Chapter1-Notes/2019-11-22-20-21-21.png" alt="TCP/IP分组模型"></p>
-<h3 id="Layer-1-Physical">Layer 1:Physical</h3>
-<p>物理层的协议指定了传输媒介和相关硬件的细节。电子相关的属性，频率，信号等都属于物理层。</p>
-<h3 id="Layer-2-Network-Interface-MAC">Layer 2: Network Interface(MAC)</h3>
-<p>网络接口层的协议指定了对网络通信的细节以及网络硬件与Layer3（Internet层）的通信细节。硬件地址，网络地址，网络可支持的最大包数据以及传输媒介的协议等信息都属于网络接口层。</p>
+<h3 id="Layer-1-Physical"><a href="#Layer-1-Physical" class="headerlink" title="Layer 1:Physical"></a>Layer 1:Physical</h3><p>物理层的协议指定了传输媒介和相关硬件的细节。电子相关的属性，频率，信号等都属于物理层。</p>
+<h3 id="Layer-2-Network-Interface-MAC"><a href="#Layer-2-Network-Interface-MAC" class="headerlink" title="Layer 2: Network Interface(MAC)"></a>Layer 2: Network Interface(MAC)</h3><p>网络接口层的协议指定了对网络通信的细节以及网络硬件与Layer3（Internet层）的通信细节。硬件地址，网络地址，网络可支持的最大包数据以及传输媒介的协议等信息都属于网络接口层。</p>
 <p>TCP/IP的设计者将这一层命名为<code>网络接口层（Network Interface）</code>，但一些协会更喜欢称为<code>数据链路层（Data Link）</code>，工业界又喜欢称为<code>媒介访问控制层（Media Access Control,MAC）</code></p>
-<h3 id="Layer-3：Internet">Layer 3：Internet</h3>
-<p>因特网层是因特网的基础。因特网地址结构，因特网包的结构，大包拆分成小包的方式，报告错误的方式都属于因特网层。</p>
-<h3 id="Layer-4：Transport">Layer 4：Transport</h3>
-<p>传输层协议提供了计算机上的一个应用与另一台机器上的应用交流的方法。如接收端接收数据的最大速率，避免网络堵塞的方法，和保证接收端按顺序接收数据的技术都属于传输层。</p>
-<h3 id="Layer-5-Application">Layer 5: Application</h3>
-<p>应用层的协议指定了通过网络交流的应用传输的数据信息的格式和意义，以及需要执行的步骤。如邮件，文件传输，语音电话等的实现都属于应用层。</p>
-<h2 id="How-Data-passes-Through-Layers">How Data passes Through Layers</h2>
-<p>分组模型并不只是为了帮助理解协议，协议的实现满足某一层协议的输出需要匹配相邻层协议的输入。</p>
+<h3 id="Layer-3：Internet"><a href="#Layer-3：Internet" class="headerlink" title="Layer 3：Internet"></a>Layer 3：Internet</h3><p>因特网层是因特网的基础。因特网地址结构，因特网包的结构，大包拆分成小包的方式，报告错误的方式都属于因特网层。</p>
+<h3 id="Layer-4：Transport"><a href="#Layer-4：Transport" class="headerlink" title="Layer 4：Transport"></a>Layer 4：Transport</h3><p>传输层协议提供了计算机上的一个应用与另一台机器上的应用交流的方法。如接收端接收数据的最大速率，避免网络堵塞的方法，和保证接收端按顺序接收数据的技术都属于传输层。</p>
+<h3 id="Layer-5-Application"><a href="#Layer-5-Application" class="headerlink" title="Layer 5: Application"></a>Layer 5: Application</h3><p>应用层的协议指定了通过网络交流的应用传输的数据信息的格式和意义，以及需要执行的步骤。如邮件，文件传输，语音电话等的实现都属于应用层。</p>
+<h2 id="How-Data-passes-Through-Layers"><a href="#How-Data-passes-Through-Layers" class="headerlink" title="How Data passes Through Layers"></a>How Data passes Through Layers</h2><p>分组模型并不只是为了帮助理解协议，协议的实现满足某一层协议的输出需要匹配相邻层协议的输入。</p>
 <p>如下图展示了两台电脑通过网络传输数据的过程：</p>
 <p><img src="CNI-Chapter1-Notes/2019-11-22-20-59-21.png" alt="网络数据传输过程"></p>
 <p>一号电脑是数据的发送方，二号电脑是数据的接收方。数据从一号电脑的应用层逐渐向下传递，通过接口层进入网络，在进入网络并传输后，通过二号电脑的接口层传入，再向上逐渐传递到应用层。</p>
-<h2 id="Headers-And-Layers">Headers And Layers</h2>
-<p>每一层的协议为了保证数据被正确的传递都进行了一些计算。在发送端的每一层中都将一些额外的信息加到了数据包中，对应的，在接受段的每一层中都将解析并移除这些额外的信息。</p>
+<h2 id="Headers-And-Layers"><a href="#Headers-And-Layers" class="headerlink" title="Headers And Layers"></a>Headers And Layers</h2><p>每一层的协议为了保证数据被正确的传递都进行了一些计算。在发送端的每一层中都将一些额外的信息加到了数据包中，对应的，在接受段的每一层中都将解析并移除这些额外的信息。</p>
 <p>这些被协议额外加入的数据称为<code>数据头(header)</code>。以发送端为例，数据头是在数据逐层向下的过程中一步步被加入的，即传输层增加一些数据头，网络层增加一些数据头，接口层增加一些数据头。因此最终的数据会如下图所示，最靠近原始数据的数据头是最早被添加的：</p>
 <p><img src="CNI-Chapter1-Notes/2019-11-22-21-08-20.png" alt="网络数据头添加"></p>
 <ul>
 <li>虽然图中每个被添加的数据头大小看起来相同，但实际上都不是一个固定的大小。</li>
 </ul>
-<h2 id="ISO-And-The-OSI-Seven-Layer-Reference-Model">ISO And The OSI Seven Layer Reference Model</h2>
-<p>在因特网模型发展的过程中，有两个组织定义了一个替代的参考模型，称为<code>开放式系统互联参考七层模型(Open Systems Interconnection Seven-Layer Reference Model)</code>，简称为<code>OSI模型</code>。</p>
+<h2 id="ISO-And-The-OSI-Seven-Layer-Reference-Model"><a href="#ISO-And-The-OSI-Seven-Layer-Reference-Model" class="headerlink" title="ISO And The OSI Seven Layer Reference Model"></a>ISO And The OSI Seven Layer Reference Model</h2><p>在因特网模型发展的过程中，有两个组织定义了一个替代的参考模型，称为<code>开放式系统互联参考七层模型(Open Systems Interconnection Seven-Layer Reference Model)</code>，简称为<code>OSI模型</code>。</p>
 <p>这两个组织分别是<code>国际标准化组织（International Organization for Standardization）</code>，简称为<code>ISO</code>和<code>国际电信联盟（International Telecommunications Union）(ITU)</code>中的电信标准部门。</p>
 <p><code>OSI</code>协议图如下：</p>
 <p><img src="CNI-Chapter1-Notes/2019-11-22-23-01-16.png" alt="OSI协议"></p>
 <p>TCP/IP协议比OSI协议更为高效合理，发展和部署OSI协议的工作已经被停滞。许多工作者目前在扩展OSI协议的定义来让其符合TCP/IP，基本是让Network层匹配Internet层，然后再在Session层和Presentation层增加一些支持协议。</p>
 <p>虽然许多工程师和商业部门知道<code>OSI协议</code>不如<code>TCP/IP协议</code>高效，但他们依然处于某些原因在坚持使用。</p>
-<h2 id="Remainder-Of-The-Text">Remainder Of The Text</h2>
-<p>书的剩下部分将分为五个部分，基本对应与1.3节中提到的五个重要领域。</p>
+<h2 id="Remainder-Of-The-Text"><a href="#Remainder-Of-The-Text" class="headerlink" title="Remainder Of The Text"></a>Remainder Of The Text</h2><p>书的剩下部分将分为五个部分，基本对应与1.3节中提到的五个重要领域。</p>
 <p>第一部分介绍网络应用和网络编程</p>
 <p>第二部分介绍数据通信和信息传输</p>
 <p>第三部分介绍分组交换以及包数据，另外也会介绍一些网络的基本分类，如局域网和广域网</p>
 <p>第四部分将介绍TCP/IP协议族</p>
 <p>第五部分介绍剩下的一些网络相关的技术</p>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>引用：</p>
+<div class="note info simple"><p>引用：</p>
 <ol>
 <li><em>Computer Networks and Internets</em> 6th</li>
 </ol>
-
-        </div>
-    </article>
+</div>
 <hr>
-</div><div class="article-licensing box"><div class="licensing-title"><p>《计算机网络与因特网》 第一章笔记</p><p><a href="https://wangxuejia.blog/CNI-Chapter1-Notes/">https://wangxuejia.blog/CNI-Chapter1-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-11-22</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/CNI-Chapter5-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《计算机网络与因特网》 第五章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/IA-Chapter13-Notes/"><span class="level-item">《算法导论》 第十三章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
-            el: '#valine-thread',
-            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
-            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
-            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
-            avatar: "mm",
-            avatarForce: false,
-            meta: ["nick","mail","link"],
-            pageSize: 10,
-            lang: "zh-CN",
-            visitor: true,
-            highlight: true,
-            recordIP: false,
-            
-            
-            
-            enableQQ: true,
-            requiredFields: [],
-        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
-            article: {
-                highlight: {
-                    clipboard: true,
-                    fold: 'unfolded'
-                }
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="Tuncle">三叔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tuncle.blog/CNI-Chapter1-Notes/">https://tuncle.blog/CNI-Chapter1-Notes/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tuncle.blog" target="_blank">三叔胡言乱语的地方</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="twitter, wechat, weibo"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/CNI-Chapter5-Notes/" title="《计算机网络与因特网》 第五章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《计算机网络与因特网》 第五章笔记</div></div></a></div><div class="next-post pull-right"><a href="/IA-Chapter13-Notes/" title="《算法导论》 第十三章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《算法导论》 第十三章笔记</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter1-Introduction-And-Overview"><span class="toc-number">1.</span> <span class="toc-text">Chapter1 Introduction And Overview</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Growth-Of-Computer-Networking"><span class="toc-number">1.1.</span> <span class="toc-text">Growth Of Computer Networking</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-Networking-Seems-Complex"><span class="toc-number">1.2.</span> <span class="toc-text">Why Networking Seems Complex</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Five-Key-ASpects-of-Networking"><span class="toc-number">1.3.</span> <span class="toc-text">The Five Key ASpects of Networking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Network-Applications-and-network-programming"><span class="toc-number">1.3.1.</span> <span class="toc-text">Network Applications and network programming</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Communications"><span class="toc-number">1.3.2.</span> <span class="toc-text">Data Communications</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Packet-Switching-And-Networking-Technologies"><span class="toc-number">1.3.3.</span> <span class="toc-text">Packet Switching And Networking Technologies</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Internetworking-with-TCP-IP"><span class="toc-number">1.3.4.</span> <span class="toc-text">Internetworking with TCP&#x2F;IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Additional-Networking-Concepts-And-Technologies"><span class="toc-number">1.3.5.</span> <span class="toc-text">Additional Networking Concepts And Technologies</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Public-and-Private-Parts-Of-The-Internet"><span class="toc-number">1.4.</span> <span class="toc-text">Public and Private Parts Of The Internet</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Public-Network"><span class="toc-number">1.4.1.</span> <span class="toc-text">Public Network</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Private-Network"><span class="toc-number">1.4.2.</span> <span class="toc-text">Private Network</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Networks-Interoperability-And-Standards"><span class="toc-number">1.5.</span> <span class="toc-text">Networks,Interoperability,And Standards</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Protocol-Suites-And-Layering-Models"><span class="toc-number">1.6.</span> <span class="toc-text">Protocol Suites And Layering Models</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Layer-1-Physical"><span class="toc-number">1.6.1.</span> <span class="toc-text">Layer 1:Physical</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layer-2-Network-Interface-MAC"><span class="toc-number">1.6.2.</span> <span class="toc-text">Layer 2: Network Interface(MAC)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layer-3%EF%BC%9AInternet"><span class="toc-number">1.6.3.</span> <span class="toc-text">Layer 3：Internet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layer-4%EF%BC%9ATransport"><span class="toc-number">1.6.4.</span> <span class="toc-text">Layer 4：Transport</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layer-5-Application"><span class="toc-number">1.6.5.</span> <span class="toc-text">Layer 5: Application</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-Data-passes-Through-Layers"><span class="toc-number">1.7.</span> <span class="toc-text">How Data passes Through Layers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Headers-And-Layers"><span class="toc-number">1.8.</span> <span class="toc-text">Headers And Layers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ISO-And-The-OSI-Seven-Layer-Reference-Model"><span class="toc-number">1.9.</span> <span class="toc-text">ISO And The OSI Seven Layer Reference Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remainder-Of-The-Text"><span class="toc-number">1.10.</span> <span class="toc-text">Remainder Of The Text</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By 三叔</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Keep Writing</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
             }
-        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
-      window.cookieconsent.initialise({
-        type: "info",
-        theme: "edgeless",
-        static: false,
-        position: "bottom-left",
-        content: {
-          message: "此网站使用Cookie来改善您的体验。",
-          dismiss: "知道了！",
-          allow: "允许使用Cookie",
-          deny: "拒绝",
-          link: "了解更多",
-          policy: "Cookie政策",
-          href: "https://www.cookiesandyou.com/",
-        },
-        palette: {
-          popup: {
-            background: "#edeff5",
-            text: "#838391"
-          },
-          button: {
-            background: "#4b81e8"
-          },
-        },
-      });
-    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
-            if (typeof $.fn.lightGallery === 'function') {
-                $('.article').lightGallery({ selector: '.gallery-item' });
-            }
-            if (typeof $.fn.justifiedGallery === 'function') {
-                if ($('.justified-gallery > p > .gallery-item').length) {
-                    $('.justified-gallery > p > .gallery-item').unwrap();
-                }
-                $('.justified-gallery').justifiedGallery();
-            }
-        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
-            'HTML-CSS': {
-                matchFontHeight: false
-            },
-            SVG: {
-                matchFontHeight: false
-            },
-            CommonHTML: {
-                matchFontHeight: false
-            },
-            tex2jax: {
-                inlineMath: [
-                    ['$','$'],
-                    ['\\(','\\)']
-                ]
-            }
-        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
-            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
-        });</script></body></html>
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey: 'z1vCYavVUbCGuMjNMcrsvShN',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

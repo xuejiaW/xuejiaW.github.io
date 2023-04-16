@@ -1,208 +1,415 @@
-<!doctype html>
-<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>《算法导论》 第十章笔记 - 三叔胡言乱语的地方</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="三叔胡言乱语的地方"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="三叔胡言乱语的地方"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="《算法导论》第十章笔记，包括栈，队列，链表的实现。"><meta property="og:type" content="blog"><meta property="og:title" content="《算法导论》 第十章笔记"><meta property="og:url" content="https://wangxuejia.blog/IA-Chapter10-Notes/"><meta property="og:site_name" content="三叔胡言乱语的地方"><meta property="og:description" content="《算法导论》第十章笔记，包括栈，队列，链表的实现。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-25-12-31-40.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-25-12-30-32.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-25-16-24-36.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-14-41-54.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-14-42-13.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-14-41-54.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-14-52-00.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-14-41-54.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-14-58-40.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-15-23-27.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-15-39-21.png"><meta property="og:image" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-15-40-32.png"><meta property="article:published_time" content="2019-11-05T06:32:10.000Z"><meta property="article:modified_time" content="2023-04-02T12:21:20.015Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="读书笔记"><meta property="article:tag" content="数据结构与算法"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-25-12-31-40.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://wangxuejia.blog/IA-Chapter10-Notes/"},"headline":"《算法导论》 第十章笔记","image":["https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-25-12-31-40.png","https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-25-12-30-32.png","https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-25-16-24-36.png","https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-14-41-54.png","https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-14-42-13.png","https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-14-41-54.png","https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-14-52-00.png","https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-14-41-54.png","https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-14-58-40.png","https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-15-23-27.png","https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-15-39-21.png","https://wangxuejia.blog/IA-Chapter10-Notes/IA-Chapter10-Notes/2019-10-26-15-40-32.png"],"datePublished":"2019-11-05T06:32:10.000Z","dateModified":"2023-04-02T12:21:20.015Z","author":{"@type":"Person","name":"三叔"},"publisher":{"@type":"Organization","name":"三叔胡言乱语的地方","logo":{"@type":"ImageObject","url":{"text":"三叔胡言乱语的地方"}}},"description":"《算法导论》第十章笔记，包括栈，队列，链表的实现。"}</script><link rel="canonical" href="https://wangxuejia.blog/IA-Chapter10-Notes/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
-  (function () {
-      function switchTab() {
-          if (!location.hash) {
-            return;
-          }
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>《算法导论》 第十章笔记 | 三叔胡言乱语的地方</title><meta name="author" content="三叔"><meta name="copyright" content="三叔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="《算法导论》第十章笔记，包括栈，队列，链表的实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《算法导论》 第十章笔记">
+<meta property="og:url" content="https://tuncle.blog/IA-Chapter10-Notes/index.html">
+<meta property="og:site_name" content="三叔胡言乱语的地方">
+<meta property="og:description" content="《算法导论》第十章笔记，包括栈，队列，链表的实现。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuncle.blog/img/avatar.jpg">
+<meta property="article:published_time" content="2019-11-05T06:32:10.000Z">
+<meta property="article:modified_time" content="2023-04-16T06:32:59.818Z">
+<meta property="article:author" content="三叔">
+<meta property="article:tag" content="读书笔记">
+<meta property="article:tag" content="数据结构与算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuncle.blog/img/avatar.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://tuncle.blog/IA-Chapter10-Notes/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: 三叔","link":"链接: ","source":"来源: 三叔胡言乱语的地方","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《算法导论》 第十章笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-16 14:32:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-          const id = '#' + CSS.escape(location.hash.substring(1));
-          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
-          if (!$tabMenu) {
-            return;
-          }
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
 
-          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
-          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
-          Array.from($tabMenuContainer.querySelectorAll('a'))
-              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
-              .forEach($content => $content.classList.add('is-hidden'));
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
 
-          if ($tabMenu) {
-              $tabMenu.parentElement.classList.add('is-active');
-          }
-          const $activeTab = document.querySelector(id);
-          if ($activeTab) {
-              $activeTab.classList.remove('is-hidden');
-          }
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
       }
-      switchTab();
-      window.addEventListener('hashchange', switchTab, false);
-  })();
-  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">三叔胡言乱语的地方</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-11-05T06:32:10.000Z" title="2019/11/5 14:32:10">2019-11-05</time>发表</span><span class="level-item"><time dateTime="2023-04-02T12:21:20.015Z" title="2023/4/2 20:21:20">2023-04-02</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><span> / </span><a class="link-muted" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span><span class="level-item">16 分钟读完 (大约2420个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">《算法导论》 第十章笔记</h1><div class="content"><p>《算法导论》第十章笔记，包括栈，队列，链表的实现。</p>
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">71</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="三叔胡言乱语的地方"><span class="site-name">三叔胡言乱语的地方</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">《算法导论》 第十章笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2019-11-05T06:32:10.000Z" title="发表于 2019-11-05 14:32:10">2019-11-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/IA-Chapter10-Notes/" data-flag-title="《算法导论》 第十章笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>《算法导论》第十章笔记，包括栈，队列，链表的实现。</p>
 <span id="more"></span>
-<h2 id="Chapter-10-Elementary-Data-Structures">Chapter 10. Elementary Data Structures</h2>
-<p>集合<code>Set</code>作为计算机科学的基础，重要性与数学中的集合相同。但数学中的集合是不可变的，计算机中的集合可在任意时刻扩张，收缩和更改，称之为<code>动态集合（dynamic set）</code>。一般动态集合需要实现如下操作中的一部分：</p>
+<h2 id="Chapter-10-Elementary-Data-Structures"><a href="#Chapter-10-Elementary-Data-Structures" class="headerlink" title="Chapter 10. Elementary Data Structures"></a>Chapter 10. Elementary Data Structures</h2><p>集合<code>Set</code>作为计算机科学的基础，重要性与数学中的集合相同。但数学中的集合是不可变的，计算机中的集合可在任意时刻扩张，收缩和更改，称之为<code>动态集合（dynamic set）</code>。一般动态集合需要实现如下操作中的一部分：</p>
 <p><code>Search</code>，<code>Insert</code>，<code>DELETE</code>，<code>MINIMUM</code>，<code>MAXIMUM</code>，<code>SUCCESSOR</code>，<code>PREDECESSOR</code></p>
 <p>这些操作可以分为两种，<code>查询操作(Queries)</code>和<code>修改操作(Modifying operations)</code>，如<code>Search</code>，<code>MINIMUM</code>，<code>MAXIMUM</code>，<code>SUCCESSOR</code>，<code>PREDECESSOR</code>都属于前者，<code>Insert</code>，<code>DELETE</code>属于后者</p>
-<h3 id="Stacks-and-queues">Stacks and queues</h3>
-<p><code>堆栈(Stacks)</code>是后进先出，<code>队列(Queues)</code>是先进先出。</p>
-<h4 id="Stacks">Stacks</h4>
-<p>在堆栈上的插入操作一般成为<code>Push</code>，删除操作一般称为<code>Pop</code>。堆栈有一个<code>top</code>指针指向队列中的第一个元素，在<code>Pop</code>时返回该元素，在<code>Push</code>时top指针向前移动一格，并在新的地方插入新值，当<code>top</code>为0则说明队列为空。</p>
-<p>堆栈的图解如下图，(a)为原始样子，(b)为执行了<code>Push(17)和Push(3)</code>后的样子，©为执行了<code>Pop</code>后的样子。图中的<code>S.top</code>表示当前指针的索引值。</p>
+<h3 id="Stacks-and-queues"><a href="#Stacks-and-queues" class="headerlink" title="Stacks and queues"></a>Stacks and queues</h3><p><code>堆栈(Stacks)</code>是后进先出，<code>队列(Queues)</code>是先进先出。</p>
+<h4 id="Stacks"><a href="#Stacks" class="headerlink" title="Stacks"></a>Stacks</h4><p>在堆栈上的插入操作一般成为<code>Push</code>，删除操作一般称为<code>Pop</code>。堆栈有一个<code>top</code>指针指向队列中的第一个元素，在<code>Pop</code>时返回该元素，在<code>Push</code>时top指针向前移动一格，并在新的地方插入新值，当<code>top</code>为0则说明队列为空。</p>
+<p>堆栈的图解如下图，(a)为原始样子，(b)为执行了<code>Push(17)和Push(3)</code>后的样子，(c)为执行了<code>Pop</code>后的样子。图中的<code>S.top</code>表示当前指针的索引值。</p>
 <p><img src="IA-Chapter10-Notes/2019-10-25-12-31-40.png" alt="堆栈图解"></p>
 <p>堆栈操作微数据实现，每个步骤的复杂度都为<code>O(1)</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">STACK_EMPTY(S):</span><br><span class="line"></span><br><span class="line">if s.top==0;</span><br><span class="line">    return true;</span><br><span class="line">else</span><br><span class="line">    return false;</span><br><span class="line"></span><br><span class="line">Push(S,x):</span><br><span class="line"></span><br><span class="line">S.top=S.top+1;</span><br><span class="line">S[S.top]=x;</span><br><span class="line"></span><br><span class="line">Pop(S):</span><br><span class="line"></span><br><span class="line">if STACK_EMPTY(S)</span><br><span class="line">    error&quot;underflow&quot;</span><br><span class="line">else</span><br><span class="line">    S.top=S.top-1;</span><br><span class="line">    return S[S.top+1]</span><br></pre></td></tr></table></figure>
 <p>c++的数组实现，不支持运行时扩大队列大小。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Stack</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="type">int</span> data[MAX];</span><br><span class="line">	~<span class="built_in">Stack</span>() &#123;&#125;</span><br><span class="line">	<span class="built_in">Stack</span>() &#123; top = <span class="number">-1</span>; &#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">push</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (top &gt; (MAX - <span class="number">1</span>))</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;Stack Overflow&quot;</span>&lt;&lt;endl;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		data[++top] = value;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">pop</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">isEmpty</span>())</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;Stack is empty&quot;</span>&lt;&lt;endl;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> data[top--];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">isEmpty</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> top &lt; <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">int</span> top;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h4 id="Queues">Queues</h4>
-<p>队列的插入操作称为<code>ENQUEUE</code>，删除操作称为<code>DEQUEUE</code>。队列的图解如下图，队列存在一个<code>head</code>指针和一个<code>tail</code>指针，两指针间的数据为队列保存的数据。当进行插入操作时，<code>tail</code>指针前移并在新地方插入数据，当进行删除操作时，<code>head</code>指针返回指着的值，并前移。</p>
+<h4 id="Queues"><a href="#Queues" class="headerlink" title="Queues"></a>Queues</h4><p>队列的插入操作称为<code>ENQUEUE</code>，删除操作称为<code>DEQUEUE</code>。队列的图解如下图，队列存在一个<code>head</code>指针和一个<code>tail</code>指针，两指针间的数据为队列保存的数据。当进行插入操作时，<code>tail</code>指针前移并在新地方插入数据，当进行删除操作时，<code>head</code>指针返回指着的值，并前移。</p>
 <p>图解如下图，使用一个大小为12的数组表示队列</p>
 <p>(a) 为初始状态，索引7-11为原始数据</p>
 <p>(b) 为执行了Enqueue(17),Enqueue(3),Enqueue(5)后的样子，每一步执行时tail指针先向前，再插入新值。当抵达数组边界时，返回数组的开头处继续执行插入操作</p>
-<p>© 为执行了Dequeue（）操作的样子</p>
+<p>(c) 为执行了Dequeue（）操作的样子</p>
 <p><img src="IA-Chapter10-Notes/2019-10-25-12-30-32.png" alt="队列图解"></p>
 <p>队列伪代码如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ENQUEUE(Q,X):</span><br><span class="line">Q[Q..tail] = x</span><br><span class="line">if [Q.tail == Q.length]</span><br><span class="line">	Q.tail = 1;</span><br><span class="line">else</span><br><span class="line">	Q.tail = Q.tail + 1</span><br><span class="line"></span><br><span class="line">DEQUEUE(Q):</span><br><span class="line"></span><br><span class="line">x=Q[Q.head]</span><br><span class="line"></span><br><span class="line">if [Q.head == Q.length]</span><br><span class="line">	Q.head = 1;</span><br><span class="line">else</span><br><span class="line">	Q.head = Q.head + 1</span><br><span class="line">return x</span><br></pre></td></tr></table></figure>
 <p>c++的循环数组实现</p>
 <p>当<code>top == head</code>时认为队列为空，当<code>(top+1) % size == head</code>时，认为队列已满。所以在队列插满的情况下永远会有一个空的值（因为top不等于head）</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Queue</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Queue</span>()</span><br><span class="line">	&#123;</span><br><span class="line">		head = tail = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~<span class="built_in">Queue</span>()</span><br><span class="line">	&#123;</span><br><span class="line">		head = tail = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">Enqueue</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> ((tail + <span class="number">1</span>) % QUEUESIZE == <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;Queue is full&quot;</span> &lt;&lt; endl;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		data[tail] = value;</span><br><span class="line"></span><br><span class="line">		tail = (tail == QUEUESIZE - <span class="number">1</span>) ? <span class="number">0</span> : tail + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">Dequeue</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">Empty</span>())</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;Queue is empty&quot;</span> &lt;&lt; endl;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="type">int</span> value = data[head];</span><br><span class="line"></span><br><span class="line">		head = (head == QUEUESIZE - <span class="number">1</span>) ? <span class="number">0</span> : head + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> value;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">Empty</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> head == tail;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">int</span> data[QUEUESIZE];</span><br><span class="line">	<span class="type">int</span> head;</span><br><span class="line">	<span class="type">int</span> tail;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="Linked-lists">Linked lists</h3>
-<p><code>链表(linked list)</code>是一种对象线性排列的数据结构。</p>
+<h3 id="Linked-lists"><a href="#Linked-lists" class="headerlink" title="Linked lists"></a>Linked lists</h3><p><code>链表(linked list)</code>是一种对象线性排列的数据结构。</p>
 <p>对于<code>双向链表(Doubly linked list)</code>来说，每个结点都保留有三个对象，表示属性的<code>key</code>，以及两个指针<code>next</code>和<code>prev</code>。如果对于结点<code>x</code>来说,<code>x.prev==Null</code>，则说明<code>x</code>是头结点，如果<code>x.next==Null</code>，则说明<code>x</code>是尾结点。另外还有存有一个变量<code>head</code>来指向头结点，如果<code>head</code>为空，则说明列表为空。</p>
 <p>对于<code>单链表（Singly linked list）</code>，删除<code>双向链表</code>中的<code>prev</code>对象即可。</p>
 <p>对于<code>循环链表（Circular list）</code>，尾结点的<code>next</code>指向头结点，头结点的<code>prev</code>指向尾结点。</p>
 <p>下图是<code>非循环双向链表</code>的图解</p>
 <p>(a) 为存有数据{1,4,9,16}的列表</p>
 <p>(b) 为插入了数据25之后的列表</p>
-<p>© 为删除了数据4之后的列表</p>
+<p>(c) 为删除了数据4之后的列表</p>
 <p><img src="IA-Chapter10-Notes/2019-10-25-16-24-36.png" alt="双向链表"></p>
 <p>链表通常需要支持<code>Search</code>，<code>Insert</code>和<code>Delete</code>操作，三者的伪代码分别为</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">SEARCH(L,k):</span><br><span class="line"></span><br><span class="line">x=L.head</span><br><span class="line">while x!=null and x.key!=k</span><br><span class="line">	x=x.next</span><br><span class="line">return x</span><br><span class="line"></span><br><span class="line">INSERT(L,k):</span><br><span class="line"></span><br><span class="line">x.next=L.head</span><br><span class="line">if L.head!=null</span><br><span class="line">	L.head.prev=x;</span><br><span class="line">x.prev=null;</span><br><span class="line">L.head=x;</span><br><span class="line"></span><br><span class="line">DELETE(L,x)</span><br><span class="line"></span><br><span class="line">if(x.prev!=Null)</span><br><span class="line">	x.prev.next=x.next</span><br><span class="line">else</span><br><span class="line">	L.head=x.next</span><br><span class="line"></span><br><span class="line">if x.next!=null</span><br><span class="line">	x.next.prev=x.prev</span><br></pre></td></tr></table></figure>
 <p><code>Search</code>的复杂度为$\Theta(n)$，<code>Insert</code>的复杂度为$O(1)$，<code>Delete</code>的复杂度本身为$O(1)$，但是通常删除操作前需要先找到该元素，所以整体复杂度为$\Theta(n)$</p>
 <p>列表的C++实现如下</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> value;</span><br><span class="line">	Node* next;</span><br><span class="line">	Node* prev;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">List</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">List</span>()</span><br><span class="line">	&#123;</span><br><span class="line">		head = <span class="literal">nullptr</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	~<span class="built_in">List</span>()</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Insert</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node* node = (Node*)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(Node));</span><br><span class="line">		node-&gt;value = value;</span><br><span class="line"></span><br><span class="line">		node-&gt;next = head;</span><br><span class="line">		node-&gt;prev = <span class="literal">nullptr</span>;</span><br><span class="line">		<span class="keyword">if</span> (head != <span class="literal">nullptr</span>)</span><br><span class="line">			head-&gt;prev = node;</span><br><span class="line"></span><br><span class="line">		head = node;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Delete</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node* toDelete = <span class="built_in">Search</span>(value);</span><br><span class="line">		<span class="keyword">if</span> (toDelete == <span class="literal">nullptr</span>)</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (toDelete-&gt;prev != <span class="literal">nullptr</span>)</span><br><span class="line">			toDelete-&gt;prev-&gt;next = toDelete-&gt;next;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			head = toDelete-&gt;next;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (toDelete-&gt;next != <span class="literal">nullptr</span>)</span><br><span class="line">			toDelete-&gt;next-&gt;prev = toDelete-&gt;prev;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">free</span>(toDelete);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">Node* <span class="title">Search</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node* begin = head;</span><br><span class="line">		<span class="keyword">while</span> (begin != <span class="literal">nullptr</span> &amp;&amp; begin-&gt;next != <span class="literal">nullptr</span> &amp;&amp; begin-&gt;value != value)</span><br><span class="line">		&#123;</span><br><span class="line">			begin = begin-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (begin-&gt;value == value)</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;Find the value &quot;</span> &lt;&lt; value &lt;&lt; endl;</span><br><span class="line">			<span class="keyword">return</span> begin;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Print</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node* begin = head;</span><br><span class="line">		<span class="keyword">while</span> (begin != <span class="literal">nullptr</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;List element value is &quot;</span> &lt;&lt; begin-&gt;value &lt;&lt; endl;</span><br><span class="line">			begin = begin-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;Print is over&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Node* head;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h4 id="Sentinels">Sentinels</h4>
-<p>可以使用一个哨兵结点来将列表变为循环列表，将哨兵结点命名为<code>nil</code>，<code>nil.next=head</code>且<code>nil.prev=tail</code>，这时候列表中就不需要存储<code>head</code>结点了，因为通过<code>nil</code>即可找到<code>head</code>。</p>
+<h4 id="Sentinels"><a href="#Sentinels" class="headerlink" title="Sentinels"></a>Sentinels</h4><p>可以使用一个哨兵结点来将列表变为循环列表，将哨兵结点命名为<code>nil</code>，<code>nil.next=head</code>且<code>nil.prev=tail</code>，这时候列表中就不需要存储<code>head</code>结点了，因为通过<code>nil</code>即可找到<code>head</code>。</p>
 <p>使用了哨兵结点后，搜索，插入以及删除伪代码变为</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">SEARCH(L,k):</span><br><span class="line"></span><br><span class="line">x=L.nil.next</span><br><span class="line">while x!=L.nil and x.key!=k</span><br><span class="line">	x=x.next</span><br><span class="line">return x</span><br><span class="line"></span><br><span class="line">INSERT(L,k):</span><br><span class="line"></span><br><span class="line">x.next=L.nil.next</span><br><span class="line">x.prev=L.nil</span><br><span class="line">L.nil.next.prev=x;</span><br><span class="line">L.nil.next=x</span><br><span class="line"></span><br><span class="line">DELETE(L,x)</span><br><span class="line">x.next.prev=x.prev;</span><br><span class="line">x.prev.next=x.next</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>哨兵循环双链表的C++实现为</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> value;</span><br><span class="line">	Node* next;</span><br><span class="line">	Node* prev;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">List_Sentinels</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">List_Sentinels</span>()</span><br><span class="line">	&#123;</span><br><span class="line">		sentials = (Node*)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(Node));</span><br><span class="line">		sentials-&gt;next = sentials;</span><br><span class="line">		sentials-&gt;prev = sentials;</span><br><span class="line">	&#125;</span><br><span class="line">	~<span class="built_in">List_Sentinels</span>()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">free</span>(sentials);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Insert</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node* node = (Node*)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(Node));</span><br><span class="line">		node-&gt;value = value;</span><br><span class="line"></span><br><span class="line">		node-&gt;next = sentials-&gt;next;</span><br><span class="line">		node-&gt;prev = sentials;</span><br><span class="line">		sentials-&gt;next-&gt;prev = node;</span><br><span class="line">		sentials-&gt;next = node;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Delete</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node* toDelete = <span class="built_in">Search</span>(value);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (toDelete == <span class="literal">nullptr</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;return for value == null&quot;</span> &lt;&lt; endl;</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		toDelete-&gt;prev-&gt;next = toDelete-&gt;next;</span><br><span class="line">		toDelete-&gt;next-&gt;prev = toDelete-&gt;prev;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">free</span>(toDelete);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function">Node* <span class="title">Search</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node* node = sentials-&gt;next;</span><br><span class="line">		<span class="keyword">while</span> (node-&gt;value != value &amp;&amp; node-&gt;next != sentials)</span><br><span class="line">		&#123;</span><br><span class="line">			node = node-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> node-&gt;value == value ? node : <span class="literal">nullptr</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Print</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Node* node = sentials-&gt;next;</span><br><span class="line">		<span class="keyword">while</span> (node != sentials)</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;value is &quot;</span> &lt;&lt; node-&gt;value &lt;&lt; endl;</span><br><span class="line">			node = node-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	Node* sentials;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="Implementing-pointers-and-objects">Implementing pointers and objects</h3>
-<p>在上一节的实现线性列表的过程中，需要用到指针来表示上一个结点或下一个结点。但在某些语言中，并没有提供指针的概念，如C#和Java，这一节介绍了在这些语言中如何来实现列表。</p>
-<h4 id="A-multiple-array-representation-of-objects">A multiple-array representation of objects</h4>
-<p>第一种方法是使用三个大小相同的数组来分别表示<code>next</code>，<code>key</code>和<code>prev</code>，如下两图实际上是实现了同一种结构。</p>
-<p><img src="IA-Chapter10-Notes/2019-10-26-14-41-54.png" alt="指针形式表现列表"><br>
-<img src="IA-Chapter10-Notes/2019-10-26-14-42-13.png" alt="多数组形式表现列表"></p>
+<h3 id="Implementing-pointers-and-objects"><a href="#Implementing-pointers-and-objects" class="headerlink" title="Implementing pointers and objects"></a>Implementing pointers and objects</h3><p>在上一节的实现线性列表的过程中，需要用到指针来表示上一个结点或下一个结点。但在某些语言中，并没有提供指针的概念，如C#和Java，这一节介绍了在这些语言中如何来实现列表。</p>
+<h4 id="A-multiple-array-representation-of-objects"><a href="#A-multiple-array-representation-of-objects" class="headerlink" title="A multiple-array representation of objects"></a>A multiple-array representation of objects</h4><p>第一种方法是使用三个大小相同的数组来分别表示<code>next</code>，<code>key</code>和<code>prev</code>，如下两图实际上是实现了同一种结构。</p>
+<p><img src="IA-Chapter10-Notes/2019-10-26-14-41-54.png" alt="指针形式表现列表"><br><img src="IA-Chapter10-Notes/2019-10-26-14-42-13.png" alt="多数组形式表现列表"></p>
 <p>图二是将三个数组并排显示的效果，另外有一个变量<code>L</code>来保存列表的第一个结点的索引值，在这里第一个结点的<code>Key</code>值为9，索引值为7，所以<code>L</code>中保存的值为7。</p>
 <p>以索引值为7为例，<code>key</code>值为9,<code>next</code>值为5,<code>prev</code>值为/。表示这个结点没有前一个结点，即为头结点，且后一个结点的索引值为5，数组索引值为5的地方，<code>key</code>值为16,<code>next</code>为2，<code>prev</code>为7。以此类推,可得到所有的结点。</p>
-<h4 id="A-single-array-representation-of-objects">A single-array representation of objects</h4>
-<p>第二种方法是只用一个数组来表示<code>next</code>，<code>key</code>和<code>prev</code>。每一个结点占数组中的三个位置，如一个结点的Key值在数组中的位置<code>A[i]</code>，则<code>next</code>位置为<code>A[i+1]</code>,<code>prev</code>位置为<code>A[i+2]</code></p>
-<p><img src="IA-Chapter10-Notes/2019-10-26-14-41-54.png" alt="指针形式表现列表"><br>
-<img src="IA-Chapter10-Notes/2019-10-26-14-52-00.png" alt="单数组形式表现列表"></p>
+<h4 id="A-single-array-representation-of-objects"><a href="#A-single-array-representation-of-objects" class="headerlink" title="A single-array representation of objects"></a>A single-array representation of objects</h4><p>第二种方法是只用一个数组来表示<code>next</code>，<code>key</code>和<code>prev</code>。每一个结点占数组中的三个位置，如一个结点的Key值在数组中的位置<code>A[i]</code>，则<code>next</code>位置为<code>A[i+1]</code>,<code>prev</code>位置为<code>A[i+2]</code></p>
+<p><img src="IA-Chapter10-Notes/2019-10-26-14-41-54.png" alt="指针形式表现列表"><br><img src="IA-Chapter10-Notes/2019-10-26-14-52-00.png" alt="单数组形式表现列表"></p>
 <p>同理，这里仍然需要一个变量<code>L</code>来保存头结点的索引，这里的头结点索引为19，所有头结点的<code>Key</code>值为9，<code>next</code>结点为13，表示下一个结点的从索引值13开始，<code>prev</code>结点为/，表示没有前结点，该结点为头结点。</p>
-<h4 id="Allocating-and-freeing-objects">Allocating and freeing objects</h4>
-<p>这里以多数组表示法进行说明。为了可以释放和分配结点，我们需要另一个变量<code>free</code>来记录数组的哪个索引值为空结点。我们可以将多个空结点们看作也是一个链表，但是只是一个单链表，只需要知道下一个空结点在哪即可，所以在多数组方法中也仅只需要用到<code>next</code>数组即可。</p>
+<h4 id="Allocating-and-freeing-objects"><a href="#Allocating-and-freeing-objects" class="headerlink" title="Allocating and freeing objects"></a>Allocating and freeing objects</h4><p>这里以多数组表示法进行说明。为了可以释放和分配结点，我们需要另一个变量<code>free</code>来记录数组的哪个索引值为空结点。我们可以将多个空结点们看作也是一个链表，但是只是一个单链表，只需要知道下一个空结点在哪即可，所以在多数组方法中也仅只需要用到<code>next</code>数组即可。</p>
 <p>分配和释放对象的过程如下图所示：</p>
-<p><img src="IA-Chapter10-Notes/2019-10-26-14-41-54.png" alt="指针形式表现列表"><br>
-<img src="IA-Chapter10-Notes/2019-10-26-14-58-40.png" alt="分配和释放对象"></p>
+<p><img src="IA-Chapter10-Notes/2019-10-26-14-41-54.png" alt="指针形式表现列表"><br><img src="IA-Chapter10-Notes/2019-10-26-14-58-40.png" alt="分配和释放对象"></p>
 <p>下图中的图(a)即为用多数组方式表示上图的数据，唯一与之前说明不同的是，这里需要一个变量<code>free</code>来表示第一个空结点在哪，这里显示第一个空结点的索引值为4，而在<code>next</code>数组的索引4处，值为8，说明下一个空结点在索引8的地方。</p>
 <p>图(b)是插入了一个<code>key</code>值为25的结点。因为之前第一个空结点的位置在索引值为<code>4</code>的地方，所以这个结点现在插入在索引为4的地方。此时行结点成为了头结点，所以变量<code>L</code>值变为4,也因为索引4的地方有了值，所以第一个空结点变成之前的第一个空结点中保存的索引值的地方，即索引值为8的地方，因此<code>free</code>变量变为8.</p>
-<p>图©是删除了<code>key</code>值为16的结点，该结点在索引值为5的地方。删除后，将他作为空结点插入空结点链表，即第一个空结点为索引值为5的地方，所以变量<code>free</code>值为5。且第一个空结点的<code>next</code>需要指向下一个空姐点，即索引值为8的地方。</p>
+<p>图(c)是删除了<code>key</code>值为16的结点，该结点在索引值为5的地方。删除后，将他作为空结点插入空结点链表，即第一个空结点为索引值为5的地方，所以变量<code>free</code>值为5。且第一个空结点的<code>next</code>需要指向下一个空姐点，即索引值为8的地方。</p>
 <p>多数组方法中，分配和删除的伪代码如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ALLOCATE-OBJECT()</span><br><span class="line"></span><br><span class="line">if free == NULL</span><br><span class="line">	error &quot;out of free&quot;</span><br><span class="line">else </span><br><span class="line">	x=free;</span><br><span class="line">	free=x.next</span><br><span class="line">	return x</span><br><span class="line"></span><br><span class="line">FREE-OBJECT()</span><br><span class="line"></span><br><span class="line">x.next=free;</span><br><span class="line">free=x;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>这两步操作的复杂度都为<code>O(1)</code></p>
 <p>另外多个链表可以共用同三个数组，且共用一个free链表，如下图所示。存在两个链表，分别以$L_2$和$L_1$作为头结点。</p>
 <p><img src="IA-Chapter10-Notes/2019-10-26-15-23-27.png" alt="多个链表共享数组和空链表"></p>
-<h3 id="Representing-rooted-trees">Representing rooted trees</h3>
-<p>可以用表示链表的方法可以用在其他的类似的数据结构中，这一节将用列表的方法来表示有根树形结构。树的每一个结点都作为对象，如链表一样，结点中也有一个类似与<code>Key</code>值的存在，不同的是根据树的类型不同，结点中的指针会有不同的表示。</p>
-<h4 id="Binary-Tree">Binary Tree</h4>
-<p>在二叉树中，每个结点都有三个变量$p$，$left$和$right$，分别表示结点的父结点，左子结点和右子结点。如没有左子结点，则<code>left=null</code>，右子结点同理。</p>
+<h3 id="Representing-rooted-trees"><a href="#Representing-rooted-trees" class="headerlink" title="Representing rooted trees"></a>Representing rooted trees</h3><p>可以用表示链表的方法可以用在其他的类似的数据结构中，这一节将用列表的方法来表示有根树形结构。树的每一个结点都作为对象，如链表一样，结点中也有一个类似与<code>Key</code>值的存在，不同的是根据树的类型不同，结点中的指针会有不同的表示。</p>
+<h4 id="Binary-Tree"><a href="#Binary-Tree" class="headerlink" title="Binary Tree"></a>Binary Tree</h4><p>在二叉树中，每个结点都有三个变量$p$，$left$和$right$，分别表示结点的父结点，左子结点和右子结点。如没有左子结点，则<code>left=null</code>，右子结点同理。</p>
 <p>二叉树实例图如下：</p>
 <p><img src="IA-Chapter10-Notes/2019-10-26-15-39-21.png" alt="二叉树"></p>
-<h4 id="Rooted-trees-with-unbounded-branching">Rooted trees with unbounded branching</h4>
-<p>对于分支没有限制的有根树，可以使用变量$child_1$，$child_2$，$child_3$…来替代$left$和$right$。</p>
+<h4 id="Rooted-trees-with-unbounded-branching"><a href="#Rooted-trees-with-unbounded-branching" class="headerlink" title="Rooted trees with unbounded branching"></a>Rooted trees with unbounded branching</h4><p>对于分支没有限制的有根树，可以使用变量$child_1$，$child_2$，$child_3$….来替代$left$和$right$。</p>
 <p>但是这种方法存在一个弊端，首先如果子结点的个数没有限制，那我们无法预先直到该为每个结点分配多少的子结点。其次如果我们用一个非常大的数值来作为子结点的个数，在多数结点的子结点个数都小于这个设定数值时，就会造成很严重的内存浪费。</p>
 <p>但是可以通过<code>左孩子和右兄弟表示法(left-child,right-sibling representation)</code>来解决这种情况，<code>x.left-child</code>表示所有子结点中，最靠左的那一个，<code>x.right-sibling</code>表示同级的结点中，最靠近<code>x</code>结点右边的那一个。</p>
 <p>分支无限制有根树实例图如下</p>
 <p><img src="IA-Chapter10-Notes/2019-10-26-15-40-32.png" alt="分支无限制有根树"></p>
-<article class="message is-info">
-        
-        <div class="message-body">
-            <p>引用：</p>
+<div class="note info simple"><p>引用：</p>
 <ol>
 <li><em>Introduction to Algorithms</em> 3rd Sep.2009</li>
 </ol>
-
-        </div>
-    </article>
+</div>
 <hr>
-</div><div class="article-licensing box"><div class="licensing-title"><p>《算法导论》 第十章笔记</p><p><a href="https://wangxuejia.blog/IA-Chapter10-Notes/">https://wangxuejia.blog/IA-Chapter10-Notes/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>三叔</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-11-05</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-04-02</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="link-muted mr-2" rel="tag" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/alipay.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/wechat.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/IA-Chapter12-Notes/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">《算法导论》 第十二章笔记</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/IA-Chapter4-Notes/"><span class="level-item">《算法导论》 第四章笔记</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn.jsdelivr.net/npm/leancloud-storage@3/dist/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script><script>new Valine({
-            el: '#valine-thread',
-            appId: "TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz",
-            appKey: "z1vCYavVUbCGuMjNMcrsvShN",
-            placeholder: "匿名的！不需要注册！想说啥直接说吧！",
-            avatar: "mm",
-            avatarForce: false,
-            meta: ["nick","mail","link"],
-            pageSize: 10,
-            lang: "zh-CN",
-            visitor: true,
-            highlight: true,
-            recordIP: false,
-            
-            
-            
-            enableQQ: true,
-            requiredFields: [],
-        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpg" alt="三叔"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">三叔</p><p class="is-size-6 is-block">XR 行业的 Unity 开发者</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">71</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">18</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://www.zhihu.com/people/wang-xue-jia-20" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xuejiaW"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Zhihu" href="https://www.zhihu.com/people/wang-xue-jia-20"><i class="fab fa-zhihu"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Jike" href="https://web.okjike.com/u/9ca63fe3-362f-458a-84ba-ec92a1dad321"><i class="fa-solid fa-j"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">博文笔记</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/"><span class="level-start"><span class="level-item">教程</span></span><span class="level-end"><span class="level-item tag">8</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/Hexo/"><span class="level-start"><span class="level-item">Hexo</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">标记语言</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%95%99%E7%A8%8B/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="level-start"><span class="level-item">翻墙梯子</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">论文笔记</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="level-start"><span class="level-item">读书笔记</span></span><span class="level-end"><span class="level-item tag">58</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="level-start"><span class="level-item">图形学</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="level-start"><span class="level-item">数据库</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="level-start"><span class="level-item">数据结构与算法</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="level-start"><span class="level-item">游戏设计</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="level-start"><span class="level-item">计算机网络</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/"><span class="level-start"><span class="level-item">计算机语言</span></span><span class="level-end"><span class="level-item tag">8</span></span></a></li><li><a class="level is-mobile" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="level-start"><span class="level-item">设计模式</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-09-24T15:13:39.000Z">2020-09-24</time></p><p class="title"><a href="/LearnOpenGL-Notes-2/">《LearnOpenGL》 笔记（二）</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-25T12:41:17.000Z">2020-05-25</time></p><p class="title"><a href="/LearnOpenGL-Notes-1/">《LearnOpenGL》 笔记 (一)</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-05-13T23:07:55.000Z">2020-05-14</time></p><p class="title"><a href="/CPPPrimer-Chapter8-Notes/">《C++ Primer》 第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/">计算机语言</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-13T14:08:54.000Z">2020-04-13</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter9-Notes/">《3D数学基础：图形和游戏开发》第九章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-04-07T06:55:42.000Z">2020-04-07</time></p><p class="title"><a href="/3DMathPrimerForGraphicsAGameDevelopment-Chapter8-Notes/">《3D数学基础：图形和游戏开发》第八章笔记</a></p><p class="categories"><a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a> / <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2020/"><span class="level-start"><span class="level-item">2020</span></span><span class="level-end"><span class="level-item tag">38</span></span></a></li><li><a class="level is-mobile" href="/archives/2019/"><span class="level-start"><span class="level-item">2019</span></span><span class="level-end"><span class="level-item tag">32</span></span></a></li><li><a class="level is-mobile" href="/archives/2018/"><span class="level-start"><span class="level-item">2018</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/3D%E6%95%B0%E5%AD%A6/"><span class="tag">3D数学</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenGL/"><span class="tag">OpenGL</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%9A%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">博文笔记</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"><span class="tag">图形学</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%88%E7%8E%87%E6%8F%90%E5%8D%87/"><span class="tag">效率提升</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="tag">数据库</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><span class="tag">数据结构与算法</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80/"><span class="tag">标记语言</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"><span class="tag">游戏设计</span><span class="tag">14</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E7%BF%BB%E5%A2%99%E6%A2%AF%E5%AD%90/"><span class="tag">翻墙梯子</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E/"><span class="tag">虚拟现实</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="tag">计算机网络</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><span class="tag">论文笔记</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="tag">设计模式</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"><span class="tag">读书笔记</span><span class="tag">58</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"><span class="tag">软件推荐</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">三叔胡言乱语的地方</a><p class="is-size-7"><span>&copy; 2023 三叔</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p><p class="is-size-7">© 2019</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
-            article: {
-                highlight: {
-                    clipboard: true,
-                    fold: 'unfolded'
-                }
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="Tuncle">三叔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tuncle.blog/IA-Chapter10-Notes/">https://tuncle.blog/IA-Chapter10-Notes/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tuncle.blog" target="_blank">三叔胡言乱语的地方</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="twitter, wechat, weibo"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/IA-Chapter12-Notes/" title="《算法导论》 第十二章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">《算法导论》 第十二章笔记</div></div></a></div><div class="next-post pull-right"><a href="/IA-Chapter4-Notes/" title="《算法导论》 第四章笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《算法导论》 第四章笔记</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-10-Elementary-Data-Structures"><span class="toc-number">1.</span> <span class="toc-text">Chapter 10. Elementary Data Structures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Stacks-and-queues"><span class="toc-number">1.1.</span> <span class="toc-text">Stacks and queues</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Stacks"><span class="toc-number">1.1.1.</span> <span class="toc-text">Stacks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Queues"><span class="toc-number">1.1.2.</span> <span class="toc-text">Queues</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linked-lists"><span class="toc-number">1.2.</span> <span class="toc-text">Linked lists</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Sentinels"><span class="toc-number">1.2.1.</span> <span class="toc-text">Sentinels</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implementing-pointers-and-objects"><span class="toc-number">1.3.</span> <span class="toc-text">Implementing pointers and objects</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-multiple-array-representation-of-objects"><span class="toc-number">1.3.1.</span> <span class="toc-text">A multiple-array representation of objects</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#A-single-array-representation-of-objects"><span class="toc-number">1.3.2.</span> <span class="toc-text">A single-array representation of objects</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Allocating-and-freeing-objects"><span class="toc-number">1.3.3.</span> <span class="toc-text">Allocating and freeing objects</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Representing-rooted-trees"><span class="toc-number">1.4.</span> <span class="toc-text">Representing rooted trees</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Binary-Tree"><span class="toc-number">1.4.1.</span> <span class="toc-text">Binary Tree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Rooted-trees-with-unbounded-branching"><span class="toc-number">1.4.2.</span> <span class="toc-text">Rooted trees with unbounded branching</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By 三叔</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Keep Writing</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
             }
-        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
-      window.cookieconsent.initialise({
-        type: "info",
-        theme: "edgeless",
-        static: false,
-        position: "bottom-left",
-        content: {
-          message: "此网站使用Cookie来改善您的体验。",
-          dismiss: "知道了！",
-          allow: "允许使用Cookie",
-          deny: "拒绝",
-          link: "了解更多",
-          policy: "Cookie政策",
-          href: "https://www.cookiesandyou.com/",
-        },
-        palette: {
-          popup: {
-            background: "#edeff5",
-            text: "#838391"
-          },
-          button: {
-            background: "#4b81e8"
-          },
-        },
-      });
-    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
-            if (typeof $.fn.lightGallery === 'function') {
-                $('.article').lightGallery({ selector: '.gallery-item' });
-            }
-            if (typeof $.fn.justifiedGallery === 'function') {
-                if ($('.justified-gallery > p > .gallery-item').length) {
-                    $('.justified-gallery > p > .gallery-item').unwrap();
-                }
-                $('.justified-gallery').justifiedGallery();
-            }
-        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
-            'HTML-CSS': {
-                matchFontHeight: false
-            },
-            SVG: {
-                matchFontHeight: false
-            },
-            CommonHTML: {
-                matchFontHeight: false
-            },
-            tex2jax: {
-                inlineMath: [
-                    ['$','$'],
-                    ['\\(','\\)']
-                ]
-            }
-        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
-            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
-        });</script></body></html>
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey: 'z1vCYavVUbCGuMjNMcrsvShN',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
