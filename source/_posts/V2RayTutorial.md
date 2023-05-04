@@ -42,11 +42,11 @@ SS及SSR因为其易用性和使用人数的广泛，已经逐渐被GFW识别。
 
 检查完时间后，通过运行`wget https://install.direct/go.sh`命令下载`V2Ray`安装脚本。
 
-![下载脚本](V2RayTutorial/2019-06-13-22-53-21.png)
+![下载脚本](/V2RayTutorial/2019-06-13-22-53-21.png)
 
 下载完成后，通过命令`sudo bash go.sh`运行脚本
 
-![安装结果](V2RayTutorial/2019-06-13-23-08-07.png)
+![安装结果](/V2RayTutorial/2019-06-13-23-08-07.png)
 
 安装后会有如上图的结果，其中`PORT`和`UUID`两项（即图中马赛克部分）需要记录下来，在之后客户端的配置中需要用到。
 
