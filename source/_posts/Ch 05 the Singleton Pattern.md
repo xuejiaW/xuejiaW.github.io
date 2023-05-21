@@ -1,12 +1,12 @@
 ---
 tags:
-    - 设计模式
+- 设计模式
 created: 2023-05-15
 updated: 2023-05-21
 title: Head First 设计模式 - 单例模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第五章，介绍了单例模式的定义及运用。
-date: 2023-05-15
+date: 2023-05-07
 ---
 
 单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。

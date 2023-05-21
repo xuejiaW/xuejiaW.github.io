@@ -1,7 +1,7 @@
 ---
 updated: 2023-05-21
 tags:
-    - 设计模式
+- 设计模式
 created: 2023-05-04
 title: Head First 设计模式 - 策略模式
 published: true

@@ -1,12 +1,12 @@
 ---
 tags:
-    - 设计模式
+- 设计模式
 created: 2023-05-16
 updated: 2023-05-21
 title: Head First 设计模式 - 命令模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第六章，介绍了命令模式的定义及运用。
-date: 2023-05-17
+date: 2023-05-08
 ---
 
 命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。
