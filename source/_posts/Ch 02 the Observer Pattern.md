@@ -1,11 +1,12 @@
 ---
 tags:
     - 设计模式
-updated: 2023-05-17
-date: 2023-05-12
+updated: 2023-05-21
+created: 2023-05-12
 title: Head First 设计模式 - 观察者模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第二章，介绍了观察者模式的定义及运用。
+date: 2023-05-12
 ---
 
 # 观察者模式

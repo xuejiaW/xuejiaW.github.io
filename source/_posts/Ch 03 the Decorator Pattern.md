@@ -2,11 +2,12 @@
 tags:
     - 设计模式
 alias: 装饰模式
-updated: 2023-05-17
-date: 2023-05-13
+updated: 2023-05-21
+created: 2023-05-13
 title: Head First 设计模式 - 装饰模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第三章，介绍了装饰模式的定义及运用。
+date: 2023-05-13
 ---
 
 装饰模式（Decorator Pattern） 提供了一个动态增加一个类功能的方法，主要实现思想是通过一个作为装饰者的类（`Decorators`）包裹被装饰类（`Component`）（装饰类以及被装饰类都有共同的基类）,`Decorators` 会在 `Component` 类的某一个函数执行前或后进行一些操作，进而达到增加功能的作用。
