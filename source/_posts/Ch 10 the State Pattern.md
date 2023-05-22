@@ -6,7 +6,7 @@ updated: 2023-05-22
 title: Head First 设计模式 - 状态模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第十章，介绍了状态模式的定义及运用。
-date: 2023-05-22
+date: 2023-05-20
 ---
 
 状态模式(State Pattern)允许一个对象根据其内部状态的变化来选择需要执行的操作。这个对象会看起来像是改变了它的类。

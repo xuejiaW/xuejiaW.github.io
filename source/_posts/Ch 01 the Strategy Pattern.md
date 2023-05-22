@@ -6,7 +6,7 @@ created: 2023-05-04
 title: Head First 设计模式 - 策略模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第一章，介绍了策略模式的定义及运用。
-date: 2023-05-04
+date: 2023-05-03
 ---
 
 策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。
