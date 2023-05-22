@@ -1,7 +1,7 @@
 ---
 tags:
     - 设计模式
-updated: 2023-05-21
+updated: 2023-05-22
 created: 2023-05-04
 title: Head First 设计模式 - 迭代器模式模式和组合模式
 published: true
