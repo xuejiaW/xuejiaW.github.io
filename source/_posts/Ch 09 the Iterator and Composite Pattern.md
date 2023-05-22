@@ -6,10 +6,8 @@ created: 2023-05-04
 title: Head First 设计模式 - 迭代器模式模式和组合模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第九章，介绍了迭代器模式和组合模式的定义及运用。
-date: 2023-05-10
+date: 2023-05-11
 ---
-
-
 
 迭代器模式(Iterator Pattern)提供了一种访问聚合对象但不需要关心其内部实现方法的方式。
 

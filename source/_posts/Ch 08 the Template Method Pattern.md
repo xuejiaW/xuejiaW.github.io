@@ -6,7 +6,7 @@ updated: 2023-05-22
 title: Head First 设计模式 - 模板方法模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第八章，介绍了模板方法模式的定义及运用。
-date: 2023-05-09
+date: 2023-05-10
 ---
 
 # 模版方法模式
