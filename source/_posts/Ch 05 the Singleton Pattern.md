@@ -2,7 +2,7 @@
 tags:
 - 设计模式
 created: 2023-05-15
-updated: 2023-05-21
+updated: 2023-05-22
 title: Head First 设计模式 - 单例模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第五章，介绍了单例模式的定义及运用。
