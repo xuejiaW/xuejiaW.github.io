@@ -1,5 +1,5 @@
 ---
-updated: 2023-05-22
+updated: 2023-05-23
 tags:
 - 设计模式
 created: 2023-05-04

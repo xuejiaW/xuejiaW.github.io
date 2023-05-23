@@ -2,7 +2,7 @@
 tags:
     - 设计模式
 created: 2022-02-02
-updated: 2023-05-22
+updated: 2023-05-23
 title: Head First 设计模式 - 状态模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第十章，介绍了状态模式的定义及运用。

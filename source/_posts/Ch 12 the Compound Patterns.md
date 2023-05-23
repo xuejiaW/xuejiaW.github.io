@@ -2,7 +2,7 @@
 tags:
     - 设计模式
 created: 2022-02-02
-updated: 2023-05-22
+updated: 2023-05-23
 title: Head First 设计模式 - 复合模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第十二章，介绍了复合模式的定义及运用。
@@ -152,4 +152,4 @@ view.OnVolumeDownButtonClick();
 
 运行结果：
 
-![复合模式运行结果](/Ch%2012%20Compound%20Patterns/2019-02-07-15-53-23.png)
+![复合模式运行结果](/Ch%2012%20the%20Compound%20Patterns/2019-02-07-15-53-23.png)
