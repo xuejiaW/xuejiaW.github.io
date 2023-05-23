@@ -1,7 +1,7 @@
 ---
 tags:
 - 设计模式
-updated: 2023-05-22
+updated: 2023-05-23
 created: 2023-05-12
 title: Head First 设计模式 - 观察者模式
 published: true
