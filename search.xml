@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>《Head First 设计模式》 Ch 01 策略模式</title>
+    <url>/Ch_01_the_Strategy_Pattern/</url>
+    <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
+<p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
+<p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
+<h1>代码示例</h1>
+<h2 id="算法接口及实现类">算法接口及实现类</h2>
+<figure class="highlight cs"><figcaption><span>飞行方法接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>飞行方法实现</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyNoWay</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Can not fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithRocket</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with rocket&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithWings</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with wings&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="环境类">环境类</h2>
+<figure class="highlight cs"><figcaption><span>鸭子基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehavior flyBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PerformFly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span>(<span class="params">IFlyBehavior fb</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior = fb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>鸭子派生类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BlackDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlackDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyWithWings());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a black duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RubberDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RubberDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a rubber duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>测试及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">RubberDuck rubberDuck = <span class="keyword">new</span> RubberDuck();</span><br><span class="line">rubberDuck.disPlay();</span><br><span class="line">rubberDuck.PerformFly();</span><br><span class="line"></span><br><span class="line">BlackDuck blackDuck = <span class="keyword">new</span> BlackDuck();</span><br><span class="line">blackDuck.disPlay();</span><br><span class="line">blackDuck.PerformFly();</span><br><span class="line">blackDuck.setFlyBehavior(<span class="keyword">new</span> FlyWithRocket());</span><br><span class="line">blackDuck.PerformFly();</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<p><img src="/Ch_01_the_Strategy_Pattern/2019-01-15-00-12-45.png" alt="策略模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 02 观察者模式</title>
-    <url>/Ch%2002%20the%20Observer%20Pattern/</url>
+    <url>/Ch_02_the_Observer_Pattern/</url>
     <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
 <p>例如我们希望定义温度计和压力计，在天气信息发生变化时自动更新，而非自己反复的查询是否天气信息有发生变化。这里天气信息就是被观察者，而温度计和压力计就是观察者。</p>
 <h1>代码示例</h1>
@@ -17,29 +39,7 @@
 <h1>测试及结果</h1>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">WeatherData weatherData = <span class="keyword">new</span> WeatherData();</span><br><span class="line">TemperatureObserver temperatureObserver = <span class="keyword">new</span> TemperatureObserver(weatherData);</span><br><span class="line">PressureObserver pressureObserver = <span class="keyword">new</span> PressureObserver(weatherData);</span><br><span class="line"></span><br><span class="line">weatherData.SetMeasurements(<span class="number">30</span>, <span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">20</span>, <span class="number">40</span>, <span class="number">5</span>);</span><br><span class="line">weatherData.UnregisterObserver(temperatureObserver);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">10</span>, <span class="number">50</span>, <span class="number">15</span>);</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
-<p><img src="/Ch%2002%20the%20Observer%20Pattern/2019-01-15-23-20-09.png" alt="观察者模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 01 策略模式</title>
-    <url>/Ch%2001%20the%20Strategy%20Pattern/</url>
-    <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
-<p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
-<p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
-<h1>代码示例</h1>
-<h2 id="算法接口及实现类">算法接口及实现类</h2>
-<figure class="highlight cs"><figcaption><span>飞行方法接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>飞行方法实现</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyNoWay</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Can not fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithRocket</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with rocket&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithWings</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with wings&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="环境类">环境类</h2>
-<figure class="highlight cs"><figcaption><span>鸭子基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehavior flyBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PerformFly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span>(<span class="params">IFlyBehavior fb</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior = fb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>鸭子派生类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BlackDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlackDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyWithWings());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a black duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RubberDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RubberDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a rubber duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1>测试及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">RubberDuck rubberDuck = <span class="keyword">new</span> RubberDuck();</span><br><span class="line">rubberDuck.disPlay();</span><br><span class="line">rubberDuck.PerformFly();</span><br><span class="line"></span><br><span class="line">BlackDuck blackDuck = <span class="keyword">new</span> BlackDuck();</span><br><span class="line">blackDuck.disPlay();</span><br><span class="line">blackDuck.PerformFly();</span><br><span class="line">blackDuck.setFlyBehavior(<span class="keyword">new</span> FlyWithRocket());</span><br><span class="line">blackDuck.PerformFly();</span><br></pre></td></tr></table></figure>
-<p>运行结果</p>
-<p><img src="/Ch%2001%20the%20Strategy%20Pattern/2019-01-15-00-12-45.png" alt="策略模式运行结果"></p>
+<p><img src="/Ch_02_the_Observer_Pattern/2019-01-15-23-20-09.png" alt="观察者模式运行结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -47,7 +47,7 @@
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 03 装饰模式</title>
-    <url>/Ch%2003%20the%20Decorator%20Pattern/</url>
+    <url>/Ch_03_the_Decorator_Pattern/</url>
     <content><![CDATA[<p>装饰模式（Decorator Pattern） 提供了一个动态增加一个类功能的方法，主要实现思想是通过一个作为装饰者的类（<code>Decorators</code>）包裹被装饰类（<code>Component</code>）（装饰类以及被装饰类都有共同的基类），<code>Decorators</code> 会在 <code>Component</code> 类的某一个函数执行前或后进行一些操作，进而达到增加功能的作用。</p>
 <p>装饰模式主要实现了“代码应该对扩展功能开放而对于修改关闭”的面向对象原则，它在增加新功能的前提下，不需要改动既有的代码，只需要增加新的 <code>Decorators</code> 并且包含既有的 <code>Component</code> 即可。</p>
 <p>例如我们要计算一杯咖啡的价格，而这杯咖啡的价格还会受到额外的配料的影响，比如要加抹茶需要额外支付 0.2 元，加奶泡需要额外支付 0.3 元等。如果对各种配料都各自使用一个类来表示，则会存在较多的类需要维护，而且一旦配料发生变化等，还需要进行代码修改。而使用装饰模式则可以将原始的咖啡作为被装饰类，而所有的配料都是装饰类，则配料的更改仅需要增加或删除外部的装饰类即可。</p>
@@ -65,7 +65,19 @@
 <h1>测试及结果</h1>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Espresso espresso = <span class="keyword">new</span> Espresso();</span><br><span class="line">Console.WriteLine(espresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + espresso.Cost());</span><br><span class="line"></span><br><span class="line">Beverage doubleMochaWhipEspresso = <span class="keyword">new</span> Mocha(<span class="keyword">new</span> Mocha(<span class="keyword">new</span> Whip(espresso)));</span><br><span class="line">Console.WriteLine(doubleMochaWhipEspresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + doubleMochaWhipEspresso.Cost());</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
-<p><img src="/Ch%2003%20the%20Decorator%20Pattern/2019-01-15-23-43-20.png" alt="装饰模式运行结果"></p>
+<p><img src="/Ch_03_the_Decorator_Pattern/2019-01-15-23-43-20.png" alt="装饰模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 05 单例模式</title>
+    <url>/Ch_05_the_Singleton_Pattern/</url>
+    <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
+<h1>代码示例</h1>
+<figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -73,7 +85,7 @@
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 04 工厂模式</title>
-    <url>/Ch%2004%20the%20Factory%20Pattern/</url>
+    <url>/Ch_04_the_Factory_Pattern/</url>
     <content><![CDATA[<p>工厂模式是为了将对象的实例化与对对象的操作解耦。因为有时我们会根据情况的不同，实例化出对象的不同版本，而我们不希望这种对于情况的判断与逻辑代码耦合在一起。</p>
 <p>工厂模式有三个较为常见的变种，简单工厂模式，工厂方法模式，抽象工厂模式，下面会以创建披萨为例子来具体说明。</p>
 <h1>简单工厂模式</h1>
@@ -90,7 +102,7 @@
 <h2 id="测试及结果">测试及结果</h2>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">PizzaStore store = <span class="keyword">new</span> PizzaStore(<span class="keyword">new</span> SimplePizzaFactory());</span><br><span class="line">Pizza pizza = store.orderPizza(<span class="string">&quot;cheese&quot;</span>);</span><br><span class="line">pizza.Debug();</span><br></pre></td></tr></table></figure>
 <p>运行结果:<br>
-<img src="/Ch%2004%20the%20Factory%20Pattern/2019-01-20-21-24-34.png" alt="简单工厂运行结果"></p>
+<img src="/Ch_04_the_Factory_Pattern/2019-01-20-21-24-34.png" alt="简单工厂运行结果"></p>
 <h1>工厂方法模式</h1>
 <p>简单工厂提供了一个类来作为对象实例化的工厂，它解决了对象实例化与逻辑代码耦合的问题，但没有提供扩写这个工厂的方法。例如上例中，我们需要在工厂中增加新的产品只能扩写原先的工厂类，但这可能会造成单个工厂类的逻辑过于复杂。<br>
 而工厂方法模式则是通过一个抽象函数来作为工厂，在各派生类中重写该函数，达到工厂的扩写。</p>
@@ -108,7 +120,7 @@
 <h2 id="测试及结果-2">测试及结果</h2>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">PizzaStore store = <span class="keyword">new</span> ChicagoPizzaStore();</span><br><span class="line">Pizza pizza = store.orderPizza(<span class="string">&quot;cheese&quot;</span>);</span><br><span class="line">pizza.Debug();</span><br><span class="line">store = <span class="keyword">new</span> NYPizzaStore();</span><br><span class="line">pizza=store.orderPizza(<span class="string">&quot;cheese&quot;</span>);</span><br><span class="line">pizza.Debug();</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
-<p><img src="/Ch%2004%20the%20Factory%20Pattern/2019-01-23-00-29-35.png" alt="工厂方法模式运行结果"></p>
+<p><img src="/Ch_04_the_Factory_Pattern/2019-01-23-00-29-35.png" alt="工厂方法模式运行结果"></p>
 <h1>抽象工厂模式</h1>
 <p>工厂方法模式中的工厂的多态性依赖于继承，比如我们定义的<code>PizzaStore</code>中有个抽象函数<code>createPizza</code>，这个抽象函数即为一个工厂，在各个派生类中我们去重写这个抽象函数，通过继承来实现不同的工厂。而在抽象工厂模式中，我们将定义一个工厂接口，在需要工厂的接口中类中存储这个接口，并在不同的情况下用这个接口不同的实现，来达到工厂的多态性。</p>
 <p>另外在工厂方法模式中，因为是通过重写函数的方法来实现，所以一个工厂只能产出一个产品。而在抽象工厂模式中，在一个抽象工厂中却能定义多个制造产品的函数，进而一个抽象工厂可以提供多个产品。</p>
@@ -135,7 +147,7 @@
 <h2 id="测试及结果-3">测试及结果</h2>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">PizzaStore pizzaStore = <span class="keyword">new</span> NYPizzaStore();</span><br><span class="line">Pizza pizza = pizzaStore.OrderPizza(<span class="string">&quot;cheese&quot;</span>);</span><br><span class="line">pizza.Debug();</span><br><span class="line">Console.WriteLine(<span class="string">&quot;--------&quot;</span>);</span><br><span class="line">pizzaStore = <span class="keyword">new</span> ChicagoPizzaStore();</span><br><span class="line">pizza = pizzaStore.OrderPizza(<span class="string">&quot;cheese&quot;</span>);</span><br><span class="line">pizza.Debug();</span><br></pre></td></tr></table></figure>
 <p>运行结果：<br>
-<img src="/Ch%2004%20the%20Factory%20Pattern/2019-01-24-01-01-50.png" alt="抽象工厂模式运行结果"></p>
+<img src="/Ch_04_the_Factory_Pattern/2019-01-24-01-01-50.png" alt="抽象工厂模式运行结果"></p>
 <h1>Reference</h1>
 <p><a href="https://dzone.com/articles/factory-method-vs-abstract">https://dzone.com/articles/factory-method-vs-abstract</a><br>
 <a href="https://stackoverflow.com/questions/5739611/differences-between-abstract-factory-pattern-and-factory-method">https://stackoverflow.com/questions/5739611/differences-between-abstract-factory-pattern-and-factory-method</a></p>
@@ -145,20 +157,8 @@
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 05 单例模式</title>
-    <url>/Ch%2005%20the%20Singleton%20Pattern/</url>
-    <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
-<h1>代码示例</h1>
-<figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Head First 设计模式》 Ch 06 命令模式</title>
-    <url>/Ch%2006%20the%20Command%20Pattern/</url>
+    <url>/Ch_06_the_Command_Pattern/</url>
     <content><![CDATA[<p>命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。</p>
 <p>命令模式由抽象命令类、具体命令类、接受者、调用者、客户类，五部分组成。其中接受者为被命令封装的类，调用者存放需要执行的类。</p>
 <p>我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令</p>
@@ -174,7 +174,7 @@
 <figure class="highlight cs"><figcaption><span>函数入口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Light light = <span class="keyword">new</span> Light();</span><br><span class="line">    RemoteControl remoteControl = <span class="keyword">new</span> RemoteControl();</span><br><span class="line">    remoteControl.SetCommand(<span class="number">0</span>, <span class="keyword">new</span> LightOnCommand(light));</span><br><span class="line">    remoteControl.SetCommand(<span class="number">1</span>, <span class="keyword">new</span> LightOffCommand(light));</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">0</span>);</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">1</span>);</span><br><span class="line">    remoteControl.OnClickUndo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1>测试及结果</h1>
 <p>运行结果：</p>
-<p><img src="/Ch%2006%20the%20Command%20Pattern/2019-02-02-23-26-25.png" alt="命令模式测试结果"></p>
+<p><img src="/Ch_06_the_Command_Pattern/2019-02-02-23-26-25.png" alt="命令模式测试结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -182,7 +182,7 @@
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 07 适配器模式和外观模式</title>
-    <url>/Ch%2007%20the%20Adapter%20and%20Facade%20Patterns/</url>
+    <url>/Ch_07_the_Adapter_and_Facade_Patterns/</url>
     <content><![CDATA[<h1>适配器模式</h1>
 <p>适配器模式（Adapter Pattern）将一个类的接口转换为用户想要的另一个接口。适配器模式将原先因为接口不兼容的一些类可以一起工作。</p>
 <p>例如我们有已经实现的火鸡类和鸭子类，其中鸭子的鸣叫我们使用<code>Quack</code>，火鸡的鸣叫我们用<code>Goggle</code>，两个接口不相同，但在某些情况下，我们不希望具体区分是火鸡还是鸭子，只希望他们都能叫，这时候就需要用适配器模式，将火鸡或鸭子伪装成同一个类。</p>
@@ -197,7 +197,7 @@
 <h2 id="测试代码及结果">测试代码及结果</h2>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    MallardDuck duck = <span class="keyword">new</span> MallardDuck();</span><br><span class="line">    WildTurkey turkey = <span class="keyword">new</span> WildTurkey();</span><br><span class="line">    TestDuck(duck);</span><br><span class="line">    TestDuck(<span class="keyword">new</span> TurkeyAdapter(turkey));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">TestDuck</span>(<span class="params">Duck duck</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    duck.Fly();</span><br><span class="line">    duck.Quack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
-<p><img src="/Ch%2007%20the%20Adapter%20and%20Facade%20Patterns/2019-02-03-00-10-27.png" alt="适配器模式运行结果"></p>
+<p><img src="/Ch_07_the_Adapter_and_Facade_Patterns/2019-02-03-00-10-27.png" alt="适配器模式运行结果"></p>
 <h1>外观模式</h1>
 <p>外观模式(Facade Pattern)为子系统的一系列接口提供了一个统一的，更高级别的接口以简化外部的调用。</p>
 <p>外观模式实际上是遵从于<code>最小知识原则</code>，对一些上层的类来说，它不需要了解下面子系统的具体构成，那么我们就用一个中间层（Facade）来将封装这些子系统，形成一个软解耦。</p>
@@ -213,7 +213,7 @@
 <h2 id="测试代码及结果-2">测试代码及结果</h2>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">HomeTheaderFacade facade = <span class="keyword">new</span> HomeTheaderFacade(<span class="keyword">new</span> Amplifier(), <span class="keyword">new</span> Tuner(), <span class="keyword">new</span> DvdPlayer(), <span class="keyword">new</span> Projector());</span><br><span class="line">facade.WatchMovie();</span><br><span class="line">Console.WriteLine();</span><br><span class="line">facade.endMovie();</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
-<p><img src="/Ch%2007%20the%20Adapter%20and%20Facade%20Patterns/2019-02-03-13-53-18.png" alt="外观模式运行结果"></p>
+<p><img src="/Ch_07_the_Adapter_and_Facade_Patterns/2019-02-03-13-53-18.png" alt="外观模式运行结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -221,7 +221,7 @@
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 08 模板方法模式</title>
-    <url>/Ch%2008%20the%20Template%20Method%20Pattern/</url>
+    <url>/Ch_08_the_Template_Method_Pattern/</url>
     <content><![CDATA[<p>模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。</p>
 <ul>
 <li>
@@ -243,7 +243,7 @@
 <h1>测试代码及结果</h1>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Coffee coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">Tea tea = <span class="keyword">new</span> Tea();</span><br><span class="line">coffee.PrepareRecipe();</span><br><span class="line">Console.WriteLine();</span><br><span class="line">tea.PrepareRecipe();</span><br></pre></td></tr></table></figure>
 <p>运行结果:</p>
-<p><img src="/Ch%2008%20the%20Template%20Method%20Pattern/2019-02-03-15-59-58.png" alt="模版方法模式运行结果"></p>
+<p><img src="/Ch_08_the_Template_Method_Pattern/2019-02-03-15-59-58.png" alt="模版方法模式运行结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -251,7 +251,7 @@
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 09 模板方法模式</title>
-    <url>/Ch%2009%20the%20Iterator%20and%20Composite%20Pattern/</url>
+    <url>/Ch_09_the_Iterator_and_Composite_Pattern/</url>
     <content><![CDATA[<h1>迭代器模式</h1>
 <p>迭代器模式(Iterator Pattern)提供了一种访问聚合对象但不需要关心其内部实现方法的方式。</p>
 <p>例如我们存在两个菜单，第一个菜单表示早餐，第二个表示晚餐，第一个菜单其中的菜品用<code>List</code>来存储，第二个菜单其中的菜品用<code>Array</code>来存储。在这种情况下就需要使用迭代器模式，为两个菜单提供一个供外部调用的访问菜品的接口。</p>
@@ -266,7 +266,7 @@
 <h2 id="测试代码及结果">测试代码及结果</h2>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    DinerMenu dinerMenu = <span class="keyword">new</span> DinerMenu();</span><br><span class="line">    PancakeHouseMenu pancakeHouseMenu = <span class="keyword">new</span> PancakeHouseMenu();</span><br><span class="line"></span><br><span class="line">    PrintMenu(dinerMenu.createIterator());</span><br><span class="line">    Console.WriteLine();</span><br><span class="line">    PrintMenu(pancakeHouseMenu.createIterator());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">PrintMenu</span>(<span class="params">Iterator iterator</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span> (iterator.hasNext())</span><br><span class="line">    &#123;</span><br><span class="line">        ((MenuItem)iterator.next()).Debug();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
-<p><img src="/Ch%2009%20the%20Iterator%20and%20Composite%20Pattern/2019-02-03-23-36-01.png" alt="迭代器模式运行结果"></p>
+<p><img src="/Ch_09_the_Iterator_and_Composite_Pattern/2019-02-03-23-36-01.png" alt="迭代器模式运行结果"></p>
 <h1>组合模式</h1>
 <p>组合模式（Composite Pattern）是用树形结构来组合对象进而体现一种局部-整体的层次结构。组合模式可以让调用者以统一的方式对待单个物体和多个物体的组合。</p>
 <p>例如我们需要打印一个菜单上的所有菜品，但菜单中可能还包含子菜单，子菜单中又可能包含子菜单等等，但对于外部调用者而言则不希望关注这些细节。我们可以通过定义一个基类，无论是菜品还是菜单都继承自这个基类，这样对于菜单而言，无论是子菜单还是菜品都是同一个基类，可一起管理。对于外部调者而言只 x 需要关心这个基类即可。</p>
@@ -279,7 +279,7 @@
 <h2 id="测试代码及结果-2">测试代码及结果</h2>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Menu menu = <span class="keyword">new</span> Menu(<span class="string">&quot;General Menu&quot;</span>, <span class="string">&quot;Holds all menus and menu items&quot;</span>);</span><br><span class="line">Menu dinnerMenu = <span class="keyword">new</span> Menu(<span class="string">&quot;Dinner Menu&quot;</span>, <span class="string">&quot;Holds dinner menu items&quot;</span>);</span><br><span class="line">Menu breakfastMenu = <span class="keyword">new</span> Menu(<span class="string">&quot;Breakfast Menu&quot;</span>, <span class="string">&quot;Holds Breakfast menu items&quot;</span>);</span><br><span class="line">menu.Add(dinnerMenu);</span><br><span class="line">menu.Add(breakfastMenu);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">breakfastMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;K&amp;B&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and toast&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>));</span><br><span class="line">breakfastMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;Regular&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and sausags&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>));</span><br><span class="line">breakfastMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;Blueberry&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and fresh blueberries&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>));</span><br><span class="line"></span><br><span class="line">dinnerMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;Vegetarian BLT&quot;</span>, <span class="string">&quot;Fakin Bacon with tomato&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>));</span><br><span class="line">dinnerMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;BLT&quot;</span>, <span class="string">&quot;Bacon with tomato&quot;</span>, <span class="literal">true</span>, <span class="number">3.99f</span>));</span><br><span class="line">dinnerMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;Soup of the day&quot;</span>, <span class="string">&quot;Soup of the day and salad&quot;</span>, <span class="literal">false</span>, <span class="number">3.29f</span>));</span><br><span class="line"></span><br><span class="line">menu.Debug();</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
-<p><img src="/Ch%2009%20the%20Iterator%20and%20Composite%20Pattern/2019-02-06-16-23-58.png" alt="组合模式运行结果"></p>
+<p><img src="/Ch_09_the_Iterator_and_Composite_Pattern/2019-02-06-16-23-58.png" alt="组合模式运行结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -287,7 +287,7 @@
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 10 状态模式</title>
-    <url>/Ch%2010%20the%20State%20Pattern/</url>
+    <url>/Ch_10_the_State_Pattern/</url>
     <content><![CDATA[<p>状态模式(State Pattern)允许一个对象根据其内部状态的变化来选择需要执行的操作。这个对象会看起来像是改变了它的类。</p>
 <p>状态模式定义听起来有些奇怪，实际上就是将不同状态的行为定义在不同的状态类中，然后根据状态的不同切换这些状态类，进而达到不同的行为。</p>
 <p>例如我们需要做一个口香糖贩卖机需要处理，投钱、退钱、旋转出货按钮这三个操作，然后机器有未投钱、投钱、货物卖出、货物卖完四个状态。我们可以将不同状态下对三个操作的处理定义在各自的状态类中。</p>
@@ -302,7 +302,7 @@
 <h1>测试代码及结果</h1>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">GumballMachine gumballMachine = <span class="keyword">new</span> GumballMachine(<span class="number">5</span>);</span><br><span class="line">gumballMachine.TurnCrank();</span><br><span class="line">gumballMachine.InsertQuarter();</span><br><span class="line">gumballMachine.EjectQuarter();</span><br><span class="line">gumballMachine.TurnCrank();</span><br><span class="line">gumballMachine.InsertQuarter();</span><br><span class="line">gumballMachine.TurnCrank();</span><br><span class="line">gumballMachine.TurnCrank();</span><br><span class="line">gumballMachine.EjectQuarter();</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
-<p><img src="/Ch%2010%20the%20State%20Pattern/2019-02-06-20-10-15.png" alt="状态模式运行结果"></p>
+<p><img src="/Ch_10_the_State_Pattern/2019-02-06-20-10-15.png" alt="状态模式运行结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -310,7 +310,7 @@
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 11 代理模式</title>
-    <url>/Ch%2011%20the%20Proxy%20Pattern/</url>
+    <url>/Ch_11_the_Proxy_Pattern/</url>
     <content><![CDATA[<p>代理模式（Proxy Pattern）为对象提供一个代理进而控制对其的访问。</p>
 <p>例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。</p>
 <h1>代码示例</h1>
@@ -322,7 +322,7 @@
 <h1>测试代码及结果</h1>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">ImageProxyIcon proxyIcon = <span class="keyword">new</span> ImageProxyIcon();</span><br><span class="line">proxyIcon.PrintIconWidthAndHeight();</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
-<p><img src="/Ch%2011%20the%20Proxy%20Pattern/2019-02-07-14-10-11.png" alt="代理模式运行结果"></p>
+<p><img src="/Ch_11_the_Proxy_Pattern/2019-02-07-14-10-11.png" alt="代理模式运行结果"></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，`ImageProxyIcon`并没有为`ImageIcon`拓展什么功能，只是用了多线程来访问访问其中的函数。</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
@@ -331,7 +331,7 @@
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 12 复合模式</title>
-    <url>/Ch%2012%20the%20Compound%20Patterns/</url>
+    <url>/Ch_12_the_Compound_Patterns/</url>
     <content><![CDATA[<p>复合模式（Compound Pattern）是通过两个或以上的设计模式形成一个可以解决一般性问题的通用框架。</p>
 <p>MVC 框架就是一种组合模式，<code>Controller</code>和<code>View</code>之间使用了策略模式， <code>View</code>中只存<code>Controller</code>的接口，进而达到可以随时切换不同<code>Controller</code>的目的。<code>Model</code>和<code>View</code>之间使用了观察者模式，<code>View</code>作为观察者，<code>Model</code>作为被观察者，当<code>Model</code>的数据发生变化时，<code>View</code>相应改变。而<code>View</code>本身使用了组合模式，比如按钮中可能存在子按钮，窗口中存在子窗口等等。</p>
 <p>我们以音量调节作为一个最简的 MVC 框架示例。</p>
@@ -347,7 +347,7 @@
 <h1>测试代码及结果</h1>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">VolumeModel model = <span class="keyword">new</span> VolumeModel();</span><br><span class="line">VolumeView view = <span class="keyword">new</span> VolumeView(<span class="keyword">new</span> VolumeController(model), model);</span><br><span class="line">view.OnVolumeUpButtonClick();</span><br><span class="line">view.OnVolumeUpButtonClick();</span><br><span class="line">view.OnVolumeDownButtonClick();</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
-<p><img src="/Ch%2012%20the%20Compound%20Patterns/2019-02-07-15-53-23.png" alt="复合模式运行结果"></p>
+<p><img src="/Ch_12_the_Compound_Patterns/2019-02-07-15-53-23.png" alt="复合模式运行结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -355,7 +355,7 @@
   </entry>
   <entry>
     <title>《Head First 设计模式》 - 设计原则总结</title>
-    <url>/Head%20First%20Design%20Pattern%20Design%20Principles/</url>
+    <url>/Head_First_Design_Pattern_Design_Principles/</url>
     <content><![CDATA[<ol>
 <li>将变化的部分封装起来（Encapsulate what varies)</li>
 <li>组合优于继承（Favor composition over inheritance）</li>
@@ -374,23 +374,117 @@
   </entry>
   <entry>
     <title>《Head First 设计模式》 笔记汇总</title>
-    <url>/Head%20First%20Design%20Patterns/</url>
-    <content><![CDATA[<p><a href="/Ch%2001%20the%20Strategy%20Pattern">Ch 01 the Strategy Pattern</a></p>
-<p><a href="/Ch%2002%20the%20Observer%20Pattern">Ch 02 the Observer Pattern</a></p>
-<p><a href="/Ch%2003%20the%20Decorator%20Pattern">Ch 03 the Decorator Pattern</a></p>
-<p><a href="/Ch%2004%20the%20Factory%20Pattern">Ch 04 the Factory Pattern</a></p>
-<p><a href="/Ch%2005%20the%20Singleton%20Pattern">Ch 05 the Singleton Pattern</a></p>
-<p><a href="/Ch%2006%20the%20Command%20Pattern">Ch 06 the Command Pattern</a></p>
-<p><a href="/Ch%2007%20the%20Adapter%20and%20Facade%20Patterns">Ch 07 the Adapter and Facade Patterns</a></p>
-<p><a href="/Ch%2008%20the%20Template%20Method%20Pattern">Ch 08 the Template Method Pattern</a></p>
-<p><a href="/Ch%2009%20the%20Iterator%20and%20Composite%20Pattern">Ch 09 the Iterator and Composite Pattern</a></p>
-<p><a href="/Ch%2010%20the%20State%20Pattern">Ch 10 the State Pattern</a></p>
-<p><a href="/Ch%2011%20the%20Proxy%20Pattern">Ch 11 the Proxy Pattern</a></p>
-<p><a href="/Ch%2012%20the%20Compound%20Patterns">Ch 12 the Compound Patterns</a></p>
-<p><a href="/Head%20First%20Design%20Pattern%20Design%20Principles">Head First Design Pattern Design Principles</a></p>
+    <url>/Head_First_Design_Patterns/</url>
+    <content><![CDATA[<p><a href="/Ch_01_the_Strategy_Pattern">Ch 01 the Strategy Pattern</a></p>
+<p><a href="/Ch_02_the_Observer_Pattern">Ch 02 the Observer Pattern</a></p>
+<p><a href="/Ch_03_the_Decorator_Pattern">Ch 03 the Decorator Pattern</a></p>
+<p><a href="/Ch_04_the_Factory_Pattern">Ch 04 the Factory Pattern</a></p>
+<p><a href="/Ch_05_the_Singleton_Pattern">Ch 05 the Singleton Pattern</a></p>
+<p><a href="/Ch_06_the_Command_Pattern">Ch 06 the Command Pattern</a></p>
+<p><a href="/Ch_07_the_Adapter_and_Facade_Patterns">Ch 07 the Adapter and Facade Patterns</a></p>
+<p><a href="/Ch_08_the_Template_Method_Pattern">Ch 08 the Template Method Pattern</a></p>
+<p><a href="/Ch_09_the_Iterator_and_Composite_Pattern">Ch 09 the Iterator and Composite Pattern</a></p>
+<p><a href="/Ch_10_the_State_Pattern">Ch 10 the State Pattern</a></p>
+<p><a href="/Ch_11_the_Proxy_Pattern">Ch 11 the Proxy Pattern</a></p>
+<p><a href="/Ch_12_the_Compound_Patterns">Ch 12 the Compound Patterns</a></p>
+<p><a href="/Head_First_Design_Pattern_Design_Principles">Head First Design Pattern Design Principles</a></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《贪婪的多巴胺》 读书笔记</title>
+    <url>/tan_lan_de_duo_ba_an/</url>
+    <content><![CDATA[<p>《贪婪的多巴胺》 笔记摘抄。该书主要从生物学角度介绍了多巴胺对人行为及心理的影响。主要的包括：</p>
+<ul>
+<li>多巴胺与当下因子：当下因子让人关注当下，多巴胺让人关注未来</li>
+<li>多巴胺与自律的关系：毒品美食的吸引力来自于欲望多巴胺，抵抗这些诱惑的能力不仅可以依赖意志力，也可以依赖控制多巴胺。</li>
+<li>多巴胺与创造力的关系：丰富的多巴胺，让人更多的关注抽象的概念，并压抑了对此刻的关注，这可能会带来更多的创造力。但过多的多巴胺，则可能带来如精神分裂症这样的疾病</li>
+<li>多巴胺与保守的关系：多巴胺能的人倾向于自由主义，当下分子能的人倾向于保守主义。</li>
+</ul>
+<h1>第一章 爱情</h1>
+<p>二十万分之一的脑细胞可以产生多巴胺，但这些细胞却能对行为产生巨大的影响。</p>
+<p>在特定的情况下，激活让人“感觉良好”的多巴胺是人们无法抗拒的诱惑。一些科学家给多巴胺取名为“快乐分子”，大脑中产生多巴胺的途径被称为“奖赏回路“。但实际上多巴胺跟快乐一点儿关系都没有，它的影响力比“快乐”要大得多</p>
+<p>多巴胺不是快乐的制造者，而是对意外的反应，即对可能性和预期的反应。我们每时每刻都在预测将要发生的事，从什么时候可以下班，到在自动取款机上看到卡里有多少余额。实际发生的事好于我们的预期，就表明我们对未来的预言存在误差：可能我们可以提前下班了，或者查看余额时发现比预期多了 100 元。正是这种让人快乐的误差触发多巴胺行动起来。这种快乐不是源于额外的时间或钱本身，而是预期之外的好消息带来的兴奋感。</p>
+<p>多巴胺能的兴奋（即预期带来的兴奋）并不持久，因为最终未来都会变成现在。</p>
+<p>多巴胺的角度来说，拥有是无趣的，只有获得才有趣。</p>
+<p>为了享受我们拥有的东西，而不是仅仅可能得到的东西，我们的大脑必须从面向未来的多巴胺过渡到面向现在的某种化学物质，这是一系列神经递质，我们称之为“<strong>当下分子</strong>“。事实上，尽管多巴胺和当下分子的回路能一起工作，但在大多数情况下它们是相互对抗的。在当下分子回路被激活时，我们更喜欢体验周围的真实世界，多巴胺就会被抑制；而当多巴胺回路被激活时，我们则进入一个充满可能性的未来，当下分子会被抑制。</p>
+<p>基于当下神经递质，如<strong>催产素、血管升压素和内啡肽</strong>的作用，它会为你提供长期的幸福感。这就像我们心中总是有最喜欢的餐厅、商店、城市一样，我们之所以喜爱这些地方，是因为熟悉的环境总是能给我们带来快乐，这里所说的环境指那个地方真实的物理环境。我们喜欢熟悉的事物，不是因为它能变成什么，而是因为它本来的样子。</p>
+<p>多巴胺代表着痴迷与渴望，而与长期关系最相关的化学物质则是催产素和血管升压素。催产素在女性中更活跃，而血管升压素在男性中更活跃。</p>
+<p>性就是爱情的快进。性始于欲望，是由睾酮这种激素驱动的一种多巴胺能的现象。接下来是性兴奋，这也是一种期待性的多巴胺能的体验。当身体接触开始时，大脑就将控制权转移到当下分子以便提供感官体验的愉悦，这个过程主要涉及内啡肽的释放。这一行为的顶峰，即性高潮，几乎完全是一种此时此地的体验，内啡肽和其他当下神经递质一起工作，将多巴胺彻底关闭。除了少数例外，大脑对性高潮的反应是相同的：多巴胺被关闭，当下分子通行。但是，正如有些人很难从激情之爱过渡到陪伴之爱，由多巴胺驱动的人在性生活中也很难把主导权让给当下分子。也就是说，有着强烈多巴胺驱动力的女性和男性有时会发现，他们难以停止自己的想法，去纯粹地体验性爱中亲昵的感觉——少一些思考，多一些感觉对他们来说非常困难。</p>
+<h1>第二章 毒品</h1>
+<p>欲望始于大脑中一个在进化上早就存在的区域，位于头骨深处，被称为腹侧被盖区。这一区域富含多巴胺，是多巴胺两个主要的产生区域之一。像大多数脑细胞一样，生长在那里的细胞长着长长的尾巴，穿过大脑到达伏隔核。这些长尾巴的细胞被激活时，会将多巴胺释放到伏隔核中，让我们产生做某事的动力。这个回路叫作中脑边缘通路，但我们通常更直白地称之为 <strong>多巴胺欲望回路</strong>。</p>
+<p><img src="/tan_lan_de_duo_ba_an/image-20230212202055360.png" alt="欲望回路"></p>
+<p>买家之所以会懊悔，就是因为当下体验无法弥补多巴胺能激励的损失。这是欲望回路描绘的美好前景被打破的一个体现。它告诉你，如果你购买了那辆昂贵的车，你会欣喜若狂，你的生活肯定也会改变。但是，在你买入之后，你却没有特别强烈的感觉，而且这种感觉也不会很持久。想要和喜欢是由大脑中的两个不同的系统产生的，所以我们想要的东西往往是我们不喜欢的。</p>
+<p>一种避免购买后懊悔的方法是购买一些能触发更多多巴胺能预期的东西，例如，一种工具（如一台能大大提高工作效率的新电脑），或者一件让你出门时看起来更迷人的新夹克。</p>
+<p>毒品会“劫持”欲望回路。它们与食物或性等自然奖赏一样会刺激大脑激励系统，但它们刺激大脑的强度远甚于自然奖赏。成瘾性药物像导弹一样，以猛烈的“化学爆炸”冲击着欲望回路。任何自然行为都比不上它，食物、性，什么都比不上。</p>
+<p>多巴胺系统的目标是预测未来，当一个意想不到的奖赏出现时，它就会发送一个信号说：“注意！现在要学习一些新东西了。”这样，沉浸在多巴胺中的脑回路就产生了可塑性，它们变成了新的样式。新的记忆被储藏，新的连接也形成了。“记住发生了什么，”多巴胺回路说，“这在将来可能有用。”最终结果是什么？下次奖赏出现时，你就不会感到惊讶了。当你发现一个网站播放着你最喜欢的音乐时，你会感到兴奋，但下一次访问这个网站时就不会了，它不再有任何奖赏预测误差。多巴胺并不是一种持久的快乐储存体。毒品破坏了大脑正常运作所需的微妙平衡。无论吸毒者处于何种情况，毒品都会刺激多巴胺的释放。于是，大脑变得混乱不堪，开始将吸毒与一切事物联系起来</p>
+<p>当你期望的奖赏没有实现时，多巴胺系统就会关闭。用科学术语来讲，当多巴胺系统处于静止状态时，它会以每秒 3 到 5 次的速度被激发。但当它兴奋时，它的激发速率会激增到每秒 20 到 30 次。当预期的奖赏没有实现时，多巴胺的激发速率会下降到零，而这种感觉很糟糕。就是为什么多巴胺的停止会让你感到愤恨和失落，一个正在恢复的毒瘾患者每天保持克制和冷静时也是这种感受。克服上瘾需要付出巨大的力量、决心和支持。不要轻易招惹多巴胺，它的反击会让人招架不住</p>
+<p>多巴胺的增加会让人热情参与自己原本认为不重要的事务。例如，有报道称一些吸大麻的人会站在水池前，看着水龙头不断地滴水，这一平平无奇的景象让他们看得十分着迷。欲望多巴胺压制了大脑中更理性的部分。我们知道自己做出的选择并不符合我们的最大利益，但我们无力抗拒。这就好比我们的自由意志已经屈服于一种强烈的及时行乐的冲动——也许是我们在节食时吃的一袋薯片，也许是一夜挥霍。</p>
+<p>上瘾不是性格软弱或意志力不足的表现，它只是欲望回路因过度刺激而进入病理状态时会发生的情况。</p>
+<p>帕金森病是一种多巴胺缺乏症，患有这种病的人负责控制肌肉运动的一条通路中多巴胺不足。这条通路，简单地说，就是我们将内心世界转化为行动，以及将意志施加给世界的途径。当这条通路中没有足够的多巴胺时，人就会僵硬和颤抖，并且移动缓慢。治疗方法是吃一些能促进多巴胺增长的药物。</p>
+<p>什么样的大脑回路强大到足以对抗多巴胺呢？答案是多巴胺，多巴胺可以对抗多巴胺。与欲望回路相反的回路可以被称为“多巴胺控制回路”。</p>
+<h1>第三章 掌控的力量</h1>
+<p>多巴胺通过不同的大脑回路也会产生不同的功能，经过中脑边缘回路的多巴胺会产生冲动，我们称该回路为 <strong>多巴胺欲望回路</strong> 。计算和规划（控制各种情况的手段）来自中脑皮层回路，我们称之为 <strong>多巴胺控制回路</strong></p>
+<p>控制多巴胺利用欲望多巴胺提供的兴奋和动力，评估选项、挑选工具，并制定策略来获得想要的东西</p>
+<p>多巴胺的功能来自进化和生存的需要。多巴胺鼓励我们最大限度地利用资源，因此，当我们把一件事情做得更好，使我们的未来成为一个更好、更安全的地方时，多巴胺就会奖励我们，给我们一点儿“躁起来”的感觉。多巴胺驱动了努力。这种努力的特征可能受到其他很多因素的影响，但如果没有多巴胺，努力从一开始就根本不会存在。</p>
+<p>当别人对成功抱有很高的期望时，我们就会给他们让路。我们会服从他们的意志——在控制多巴胺的驱动下，他们的自我效能得到了完全的表达。我们的大脑之所以进化成这样，有一个充分的理由：参加一场你无法取胜的比赛可不明智。如果你发现对手对成功抱有很高的期望，那么你想要获胜就不那么容易了。<br>
+为什么控制性神经递质多巴胺会触发顺从行为？这不是矛盾吗？一点儿也不矛盾。在控制回路中，多巴胺驱动的是控制环境，而不一定是环境中的人。多巴胺想要更多，但它不在乎它是如何得到的。无论道德还是不道德，控制还是顺从，对多巴胺而言都是一样的，只要它能使未来更好。</p>
+<p>欲望多巴胺会促进毒瘾，让人追求快感，但收获的多巴胺刺激越来越少，同样，有些人的控制多巴胺如此之多，这使他们对成就上瘾，因而无法体验当下的满足。<br>
+这是聚焦未来的多巴胺和聚焦现在的当下神经递质之间的失衡。他们想要逃避当下的情感和感官体验。对他们来说，生活关乎未来，关乎进步，关乎创新。尽管他们的努力带来了金钱甚至名声，但他们总是不开心。不管做了多少，他们都觉得不够。</p>
+<p>额叶负责控制多巴胺的活动，它是发育得最晚的脑区，直到一个人结束青春期进入成年期之后，它才与大脑的其他部分完成连接。控制回路的工作之一是限制欲望回路，因此冲动控制与 ADHD 相关。当控制多巴胺很弱时，人们会去追求他们想要的东西而不考虑长期的后果。多巴胺的生成不受良心的约束。相反，在欲望的滋养下，它是狡猾的源泉。它被激发时，会抑制内疚感这种当下的情绪。它能够激励人们做出不懈的努力，但在追求的过程中不能避免使用欺骗甚至暴力手段 。</p>
+<p>由激情驱使的攻击是对挑衅的猛烈回击，但这并不是由多巴胺控制回路刻意安排的动作。恰恰相反，当激情驱使着我们攻击挑衅者时，当下分子回路会抑制多巴胺。</p>
+<p>当下分子回路相抗衡的多巴胺可以关闭情绪的音量。在复杂的情况下，拥有“冷静头脑”的人，也就是多巴胺能更强的人，能够抑制这种反应，做出更深思熟虑的选择，这些选择通常会带来更好的结果。传统观点将他的脱险归因于“肾上腺素爆发”，事实则恰恰相反。他不是靠肾上腺素爆发，而是靠多巴胺爆发。在他拯救船只的紧张时刻，多巴胺开始掌控局面，肾上腺素（当它在大脑中时被称为去甲肾上腺素）被抑制。</p>
+<p>但当我们需要抵制有害的欲望时，意志力是我们首先使用的工具。事实证明，这可能不是个好选择。意志力可以帮助酒鬼拒绝一次喝酒，但如果他要在几个月或几年的时间里一次次地拒绝的话，他很可能坚持不住。意志力就像一块肌肉，用过之后会疲劳，可能用不了多久，它就放弃了 。于是就有了通过多巴胺对抗多巴胺的疗法，包括：</p>
+<ul>
+<li>动机增强疗法：用欲望多巴胺对抗欲望多巴胺</li>
+<li>认知行为疗法：用控制多巴胺对抗欲望多巴胺</li>
+<li>十二步促进疗法：用当下分子对抗欲望多巴胺<br>
+当下的内疚感是一种强大的动力（你母亲或许也经常利用这一点）。情感的支持和内疚的威胁相结合，帮助许多瘾君子长期保持不复饮</li>
+</ul>
+<h1>第四章 天才与疯子</h1>
+<p>有可能影响你未来的事情是突出的，能触发欲望多巴胺的事情也是突出的。突出的信息提醒你：“该醒醒了！”“当心点儿！”“兴奋起来！”“这很重要！ 如果大脑在突出性方面的功能失灵，即在没有发生对你真正重要的事情时，它也爆发了，那么会发生什么呢？想象你在看新闻，主持人正在谈论政府的一项间谍计划，突然你的突出性回路无缘无故地启动，你可能就会相信新闻上的这个故事和你有关。突出性过强或者在错误的时间出现，都会产生错觉，让触发事件从默默无闻上升到至关重要。</p>
+<p>患有精神分裂症的人通过服用阻断多巴胺受体的药物来控制多巴胺的活动。阻断多巴胺通常不会使精神分裂症的所有症状消失，但可以消除妄想和幻觉。不幸的是，抗精神病药物会阻断整个大脑的多巴胺，而阻断额叶的控制回路会使某些方面变得更糟，例如难以集中注意力和难以用抽象概念推理。</p>
+<p>精神分裂症的患者大脑处于短路状态，把原本熟悉而被忽视的普通事物变得更显著。这种状态也叫作“低潜在抑制“。“潜在抑制”中“潜在”的含义略有不同。不是说一件事从一开始就被隐藏起来，而是说我们把它隐藏起来，因为它对我们不重要。</p>
+<p>我们会抑制自己关注不重要事物的能力，这样就不必把注意力浪费在它们上面。我们在街上走的时候，如果被干净透亮的窗户分散了注意力，可能就注意不到十字路口处“禁止通行”的标志。</p>
+<p>有时我们的环境充满了新事物，使得潜在抑制能力无法挑选出最重要的东西。这种经历可能令人兴奋，也可能令人恐惧。如你身处异国他乡，没有什么可抑制的，它就能带来极大的愉悦，但也会让人混乱、迷失方向，这就是文化冲击。</p>
+<p>模型是我们为了更好地理解世界而建立起的对世界的假想图示。在某些方面，模型就像潜在抑制。模型只包含模型建造者认为必不可少的环境元素，不包含其他细节。这使得这个世界更容易理解，后续我们还可以通过各种方式来操纵它以获得最大利益。模型不仅简化了我们对世界的理解，而且还让我们做抽象归纳，利用获取的特定经验来制定广泛、通用的规则，从而预测和处理从未遇到的情况。<br>
+当我们需要在许多不同的选项中进行选择时，模型会很有帮助。它们让我们想象不同的场景，以便选出最佳的一个。</p>
+<p>糟糕的现实模型可能是由许多因素造成的：没有足够的信息，难以进行抽象思考，或者执着于错误的假设。这些糟糕的假设可能会导致焦虑和抑郁等精神疾病。例如，如果一个孩子在父母的挑剔下长大，她可能会产生自己是一个无能的人的想法，这种想法将塑造她一生所创造的世界模型 。</p>
+<p>模型是一种强大的工具，但也有缺点。它们会让我们陷入特定的思维方式中，导致我们错失一些改善世界的机会</p>
+<p>美术和自然科学之间的共同点，比大多数人认为的要更多，因为两者都是由多巴胺驱动的。诗人写一首描写爱而不得的诗句和物理学家写出电子激发公式没有什么不同，都需要创作者具有超越感官世界，进入一个更深层、更深刻的抽象思想世界的能力。</p>
+<p>高水平的多巴胺会抑制当下分子的功能，所以聪明的人在人际关系上往往很差。我们需要当下的同理心来理解别人的想法，这是社交互动的基本技能。极其聪明、成功和极富创造性的人，也就是那些典型的多巴胺丰富的人通常会表达一种奇怪的情绪：他们对人类充满激情，但对个人却没有耐心。</p>
+<h1>第五章 自由与保守</h1>
+<p>多巴胺能的人倾向于支持自由主义政策。自由主义者经常把自己称为“进步的”，这个词意味着不断的提升。 硅谷的企业家以及为他们工作的人，往往极富多巴胺能。他们意志坚强、敢于冒险、追求刺激，与《美国政治科学杂志》修正版文章中的自由主义者的特征相符。 一项针对初创企业创始人的调查显示，83% 的人持进步主义的观点，认为教育可以解决社会上的所有或大部分问题。而在公众中，只有 44% 的人相信这是真的。《纽约时报》的一篇评论指出，只有 2% 的英语系教授是共和党人，而 18% 的社会学家则认为自己是马克思主义者。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">多巴胺能的人倾向于自由主义，当下分子能的人倾向于保守主义。</span><br></pre></td></tr></table></figure>
+<p>大多数专家都认为智商测试并不能衡量一般智力。它更着重于衡量根据不完整数据进行归纳和使用抽象规则找出新信息的能力。智商测试衡量了一个人根据过去的经验建立假想模型，然后利用这些模型预测未来会发生什么的能力。控制多巴胺在这些过程中起着很大的作用。</p>
+<p>理性决定是不可靠的，总是随着新证据的出现而随时可能被修改。非理性则更持久，欲望多巴胺和当下分子通路都可以被用来引导人们做出非理性的决定。最有效的工具是恐惧、欲望和同情。 不论是哪种政治倾向的人，他们在感受到威胁时都会变得更加保守。一瓶洗手液能唤醒人对于病毒的恐惧。研究进化对人类行为影响的心理学家格伦·D. 威尔逊（Glenn D. Wilson）教授开玩笑说，在选举季节，厕所里张贴“员工必须洗手才能重返工作岗位”的标志就是在给共和党打广告。</p>
+<p>保守主义者倾向于关注较小的群体，比如个人、家庭和国家，而自由主义者则更倾向于关注更大的群体：由所有人组成的全球社区。</p>
+<p>把贫困移民拒之门外让人想起了爱因斯坦的那句话：“我对社会正义和社会责任充满热情，但我与其他人直接接触时却表现冷淡，这实在是一种奇怪的对比。”保守派似乎恰恰相反。他们想把非法移民排除在这个国家之外，以防止他们担心的事情发生，即他们的文化发生根本性转变。然而，伤害厌恶会促使他们愿意去照顾住在本国的人。</p>
+<p>政治是一种多巴胺能的活动，因为政府是通过抽象的法律从远处管理人民的。由当下回路控制的暴力为法律树立威信。由于政府的本性就是多巴胺能的，自由主义者往往比专注于当下的保守主义者更热衷于此。相比之下，保守主义者更容易不信任政府，特别是距离较远的政府。保守派倾向于地方治理，权力在州或地方一级，而不是联邦一级。</p>
+<h1>第六章 进步</h1>
+<p>多巴胺受体 D4 的一种编码基因。D4 基因的一个变体被称为 7R，拥有 7R 变体的人喜欢探求新奇事物。 他们喜欢追求新的体验，因为他们不大能容忍无聊。他们喜欢探索新的地方、想法、食物、毒品和性机会，他们是冒险家。全世界大约 1/5 的人有 7R 等位基因，但各地的差异很大。</p>
+<p>经历了漫长征程的南美原住民中，长多巴胺等位基因的比例最高，达到 69%。在迁徙较短距离并定居北美的人中，只有 32% 的人拥有长等位基因。中美洲原住民的比例介于它们之间，为 42%。据估计，平均每迁移 1 000 英里，长等位基因的比例就会增加 4.3 个百分点。确定了 DRD4 基因的 7R 等位基因与种群迁移的距离有关以后，下一个问题就是为什么迁徙成员中的 7R 等位基因更多？答案是，也许 7R 等位基因并没有引发迁移，但一旦迁移开始，这一等位基因就会赋予携带者生存优势。7R 等位基因的一个优点是，它会让你不断探索新环境，以便寻找机会来使资源最大化。换句话说，它促进了对新事物的探索。不断前进的部落会一代又一代地经历陌生的环境。7R 的生殖优势将继续下去，7R 携带者将活得更长，生育更多的孩子。随着时间的推移，7R 等位基因在这些长途迁移者中会变得越来越普遍。</p>
+<p>双相情感障碍中的双相又称两极（bipolar），是指两种极端的情绪。双相情感障碍患者会经历抑郁发作，即情绪异常低落，也会经历躁狂发作，即情绪过于高昂。后者与高水平的多巴胺有关，考虑到躁狂状态的症状，这一点儿也不奇怪。<br>
+在舞蹈、表演、音乐和写作等创造性领域工作的人与没有从事创造性工作的人相比，患双相情感障碍的可能性高出 25%。在另一项研究中，格拉斯哥大学的科学家跟踪了 1 800 多名 8 岁到 20 岁出头的人。他们发现，8 岁时的智商分数越高，23 岁或之前患双相情感障碍的风险就越大。<br>
+与普通大脑相比，聪明的大脑患多巴胺能精神疾病的风险更大。许多著名的有创造力的人都透露他们患有双相情感障碍。</p>
+<p>多巴胺过度活动并不是双相情感障碍的唯一问题，但它起着重要的作用。它不是由高活性 DRD4 受体等位基因引起的。科学家认为这是由多巴胺转运体引起的。多巴胺转运体就像吸尘器，它可以限制多巴胺刺激周围细胞的时间。<br>
+当一个能产生多巴胺的细胞被激活时，它会释放出它储存的多巴胺，后者与其他脑细胞的受体结合。之后，多巴胺转运体会将多巴胺吸回原来的细胞中，结束与受体的相互作用，以便后续再重复这一过程。这种转运体有时被称为“再摄取泵”，因为它将多巴胺重新泵入细胞。<br>
+当转运体不能正常工作时会发生什么？我们可以通过研究滥用可卡因的人的行为来回答这个问题。可卡因会阻滞多巴胺转运体，就像把袜子塞进吸尘器吸嘴一样。这种阻滞作用使多巴胺能够一次又一次地与其受体相互作用。当这种情况发生时，人们会感受到更多的能量，也会有更多目标导向的活动和更强的性冲动。人的自尊和兴奋感得到提升，喜欢从一个话题跳到另一个话题。可卡因中毒与躁狂症十分相似，有时医生都难以区分。</p>
+<p>高多巴胺能的科学家为高多巴胺能的统治者制造了末日武器。科学家无法阻止自己制造出更加致命的武器，独裁者也无法阻止自己对权力的贪欲。<br>
+另一个容易想象到的世界末日场景是多巴胺驱使我们消耗越来越多的资源，直到我们毁灭地球<br>
+着眼于未来的多巴胺让人不再生孩子，因为生活在发达国家的人在年老时不依赖孩子来抚养他们。</p>
+<h1>第七章 和谐</h1>
+<p>现代世界驱使我们向着每时每刻全是多巴胺的状态发展。过多的多巴胺会导致精力旺盛的痛苦（如工作狂式的主管），而过多的当下神经递质则会导致快乐的懒惰（如躺在地下室抽大麻的人）。</p>
+<p>从多巴胺的角度来看，精通是一件值得期待和追求的好事，但它不同于其他好事。它不仅仅是寻找食物和新的合作伙伴，或者击败竞争对手，它比这些更宏大、更普遍。它是我们成功提取奖励的过程：多巴胺达到了多巴胺的目标。实现了精通，多巴胺到达了它渴望的顶峰——挤压了所有可用资源的最后一滴。<br>
+在尽其所能之后，多巴胺会暂停下来，允许当下分子在我们的快乐回路中发挥作用。在这一刻，多巴胺不再对抗满足感，它让它通行——即使只持续很短的一段时间。最好的享受就是沉浸在一份干得好的工作中。</p>
+<p>关注现实，关注你此刻所做的事情，可以使进入你大脑的信息流最大化。它能最大限度地提高多巴胺制订新计划的能力，因为为了建立模型以准确地预测未来，多巴胺需要数据，以及来自感官的数据流。这时，多巴胺和当下分子就联手工作了。</p>
+]]></content>
+      <tags>
+        <tag>自然科学</tag>
+        <tag>心理学</tag>
+        <tag>科普</tag>
       </tags>
   </entry>
 </search>
