@@ -15,9 +15,9 @@ date: 2023-05-08
 
 我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令
 
-## 代码示例
+# 代码示例
 
-### 抽象命令类及实现
+## 抽象命令类及实现
 
 ```cs 抽象命令类
 public interface Command
@@ -78,7 +78,7 @@ public class NoCommand : Command
 }
 ```
 
-### 接受者
+## 接受者
 
 ```cs 灯
 public class Light
@@ -95,7 +95,7 @@ public class Light
 }
 ```
 
-### 调用者
+## 调用者
 
 ```cs 远程控制
 class RemoteControl
@@ -128,7 +128,7 @@ class RemoteControl
 }
 ```
 
-### 客户类
+## 客户类
 
 ```cs 函数入口
 static void Main(string[] args)
@@ -143,7 +143,7 @@ static void Main(string[] args)
 }
 ```
 
-## 测试及结果
+# 测试及结果
 
 运行结果：
 

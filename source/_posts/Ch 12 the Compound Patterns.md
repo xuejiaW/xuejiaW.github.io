@@ -15,9 +15,9 @@ MVC 框架就是一种组合模式，`Controller`和`View`之间使用了策略�
 
 我们以音量调节作为一个最简的 MVC 框架示例。
 
-## 代码示例
+# 代码示例
 
-### 框架接口
+## 框架接口
 
 ```cs 观察者接口
 public interface IVolumeObserver
@@ -44,7 +44,7 @@ public interface IViewController
 }
 ```
 
-### 接口实现
+## 接口实现
 
 ```cs Model
 public class VolumeModel : IVolumeModel
@@ -140,7 +140,7 @@ public class VolumeController : IViewController
     }
 ```
 
-## 测试代码及结果
+# 测试代码及结果
 
 ```cs 测试代码
 VolumeModel model = new VolumeModel();

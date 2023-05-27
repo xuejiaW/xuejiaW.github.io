@@ -15,9 +15,9 @@ date: 2023-05-20
 
 例如我们需要做一个口香糖贩卖机需要处理，投钱、退钱、旋转出货按钮这三个操作，然后机器有未投钱、投钱、货物卖出、货物卖完四个状态。我们可以将不同状态下对三个操作的处理定义在各自的状态类中。
 
-## 代码示例
+# 代码示例
 
-### 状态类接口
+## 状态类接口
 
 ```cs 状态类接口
 public interface State
@@ -29,7 +29,7 @@ public interface State
 }
 ```
 
-### 状态类实现
+## 状态类实现
 
 ```cs 未投钱状态
 public class NoQuarterState : State
@@ -157,7 +157,7 @@ public class SoldOutState : State
 }
 ```
 
-## 测试代码及结果
+# 测试代码及结果
 
 ```cs 测试代码
 GumballMachine gumballMachine = new GumballMachine(5);
