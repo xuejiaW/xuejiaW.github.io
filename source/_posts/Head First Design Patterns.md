@@ -1,6 +1,6 @@
 ---
 created: 2022-02-02
-updated: 2023-05-23
+updated: 2023-05-27
 tags:
     - 设计模式
 Author:
@@ -8,10 +8,10 @@ Author:
     - Elisabeth Robson
 Cover: https://images-na.ssl-images-amazon.com/images/I/61APhXCksuL._SX430_BO1,204,203,200_.jpg
 ISBN: 978-0596007126
-title: Head First 设计模式
+title: 《Head First 设计模式》 笔记汇总
 published: true
 description: 本篇为 Head First Design Patterns 的笔记汇总
-date: 2023-05-23
+date: 2023-05-24
 ---
 
 [Ch 01 the Strategy Pattern](/Ch%2001%20the%20Strategy%20Pattern)
@@ -38,4 +38,4 @@ date: 2023-05-23
 
 [Ch 12 the Compound Patterns](/Ch%2012%20the%20Compound%20Patterns)
 
-[Design Principles](/Design%20Principles)
+[Head First Design Pattern Design Principles](/Head%20First%20Design%20Pattern%20Design%20Principles)

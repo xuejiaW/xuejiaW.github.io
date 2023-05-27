@@ -2,8 +2,8 @@
 tags:
 - 设计模式
 created: 2023-05-16
-updated: 2023-05-23
-title: Head First 设计模式 - 适配器模式和外观模式
+updated: 2023-05-27
+title: 《Head First 设计模式》 Ch 07 适配器模式和外观模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第七章，介绍了适配器模式及外观模式的定义及运用。
 date: 2023-05-09

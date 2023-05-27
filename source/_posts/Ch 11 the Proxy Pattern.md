@@ -2,8 +2,8 @@
 tags:
     - 设计模式
 created: 2022-02-02
-updated: 2023-05-23
-title: Head First 设计模式 - 代理模式
+updated: 2023-05-27
+title: 《Head First 设计模式》 Ch 11 代理模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第十一章，介绍了代理模式的定义及运用。
 date: 2023-05-21

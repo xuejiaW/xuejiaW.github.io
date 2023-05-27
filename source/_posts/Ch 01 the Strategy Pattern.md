@@ -1,9 +1,9 @@
 ---
-updated: 2023-05-23
+updated: 2023-05-27
 tags:
 - 设计模式
 created: 2023-05-04
-title: Head First 设计模式 - 策略模式
+title: 《Head First 设计模式》 Ch 01 策略模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第一章，介绍了策略模式的定义及运用。
 date: 2023-05-03
