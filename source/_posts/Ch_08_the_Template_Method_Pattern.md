@@ -107,4 +107,4 @@ tea.PrepareRecipe();
 
 运行结果:
 
-![模版方法模式运行结果](/Ch%2008%20the%20Template%20Method%20Pattern/2019-02-03-15-59-58.png)
+![模版方法模式运行结果](/Ch_08_the_Template_Method_Pattern/2019-02-03-15-59-58.png)

@@ -128,7 +128,7 @@ pizza.Debug();
 ```
 
 运行结果:
-![简单工厂运行结果](/Ch%2004%20the%20Factory%20Pattern/2019-01-20-21-24-34.png)
+![简单工厂运行结果](/Ch_04_the_Factory_Pattern/2019-01-20-21-24-34.png)
 
 # 工厂方法模式
 
@@ -243,7 +243,7 @@ pizza.Debug();
 
 运行结果：
 
-![工厂方法模式运行结果](/Ch%2004%20the%20Factory%20Pattern/2019-01-23-00-29-35.png)
+![工厂方法模式运行结果](/Ch_04_the_Factory_Pattern/2019-01-23-00-29-35.png)
 
 # 抽象工厂模式
 
@@ -455,7 +455,7 @@ pizza.Debug();
 ```
 
 运行结果：
-![抽象工厂模式运行结果](/Ch%2004%20the%20Factory%20Pattern/2019-01-24-01-01-50.png)
+![抽象工厂模式运行结果](/Ch_04_the_Factory_Pattern/2019-01-24-01-01-50.png)
 
 # Reference
 

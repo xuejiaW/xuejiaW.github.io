@@ -153,7 +153,7 @@ private static void PrintMenu(Iterator iterator)
 
 运行结果：
 
-![迭代器模式运行结果](/Ch%2009%20the%20Iterator%20and%20Composite%20Pattern/2019-02-03-23-36-01.png)
+![迭代器模式运行结果](/Ch_09_the_Iterator_and_Composite_Pattern/2019-02-03-23-36-01.png)
 
 # 组合模式
 
@@ -255,4 +255,4 @@ menu.Debug();
 
 运行结果：
 
-![组合模式运行结果](/Ch%2009%20the%20Iterator%20and%20Composite%20Pattern/2019-02-06-16-23-58.png)
+![组合模式运行结果](/Ch_09_the_Iterator_and_Composite_Pattern/2019-02-06-16-23-58.png)

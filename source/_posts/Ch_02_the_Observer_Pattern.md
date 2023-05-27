@@ -136,4 +136,4 @@ weatherData.SetMeasurements(10, 50, 15);
 
 运行结果：
 
-![观察者模式运行结果](/Ch%2002%20the%20Observer%20Pattern/2019-01-15-23-20-09.png)
+![观察者模式运行结果](/Ch_02_the_Observer_Pattern/2019-01-15-23-20-09.png)
