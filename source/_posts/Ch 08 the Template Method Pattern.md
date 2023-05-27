@@ -9,8 +9,6 @@ description: 本篇来自于 《Head First Design Pattern》 第八章，介绍�
 date: 2023-05-10
 ---
 
-# 模版方法模式
-
 模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。
 
 * 工厂方法>模式就是模版方法模式的一种运用。
@@ -19,9 +17,9 @@ date: 2023-05-10
 
 例如我们需要准备咖啡和茶，准备咖啡基本步骤为烧开水，加入咖啡粉，将咖啡倒入杯子，增加牛奶或糖（可选），准备茶的基本步骤为烧开水，加入茶粉，将茶倒入杯子，增加柠檬（可选）。我们发现在制作两个饮料的过程中，烧开水和倒入杯子这两个步骤是一样的，剩下的两个步骤，向烧开的水中增加相应的粉和增加配料，这两部分也是类似的，于是我们可以用模版方法模式，将这两步骤作为抽象方法。
 
-## 代码示例
+# 代码示例
 
-### 算法模版基类
+## 算法模版基类
 
 ```cs 咖啡因饮料模版
 public abstract class CaffeineBeverage
@@ -60,7 +58,7 @@ public abstract class CaffeineBeverage
 例子中`brew`和`addCondiments`即为模版函数，而`NeedCondiments`这种提供了基本实现，但派生类中仍然可以重写的函数被称为钩子（`Hook`）。
 {% endnote%}
 
-### 咖啡因饮料实现
+## 咖啡因饮料实现
 
 ```cs 咖啡
 public class Coffee : CaffeineBeverage
@@ -97,7 +95,7 @@ class Tea : CaffeineBeverage
 }
 ```
 
-## 测试代码及结果
+# 测试代码及结果
 
 ```cs 测试代码
 Coffee coffee = new Coffee();

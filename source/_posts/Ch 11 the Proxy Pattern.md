@@ -13,9 +13,9 @@ date: 2023-05-21
 
 例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。
 
-## 代码示例
+# 代码示例
 
-### 抽象接口
+## 抽象接口
 
 ```cs 图片接口
 public interface Icon
@@ -24,7 +24,7 @@ public interface Icon
 }
 ```
 
-### 抽象接口实现
+## 抽象接口实现
 
 ```cs 真实图片类
 public class ImageIcon : Icon
@@ -69,7 +69,7 @@ public class ImageProxyIcon : Icon
 }
 ```
 
-## 测试代码及结果
+# 测试代码及结果
 
 ```cs 测试代码
 ImageProxyIcon proxyIcon = new ImageProxyIcon();
