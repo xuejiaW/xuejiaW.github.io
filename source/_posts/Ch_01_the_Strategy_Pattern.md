@@ -118,4 +118,4 @@ blackDuck.PerformFly();
 
 运行结果
 
-![策略模式运行结果](/Ch%2001%20the%20Strategy%20Pattern/2019-01-15-00-12-45.png)
+![策略模式运行结果](/Ch_01_the_Strategy_Pattern/2019-01-15-00-12-45.png)

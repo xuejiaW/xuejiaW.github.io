@@ -132,4 +132,4 @@ Console.WriteLine(doubleMochaWhipEspresso.getDescription() + " Cost: " + doubleM
 
 运行结果：
 
-![装饰模式运行结果](/Ch%2003%20the%20Decorator%20Pattern/2019-01-15-23-43-20.png)
+![装饰模式运行结果](/Ch_03_the_Decorator_Pattern/2019-01-15-23-43-20.png)

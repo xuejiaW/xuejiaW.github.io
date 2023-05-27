@@ -78,7 +78,7 @@ proxyIcon.PrintIconWidthAndHeight();
 
 运行结果：
 
-![代理模式运行结果](/Ch%2011%20the%20Proxy%20Pattern/2019-02-07-14-10-11.png)
+![代理模式运行结果](/Ch_11_the_Proxy_Pattern/2019-02-07-14-10-11.png)
 
 ```ad-note
 代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，`ImageProxyIcon`并没有为`ImageIcon`拓展什么功能，只是用了多线程来访问访问其中的函数。

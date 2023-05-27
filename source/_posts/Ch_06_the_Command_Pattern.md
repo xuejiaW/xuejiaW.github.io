@@ -147,4 +147,4 @@ static void Main(string[] args)
 
 运行结果：
 
-![命令模式测试结果](/Ch%2006%20the%20Command%20Pattern/2019-02-02-23-26-25.png)
+![命令模式测试结果](/Ch_06_the_Command_Pattern/2019-02-02-23-26-25.png)
