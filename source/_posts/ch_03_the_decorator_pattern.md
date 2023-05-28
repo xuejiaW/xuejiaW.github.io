@@ -46,9 +46,9 @@ public abstract class CondimentDecorator : Beverage
 }
 ```
 
-```ad-note
+{% note info %}
 注意装饰类基类继承自被装饰类，并存有一个被装饰类的变量，因为装饰类需要在被装饰类操作的基础上进行一定额外的操作，所以它需要存有对被装饰类的引用，同时对外部而言调用者而言，它与被装饰类相同。
-```
+{% endnote %}
 
 ## 被装饰类实现
 
