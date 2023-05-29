@@ -37,8 +37,8 @@ description: 本部分中介绍了渲染过程中常见的问题，这些问题�
 
 # Thin Triangles
 
-如在 Book 2 的 [Rasterizing](book_2_pipeline.md#rasterizing) 中所属，光栅化后的单位是 `pre-pixles` ，Warp 中的四个线程会被分给一个 `pre-pixels` 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：
-![Thin Triangles 造成的性能浪费](/book_3_problems/pipeline_rasterizing03_(1).gif)
+如在 Book 2 的 [Rasterizing](/book_2_pipeline#Rasterizing) 中所属，光栅化后的单位是 `pre-pixles` ，Warp 中的四个线程会被分给一个 `pre-pixels` 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：
+![Thin Triangles 造成的性能浪费](/book_3_problems/pipeline_rasterizing03_.gif)
 
 # Reference
 
