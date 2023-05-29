@@ -1,12 +1,12 @@
 ---
 created: 2022-01-04
-updated: 2023-05-28
+updated: 2023-05-29
 tags:
     - GPU
 title: 《Render Hell》 第一部分 概览
 published: true
 date: 2023-05-28
-description: 本部分中介绍了在渲染过程中数据传递的流程，包括 CPU 通过 Command Buffer 将 Draw Call 和 Render State 传递给 GPU。GPU 内部在绘制时会将数据拷贝到各缓存（L1 Cache，L2 Cache，Register）中，并交由各核心进行处理。
+description: 本部分中简略介绍了在渲染过程中数据传递的流程，包括 CPU 通过 Command Buffer 将 Draw Call 和 Render State 传递给 GPU。GPU 内部在绘制时会将数据拷贝到各缓存（L1 Cache，L2 Cache，Register）中，并交由各核心进行处理。
 ---
 
 {% note info %}
