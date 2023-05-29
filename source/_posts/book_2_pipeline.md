@@ -5,10 +5,10 @@ tags:
     - GPU
 title: 《Render Hell》 第二部分 管线
 published: true
-date: 2023-05-29
-math: true
+date: 2023-05-29 21:45
 description: 本部分中介绍了 GPU 核心的部分概念，以及自上而下的深入讲解了 GPU 管线中的各部分。
 ---
+
 
 # GPU Core
 
