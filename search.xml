@@ -1,6 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>《Render Hell》 第一部分 概览</title>
+    <url>/book_1_overview/</url>
+    <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
+</div>
+<h1 id="Copy_the_Data"><a class="header-anchor" href="#Copy_the_Data">#</a>Copy the Data</h1>
+<div class="note info simple"><p>之所以需要在不同的硬件间拷贝数据，是因为从不同硬件中读取数据的速度差异很大。因此对于当前需要频繁访问的数据，通常会选择将其拷贝到更为高速的内存部分中。</p>
+</div>
+<div class="note warning simple"><p>GPU 和 显卡 并不是相等的关系 GPU 全称为 Graphics Processing Unit，它指示显卡中的核心计算芯片。整个显卡中还包括显存（VRam），散热器等配件。</p>
+</div>
+<p>对于所有与绘制相关的资源，如贴图，模型，一开始都是存储在硬盘（HDD）上的 。在整个绘制过程中，它们会先被读取到内存（RAM）中，再被读取到显卡上的显存（VRAM）中。之所以要进行这么一个数据从 HDD 拷贝到 VRAM 中的操作，是因为显卡读取 VRAM 中的内容速度更快。整个过程如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_8-52-50_am.gif" alt="数据从内存拷贝到显存"></p>
+<p>又因为整个过程中数据是被 拷贝 的，因此当数据进入 VRAM 后，在 RAM 中的数据可以被正常销毁，不会影响到后续的绘制。如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_8-55-43_am.gif" alt="内存中数据可安全销毁"></p>
+<p>但是 GPU 访问 VRAM 速度仍然不够快，VRAM 中需要使用到的数据会进一步的被拷贝到 GPU 中的一小块内存上（ on-chip caches），这一块内存被称为 <code>L2 Cache</code> 。过程如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_9-18-41_am.gif" alt="L2 Cache"></p>
+<p>在 GPU 更靠近核心（Core）的地方，还有一片更小的内存，称为 <code>L1 Cache</code> 。因为更靠近核心，所以 <code>L1 Cache</code> 中数据的访问速度相对于 <code>L2 Cache</code> 也更快。 <code>L2 Cache</code> 中的数据在需要被操作时，也会先拷贝到 <code>L1 Cache</code> 中。</p>
+<p>在 <code>L1 Cache</code> 中的数据还会被进一步拷贝到 GPU 中被称为 <code>Register</code> 的内存区域，GPU Cores 会从该区域中读取数据，计算并将运算后结果放回到 <code>Register</code> 中：<br>
+<img src="/book_1_overview/gif_9-13-2021_9-25-58_am.gif" alt="Register"></p>
+<h1 id="Set_the_Render_State"><a class="header-anchor" href="#Set_the_Render_State">#</a>Set the Render State</h1>
+<p>对于除了 Mesh 数据外的数据，如顶点/像素着色器，纹理，材质，光照信息，是否半透明等信息都称为 <code>Render State</code> 。</p>
+<p>Mesh 数据会使用被设置的 <code>Render State</code> 进行渲染，图形 API 又是一个类似状态机的实现，即设置了 Render State 后，后续的 Mesh 都会使用该 State 进行渲染，直到有了新 State 被设置。示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_8-47-57_am.gif" alt="State"></p>
+<h1 id="Draw_Call"><a class="header-anchor" href="#Draw_Call">#</a>Draw Call</h1>
+<p><code>DrawCall</code> 是一个由 CPU 端发出，由 GPU 端接受的绘制 <strong>一个 Mesh</strong> 的指令。该指令只包含指向需要绘制的 Mesh 的指针，而如材质这样的信息是通过 Render State 进行传递，并不会在 <code>DrawCall</code> 中。示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_8-55-41_am.gif" alt="Draw Call"></p>
+<h1 id="Pipeline"><a class="header-anchor" href="#Pipeline">#</a>Pipeline</h1>
+<p>当 <code>DrawCall</code> 发送后，GPU 会获取当前的 Render State，和设置的顶点信息（Mesh），并通过渲染管线（Pipeline）将其一步步转换到最终屏幕上所见像素。在管线中，对于顶点和像素的工作会被划分到 GPU 的多个核心中平行处理。整个管线工作的简单示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_9-02-13_am.gif" alt="Pipeline"></p>
+<h1 id="Command_Buffer"><a class="header-anchor" href="#Command_Buffer">#</a>Command Buffer</h1>
+<p>CPU 并不是直接将数据传递给 GPU，而是通过 <code>Command Buffer</code> ，这样 CPU 和 GPU 就可以各自独立的工作。如果是直接传递的话，当 GPU 在忙碌时，CPU 无法将数据送给 GPU，就会造成 CPU 的堵塞。</p>
+<p>Command Buffer 是一个 <code>FIFO 存储器</code> ，即 GPU 只会取 CPU 最早 Push 进 Command Buffer 中的数据。 Command Buffer 的示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_9-12-25_am.gif" alt="Command Buffer"></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book1/">Render Hell – Book I | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Render Hell》 第二部分 管线</title>
+    <url>/book_2_pipeline/</url>
+    <content><![CDATA[<h1 id="GPU_Core"><a class="header-anchor" href="#GPU_Core">#</a>GPU Core</h1>
+<p>在 GPU Core 中有两个运算单元 <code>floating point unit(FP UNIT)</code> 和 <code>integer unit (INT UNIT)</code> ，当 GPU Core 接收到数据后，会通过这两个运算单元进行计算。</p>
+<p><img src="/book_2_pipeline/gif_9-14-2021_9-27-55_am.gif" alt="FP / Int Unit"></p>
+<h2 id="Not_Everything_is_done_by_GPU_Cores"><a class="header-anchor" href="#Not_Everything_is_done_by_GPU_Cores">#</a>Not Everything is done by GPU Cores</h2>
+<p>对于如分发渲染任务，计算 <code>Tessellation</code>，<code>Culling</code> ，<code>Depth Testing</code>，光栅化，将计算后的 Pixel 信息写入到 Framebuffer 中等工作，并不是不通过 GPU Cores 完成，这些工作会由 GPU 中其他的硬件模块完成（这些模块不受开发者的代码控制）。</p>
+<h2 id="Parallel_Running_Pipelines"><a class="header-anchor" href="#Parallel_Running_Pipelines">#</a>Parallel Running Pipelines</h2>
+<p>对于 GPU Core 而言，它需要 <code>Streaming Multiprocessor(SM)</code> 为其分配工作，一个 SM 处理来自于 <strong>一个</strong> Shader 的顶点或像素数据。因此当一个 SM 下有多个 Core 时，来自于 <strong>一个</strong> Shader 的顶点或像素就能被并行的处理。当有多个 SM 时，多个 Shader 间也能并行处理。如下图所示：</p>
+<p><img src="/book_2_pipeline/untitled.png" alt="Streaming Multiprocessor"></p>
+<h1 id="Pipeline_Stages_In_Depth"><a class="header-anchor" href="#Pipeline_Stages_In_Depth">#</a>Pipeline Stages In-Depth</h1>
+<div class="note info simple"><p>这一部分从上至下更深入的讲解 GPU Pipeline</p>
+</div>
+<h2 id="Application_Stage"><a class="header-anchor" href="#Application_Stage">#</a>Application Stage</h2>
+<p>对于应用而言，其提交的图形 API 都是提交给 GPU 的驱动，告诉其需要绘制的内容和 Render State。</p>
+<p><img src="/book_2_pipeline/gif_9-15-2021_8-41-31_am.gif" alt="Application 提交图像指令给 Driver"></p>
+<h2 id="Driver_Stage"><a class="header-anchor" href="#Driver_Stage">#</a>Driver Stage</h2>
+<p>驱动会将绘制的数据 Push 到 Command Buffer 中，当 VSync 或 Flush 时，Command Buffer 中的数据会被 Push 到 GPU 中。</p>
+<p><img src="/book_2_pipeline/gif_9-15-2021_8-44-49_am.gif" alt="Driver 将指令给 Command Buffer"></p>
+<h2 id="Read_Commands"><a class="header-anchor" href="#Read_Commands">#</a>Read Commands</h2>
+<p>显卡中的 <code>Host Interface</code> 会负责读取 Command Buffer 传递进来的数据供后续的使用。<br>
+<img src="/book_2_pipeline/gif_9-15-2021_8-45-28_am.gif" alt="Host Interface 读取 Command Buffer"></p>
+<h2 id="Data_Fetch"><a class="header-anchor" href="#Data_Fetch">#</a>Data Fetch</h2>
+<p>一些 Command 包含数据的拷贝。GPU 通常会有一个单独的模块处理从 RAM 拷贝数据到 VRAM 的过程，反之亦然。这些需要拷贝的数据可以是 Vertex Buffer，纹理或其他 Shader 的参数。通常渲染一帧会从传递 Camera 相关的数据开始。</p>
+<p>当所有数据准备完成后，GPU 中会有一个模块（Gigathread Engine）负责处理任务的分发。它为每一个要处理的顶点或像素创建一个线程，并将多个线程打包成一个 Package, NVIDIA 将这个 Package 称为 Thread block 。 Thread Block 会被分发给 SM，如下图所示：<br>
+<img src="/book_2_pipeline/gif_9-15-2021_8-58-59_am.gif" alt="分配 Thread Block"></p>
+<h2 id="Vertex_Fetch"><a class="header-anchor" href="#Vertex_Fetch">#</a>Vertex Fetch</h2>
+<p>SM 中仍然包含了多个硬件的单元，其中一个为 <code>Polymorph Engine</code> ，它负责将数据拷贝到各内存部分中，让 Core 在之后的工作中可以更快的访问数据。</p>
+<p><img src="/book_2_pipeline/gif_9-15-2021_9-03-27_am.gif" alt="Polymorph Engine 拷贝数据"></p>
+<h2 id="Shader_Execution"><a class="header-anchor" href="#Shader_Execution">#</a>Shader Execution</h2>
+<p><code>Streaming MultiProcessor (SM)</code> 的主要功能为执行开发者编写的 Shaders。</p>
+<p>SM 首先会将之前获取到的 Thread Block 拆分为多个 <code>Warp</code> 。每一个 Warp 包含的线程数根据硬件的不同可能存在差异， Nvidia 平台下一个 Warp 包含 32 个 Thread。<br>
+<img src="/book_2_pipeline/pipeline_workdistribution_02.gif" alt="Thread Block to Warp"></p>
+<p>SM 中包含多个 <code>Warp Schedulers</code> ，每个 <code>Warp Schedulers</code> 会选择其中一个 Warp，并将需要执行的指令进行翻译。与 Warp 中线程数相同的 GPU Core 会一起逐条执行这些指令。每个 GPU Core 在同一时间点会执行相同的指令，但有着不同的数据（如不同的像素，不同的顶点）。为了简化，如下只展示一个 <code>Warp Schedulers</code> 的情况，过程如下所示：</p>
+<p><img src="/book_2_pipeline/pipeline_workdistribution_04.gif" alt="Wrap Schedulers 执行指令"></p>
+<div class="note info simple"><p>对于每个 GPU Core 而言，它们无法知晓整个 Shader 指令，它们在仅知晓当前需要执行的那 <strong>一条</strong> 指令。</p>
+</div>
+<p>需要再次强调的是，一个 Warp 对应的 GPU Cores 在同一时间点会执行相同的指令，不会存在某个时间点一个 Core 执行语句 A，另一个 Core 执行语句 B 的情况。这种限制被称为 <code>lock-step</code> 。</p>
+<p>当 Shader 中 IF 指令时，进入分支的 Core 会进行工作，剩下的 Core 会进入“休眠”。同理如果 Shader 中存在循环，那么仍然在循环内的 Core 进行工作，已经完成循环 工作的 Core 进入休眠，直到所有的 Core 都完成了操作。如下所示：</p>
+<p><img src="/book_2_pipeline/pipeline_workdistribution_06.gif" alt="Lock Step"></p>
+<div class="note info simple"><p>部分 Cores 工作，部分 Cores 休眠的现象称为 <strong><code>divergent threads</code></strong> 应当要尽量避免。</p>
+</div>
+<p>当 Warp 中需要执行的指令依赖的数据尚未被准备好， SM 会选择另一个 Warp 并执行其中的指令，如下所示：<br>
+<img src="/book_2_pipeline/pipeline_workdistribution_07.gif" alt="Memory Stall"></p>
+<div class="note info simple"><p>Warp 中指令依赖数据未准备好，必须切换另一个 Warp 继续执行的现象，称为 <code>Memory Stall</code> 。</p>
+</div>
+<p>如前所述，一个 SM 可能包含多个 Warp Schedulers，也因此可以并行的处理多个 Warps，<br>
+<img src="/book_2_pipeline/untitled_1.png" alt="|多个 Warps"></p>
+<h2 id="Vertex_Shader"><a class="header-anchor" href="#Vertex_Shader">#</a>Vertex Shader</h2>
+<p>每一个顶点着色器的实例对应 <strong>一个</strong> 顶点的处理，且运行在被 SM 管理的一个线程上。<br>
+<img src="/book_2_pipeline/pipeline_vertex_shader_01.gif" alt="顶点"></p>
+<h2 id="Tessellation"><a class="header-anchor" href="#Tessellation">#</a>Tessellation</h2>
+<div class="note info simple"><p>曲面细分阶段中，有两个可编程的着色器， <code>Hull Shader</code> 和 <code>Domain Shader</code></p>
+</div>
+<div class="note info simple"><p>为何需要曲面细分阶段，而不是直接在模型中增加更多的顶点？</p>
+<ol>
+<li>相较于更多顶点时数据传输时的开销，通过曲面细分生成更多顶点的开销更低</li>
+<li>曲面细分阶段可以控制顶点该如何被细分，如根据摄像机的距离。这样就能产生出更适合实际使用时的顶点数据。</li>
+</ol>
+</div>
+<h3 id="Patch_Assembly"><a class="header-anchor" href="#Patch_Assembly">#</a>Patch Assembly</h3>
+<div class="note info simple"><p><code>Patch Assembly</code> 和后续的 <code>Hull Shader</code> ， <code>Tessellation</code> 及 <code>Domain Shader</code> 仅当使用了 <code>曲面细分着色器(Tessellation Shader)</code> 时才会进行。</p>
+</div>
+<p>Patch Assembly 阶段会把多个顶点打包成一个 Patch 供后续的 Tessellation 阶段处理。究竟多少个 顶点会被打包成一个 Patch，是由开发者决定的，最多 32 个顶点可以被打包成一个 Patch：<br>
+<img src="/book_2_pipeline/pipeline_patch_assembly_01.gif" alt="将多个顶点打包为一个 Patch"></p>
+<h3 id="Hull_Shader"><a class="header-anchor" href="#Hull_Shader">#</a>Hull Shader</h3>
+<p>Hull Shader 处理之前被打包成一个 Patch 的顶点们，并生成一系列的 <code>Tessellation Factor</code> 。这些 Factors 指明了 Patch 中的边该如何细分，和 Patch 的内部该如何细分。</p>
+<p>Hull Shader 中也可以指明计算 Factor 的方法，最常见的是根据与摄像机的距离：</p>
+<p><img src="/book_2_pipeline/pipeline_hull_shader_01.gif" alt="Tessellation Factor"></p>
+<p>另外因为 GPU 仅能对三个基本的几何元素（ Quad，Triangle，Lines）进行细分，Hull Shader 也会指明 Patch 需要按哪个几何元素进行细分。</p>
+<h3 id="Tessellation-2"><a class="header-anchor" href="#Tessellation-2">#</a>Tessellation</h3>
+<p><code>Polymorph Engine</code> 会根据之前的 Patch 以及得到的 Tessellation Factor 真正的执行细分操作：</p>
+<p><img src="/book_2_pipeline/pipeline_tesselation_01.gif" alt="Polymorph Engine"></p>
+<p>被细分创造出的顶点会被送回到 <code>GigaThead Engine</code> 中，并被其重新派分给 SM，这些 SM 会将得到的顶点通过 <code>Domain Shader</code> 处理。</p>
+<h3 id="Domain_Shader"><a class="header-anchor" href="#Domain_Shader">#</a>Domain Shader</h3>
+<p>Domain Shader 会根据 Hell Shader 的输出（ Patch 顶点）以及 Tessellation 的输出（顶点的质心坐标系（ Barycentric Coordinate））调整每个顶点的位置。如果开发者使用了 <code>Displacement map</code> ，则会在这个阶段被使用：</p>
+<p><img src="/book_2_pipeline/pipeline_domain_shader01.gif" alt="Domain Shader "></p>
+<h2 id="Primitive_Assembly"><a class="header-anchor" href="#Primitive_Assembly">#</a>Primitive Assembly</h2>
+<p>图元装配阶段，会将顶点数据（来自于 Vertex Shader 或来自于 Tessellation ）装配成一个个几何图形：<br>
+<img src="/book_2_pipeline/pipeline_primitive_assembly_01.gif" alt="图元装配"></p>
+<h2 id="Geometry_Shader"><a class="header-anchor" href="#Geometry_Shader">#</a>Geometry Shader</h2>
+<div class="note info simple"><p>几何着色器（Geometry Shader）是一个可选 Shadder</p>
+</div>
+<p>几何着色器会针对 Primitive Assembly 给出的图元进行调整，如它可以将一个点调整为两个三角形：</p>
+<p><img src="/book_2_pipeline/pipeline_geometry_shader01.gif" alt="几何"></p>
+<div class="note info simple"><p>如果需要大量的生成新顶点，更适合在 Tessellation 阶段进行。</p>
+</div>
+<div class="note info simple"><p>几何着色器更大意义在于，它是进入光栅化前最后可配置的一个阶段。如它在 <code>Voxelization Techniques</code> 中扮演了重要角色。</p>
+</div>
+<h2 id="Viewport_Transform_Clipping"><a class="header-anchor" href="#Viewport_Transform_Clipping">#</a>Viewport Transform &amp;&amp; Clipping</h2>
+<p>之前的操作，物体都是处在 NDC 空间中的。在 Viewport Transform 中需要将其转换到与屏幕分辨率匹配的空间（Viewport 空间），这个操作被称为 <code>Viewport Transform</code> 或 <code>Screen Mapping</code> 。</p>
+<p><img src="/book_2_pipeline/pipeline_screenmapping01.gif" alt="Viewport Transform"></p>
+<p>超过了屏幕范围的三角形会被裁剪，这一部分称为 <code>Guard Band Clipping</code> ，如下所示：<br>
+<img src="/book_2_pipeline/pipeline_clipping01.gif" alt="Guard Band Clipping"></p>
+<h2 id="Rasterizing"><a class="header-anchor" href="#Rasterizing">#</a>Rasterizing</h2>
+<p>在运行像素着色器前，需要通过光栅化，将之前的三角形转换为屏幕上的像素。 GPU 硬件中通常包含多个光栅器，并且他们可以同时工作。</p>
+<p>每一个光栅器会负责屏幕中的特定区域，因此 GPU 会根据三角形在屏幕中的位置决定他们应当由哪个光栅器进行处理，并将其发送给特定的光栅器。示意图如下所示：</p>
+<p><img src="/book_2_pipeline/pipeline_triangle_journey01.gif" alt="指定光栅器"></p>
+<div class="note info simple"><p>如果一个三角形足够的大，覆盖了屏幕中的很大一部分，那么可能会同时有多个光栅器为其进行光栅化。</p>
+</div>
+<p>当光栅器接收到一个三角形数据后，它会首先快速的检查该三角形的朝向<code>（Face Culling）</code> 。如果三角形通过了 Face Culling，则光栅器会根据三角形的边，确定它覆盖了那些 Pixels Quad （ $2\times2$ Piexls，或称为 <code>pre-pixels</code> / <code>pre-fragment</code>），示意图如下所示：<br>
+<img src="/book_2_pipeline/pipeline_rasterizing02.gif" alt="确认覆盖的 Pixels Quad"></p>
+<p>之所以以 <code>pre-piexles/fragments</code> 作为一个单位，而非单一的 Pixel 作为单位，是因为这样可以计算一些后续操作需要用到的数据（如采样 Mipmap 时需要的导数<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>。</p>
+<div class="note info simple"><p>一些 Tile-Based 硬件 ，在 <code>pre-pixels/fragments</code> 创建后，可能会有一些硬件层面上的可见性检测。它们会将整个 Tile 发送给一个称为 <code>Z-Cull</code> 的模块，该模块会将 Tile 中的每个像素的深度与 FrameBuffer 中的像素深度进行比较，如果一整个 Tile 的测试都未通过，则该 Tile 会被丢弃。</p>
+</div>
+<h2 id="Pixel_Shader"><a class="header-anchor" href="#Pixel_Shader">#</a>Pixel Shader</h2>
+<p>对于每个 <code>pre-pixels/fragments</code> ，它们会被 Pixel Shaders 进行填色处理。同样的， Pixel Shader 也是运行在 Warp 的一个线程上。</p>
+<div class="note info simple"><p>一个 <code>pre-pixels/fragments</code> 实际上是 4 个像素（$2*2$），因此一个 32 线程的 Warp，实际上运行 8 个 <code>pre-pixels/fragments</code> 。</p>
+</div>
+<p>当核心工作完成后，它们会将得到的数据写入 L2 Cache。</p>
+<h2 id="Raster_Output"><a class="header-anchor" href="#Raster_Output">#</a>Raster Output</h2>
+<p>在管线的最后，会有称为 <code>Raster Output(ROP)</code> 的硬件模块将 L2 Cache 中存储的 Pixel Shader 运算得到的像素数据写入 VRAM 中的 Frame buffer。</p>
+<p>除了单纯的拷贝像素数据， ROPs 还会进行如 Pixel Blending， 抗锯齿时依赖的 Coverage Information 计算等工作。</p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book2/">Render Hell – Book II | Simon schreibt.</a></p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a href="https://developer.nvidia.com/content/life-triangle-nvidias-logical-pipeline">Life of a triangler</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Render Hell》 第三部分 常见问题</title>
+    <url>/book_3_problems/</url>
+    <content><![CDATA[<h1 id="Many_Draw_Calls_Many_Commands"><a class="header-anchor" href="#Many_Draw_Calls_Many_Commands">#</a>Many Draw Calls / Many Commands</h1>
+<p>对于一个 API 而言，它不仅仅是将命令发送给 GPU，它还会有额外的如驱动翻译等的开销，因此应当尽可能的使用更少的命令。</p>
+<div class="note info simple"><p>对于新的图形 API，如 DirectX12， Vulkan 等，命令的开销会相对较少，但仍然应当尽可能的减少命令的数量。</p>
+</div>
+<p>如果有一系列很小的 Mesh，相较于每个 Mesh 都使用一个 Drawcall，更理想的做法是将这些 Meshes 组合成一个更大的 Mesh，并通过一个 Drawcall 传送。</p>
+<p>因为对于 GPU 而言，绘制一个小 Mesh 的时间是非常快的，而 CPU 将数据发送给 GPU 的时间是相对较长的。</p>
+<p>如果是每一个 Mesh 一个 Draw Call 的处理方式，往往瓶颈会出现在 CPU 侧。</p>
+<h1 id="Many_Meshes_and_Materials"><a class="header-anchor" href="#Many_Meshes_and_Materials">#</a>Many Meshes and Materials</h1>
+<p>如果要渲染许多 Mesh 并使用不同的 Materials，除了需要用许多的命令外，还会额外带来 <code>Flush Pipeline</code> 的问题。</p>
+<p>如果多个 Meshes 是用同一种渲染状态，则在一个 Mesh 完成后，另一个 Mesh 可以被很快的装填。而如果更改了材质状态，则管线中的一部分数据需要被刷新，才能进行下一个 Mesh 的绘制，这会造成额外的开销。</p>
+<h1 id="Meshes_and_Multi_Materials"><a class="header-anchor" href="#Meshes_and_Multi_Materials">#</a>Meshes and Multi-Materials</h1>
+<p>如果一个 Mesh 被赋予了多个材质，则该 Mesh 会被切分成多份再被送入 Command Buffer 中，这无疑也会造成多个 Draw Call 的产生。如下示意图所示，球的左半部分和右半部分各需要一个 Draw Call：<br>
+<img src="/book_3_problems/copy_data_from_hdd_to_ram_vram_01_multimaterial.gif" alt="Multi-Materials"></p>
+<h1 id="Thin_Triangles"><a class="header-anchor" href="#Thin_Triangles">#</a>Thin Triangles</h1>
+<p>如在 Book 2 的 <a href="/book_2_pipeline/#Rasterizing">Rasterizing</a> 中所属，光栅化后的单位是 <code>pre-pixles</code> ，Warp 中的四个线程会被分给一个 <code>pre-pixels</code> 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：<br>
+<img src="/book_3_problems/pipeline_rasterizing03_.gif" alt="Thin Triangles 造成的性能浪费"></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book3/">Render Hell – Book III | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Render Hell》 第四部分 解决方法</title>
+    <url>/book_4_solutions/</url>
+    <content><![CDATA[<h1 id="Sorting"><a class="header-anchor" href="#Sorting">#</a>Sorting</h1>
+<p>对于多个 Meshes，多个 Materials 的情况，可以通过排序将同一种 Material 的 Mesh 放在一起减少 Render State 的切换，如下所示：<br>
+<img src="/book_4_solutions/optimisation_sorting_01.gif" alt="重新排序以减少 State 切换"></p>
+<h1 id="Batching"><a class="header-anchor" href="#Batching">#</a>Batching</h1>
+<p>在排序完，仍然存在的问题是多个 Meshes 会造成多个 Commands 进而引起过多开销。因此应当将多个 Meshes 结合在一起，通过一次 Draw Call 进行渲染。在调用 API 前将多个 Meshes 合并在一起的过程称为 <code>Batch</code> 。</p>
+<p><img src="/book_4_solutions/optimisation_batching_02.gif" alt="Batching"></p>
+<div class="note info simple"><p>在 RAM 中将多个 Mesh 结合在一起也是需要开销的（CPU 时间），因此通常选择将静态的 Mesh，如房子，石头等Batch 在一起。 而如果是一系列运动的子弹，因为它们的位置每帧都会移动，所以相当于每帧都需要重新 <code>Batch</code>，这会造成巨大的开销。</p>
+</div>
+<p>Batch 还会造成一个额外的问题。在未进行 Batch 时，如果一个 Mesh 在 Frustum 外，则它会被直接 Cull 掉。但如果将多个 Meshes Batch 成一个大 Mesh，则即使只有其中的一小部分处在 Frustum 中，整个 Mesh 仍然会被认为需要被绘制。</p>
+<p>因此相对于 <code>Batching</code>，更好的解决方法是 <code>Instancing</code></p>
+<h1 id="Instancing"><a class="header-anchor" href="#Instancing">#</a>Instancing</h1>
+<p><code>Instancing</code> 是提交一次 Mesh，但会告知 GPU 绘制多次，并在 RAM 中指定每次绘制时需要用的状态。因此 <code>Instancing</code> 适合同一个 Mesh 要多次绘制的情况，如草，子弹。示意图如下所示：<br>
+<img src="/book_4_solutions/20200129181033200.gif" alt="Instancing"></p>
+<h1 id="Multi_Material_Shader"><a class="header-anchor" href="#Multi_Material_Shader">#</a>Multi-Material Shader</h1>
+<p>为了解决 Book3 中提到的 <a href="/book_3_problems/#Meshes_and_Multi-Materials">Meshes and Multi-Materials</a> 导致多 Draw Call 的问题，一个解决思路是将多个材质需要用到的数据合并在一个 Shader 中，相当于将多个 Material 合并成了一个 Material。</p>
+<p>如原来每个材质需要一个 Diffuse Texture，一个 Normal Texture，可以使用一个包含两个 Diffuse Texture， 两个 Normal Texture 的材质来取代原来的两个材质，并在 Shader 中通过 Blending 的方式达成之前的效果。</p>
+<div class="note warning simple"><p>这种实现方式虽然减少了 DrawCall 的数量，但会造成 Blending 的大量额外开销，因此最终性能可能反而下降。</p>
+</div>
+<h1 id="Skinned_Meshes"><a class="header-anchor" href="#Skinned_Meshes">#</a>Skinned Meshes</h1>
+<p>如之前的描述，如果需要通过 Batch 来解决多个子弹占用多个 Draw Call 的问题，则会因为子弹需要每帧移动而造成每帧重新 Batch，这会造成巨大的开销。</p>
+<p>有一个解决思路是将所有这些子弹结合在一起作为 Skinned Mesh，其中每个子弹作为一个 Bone，在后续的帧中只需要更新这些 Bone 的位置，而不需要重新进行合并。</p>
+<div class="note warning simple"><p>当出现了子弹增加或减少时，则需要重新合并 Mesh</p>
+</div>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book4/">Render Hell – Book IV | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 01 策略模式</title>
     <url>/ch_01_the_strategy_pattern/</url>
     <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
@@ -67,18 +294,6 @@
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Espresso espresso = <span class="keyword">new</span> Espresso();</span><br><span class="line">Console.WriteLine(espresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + espresso.Cost());</span><br><span class="line"></span><br><span class="line">Beverage doubleMochaWhipEspresso = <span class="keyword">new</span> Mocha(<span class="keyword">new</span> Mocha(<span class="keyword">new</span> Whip(espresso)));</span><br><span class="line">Console.WriteLine(doubleMochaWhipEspresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + doubleMochaWhipEspresso.Cost());</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
 <p><img src="/ch_03_the_decorator_pattern/2019-01-15-23-43-20.png" alt="装饰模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 05 单例模式</title>
-    <url>/ch_05_the_singleton_pattern/</url>
-    <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -152,6 +367,18 @@
 <h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
 <p><a href="https://dzone.com/articles/factory-method-vs-abstract">https://dzone.com/articles/factory-method-vs-abstract</a><br>
 <a href="https://stackoverflow.com/questions/5739611/differences-between-abstract-factory-pattern-and-factory-method">https://stackoverflow.com/questions/5739611/differences-between-abstract-factory-pattern-and-factory-method</a></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 05 单例模式</title>
+    <url>/ch_05_the_singleton_pattern/</url>
+    <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -393,6 +620,22 @@
 ]]></content>
       <tags>
         <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Render Hell》 笔记汇总</title>
+    <url>/render_hell/</url>
+    <content><![CDATA[<ul>
+<li><a href="/book_1_overview">Book 1 Overview</a></li>
+<li><a href="/book_2_pipeline">Book 2 Pipeline</a></li>
+<li><a href="/book_3_problems">Book 3 Problems</a></li>
+<li><a href="/book_4_solutions">Book 4 Solutions</a></li>
+</ul>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell/">Render Hell 2.0 | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
       </tags>
   </entry>
   <entry>
