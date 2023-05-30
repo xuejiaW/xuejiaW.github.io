@@ -1,6 +1,6 @@
 ---
 created: 2022-01-05
-updated: 2023-05-29
+updated: 2023-05-30
 tags:
     - GPU
 title: 《Render Hell》 第四部分 解决方法
@@ -35,7 +35,7 @@ Batch 还会造成一个额外的问题。在未进行 Batch 时，如果一个 
 
 # Multi-Material Shader
 
-为了解决 Book3 中提到的 [Meshes and Multi-Materials](/book_3_problems#Meshes%20and%20Multi-Materials) 导致多 Draw Call 的问题，一个解决思路是将多个材质需要用到的数据合并在一个 Shader 中，相当于将多个 Material 合并成了一个 Material。
+为了解决 Book3 中提到的 [Meshes and Multi-Materials](/book_3_problems/#Meshes_and_Multi-Materials) 导致多 Draw Call 的问题，一个解决思路是将多个材质需要用到的数据合并在一个 Shader 中，相当于将多个 Material 合并成了一个 Material。
 
 如原来每个材质需要一个 Diffuse Texture，一个 Normal Texture，可以使用一个包含两个 Diffuse Texture， 两个 Normal Texture 的材质来取代原来的两个材质，并在 Shader 中通过 Blending 的方式达成之前的效果。
 
