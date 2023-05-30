@@ -1,6 +1,6 @@
 ---
 created: 2022-01-05
-updated: 2023-05-29
+updated: 2023-05-30
 tags:
     - GPU
 title: 《Render Hell》 第三部分 常见问题
@@ -22,7 +22,7 @@ description: 本部分中介绍了渲染过程中常见的问题，这些问题�
 
 因为对于 GPU 而言，绘制一个小 Mesh 的时间是非常快的，而 CPU 将数据发送给 GPU 的时间是相对较长的。
 
-如果是每一个 Mesh 一个 Drawcall 的处理方式，往往瓶颈会出现在 CPU 侧。
+如果是每一个 Mesh 一个 Draw Call 的处理方式，往往瓶颈会出现在 CPU 侧。
 
 # Many Meshes and Materials
 
@@ -37,7 +37,7 @@ description: 本部分中介绍了渲染过程中常见的问题，这些问题�
 
 # Thin Triangles
 
-如在 Book 2 的 [Rasterizing](/book_2_pipeline#Rasterizing) 中所属，光栅化后的单位是 `pre-pixles` ，Warp 中的四个线程会被分给一个 `pre-pixels` 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：
+如在 Book 2 的 [Rasterizing](/book_2_pipeline/#Rasterizing) 中所属，光栅化后的单位是 `pre-pixles` ，Warp 中的四个线程会被分给一个 `pre-pixels` 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：
 ![Thin Triangles 造成的性能浪费](/book_3_problems/pipeline_rasterizing03_.gif)
 
 # Reference
