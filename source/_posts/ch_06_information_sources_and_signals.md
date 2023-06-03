@@ -23,7 +23,7 @@ description: 本篇为 《Computer Networks and Internets》 的第六章笔记�
 
 ![模拟信号与数字信号](/ch_06_information_sources_and_signals/2019-11-28-09-30-33.png)
 
-# Periodic And APeriodic Signals
+# Periodic And Aperiodic Signals
 
 信号也可分类为周期信号与非周期信号。周期信号顾名思义表示信号会重复出现，反之为非周期信号。下图为周期信号：
 
@@ -31,7 +31,7 @@ description: 本篇为 《Computer Networks and Internets》 的第六章笔记�
 
 # Sine Waves And Signal Characteristics
 
-数据通信通常使用`Sin函数`来表示信号。之所以选择 Sin 函数，是因为许多自然界产生的信号强度与时间的函数都是 Sin，如麦克风获取声音后的输出信号，电磁波的信号等。
+数据通信通常使用 `Sin函数` 来表示信号。之所以选择 Sin 函数，是因为许多自然界产生的信号强度与时间的函数都是 Sin，如麦克风获取声音后的输出信号，电磁波的信号等。
 
 Sin 函数波的信号特性由四个部分组成：
 
