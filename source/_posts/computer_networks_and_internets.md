@@ -27,7 +27,7 @@ description: 《Computer Networks and Internets》一书是我硕士课程时期
 
 [Ch 10 Modulation And Modems](/ch_10_modulation_and_modems)
 
-[Ch 11 Multiplexing And Demultiplexing (Channelization)](computer_networks_and_internets/ch_11_multiplexing_and_demultiplexing(channelization).md)
+[Ch 11 Multiplexing And Demultiplexing (Channelization)](/ch_11_multiplexing_and_demultiplexing)
 
 
 # Packet Switching And Network Technologies
@@ -39,3 +39,6 @@ description: 《Computer Networks and Internets》一书是我硕士课程时期
 [Ch 16 Wireless Networking Technologies](/ch_16_wireless_networking_technologies)
 
 [Ch 17 Repeaters, Bridges, And Switches](/ch_17_repeaters,_bridges,_and_switches)
+
+
+

@@ -5,7 +5,7 @@ tags:
     - 计算机网络
 title: 《Computer Networks and Internets》 Ch 11 复用与解复用
 published: true
-date: 2023-06-04 15:32 
+date: 2023-06-04 15:35
 description: 本篇为 《Computer Networks and Internets》 的第十一章笔记， 这一部分将介绍将多个心愿的数据流合并在一起的复用，和将合并后数据流拆分的解复用。
 ---
 
@@ -17,7 +17,7 @@ description: 本篇为 《Computer Networks and Internets》 的第十一章笔�
 
 `复用(Multiplexing)`是将多个信源的数据流合并在一起，并通过一个共享的媒介进行传输。`复用器（Multiplexor）`是用来进行复用的设备。`解复用（Demultiplexing）`是将合并后的数据流拆分还原成一个个信源的信息，`解复用器（Demultiplexor）`是用来进行解复用的设备。下图是复用与解复用的使用简图：
 
-![复用与解复用](/ch_11_multiplexing_and_demultiplexing(channelization)/2019-12-08-10-56-05.png)
+![复用与解复用](/ch_11_multiplexing_and_demultiplexing/2019-12-08-10-56-05.png)
 
 复用与解复用在日常的计算机网络使用中一直在进行，如多台电脑使用同一根网线等。
 
@@ -42,7 +42,7 @@ description: 本篇为 《Computer Networks and Internets》 的第十一章笔�
 
 下图是频分复用的示意图，每个小块代表一个可供信源使用的单独信道，可以看到每个信道间都有一个小间隔作为防护频带。
 
-![频分复用](/ch_11_multiplexing_and_demultiplexing(channelization)/2019-12-08-11-15-01.png)
+![频分复用](/ch_11_multiplexing_and_demultiplexing/2019-12-08-11-15-01.png)
 
 # Using A Range Of Frequency Per Channel
 
@@ -58,7 +58,7 @@ description: 本篇为 《Computer Networks and Internets》 的第十一章笔�
 
 `分层频分复用（Hierarchical FDM）`是将频分复用后的总数据再作为一个频率更高的频分复用的输入进行再次复用。如下图所示：
 
-![分层频分复用](/ch_11_multiplexing_and_demultiplexing(channelization)/2019-12-08-12-06-55.png)
+![分层频分复用](/ch_11_multiplexing_and_demultiplexing/2019-12-08-12-06-55.png)
 
 虽然上图中每一级的单一信道带宽是上一级所有信道带宽的总和。但在实际运用中，下一级的单一信道带宽是要略大于上一级所有信道带宽的总和的，因为还需要携带额外的同步帧。
 
@@ -68,43 +68,43 @@ description: 本篇为 《Computer Networks and Internets》 的第十一章笔�
 
 波分复用的原理可以参考物理上的三棱镜实验，即白光可以拆分为不同颜色的光，而光的颜色是由光的频率决定的。棱柱为波分复用与解复用提供了基础。波分复用的复用器是接受一系列不同波长的光，然后通过一个棱柱将它们合并成一束光，然后接收端的解复用器再次通过棱镜将它们还原成不同波长的光。示意图如下：
 
-![波分复用](/ch_11_multiplexing_and_demultiplexing(channelization)/2019-12-08-12-15-12.png)
+![波分复用](/ch_11_multiplexing_and_demultiplexing/2019-12-08-12-15-12.png)
 
 # Time Division Multiplexing（TDM）
 
 `时分复用（Time Division Multiplexing，TDM）`的原理很简单，即每个信源使用共同的媒介一段时间，然后供下一个信源使用。示意图如下：
 
-![时分复用](/ch_11_multiplexing_and_demultiplexing(channelization)/2019-12-08-12-18-29.png)
+![时分复用](/ch_11_multiplexing_and_demultiplexing/2019-12-08-12-18-29.png)
 
 # Synchronous TDM
 
 时分复用在计算机网络中是一个比较宽泛的概念。因此在实际运用中，上节中的概念图会在细节上有变化。例如有些时分复用系统并不是所有信源按顺序一个个发送。有些时分复用的系统中，每个信源发送间也并不像上图一样有时间间隔，一个信源发送后另一个信源会马上发送，这种系统称为`同步时间复用系统（Synchronous TDM）`。如下图所示：
 
-![同步TDM](/ch_11_multiplexing_and_demultiplexing(channelization)/2019-12-08-14-34-28.png)
+![同步TDM](/ch_11_multiplexing_and_demultiplexing/2019-12-08-14-34-28.png)
 
 # Framing Used In The Telephone System Version Of TDM
 
 如之前所述，电话系统的两端是模拟信号，中间传输的是数字信号。对于中间使用同一个媒介传输的数字信号是通过同步时间复用系统来进行复用的。在电话系统中在时间复用系统中用了一个特殊技术来保证接收端和发送端的时间是对齐的，因为一旦接收端的时间出现了偏差，则可能将错误的信号传递给错误的目的地。为了解决这个问题，电话系统中的时间复用系统需要额外传输一个`信道帧（Framing Channel）`来表示一轮传输的开始，如下图所示：
 
-![信道帧](/ch_11_multiplexing_and_demultiplexing(channelization)/2019-12-08-14-42-09.png)
+![信道帧](/ch_11_multiplexing_and_demultiplexing/2019-12-08-14-42-09.png)
 
 # Hierarchical TDM
 
 如同频分复用，时间复用也可以是分层的。不同的是，在频分复用系统中，每一级增加的是频率，在时分复用系统中每一级增加的是数据速率（减少时间切分间隔）。另外每一级的数据速率略大于前一级所有数据速率的总和，这是因为要传输额外帧数据。分层时间复用如下图：
 
-![](/ch_11_multiplexing_and_demultiplexing(channelization)/2019-12-08-14-46-19.png)
+![](/ch_11_multiplexing_and_demultiplexing/2019-12-08-14-46-19.png)
 
 # The Problem With Synchronous TDM: Unfilled Slots
 
 同步时间复用对与每个信源都平均的提供时间，即将整个信道的容量（容量可看作一秒能传输的数据量）平分。但如果一个信源在某一段是空白数据，那么当轮到这个信源发送数据时，只能往信道内填空白数据（通常填0），且额外增加一位表示该数据是无效的，而不是正好全是0。这样会造成信道容量的浪费。如下图所示：
 
-![未填充数据时间复用](/ch_11_multiplexing_and_demultiplexing(channelization)/2019-12-08-14-50-26.png)
+![未填充数据时间复用](/ch_11_multiplexing_and_demultiplexing/2019-12-08-14-50-26.png)
 
 # Statistical TDM
 
 为了解决同步TDM这个问题，有个称为`统计时间复用（Statistical TDM）`，或称为异步时间复用（Asynchronous）的技术。这个技术仍然是所有信源轮询的传输数据，但是当信源没有数据时，并非像同步时间同步那样装填空白数据，而是直接跳过。如下图所示：
 
-![统计时间复用](/ch_11_multiplexing_and_demultiplexing(channelization)/2019-12-08-14-54-27.png)
+![统计时间复用](/ch_11_multiplexing_and_demultiplexing/2019-12-08-14-54-27.png)
 
 尽管这个方法解决了空白数据造成的信道容量浪费，但需要引入额外的数据来表明每个数据块是哪个信源的。
 
@@ -112,7 +112,7 @@ description: 本篇为 《Computer Networks and Internets》 的第十一章笔�
 
 `逆复用（Inverse Multiplexing）`技术是用类似于复用的思维方式，但解决是只有两个信源，但其中有多个传输媒介，且两信源有大量的数据需要传输，但中间媒介没有一个有足够的足够的比特率。逆复用技术就是将原数据拆分成多份，然后通过中间的低容量媒介进行传输，最后在接收端再将数据合并在一起。示意图如下图所示：
 
-![逆复用](/ch_11_multiplexing_and_demultiplexing(channelization)/2019-12-08-15-04-52.png)
+![逆复用](/ch_11_multiplexing_and_demultiplexing/2019-12-08-15-04-52.png)
 
 虽然逆复用看着很像复用的反向使用，即将复用的输出端变成输入，输入端变成输出，但在实际使用时，不能简单的将复用器反向设计得到逆复用器。逆复用器在发射端必须考虑如何将数据拆分后分配给多个低速率媒介。在接收端也必须考虑多个媒介的传输速率不同，可能造成某些媒介中的数据到达特别缓慢，这时候该如何处理。
 
