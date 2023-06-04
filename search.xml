@@ -334,28 +334,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 01 策略模式</title>
-    <url>/ch_01_the_strategy_pattern/</url>
-    <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
-<p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
-<p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="算法接口及实现类"><a class="header-anchor" href="#算法接口及实现类">#</a>算法接口及实现类</h2>
-<figure class="highlight cs"><figcaption><span>飞行方法接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>飞行方法实现</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyNoWay</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Can not fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithRocket</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with rocket&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithWings</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with wings&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="环境类"><a class="header-anchor" href="#环境类">#</a>环境类</h2>
-<figure class="highlight cs"><figcaption><span>鸭子基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehavior flyBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PerformFly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span>(<span class="params">IFlyBehavior fb</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior = fb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>鸭子派生类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BlackDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlackDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyWithWings());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a black duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RubberDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RubberDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a rubber duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">RubberDuck rubberDuck = <span class="keyword">new</span> RubberDuck();</span><br><span class="line">rubberDuck.disPlay();</span><br><span class="line">rubberDuck.PerformFly();</span><br><span class="line"></span><br><span class="line">BlackDuck blackDuck = <span class="keyword">new</span> BlackDuck();</span><br><span class="line">blackDuck.disPlay();</span><br><span class="line">blackDuck.PerformFly();</span><br><span class="line">blackDuck.setFlyBehavior(<span class="keyword">new</span> FlyWithRocket());</span><br><span class="line">blackDuck.PerformFly();</span><br></pre></td></tr></table></figure>
-<p>运行结果</p>
-<p><img src="/ch_01_the_strategy_pattern/2019-01-15-00-12-45.png" alt="策略模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Head First 设计模式》 Ch 02 观察者模式</title>
     <url>/ch_02_the_observer_pattern/</url>
     <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
@@ -373,6 +351,28 @@
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">WeatherData weatherData = <span class="keyword">new</span> WeatherData();</span><br><span class="line">TemperatureObserver temperatureObserver = <span class="keyword">new</span> TemperatureObserver(weatherData);</span><br><span class="line">PressureObserver pressureObserver = <span class="keyword">new</span> PressureObserver(weatherData);</span><br><span class="line"></span><br><span class="line">weatherData.SetMeasurements(<span class="number">30</span>, <span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">20</span>, <span class="number">40</span>, <span class="number">5</span>);</span><br><span class="line">weatherData.UnregisterObserver(temperatureObserver);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">10</span>, <span class="number">50</span>, <span class="number">15</span>);</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
 <p><img src="/ch_02_the_observer_pattern/2019-01-15-23-20-09.png" alt="观察者模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 01 策略模式</title>
+    <url>/ch_01_the_strategy_pattern/</url>
+    <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
+<p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
+<p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="算法接口及实现类"><a class="header-anchor" href="#算法接口及实现类">#</a>算法接口及实现类</h2>
+<figure class="highlight cs"><figcaption><span>飞行方法接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>飞行方法实现</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyNoWay</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Can not fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithRocket</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with rocket&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithWings</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with wings&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="环境类"><a class="header-anchor" href="#环境类">#</a>环境类</h2>
+<figure class="highlight cs"><figcaption><span>鸭子基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehavior flyBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PerformFly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span>(<span class="params">IFlyBehavior fb</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior = fb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>鸭子派生类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BlackDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlackDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyWithWings());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a black duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RubberDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RubberDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a rubber duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">RubberDuck rubberDuck = <span class="keyword">new</span> RubberDuck();</span><br><span class="line">rubberDuck.disPlay();</span><br><span class="line">rubberDuck.PerformFly();</span><br><span class="line"></span><br><span class="line">BlackDuck blackDuck = <span class="keyword">new</span> BlackDuck();</span><br><span class="line">blackDuck.disPlay();</span><br><span class="line">blackDuck.PerformFly();</span><br><span class="line">blackDuck.setFlyBehavior(<span class="keyword">new</span> FlyWithRocket());</span><br><span class="line">blackDuck.PerformFly();</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<p><img src="/ch_01_the_strategy_pattern/2019-01-15-00-12-45.png" alt="策略模式运行结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -403,70 +403,6 @@
 ]]></content>
       <tags>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
-    <url>/ch_05_overview_of_data_communications/</url>
-    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
-<h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
-<p>数据通信是物理，数学和电气工程三个学科的混合领域。</p>
-<ol>
-<li>物理：信息的传输依赖于物理媒介</li>
-<li>数学：信息需要数字化</li>
-<li>电气工程：数据传输需要构建现实中的通信系统</li>
-</ol>
-<h1 id="Motivation_And_Scope_Of_The_Subject"><a class="header-anchor" href="#Motivation_And_Scope_Of_The_Subject">#</a>Motivation And Scope Of The Subject</h1>
-<p>在数据通信领域有三个重要的点，他们定义了数据通信的一些领域</p>
-<ol>
-<li>
-<p>传输的数据可以是任意类型的</p>
-<p>传输的数据并不一定是存储在计算机中的<code>bit</code>数据，也可以是从现实世界中获取的信息，如音频和视频。</p>
-</li>
-<li>
-<p>数据的传输依赖于物理系统</p>
-<p>数据是基于物理现象来传输的，例如电，电磁波。了解为什么这些物理现象可以被用来传输数据是很重要的。另外也需要理解物理系统的限制，因为这些限制引发的问题和这些问题如何被检测并解决。</p>
-</li>
-<li>
-<p>多个来源的信息可以共享基础媒介来传输</p>
-<p>媒介共享在计算机网络中是一个重要角色。了解哪些基础设施是可以被共享的，共享他们的优缺点，以及基于共享而设计的通信模型是很重要的。</p>
-</li>
-</ol>
-<h1 id="The_Conceptual_Pieces_Of_A_Communications_System"><a class="header-anchor" href="#The_Conceptual_Pieces_Of_A_Communications_System">#</a>The Conceptual Pieces Of A Communications System</h1>
-<p>每一个来源都需要一些方法来获取信息，调整信息为用于传播的模式，使用共享的物理媒介来传输信息。同时也需要一些方法从物理媒介中抽取出每条信息的目的地地址，并将信息传送给目标地址。整个过程如下图所示：</p>
-<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-24-24.png" alt="数据通信简单模型"></p>
-<p>上图是一个非常简化的模型，在实际操作中，在传输数据前，必须对数据进行数字化，也需要加入一些额外的信息防止错误发生。如果考虑到隐私，可能还需要进行加密。在使用共享媒介时，还要保证有方法可以分辨出每条信息且他们不会相互干扰。</p>
-<p>为了解释数据通信的每个部分，工程师们制订了一个概念框架来说明通信系统中的每个小主题是如何联系在一起的，概念框架如下图所示：</p>
-<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-28-26.png" alt="概念框架"></p>
-<h1 id="The_Subtopics_Of_Data_Communications"><a class="header-anchor" href="#The_Subtopics_Of_Data_Communications">#</a>The Subtopics Of Data Communications</h1>
-<p>上一节中的概念框架图中的每一部分都代表了数据通信中的一个小主题。这一节中简单介绍了图中的一些术语，之后的几章中会在对每一部分进行详细说。</p>
-<ol>
-<li>
-<p><code>数据来源(Information Sources)</code>可以是模拟数据或者数字电路。这一部分的关键内容包括信号的特征（<code>振幅(Amplitude)</code>，<code>频率(Frequency)</code>，<code>相位(Phase)</code>），周期性与非周期性，以及模拟信息和数字信息的转换。</p>
-</li>
-<li>
-<p><code>信源编码与解码(Source Encoder and Decoder)</code>。一旦信息被数字化后，信息就可以被转换，这一部分的关键内容包括数据压缩以及压缩后对于传输的影响</p>
-</li>
-<li>
-<p><code>加密与解密(Encryptor and Decryptor)</code>。为了保护信息和保证其可信度，在信息传送前需要进行加密，在接收后需要解密。这一部分的关键内容包括密码学技术与算法。</p>
-</li>
-<li>
-<p><code>信道编码与解码(Channel Encoder and Decoder)</code>。信道编码是用来检测也纠正传输错误。这一部分的关键内容包括检测和限制错误，以及实际应用的技术，如奇偶校验(parity checking)等。</p>
-</li>
-<li>
-<p><code>复用与解复用(Multiplexor and Demultiplexor)</code>。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。</p>
-</li>
-<li>
-<p><code>调制与解调(Modulator and Demodulator)</code>。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。</p>
-</li>
-<li>
-<p><code>物理通道与传输(Physical Channel and Transmission)</code>。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -543,36 +479,76 @@
       </tags>
   </entry>
   <entry>
+    <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
+    <url>/ch_05_overview_of_data_communications/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
+<h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
+<p>数据通信是物理，数学和电气工程三个学科的混合领域。</p>
+<ol>
+<li>物理：信息的传输依赖于物理媒介</li>
+<li>数学：信息需要数字化</li>
+<li>电气工程：数据传输需要构建现实中的通信系统</li>
+</ol>
+<h1 id="Motivation_And_Scope_Of_The_Subject"><a class="header-anchor" href="#Motivation_And_Scope_Of_The_Subject">#</a>Motivation And Scope Of The Subject</h1>
+<p>在数据通信领域有三个重要的点，他们定义了数据通信的一些领域</p>
+<ol>
+<li>
+<p>传输的数据可以是任意类型的</p>
+<p>传输的数据并不一定是存储在计算机中的<code>bit</code>数据，也可以是从现实世界中获取的信息，如音频和视频。</p>
+</li>
+<li>
+<p>数据的传输依赖于物理系统</p>
+<p>数据是基于物理现象来传输的，例如电，电磁波。了解为什么这些物理现象可以被用来传输数据是很重要的。另外也需要理解物理系统的限制，因为这些限制引发的问题和这些问题如何被检测并解决。</p>
+</li>
+<li>
+<p>多个来源的信息可以共享基础媒介来传输</p>
+<p>媒介共享在计算机网络中是一个重要角色。了解哪些基础设施是可以被共享的，共享他们的优缺点，以及基于共享而设计的通信模型是很重要的。</p>
+</li>
+</ol>
+<h1 id="The_Conceptual_Pieces_Of_A_Communications_System"><a class="header-anchor" href="#The_Conceptual_Pieces_Of_A_Communications_System">#</a>The Conceptual Pieces Of A Communications System</h1>
+<p>每一个来源都需要一些方法来获取信息，调整信息为用于传播的模式，使用共享的物理媒介来传输信息。同时也需要一些方法从物理媒介中抽取出每条信息的目的地地址，并将信息传送给目标地址。整个过程如下图所示：</p>
+<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-24-24.png" alt="数据通信简单模型"></p>
+<p>上图是一个非常简化的模型，在实际操作中，在传输数据前，必须对数据进行数字化，也需要加入一些额外的信息防止错误发生。如果考虑到隐私，可能还需要进行加密。在使用共享媒介时，还要保证有方法可以分辨出每条信息且他们不会相互干扰。</p>
+<p>为了解释数据通信的每个部分，工程师们制订了一个概念框架来说明通信系统中的每个小主题是如何联系在一起的，概念框架如下图所示：</p>
+<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-28-26.png" alt="概念框架"></p>
+<h1 id="The_Subtopics_Of_Data_Communications"><a class="header-anchor" href="#The_Subtopics_Of_Data_Communications">#</a>The Subtopics Of Data Communications</h1>
+<p>上一节中的概念框架图中的每一部分都代表了数据通信中的一个小主题。这一节中简单介绍了图中的一些术语，之后的几章中会在对每一部分进行详细说。</p>
+<ol>
+<li>
+<p><code>数据来源(Information Sources)</code>可以是模拟数据或者数字电路。这一部分的关键内容包括信号的特征（<code>振幅(Amplitude)</code>，<code>频率(Frequency)</code>，<code>相位(Phase)</code>），周期性与非周期性，以及模拟信息和数字信息的转换。</p>
+</li>
+<li>
+<p><code>信源编码与解码(Source Encoder and Decoder)</code>。一旦信息被数字化后，信息就可以被转换，这一部分的关键内容包括数据压缩以及压缩后对于传输的影响</p>
+</li>
+<li>
+<p><code>加密与解密(Encryptor and Decryptor)</code>。为了保护信息和保证其可信度，在信息传送前需要进行加密，在接收后需要解密。这一部分的关键内容包括密码学技术与算法。</p>
+</li>
+<li>
+<p><code>信道编码与解码(Channel Encoder and Decoder)</code>。信道编码是用来检测也纠正传输错误。这一部分的关键内容包括检测和限制错误，以及实际应用的技术，如奇偶校验(parity checking)等。</p>
+</li>
+<li>
+<p><code>复用与解复用(Multiplexor and Demultiplexor)</code>。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。</p>
+</li>
+<li>
+<p><code>调制与解调(Modulator and Demodulator)</code>。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。</p>
+</li>
+<li>
+<p><code>物理通道与传输(Physical Channel and Transmission)</code>。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 05 单例模式</title>
     <url>/ch_05_the_singleton_pattern/</url>
     <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
 <h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
 <figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 06 命令模式</title>
-    <url>/ch_06_the_command_pattern/</url>
-    <content><![CDATA[<p>命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。</p>
-<p>命令模式由抽象命令类、具体命令类、接受者、调用者、客户类，五部分组成。其中接受者为被命令封装的类，调用者存放需要执行的类。</p>
-<p>我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="抽象命令类及实现"><a class="header-anchor" href="#抽象命令类及实现">#</a>抽象命令类及实现</h2>
-<figure class="highlight cs"><figcaption><span>抽象命令类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Undo</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>命令类实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOffCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOffCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOnCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOnCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command execute&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command undo&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="接受者"><a class="header-anchor" href="#接受者">#</a>接受者</h2>
-<figure class="highlight cs"><figcaption><span>灯</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Light</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is on&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="调用者"><a class="header-anchor" href="#调用者">#</a>调用者</h2>
-<figure class="highlight cs"><figcaption><span>远程控制</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">RemoteControl</span></span><br><span class="line">&#123;</span><br><span class="line">    Command[] commands;</span><br><span class="line">    Command lastCommond;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RemoteControl</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands = <span class="keyword">new</span> Command[<span class="number">2</span>] &#123; <span class="keyword">new</span> NoCommand(), <span class="keyword">new</span> NoCommand() &#125;;</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetCommand</span>(<span class="params"><span class="built_in">int</span> index, Command command</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index] = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnButtonClick</span>(<span class="params"><span class="built_in">int</span> index</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index].Execute();</span><br><span class="line">        lastCommond = commands[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnClickUndo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        lastCommond.Undo();</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="客户类"><a class="header-anchor" href="#客户类">#</a>客户类</h2>
-<figure class="highlight cs"><figcaption><span>函数入口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Light light = <span class="keyword">new</span> Light();</span><br><span class="line">    RemoteControl remoteControl = <span class="keyword">new</span> RemoteControl();</span><br><span class="line">    remoteControl.SetCommand(<span class="number">0</span>, <span class="keyword">new</span> LightOnCommand(light));</span><br><span class="line">    remoteControl.SetCommand(<span class="number">1</span>, <span class="keyword">new</span> LightOffCommand(light));</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">0</span>);</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">1</span>);</span><br><span class="line">    remoteControl.OnClickUndo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<p>运行结果：</p>
-<p><img src="/ch_06_the_command_pattern/2019-02-02-23-26-25.png" alt="命令模式测试结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -689,6 +665,30 @@ $$</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 06 命令模式</title>
+    <url>/ch_06_the_command_pattern/</url>
+    <content><![CDATA[<p>命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。</p>
+<p>命令模式由抽象命令类、具体命令类、接受者、调用者、客户类，五部分组成。其中接受者为被命令封装的类，调用者存放需要执行的类。</p>
+<p>我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="抽象命令类及实现"><a class="header-anchor" href="#抽象命令类及实现">#</a>抽象命令类及实现</h2>
+<figure class="highlight cs"><figcaption><span>抽象命令类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Undo</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>命令类实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOffCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOffCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOnCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOnCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command execute&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command undo&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接受者"><a class="header-anchor" href="#接受者">#</a>接受者</h2>
+<figure class="highlight cs"><figcaption><span>灯</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Light</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is on&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="调用者"><a class="header-anchor" href="#调用者">#</a>调用者</h2>
+<figure class="highlight cs"><figcaption><span>远程控制</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">RemoteControl</span></span><br><span class="line">&#123;</span><br><span class="line">    Command[] commands;</span><br><span class="line">    Command lastCommond;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RemoteControl</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands = <span class="keyword">new</span> Command[<span class="number">2</span>] &#123; <span class="keyword">new</span> NoCommand(), <span class="keyword">new</span> NoCommand() &#125;;</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetCommand</span>(<span class="params"><span class="built_in">int</span> index, Command command</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index] = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnButtonClick</span>(<span class="params"><span class="built_in">int</span> index</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index].Execute();</span><br><span class="line">        lastCommond = commands[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnClickUndo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        lastCommond.Undo();</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="客户类"><a class="header-anchor" href="#客户类">#</a>客户类</h2>
+<figure class="highlight cs"><figcaption><span>函数入口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Light light = <span class="keyword">new</span> Light();</span><br><span class="line">    RemoteControl remoteControl = <span class="keyword">new</span> RemoteControl();</span><br><span class="line">    remoteControl.SetCommand(<span class="number">0</span>, <span class="keyword">new</span> LightOnCommand(light));</span><br><span class="line">    remoteControl.SetCommand(<span class="number">1</span>, <span class="keyword">new</span> LightOffCommand(light));</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">0</span>);</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">1</span>);</span><br><span class="line">    remoteControl.OnClickUndo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<p>运行结果：</p>
+<p><img src="/ch_06_the_command_pattern/2019-02-02-23-26-25.png" alt="命令模式测试结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -945,6 +945,226 @@ $$</p>
       </tags>
   </entry>
   <entry>
+    <title>《Computer Networks and Internets》 Ch 08 可靠性及信道编码</title>
+    <url>/ch_08_reliability_and_channel_coding/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一部分将介绍信息传输过程中发生错误的原因，以及纠错的方式——信道编码。本部分将着重介绍前向错误纠正技术，并引出汉明距离等概念。</p>
+<h1 id="The_Three_Main_Sources_Of_Transmission_Errors"><a class="header-anchor" href="#The_Three_Main_Sources_Of_Transmission_Errors">#</a>The Three Main Sources Of Transmission Errors</h1>
+<p>传输中发生的错误可以分为三大类：</p>
+<ol>
+<li>干扰（Interference）：如第七章所述，环境中存在许多电磁干扰，这些电磁干扰会阻碍无线电传输和线缆中的信号传输。</li>
+<li>失真（Distortion）：所有的物理系统都会造成信号的失真。光纤中的光因为移动距离的增加，时域会发生扩张（频域也因此变化）。信道容量会导致一些频率的信号被过滤掉。放在线缆旁边的金属可能会改变线缆内信号的频率，金属也能干扰无线电信号。</li>
+<li>衰弱（Attenuation）：信号在媒介中传输的过程中，信号会逐渐衰弱。</li>
+</ol>
+<p>香农定理给出了减少错误的思路：提高信噪比。</p>
+<p>但无论如何噪声不可能被完全的消除，所以许多方法致力于检测错误，在某些情况下自动修复错误。</p>
+<p>但是错误的监测机制无疑是会为系统增加开销的，因此系统设计时要考虑在错误影响与错误检测开销间做权衡，如金融系统，1bit 的错误可能会造成很严重的错误，但是在图片中 1bit 的错误可能根本无法被识别到。</p>
+<h1 id="Effect_Of_Transmission_Errors_On_Data"><a class="header-anchor" href="#Effect_Of_Transmission_Errors_On_Data">#</a>Effect Of Transmission Errors On Data</h1>
+<p>这里要区分传输错误与数据错误，数据是由传输信号在经过例如解码，解调后得到的。传输错误最后都会导致最后的数据出错。主要有三类传输造成的数据错误：</p>
+<ol>
+<li>
+<p>单元位错误（Single Bit Error）：即一系列数据中，只有一位数据被改变了。这通常是因为传输信号的短时间（称为脉冲，Spike）干扰造成的。</p>
+</li>
+<li>
+<p>突发性错误：一系列数据中有多位数据被改变，通常是由长时间的干扰造成的。错误长度是由错误开始位到错误结束位直接的位数决定。如下表，错误的数据由加粗表示，错误长度是 7：</p>
+<table>
+<thead>
+<tr>
+<th>发送</th>
+<th>1</th>
+<th>0</th>
+<th>1</th>
+<th>1</th>
+<th>0</th>
+<th>0</th>
+<th>0</th>
+<th>1</th>
+<th>0</th>
+<th>1</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>接收</td>
+<td>1</td>
+<td>0</td>
+<td><strong>0</strong></td>
+<td>1</td>
+<td><strong>1</strong></td>
+<td>0</td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<h1 id="Two_Strategies_For_Handling_Channel_Errors"><a class="header-anchor" href="#Two_Strategies_For_Handling_Channel_Errors">#</a>Two Strategies For Handling Channel Errors</h1>
+<p>有一系列的方法解决数据错误并增加数据的可靠性，这些方法统称为<code>信道编码(Channel Coding)</code>，这些方法可以被分为两类：<code>前向错误纠正技术（Forward Error Correction，FEC）</code>，<code>自动重传请求技术（Automatic Repeat reQuest，ARQ）</code>。</p>
+<p>前向错误纠正技术的主题思想是在发送的数据中增加额外的信息，接收端可以根据这些额外信息来判断是否有错误发生，有些方法可以检测出究竟是哪一位数据发生了错误，并在可能的情况下纠正错误。</p>
+<p>自动重传请求技术是让接收端和发送端互换数据来保证数据被正确的传递。</p>
+<h1 id="Block_And_Convolutional_Error_Codes"><a class="header-anchor" href="#Block_And_Convolutional_Error_Codes">#</a>Block And Convolutional Error Codes</h1>
+<p>前向错误纠正技术可以再细分为两类：</p>
+<ol>
+<li>分组错误码（Block Error Codes）：分组错误码是将数据分成一块块的，然后对每一块都增加额外信息。每一块的额外信息只针对于该块数据本身。</li>
+<li>卷积错误码（Convolutional Error Codes）：卷积错误码是将数据看作一系列 bits，增加的额外信息是由当前的 bit 和之前的 bit 共同决定的。</li>
+</ol>
+<p>卷积错误码相对于分组错误码需要更多的计算，但是也更能检测出错误。</p>
+<h1 id="An_Example_Block_Error_Code_Single_Parity_Checking"><a class="header-anchor" href="#An_Example_Block_Error_Code_Single_Parity_Checking">#</a>An Example Block Error Code: Single Parity Checking</h1>
+<p>单一奇偶校验检查（Single Parity Checking）是分组错误码检测的一个例子，可以再分为偶校验检查和奇校验检查。如果将数据分为 $n$ bit 一组，那么每一组增加一位数据，当是偶校验时，$n$ 位数据+1 位额外数据应该一共有偶数个 1，当是奇校验时，$n$ 位数据+1 位额外数据应该一共有奇数个 1。下表为 8 位数据时的例子：</p>
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>偶校验</th>
+<th>奇校验</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00000000</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>01011011</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>01010101</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>单一奇偶校验是一个比较弱的信道编码，他只能检测错误，但无法检测出错误具体出现在哪一位，也无法纠正错误。而且当有偶数个位发生错误时，错误就无法被检测出来。</p>
+<h1 id="The_Mathematics_of_Block_Error_Codes_And_n_k_Notation"><a class="header-anchor" href="#The_Mathematics_of_Block_Error_Codes_And_n_k_Notation">#</a>The Mathematics of Block Error Codes And (n,k) Notation</h1>
+<p>如有 $k$ 位 bit 的数据，我们将所有 $2^k$ 种可能出现的数据称为<code>数据字(Datawords)</code>，在这些数据中增加 $r$ 位额外数据，一共有 $n=k+r$ 个数据，所有 $2^n$ 种可能称为<code>编码字(codeworks)</code>，其中编码字中合法的部分，即额外添加的数据与原数据时符合规则的部分，称为<code>码书(Codebook)</code>，并将这种方法标记为$(n,k)$</p>
+<p>如单一奇偶校验中，$k=8,r=1$，因此一共有 256 个数据字，也对应了有 256 个合法的编码字，一共有 512 个编码字。</p>
+<p>在理想状态下，合法编码字中的任一一位被改变了，改变后的编码字就不是合法编码字。但是在单一奇偶校验的例子中，如果同时改变了合法编码字中的两位，那么结果仍然是一个合法编码字。</p>
+<p>没有一个信道编码可以达到理想状态，所以要考虑的就是，合法编码字最少多少位数据要被同时改变，才能产生另一个合法编码字。在单一数字编码中，这个位数为 2。</p>
+<h1 id="Hamming_Distance：A_Measure_Of_A_Code’s_Strength"><a class="header-anchor" href="#Hamming_Distance：A_Measure_Of_A_Code’s_Strength">#</a>Hamming Distance：A Measure Of A Code’s Strength</h1>
+<p>汉明距离（Hamming Distance）是用来测量一个合法编码字要转换为另一个合法编码字最少要改变的数据位数的方法中需要用到的概念。如果给定两个$n$长度的字符，两个字符的汉明距离就是两个字符间不同的数据数量。</p>
+<p>如$d(000,001)=1,d(000,101)=2,d(000,111)=3,d(101,001)=1$。</p>
+<p>可以先对两个字符求异或，然后计算异或出来的字符 1 的总数，即为汉明距离。</p>
+<h1 id="The_Hamming_Distance_Among_String_In_A_Codebook"><a class="header-anchor" href="#The_Hamming_Distance_Among_String_In_A_Codebook">#</a>The Hamming Distance Among String In A Codebook</h1>
+<p>为了计算出一个合法编码字要转换为另一个合法编码字最少要改变的数据位数，先要计算出码书中所有编码字组合的汉明距离。如对 2 位 bit 数据进行单一奇校验检测：</p>
+<table>
+<thead>
+<tr>
+<th>数据字</th>
+<th>编码字</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>001</td>
+</tr>
+<tr>
+<td>01</td>
+<td>010</td>
+</tr>
+<tr>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td>11</td>
+<td>111</td>
+</tr>
+</tbody>
+</table>
+<p>一共有 4 个编码字，4 个编码字一一配对一共有 6 种可能，$d(001,010)=2,d(010,100)=2,d(001,100)=2,d(010,111)=2,d(001,111)=2,d(100,111)=2$。6 种可能中最小的汉明距离是 2，所以最少需要更改 2 位数据才能从一个合法编码字变为另一个合法编码字。</p>
+<p>因此计算从一个合法编码字转换为另一个合法编码字最少要改变的数据位数过程是，计算出所有码书中的编码字（即合法编码字）两两配对后的所有汉明距离 $d_{min}$，其中的最小值即为所求值。</p>
+<h1 id="The_Tradeoff_Between_Error_Detection_And_Overhead"><a class="header-anchor" href="#The_Tradeoff_Between_Error_Detection_And_Overhead">#</a>The Tradeoff Between Error Detection And Overhead</h1>
+<p>对于一个编码，最多的能被检测出来的错误位数为$e=d_{min}-1$，如单一奇偶校验，因为$d_{min}=2$，所以最多能正确检测出来的错误位数为 1。</p>
+<p>虽然$d_{min}$越大能检测出来的错误位数越多，但这也意味着要增加更多的额外数据，对于$(n,k)$的编码，工程师用编码率（Code Rate）$R=\frac{k}{n}$来表示为了检测出错误信息的编码开销。</p>
+<h1 id="Error_Correction_With_Row_And_Column_RAC_Parity"><a class="header-anchor" href="#Error_Correction_With_Row_And_Column_RAC_Parity">#</a>Error Correction With Row And Column(RAC) Parity</h1>
+<p>奇偶校验本身是不能进行错误纠正的，但是通过<code>行列奇偶校验（Row And Column Parity）</code>就可以做到。如一共有 12 个 bit 的原始数据，即$k=12$，排成三行四列每一列每一行都进行奇偶校验，增加一个额外位，则一共 8 个额外位，即$r=8，n=k+r=20$，因此这是一个$(20,12)$的编码，如下图所示：</p>
+<p><img src="/ch_08_reliability_and_channel_coding/2019-12-05-14-46-47.png" alt="行列奇偶校验"></p>
+<p>因此如果一位数据出错，会同时在对应的行和列校验位感知到，因此就可以定位到错误的数据，取反后就能纠正数据。</p>
+<p>奇偶校验数据的$d_{min}$还是 2，因此如果错误的位数大于 1，当是偶数时无法被检测到，当是奇数时虽然能检测出错误，但无法纠正。</p>
+<h1 id="The_16_Bit_Checksum_Used_In_The_Internet"><a class="header-anchor" href="#The_16_Bit_Checksum_Used_In_The_Internet">#</a>The 16-Bit Checksum Used In The Internet</h1>
+<p>有个称为<code>因特网校验和（Internet checksum）</code>的信道编码方法在网络中扮演了重要角色。这个算法的输入可以是任意长度，将输入拆分为一段段 16 字节的的部分，如果不能长度不能被 16 整除，则最后补 0。如下图所示：</p>
+<p><img src="/ch_08_reliability_and_channel_coding/2019-12-06-17-25-08.png" alt="拆分为16字节"></p>
+<p>算法的流程如下：</p>
+<ol>
+<li>将输入拆分为以 16-bit 为一组</li>
+<li>定义一个 32-bit 的变量（这里称为$C$）作为结果。</li>
+<li>将每一组 16-bit 的数据累加给$C$</li>
+<li>将$C$的前 16 位累加给后 16 位</li>
+<li>将$C$的后 16 位取反，如果取反后全是 0，则将其改为全是 1</li>
+<li>此时$C$的 16 位即为校验和。</li>
+</ol>
+<p>可以看出最后的校验和也是 16 位的数据，将校验和作为新的一组 16-bit 放在原数据后（经过了补 0 的原数据）发送出去。接收端接受信息后重复算法流程，如果数据没有发生错误，最后接收端计算出的校验和应该是 FFFF。</p>
+<p>下面以两个例子进行说明：</p>
+<ol>
+<li>
+<p>例子 1<br>
+如果发送端输入数据为<code>0100 1000 0110 0101</code>，<code>0110 1100 0110 1100</code>，<code>0110 1111 0010 0001</code>，计算过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">+  0110 1111 0010 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  0010 0011 1111 0010</span><br></pre></td></tr></table></figure>
+<p>将高 16 位移到后 16 位</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  0010 0011 1111 0010</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  0010 0011 1111 0011</span><br></pre></td></tr></table></figure>
+<p>取反后得到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1101 1100 0000 1100</span><br></pre></td></tr></table></figure>
+<p>这即为校验和</p>
+<p>对于接收端，因为将校验和也一并发送了过去，所以接收端的计算过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">   0110 1111 0010 0001</span><br><span class="line">+  1101 1100 0000 1100</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
+<p>将高 16 位移到后 16 位</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+<p>取反后得到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
+<p>因为全为 0，所以改为全为 1</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>例子 2<br>
+如果发送端输入数据为<code>1111 1111 1111 1111</code>，<code>1111 1111 1111 1111</code>，<code>0000 0000 0000 0001</code>，计算过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">+  0000 0000 0000 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+<p>将高 16 位移到后 16 位</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1111</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
+<p>此时虽然高 16 仍然有数值，但不需要再次累加，后 16 位取反后得到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 11111</span><br></pre></td></tr></table></figure>
+<p>这即为校验和</p>
+<p>对于接收端，因为将校验和也一并发送了过去，所以接收端的计算过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">   0000 0000 0000 0001</span><br><span class="line">+  1111 1111 1111 1111</span><br><span class="line">----------------------------</span><br><span class="line">10 1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
+<p>将高 16 位移到后 16 位</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                  10</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
+<p>取反后得到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Cyclic_Redundancy_Codes_CRCs"><a class="header-anchor" href="#Cyclic_Redundancy_Codes_CRCs">#</a>Cyclic Redundancy Codes(CRCs)</h1>
+<p>在高速网络中，有一个称为<code>循环冗余码(Cyclic Redundancy Codes,CRCs)</code>的信道编码方法。循环冗余码有三个主要优点：</p>
+<ol>
+<li>可以对任意长度的数据进行计算</li>
+<li>可以充分的检测出错误</li>
+<li>可以通过硬件实现，所以非常的高效</li>
+</ol>
+<p>求$CRC$的计算过程可以看作是两个二进制数的相除，一个代表原数据，一个代表一个特定的除数（可根据不同的情况设置，除数的设置决定错误检测的能力），如果需要求得$N$长度的$CRC$，则需要$N+1$长度的被除数。二进制数相除的过程可以看作是多项式相除，如果原数据是$1010$，除数设置为$1011$，则计算过程如下图：</p>
+<p><img src="/ch_08_reliability_and_channel_coding/2019-12-07-00-01-18.png" alt="CRC计算过程"></p>
+<h1 id="An_Efficient_Hardware_Implementation_Of_CRC"><a class="header-anchor" href="#An_Efficient_Hardware_Implementation_Of_CRC">#</a>An Efficient Hardware Implementation Of CRC</h1>
+<p>CRC 算法的实现硬件是由<code>移位寄存器(Shift Register)</code>和<code>异或门(Exclusive or gates)</code>构成的。在计算 CRC 前，硬件会初始化将移位寄存器中的所有位改为 0，上例中的除数$1011$，对应的硬件图如下：</p>
+<p><img src="/ch_08_reliability_and_channel_coding/2019-12-07-00-06-02.png" alt="1011硬件"></p>
+<p>TODO：为什么这么设计的原因。</p>
+<h1 id="Automatic_Repeat_Request_ARQ_Mechanisms"><a class="header-anchor" href="#Automatic_Repeat_Request_ARQ_Mechanisms">#</a>Automatic Repeat Request(ARQ) Mechanisms</h1>
+<p>自动重传请求技术（Automatic Repeat Request,ARQ）需要发送端和接收端传递信息来检测错误。当一方发送数据给另一方时，接收方需要传递一个回执给发送方。如果在一段时间后发送方仍然没有收到回执，则认为数据丢失，重新发送数据。</p>
+<p>自动重传请求技术适合只能检测错误，但不能修复错误的系统。当接收方检测出数据有错误后，将数据丢弃并不传递回执，那么发送方就会再次发送数据。</p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://en.wikipedia.org/wiki/polynomial_long_division">多项式除法</a><br>
+<a href="https://heasarc.gsfc.nasa.gov/docs/heasarc/ofwg/docs/general/checksum/node11.html">1’s Complement Arithmetic</a></p>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 08 模板方法模式</title>
     <url>/ch_08_the_template_method_pattern/</url>
     <content><![CDATA[<p>模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。</p>
@@ -1008,6 +1228,62 @@ $$</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Computer Networks and Internets》 Ch 10 调制与调制器</title>
+    <url>/ch_10_modulation_and_modems/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一章讨论数据通信中的调制与调制器相关的内容。</p>
+<p>调制是利用高频的信息来携带原始数据，将分别讨论当原始数据是模拟信号和数字信号的情况。</p>
+<h1 id="Carriers_Frequency_And_Propagation"><a class="header-anchor" href="#Carriers_Frequency_And_Propagation">#</a>Carriers,Frequency,And Propagation</h1>
+<p>许多通信系统会利用一个持续震荡的电磁波来作为信息的载波（Carrier），通常这个信号都是一个高频信号。在第七章有提到，信号的频率会影响信号的传播特性，如穿透性，对噪声的敏感性等。</p>
+<h1 id="Analog_Modulation_Schemes"><a class="header-anchor" href="#Analog_Modulation_Schemes">#</a>Analog Modulation Schemes</h1>
+<p><code>调制（Modulation）</code>意为根据原始信号来改变载波的特性。调制有两个输入，一个是载波，一个是原信号，然后产生一个调制后的载波作为输出。调制的原理图如下：</p>
+<p><img src="/ch_10_modulation_and_modems/2019-12-07-23-21-31.png" alt="调制原理图"></p>
+<p>输入的原信号必须改变载波的一个特性，根据特性的不同可以分为<code>振幅调制（Amplitude modulation）</code>，<code>频移调制（Frequency modulation）</code>，<code>移相调制（Phase shift modulation）</code>。其中前两种最为普遍。</p>
+<h1 id="Amplitude_Modulation"><a class="header-anchor" href="#Amplitude_Modulation">#</a>Amplitude Modulation</h1>
+<p><code>振幅调制（Amplitude modulation）</code>是根据原信号改变载波的振幅。从时域图上看，调制后的波形的轮廓与原信号基本相同，如下图所示，（a）是高频载波，（b）是原信号，（c）是调制后的信号。</p>
+<p><img src="/ch_10_modulation_and_modems/2019-12-07-23-28-45.png" alt="振幅调制"></p>
+<h1 id="Frequency_Modulation"><a class="header-anchor" href="#Frequency_Modulation">#</a>Frequency Modulation</h1>
+<p><code>频移调制（Frequency modulation）</code>是根据原信号改变载波的频率，当信号强是，载波的频率增加，反之减少。如下图即为频移调制后的样子：</p>
+<p><img src="/ch_10_modulation_and_modems/2019-12-07-23-36-37.png" alt="频移调制"></p>
+<h1 id="Phase_Shift_Modulation"><a class="header-anchor" href="#Phase_Shift_Modulation">#</a>Phase Shift Modulation</h1>
+<p><code>移相调制（Phase shift modulation）</code>是根据原信号改变载波的相位。经过理论上可行，但对于模拟信号来说，很少用移相调制，因为模拟信号采样点的数据可能比较接近，导致移相的大小不明显，很容易被误认为是频率的改变。但对于数字信号来说移相调制因为可以一个码元传递多个 Bit 的字节，所以经常被使用。</p>
+<h1 id="Amplitude_Modulation_And_Shannon’s_Theorem"><a class="header-anchor" href="#Amplitude_Modulation_And_Shannon’s_Theorem">#</a>Amplitude Modulation And Shannon’s Theorem</h1>
+<p>在之前解释振幅调制的示意图中，调制后信号变化幅度较大，最低处的强度接近于 0。但实际运用时，基本上振幅调制的幅度变化很小。因为考虑到有噪声的存在，如果信号的变化幅度较大，在信号最弱时的信噪比会很低，则几乎无法传递有效信息。</p>
+<h1 id="Modulation_Digital_Input_And_Shift_Keying"><a class="header-anchor" href="#Modulation_Digital_Input_And_Shift_Keying">#</a>Modulation,Digital Input,And Shift Keying</h1>
+<p>为了区分模拟信号和数字信号的调制，使用属于<code>移位键控（Shift Keying）</code>来表示数字信号的调制。数字信号的调制与模拟信号调制基本原理类似，只不过作为原信号的模拟信号是连续的数值变化，而数字信号是离散的几个特定的数值。振幅与频率移位键控如下图，(a)是载波，(b)是原信号，©是振幅移位键控，(d)是频率移位键控</p>
+<p><img src="/ch_10_modulation_and_modems/2019-12-08-00-05-53.png" alt="振幅，频率移位键控"></p>
+<h1 id="Phase_Shift_Keying"><a class="header-anchor" href="#Phase_Shift_Keying">#</a>Phase Shift Keying</h1>
+<p><code>相位移位键控(Phase Shift Keying)</code>是根据原信号突然的改变载波的相位，如下图所示，即为相位移位键控的示意图。</p>
+<p><img src="/ch_10_modulation_and_modems/2019-12-08-00-11-28.png" alt="相位移位键控"></p>
+<h1 id="Phase_Shift_And_A_Constellation_Diagram"><a class="header-anchor" href="#Phase_Shift_And_A_Constellation_Diagram">#</a>Phase Shift And A Constellation Diagram</h1>
+<p>如之前所示，相位移位键控最大的优势在于可以用一个码元传递多个 bit。可通过$2^n$个相位来使一个码元可携带$n$ bit 数据。使用星座图来表示相位变化大小与该大小与对应数据的关系。星座图如下图所示，图（1）是只有两个相位变化，即表示 0 和 1，图（2）是有四个相位变化，可代表两个 bit,即 00,01,10,11。</p>
+<p><img src="/ch_10_modulation_and_modems/2019-12-08-00-18-17.png" alt="两个相位的相位移位键控"></p>
+<p><img src="/ch_10_modulation_and_modems/2019-12-08-00-18-54.png" alt="四个相位的相位移位键控"></p>
+<h1 id="Quadrature_Amplitude_Modulation"><a class="header-anchor" href="#Quadrature_Amplitude_Modulation">#</a>Quadrature Amplitude Modulation</h1>
+<p>如上节所述，可以在使用相位移位键控时采用多个相位间隔使一个码元传递多个 bit。但某些情况下，硬件无法检测过于精细的相位变化。这时候可以通过降相位移位键控和振幅移位键控结合在一起使一个码元可携带更多的数据，这方法称为<code>正交振幅调制（Quadrature Amplitude Modulation）</code>。如下图所示：</p>
+<p><img src="/ch_10_modulation_and_modems/2019-12-08-10-04-32.png" alt="正交振幅调制"></p>
+<p>如上图，一共有四个相位区分，每个点距离原点的距离代表振幅，一共有四个电压，因此一共有 16 种组合，一个码元可以携带 4 个 bit。</p>
+<h1 id="Modem_Hardware_For_Modulation_And_Demodulation"><a class="header-anchor" href="#Modem_Hardware_For_Modulation_And_Demodulation">#</a>Modem Hardware For Modulation And Demodulation</h1>
+<p>将一系列的数据 bit 作为输入，然后根据这些原数据对载波进行调制的设备称为<code>调制器（Modulator）</code>，反之根据调制后的载波重新解析出原信号的机器称为<code>解调器（Demodulator）</code>。在实际中，大部分的通信设备同时包含调制器和解调器，这种设备被称为<code>调制解调器（Modem）</code>。下图是两个计算机的通信简图，在两者将数据传给中间的电缆媒介前，都经过了调制解调器</p>
+<p><img src="/ch_10_modulation_and_modems/2019-12-08-10-13-14.png" alt="调制解调器"></p>
+<h1 id="Optical_And_Radio_Frequency_Modems"><a class="header-anchor" href="#Optical_And_Radio_Frequency_Modems">#</a>Optical And Radio Frequency Modems</h1>
+<p>调制解调器不仅可用于电缆的传输，对于无线电波和光纤也同样适用，原理也一样，在发送端调制解调器对载波进行调制，在接收端，数据从被调制后的载波中会提取。</p>
+<h1 id="Dialup_Modems"><a class="header-anchor" href="#Dialup_Modems">#</a>Dialup Modems</h1>
+<p>在语音电话系统中，使用的调制解调器称为<code>拨号调制解调器（Dialup Modems）</code>，其与普通的调制解调器最大的区别在于，前者用的是语音信号，后者用的是电信号，而且拨号调制解调器占用的带宽更小。</p>
+<p>因为电话系统接受的是模拟信号，所以拨号调制解调器也是一个对模拟信号进行调制的设备。但讽刺的是现代电话系统的中间传输部分是数字信号，于是发送端在调制后，需要将模拟信号转换为数字信号。而在接收端，在进行解调前也需要先将中间传输来的数字信号转换为模拟信号。</p>
+<h1 id="QAM_Applied_To_Dialup"><a class="header-anchor" href="#QAM_Applied_To_Dialup">#</a>QAM Applied To Dialup</h1>
+<p>正交振幅调制也同样可用于拨号调制解调器中。因为大部分语音频率本身是从$300HZ\sim 3300HZ$，但拨号调制解调器只能提供$600HZ\sim 3000HZ$，所以同样需要正交振幅调制来使一个码元能携带更多的数据。</p>
+<h1 id="V_32_And_V_32bis_Dialup_Modems"><a class="header-anchor" href="#V_32_And_V_32bis_Dialup_Modems">#</a>V.32 And V.32bis Dialup Modems</h1>
+<p>V.32 和 V.32bis 是两个拨号调制解调器用正交振幅调制的标准。</p>
+<p>V.32 使用 32 个振幅和相位的组合来表示数据，可以达到单向每秒 9600 个 bit 的数据速率。</p>
+<p><img src="/ch_10_modulation_and_modems/2019-12-08-10-28-37.png" alt="V.32"></p>
+<p>V.32bis 使用 128 个振幅和相位的组合来表数据，可以达到单向每秒 14400 个 bit 的数据速率。</p>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
