@@ -1,6 +1,6 @@
 ---
 created: 2022-02-02
-updated: 2023-06-04
+updated: 2023-06-12
 tags:
     - 计算机网络
 published: true
@@ -64,4 +64,5 @@ description: 本篇为 《Computer Networks and Internets》 的第五章笔记�
 5. `复用与解复用(Multiplexor and Demultiplexor)`。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。
 
 6. `调制与解调(Modulator and Demodulator)`。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。
+
 7. `物理通道与传输(Physical Channel and Transmission)`。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，
