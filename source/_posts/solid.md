@@ -431,3 +431,5 @@ public class Door : MonoBehaviour, ISwitchable
 # Reference
 
 [Level up your code with game programming patterns | Unity Blog](https://blog.unity.com/games/level-up-your-code-with-game-programming-patterns)
+
+[图解你身边的 SOLID 原则 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/130954951)
