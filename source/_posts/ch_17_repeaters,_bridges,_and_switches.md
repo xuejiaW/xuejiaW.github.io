@@ -1,6 +1,6 @@
 ---
 created: 2022-02-02
-updated: 2023-06-04
+updated: 2023-06-06
 tags:
     - 计算机网络
 title: 《Computer Networks and Internets》 Ch 17 中继器，网桥和交换机

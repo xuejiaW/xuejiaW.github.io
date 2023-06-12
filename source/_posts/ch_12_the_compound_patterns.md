@@ -2,7 +2,7 @@
 tags:
     - 设计模式
 created: 2022-02-02
-updated: 2023-05-28
+updated: 2023-06-12
 title: 《Head First 设计模式》 Ch 12 复合模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第十二章，介绍了复合模式的定义及运用。
@@ -14,6 +14,10 @@ date: 2023-05-22
 MVC 框架就是一种组合模式，`Controller`和`View`之间使用了策略模式， `View`中只存`Controller`的接口，进而达到可以随时切换不同`Controller`的目的。`Model`和`View`之间使用了观察者模式，`View`作为观察者，`Model`作为被观察者，当`Model`的数据发生变化时，`View`相应改变。而`View`本身使用了组合模式，比如按钮中可能存在子按钮，窗口中存在子窗口等等。
 
 我们以音量调节作为一个最简的 MVC 框架示例。
+
+{% note info %}
+关于 MVC 更多的减少，见 MVC
+{% endnote %}
 
 # 代码示例
 
