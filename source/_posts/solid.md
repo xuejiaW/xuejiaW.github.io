@@ -3,7 +3,7 @@ tags:
     - 设计模式
     - 编码规范 
 created: 2023-06-07
-updated: 2023-06-12
+updated: 2023-06-13
 title: SOLID 原则
 published: true
 date: 2023-06-12 21:37 
