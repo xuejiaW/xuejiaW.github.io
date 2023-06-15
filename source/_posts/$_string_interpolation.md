@@ -3,7 +3,7 @@ tags:
     - C#
     - String
 created: 2021-12-09
-updated: 2023-06-13
+updated: 2023-06-15
 date: 2023-06-13 21:55 
 published: true
 title: C# $ 字符串插值
@@ -142,7 +142,7 @@ Debug.Log(result);
 其中逗号后的数字，如果为负数，则输出为左对齐，如果为正数则右对齐。数字本身表示最少的**字符数**。因此如果显示系统中每个字符的宽度是不相等的话，如 `i` 和 `a` 的宽度在某些显示系统下会有较大差异，则即使控制字符宽度也无法实现对其的效果。
 
 如下为相同输出结果在 Unity 的 Console 面板中的展示：
-![|300](/$_string_interpolation/image-20211210201354094.png)
+![对齐输出](/$_string_interpolation/image-20211210201354094.png)
 
 表达式格式和对齐方式也可以一起设定，但需要首先设定对其方式，再设定格式。如下首先控制了左对齐，且字符数为 10 个，又设定输出格式为当前小时数：
 
@@ -272,7 +272,7 @@ string str = string.Format("It is {0}", now);
 
 ## FormattableString
 
-如果插值的对象为类型为 Formattable String 时，编译器会选择使用 `FormattableStringFactory.Create` 创建一个新的 `FormattableString`。
+如果插值的对象为类型为 [Formattable String](/formattable_string) 时，编译器会选择使用 `FormattableStringFactory.Create` 创建一个新的 `FormattableString`。
 
 如下代码：
 
