@@ -2,7 +2,7 @@
 tags:
 - # 摘要
 created: 2023-06-18
-updated: 2023-06-27
+updated: 2023-07-09
 published: true
 title: 《You and Your Research》 摘抄
 date: 2023-06-27 21:28 
