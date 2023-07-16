@@ -155,6 +155,32 @@
       </tags>
   </entry>
   <entry>
+    <title>《Render Hell》 第三部分 常见问题</title>
+    <url>/book_3_problems/</url>
+    <content><![CDATA[<h1 id="Many_Draw_Calls_Many_Commands"><a class="header-anchor" href="#Many_Draw_Calls_Many_Commands">#</a>Many Draw Calls / Many Commands</h1>
+<p>对于一个 API 而言，它不仅仅是将命令发送给 GPU，它还会有额外的如驱动翻译等的开销，因此应当尽可能的使用更少的命令。</p>
+<div class="note info simple"><p>对于新的图形 API，如 DirectX12， Vulkan 等，命令的开销会相对较少，但仍然应当尽可能的减少命令的数量。</p>
+</div>
+<p>如果有一系列很小的 Mesh，相较于每个 Mesh 都使用一个 Drawcall，更理想的做法是将这些 Meshes 组合成一个更大的 Mesh，并通过一个 Drawcall 传送。</p>
+<p>因为对于 GPU 而言，绘制一个小 Mesh 的时间是非常快的，而 CPU 将数据发送给 GPU 的时间是相对较长的。</p>
+<p>如果是每一个 Mesh 一个 Draw Call 的处理方式，往往瓶颈会出现在 CPU 侧。</p>
+<h1 id="Many_Meshes_and_Materials"><a class="header-anchor" href="#Many_Meshes_and_Materials">#</a>Many Meshes and Materials</h1>
+<p>如果要渲染许多 Mesh 并使用不同的 Materials，除了需要用许多的命令外，还会额外带来 <code>Flush Pipeline</code> 的问题。</p>
+<p>如果多个 Meshes 是用同一种渲染状态，则在一个 Mesh 完成后，另一个 Mesh 可以被很快的装填。而如果更改了材质状态，则管线中的一部分数据需要被刷新，才能进行下一个 Mesh 的绘制，这会造成额外的开销。</p>
+<h1 id="Meshes_and_Multi_Materials"><a class="header-anchor" href="#Meshes_and_Multi_Materials">#</a>Meshes and Multi-Materials</h1>
+<p>如果一个 Mesh 被赋予了多个材质，则该 Mesh 会被切分成多份再被送入 Command Buffer 中，这无疑也会造成多个 Draw Call 的产生。如下示意图所示，球的左半部分和右半部分各需要一个 Draw Call：<br>
+<img src="/book_3_problems/copy_data_from_hdd_to_ram_vram_01_multimaterial.gif" alt="Multi-Materials"></p>
+<h1 id="Thin_Triangles"><a class="header-anchor" href="#Thin_Triangles">#</a>Thin Triangles</h1>
+<p>如在 Book 2 的 <a href="/book_2_pipeline/#Rasterizing">Rasterizing</a> 中所属，光栅化后的单位是 <code>pre-pixles</code> ，Warp 中的四个线程会被分给一个 <code>pre-pixels</code> 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：<br>
+<img src="/book_3_problems/pipeline_rasterizing03_.gif" alt="Thin Triangles 造成的性能浪费"></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book3/">Render Hell – Book III | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Render Hell》 第二部分 管线</title>
     <url>/book_2_pipeline/</url>
     <content><![CDATA[<h1 id="GPU_Core"><a class="header-anchor" href="#GPU_Core">#</a>GPU Core</h1>
@@ -283,32 +309,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Render Hell》 第三部分 常见问题</title>
-    <url>/book_3_problems/</url>
-    <content><![CDATA[<h1 id="Many_Draw_Calls_Many_Commands"><a class="header-anchor" href="#Many_Draw_Calls_Many_Commands">#</a>Many Draw Calls / Many Commands</h1>
-<p>对于一个 API 而言，它不仅仅是将命令发送给 GPU，它还会有额外的如驱动翻译等的开销，因此应当尽可能的使用更少的命令。</p>
-<div class="note info simple"><p>对于新的图形 API，如 DirectX12， Vulkan 等，命令的开销会相对较少，但仍然应当尽可能的减少命令的数量。</p>
-</div>
-<p>如果有一系列很小的 Mesh，相较于每个 Mesh 都使用一个 Drawcall，更理想的做法是将这些 Meshes 组合成一个更大的 Mesh，并通过一个 Drawcall 传送。</p>
-<p>因为对于 GPU 而言，绘制一个小 Mesh 的时间是非常快的，而 CPU 将数据发送给 GPU 的时间是相对较长的。</p>
-<p>如果是每一个 Mesh 一个 Draw Call 的处理方式，往往瓶颈会出现在 CPU 侧。</p>
-<h1 id="Many_Meshes_and_Materials"><a class="header-anchor" href="#Many_Meshes_and_Materials">#</a>Many Meshes and Materials</h1>
-<p>如果要渲染许多 Mesh 并使用不同的 Materials，除了需要用许多的命令外，还会额外带来 <code>Flush Pipeline</code> 的问题。</p>
-<p>如果多个 Meshes 是用同一种渲染状态，则在一个 Mesh 完成后，另一个 Mesh 可以被很快的装填。而如果更改了材质状态，则管线中的一部分数据需要被刷新，才能进行下一个 Mesh 的绘制，这会造成额外的开销。</p>
-<h1 id="Meshes_and_Multi_Materials"><a class="header-anchor" href="#Meshes_and_Multi_Materials">#</a>Meshes and Multi-Materials</h1>
-<p>如果一个 Mesh 被赋予了多个材质，则该 Mesh 会被切分成多份再被送入 Command Buffer 中，这无疑也会造成多个 Draw Call 的产生。如下示意图所示，球的左半部分和右半部分各需要一个 Draw Call：<br>
-<img src="/book_3_problems/copy_data_from_hdd_to_ram_vram_01_multimaterial.gif" alt="Multi-Materials"></p>
-<h1 id="Thin_Triangles"><a class="header-anchor" href="#Thin_Triangles">#</a>Thin Triangles</h1>
-<p>如在 Book 2 的 <a href="/book_2_pipeline/#Rasterizing">Rasterizing</a> 中所属，光栅化后的单位是 <code>pre-pixles</code> ，Warp 中的四个线程会被分给一个 <code>pre-pixels</code> 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：<br>
-<img src="/book_3_problems/pipeline_rasterizing03_.gif" alt="Thin Triangles 造成的性能浪费"></p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell-book3/">Render Hell – Book III | Simon schreibt.</a></p>
-]]></content>
-      <tags>
-        <tag>GPU</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Render Hell》 第四部分 解决方法</title>
     <url>/book_4_solutions/</url>
     <content><![CDATA[<h1 id="Sorting"><a class="header-anchor" href="#Sorting">#</a>Sorting</h1>
@@ -339,6 +339,28 @@
 ]]></content>
       <tags>
         <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 01 策略模式</title>
+    <url>/ch_01_the_strategy_pattern/</url>
+    <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
+<p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
+<p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="算法接口及实现类"><a class="header-anchor" href="#算法接口及实现类">#</a>算法接口及实现类</h2>
+<figure class="highlight cs"><figcaption><span>飞行方法接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>飞行方法实现</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyNoWay</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Can not fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithRocket</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with rocket&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithWings</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with wings&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="环境类"><a class="header-anchor" href="#环境类">#</a>环境类</h2>
+<figure class="highlight cs"><figcaption><span>鸭子基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehavior flyBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PerformFly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span>(<span class="params">IFlyBehavior fb</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior = fb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>鸭子派生类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BlackDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlackDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyWithWings());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a black duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RubberDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RubberDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a rubber duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">RubberDuck rubberDuck = <span class="keyword">new</span> RubberDuck();</span><br><span class="line">rubberDuck.disPlay();</span><br><span class="line">rubberDuck.PerformFly();</span><br><span class="line"></span><br><span class="line">BlackDuck blackDuck = <span class="keyword">new</span> BlackDuck();</span><br><span class="line">blackDuck.disPlay();</span><br><span class="line">blackDuck.PerformFly();</span><br><span class="line">blackDuck.setFlyBehavior(<span class="keyword">new</span> FlyWithRocket());</span><br><span class="line">blackDuck.PerformFly();</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<p><img src="/ch_01_the_strategy_pattern/2019-01-15-00-12-45.png" alt="策略模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -448,28 +470,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 01 策略模式</title>
-    <url>/ch_01_the_strategy_pattern/</url>
-    <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
-<p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
-<p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="算法接口及实现类"><a class="header-anchor" href="#算法接口及实现类">#</a>算法接口及实现类</h2>
-<figure class="highlight cs"><figcaption><span>飞行方法接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>飞行方法实现</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyNoWay</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Can not fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithRocket</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with rocket&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithWings</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with wings&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="环境类"><a class="header-anchor" href="#环境类">#</a>环境类</h2>
-<figure class="highlight cs"><figcaption><span>鸭子基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehavior flyBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PerformFly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span>(<span class="params">IFlyBehavior fb</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior = fb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>鸭子派生类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BlackDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlackDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyWithWings());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a black duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RubberDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RubberDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a rubber duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">RubberDuck rubberDuck = <span class="keyword">new</span> RubberDuck();</span><br><span class="line">rubberDuck.disPlay();</span><br><span class="line">rubberDuck.PerformFly();</span><br><span class="line"></span><br><span class="line">BlackDuck blackDuck = <span class="keyword">new</span> BlackDuck();</span><br><span class="line">blackDuck.disPlay();</span><br><span class="line">blackDuck.PerformFly();</span><br><span class="line">blackDuck.setFlyBehavior(<span class="keyword">new</span> FlyWithRocket());</span><br><span class="line">blackDuck.PerformFly();</span><br></pre></td></tr></table></figure>
-<p>运行结果</p>
-<p><img src="/ch_01_the_strategy_pattern/2019-01-15-00-12-45.png" alt="策略模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Head First 设计模式》 Ch 02 观察者模式</title>
     <url>/ch_02_the_observer_pattern/</url>
     <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
@@ -517,70 +517,6 @@
 ]]></content>
       <tags>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
-    <url>/ch_05_overview_of_data_communications/</url>
-    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
-<h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
-<p>数据通信是物理，数学和电气工程三个学科的混合领域。</p>
-<ol>
-<li>物理：信息的传输依赖于物理媒介</li>
-<li>数学：信息需要数字化</li>
-<li>电气工程：数据传输需要构建现实中的通信系统</li>
-</ol>
-<h1 id="Motivation_And_Scope_Of_The_Subject"><a class="header-anchor" href="#Motivation_And_Scope_Of_The_Subject">#</a>Motivation And Scope Of The Subject</h1>
-<p>在数据通信领域有三个重要的点，他们定义了数据通信的一些领域</p>
-<ol>
-<li>
-<p>传输的数据可以是任意类型的</p>
-<p>传输的数据并不一定是存储在计算机中的<code>bit</code>数据，也可以是从现实世界中获取的信息，如音频和视频。</p>
-</li>
-<li>
-<p>数据的传输依赖于物理系统</p>
-<p>数据是基于物理现象来传输的，例如电，电磁波。了解为什么这些物理现象可以被用来传输数据是很重要的。另外也需要理解物理系统的限制，因为这些限制引发的问题和这些问题如何被检测并解决。</p>
-</li>
-<li>
-<p>多个来源的信息可以共享基础媒介来传输</p>
-<p>媒介共享在计算机网络中是一个重要角色。了解哪些基础设施是可以被共享的，共享他们的优缺点，以及基于共享而设计的通信模型是很重要的。</p>
-</li>
-</ol>
-<h1 id="The_Conceptual_Pieces_Of_A_Communications_System"><a class="header-anchor" href="#The_Conceptual_Pieces_Of_A_Communications_System">#</a>The Conceptual Pieces Of A Communications System</h1>
-<p>每一个来源都需要一些方法来获取信息，调整信息为用于传播的模式，使用共享的物理媒介来传输信息。同时也需要一些方法从物理媒介中抽取出每条信息的目的地地址，并将信息传送给目标地址。整个过程如下图所示：</p>
-<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-24-24.png" alt="数据通信简单模型"></p>
-<p>上图是一个非常简化的模型，在实际操作中，在传输数据前，必须对数据进行数字化，也需要加入一些额外的信息防止错误发生。如果考虑到隐私，可能还需要进行加密。在使用共享媒介时，还要保证有方法可以分辨出每条信息且他们不会相互干扰。</p>
-<p>为了解释数据通信的每个部分，工程师们制订了一个概念框架来说明通信系统中的每个小主题是如何联系在一起的，概念框架如下图所示：</p>
-<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-28-26.png" alt="概念框架"></p>
-<h1 id="The_Subtopics_Of_Data_Communications"><a class="header-anchor" href="#The_Subtopics_Of_Data_Communications">#</a>The Subtopics Of Data Communications</h1>
-<p>上一节中的概念框架图中的每一部分都代表了数据通信中的一个小主题。这一节中简单介绍了图中的一些术语，之后的几章中会在对每一部分进行详细说。</p>
-<ol>
-<li>
-<p><code>数据来源(Information Sources)</code>可以是模拟数据或者数字电路。这一部分的关键内容包括信号的特征（<code>振幅(Amplitude)</code>，<code>频率(Frequency)</code>，<code>相位(Phase)</code>），周期性与非周期性，以及模拟信息和数字信息的转换。</p>
-</li>
-<li>
-<p><code>信源编码与解码(Source Encoder and Decoder)</code>。一旦信息被数字化后，信息就可以被转换，这一部分的关键内容包括数据压缩以及压缩后对于传输的影响</p>
-</li>
-<li>
-<p><code>加密与解密(Encryptor and Decryptor)</code>。为了保护信息和保证其可信度，在信息传送前需要进行加密，在接收后需要解密。这一部分的关键内容包括密码学技术与算法。</p>
-</li>
-<li>
-<p><code>信道编码与解码(Channel Encoder and Decoder)</code>。信道编码是用来检测也纠正传输错误。这一部分的关键内容包括检测和限制错误，以及实际应用的技术，如奇偶校验(parity checking)等。</p>
-</li>
-<li>
-<p><code>复用与解复用(Multiplexor and Demultiplexor)</code>。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。</p>
-</li>
-<li>
-<p><code>调制与解调(Modulator and Demodulator)</code>。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。</p>
-</li>
-<li>
-<p><code>物理通道与传输(Physical Channel and Transmission)</code>。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -657,36 +593,76 @@
       </tags>
   </entry>
   <entry>
+    <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
+    <url>/ch_05_overview_of_data_communications/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
+<h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
+<p>数据通信是物理，数学和电气工程三个学科的混合领域。</p>
+<ol>
+<li>物理：信息的传输依赖于物理媒介</li>
+<li>数学：信息需要数字化</li>
+<li>电气工程：数据传输需要构建现实中的通信系统</li>
+</ol>
+<h1 id="Motivation_And_Scope_Of_The_Subject"><a class="header-anchor" href="#Motivation_And_Scope_Of_The_Subject">#</a>Motivation And Scope Of The Subject</h1>
+<p>在数据通信领域有三个重要的点，他们定义了数据通信的一些领域</p>
+<ol>
+<li>
+<p>传输的数据可以是任意类型的</p>
+<p>传输的数据并不一定是存储在计算机中的<code>bit</code>数据，也可以是从现实世界中获取的信息，如音频和视频。</p>
+</li>
+<li>
+<p>数据的传输依赖于物理系统</p>
+<p>数据是基于物理现象来传输的，例如电，电磁波。了解为什么这些物理现象可以被用来传输数据是很重要的。另外也需要理解物理系统的限制，因为这些限制引发的问题和这些问题如何被检测并解决。</p>
+</li>
+<li>
+<p>多个来源的信息可以共享基础媒介来传输</p>
+<p>媒介共享在计算机网络中是一个重要角色。了解哪些基础设施是可以被共享的，共享他们的优缺点，以及基于共享而设计的通信模型是很重要的。</p>
+</li>
+</ol>
+<h1 id="The_Conceptual_Pieces_Of_A_Communications_System"><a class="header-anchor" href="#The_Conceptual_Pieces_Of_A_Communications_System">#</a>The Conceptual Pieces Of A Communications System</h1>
+<p>每一个来源都需要一些方法来获取信息，调整信息为用于传播的模式，使用共享的物理媒介来传输信息。同时也需要一些方法从物理媒介中抽取出每条信息的目的地地址，并将信息传送给目标地址。整个过程如下图所示：</p>
+<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-24-24.png" alt="数据通信简单模型"></p>
+<p>上图是一个非常简化的模型，在实际操作中，在传输数据前，必须对数据进行数字化，也需要加入一些额外的信息防止错误发生。如果考虑到隐私，可能还需要进行加密。在使用共享媒介时，还要保证有方法可以分辨出每条信息且他们不会相互干扰。</p>
+<p>为了解释数据通信的每个部分，工程师们制订了一个概念框架来说明通信系统中的每个小主题是如何联系在一起的，概念框架如下图所示：</p>
+<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-28-26.png" alt="概念框架"></p>
+<h1 id="The_Subtopics_Of_Data_Communications"><a class="header-anchor" href="#The_Subtopics_Of_Data_Communications">#</a>The Subtopics Of Data Communications</h1>
+<p>上一节中的概念框架图中的每一部分都代表了数据通信中的一个小主题。这一节中简单介绍了图中的一些术语，之后的几章中会在对每一部分进行详细说。</p>
+<ol>
+<li>
+<p><code>数据来源(Information Sources)</code>可以是模拟数据或者数字电路。这一部分的关键内容包括信号的特征（<code>振幅(Amplitude)</code>，<code>频率(Frequency)</code>，<code>相位(Phase)</code>），周期性与非周期性，以及模拟信息和数字信息的转换。</p>
+</li>
+<li>
+<p><code>信源编码与解码(Source Encoder and Decoder)</code>。一旦信息被数字化后，信息就可以被转换，这一部分的关键内容包括数据压缩以及压缩后对于传输的影响</p>
+</li>
+<li>
+<p><code>加密与解密(Encryptor and Decryptor)</code>。为了保护信息和保证其可信度，在信息传送前需要进行加密，在接收后需要解密。这一部分的关键内容包括密码学技术与算法。</p>
+</li>
+<li>
+<p><code>信道编码与解码(Channel Encoder and Decoder)</code>。信道编码是用来检测也纠正传输错误。这一部分的关键内容包括检测和限制错误，以及实际应用的技术，如奇偶校验(parity checking)等。</p>
+</li>
+<li>
+<p><code>复用与解复用(Multiplexor and Demultiplexor)</code>。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。</p>
+</li>
+<li>
+<p><code>调制与解调(Modulator and Demodulator)</code>。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。</p>
+</li>
+<li>
+<p><code>物理通道与传输(Physical Channel and Transmission)</code>。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 05 单例模式</title>
     <url>/ch_05_the_singleton_pattern/</url>
     <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
 <h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
 <figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 06 命令模式</title>
-    <url>/ch_06_the_command_pattern/</url>
-    <content><![CDATA[<p>命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。</p>
-<p>命令模式由抽象命令类、具体命令类、接受者、调用者、客户类，五部分组成。其中接受者为被命令封装的类，调用者存放需要执行的类。</p>
-<p>我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="抽象命令类及实现"><a class="header-anchor" href="#抽象命令类及实现">#</a>抽象命令类及实现</h2>
-<figure class="highlight cs"><figcaption><span>抽象命令类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Undo</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>命令类实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOffCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOffCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOnCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOnCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command execute&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command undo&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="接受者"><a class="header-anchor" href="#接受者">#</a>接受者</h2>
-<figure class="highlight cs"><figcaption><span>灯</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Light</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is on&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="调用者"><a class="header-anchor" href="#调用者">#</a>调用者</h2>
-<figure class="highlight cs"><figcaption><span>远程控制</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">RemoteControl</span></span><br><span class="line">&#123;</span><br><span class="line">    Command[] commands;</span><br><span class="line">    Command lastCommond;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RemoteControl</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands = <span class="keyword">new</span> Command[<span class="number">2</span>] &#123; <span class="keyword">new</span> NoCommand(), <span class="keyword">new</span> NoCommand() &#125;;</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetCommand</span>(<span class="params"><span class="built_in">int</span> index, Command command</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index] = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnButtonClick</span>(<span class="params"><span class="built_in">int</span> index</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index].Execute();</span><br><span class="line">        lastCommond = commands[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnClickUndo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        lastCommond.Undo();</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="客户类"><a class="header-anchor" href="#客户类">#</a>客户类</h2>
-<figure class="highlight cs"><figcaption><span>函数入口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Light light = <span class="keyword">new</span> Light();</span><br><span class="line">    RemoteControl remoteControl = <span class="keyword">new</span> RemoteControl();</span><br><span class="line">    remoteControl.SetCommand(<span class="number">0</span>, <span class="keyword">new</span> LightOnCommand(light));</span><br><span class="line">    remoteControl.SetCommand(<span class="number">1</span>, <span class="keyword">new</span> LightOffCommand(light));</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">0</span>);</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">1</span>);</span><br><span class="line">    remoteControl.OnClickUndo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<p>运行结果：</p>
-<p><img src="/ch_06_the_command_pattern/2019-02-02-23-26-25.png" alt="命令模式测试结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -806,6 +782,30 @@ $$</p>
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 Ch 06 命令模式</title>
+    <url>/ch_06_the_command_pattern/</url>
+    <content><![CDATA[<p>命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。</p>
+<p>命令模式由抽象命令类、具体命令类、接受者、调用者、客户类，五部分组成。其中接受者为被命令封装的类，调用者存放需要执行的类。</p>
+<p>我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="抽象命令类及实现"><a class="header-anchor" href="#抽象命令类及实现">#</a>抽象命令类及实现</h2>
+<figure class="highlight cs"><figcaption><span>抽象命令类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Undo</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>命令类实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOffCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOffCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOnCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOnCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command execute&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command undo&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接受者"><a class="header-anchor" href="#接受者">#</a>接受者</h2>
+<figure class="highlight cs"><figcaption><span>灯</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Light</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is on&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="调用者"><a class="header-anchor" href="#调用者">#</a>调用者</h2>
+<figure class="highlight cs"><figcaption><span>远程控制</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">RemoteControl</span></span><br><span class="line">&#123;</span><br><span class="line">    Command[] commands;</span><br><span class="line">    Command lastCommond;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RemoteControl</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands = <span class="keyword">new</span> Command[<span class="number">2</span>] &#123; <span class="keyword">new</span> NoCommand(), <span class="keyword">new</span> NoCommand() &#125;;</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetCommand</span>(<span class="params"><span class="built_in">int</span> index, Command command</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index] = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnButtonClick</span>(<span class="params"><span class="built_in">int</span> index</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index].Execute();</span><br><span class="line">        lastCommond = commands[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnClickUndo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        lastCommond.Undo();</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="客户类"><a class="header-anchor" href="#客户类">#</a>客户类</h2>
+<figure class="highlight cs"><figcaption><span>函数入口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Light light = <span class="keyword">new</span> Light();</span><br><span class="line">    RemoteControl remoteControl = <span class="keyword">new</span> RemoteControl();</span><br><span class="line">    remoteControl.SetCommand(<span class="number">0</span>, <span class="keyword">new</span> LightOnCommand(light));</span><br><span class="line">    remoteControl.SetCommand(<span class="number">1</span>, <span class="keyword">new</span> LightOffCommand(light));</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">0</span>);</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">1</span>);</span><br><span class="line">    remoteControl.OnClickUndo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<p>运行结果：</p>
+<p><img src="/ch_06_the_command_pattern/2019-02-02-23-26-25.png" alt="命令模式测试结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 07 适配器模式和外观模式</title>
     <url>/ch_07_the_adapter_and_facade_patterns/</url>
     <content><![CDATA[<h1 id="适配器模式"><a class="header-anchor" href="#适配器模式">#</a>适配器模式</h1>
@@ -842,226 +842,6 @@ $$</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Computer Networks and Internets》 Ch 08 可靠性及信道编码</title>
-    <url>/ch_08_reliability_and_channel_coding/</url>
-    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一部分将介绍信息传输过程中发生错误的原因，以及纠错的方式——信道编码。本部分将着重介绍前向错误纠正技术，并引出汉明距离等概念。</p>
-<h1 id="The_Three_Main_Sources_Of_Transmission_Errors"><a class="header-anchor" href="#The_Three_Main_Sources_Of_Transmission_Errors">#</a>The Three Main Sources Of Transmission Errors</h1>
-<p>传输中发生的错误可以分为三大类：</p>
-<ol>
-<li>干扰（Interference）：如第七章所述，环境中存在许多电磁干扰，这些电磁干扰会阻碍无线电传输和线缆中的信号传输。</li>
-<li>失真（Distortion）：所有的物理系统都会造成信号的失真。光纤中的光因为移动距离的增加，时域会发生扩张（频域也因此变化）。信道容量会导致一些频率的信号被过滤掉。放在线缆旁边的金属可能会改变线缆内信号的频率，金属也能干扰无线电信号。</li>
-<li>衰弱（Attenuation）：信号在媒介中传输的过程中，信号会逐渐衰弱。</li>
-</ol>
-<p>香农定理给出了减少错误的思路：提高信噪比。</p>
-<p>但无论如何噪声不可能被完全的消除，所以许多方法致力于检测错误，在某些情况下自动修复错误。</p>
-<p>但是错误的监测机制无疑是会为系统增加开销的，因此系统设计时要考虑在错误影响与错误检测开销间做权衡，如金融系统，1bit 的错误可能会造成很严重的错误，但是在图片中 1bit 的错误可能根本无法被识别到。</p>
-<h1 id="Effect_Of_Transmission_Errors_On_Data"><a class="header-anchor" href="#Effect_Of_Transmission_Errors_On_Data">#</a>Effect Of Transmission Errors On Data</h1>
-<p>这里要区分传输错误与数据错误，数据是由传输信号在经过例如解码，解调后得到的。传输错误最后都会导致最后的数据出错。主要有三类传输造成的数据错误：</p>
-<ol>
-<li>
-<p>单元位错误（Single Bit Error）：即一系列数据中，只有一位数据被改变了。这通常是因为传输信号的短时间（称为脉冲，Spike）干扰造成的。</p>
-</li>
-<li>
-<p>突发性错误：一系列数据中有多位数据被改变，通常是由长时间的干扰造成的。错误长度是由错误开始位到错误结束位直接的位数决定。如下表，错误的数据由加粗表示，错误长度是 7：</p>
-<table>
-<thead>
-<tr>
-<th>发送</th>
-<th>1</th>
-<th>0</th>
-<th>1</th>
-<th>1</th>
-<th>0</th>
-<th>0</th>
-<th>0</th>
-<th>1</th>
-<th>0</th>
-<th>1</th>
-<th>1</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>接收</td>
-<td>1</td>
-<td>0</td>
-<td><strong>0</strong></td>
-<td>1</td>
-<td><strong>1</strong></td>
-<td>0</td>
-<td><strong>1</strong></td>
-<td><strong>0</strong></td>
-<td><strong>1</strong></td>
-<td>1</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-</li>
-</ol>
-<h1 id="Two_Strategies_For_Handling_Channel_Errors"><a class="header-anchor" href="#Two_Strategies_For_Handling_Channel_Errors">#</a>Two Strategies For Handling Channel Errors</h1>
-<p>有一系列的方法解决数据错误并增加数据的可靠性，这些方法统称为<code>信道编码(Channel Coding)</code>，这些方法可以被分为两类：<code>前向错误纠正技术（Forward Error Correction，FEC）</code>，<code>自动重传请求技术（Automatic Repeat reQuest，ARQ）</code>。</p>
-<p>前向错误纠正技术的主题思想是在发送的数据中增加额外的信息，接收端可以根据这些额外信息来判断是否有错误发生，有些方法可以检测出究竟是哪一位数据发生了错误，并在可能的情况下纠正错误。</p>
-<p>自动重传请求技术是让接收端和发送端互换数据来保证数据被正确的传递。</p>
-<h1 id="Block_And_Convolutional_Error_Codes"><a class="header-anchor" href="#Block_And_Convolutional_Error_Codes">#</a>Block And Convolutional Error Codes</h1>
-<p>前向错误纠正技术可以再细分为两类：</p>
-<ol>
-<li>分组错误码（Block Error Codes）：分组错误码是将数据分成一块块的，然后对每一块都增加额外信息。每一块的额外信息只针对于该块数据本身。</li>
-<li>卷积错误码（Convolutional Error Codes）：卷积错误码是将数据看作一系列 bits，增加的额外信息是由当前的 bit 和之前的 bit 共同决定的。</li>
-</ol>
-<p>卷积错误码相对于分组错误码需要更多的计算，但是也更能检测出错误。</p>
-<h1 id="An_Example_Block_Error_Code_Single_Parity_Checking"><a class="header-anchor" href="#An_Example_Block_Error_Code_Single_Parity_Checking">#</a>An Example Block Error Code: Single Parity Checking</h1>
-<p>单一奇偶校验检查（Single Parity Checking）是分组错误码检测的一个例子，可以再分为偶校验检查和奇校验检查。如果将数据分为 $n$ bit 一组，那么每一组增加一位数据，当是偶校验时，$n$ 位数据+1 位额外数据应该一共有偶数个 1，当是奇校验时，$n$ 位数据+1 位额外数据应该一共有奇数个 1。下表为 8 位数据时的例子：</p>
-<table>
-<thead>
-<tr>
-<th>原始数据</th>
-<th>偶校验</th>
-<th>奇校验</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>00000000</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>01011011</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>01010101</td>
-<td>0</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<p>单一奇偶校验是一个比较弱的信道编码，他只能检测错误，但无法检测出错误具体出现在哪一位，也无法纠正错误。而且当有偶数个位发生错误时，错误就无法被检测出来。</p>
-<h1 id="The_Mathematics_of_Block_Error_Codes_And_n_k_Notation"><a class="header-anchor" href="#The_Mathematics_of_Block_Error_Codes_And_n_k_Notation">#</a>The Mathematics of Block Error Codes And (n,k) Notation</h1>
-<p>如有 $k$ 位 bit 的数据，我们将所有 $2^k$ 种可能出现的数据称为<code>数据字(Datawords)</code>，在这些数据中增加 $r$ 位额外数据，一共有 $n=k+r$ 个数据，所有 $2^n$ 种可能称为<code>编码字(codeworks)</code>，其中编码字中合法的部分，即额外添加的数据与原数据时符合规则的部分，称为<code>码书(Codebook)</code>，并将这种方法标记为$(n,k)$</p>
-<p>如单一奇偶校验中，$k=8,r=1$，因此一共有 256 个数据字，也对应了有 256 个合法的编码字，一共有 512 个编码字。</p>
-<p>在理想状态下，合法编码字中的任一一位被改变了，改变后的编码字就不是合法编码字。但是在单一奇偶校验的例子中，如果同时改变了合法编码字中的两位，那么结果仍然是一个合法编码字。</p>
-<p>没有一个信道编码可以达到理想状态，所以要考虑的就是，合法编码字最少多少位数据要被同时改变，才能产生另一个合法编码字。在单一数字编码中，这个位数为 2。</p>
-<h1 id="Hamming_Distance：A_Measure_Of_A_Code’s_Strength"><a class="header-anchor" href="#Hamming_Distance：A_Measure_Of_A_Code’s_Strength">#</a>Hamming Distance：A Measure Of A Code’s Strength</h1>
-<p>汉明距离（Hamming Distance）是用来测量一个合法编码字要转换为另一个合法编码字最少要改变的数据位数的方法中需要用到的概念。如果给定两个$n$长度的字符，两个字符的汉明距离就是两个字符间不同的数据数量。</p>
-<p>如$d(000,001)=1,d(000,101)=2,d(000,111)=3,d(101,001)=1$。</p>
-<p>可以先对两个字符求异或，然后计算异或出来的字符 1 的总数，即为汉明距离。</p>
-<h1 id="The_Hamming_Distance_Among_String_In_A_Codebook"><a class="header-anchor" href="#The_Hamming_Distance_Among_String_In_A_Codebook">#</a>The Hamming Distance Among String In A Codebook</h1>
-<p>为了计算出一个合法编码字要转换为另一个合法编码字最少要改变的数据位数，先要计算出码书中所有编码字组合的汉明距离。如对 2 位 bit 数据进行单一奇校验检测：</p>
-<table>
-<thead>
-<tr>
-<th>数据字</th>
-<th>编码字</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>00</td>
-<td>001</td>
-</tr>
-<tr>
-<td>01</td>
-<td>010</td>
-</tr>
-<tr>
-<td>10</td>
-<td>100</td>
-</tr>
-<tr>
-<td>11</td>
-<td>111</td>
-</tr>
-</tbody>
-</table>
-<p>一共有 4 个编码字，4 个编码字一一配对一共有 6 种可能，$d(001,010)=2,d(010,100)=2,d(001,100)=2,d(010,111)=2,d(001,111)=2,d(100,111)=2$。6 种可能中最小的汉明距离是 2，所以最少需要更改 2 位数据才能从一个合法编码字变为另一个合法编码字。</p>
-<p>因此计算从一个合法编码字转换为另一个合法编码字最少要改变的数据位数过程是，计算出所有码书中的编码字（即合法编码字）两两配对后的所有汉明距离 $d_{min}$，其中的最小值即为所求值。</p>
-<h1 id="The_Tradeoff_Between_Error_Detection_And_Overhead"><a class="header-anchor" href="#The_Tradeoff_Between_Error_Detection_And_Overhead">#</a>The Tradeoff Between Error Detection And Overhead</h1>
-<p>对于一个编码，最多的能被检测出来的错误位数为$e=d_{min}-1$，如单一奇偶校验，因为$d_{min}=2$，所以最多能正确检测出来的错误位数为 1。</p>
-<p>虽然$d_{min}$越大能检测出来的错误位数越多，但这也意味着要增加更多的额外数据，对于$(n,k)$的编码，工程师用编码率（Code Rate）$R=\frac{k}{n}$来表示为了检测出错误信息的编码开销。</p>
-<h1 id="Error_Correction_With_Row_And_Column_RAC_Parity"><a class="header-anchor" href="#Error_Correction_With_Row_And_Column_RAC_Parity">#</a>Error Correction With Row And Column(RAC) Parity</h1>
-<p>奇偶校验本身是不能进行错误纠正的，但是通过<code>行列奇偶校验（Row And Column Parity）</code>就可以做到。如一共有 12 个 bit 的原始数据，即$k=12$，排成三行四列每一列每一行都进行奇偶校验，增加一个额外位，则一共 8 个额外位，即$r=8，n=k+r=20$，因此这是一个$(20,12)$的编码，如下图所示：</p>
-<p><img src="/ch_08_reliability_and_channel_coding/2019-12-05-14-46-47.png" alt="行列奇偶校验"></p>
-<p>因此如果一位数据出错，会同时在对应的行和列校验位感知到，因此就可以定位到错误的数据，取反后就能纠正数据。</p>
-<p>奇偶校验数据的$d_{min}$还是 2，因此如果错误的位数大于 1，当是偶数时无法被检测到，当是奇数时虽然能检测出错误，但无法纠正。</p>
-<h1 id="The_16_Bit_Checksum_Used_In_The_Internet"><a class="header-anchor" href="#The_16_Bit_Checksum_Used_In_The_Internet">#</a>The 16-Bit Checksum Used In The Internet</h1>
-<p>有个称为<code>因特网校验和（Internet checksum）</code>的信道编码方法在网络中扮演了重要角色。这个算法的输入可以是任意长度，将输入拆分为一段段 16 字节的的部分，如果不能长度不能被 16 整除，则最后补 0。如下图所示：</p>
-<p><img src="/ch_08_reliability_and_channel_coding/2019-12-06-17-25-08.png" alt="拆分为16字节"></p>
-<p>算法的流程如下：</p>
-<ol>
-<li>将输入拆分为以 16-bit 为一组</li>
-<li>定义一个 32-bit 的变量（这里称为$C$）作为结果。</li>
-<li>将每一组 16-bit 的数据累加给$C$</li>
-<li>将$C$的前 16 位累加给后 16 位</li>
-<li>将$C$的后 16 位取反，如果取反后全是 0，则将其改为全是 1</li>
-<li>此时$C$的 16 位即为校验和。</li>
-</ol>
-<p>可以看出最后的校验和也是 16 位的数据，将校验和作为新的一组 16-bit 放在原数据后（经过了补 0 的原数据）发送出去。接收端接受信息后重复算法流程，如果数据没有发生错误，最后接收端计算出的校验和应该是 FFFF。</p>
-<p>下面以两个例子进行说明：</p>
-<ol>
-<li>
-<p>例子 1<br>
-如果发送端输入数据为<code>0100 1000 0110 0101</code>，<code>0110 1100 0110 1100</code>，<code>0110 1111 0010 0001</code>，计算过程如下：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">+  0110 1111 0010 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  0010 0011 1111 0010</span><br></pre></td></tr></table></figure>
-<p>将高 16 位移到后 16 位</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  0010 0011 1111 0010</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  0010 0011 1111 0011</span><br></pre></td></tr></table></figure>
-<p>取反后得到：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1101 1100 0000 1100</span><br></pre></td></tr></table></figure>
-<p>这即为校验和</p>
-<p>对于接收端，因为将校验和也一并发送了过去，所以接收端的计算过程如下：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">   0110 1111 0010 0001</span><br><span class="line">+  1101 1100 0000 1100</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
-<p>将高 16 位移到后 16 位</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
-<p>取反后得到：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
-<p>因为全为 0，所以改为全为 1</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>例子 2<br>
-如果发送端输入数据为<code>1111 1111 1111 1111</code>，<code>1111 1111 1111 1111</code>，<code>0000 0000 0000 0001</code>，计算过程如下：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">+  0000 0000 0000 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
-<p>将高 16 位移到后 16 位</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1111</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
-<p>此时虽然高 16 仍然有数值，但不需要再次累加，后 16 位取反后得到：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 11111</span><br></pre></td></tr></table></figure>
-<p>这即为校验和</p>
-<p>对于接收端，因为将校验和也一并发送了过去，所以接收端的计算过程如下：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">   0000 0000 0000 0001</span><br><span class="line">+  1111 1111 1111 1111</span><br><span class="line">----------------------------</span><br><span class="line">10 1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
-<p>将高 16 位移到后 16 位</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                  10</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
-<p>取反后得到：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="Cyclic_Redundancy_Codes_CRCs"><a class="header-anchor" href="#Cyclic_Redundancy_Codes_CRCs">#</a>Cyclic Redundancy Codes(CRCs)</h1>
-<p>在高速网络中，有一个称为<code>循环冗余码(Cyclic Redundancy Codes,CRCs)</code>的信道编码方法。循环冗余码有三个主要优点：</p>
-<ol>
-<li>可以对任意长度的数据进行计算</li>
-<li>可以充分的检测出错误</li>
-<li>可以通过硬件实现，所以非常的高效</li>
-</ol>
-<p>求$CRC$的计算过程可以看作是两个二进制数的相除，一个代表原数据，一个代表一个特定的除数（可根据不同的情况设置，除数的设置决定错误检测的能力），如果需要求得$N$长度的$CRC$，则需要$N+1$长度的被除数。二进制数相除的过程可以看作是多项式相除，如果原数据是$1010$，除数设置为$1011$，则计算过程如下图：</p>
-<p><img src="/ch_08_reliability_and_channel_coding/2019-12-07-00-01-18.png" alt="CRC计算过程"></p>
-<h1 id="An_Efficient_Hardware_Implementation_Of_CRC"><a class="header-anchor" href="#An_Efficient_Hardware_Implementation_Of_CRC">#</a>An Efficient Hardware Implementation Of CRC</h1>
-<p>CRC 算法的实现硬件是由<code>移位寄存器(Shift Register)</code>和<code>异或门(Exclusive or gates)</code>构成的。在计算 CRC 前，硬件会初始化将移位寄存器中的所有位改为 0，上例中的除数$1011$，对应的硬件图如下：</p>
-<p><img src="/ch_08_reliability_and_channel_coding/2019-12-07-00-06-02.png" alt="1011硬件"></p>
-<p>TODO：为什么这么设计的原因。</p>
-<h1 id="Automatic_Repeat_Request_ARQ_Mechanisms"><a class="header-anchor" href="#Automatic_Repeat_Request_ARQ_Mechanisms">#</a>Automatic Repeat Request(ARQ) Mechanisms</h1>
-<p>自动重传请求技术（Automatic Repeat Request,ARQ）需要发送端和接收端传递信息来检测错误。当一方发送数据给另一方时，接收方需要传递一个回执给发送方。如果在一段时间后发送方仍然没有收到回执，则认为数据丢失，重新发送数据。</p>
-<p>自动重传请求技术适合只能检测错误，但不能修复错误的系统。当接收方检测出数据有错误后，将数据丢弃并不传递回执，那么发送方就会再次发送数据。</p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="https://en.wikipedia.org/wiki/polynomial_long_division">多项式除法</a><br>
-<a href="https://heasarc.gsfc.nasa.gov/docs/heasarc/ofwg/docs/general/checksum/node11.html">1’s Complement Arithmetic</a></p>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -1309,6 +1089,226 @@ $$</p>
       </tags>
   </entry>
   <entry>
+    <title>《Computer Networks and Internets》 Ch 08 可靠性及信道编码</title>
+    <url>/ch_08_reliability_and_channel_coding/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一部分将介绍信息传输过程中发生错误的原因，以及纠错的方式——信道编码。本部分将着重介绍前向错误纠正技术，并引出汉明距离等概念。</p>
+<h1 id="The_Three_Main_Sources_Of_Transmission_Errors"><a class="header-anchor" href="#The_Three_Main_Sources_Of_Transmission_Errors">#</a>The Three Main Sources Of Transmission Errors</h1>
+<p>传输中发生的错误可以分为三大类：</p>
+<ol>
+<li>干扰（Interference）：如第七章所述，环境中存在许多电磁干扰，这些电磁干扰会阻碍无线电传输和线缆中的信号传输。</li>
+<li>失真（Distortion）：所有的物理系统都会造成信号的失真。光纤中的光因为移动距离的增加，时域会发生扩张（频域也因此变化）。信道容量会导致一些频率的信号被过滤掉。放在线缆旁边的金属可能会改变线缆内信号的频率，金属也能干扰无线电信号。</li>
+<li>衰弱（Attenuation）：信号在媒介中传输的过程中，信号会逐渐衰弱。</li>
+</ol>
+<p>香农定理给出了减少错误的思路：提高信噪比。</p>
+<p>但无论如何噪声不可能被完全的消除，所以许多方法致力于检测错误，在某些情况下自动修复错误。</p>
+<p>但是错误的监测机制无疑是会为系统增加开销的，因此系统设计时要考虑在错误影响与错误检测开销间做权衡，如金融系统，1bit 的错误可能会造成很严重的错误，但是在图片中 1bit 的错误可能根本无法被识别到。</p>
+<h1 id="Effect_Of_Transmission_Errors_On_Data"><a class="header-anchor" href="#Effect_Of_Transmission_Errors_On_Data">#</a>Effect Of Transmission Errors On Data</h1>
+<p>这里要区分传输错误与数据错误，数据是由传输信号在经过例如解码，解调后得到的。传输错误最后都会导致最后的数据出错。主要有三类传输造成的数据错误：</p>
+<ol>
+<li>
+<p>单元位错误（Single Bit Error）：即一系列数据中，只有一位数据被改变了。这通常是因为传输信号的短时间（称为脉冲，Spike）干扰造成的。</p>
+</li>
+<li>
+<p>突发性错误：一系列数据中有多位数据被改变，通常是由长时间的干扰造成的。错误长度是由错误开始位到错误结束位直接的位数决定。如下表，错误的数据由加粗表示，错误长度是 7：</p>
+<table>
+<thead>
+<tr>
+<th>发送</th>
+<th>1</th>
+<th>0</th>
+<th>1</th>
+<th>1</th>
+<th>0</th>
+<th>0</th>
+<th>0</th>
+<th>1</th>
+<th>0</th>
+<th>1</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>接收</td>
+<td>1</td>
+<td>0</td>
+<td><strong>0</strong></td>
+<td>1</td>
+<td><strong>1</strong></td>
+<td>0</td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<h1 id="Two_Strategies_For_Handling_Channel_Errors"><a class="header-anchor" href="#Two_Strategies_For_Handling_Channel_Errors">#</a>Two Strategies For Handling Channel Errors</h1>
+<p>有一系列的方法解决数据错误并增加数据的可靠性，这些方法统称为<code>信道编码(Channel Coding)</code>，这些方法可以被分为两类：<code>前向错误纠正技术（Forward Error Correction，FEC）</code>，<code>自动重传请求技术（Automatic Repeat reQuest，ARQ）</code>。</p>
+<p>前向错误纠正技术的主题思想是在发送的数据中增加额外的信息，接收端可以根据这些额外信息来判断是否有错误发生，有些方法可以检测出究竟是哪一位数据发生了错误，并在可能的情况下纠正错误。</p>
+<p>自动重传请求技术是让接收端和发送端互换数据来保证数据被正确的传递。</p>
+<h1 id="Block_And_Convolutional_Error_Codes"><a class="header-anchor" href="#Block_And_Convolutional_Error_Codes">#</a>Block And Convolutional Error Codes</h1>
+<p>前向错误纠正技术可以再细分为两类：</p>
+<ol>
+<li>分组错误码（Block Error Codes）：分组错误码是将数据分成一块块的，然后对每一块都增加额外信息。每一块的额外信息只针对于该块数据本身。</li>
+<li>卷积错误码（Convolutional Error Codes）：卷积错误码是将数据看作一系列 bits，增加的额外信息是由当前的 bit 和之前的 bit 共同决定的。</li>
+</ol>
+<p>卷积错误码相对于分组错误码需要更多的计算，但是也更能检测出错误。</p>
+<h1 id="An_Example_Block_Error_Code_Single_Parity_Checking"><a class="header-anchor" href="#An_Example_Block_Error_Code_Single_Parity_Checking">#</a>An Example Block Error Code: Single Parity Checking</h1>
+<p>单一奇偶校验检查（Single Parity Checking）是分组错误码检测的一个例子，可以再分为偶校验检查和奇校验检查。如果将数据分为 $n$ bit 一组，那么每一组增加一位数据，当是偶校验时，$n$ 位数据+1 位额外数据应该一共有偶数个 1，当是奇校验时，$n$ 位数据+1 位额外数据应该一共有奇数个 1。下表为 8 位数据时的例子：</p>
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>偶校验</th>
+<th>奇校验</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00000000</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>01011011</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>01010101</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>单一奇偶校验是一个比较弱的信道编码，他只能检测错误，但无法检测出错误具体出现在哪一位，也无法纠正错误。而且当有偶数个位发生错误时，错误就无法被检测出来。</p>
+<h1 id="The_Mathematics_of_Block_Error_Codes_And_n_k_Notation"><a class="header-anchor" href="#The_Mathematics_of_Block_Error_Codes_And_n_k_Notation">#</a>The Mathematics of Block Error Codes And (n,k) Notation</h1>
+<p>如有 $k$ 位 bit 的数据，我们将所有 $2^k$ 种可能出现的数据称为<code>数据字(Datawords)</code>，在这些数据中增加 $r$ 位额外数据，一共有 $n=k+r$ 个数据，所有 $2^n$ 种可能称为<code>编码字(codeworks)</code>，其中编码字中合法的部分，即额外添加的数据与原数据时符合规则的部分，称为<code>码书(Codebook)</code>，并将这种方法标记为$(n,k)$</p>
+<p>如单一奇偶校验中，$k=8,r=1$，因此一共有 256 个数据字，也对应了有 256 个合法的编码字，一共有 512 个编码字。</p>
+<p>在理想状态下，合法编码字中的任一一位被改变了，改变后的编码字就不是合法编码字。但是在单一奇偶校验的例子中，如果同时改变了合法编码字中的两位，那么结果仍然是一个合法编码字。</p>
+<p>没有一个信道编码可以达到理想状态，所以要考虑的就是，合法编码字最少多少位数据要被同时改变，才能产生另一个合法编码字。在单一数字编码中，这个位数为 2。</p>
+<h1 id="Hamming_Distance：A_Measure_Of_A_Code’s_Strength"><a class="header-anchor" href="#Hamming_Distance：A_Measure_Of_A_Code’s_Strength">#</a>Hamming Distance：A Measure Of A Code’s Strength</h1>
+<p>汉明距离（Hamming Distance）是用来测量一个合法编码字要转换为另一个合法编码字最少要改变的数据位数的方法中需要用到的概念。如果给定两个$n$长度的字符，两个字符的汉明距离就是两个字符间不同的数据数量。</p>
+<p>如$d(000,001)=1,d(000,101)=2,d(000,111)=3,d(101,001)=1$。</p>
+<p>可以先对两个字符求异或，然后计算异或出来的字符 1 的总数，即为汉明距离。</p>
+<h1 id="The_Hamming_Distance_Among_String_In_A_Codebook"><a class="header-anchor" href="#The_Hamming_Distance_Among_String_In_A_Codebook">#</a>The Hamming Distance Among String In A Codebook</h1>
+<p>为了计算出一个合法编码字要转换为另一个合法编码字最少要改变的数据位数，先要计算出码书中所有编码字组合的汉明距离。如对 2 位 bit 数据进行单一奇校验检测：</p>
+<table>
+<thead>
+<tr>
+<th>数据字</th>
+<th>编码字</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>001</td>
+</tr>
+<tr>
+<td>01</td>
+<td>010</td>
+</tr>
+<tr>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td>11</td>
+<td>111</td>
+</tr>
+</tbody>
+</table>
+<p>一共有 4 个编码字，4 个编码字一一配对一共有 6 种可能，$d(001,010)=2,d(010,100)=2,d(001,100)=2,d(010,111)=2,d(001,111)=2,d(100,111)=2$。6 种可能中最小的汉明距离是 2，所以最少需要更改 2 位数据才能从一个合法编码字变为另一个合法编码字。</p>
+<p>因此计算从一个合法编码字转换为另一个合法编码字最少要改变的数据位数过程是，计算出所有码书中的编码字（即合法编码字）两两配对后的所有汉明距离 $d_{min}$，其中的最小值即为所求值。</p>
+<h1 id="The_Tradeoff_Between_Error_Detection_And_Overhead"><a class="header-anchor" href="#The_Tradeoff_Between_Error_Detection_And_Overhead">#</a>The Tradeoff Between Error Detection And Overhead</h1>
+<p>对于一个编码，最多的能被检测出来的错误位数为$e=d_{min}-1$，如单一奇偶校验，因为$d_{min}=2$，所以最多能正确检测出来的错误位数为 1。</p>
+<p>虽然$d_{min}$越大能检测出来的错误位数越多，但这也意味着要增加更多的额外数据，对于$(n,k)$的编码，工程师用编码率（Code Rate）$R=\frac{k}{n}$来表示为了检测出错误信息的编码开销。</p>
+<h1 id="Error_Correction_With_Row_And_Column_RAC_Parity"><a class="header-anchor" href="#Error_Correction_With_Row_And_Column_RAC_Parity">#</a>Error Correction With Row And Column(RAC) Parity</h1>
+<p>奇偶校验本身是不能进行错误纠正的，但是通过<code>行列奇偶校验（Row And Column Parity）</code>就可以做到。如一共有 12 个 bit 的原始数据，即$k=12$，排成三行四列每一列每一行都进行奇偶校验，增加一个额外位，则一共 8 个额外位，即$r=8，n=k+r=20$，因此这是一个$(20,12)$的编码，如下图所示：</p>
+<p><img src="/ch_08_reliability_and_channel_coding/2019-12-05-14-46-47.png" alt="行列奇偶校验"></p>
+<p>因此如果一位数据出错，会同时在对应的行和列校验位感知到，因此就可以定位到错误的数据，取反后就能纠正数据。</p>
+<p>奇偶校验数据的$d_{min}$还是 2，因此如果错误的位数大于 1，当是偶数时无法被检测到，当是奇数时虽然能检测出错误，但无法纠正。</p>
+<h1 id="The_16_Bit_Checksum_Used_In_The_Internet"><a class="header-anchor" href="#The_16_Bit_Checksum_Used_In_The_Internet">#</a>The 16-Bit Checksum Used In The Internet</h1>
+<p>有个称为<code>因特网校验和（Internet checksum）</code>的信道编码方法在网络中扮演了重要角色。这个算法的输入可以是任意长度，将输入拆分为一段段 16 字节的的部分，如果不能长度不能被 16 整除，则最后补 0。如下图所示：</p>
+<p><img src="/ch_08_reliability_and_channel_coding/2019-12-06-17-25-08.png" alt="拆分为16字节"></p>
+<p>算法的流程如下：</p>
+<ol>
+<li>将输入拆分为以 16-bit 为一组</li>
+<li>定义一个 32-bit 的变量（这里称为$C$）作为结果。</li>
+<li>将每一组 16-bit 的数据累加给$C$</li>
+<li>将$C$的前 16 位累加给后 16 位</li>
+<li>将$C$的后 16 位取反，如果取反后全是 0，则将其改为全是 1</li>
+<li>此时$C$的 16 位即为校验和。</li>
+</ol>
+<p>可以看出最后的校验和也是 16 位的数据，将校验和作为新的一组 16-bit 放在原数据后（经过了补 0 的原数据）发送出去。接收端接受信息后重复算法流程，如果数据没有发生错误，最后接收端计算出的校验和应该是 FFFF。</p>
+<p>下面以两个例子进行说明：</p>
+<ol>
+<li>
+<p>例子 1<br>
+如果发送端输入数据为<code>0100 1000 0110 0101</code>，<code>0110 1100 0110 1100</code>，<code>0110 1111 0010 0001</code>，计算过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">+  0110 1111 0010 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  0010 0011 1111 0010</span><br></pre></td></tr></table></figure>
+<p>将高 16 位移到后 16 位</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  0010 0011 1111 0010</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  0010 0011 1111 0011</span><br></pre></td></tr></table></figure>
+<p>取反后得到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1101 1100 0000 1100</span><br></pre></td></tr></table></figure>
+<p>这即为校验和</p>
+<p>对于接收端，因为将校验和也一并发送了过去，所以接收端的计算过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">   0110 1111 0010 0001</span><br><span class="line">+  1101 1100 0000 1100</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
+<p>将高 16 位移到后 16 位</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+<p>取反后得到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
+<p>因为全为 0，所以改为全为 1</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>例子 2<br>
+如果发送端输入数据为<code>1111 1111 1111 1111</code>，<code>1111 1111 1111 1111</code>，<code>0000 0000 0000 0001</code>，计算过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">+  0000 0000 0000 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+<p>将高 16 位移到后 16 位</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1111</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
+<p>此时虽然高 16 仍然有数值，但不需要再次累加，后 16 位取反后得到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 11111</span><br></pre></td></tr></table></figure>
+<p>这即为校验和</p>
+<p>对于接收端，因为将校验和也一并发送了过去，所以接收端的计算过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">   0000 0000 0000 0001</span><br><span class="line">+  1111 1111 1111 1111</span><br><span class="line">----------------------------</span><br><span class="line">10 1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
+<p>将高 16 位移到后 16 位</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                  10</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
+<p>取反后得到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Cyclic_Redundancy_Codes_CRCs"><a class="header-anchor" href="#Cyclic_Redundancy_Codes_CRCs">#</a>Cyclic Redundancy Codes(CRCs)</h1>
+<p>在高速网络中，有一个称为<code>循环冗余码(Cyclic Redundancy Codes,CRCs)</code>的信道编码方法。循环冗余码有三个主要优点：</p>
+<ol>
+<li>可以对任意长度的数据进行计算</li>
+<li>可以充分的检测出错误</li>
+<li>可以通过硬件实现，所以非常的高效</li>
+</ol>
+<p>求$CRC$的计算过程可以看作是两个二进制数的相除，一个代表原数据，一个代表一个特定的除数（可根据不同的情况设置，除数的设置决定错误检测的能力），如果需要求得$N$长度的$CRC$，则需要$N+1$长度的被除数。二进制数相除的过程可以看作是多项式相除，如果原数据是$1010$，除数设置为$1011$，则计算过程如下图：</p>
+<p><img src="/ch_08_reliability_and_channel_coding/2019-12-07-00-01-18.png" alt="CRC计算过程"></p>
+<h1 id="An_Efficient_Hardware_Implementation_Of_CRC"><a class="header-anchor" href="#An_Efficient_Hardware_Implementation_Of_CRC">#</a>An Efficient Hardware Implementation Of CRC</h1>
+<p>CRC 算法的实现硬件是由<code>移位寄存器(Shift Register)</code>和<code>异或门(Exclusive or gates)</code>构成的。在计算 CRC 前，硬件会初始化将移位寄存器中的所有位改为 0，上例中的除数$1011$，对应的硬件图如下：</p>
+<p><img src="/ch_08_reliability_and_channel_coding/2019-12-07-00-06-02.png" alt="1011硬件"></p>
+<p>TODO：为什么这么设计的原因。</p>
+<h1 id="Automatic_Repeat_Request_ARQ_Mechanisms"><a class="header-anchor" href="#Automatic_Repeat_Request_ARQ_Mechanisms">#</a>Automatic Repeat Request(ARQ) Mechanisms</h1>
+<p>自动重传请求技术（Automatic Repeat Request,ARQ）需要发送端和接收端传递信息来检测错误。当一方发送数据给另一方时，接收方需要传递一个回执给发送方。如果在一段时间后发送方仍然没有收到回执，则认为数据丢失，重新发送数据。</p>
+<p>自动重传请求技术适合只能检测错误，但不能修复错误的系统。当接收方检测出数据有错误后，将数据丢弃并不传递回执，那么发送方就会再次发送数据。</p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://en.wikipedia.org/wiki/polynomial_long_division">多项式除法</a><br>
+<a href="https://heasarc.gsfc.nasa.gov/docs/heasarc/ofwg/docs/general/checksum/node11.html">1’s Complement Arithmetic</a></p>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 09 模板方法模式</title>
     <url>/ch_09_the_iterator_and_composite_pattern/</url>
     <content><![CDATA[<h1 id="迭代器模式"><a class="header-anchor" href="#迭代器模式">#</a>迭代器模式</h1>
@@ -1424,28 +1424,6 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 11 代理模式</title>
-    <url>/ch_11_the_proxy_pattern/</url>
-    <content><![CDATA[<p>代理模式（Proxy Pattern）为对象提供一个代理进而控制对其的访问。</p>
-<p>例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="抽象接口"><a class="header-anchor" href="#抽象接口">#</a>抽象接口</h2>
-<figure class="highlight cs"><figcaption><span>图片接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="抽象接口实现"><a class="header-anchor" href="#抽象接口实现">#</a>抽象接口实现</h2>
-<figure class="highlight cs"><figcaption><span>真实图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> width, height;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageIcon</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Thread.Sleep(<span class="number">5000</span>);<span class="comment">//Pretend there is some hard work to load the image</span></span><br><span class="line">        width = <span class="number">800</span>;</span><br><span class="line">        height = <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Width is &quot;</span> + width + <span class="string">&quot;,height is &quot;</span> + height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>代理图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageProxyIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ImageIcon icon = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageProxyIcon</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (icon != <span class="literal">null</span>)</span><br><span class="line">            icon.PrintIconWidthAndHeight();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!isLoading)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Is Loading Image...&quot;</span>);</span><br><span class="line">            isLoading = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">new</span> Thread(() =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                icon = <span class="keyword">new</span> ImageIcon();</span><br><span class="line">                icon.PrintIconWidthAndHeight();</span><br><span class="line">            &#125;).Start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">ImageProxyIcon proxyIcon = <span class="keyword">new</span> ImageProxyIcon();</span><br><span class="line">proxyIcon.PrintIconWidthAndHeight();</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_11_the_proxy_pattern/2019-02-07-14-10-11.png" alt="代理模式运行结果"></p>
-<div class="note info simple"><p>代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，<code>ImageProxyIcon</code>并没有为<code>ImageIcon</code>拓展什么功能，只是用了多线程来访问访问其中的函数。</p>
-</div>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Computer Networks and Internets》 Ch 11 复用与解复用</title>
     <url>/ch_11_multiplexing_and_demultiplexing/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
@@ -1538,6 +1516,54 @@ $$</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 11 代理模式</title>
+    <url>/ch_11_the_proxy_pattern/</url>
+    <content><![CDATA[<p>代理模式（Proxy Pattern）为对象提供一个代理进而控制对其的访问。</p>
+<p>例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="抽象接口"><a class="header-anchor" href="#抽象接口">#</a>抽象接口</h2>
+<figure class="highlight cs"><figcaption><span>图片接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="抽象接口实现"><a class="header-anchor" href="#抽象接口实现">#</a>抽象接口实现</h2>
+<figure class="highlight cs"><figcaption><span>真实图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> width, height;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageIcon</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Thread.Sleep(<span class="number">5000</span>);<span class="comment">//Pretend there is some hard work to load the image</span></span><br><span class="line">        width = <span class="number">800</span>;</span><br><span class="line">        height = <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Width is &quot;</span> + width + <span class="string">&quot;,height is &quot;</span> + height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>代理图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageProxyIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ImageIcon icon = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageProxyIcon</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (icon != <span class="literal">null</span>)</span><br><span class="line">            icon.PrintIconWidthAndHeight();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!isLoading)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Is Loading Image...&quot;</span>);</span><br><span class="line">            isLoading = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">new</span> Thread(() =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                icon = <span class="keyword">new</span> ImageIcon();</span><br><span class="line">                icon.PrintIconWidthAndHeight();</span><br><span class="line">            &#125;).Start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">ImageProxyIcon proxyIcon = <span class="keyword">new</span> ImageProxyIcon();</span><br><span class="line">proxyIcon.PrintIconWidthAndHeight();</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_11_the_proxy_pattern/2019-02-07-14-10-11.png" alt="代理模式运行结果"></p>
+<div class="note info simple"><p>代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，<code>ImageProxyIcon</code>并没有为<code>ImageIcon</code>拓展什么功能，只是用了多线程来访问访问其中的函数。</p>
+</div>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 12 复合模式</title>
+    <url>/ch_12_the_compound_patterns/</url>
+    <content><![CDATA[<p>复合模式（Compound Pattern）是通过两个或以上的设计模式形成一个可以解决一般性问题的通用框架。</p>
+<p>MVC 框架就是一种组合模式，<code>Controller</code>和<code>View</code>之间使用了策略模式， <code>View</code>中只存<code>Controller</code>的接口，进而达到可以随时切换不同<code>Controller</code>的目的。<code>Model</code>和<code>View</code>之间使用了观察者模式，<code>View</code>作为观察者，<code>Model</code>作为被观察者，当<code>Model</code>的数据发生变化时，<code>View</code>相应改变。而<code>View</code>本身使用了组合模式，比如按钮中可能存在子按钮，窗口中存在子窗口等等。</p>
+<p>我们以音量调节作为一个最简的 MVC 框架示例。</p>
+<div class="note info simple"><p>关于 MVC 更多的减少，见 MVC</p>
+</div>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="框架接口"><a class="header-anchor" href="#框架接口">#</a>框架接口</h2>
+<figure class="highlight cs"><figcaption><span>观察者接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IVolumeObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">VolumeUpdated</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>Model接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IVolumeModel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> Volume &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">UnRegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>Controller接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IViewController</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">VolumeUp</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">VolumeDown</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetVolume</span>(<span class="params"><span class="built_in">int</span> volume</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接口实现"><a class="header-anchor" href="#接口实现">#</a>接口实现</h2>
+<figure class="highlight cs"><figcaption><span>Model</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VolumeModel</span> : <span class="title">IVolumeModel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> volume = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> Volume</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> volume; &#125;</span><br><span class="line">        <span class="keyword">set</span></span><br><span class="line">        &#123;</span><br><span class="line">            volume = <span class="keyword">value</span>;</span><br><span class="line">            observersList.ForEach(observer =&gt; observer.VolumeUpdated());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> List&lt;IVolumeObserver&gt; observersList = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VolumeModel</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList = <span class="keyword">new</span> List&lt;IVolumeObserver&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Add(observer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnRegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Remove(observer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>View</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VolumeView</span> : <span class="title">IVolumeObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IViewController controller = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> IVolumeModel model = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VolumeView</span>(<span class="params">IViewController controller, IVolumeModel model</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.controller = controller;</span><br><span class="line">        <span class="keyword">this</span>.model = model;</span><br><span class="line">        <span class="keyword">this</span>.model.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;View: volume init is &quot;</span> + model.Volume);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnVolumeUpButtonClick</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        controller.VolumeUp();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnVolumeDownButtonClick</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        controller.VolumeDown();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">VolumeUpdated</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;View: volume updated &quot;</span> + model.Volume);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~VolumeView()</span><br><span class="line">    &#123;</span><br><span class="line">        model.UnRegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>Controller</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VolumeController</span> : <span class="title">IViewController</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> VolumeModel model = <span class="literal">null</span>;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">VolumeController</span>(<span class="params">VolumeModel model</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>.model = model;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetVolume</span>(<span class="params"><span class="built_in">int</span> volume</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            model.Volume = volume;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">VolumeDown</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            --model.Volume;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">VolumeUp</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            ++model.Volume;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">VolumeModel model = <span class="keyword">new</span> VolumeModel();</span><br><span class="line">VolumeView view = <span class="keyword">new</span> VolumeView(<span class="keyword">new</span> VolumeController(model), model);</span><br><span class="line">view.OnVolumeUpButtonClick();</span><br><span class="line">view.OnVolumeUpButtonClick();</span><br><span class="line">view.OnVolumeDownButtonClick();</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_12_the_compound_patterns/2019-02-07-15-53-23.png" alt="复合模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1658,32 +1684,6 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 12 复合模式</title>
-    <url>/ch_12_the_compound_patterns/</url>
-    <content><![CDATA[<p>复合模式（Compound Pattern）是通过两个或以上的设计模式形成一个可以解决一般性问题的通用框架。</p>
-<p>MVC 框架就是一种组合模式，<code>Controller</code>和<code>View</code>之间使用了策略模式， <code>View</code>中只存<code>Controller</code>的接口，进而达到可以随时切换不同<code>Controller</code>的目的。<code>Model</code>和<code>View</code>之间使用了观察者模式，<code>View</code>作为观察者，<code>Model</code>作为被观察者，当<code>Model</code>的数据发生变化时，<code>View</code>相应改变。而<code>View</code>本身使用了组合模式，比如按钮中可能存在子按钮，窗口中存在子窗口等等。</p>
-<p>我们以音量调节作为一个最简的 MVC 框架示例。</p>
-<div class="note info simple"><p>关于 MVC 更多的减少，见 MVC</p>
-</div>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="框架接口"><a class="header-anchor" href="#框架接口">#</a>框架接口</h2>
-<figure class="highlight cs"><figcaption><span>观察者接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IVolumeObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">VolumeUpdated</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>Model接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IVolumeModel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> Volume &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">UnRegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>Controller接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IViewController</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">VolumeUp</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">VolumeDown</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetVolume</span>(<span class="params"><span class="built_in">int</span> volume</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="接口实现"><a class="header-anchor" href="#接口实现">#</a>接口实现</h2>
-<figure class="highlight cs"><figcaption><span>Model</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VolumeModel</span> : <span class="title">IVolumeModel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> volume = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> Volume</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> volume; &#125;</span><br><span class="line">        <span class="keyword">set</span></span><br><span class="line">        &#123;</span><br><span class="line">            volume = <span class="keyword">value</span>;</span><br><span class="line">            observersList.ForEach(observer =&gt; observer.VolumeUpdated());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> List&lt;IVolumeObserver&gt; observersList = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VolumeModel</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList = <span class="keyword">new</span> List&lt;IVolumeObserver&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Add(observer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnRegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Remove(observer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>View</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VolumeView</span> : <span class="title">IVolumeObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IViewController controller = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> IVolumeModel model = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VolumeView</span>(<span class="params">IViewController controller, IVolumeModel model</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.controller = controller;</span><br><span class="line">        <span class="keyword">this</span>.model = model;</span><br><span class="line">        <span class="keyword">this</span>.model.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;View: volume init is &quot;</span> + model.Volume);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnVolumeUpButtonClick</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        controller.VolumeUp();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnVolumeDownButtonClick</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        controller.VolumeDown();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">VolumeUpdated</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;View: volume updated &quot;</span> + model.Volume);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~VolumeView()</span><br><span class="line">    &#123;</span><br><span class="line">        model.UnRegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>Controller</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VolumeController</span> : <span class="title">IViewController</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> VolumeModel model = <span class="literal">null</span>;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">VolumeController</span>(<span class="params">VolumeModel model</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>.model = model;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetVolume</span>(<span class="params"><span class="built_in">int</span> volume</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            model.Volume = volume;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">VolumeDown</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            --model.Volume;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">VolumeUp</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            ++model.Volume;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">VolumeModel model = <span class="keyword">new</span> VolumeModel();</span><br><span class="line">VolumeView view = <span class="keyword">new</span> VolumeView(<span class="keyword">new</span> VolumeController(model), model);</span><br><span class="line">view.OnVolumeUpButtonClick();</span><br><span class="line">view.OnVolumeUpButtonClick();</span><br><span class="line">view.OnVolumeDownButtonClick();</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_12_the_compound_patterns/2019-02-07-15-53-23.png" alt="复合模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Computer Networks and Internets》 Ch 14 MAC 层</title>
     <url>/ch_14_the_ieee_mac_sublayer/</url>
     <content><![CDATA[<ul>
@@ -1767,84 +1767,6 @@ $$</p>
 <p>所以无线网络中使用<code>具有冲突规避的载波侦听多路访问（CSMA/CA，Carrier Sense Multi-Access With Collision Avoidance）</code>。以上图的例子，Computer3在发送数据前会先向所有它的$\delta$范围内的设备发出一个短信息表明自己需要发送数据了，接受到Computer3发出的短信息的设备会检查自己是否正在接受其他的数据，如果不是则回复可以发送的信号。如下图所示：</p>
 <p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-08-19.png" alt="CSMA/CA图解"></p>
 <p>如果发送端没有收到接收方的回执，则会在随机时间后再次尝试发送。</p>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Computer Networks and Internets》 Ch 17 中继器，网桥和交换机</title>
-    <url>/ch_17_repeaters,_bridges,_and_switches/</url>
-    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一章会介绍关于扩展 LAN 的方法，如中继器（Repeaters）和网桥（Bridges），也会介绍在网桥存在循环时解决死循环的<code>生成树算法(Spannning tree algorithms)</code>。最后会讨论交换机和网桥之间的关系。</p>
-<h1 id="Distance_Limitation_And_LAN_Design"><a class="header-anchor" href="#Distance_Limitation_And_LAN_Design">#</a>Distance Limitation And LAN Design</h1>
-<p>距离限制是 LAN 计算的核心，工程师们需要从最大延迟，信道容量和传输距离间做权衡。因为 LAN 中的硬件设备的发送功率是固定的，所以如果两个设备之间的电缆长度增加，其中的信号强度就会减弱，导致错误的发生。</p>
-<h1 id="Fiber_Modem_Extensions"><a class="header-anchor" href="#Fiber_Modem_Extensions">#</a>Fiber Modem Extensions</h1>
-<p>解决 LAN 距离的方法通常不是增加信号的强度也不是增加电缆，而是增加额外的硬件设备来转播信号。</p>
-<p>最简单的 LAN 扩展方法是通过一根光纤和一堆光纤调制解调器，如下图所示：</p>
-<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-08-27-17.png" alt="光纤调制解调器扩展"></p>
-<p>一个光纤调制解调器与计算机设备连接，另一个光纤调制解调器与通向以太网的交换机或集线器连接，两个光纤调制解调器用光纤连接。这样计算机设备就能与以太网进行连接。</p>
-<h1 id="Repeaters"><a class="header-anchor" href="#Repeaters">#</a>Repeaters</h1>
-<p>中继器（Repeaters）是一个用来传播 LAN 信号的模拟设备，中继器并不理解包和 Bit 数据，它只是将接受到的信号放大再传播出去。</p>
-<p>一个中继器的典型应用就是使用遥控器控制其他房间的设备，将中继器放置在另一个房间，在遥控器所在房间，将 Sensor 通过线缆与中继器相连。当本房间的 Sensor 搜到信号后，信号后传输给中继器，中继器放大后传播出去，另一个房间的设备就会收到，如下图所示：</p>
-<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-08-35-01.png" alt=""></p>
-<h1 id="Bridges_And_Bridging"><a class="header-anchor" href="#Bridges_And_Bridging">#</a>Bridges And Bridging</h1>
-<p>网桥（Bridges）是连接两组 LAN 设备（如两个集线器）并且在它们之间传输包的方法。网桥是以混杂模式监听每组 LAN 设备，即数据发送给其下的任意一个设备，该数据都会被网桥检测到。因此，被网桥连接的两组设备表现如同是一组设备，即一组中的设备可以发送数据给另一组设备，且当一个设备广播时，两组设备中的所有设备都能接受到。而在网桥下的设备是无法区分自己是在一个单一的一组设备下（如只是在集线器下）还是在网桥下。</p>
-<ul>
-<li>这里将书中描述的 Segment 翻译为一组设备，如一个集线器下的设备。</li>
-</ul>
-<p>网桥连接的示意图如下：</p>
-<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-09-14-18.png" alt=""></p>
-<h1 id="Learning_Bridges_And_Frame_Filtering"><a class="header-anchor" href="#Learning_Bridges_And_Frame_Filtering">#</a>Learning Bridges And Frame Filtering</h1>
-<p>虽然网桥是以混杂模式监听，且可以让两组设备表现的如同在同一组，但是网桥并不会盲目的将数据从一组设备传递给另一组。网桥监听到数据后会针对包的目标 MAC 地址过滤数据，仅将数据发送给需要的一组设备。当让，在广播或者多播模式下，网桥直接将数据发送给两个设备的，以保证广播或者多播的正常运行。</p>
-<p>大多数网桥被称为自适应网桥（Adaptive/Learning Bridges），因为他们可以自动识别出每个设备是处于哪个分组下。当一个数据包经过网桥时，网桥会读取源地址，然后判断两组设备列表中是否有该发送设备，如果没有，则将发送设备放在符合的设备列表下。同时也会读取目标地址，决定数据需要发送给哪部分设备，如果目标地址在两组设备列表中都不存在，则两组设备都会收到网桥的转发的数据。</p>
-<p>下表是发送网桥发送数据的例子。在第一行即网桥启动时，两组数据的列表都是空的。第二行即数据从 A 设备发送给 B 设备，此时先检测出将发送端 A 是在 Segment1 中，但此时 B 不在任何列表中，所以数据会发送给两个部分。第三行即数据从 B 设备发送给 A 设备，先检测出发送端 B 设备是再 Segment1 中，而 A 也在 Segment1 种，所以数据只要在 Segment1 中传输即可。同理可以分析其他的发送数据。</p>
-<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-09-30-16.png" alt="网桥数据发送"></p>
-<h1 id="Why_Bridging_Works_Well"><a class="header-anchor" href="#Why_Bridging_Works_Well">#</a>Why Bridging Works Well</h1>
-<p>当网桥知道其下的所有设备处于哪个部分后，数据在网桥之间的传输效率要大于数据在真正的单一分组中的传输。</p>
-<p>以上节中的示意图为例，当网桥知道所有的设备处于哪个部分后，如果数据从 A 发送给 B，那么数据只要在 Segment1 中传输，同理如果数据从 X 发送给 Y，数据只要在 Segment2 中传输。因此，这两个传输行为是可以同时进行的，因为它们都只是发生在各自的部分中。而如果所有设备都是在一个真正的单一分组下，即 A，B，X，Y 是共享一个媒介传输，两个传输行为也就不可能同时发生。</p>
-<p>因此可以将设备分组后，用网桥连接来增加数据传输的效率。</p>
-<h1 id="Distributed_Spanning_Tree"><a class="header-anchor" href="#Distributed_Spanning_Tree">#</a>Distributed Spanning Tree</h1>
-<p>如果一系列设备如下图所示连接（每个 HUb 下有多个设备，图中未展现）：</p>
-<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-09-37-20.png" alt=""></p>
-<p>可以看到图中的设备形成了一个循环，在这种情况下广播的数据会发生死循环。因为网桥收到广播数据后会直接向前传递，而在网桥形成循环后，每个网桥的直接向前传递就会导致信息始终在循环中传输。</p>
-<p>为了解决这个问题，电子设备协会（Digital Equipment Corporation）在 1985 年为以太网设计了一个称为<code>生成树协议（Spannning Tree Protocol,STP）</code>的方法。STP 方法是通过算法从一系列网桥 STP 计算出一个<code>分布生成树（Distributed Spanning Tree）</code>。协议规定如果将包的广播地址设为<code>01:80:C2:00:00:00</code>即表示使用 STP 方法。STP 方法的步骤如下：</p>
-<ol>
-<li>
-<p>先找到一个网桥作为根。</p>
-<p>每个网桥都有一个 ID 地址，算法将 ID 最小的网桥作为根。</p>
-<p>每个网桥的 ID 地址都由两部分组成，第一部分是 16bit 长的可配置优先级数字，第二部分是 48bits 长的 MAC 地址。当比较 ID 地址时，会首先判断第一部分，在第一部分相同的情况下判断第二部分。因为第一部分是可配置的，所以管理员是可以指定某一个网桥作为根的。</p>
-</li>
-<li>
-<p>最短路径计算</p>
-<p>每个网桥都计算自己与根网桥的最短路径。</p>
-</li>
-<li>
-<p>传递数据</p>
-<p>网桥之间的数据传递，只能由最短路径传输。</p>
-</li>
-</ol>
-<p>在上图展示的循环中，如果 Hub1 广播数据，那么 Hub4 收到数据的通路就是$Hub1-&gt;Hub4$，而更长的路径，如$Hub1-&gt;Hub2-&gt;Hub3-&gt;Hub4$就会被禁止，因此更长的循环路径也同样会被禁止。</p>
-<h1 id="Switching_And_Layer_2_switchers"><a class="header-anchor" href="#Switching_And_Layer_2_switchers">#</a>Switching And Layer 2 switchers</h1>
-<p><code>桥接（bridging）</code>的概念可以帮助理解现代以太网的基础：<code>交换（switching）</code>。一个以太网交换机（Ethernet switch）有时也被称为二层交换机（Layer-2 switch）。交换机如同集线器一样，有多个接口，每个接口都与一个计算机相连。交换机和集线器的不同在于，集线器如模拟设备一样，是将电脑传输的信号传递出去，而交换机是数字设备，传递的是电脑的数据包。可以将集线器想象成一个共享媒介，而把交换器想象成一个由网桥连接的网络，其中每个部分都只有一台电脑。</p>
-<p>交换机可以想象成如下图的结构，可以看到交换机的左侧是三个网桥，每个网桥连接两个设备：</p>
-<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-10-22-38.png" alt=""></p>
-<p>但上图只是一个概念图，实际中的交换机中并没有网桥，而是每个端口都于一个<code>智能接口（Intelligent Interface）</code>相连，然后有个中央光纤将所有的接口连接在一起，而且这光纤支持两两配对的接口间的同时传输（如之前提到的网桥连接的两部分间的设备可同时传输一样）。</p>
-<p>每个智能接口都有处理器和内存，因此可以判断需要传递的路线以及在目标端口繁忙时缓存数据，如电脑 1 和电脑 2 同时要向电脑 3 传输数据，则电脑 1 或电脑 2 中的一台会先将要传输的数据缓存起来。实际的交换机结构如下：</p>
-<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-10-27-51.png" alt=""></p>
-<p>交换机相对于集线器最大的优点在于并行。集线器在同一时间只能支持一个传输，而交换机可以同时进行多个独立的传输（这里的独立指不会有多个来自于不同地址的数据要发送给同一端口）。因此如果一个交换机有$N$个端口，最多可以有$N/2$个传输同时进行。</p>
-<h1 id="VLAN_Switchers"><a class="header-anchor" href="#VLAN_Switchers">#</a>VLAN Switchers</h1>
-<p>当一个交换机被扩展了虚拟功能，即称为虚拟局域网交换机（Virtual Local Area Network Switch,VLAN Switcher）。虚拟局域网交换机的功能就是让单一的交换机模拟成是多个独立的交换机，即管理者可以将一台交换机的其中某几个端口定义是在一个模拟局域网中，而另几个端口是在另外一个模拟局域网中，这样的话其中一个模拟局域网中的设备发送广播数据，另一个模拟局域网中的端口并不会接受到信息。</p>
-<p>这种通过 VLAN 切分广播域的做法在公司环境下很关键，如一层楼只有一个交换机，但广播数据的发送并不希望整层楼都能收到。</p>
-<h1 id="Multiple_Switchers_And_Shared_VLANs"><a class="header-anchor" href="#Multiple_Switchers_And_Shared_VLANs">#</a>Multiple Switchers And Shared VLANs</h1>
-<p>交换机通常被部署在离计算机较近的地方，如每层楼都有一个交换机。在公司环境下有种情况是同一个部门可能处于不同的楼层，那么同一个部门的网络在不同的交换机下。在有多个交换机的情况下，上节中提到的 VLAN 会遇到问题。当只有一个交换机时，根据端口号分好 VLAN 后，数据的传输指定端口号就能判断出数据应该处于哪个 VLAN 中。但如果有两台交换机，两台交换机的同一端口，如端口 1，可能是在不同的 VLAN 下，因此光指定端口号是无法知道其到底在哪个 VLAN。</p>
-<p>为了在多个交换机中使用 VLAN 技术，IEEE 扩展了以太网协议，记录在$802.1Q$中。该协议下，在以太网的数据包的头字段中，增加 16bit 长的数据表示 VLAN Tag，表示需要传递给 VLAN。在 802.1Q 协议下的以太网数据包如下图所示：</p>
-<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-11-13-59.png" alt=""></p>
-<p>即使是使用了多交换机的 VLAN，$802.1Q$协议下的以太网数据包仅在交换机之间传输，而在交换机与电脑间传输的包仍然是普通以太网数据包，因为只有交换机才能解析$802.1Q$数据。使用$802.1Q$实现 VLAN 的交换机如下图所示</p>
-<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-11-15-56.png" alt=""></p>
-<p>以上图为例，如果图中的 A，B，D，E 共处于 VLAN 17 中，当 A 广播数据后，B 会直接收到数据，然后交换机 1 会将$17$作为 VLAN Tag 插入到数据包头中，然后传递给交换机 2，交换机 2 在收到数据后，取出其中的 VLAN tag，并将包传递给 D 和 E。</p>
-<h1 id="The_importance_Of_Bridging"><a class="header-anchor" href="#The_importance_Of_Bridging">#</a>The importance Of Bridging</h1>
-<p>虽然现在很少会有厂商生产单独的网桥，但是桥接的概念已经被整合入网络设备中。如无线网络的路由器就整合了提供桥接功能的以太网的交换器，通常将其中交换机的端口称为<code>本地端口（Local Port）</code>，将连接网络调制解调器的端口称为<code>因特网端口（Internet Port）</code>。当两个本地的电脑传输数据时，无线路由器并不会将数据发送给网络服务商，而是直接将数据在本地进行传输（类似于桥接的分组功能）。</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
@@ -2005,6 +1927,84 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
+    <title>《Computer Networks and Internets》 Ch 17 中继器，网桥和交换机</title>
+    <url>/ch_17_repeaters,_bridges,_and_switches/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一章会介绍关于扩展 LAN 的方法，如中继器（Repeaters）和网桥（Bridges），也会介绍在网桥存在循环时解决死循环的<code>生成树算法(Spannning tree algorithms)</code>。最后会讨论交换机和网桥之间的关系。</p>
+<h1 id="Distance_Limitation_And_LAN_Design"><a class="header-anchor" href="#Distance_Limitation_And_LAN_Design">#</a>Distance Limitation And LAN Design</h1>
+<p>距离限制是 LAN 计算的核心，工程师们需要从最大延迟，信道容量和传输距离间做权衡。因为 LAN 中的硬件设备的发送功率是固定的，所以如果两个设备之间的电缆长度增加，其中的信号强度就会减弱，导致错误的发生。</p>
+<h1 id="Fiber_Modem_Extensions"><a class="header-anchor" href="#Fiber_Modem_Extensions">#</a>Fiber Modem Extensions</h1>
+<p>解决 LAN 距离的方法通常不是增加信号的强度也不是增加电缆，而是增加额外的硬件设备来转播信号。</p>
+<p>最简单的 LAN 扩展方法是通过一根光纤和一堆光纤调制解调器，如下图所示：</p>
+<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-08-27-17.png" alt="光纤调制解调器扩展"></p>
+<p>一个光纤调制解调器与计算机设备连接，另一个光纤调制解调器与通向以太网的交换机或集线器连接，两个光纤调制解调器用光纤连接。这样计算机设备就能与以太网进行连接。</p>
+<h1 id="Repeaters"><a class="header-anchor" href="#Repeaters">#</a>Repeaters</h1>
+<p>中继器（Repeaters）是一个用来传播 LAN 信号的模拟设备，中继器并不理解包和 Bit 数据，它只是将接受到的信号放大再传播出去。</p>
+<p>一个中继器的典型应用就是使用遥控器控制其他房间的设备，将中继器放置在另一个房间，在遥控器所在房间，将 Sensor 通过线缆与中继器相连。当本房间的 Sensor 搜到信号后，信号后传输给中继器，中继器放大后传播出去，另一个房间的设备就会收到，如下图所示：</p>
+<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-08-35-01.png" alt=""></p>
+<h1 id="Bridges_And_Bridging"><a class="header-anchor" href="#Bridges_And_Bridging">#</a>Bridges And Bridging</h1>
+<p>网桥（Bridges）是连接两组 LAN 设备（如两个集线器）并且在它们之间传输包的方法。网桥是以混杂模式监听每组 LAN 设备，即数据发送给其下的任意一个设备，该数据都会被网桥检测到。因此，被网桥连接的两组设备表现如同是一组设备，即一组中的设备可以发送数据给另一组设备，且当一个设备广播时，两组设备中的所有设备都能接受到。而在网桥下的设备是无法区分自己是在一个单一的一组设备下（如只是在集线器下）还是在网桥下。</p>
+<ul>
+<li>这里将书中描述的 Segment 翻译为一组设备，如一个集线器下的设备。</li>
+</ul>
+<p>网桥连接的示意图如下：</p>
+<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-09-14-18.png" alt=""></p>
+<h1 id="Learning_Bridges_And_Frame_Filtering"><a class="header-anchor" href="#Learning_Bridges_And_Frame_Filtering">#</a>Learning Bridges And Frame Filtering</h1>
+<p>虽然网桥是以混杂模式监听，且可以让两组设备表现的如同在同一组，但是网桥并不会盲目的将数据从一组设备传递给另一组。网桥监听到数据后会针对包的目标 MAC 地址过滤数据，仅将数据发送给需要的一组设备。当让，在广播或者多播模式下，网桥直接将数据发送给两个设备的，以保证广播或者多播的正常运行。</p>
+<p>大多数网桥被称为自适应网桥（Adaptive/Learning Bridges），因为他们可以自动识别出每个设备是处于哪个分组下。当一个数据包经过网桥时，网桥会读取源地址，然后判断两组设备列表中是否有该发送设备，如果没有，则将发送设备放在符合的设备列表下。同时也会读取目标地址，决定数据需要发送给哪部分设备，如果目标地址在两组设备列表中都不存在，则两组设备都会收到网桥的转发的数据。</p>
+<p>下表是发送网桥发送数据的例子。在第一行即网桥启动时，两组数据的列表都是空的。第二行即数据从 A 设备发送给 B 设备，此时先检测出将发送端 A 是在 Segment1 中，但此时 B 不在任何列表中，所以数据会发送给两个部分。第三行即数据从 B 设备发送给 A 设备，先检测出发送端 B 设备是再 Segment1 中，而 A 也在 Segment1 种，所以数据只要在 Segment1 中传输即可。同理可以分析其他的发送数据。</p>
+<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-09-30-16.png" alt="网桥数据发送"></p>
+<h1 id="Why_Bridging_Works_Well"><a class="header-anchor" href="#Why_Bridging_Works_Well">#</a>Why Bridging Works Well</h1>
+<p>当网桥知道其下的所有设备处于哪个部分后，数据在网桥之间的传输效率要大于数据在真正的单一分组中的传输。</p>
+<p>以上节中的示意图为例，当网桥知道所有的设备处于哪个部分后，如果数据从 A 发送给 B，那么数据只要在 Segment1 中传输，同理如果数据从 X 发送给 Y，数据只要在 Segment2 中传输。因此，这两个传输行为是可以同时进行的，因为它们都只是发生在各自的部分中。而如果所有设备都是在一个真正的单一分组下，即 A，B，X，Y 是共享一个媒介传输，两个传输行为也就不可能同时发生。</p>
+<p>因此可以将设备分组后，用网桥连接来增加数据传输的效率。</p>
+<h1 id="Distributed_Spanning_Tree"><a class="header-anchor" href="#Distributed_Spanning_Tree">#</a>Distributed Spanning Tree</h1>
+<p>如果一系列设备如下图所示连接（每个 HUb 下有多个设备，图中未展现）：</p>
+<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-09-37-20.png" alt=""></p>
+<p>可以看到图中的设备形成了一个循环，在这种情况下广播的数据会发生死循环。因为网桥收到广播数据后会直接向前传递，而在网桥形成循环后，每个网桥的直接向前传递就会导致信息始终在循环中传输。</p>
+<p>为了解决这个问题，电子设备协会（Digital Equipment Corporation）在 1985 年为以太网设计了一个称为<code>生成树协议（Spannning Tree Protocol,STP）</code>的方法。STP 方法是通过算法从一系列网桥 STP 计算出一个<code>分布生成树（Distributed Spanning Tree）</code>。协议规定如果将包的广播地址设为<code>01:80:C2:00:00:00</code>即表示使用 STP 方法。STP 方法的步骤如下：</p>
+<ol>
+<li>
+<p>先找到一个网桥作为根。</p>
+<p>每个网桥都有一个 ID 地址，算法将 ID 最小的网桥作为根。</p>
+<p>每个网桥的 ID 地址都由两部分组成，第一部分是 16bit 长的可配置优先级数字，第二部分是 48bits 长的 MAC 地址。当比较 ID 地址时，会首先判断第一部分，在第一部分相同的情况下判断第二部分。因为第一部分是可配置的，所以管理员是可以指定某一个网桥作为根的。</p>
+</li>
+<li>
+<p>最短路径计算</p>
+<p>每个网桥都计算自己与根网桥的最短路径。</p>
+</li>
+<li>
+<p>传递数据</p>
+<p>网桥之间的数据传递，只能由最短路径传输。</p>
+</li>
+</ol>
+<p>在上图展示的循环中，如果 Hub1 广播数据，那么 Hub4 收到数据的通路就是$Hub1-&gt;Hub4$，而更长的路径，如$Hub1-&gt;Hub2-&gt;Hub3-&gt;Hub4$就会被禁止，因此更长的循环路径也同样会被禁止。</p>
+<h1 id="Switching_And_Layer_2_switchers"><a class="header-anchor" href="#Switching_And_Layer_2_switchers">#</a>Switching And Layer 2 switchers</h1>
+<p><code>桥接（bridging）</code>的概念可以帮助理解现代以太网的基础：<code>交换（switching）</code>。一个以太网交换机（Ethernet switch）有时也被称为二层交换机（Layer-2 switch）。交换机如同集线器一样，有多个接口，每个接口都与一个计算机相连。交换机和集线器的不同在于，集线器如模拟设备一样，是将电脑传输的信号传递出去，而交换机是数字设备，传递的是电脑的数据包。可以将集线器想象成一个共享媒介，而把交换器想象成一个由网桥连接的网络，其中每个部分都只有一台电脑。</p>
+<p>交换机可以想象成如下图的结构，可以看到交换机的左侧是三个网桥，每个网桥连接两个设备：</p>
+<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-10-22-38.png" alt=""></p>
+<p>但上图只是一个概念图，实际中的交换机中并没有网桥，而是每个端口都于一个<code>智能接口（Intelligent Interface）</code>相连，然后有个中央光纤将所有的接口连接在一起，而且这光纤支持两两配对的接口间的同时传输（如之前提到的网桥连接的两部分间的设备可同时传输一样）。</p>
+<p>每个智能接口都有处理器和内存，因此可以判断需要传递的路线以及在目标端口繁忙时缓存数据，如电脑 1 和电脑 2 同时要向电脑 3 传输数据，则电脑 1 或电脑 2 中的一台会先将要传输的数据缓存起来。实际的交换机结构如下：</p>
+<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-10-27-51.png" alt=""></p>
+<p>交换机相对于集线器最大的优点在于并行。集线器在同一时间只能支持一个传输，而交换机可以同时进行多个独立的传输（这里的独立指不会有多个来自于不同地址的数据要发送给同一端口）。因此如果一个交换机有$N$个端口，最多可以有$N/2$个传输同时进行。</p>
+<h1 id="VLAN_Switchers"><a class="header-anchor" href="#VLAN_Switchers">#</a>VLAN Switchers</h1>
+<p>当一个交换机被扩展了虚拟功能，即称为虚拟局域网交换机（Virtual Local Area Network Switch,VLAN Switcher）。虚拟局域网交换机的功能就是让单一的交换机模拟成是多个独立的交换机，即管理者可以将一台交换机的其中某几个端口定义是在一个模拟局域网中，而另几个端口是在另外一个模拟局域网中，这样的话其中一个模拟局域网中的设备发送广播数据，另一个模拟局域网中的端口并不会接受到信息。</p>
+<p>这种通过 VLAN 切分广播域的做法在公司环境下很关键，如一层楼只有一个交换机，但广播数据的发送并不希望整层楼都能收到。</p>
+<h1 id="Multiple_Switchers_And_Shared_VLANs"><a class="header-anchor" href="#Multiple_Switchers_And_Shared_VLANs">#</a>Multiple Switchers And Shared VLANs</h1>
+<p>交换机通常被部署在离计算机较近的地方，如每层楼都有一个交换机。在公司环境下有种情况是同一个部门可能处于不同的楼层，那么同一个部门的网络在不同的交换机下。在有多个交换机的情况下，上节中提到的 VLAN 会遇到问题。当只有一个交换机时，根据端口号分好 VLAN 后，数据的传输指定端口号就能判断出数据应该处于哪个 VLAN 中。但如果有两台交换机，两台交换机的同一端口，如端口 1，可能是在不同的 VLAN 下，因此光指定端口号是无法知道其到底在哪个 VLAN。</p>
+<p>为了在多个交换机中使用 VLAN 技术，IEEE 扩展了以太网协议，记录在$802.1Q$中。该协议下，在以太网的数据包的头字段中，增加 16bit 长的数据表示 VLAN Tag，表示需要传递给 VLAN。在 802.1Q 协议下的以太网数据包如下图所示：</p>
+<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-11-13-59.png" alt=""></p>
+<p>即使是使用了多交换机的 VLAN，$802.1Q$协议下的以太网数据包仅在交换机之间传输，而在交换机与电脑间传输的包仍然是普通以太网数据包，因为只有交换机才能解析$802.1Q$数据。使用$802.1Q$实现 VLAN 的交换机如下图所示</p>
+<p><img src="/ch_17_repeaters,_bridges,_and_switches/2020-01-03-11-15-56.png" alt=""></p>
+<p>以上图为例，如果图中的 A，B，D，E 共处于 VLAN 17 中，当 A 广播数据后，B 会直接收到数据，然后交换机 1 会将$17$作为 VLAN Tag 插入到数据包头中，然后传递给交换机 2，交换机 2 在收到数据后，取出其中的 VLAN tag，并将包传递给 D 和 E。</p>
+<h1 id="The_importance_Of_Bridging"><a class="header-anchor" href="#The_importance_Of_Bridging">#</a>The importance Of Bridging</h1>
+<p>虽然现在很少会有厂商生产单独的网桥，但是桥接的概念已经被整合入网络设备中。如无线网络的路由器就整合了提供桥接功能的以太网的交换器，通常将其中交换机的端口称为<code>本地端口（Local Port）</code>，将连接网络调制解调器的端口称为<code>因特网端口（Internet Port）</code>。当两个本地的电脑传输数据时，无线路由器并不会将数据发送给网络服务商，而是直接将数据在本地进行传输（类似于桥接的分组功能）。</p>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Computer Networks and Internets》 笔记汇总</title>
     <url>/computer_networks_and_internets/</url>
     <content><![CDATA[<h1 id="Introduction_And_Internet_Applications"><a class="header-anchor" href="#Introduction_And_Internet_Applications">#</a>Introduction And Internet Applications</h1>
@@ -2041,40 +2041,6 @@ $16.20$介绍了软件无线电系统。</p>
 ]]></content>
       <tags>
         <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C# Formattable String</title>
-    <url>/formattable_string/</url>
-    <content><![CDATA[<p><code>FormattableString</code>  是 C# 6.0 中引入的新类型之一，可以避免在非必要情况下执行了格式化字符串带来的性能开销。</p>
-<p>使用如下示例如下，可以看出 <code>FormattableString</code> 将需要格式化的字符串创建和真正的格式化操作进行了拆分：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> name = <span class="string">&quot;张三&quot;</span>;</span><br><span class="line"><span class="built_in">int</span> age = <span class="number">30</span>;</span><br><span class="line"><span class="built_in">decimal</span> weight = <span class="number">60.5</span>m;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个 FormattableString</span></span><br><span class="line">FormattableString message = <span class="string">$&quot;<span class="subst">&#123;name&#125;</span> 年龄 <span class="subst">&#123;age&#125;</span>，体重 <span class="subst">&#123;weight&#125;</span> 公斤。&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 FormattableString 转换为 string 类型</span></span><br><span class="line"><span class="built_in">string</span> formattedMessage = message.ToString();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出结果</span></span><br><span class="line">Console.WriteLine(formattedMessage);</span><br></pre></td></tr></table></figure>
-<h1 id="Performance"><a class="header-anchor" href="#Performance">#</a>Performance</h1>
-<p>对于一些函数，需要在运行时判断是否需要输出 string，可以使用 <code>FormattableString</code> 保证格式化仅在真正需要使用 <code>string</code> 时才执行。这可以带来性能提升。</p>
-<p>如下性能测试函数：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test, Performance, Category(<span class="string">&quot;String&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">String_NotReallyOutput</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> unit = SampleUnit.Microsecond;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> outputStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using string&quot;</span>, unit);</span><br><span class="line">    <span class="keyword">var</span> outputFormattedStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using formatted string&quot;</span>, unit);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FakeOutput</span>(<span class="params"><span class="built_in">string</span> str</span>)</span> &#123; <span class="keyword">if</span> (<span class="literal">false</span>) Debug.Log(str); &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FormattedFakeOutput</span>(<span class="params">FormattableString fStr</span>)</span> &#123; <span class="keyword">if</span> (<span class="literal">false</span>) Debug.Log(fStr.ToString()); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> age = <span class="number">23</span>, times = <span class="number">25</span>;</span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputStr).Run();</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FormattedFakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputFormattedStr).Run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 <code>FormattableString</code> 的版本因为避免了格式化操作的进行，带来了约 5 倍的收益：<br>
-<img src="/formattable_string/image-20230417094543917.png" alt=""></p>
-<p>即使真正需要执行 String 格式化时，使用 <code>FormattableString</code> 也不会带来性能劣化，如下性能测试代码：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test, Performance, Category(<span class="string">&quot;String&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">String_ReallyOutput</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> unit = SampleUnit.Microsecond;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> outputStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using string&quot;</span>, unit);</span><br><span class="line">    <span class="keyword">var</span> outputFormattedStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using formatted string&quot;</span>, unit);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FakeOutput</span>(<span class="params"><span class="built_in">string</span> str</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">true</span>) Debug.Log(str);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FormattedFakeOutput</span>(<span class="params">FormattableString fStr</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">true</span>) Debug.Log(fStr.ToString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> age = <span class="number">23</span>, times = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputStr).Run();</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FormattedFakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputFormattedStr).Run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>性能测试结果为：<br>
-<img src="/formattable_string/image-20230417094729230.png" alt=""></p>
-<p>但是如果在不需要进行格式化时，强制使用 <code>FormattableString</code> 则会带来性能劣化。</p>
-<p>如下代码，可以看到针对字符串实际上并没有需要拼接的数据，但对于 <code>Formattted</code> 版本的函数，为了保证形参为 <code>FormattableString</code> 仍然加上了 <code>$</code> 符：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test, Performance, Category(<span class="string">&quot;String&quot;</span>), TestCase(true), TestCase(false)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">String_UseZeroArgument</span>(<span class="params"><span class="built_in">bool</span> reallyOutput</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    MeasurementSettings outputStr = <span class="keyword">new</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using string&quot;</span>, s_Unit);</span><br><span class="line">    MeasurementSettings outputFormattedStr = <span class="keyword">new</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using formatted string&quot;</span>, s_Unit);</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (reallyOutput)</span><br><span class="line">            ReallyOutput(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            FakeOutput(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">    &#125;, outputStr).Run();</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (reallyOutput)</span><br><span class="line">            ReallyFormattedOutput(<span class="string">$&quot;Hello World&quot;</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            FakeFormattedOutput(<span class="string">$&quot;Hello World&quot;</span>);</span><br><span class="line">    &#125;, outputFormattedStr).Run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>此时，<code>FormattableString</code> 版本的函数在实际不需要输出时带来了约 10 倍的性能恶化：<br>
-<img src="/formattable_string/image-20230417102028637.png" alt=""></p>
-<h1 id="Override"><a class="header-anchor" href="#Override">#</a>Override</h1>
-<p>尽可能的避免 <code>string</code> 和 <code>FormattableString</code> 的函数重载，因为编译器会优先选择 <code>string</code> 形参的版本，且在一些操作时可能会隐式的将 <code>FormattableString</code> 转换为 <code>string</code>，进而导致与预期违背的行为产生。</p>
-<p>如下示例代码：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// DO NOT</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Sample</span>(<span class="params"><span class="built_in">string</span> <span class="keyword">value</span></span>)</span> =&gt; <span class="keyword">throw</span> <span class="literal">null</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Sample</span>(<span class="params">FormattableString <span class="keyword">value</span></span>)</span> =&gt; <span class="keyword">throw</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">Sample(<span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span>);</span><br><span class="line"><span class="comment">// ⚠ Call Sample(string)</span></span><br><span class="line"></span><br><span class="line">Sample((FormattableString)<span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span>);</span><br><span class="line"><span class="comment">// Call Sample(FormattableString) because of the explicit cast</span></span><br><span class="line"></span><br><span class="line">Sample((FormattableString)<span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span> + <span class="string">&quot;!&quot;</span>);</span><br><span class="line"><span class="comment">// Call Sample(string) because the operator FormattableString + string returns a string</span></span><br></pre></td></tr></table></figure>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="https://www.meziantou.net/interpolated-strings-advanced-usages.htm#interpolated-strings-a9996a-2">Interpolated strings: advanced usages - Meziantou’s blog</a></p>
-]]></content>
-      <tags>
-        <tag>C#</tag>
-        <tag>String</tag>
-        <tag>Performance</tag>
       </tags>
   </entry>
   <entry>
@@ -2118,6 +2084,61 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
+    <title>《LLM 对程序员的冲击和影响》摘抄</title>
+    <url>/llm_dui_cheng_xu_yuan_de_chong_ji_he_ying_xiang/</url>
+    <content><![CDATA[<h1 id="LLM_的局限"><a class="header-anchor" href="#LLM_的局限">#</a>LLM 的局限</h1>
+<p>如果说 <strong>ChatGPT 实现了数字时代知识的平权，codex 类的代码语言大模型实现了基础编码能力的知识平权</strong>，进而带来软件研发的局部效率提升。 可以说，LLM 降低了软件开发的门槛，可以让更多对软件开发感兴趣的人更加轻松地参与到软件开发工作中，同时，LLM 提高了编程的效率和质量，使我们可以在更短的时间内完成更多的工作，因而能留出更多的时间让我们思考。</p>
+<p>我们面对的是软件工程的问题，<strong>编程不等于软件工程，编程只是软件工程的一部分。软件工程的四大内在特性（复杂度、不一致性、可变性、不可见性）并没有因为 LLM 的出现而发生本质上的变化，这才是软件工程面临的主要矛盾</strong>。这四点再叠加上大型软件的规模效应，其中包含软件系统本身的规模和软件研发团队的规模，问题就更严重了，即会显著提升软件研发过程中的沟通成本、决策成本、认知成本和试错成本，而这些才是软件工程问题的本质，这些本质问题自始至终都没有变过，LLM 对此也基本无能为力。</p>
+<h2 id="复杂性"><a class="header-anchor" href="#复杂性">#</a>复杂性</h2>
+<p>LLM 让局部编码变简单，或者说更高效了，但是需求分析和软件设计并没有因为 LLM 而变得简单。</p>
+<p>只有我们的需求足够的清楚，那么生成的代码才会准确。如何准确全面描述需求成为了关键。面向自然语言编程，首先你要有能力把话讲清楚。但是问题是：你能讲清楚吗？我们通过一些实践发现，<strong>要把需求描述到让它能正确写出来代码，需要的工作量似乎已经接近甚至超过编码了</strong>。为什么会这样，有两个方面的原因：</p>
+<ol>
+<li>
+<p>因为大多数的代码实现是 imperative 的，而需求描述是 declarative 的，这两者对人的要求完全不一样。我们程序员群体接受的教育是编程，而不是需求描述，也就是说程序员本来更擅长写代码，而不是描述需求。</p>
+</li>
+<li>
+<p>在当前的开发模式下，程序员直接用代码默认帮需求（产品经理）做了很多代偿。很多在需求中没有明确提及的内容被程序员用代码直接实现了（代偿）。而现在要倒过来先把需求的细节完全理清楚这个可能不是程序员当前的工作习惯。而且代码的信息熵其实要大于自然语言，程序员更善于用代码而非自然语言来描述事务。</p>
+<ul>
+<li>在当前的开发模式下，程序员直接用代码默认帮需求（产品经理）做了很多代偿。很多在需求中没有明确提及的内容被程序员用代码直接实现了（代偿）。而现在要倒过来先把需求的细节完全理清楚这个可能不是程序员当前的工作习惯。而且代码的信息熵其实要大于自然语言，程序员更善于用代码而非自然语言来描述事务。</li>
+<li>一个软件的需求，不仅仅是功能性的，还有很多非功能的需求，这些都是需要描述清楚的。另外代码实现的时候，还要考虑为可测试而设计，为可扩展而设计，为可运维而设计，为可观测而设计等等。原本这些很多是开发代偿了，现在要从需求生成代码，你必须要提前讲清楚。</li>
+</ul>
+</li>
+</ol>
+<div class="note info simple"><p>软件从业者高估了编程的复杂度，但是却低估了功能和设计的深刻度。</p>
+</div>
+<h2 id="一致性"><a class="header-anchor" href="#一致性">#</a>一致性</h2>
+<p>由于软件研发的本质依然是“<strong>知识手工业者的大规模协作</strong>”，所以我们非常需要一致性。如果系统是一致的，则意味着相似的事情以相似的方式完成，错并不可怕，怕的是错的千变万化。LLM 的出现并没有提升软件研发的一致性，甚至<strong>由于 LLM 本身的概率属性，使用 LLM 实现代码生成的不一致性问题反而是被放大了</strong></p>
+<h2 id="可变性"><a class="header-anchor" href="#可变性">#</a>可变性</h2>
+<p>软件会随着需求不断演进和变化，所以架构设计和模块抽象只能面向当下，它天然是短视的，或者说是有局限性的，这种局限性即使是最优秀的架构师也是不可逾越的。</p>
+<p>当需求发生变动后，一般是会在原有代码基础上改动，而不是直接从头全量生成全部代码，这个时候，LLM 本质上做的是局部编程的辅助（pair programming）。局部编程辅助过程中，经常需要对代码做局部修改，而这个往往并不容易。代码的信息熵大于自然语言，用信息熵更低的自然语言去描述代码，尤其是准确描述大段代码中的若干个位置往往是困难的。</p>
+<p>如果需要进一步描述如何修改就会更困难，因为大概率需要用到很多代码上下文的相关描述，所以对于 prompt 的表述要求以及长度要求都很高。要在原有代码基础上修改，就需要利用已有的代码上下文，而不是从 0 开始。要实现这一点，一个最朴素的做法就是把整个项目的代码都贴到 prompt 里，但这样并不现实。因为 GPT-3.5 限制最多只能 4096 个 tokens，GPT-4 最多 8192 个，除非项目非常小，否则根本放不下。这个问题可能需要用 LangChain 来解决了。</p>
+<p>而且 LLM 本质上不是基于修改意见（prompt）进行改写，而是基于修改意见（prompt）重新写了一份，而且 LLM 的原理决定了其会“一本正经的胡说八道”的本质，会<strong>混合捏造</strong>一些不存在的东西，可以说人工智能的混合捏造是人工智能在无知情况下的“自信”反应，而这个点在代码生成上是灾难性的，比如会将不同类型的 SQL 语句混在一起使用，会分不清 Go 语言的 <code>os.Kill</code> 和 Python 语言的 <code>os.kill()</code>。输出的代码需要人重复的阅读和理解，使得认知成本变高了。</p>
+<h2 id="不可见性"><a class="header-anchor" href="#不可见性">#</a>不可见性</h2>
+<p>软件的客观存在不具有空间的形体特征，不同的关注点，会有不同的图。综合叠加这些图是困难的，而且<strong>强行可视化的效果会造成图的异常复杂，反而失去了可视化的价值</strong>。设计无法可视化就限制了有效的沟通和交流。</p>
+<p>在实际中，很多需求和设计并不以文档的形式存在，往往会存在于程序员和架构师的脑子里，或者在讨论的过程中。就算有文档，文档和代码大概率不同步。就算文档同步，文档（需求和设计）背后经常有大量的方案对比和推敲，甚至有很多要在原有债务基础上的设计妥协，这些决策过程一般都不会明确地被记录下来。这些没有被文档化下来的知识，我们称其为<code>暗知识</code>。虽然我们说只要有足够的数据，大模型就可以学到需求和设计知识。但这些“暗知识”本身就很难被捕捉到，“足够的数据”这一前提在需求分析和软件设计可能难以满足。</p>
+<p>在实际软件开发中，需求可能一次不能表达得很清楚，需要一边开发一边逐步写清楚需求。尤其是敏捷开发更是如此。所以一些通用的，不需要特定领域知识的问题，LLM 的表现会比较好，但是那些专用的，需要特定领域知识（私域知识）的问题，LLM 就可能不是很擅长。</p>
+<div class="note info simple"><p>你能想到的多过你能说出来的，你能说出来的多过你能写下来的。所以这就天然限制了 LLM 能力的上限。</p>
+</div>
+<h1 id="工程师与_LLM_的共生"><a class="header-anchor" href="#工程师与_LLM_的共生">#</a>工程师与 LLM 的共生</h1>
+<p>在软件开发过程中，当伪代码级别的设计完成后，最后一公里的编码实现会被 LLM 替代，因为基于记忆的简单重复编码不是人的优势，而是机器的优势。</p>
+<p>这部分工作现在属于码农，也就是我们俗称的 CRUD 仔和 API Boy，所以很多不涉及设计的码农可能会被大模型替代。未来工程师需要关注业务理解、需求拆分、架构设计、设计取舍，并在此基础上通过 prompt 学会与 AI 合作，从而<strong>实现“工程师 + LLM”形成 1+1 &gt;2 的效果。这就是共生</strong>。需要注意的是，这种<strong>共生必须始终保持人的主观能动性</strong>，机器必须是 Copilot，也就是智能副驾驶，主驾驶位置必须是人，这样的人 - 机关系才能长期健康发展。这也就是为什么说微软现任 CEO 萨提亚强调 Copilot（智能副驾驶）是比 Autopilot（自动驾驶）还先进的根本原因。</p>
+<p>软件项目参与的人越来越多，分工越来越细，人和人之间需要的沟通量，也指数增长。很快你会发现，沟通花费的时间，渐渐地就比分工省下来的时间还要多。说白了，过了一个临界点，人越多不是越帮忙，而是人越多越添乱。一个人 12 个月能完成的事，不见得上 12 个人 1 个月就能完成，甚至 12 个月也未必能完成。</p>
+<ul>
+<li>《人月神话》里建议了一种组织方式，叫“外科手术式的队伍”。就像一台外科手术一样，有一个主刀大夫，软件项目也应该有一个首席程序员，其他人都是给他提供支持的。这样，就既能获得由少数头脑产生的产品完整性，又能得到多位协助人员的总体生产率，还彻底地减少了沟通的工作量。<strong>LLM 的出现，让基础编程工作一定程度上实现了自动化，这样非常有利于控制研发团队规模，保持小团队的效率优势</strong>。</li>
+</ul>
+<h1 id="未来可能基于_Prompt_编程"><a class="header-anchor" href="#未来可能基于_Prompt_编程">#</a>未来可能基于 Prompt 编程</h1>
+<p>让我们做个大胆的设想，如果当软件需求发生变化的时候，我们不再是去改代码，而是直接修改需求对应的 prompt，然后基于 prompt 直接生成完整的代码，这个将是软件开发范式的改变。在这种范式下，我们需要确保代码不能有人为修改，必须都是由 prompt 直接生成，此时我们还需要对 prompt 做版本管理，或许会出现类似今天 git 的 prompt 版本管理的新物种。</p>
+<p>此时，从本质上来看 <strong>prompt 即是代码，而原本的代码不再是代码了</strong>，这就真正实现了基于自然语言（prompt）的编程，此时的编程范式将从 prompt to code 转变为 prompt as code。</p>
+<p>但这个假设还是在以以往的逻辑在做分析，这个基础可能本来就是错误，全新的时代或许需要全新的思维模式。</p>
+]]></content>
+      <tags>
+        <tag>摘抄</tag>
+        <tag>AI</tag>
+        <tag>LLM</tag>
+        <tag>程序员</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Render Hell》 笔记汇总</title>
     <url>/render_hell/</url>
     <content><![CDATA[<ul>
@@ -2131,6 +2152,40 @@ $16.20$介绍了软件无线电系统。</p>
 ]]></content>
       <tags>
         <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C# Formattable String</title>
+    <url>/formattable_string/</url>
+    <content><![CDATA[<p><code>FormattableString</code>  是 C# 6.0 中引入的新类型之一，可以避免在非必要情况下执行了格式化字符串带来的性能开销。</p>
+<p>使用如下示例如下，可以看出 <code>FormattableString</code> 将需要格式化的字符串创建和真正的格式化操作进行了拆分：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> name = <span class="string">&quot;张三&quot;</span>;</span><br><span class="line"><span class="built_in">int</span> age = <span class="number">30</span>;</span><br><span class="line"><span class="built_in">decimal</span> weight = <span class="number">60.5</span>m;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个 FormattableString</span></span><br><span class="line">FormattableString message = <span class="string">$&quot;<span class="subst">&#123;name&#125;</span> 年龄 <span class="subst">&#123;age&#125;</span>，体重 <span class="subst">&#123;weight&#125;</span> 公斤。&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 FormattableString 转换为 string 类型</span></span><br><span class="line"><span class="built_in">string</span> formattedMessage = message.ToString();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出结果</span></span><br><span class="line">Console.WriteLine(formattedMessage);</span><br></pre></td></tr></table></figure>
+<h1 id="Performance"><a class="header-anchor" href="#Performance">#</a>Performance</h1>
+<p>对于一些函数，需要在运行时判断是否需要输出 string，可以使用 <code>FormattableString</code> 保证格式化仅在真正需要使用 <code>string</code> 时才执行。这可以带来性能提升。</p>
+<p>如下性能测试函数：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test, Performance, Category(<span class="string">&quot;String&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">String_NotReallyOutput</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> unit = SampleUnit.Microsecond;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> outputStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using string&quot;</span>, unit);</span><br><span class="line">    <span class="keyword">var</span> outputFormattedStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using formatted string&quot;</span>, unit);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FakeOutput</span>(<span class="params"><span class="built_in">string</span> str</span>)</span> &#123; <span class="keyword">if</span> (<span class="literal">false</span>) Debug.Log(str); &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FormattedFakeOutput</span>(<span class="params">FormattableString fStr</span>)</span> &#123; <span class="keyword">if</span> (<span class="literal">false</span>) Debug.Log(fStr.ToString()); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> age = <span class="number">23</span>, times = <span class="number">25</span>;</span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputStr).Run();</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FormattedFakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputFormattedStr).Run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>FormattableString</code> 的版本因为避免了格式化操作的进行，带来了约 5 倍的收益：<br>
+<img src="/formattable_string/image-20230417094543917.png" alt=""></p>
+<p>即使真正需要执行 String 格式化时，使用 <code>FormattableString</code> 也不会带来性能劣化，如下性能测试代码：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test, Performance, Category(<span class="string">&quot;String&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">String_ReallyOutput</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> unit = SampleUnit.Microsecond;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> outputStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using string&quot;</span>, unit);</span><br><span class="line">    <span class="keyword">var</span> outputFormattedStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using formatted string&quot;</span>, unit);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FakeOutput</span>(<span class="params"><span class="built_in">string</span> str</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">true</span>) Debug.Log(str);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FormattedFakeOutput</span>(<span class="params">FormattableString fStr</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">true</span>) Debug.Log(fStr.ToString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> age = <span class="number">23</span>, times = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputStr).Run();</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FormattedFakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputFormattedStr).Run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>性能测试结果为：<br>
+<img src="/formattable_string/image-20230417094729230.png" alt=""></p>
+<p>但是如果在不需要进行格式化时，强制使用 <code>FormattableString</code> 则会带来性能劣化。</p>
+<p>如下代码，可以看到针对字符串实际上并没有需要拼接的数据，但对于 <code>Formattted</code> 版本的函数，为了保证形参为 <code>FormattableString</code> 仍然加上了 <code>$</code> 符：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test, Performance, Category(<span class="string">&quot;String&quot;</span>), TestCase(true), TestCase(false)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">String_UseZeroArgument</span>(<span class="params"><span class="built_in">bool</span> reallyOutput</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    MeasurementSettings outputStr = <span class="keyword">new</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using string&quot;</span>, s_Unit);</span><br><span class="line">    MeasurementSettings outputFormattedStr = <span class="keyword">new</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using formatted string&quot;</span>, s_Unit);</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (reallyOutput)</span><br><span class="line">            ReallyOutput(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            FakeOutput(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">    &#125;, outputStr).Run();</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (reallyOutput)</span><br><span class="line">            ReallyFormattedOutput(<span class="string">$&quot;Hello World&quot;</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            FakeFormattedOutput(<span class="string">$&quot;Hello World&quot;</span>);</span><br><span class="line">    &#125;, outputFormattedStr).Run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时，<code>FormattableString</code> 版本的函数在实际不需要输出时带来了约 10 倍的性能恶化：<br>
+<img src="/formattable_string/image-20230417102028637.png" alt=""></p>
+<h1 id="Override"><a class="header-anchor" href="#Override">#</a>Override</h1>
+<p>尽可能的避免 <code>string</code> 和 <code>FormattableString</code> 的函数重载，因为编译器会优先选择 <code>string</code> 形参的版本，且在一些操作时可能会隐式的将 <code>FormattableString</code> 转换为 <code>string</code>，进而导致与预期违背的行为产生。</p>
+<p>如下示例代码：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// DO NOT</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Sample</span>(<span class="params"><span class="built_in">string</span> <span class="keyword">value</span></span>)</span> =&gt; <span class="keyword">throw</span> <span class="literal">null</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Sample</span>(<span class="params">FormattableString <span class="keyword">value</span></span>)</span> =&gt; <span class="keyword">throw</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">Sample(<span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span>);</span><br><span class="line"><span class="comment">// ⚠ Call Sample(string)</span></span><br><span class="line"></span><br><span class="line">Sample((FormattableString)<span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span>);</span><br><span class="line"><span class="comment">// Call Sample(FormattableString) because of the explicit cast</span></span><br><span class="line"></span><br><span class="line">Sample((FormattableString)<span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span> + <span class="string">&quot;!&quot;</span>);</span><br><span class="line"><span class="comment">// Call Sample(string) because the operator FormattableString + string returns a string</span></span><br></pre></td></tr></table></figure>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://www.meziantou.net/interpolated-strings-advanced-usages.htm#interpolated-strings-a9996a-2">Interpolated strings: advanced usages - Meziantou’s blog</a></p>
+]]></content>
+      <tags>
+        <tag>C#</tag>
+        <tag>String</tag>
+        <tag>Performance</tag>
       </tags>
   </entry>
   <entry>
@@ -2325,7 +2380,7 @@ $16.20$介绍了软件无线电系统。</p>
 ]]></content>
       <tags>
         <tag>自然科学</tag>
-        <tag>心理学</tag>
+        <tag>心理</tag>
         <tag>科普</tag>
       </tags>
   </entry>
@@ -2719,7 +2774,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
 <p>有效性是一种后天的习惯，是一种实践的综合。既然是一种习惯，便是可以学会的。</p>
 <p>下列 5 项是要成为一个卓有成效的管理者，必须在思想上养成的习惯：</p>
 <ol>
-<li>有效的管理者知道应该将他们的时间用在什么地方。他们所能控制的时间非常有限，他们会有系统地工作，来善用这有限的时间。</li>
+<li>有效的管理者知道应该将他们的时间用在什么地方。他们所能控制的时间非常有限，他们会通过系统地工作来善用这有限的时间。</li>
 <li>有效的管理者重视对外界的贡献。他们并非为工作而工作，而是为成果而工作。他们不会一接到工作就一头钻进去，更不会一开头就探究工作的技术和手段，他们会首先自问：“别人期望我做出什么成果？”</li>
 <li>有效的管理者善于利用长处，包括自己的长处、上司的长处、同事的长处和下属的长处。他们还善于抓住有利形势，做他们能做的事。他们不会把工作建立在自己的短处上，也绝不会去做自己做不了的事。</li>
 <li>有效的管理者集中精力于少数重要的领域，在这少数重要的领域中，如果能有优秀的绩效就可以产生卓越的成果。他们会按照工作的轻重缓急设定优先次序，而且坚守优先次序。他们别无选择，只能要事第一。重要的事先做，不重要的事放一放，甚至不做，两种事都做，反倒会一事无成。</li>
