@@ -2,7 +2,7 @@
 tags:
     - 设计模式
 created: 2022-02-02
-updated: 2023-06-12
+updated: 2023-07-16
 title: 《Head First 设计模式》 Ch 12 复合模式
 published: true
 description: 本篇来自于 《Head First Design Pattern》 第十二章，介绍了复合模式的定义及运用。
