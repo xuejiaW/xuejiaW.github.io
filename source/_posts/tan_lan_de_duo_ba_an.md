@@ -1,7 +1,7 @@
 ---
 tags:
 - 自然科学
-- 心理学
+- 心理
 - 科普
 Author:
 - 丹尼尔·利伯曼
@@ -10,7 +10,7 @@ Cover: https://wfqqreader-1252317822.image.myqcloud.com/cover/9/41626009/t7_4162
 ISBN: 9787521731583
 Category: 科学技术-自然科学
 created: 2023-02-12
-updated: 2023-05-28
+updated: 2023-07-16
 Completecreated: 2023-02
 title: 《贪婪的多巴胺》 读书笔记
 published: true
