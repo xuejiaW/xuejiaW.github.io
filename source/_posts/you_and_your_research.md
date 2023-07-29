@@ -1,8 +1,8 @@
 ---
 tags:
-- # 摘要
+- 摘抄
 created: 2023-06-18
-updated: 2023-07-11
+updated: 2023-07-29
 published: true
 title: 《You and Your Research》 摘抄
 date: 2023-06-27 21:28 

@@ -5,10 +5,11 @@ tags:
     - LLM
     - 程序员
 created: 2023-07-16
-updated: 2023-07-16
+updated: 2023-07-29
 source: https://mp.weixin.qq.com/s/_Kh8IzsfghT4fPWknesnzA
 title: 《LLM 对程序员的冲击和影响》摘抄
 published: true
+date: 2023-07-16 16:48
 description: 摘抄整理自 茹炳晟 在 InfoQ 上一文 [LLM对程序员的冲击和影响 (qq.com)](https://mp.weixin.qq.com/s/_kh8izsfght4fpwknesnza)
 ---
 
