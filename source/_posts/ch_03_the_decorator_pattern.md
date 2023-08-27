@@ -2,7 +2,7 @@
 tags:
     - 设计模式
 alias: 装饰模式
-updated: 2023-05-28
+updated: 2023-08-22
 created: 2023-05-13
 title: 《Head First 设计模式》 Ch 03 装饰模式
 published: true

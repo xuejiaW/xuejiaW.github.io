@@ -1,7 +1,7 @@
 ---
 tags:
 - 设计模式
-updated: 2023-05-28
+updated: 2023-08-22
 created: 2023-05-12
 title: 《Head First 设计模式》 Ch 02 观察者模式
 published: true
