@@ -241,46 +241,7 @@
 ]]></content>
       <tags>
         <tag>心理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Render Hell》 第一部分 概览</title>
-    <url>/book_1_overview/</url>
-    <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
-</div>
-<h1 id="Copy_the_Data"><a class="header-anchor" href="#Copy_the_Data">#</a>Copy the Data</h1>
-<div class="note info simple"><p>之所以需要在不同的硬件间拷贝数据，是因为从不同硬件中读取数据的速度差异很大。因此对于当前需要频繁访问的数据，通常会选择将其拷贝到更为高速的内存部分中。</p>
-</div>
-<div class="note warning simple"><p>GPU 和 显卡 并不是相等的关系 GPU 全称为 Graphics Processing Unit，它指示显卡中的核心计算芯片。整个显卡中还包括显存（VRam），散热器等配件。</p>
-</div>
-<p>对于所有与绘制相关的资源，如贴图，模型，一开始都是存储在硬盘（HDD）上的 。在整个绘制过程中，它们会先被读取到内存（RAM）中，再被读取到显卡上的显存（VRAM）中。之所以要进行这么一个数据从 HDD 拷贝到 VRAM 中的操作，是因为显卡读取 VRAM 中的内容速度更快。整个过程如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_8-52-50_am.gif" alt="数据从内存拷贝到显存"></p>
-<p>又因为整个过程中数据是被 拷贝 的，因此当数据进入 VRAM 后，在 RAM 中的数据可以被正常销毁，不会影响到后续的绘制。如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_8-55-43_am.gif" alt="内存中数据可安全销毁"></p>
-<p>但是 GPU 访问 VRAM 速度仍然不够快，VRAM 中需要使用到的数据会进一步的被拷贝到 GPU 中的一小块内存上（ on-chip caches），这一块内存被称为 <code>L2 Cache</code> 。过程如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_9-18-41_am.gif" alt="L2 Cache"></p>
-<p>在 GPU 更靠近核心（Core）的地方，还有一片更小的内存，称为 <code>L1 Cache</code> 。因为更靠近核心，所以 <code>L1 Cache</code> 中数据的访问速度相对于 <code>L2 Cache</code> 也更快。 <code>L2 Cache</code> 中的数据在需要被操作时，也会先拷贝到 <code>L1 Cache</code> 中。</p>
-<p>在 <code>L1 Cache</code> 中的数据还会被进一步拷贝到 GPU 中被称为 <code>Register</code> 的内存区域，GPU Cores 会从该区域中读取数据，计算并将运算后结果放回到 <code>Register</code> 中：<br>
-<img src="/book_1_overview/gif_9-13-2021_9-25-58_am.gif" alt="Register"></p>
-<h1 id="Set_the_Render_State"><a class="header-anchor" href="#Set_the_Render_State">#</a>Set the Render State</h1>
-<p>对于除了 Mesh 数据外的数据，如顶点/像素着色器，纹理，材质，光照信息，是否半透明等信息都称为 <code>Render State</code> 。</p>
-<p>Mesh 数据会使用被设置的 <code>Render State</code> 进行渲染，图形 API 又是一个类似状态机的实现，即设置了 Render State 后，后续的 Mesh 都会使用该 State 进行渲染，直到有了新 State 被设置。示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_8-47-57_am.gif" alt="State"></p>
-<h1 id="Draw_Call"><a class="header-anchor" href="#Draw_Call">#</a>Draw Call</h1>
-<p><code>DrawCall</code> 是一个由 CPU 端发出，由 GPU 端接受的绘制 <strong>一个 Mesh</strong> 的指令。该指令只包含指向需要绘制的 Mesh 的指针，而如材质这样的信息是通过 Render State 进行传递，并不会在 <code>DrawCall</code> 中。示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_8-55-41_am.gif" alt="Draw Call"></p>
-<h1 id="Pipeline"><a class="header-anchor" href="#Pipeline">#</a>Pipeline</h1>
-<p>当 <code>DrawCall</code> 发送后，GPU 会获取当前的 Render State，和设置的顶点信息（Mesh），并通过渲染管线（Pipeline）将其一步步转换到最终屏幕上所见像素。在管线中，对于顶点和像素的工作会被划分到 GPU 的多个核心中平行处理。整个管线工作的简单示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_9-02-13_am.gif" alt="Pipeline"></p>
-<h1 id="Command_Buffer"><a class="header-anchor" href="#Command_Buffer">#</a>Command Buffer</h1>
-<p>CPU 并不是直接将数据传递给 GPU，而是通过 <code>Command Buffer</code> ，这样 CPU 和 GPU 就可以各自独立的工作。如果是直接传递的话，当 GPU 在忙碌时，CPU 无法将数据送给 GPU，就会造成 CPU 的堵塞。</p>
-<p>Command Buffer 是一个 <code>FIFO 存储器</code> ，即 GPU 只会取 CPU 最早 Push 进 Command Buffer 中的数据。 Command Buffer 的示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_9-12-25_am.gif" alt="Command Buffer"></p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell-book1/">Render Hell – Book I | Simon schreibt.</a></p>
-]]></content>
-      <tags>
-        <tag>GPU</tag>
+        <tag>摘抄</tag>
       </tags>
   </entry>
   <entry>
@@ -406,6 +367,46 @@
 </li>
 </ol>
 </section>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Render Hell》 第一部分 概览</title>
+    <url>/book_1_overview/</url>
+    <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
+</div>
+<h1 id="Copy_the_Data"><a class="header-anchor" href="#Copy_the_Data">#</a>Copy the Data</h1>
+<div class="note info simple"><p>之所以需要在不同的硬件间拷贝数据，是因为从不同硬件中读取数据的速度差异很大。因此对于当前需要频繁访问的数据，通常会选择将其拷贝到更为高速的内存部分中。</p>
+</div>
+<div class="note warning simple"><p>GPU 和 显卡 并不是相等的关系 GPU 全称为 Graphics Processing Unit，它指示显卡中的核心计算芯片。整个显卡中还包括显存（VRam），散热器等配件。</p>
+</div>
+<p>对于所有与绘制相关的资源，如贴图，模型，一开始都是存储在硬盘（HDD）上的 。在整个绘制过程中，它们会先被读取到内存（RAM）中，再被读取到显卡上的显存（VRAM）中。之所以要进行这么一个数据从 HDD 拷贝到 VRAM 中的操作，是因为显卡读取 VRAM 中的内容速度更快。整个过程如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_8-52-50_am.gif" alt="数据从内存拷贝到显存"></p>
+<p>又因为整个过程中数据是被 拷贝 的，因此当数据进入 VRAM 后，在 RAM 中的数据可以被正常销毁，不会影响到后续的绘制。如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_8-55-43_am.gif" alt="内存中数据可安全销毁"></p>
+<p>但是 GPU 访问 VRAM 速度仍然不够快，VRAM 中需要使用到的数据会进一步的被拷贝到 GPU 中的一小块内存上（ on-chip caches），这一块内存被称为 <code>L2 Cache</code> 。过程如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_9-18-41_am.gif" alt="L2 Cache"></p>
+<p>在 GPU 更靠近核心（Core）的地方，还有一片更小的内存，称为 <code>L1 Cache</code> 。因为更靠近核心，所以 <code>L1 Cache</code> 中数据的访问速度相对于 <code>L2 Cache</code> 也更快。 <code>L2 Cache</code> 中的数据在需要被操作时，也会先拷贝到 <code>L1 Cache</code> 中。</p>
+<p>在 <code>L1 Cache</code> 中的数据还会被进一步拷贝到 GPU 中被称为 <code>Register</code> 的内存区域，GPU Cores 会从该区域中读取数据，计算并将运算后结果放回到 <code>Register</code> 中：<br>
+<img src="/book_1_overview/gif_9-13-2021_9-25-58_am.gif" alt="Register"></p>
+<h1 id="Set_the_Render_State"><a class="header-anchor" href="#Set_the_Render_State">#</a>Set the Render State</h1>
+<p>对于除了 Mesh 数据外的数据，如顶点/像素着色器，纹理，材质，光照信息，是否半透明等信息都称为 <code>Render State</code> 。</p>
+<p>Mesh 数据会使用被设置的 <code>Render State</code> 进行渲染，图形 API 又是一个类似状态机的实现，即设置了 Render State 后，后续的 Mesh 都会使用该 State 进行渲染，直到有了新 State 被设置。示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_8-47-57_am.gif" alt="State"></p>
+<h1 id="Draw_Call"><a class="header-anchor" href="#Draw_Call">#</a>Draw Call</h1>
+<p><code>DrawCall</code> 是一个由 CPU 端发出，由 GPU 端接受的绘制 <strong>一个 Mesh</strong> 的指令。该指令只包含指向需要绘制的 Mesh 的指针，而如材质这样的信息是通过 Render State 进行传递，并不会在 <code>DrawCall</code> 中。示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_8-55-41_am.gif" alt="Draw Call"></p>
+<h1 id="Pipeline"><a class="header-anchor" href="#Pipeline">#</a>Pipeline</h1>
+<p>当 <code>DrawCall</code> 发送后，GPU 会获取当前的 Render State，和设置的顶点信息（Mesh），并通过渲染管线（Pipeline）将其一步步转换到最终屏幕上所见像素。在管线中，对于顶点和像素的工作会被划分到 GPU 的多个核心中平行处理。整个管线工作的简单示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_9-02-13_am.gif" alt="Pipeline"></p>
+<h1 id="Command_Buffer"><a class="header-anchor" href="#Command_Buffer">#</a>Command Buffer</h1>
+<p>CPU 并不是直接将数据传递给 GPU，而是通过 <code>Command Buffer</code> ，这样 CPU 和 GPU 就可以各自独立的工作。如果是直接传递的话，当 GPU 在忙碌时，CPU 无法将数据送给 GPU，就会造成 CPU 的堵塞。</p>
+<p>Command Buffer 是一个 <code>FIFO 存储器</code> ，即 GPU 只会取 CPU 最早 Push 进 Command Buffer 中的数据。 Command Buffer 的示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_9-12-25_am.gif" alt="Command Buffer"></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book1/">Render Hell – Book I | Simon schreibt.</a></p>
 ]]></content>
       <tags>
         <tag>GPU</tag>
@@ -577,28 +578,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 01 策略模式</title>
-    <url>/ch_01_the_strategy_pattern/</url>
-    <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
-<p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
-<p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="算法接口及实现类"><a class="header-anchor" href="#算法接口及实现类">#</a>算法接口及实现类</h2>
-<figure class="highlight cs"><figcaption><span>飞行方法接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>飞行方法实现</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyNoWay</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Can not fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithRocket</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with rocket&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithWings</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with wings&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="环境类"><a class="header-anchor" href="#环境类">#</a>环境类</h2>
-<figure class="highlight cs"><figcaption><span>鸭子基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehavior flyBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PerformFly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span>(<span class="params">IFlyBehavior fb</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior = fb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>鸭子派生类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BlackDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlackDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyWithWings());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a black duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RubberDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RubberDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a rubber duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">RubberDuck rubberDuck = <span class="keyword">new</span> RubberDuck();</span><br><span class="line">rubberDuck.disPlay();</span><br><span class="line">rubberDuck.PerformFly();</span><br><span class="line"></span><br><span class="line">BlackDuck blackDuck = <span class="keyword">new</span> BlackDuck();</span><br><span class="line">blackDuck.disPlay();</span><br><span class="line">blackDuck.PerformFly();</span><br><span class="line">blackDuck.setFlyBehavior(<span class="keyword">new</span> FlyWithRocket());</span><br><span class="line">blackDuck.PerformFly();</span><br></pre></td></tr></table></figure>
-<p>运行结果</p>
-<p><img src="/ch_01_the_strategy_pattern/2019-01-15-00-12-45.png" alt="策略模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Head First 设计模式》 Ch 02 观察者模式</title>
     <url>/ch_02_the_observer_pattern/</url>
     <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
@@ -622,27 +601,22 @@
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 03 装饰模式</title>
-    <url>/ch_03_the_decorator_pattern/</url>
-    <content><![CDATA[<p>装饰模式（Decorator Pattern） 提供了一个动态增加一个类功能的方法，主要实现思想是通过一个作为装饰者的类（<code>Decorators</code>）包裹被装饰类（<code>Component</code>）（装饰类以及被装饰类都有共同的基类），<code>Decorators</code> 会在 <code>Component</code> 类的某一个函数执行前或后进行一些操作，进而达到增加功能的作用。</p>
-<p>装饰模式主要实现了“代码应该对扩展功能开放而对于修改关闭”的面向对象原则，它在增加新功能的前提下，不需要改动既有的代码，只需要增加新的 <code>Decorators</code> 并且包含既有的 <code>Component</code> 即可。</p>
-<p>例如我们要计算一杯咖啡的价格，而这杯咖啡的价格还会受到额外的配料的影响，比如要加抹茶需要额外支付 0.2 元，加奶泡需要额外支付 0.3 元等。如果对各种配料都各自使用一个类来表示，则会存在较多的类需要维护，而且一旦配料发生变化等，还需要进行代码修改。而使用装饰模式则可以将原始的咖啡作为被装饰类，而所有的配料都是装饰类，则配料的更改仅需要增加或删除外部的装饰类即可。</p>
+    <title>《Head First 设计模式》 Ch 01 策略模式</title>
+    <url>/ch_01_the_strategy_pattern/</url>
+    <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
+<p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
+<p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
 <h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="装饰类及被装饰类基类"><a class="header-anchor" href="#装饰类及被装饰类基类">#</a>装饰类及被装饰类基类</h2>
-<figure class="highlight cs"><figcaption><span>被装饰类基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="built_in">string</span> description = <span class="string">&quot;UnKnown Beverage&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> description;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>装饰类基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CondimentDecorator</span> : <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> Beverage beverage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CondimentDecorator</span>(<span class="params">Beverage beverage</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.beverage = beverage;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<div class="note info simple"><p>注意装饰类基类继承自被装饰类，并存有一个被装饰类的变量，因为装饰类需要在被装饰类操作的基础上进行一定额外的操作，所以它需要存有对被装饰类的引用，同时对外部而言调用者而言，它与被装饰类相同。</p>
-</div>
-<h2 id="被装饰类实现"><a class="header-anchor" href="#被装饰类实现">#</a>被装饰类实现</h2>
-<figure class="highlight cs"><figcaption><span>浓咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Espresso</span> : <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Espresso</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        description = <span class="string">&quot;Espresson&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1.99</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="装饰类实现"><a class="header-anchor" href="#装饰类实现">#</a>装饰类实现</h2>
-<figure class="highlight cs"><figcaption><span>酱油</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Soy</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Soy</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Soy&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.30</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>奶泡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Whip</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Whip</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Whip&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.30</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>抹茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Mocha</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mocha</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Mocha&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.20</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="算法接口及实现类"><a class="header-anchor" href="#算法接口及实现类">#</a>算法接口及实现类</h2>
+<figure class="highlight cs"><figcaption><span>飞行方法接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>飞行方法实现</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyNoWay</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Can not fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithRocket</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with rocket&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithWings</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with wings&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="环境类"><a class="header-anchor" href="#环境类">#</a>环境类</h2>
+<figure class="highlight cs"><figcaption><span>鸭子基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehavior flyBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PerformFly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span>(<span class="params">IFlyBehavior fb</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior = fb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>鸭子派生类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BlackDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlackDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyWithWings());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a black duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RubberDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RubberDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a rubber duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Espresso espresso = <span class="keyword">new</span> Espresso();</span><br><span class="line">Console.WriteLine(espresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + espresso.Cost());</span><br><span class="line"></span><br><span class="line">Beverage doubleMochaWhipEspresso = <span class="keyword">new</span> Mocha(<span class="keyword">new</span> Mocha(<span class="keyword">new</span> Whip(espresso)));</span><br><span class="line">Console.WriteLine(doubleMochaWhipEspresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + doubleMochaWhipEspresso.Cost());</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_03_the_decorator_pattern/2019-01-15-23-43-20.png" alt="装饰模式运行结果"></p>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">RubberDuck rubberDuck = <span class="keyword">new</span> RubberDuck();</span><br><span class="line">rubberDuck.disPlay();</span><br><span class="line">rubberDuck.PerformFly();</span><br><span class="line"></span><br><span class="line">BlackDuck blackDuck = <span class="keyword">new</span> BlackDuck();</span><br><span class="line">blackDuck.disPlay();</span><br><span class="line">blackDuck.PerformFly();</span><br><span class="line">blackDuck.setFlyBehavior(<span class="keyword">new</span> FlyWithRocket());</span><br><span class="line">blackDuck.PerformFly();</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<p><img src="/ch_01_the_strategy_pattern/2019-01-15-00-12-45.png" alt="策略模式运行结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -722,67 +696,30 @@
       </tags>
   </entry>
   <entry>
-    <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
-    <url>/ch_05_overview_of_data_communications/</url>
-    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
-<h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
-<p>数据通信是物理，数学和电气工程三个学科的混合领域。</p>
-<ol>
-<li>物理：信息的传输依赖于物理媒介</li>
-<li>数学：信息需要数字化</li>
-<li>电气工程：数据传输需要构建现实中的通信系统</li>
-</ol>
-<h1 id="Motivation_And_Scope_Of_The_Subject"><a class="header-anchor" href="#Motivation_And_Scope_Of_The_Subject">#</a>Motivation And Scope Of The Subject</h1>
-<p>在数据通信领域有三个重要的点，他们定义了数据通信的一些领域</p>
-<ol>
-<li>
-<p>传输的数据可以是任意类型的</p>
-<p>传输的数据并不一定是存储在计算机中的<code>bit</code>数据，也可以是从现实世界中获取的信息，如音频和视频。</p>
-</li>
-<li>
-<p>数据的传输依赖于物理系统</p>
-<p>数据是基于物理现象来传输的，例如电，电磁波。了解为什么这些物理现象可以被用来传输数据是很重要的。另外也需要理解物理系统的限制，因为这些限制引发的问题和这些问题如何被检测并解决。</p>
-</li>
-<li>
-<p>多个来源的信息可以共享基础媒介来传输</p>
-<p>媒介共享在计算机网络中是一个重要角色。了解哪些基础设施是可以被共享的，共享他们的优缺点，以及基于共享而设计的通信模型是很重要的。</p>
-</li>
-</ol>
-<h1 id="The_Conceptual_Pieces_Of_A_Communications_System"><a class="header-anchor" href="#The_Conceptual_Pieces_Of_A_Communications_System">#</a>The Conceptual Pieces Of A Communications System</h1>
-<p>每一个来源都需要一些方法来获取信息，调整信息为用于传播的模式，使用共享的物理媒介来传输信息。同时也需要一些方法从物理媒介中抽取出每条信息的目的地地址，并将信息传送给目标地址。整个过程如下图所示：</p>
-<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-24-24.png" alt="数据通信简单模型"></p>
-<p>上图是一个非常简化的模型，在实际操作中，在传输数据前，必须对数据进行数字化，也需要加入一些额外的信息防止错误发生。如果考虑到隐私，可能还需要进行加密。在使用共享媒介时，还要保证有方法可以分辨出每条信息且他们不会相互干扰。</p>
-<p>为了解释数据通信的每个部分，工程师们制订了一个概念框架来说明通信系统中的每个小主题是如何联系在一起的，概念框架如下图所示：</p>
-<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-28-26.png" alt="概念框架"></p>
-<h1 id="The_Subtopics_Of_Data_Communications"><a class="header-anchor" href="#The_Subtopics_Of_Data_Communications">#</a>The Subtopics Of Data Communications</h1>
-<p>上一节中的概念框架图中的每一部分都代表了数据通信中的一个小主题。这一节中简单介绍了图中的一些术语，之后的几章中会在对每一部分进行详细说。</p>
-<ol>
-<li>
-<p><code>数据来源(Information Sources)</code>可以是模拟数据或者数字电路。这一部分的关键内容包括信号的特征（<code>振幅(Amplitude)</code>，<code>频率(Frequency)</code>，<code>相位(Phase)</code>），周期性与非周期性，以及模拟信息和数字信息的转换。</p>
-</li>
-<li>
-<p><code>信源编码与解码(Source Encoder and Decoder)</code>。一旦信息被数字化后，信息就可以被转换，这一部分的关键内容包括数据压缩以及压缩后对于传输的影响</p>
-</li>
-<li>
-<p><code>加密与解密(Encryptor and Decryptor)</code>。为了保护信息和保证其可信度，在信息传送前需要进行加密，在接收后需要解密。这一部分的关键内容包括密码学技术与算法。</p>
-</li>
-<li>
-<p><code>信道编码与解码(Channel Encoder and Decoder)</code>。信道编码是用来检测也纠正传输错误。这一部分的关键内容包括检测和限制错误，以及实际应用的技术，如奇偶校验(parity checking)等。</p>
-</li>
-<li>
-<p><code>复用与解复用(Multiplexor and Demultiplexor)</code>。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。</p>
-</li>
-<li>
-<p><code>调制与解调(Modulator and Demodulator)</code>。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。</p>
-</li>
-<li>
-<p><code>物理通道与传输(Physical Channel and Transmission)</code>。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，</p>
-</li>
-</ol>
+    <title>《Head First 设计模式》 Ch 03 装饰模式</title>
+    <url>/ch_03_the_decorator_pattern/</url>
+    <content><![CDATA[<p>装饰模式（Decorator Pattern） 提供了一个动态增加一个类功能的方法，主要实现思想是通过一个作为装饰者的类（<code>Decorators</code>）包裹被装饰类（<code>Component</code>）（装饰类以及被装饰类都有共同的基类），<code>Decorators</code> 会在 <code>Component</code> 类的某一个函数执行前或后进行一些操作，进而达到增加功能的作用。</p>
+<p>装饰模式主要实现了“代码应该对扩展功能开放而对于修改关闭”的面向对象原则，它在增加新功能的前提下，不需要改动既有的代码，只需要增加新的 <code>Decorators</code> 并且包含既有的 <code>Component</code> 即可。</p>
+<p>例如我们要计算一杯咖啡的价格，而这杯咖啡的价格还会受到额外的配料的影响，比如要加抹茶需要额外支付 0.2 元，加奶泡需要额外支付 0.3 元等。如果对各种配料都各自使用一个类来表示，则会存在较多的类需要维护，而且一旦配料发生变化等，还需要进行代码修改。而使用装饰模式则可以将原始的咖啡作为被装饰类，而所有的配料都是装饰类，则配料的更改仅需要增加或删除外部的装饰类即可。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="装饰类及被装饰类基类"><a class="header-anchor" href="#装饰类及被装饰类基类">#</a>装饰类及被装饰类基类</h2>
+<figure class="highlight cs"><figcaption><span>被装饰类基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="built_in">string</span> description = <span class="string">&quot;UnKnown Beverage&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> description;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>装饰类基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CondimentDecorator</span> : <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> Beverage beverage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CondimentDecorator</span>(<span class="params">Beverage beverage</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.beverage = beverage;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info simple"><p>注意装饰类基类继承自被装饰类，并存有一个被装饰类的变量，因为装饰类需要在被装饰类操作的基础上进行一定额外的操作，所以它需要存有对被装饰类的引用，同时对外部而言调用者而言，它与被装饰类相同。</p>
+</div>
+<h2 id="被装饰类实现"><a class="header-anchor" href="#被装饰类实现">#</a>被装饰类实现</h2>
+<figure class="highlight cs"><figcaption><span>浓咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Espresso</span> : <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Espresso</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        description = <span class="string">&quot;Espresson&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1.99</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="装饰类实现"><a class="header-anchor" href="#装饰类实现">#</a>装饰类实现</h2>
+<figure class="highlight cs"><figcaption><span>酱油</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Soy</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Soy</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Soy&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.30</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>奶泡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Whip</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Whip</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Whip&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.30</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>抹茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Mocha</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mocha</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Mocha&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.20</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Espresso espresso = <span class="keyword">new</span> Espresso();</span><br><span class="line">Console.WriteLine(espresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + espresso.Cost());</span><br><span class="line"></span><br><span class="line">Beverage doubleMochaWhipEspresso = <span class="keyword">new</span> Mocha(<span class="keyword">new</span> Mocha(<span class="keyword">new</span> Whip(espresso)));</span><br><span class="line">Console.WriteLine(doubleMochaWhipEspresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + doubleMochaWhipEspresso.Cost());</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_03_the_decorator_pattern/2019-01-15-23-43-20.png" alt="装饰模式运行结果"></p>
 ]]></content>
       <tags>
-        <tag>计算机网络</tag>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -935,42 +872,67 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 07 适配器模式和外观模式</title>
-    <url>/ch_07_the_adapter_and_facade_patterns/</url>
-    <content><![CDATA[<h1 id="适配器模式"><a class="header-anchor" href="#适配器模式">#</a>适配器模式</h1>
-<p>适配器模式（Adapter Pattern）将一个类的接口转换为用户想要的另一个接口。适配器模式将原先因为接口不兼容的一些类可以一起工作。</p>
-<p>例如我们有已经实现的火鸡类和鸭子类，其中鸭子的鸣叫我们使用<code>Quack</code>，火鸡的鸣叫我们用<code>Goggle</code>，两个接口不相同，但在某些情况下，我们不希望具体区分是火鸡还是鸭子，只希望他们都能叫，这时候就需要用适配器模式，将火鸡或鸭子伪装成同一个类。</p>
-<h2 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h2>
-<h3 id="鸭子及火鸡抽象接口及实现"><a class="header-anchor" href="#鸭子及火鸡抽象接口及实现">#</a>鸭子及火鸡抽象接口及实现</h3>
-<figure class="highlight cs"><figcaption><span>鸭子接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Quack</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>鸭子实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MallardDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;MallardDuck Fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Quack</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;MallardDuck Quack&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>火鸡接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Turkey</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Gobble</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>火鸡实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">WildTurkey</span> : <span class="title">Turkey</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;WildTurkey Fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Gobble</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;WildTurkey Gobble&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="适配器类"><a class="header-anchor" href="#适配器类">#</a>适配器类</h3>
-<figure class="highlight cs"><figcaption><span>火鸡适配器</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TurkeyAdapter</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    Turkey turkey;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TurkeyAdapter</span>(<span class="params">Turkey turkey</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.turkey = turkey;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i != <span class="number">5</span>; ++i)</span><br><span class="line">            turkey.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Quack</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        turkey.Gobble();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h2>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    MallardDuck duck = <span class="keyword">new</span> MallardDuck();</span><br><span class="line">    WildTurkey turkey = <span class="keyword">new</span> WildTurkey();</span><br><span class="line">    TestDuck(duck);</span><br><span class="line">    TestDuck(<span class="keyword">new</span> TurkeyAdapter(turkey));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">TestDuck</span>(<span class="params">Duck duck</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    duck.Fly();</span><br><span class="line">    duck.Quack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_07_the_adapter_and_facade_patterns/2019-02-03-00-10-27.png" alt="适配器模式运行结果"></p>
-<h1 id="外观模式"><a class="header-anchor" href="#外观模式">#</a>外观模式</h1>
-<p>外观模式(Facade Pattern)为子系统的一系列接口提供了一个统一的，更高级别的接口以简化外部的调用。</p>
-<p>外观模式实际上是遵从于<code>最小知识原则</code>，对一些上层的类来说，它不需要了解下面子系统的具体构成，那么我们就用一个中间层（Facade）来将封装这些子系统，形成一个软解耦。</p>
-<p>例如我们有一个家庭影院，在播放电影时我们需要打开 DVD 机，打开投影仪，打开放大器，打开音频协调器等，我们可以用一个<code>Facade</code>来将这些操作都封装起来，对于外部调用者来说仅有开始播放电影及关闭播放电影两步。</p>
-<h2 id="代码示例-2"><a class="header-anchor" href="#代码示例-2">#</a>代码示例</h2>
-<h3 id="子系统"><a class="header-anchor" href="#子系统">#</a>子系统</h3>
-<figure class="highlight cs"><figcaption><span>DVD机器</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DvdPlayer</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; On&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; Off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>投影仪</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Projector</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; On&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; Off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>放大器</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Amplifier</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; On&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; Off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>音频协调器</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Tuner</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; On&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; Off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Facade"><a class="header-anchor" href="#Facade">#</a>Facade</h3>
-<figure class="highlight cs"><figcaption><span>家庭影院外观者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">HomeTheaderFacade</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Amplifier amplifier = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> Tuner tuner = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> DvdPlayer dvdPlayer = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> Projector projector = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HomeTheaderFacade</span>(<span class="params">Amplifier amplifier, Tuner tuner, DvdPlayer dvdPlayer, Projector projector</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.amplifier = amplifier;</span><br><span class="line">        <span class="keyword">this</span>.tuner = tuner;</span><br><span class="line">        <span class="keyword">this</span>.dvdPlayer = dvdPlayer;</span><br><span class="line">        <span class="keyword">this</span>.projector = projector;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">WatchMovie</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        amplifier.On();</span><br><span class="line">        tuner.On();</span><br><span class="line">        dvdPlayer.On();</span><br><span class="line">        projector.On();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">endMovie</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        amplifier.Off();</span><br><span class="line">        tuner.Off();</span><br><span class="line">        dvdPlayer.Off();</span><br><span class="line">        projector.Off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="测试代码及结果-2"><a class="header-anchor" href="#测试代码及结果-2">#</a>测试代码及结果</h2>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">HomeTheaderFacade facade = <span class="keyword">new</span> HomeTheaderFacade(<span class="keyword">new</span> Amplifier(), <span class="keyword">new</span> Tuner(), <span class="keyword">new</span> DvdPlayer(), <span class="keyword">new</span> Projector());</span><br><span class="line">facade.WatchMovie();</span><br><span class="line">Console.WriteLine();</span><br><span class="line">facade.endMovie();</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_07_the_adapter_and_facade_patterns/2019-02-03-13-53-18.png" alt="外观模式运行结果"></p>
+    <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
+    <url>/ch_05_overview_of_data_communications/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
+<h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
+<p>数据通信是物理，数学和电气工程三个学科的混合领域。</p>
+<ol>
+<li>物理：信息的传输依赖于物理媒介</li>
+<li>数学：信息需要数字化</li>
+<li>电气工程：数据传输需要构建现实中的通信系统</li>
+</ol>
+<h1 id="Motivation_And_Scope_Of_The_Subject"><a class="header-anchor" href="#Motivation_And_Scope_Of_The_Subject">#</a>Motivation And Scope Of The Subject</h1>
+<p>在数据通信领域有三个重要的点，他们定义了数据通信的一些领域</p>
+<ol>
+<li>
+<p>传输的数据可以是任意类型的</p>
+<p>传输的数据并不一定是存储在计算机中的<code>bit</code>数据，也可以是从现实世界中获取的信息，如音频和视频。</p>
+</li>
+<li>
+<p>数据的传输依赖于物理系统</p>
+<p>数据是基于物理现象来传输的，例如电，电磁波。了解为什么这些物理现象可以被用来传输数据是很重要的。另外也需要理解物理系统的限制，因为这些限制引发的问题和这些问题如何被检测并解决。</p>
+</li>
+<li>
+<p>多个来源的信息可以共享基础媒介来传输</p>
+<p>媒介共享在计算机网络中是一个重要角色。了解哪些基础设施是可以被共享的，共享他们的优缺点，以及基于共享而设计的通信模型是很重要的。</p>
+</li>
+</ol>
+<h1 id="The_Conceptual_Pieces_Of_A_Communications_System"><a class="header-anchor" href="#The_Conceptual_Pieces_Of_A_Communications_System">#</a>The Conceptual Pieces Of A Communications System</h1>
+<p>每一个来源都需要一些方法来获取信息，调整信息为用于传播的模式，使用共享的物理媒介来传输信息。同时也需要一些方法从物理媒介中抽取出每条信息的目的地地址，并将信息传送给目标地址。整个过程如下图所示：</p>
+<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-24-24.png" alt="数据通信简单模型"></p>
+<p>上图是一个非常简化的模型，在实际操作中，在传输数据前，必须对数据进行数字化，也需要加入一些额外的信息防止错误发生。如果考虑到隐私，可能还需要进行加密。在使用共享媒介时，还要保证有方法可以分辨出每条信息且他们不会相互干扰。</p>
+<p>为了解释数据通信的每个部分，工程师们制订了一个概念框架来说明通信系统中的每个小主题是如何联系在一起的，概念框架如下图所示：</p>
+<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-28-26.png" alt="概念框架"></p>
+<h1 id="The_Subtopics_Of_Data_Communications"><a class="header-anchor" href="#The_Subtopics_Of_Data_Communications">#</a>The Subtopics Of Data Communications</h1>
+<p>上一节中的概念框架图中的每一部分都代表了数据通信中的一个小主题。这一节中简单介绍了图中的一些术语，之后的几章中会在对每一部分进行详细说。</p>
+<ol>
+<li>
+<p><code>数据来源(Information Sources)</code>可以是模拟数据或者数字电路。这一部分的关键内容包括信号的特征（<code>振幅(Amplitude)</code>，<code>频率(Frequency)</code>，<code>相位(Phase)</code>），周期性与非周期性，以及模拟信息和数字信息的转换。</p>
+</li>
+<li>
+<p><code>信源编码与解码(Source Encoder and Decoder)</code>。一旦信息被数字化后，信息就可以被转换，这一部分的关键内容包括数据压缩以及压缩后对于传输的影响</p>
+</li>
+<li>
+<p><code>加密与解密(Encryptor and Decryptor)</code>。为了保护信息和保证其可信度，在信息传送前需要进行加密，在接收后需要解密。这一部分的关键内容包括密码学技术与算法。</p>
+</li>
+<li>
+<p><code>信道编码与解码(Channel Encoder and Decoder)</code>。信道编码是用来检测也纠正传输错误。这一部分的关键内容包括检测和限制错误，以及实际应用的技术，如奇偶校验(parity checking)等。</p>
+</li>
+<li>
+<p><code>复用与解复用(Multiplexor and Demultiplexor)</code>。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。</p>
+</li>
+<li>
+<p><code>调制与解调(Modulator and Demodulator)</code>。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。</p>
+</li>
+<li>
+<p><code>物理通道与传输(Physical Channel and Transmission)</code>。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，</p>
+</li>
+</ol>
 ]]></content>
       <tags>
-        <tag>设计模式</tag>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -1188,30 +1150,39 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 08 模板方法模式</title>
-    <url>/ch_08_the_template_method_pattern/</url>
-    <content><![CDATA[<p>模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。</p>
-<ul>
-<li>
-<p>工厂方法&gt;模式就是模版方法模式的一种运用。</p>
-</li>
-<li>
-<p>策略模式和模版方法模式都是将算法的实现抽象出来，不同的是策略模式的实现依靠组成，而模版方法模式依靠继承。</p>
-</li>
-</ul>
-<p>例如我们需要准备咖啡和茶，准备咖啡基本步骤为烧开水，加入咖啡粉，将咖啡倒入杯子，增加牛奶或糖（可选），准备茶的基本步骤为烧开水，加入茶粉，将茶倒入杯子，增加柠檬（可选）。我们发现在制作两个饮料的过程中，烧开水和倒入杯子这两个步骤是一样的，剩下的两个步骤，向烧开的水中增加相应的粉和增加配料，这两部分也是类似的，于是我们可以用模版方法模式，将这两步骤作为抽象方法。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="算法模版基类"><a class="header-anchor" href="#算法模版基类">#</a>算法模版基类</h2>
-<figure class="highlight cs"><figcaption><span>咖啡因饮料模版</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrepareRecipe</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        boilWater();</span><br><span class="line">        brew();</span><br><span class="line">        pourInCup();</span><br><span class="line">        <span class="keyword">if</span> (NeedCondiments())</span><br><span class="line">            addCondiments();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">brew</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">boilWater</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Boiling Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">pourInCup</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Pouring Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<div class="note info simple"><p>例子中<code>brew</code>和<code>addCondiments</code>即为模版函数，而<code>NeedCondiments</code>这种提供了基本实现，但派生类中仍然可以重写的函数被称为钩子（<code>Hook</code>）。</p>
-</div>
-<h2 id="咖啡因饮料实现"><a class="header-anchor" href="#咖啡因饮料实现">#</a>咖啡因饮料实现</h2>
-<figure class="highlight cs"><figcaption><span>咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Coffee</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Add sugar and Milk&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Dripping coffee through filter&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Tea</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Adding lemon&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Steeping the tea&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Coffee coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">Tea tea = <span class="keyword">new</span> Tea();</span><br><span class="line">coffee.PrepareRecipe();</span><br><span class="line">Console.WriteLine();</span><br><span class="line">tea.PrepareRecipe();</span><br></pre></td></tr></table></figure>
-<p>运行结果:</p>
-<p><img src="/ch_08_the_template_method_pattern/2019-02-03-15-59-58.png" alt="模版方法模式运行结果"></p>
+    <title>《Head First 设计模式》 Ch 07 适配器模式和外观模式</title>
+    <url>/ch_07_the_adapter_and_facade_patterns/</url>
+    <content><![CDATA[<h1 id="适配器模式"><a class="header-anchor" href="#适配器模式">#</a>适配器模式</h1>
+<p>适配器模式（Adapter Pattern）将一个类的接口转换为用户想要的另一个接口。适配器模式将原先因为接口不兼容的一些类可以一起工作。</p>
+<p>例如我们有已经实现的火鸡类和鸭子类，其中鸭子的鸣叫我们使用<code>Quack</code>，火鸡的鸣叫我们用<code>Goggle</code>，两个接口不相同，但在某些情况下，我们不希望具体区分是火鸡还是鸭子，只希望他们都能叫，这时候就需要用适配器模式，将火鸡或鸭子伪装成同一个类。</p>
+<h2 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h2>
+<h3 id="鸭子及火鸡抽象接口及实现"><a class="header-anchor" href="#鸭子及火鸡抽象接口及实现">#</a>鸭子及火鸡抽象接口及实现</h3>
+<figure class="highlight cs"><figcaption><span>鸭子接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Quack</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>鸭子实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MallardDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;MallardDuck Fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Quack</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;MallardDuck Quack&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>火鸡接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Turkey</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Gobble</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>火鸡实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">WildTurkey</span> : <span class="title">Turkey</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;WildTurkey Fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Gobble</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;WildTurkey Gobble&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="适配器类"><a class="header-anchor" href="#适配器类">#</a>适配器类</h3>
+<figure class="highlight cs"><figcaption><span>火鸡适配器</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TurkeyAdapter</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    Turkey turkey;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TurkeyAdapter</span>(<span class="params">Turkey turkey</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.turkey = turkey;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i != <span class="number">5</span>; ++i)</span><br><span class="line">            turkey.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Quack</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        turkey.Gobble();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h2>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    MallardDuck duck = <span class="keyword">new</span> MallardDuck();</span><br><span class="line">    WildTurkey turkey = <span class="keyword">new</span> WildTurkey();</span><br><span class="line">    TestDuck(duck);</span><br><span class="line">    TestDuck(<span class="keyword">new</span> TurkeyAdapter(turkey));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">TestDuck</span>(<span class="params">Duck duck</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    duck.Fly();</span><br><span class="line">    duck.Quack();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_07_the_adapter_and_facade_patterns/2019-02-03-00-10-27.png" alt="适配器模式运行结果"></p>
+<h1 id="外观模式"><a class="header-anchor" href="#外观模式">#</a>外观模式</h1>
+<p>外观模式(Facade Pattern)为子系统的一系列接口提供了一个统一的，更高级别的接口以简化外部的调用。</p>
+<p>外观模式实际上是遵从于<code>最小知识原则</code>，对一些上层的类来说，它不需要了解下面子系统的具体构成，那么我们就用一个中间层（Facade）来将封装这些子系统，形成一个软解耦。</p>
+<p>例如我们有一个家庭影院，在播放电影时我们需要打开 DVD 机，打开投影仪，打开放大器，打开音频协调器等，我们可以用一个<code>Facade</code>来将这些操作都封装起来，对于外部调用者来说仅有开始播放电影及关闭播放电影两步。</p>
+<h2 id="代码示例-2"><a class="header-anchor" href="#代码示例-2">#</a>代码示例</h2>
+<h3 id="子系统"><a class="header-anchor" href="#子系统">#</a>子系统</h3>
+<figure class="highlight cs"><figcaption><span>DVD机器</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DvdPlayer</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; On&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; Off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>投影仪</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Projector</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; On&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; Off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>放大器</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Amplifier</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; On&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; Off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>音频协调器</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Tuner</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; On&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="keyword">this</span>.GetType().ToString() + <span class="string">&quot; Off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Facade"><a class="header-anchor" href="#Facade">#</a>Facade</h3>
+<figure class="highlight cs"><figcaption><span>家庭影院外观者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">HomeTheaderFacade</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Amplifier amplifier = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> Tuner tuner = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> DvdPlayer dvdPlayer = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> Projector projector = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HomeTheaderFacade</span>(<span class="params">Amplifier amplifier, Tuner tuner, DvdPlayer dvdPlayer, Projector projector</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.amplifier = amplifier;</span><br><span class="line">        <span class="keyword">this</span>.tuner = tuner;</span><br><span class="line">        <span class="keyword">this</span>.dvdPlayer = dvdPlayer;</span><br><span class="line">        <span class="keyword">this</span>.projector = projector;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">WatchMovie</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        amplifier.On();</span><br><span class="line">        tuner.On();</span><br><span class="line">        dvdPlayer.On();</span><br><span class="line">        projector.On();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">endMovie</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        amplifier.Off();</span><br><span class="line">        tuner.Off();</span><br><span class="line">        dvdPlayer.Off();</span><br><span class="line">        projector.Off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="测试代码及结果-2"><a class="header-anchor" href="#测试代码及结果-2">#</a>测试代码及结果</h2>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">HomeTheaderFacade facade = <span class="keyword">new</span> HomeTheaderFacade(<span class="keyword">new</span> Amplifier(), <span class="keyword">new</span> Tuner(), <span class="keyword">new</span> DvdPlayer(), <span class="keyword">new</span> Projector());</span><br><span class="line">facade.WatchMovie();</span><br><span class="line">Console.WriteLine();</span><br><span class="line">facade.endMovie();</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_07_the_adapter_and_facade_patterns/2019-02-03-13-53-18.png" alt="外观模式运行结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -1438,6 +1409,36 @@ $$</p>
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 Ch 08 模板方法模式</title>
+    <url>/ch_08_the_template_method_pattern/</url>
+    <content><![CDATA[<p>模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。</p>
+<ul>
+<li>
+<p>工厂方法&gt;模式就是模版方法模式的一种运用。</p>
+</li>
+<li>
+<p>策略模式和模版方法模式都是将算法的实现抽象出来，不同的是策略模式的实现依靠组成，而模版方法模式依靠继承。</p>
+</li>
+</ul>
+<p>例如我们需要准备咖啡和茶，准备咖啡基本步骤为烧开水，加入咖啡粉，将咖啡倒入杯子，增加牛奶或糖（可选），准备茶的基本步骤为烧开水，加入茶粉，将茶倒入杯子，增加柠檬（可选）。我们发现在制作两个饮料的过程中，烧开水和倒入杯子这两个步骤是一样的，剩下的两个步骤，向烧开的水中增加相应的粉和增加配料，这两部分也是类似的，于是我们可以用模版方法模式，将这两步骤作为抽象方法。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="算法模版基类"><a class="header-anchor" href="#算法模版基类">#</a>算法模版基类</h2>
+<figure class="highlight cs"><figcaption><span>咖啡因饮料模版</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrepareRecipe</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        boilWater();</span><br><span class="line">        brew();</span><br><span class="line">        pourInCup();</span><br><span class="line">        <span class="keyword">if</span> (NeedCondiments())</span><br><span class="line">            addCondiments();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">brew</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">boilWater</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Boiling Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">pourInCup</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Pouring Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info simple"><p>例子中<code>brew</code>和<code>addCondiments</code>即为模版函数，而<code>NeedCondiments</code>这种提供了基本实现，但派生类中仍然可以重写的函数被称为钩子（<code>Hook</code>）。</p>
+</div>
+<h2 id="咖啡因饮料实现"><a class="header-anchor" href="#咖啡因饮料实现">#</a>咖啡因饮料实现</h2>
+<figure class="highlight cs"><figcaption><span>咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Coffee</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Add sugar and Milk&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Dripping coffee through filter&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Tea</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Adding lemon&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Steeping the tea&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Coffee coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">Tea tea = <span class="keyword">new</span> Tea();</span><br><span class="line">coffee.PrepareRecipe();</span><br><span class="line">Console.WriteLine();</span><br><span class="line">tea.PrepareRecipe();</span><br></pre></td></tr></table></figure>
+<p>运行结果:</p>
+<p><img src="/ch_08_the_template_method_pattern/2019-02-03-15-59-58.png" alt="模版方法模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 09 模板方法模式</title>
     <url>/ch_09_the_iterator_and_composite_pattern/</url>
     <content><![CDATA[<h1 id="迭代器模式"><a class="header-anchor" href="#迭代器模式">#</a>迭代器模式</h1>
@@ -1527,6 +1528,28 @@ $$</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 11 代理模式</title>
+    <url>/ch_11_the_proxy_pattern/</url>
+    <content><![CDATA[<p>代理模式（Proxy Pattern）为对象提供一个代理进而控制对其的访问。</p>
+<p>例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="抽象接口"><a class="header-anchor" href="#抽象接口">#</a>抽象接口</h2>
+<figure class="highlight cs"><figcaption><span>图片接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="抽象接口实现"><a class="header-anchor" href="#抽象接口实现">#</a>抽象接口实现</h2>
+<figure class="highlight cs"><figcaption><span>真实图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> width, height;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageIcon</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Thread.Sleep(<span class="number">5000</span>);<span class="comment">//Pretend there is some hard work to load the image</span></span><br><span class="line">        width = <span class="number">800</span>;</span><br><span class="line">        height = <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Width is &quot;</span> + width + <span class="string">&quot;,height is &quot;</span> + height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>代理图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageProxyIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ImageIcon icon = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageProxyIcon</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (icon != <span class="literal">null</span>)</span><br><span class="line">            icon.PrintIconWidthAndHeight();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!isLoading)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Is Loading Image...&quot;</span>);</span><br><span class="line">            isLoading = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">new</span> Thread(() =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                icon = <span class="keyword">new</span> ImageIcon();</span><br><span class="line">                icon.PrintIconWidthAndHeight();</span><br><span class="line">            &#125;).Start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">ImageProxyIcon proxyIcon = <span class="keyword">new</span> ImageProxyIcon();</span><br><span class="line">proxyIcon.PrintIconWidthAndHeight();</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_11_the_proxy_pattern/2019-02-07-14-10-11.png" alt="代理模式运行结果"></p>
+<div class="note info simple"><p>代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，<code>ImageProxyIcon</code>并没有为<code>ImageIcon</code>拓展什么功能，只是用了多线程来访问访问其中的函数。</p>
+</div>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1648,28 +1671,6 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 11 代理模式</title>
-    <url>/ch_11_the_proxy_pattern/</url>
-    <content><![CDATA[<p>代理模式（Proxy Pattern）为对象提供一个代理进而控制对其的访问。</p>
-<p>例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="抽象接口"><a class="header-anchor" href="#抽象接口">#</a>抽象接口</h2>
-<figure class="highlight cs"><figcaption><span>图片接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="抽象接口实现"><a class="header-anchor" href="#抽象接口实现">#</a>抽象接口实现</h2>
-<figure class="highlight cs"><figcaption><span>真实图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> width, height;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageIcon</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Thread.Sleep(<span class="number">5000</span>);<span class="comment">//Pretend there is some hard work to load the image</span></span><br><span class="line">        width = <span class="number">800</span>;</span><br><span class="line">        height = <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Width is &quot;</span> + width + <span class="string">&quot;,height is &quot;</span> + height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>代理图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageProxyIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ImageIcon icon = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageProxyIcon</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (icon != <span class="literal">null</span>)</span><br><span class="line">            icon.PrintIconWidthAndHeight();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!isLoading)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Is Loading Image...&quot;</span>);</span><br><span class="line">            isLoading = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">new</span> Thread(() =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                icon = <span class="keyword">new</span> ImageIcon();</span><br><span class="line">                icon.PrintIconWidthAndHeight();</span><br><span class="line">            &#125;).Start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">ImageProxyIcon proxyIcon = <span class="keyword">new</span> ImageProxyIcon();</span><br><span class="line">proxyIcon.PrintIconWidthAndHeight();</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_11_the_proxy_pattern/2019-02-07-14-10-11.png" alt="代理模式运行结果"></p>
-<div class="note info simple"><p>代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，<code>ImageProxyIcon</code>并没有为<code>ImageIcon</code>拓展什么功能，只是用了多线程来访问访问其中的函数。</p>
-</div>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Head First 设计模式》 Ch 12 复合模式</title>
     <url>/ch_12_the_compound_patterns/</url>
     <content><![CDATA[<p>复合模式（Compound Pattern）是通过两个或以上的设计模式形成一个可以解决一般性问题的通用框架。</p>
@@ -1693,6 +1694,123 @@ $$</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Computer Networks and Internets》 Ch 13 局域网：数据包，帧 和拓扑结构</title>
+    <url>/ch_13_local_area_networks_packets,_frames,_and_topologies/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一部分将介绍分组交换技术，拓扑结构，硬件地址寻址，帧的概念。</p>
+<h1 id="Circuit_Switching_And_Analog_Communication"><a class="header-anchor" href="#Circuit_Switching_And_Analog_Communication">#</a>Circuit Switching And Analog Communication</h1>
+<p><code>电路交换（Circuit Switching）</code>概念是指使用时在发送端和接收端之间建立不受干扰的通路的通信方法。电路交换通常与模拟电话技术相关。下图是电路交换的示意图：</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-08-28-27.png" alt="电路交换"></p>
+<p>电路交换的主要特点是：</p>
+<ol>
+<li>是点对点的通信</li>
+<li>有单独的步骤建立电路连接，使用电路，终止电路连接<br>
+例如在电话通信中，实际上有三步。第一步在电话发起人和接受者之间建立电路，第二步双方使用电路进行通信，第三步在通话结束后，终止通路。<br>
+这也是称为交换（Switched）电路的原因</li>
+<li>与固定的物理通路有相同的性能。</li>
+</ol>
+<p>电路交换建立的电路最终使用频分复用或者时分复用使用同一个媒介进行传输。电路建立的过程包括在频分复用或时分复用中分配频率或时间段。</p>
+<h1 id="Packet_Switching"><a class="header-anchor" href="#Packet_Switching">#</a>Packet Switching</h1>
+<p>分组交换（Packet Switching）使用一种统计意义上的复用，即多个信源之间竞争共享媒介的使用。电路交换通常在传统的电话通信中使用，而分组交换构成了因特网的基础。分组交换示意图如下：</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-08-37-20.png" alt="分组交换"></p>
+<p>注意，在11章中提到的复用技术，如频分复用和时分复用是对于物理存在的信道或者像电路交换这样生成的信道使用的，与分组交换并没有关系。分组交换本身就有统计复用（Statistic Multiplexing）的概念。多个信源在媒介空闲时竞争使用，当媒介为空，且只有一个信源需要传输数据时，该信源就会独占媒介。如果同时有多个信源要传输数据，则基本每个信源占据媒介的时间是平均的，轮流使用。</p>
+<p>分组交换的核心是将原数据切分成一个个小块方便传输，这些小块称作包（Packets），包中需要包括传送的目的地信息（在之后节会更详细说明）。分组交换传输的单位不是bit或者byte,而是包。不同的分组交换技术对于包的尺寸有不同的定义。</p>
+<p>分组交换的主要特点是：</p>
+<ol>
+<li>任意大小的异步传输</li>
+<li>在通信前没有建立通路的步骤</li>
+<li>性能取决于各信源的包的统计复用</li>
+</ol>
+<p>分组交换的主要优点在于成本的控制。对于电路交换来说，如果有$N$个电脑，则需要$N/2$个独立的路径（虽然在连接时才创建）。但对于分组交换只要一个共享的电路就行。</p>
+<h1 id="Local_And_Wide_Area_Packet_Networks"><a class="header-anchor" href="#Local_And_Wide_Area_Packet_Networks">#</a>Local And Wide Area Packet Networks</h1>
+<p>分组交换技术通常根据传输距离的距离进行分类。通常分为三类：</p>
+<ol>
+<li>局域网（Local Area Network,LAN）：最便宜，通常范围在房间级或者一个大楼。</li>
+<li>城域网（Metropolitan Area Network,MAN）中等开销，范围涵盖城市或者大都会。</li>
+<li>广域网（Wide Area Network,WAN）：最贵。范围通常包含城市与城市之间。</li>
+</ol>
+<p>在实际使用中，虽然城域网的概念被提出，但在商业上并不成功。基本广泛使用的只有局域网和广域网，城域网的概念在逐步被纳入广域网中。</p>
+<p>还有一些机构或者商家定义的类似的分类方式，如：</p>
+<ol>
+<li><code>个人局域网络（Personal Area Network，PAN）</code>，通常范围在几米内，如蓝牙通信等。</li>
+<li><code>芯片局域网络（Chip Area Network）</code>，芯片厂商提出的概念，通常是超大型电路（Very-Large-Scale-Integration,VLSI）中多个核之间的通信。</li>
+</ol>
+<h1 id="Standards_For_Packet_Format_And_Identification"><a class="header-anchor" href="#Standards_For_Packet_Format_And_Identification">#</a>Standards For Packet Format And Identification</h1>
+<p>每个在网络中传输的包都必须包含其目标收信人的标识。需要有规范来制定标识的格式以及添加的位置，在LAN领域最常用的标准是由IEEE（Institute Electrical And Electronics Engineers）创建的。</p>
+<p>IEEE是由一群关注于协议栈最下两层（物理层（Physical）和数据链接层（Data Link））的工程师构成的。协议栈的不同层由不同的机构负责，如IEFT关注传输层和因特网协议，WWW组织关注应用层。机构与其关注的协议如下图所示：</p>
+<p>在1980年，IEEE组织了<code>802项目局域网/城域网标准委员（Project 802 LAN/MAN Standards Commitee）</code>会为网络设定标准。</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-09-12-05.png" alt="组织和协议"></p>
+<h1 id="IEEE_802_Model_And_Standards"><a class="header-anchor" href="#IEEE_802_Model_And_Standards">#</a>IEEE 802 Model And Standards</h1>
+<p>IEEE将数据链接层又在细分为了两层，<code>逻辑链接控制层（Logical Link Control,LLC）</code>(第15章中描述)和<code>媒介访问控制层（Media Access Control,MAC）</code>。</p>
+<p>逻辑链接控制层设备的地址和在解复用中地址的使用。媒介访问控制层关注于多个计算机如何共享底层的媒介。</p>
+<p>IEEE对于协议的命名是采用多部分标识符，如$XXX.YYY.ZZZ$，$XXX$表示协议的分类，$YYY$表示协议的子分类，$ZZZ$是当子分类也非常大是，额外添加的标识。</p>
+<p>如局域网的规范在分类802中，这里的802并不是什么缩写或有实际的技术含义，仅仅是一个分类标识。IEEE不同的工作小组针对其细分的协议进行定义，如针对$802.1$或$802.2$。</p>
+<p>IEEE中有许多不同的工作小组。当有新技术需要协议时，由工业代表和学术协会共同形成工作小组，他们会定期开会商定协议的细节等，当协议的所有细节都确定后，IEEE会发表协议的标准文件。</p>
+<p>当协议最终发布后，工作小组可以选择解散或者如果协议非常重要或者仍需要后续工作，小组也可以继续活动。如果小组负责的部分协议不再有意义，如商业上不被接受，或者有更新更好的技术出现，小组也可以选择直接解散而不发表任何的规范。下图是802分类下的协议，有一些规范就已经被放弃（Disbanded）了。</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-09-25-59.png" alt="802协议"></p>
+<h2 id="LAN_Topologies"><a class="header-anchor" href="#LAN_Topologies">#</a>LAN Topologies</h2>
+<p>因为有许多不同的LAN技术，通常使用拓扑型或者网络的基本形状来进行分类。LAN有四个基本的拓扑型，<code>总线型结构（Bus）</code>，<code>环状结构（Ring）</code>，<code>星状结构（Star）</code>，<code>网状结构（Mesh）</code>。</p>
+<h2 id="Bus_Topology"><a class="header-anchor" href="#Bus_Topology">#</a>Bus Topology</h2>
+<p><code>总线型结构（Bus Topology）</code>是如同以太网一样，用一根电缆连接所有电脑，任何电脑都可以将数据传输到电缆上，然后所有的计算机都可以接受到数据。</p>
+<h2 id="Ring_Topology"><a class="header-anchor" href="#Ring_Topology">#</a>Ring Topology</h2>
+<p><code>环状结构（Ring Topology）</code>是多个电脑首尾相接的连接，直至成为环形。环形结构的优点是对于相连的两台设备来说连接是安全的，即使别的设备出现问题仍然可以连接。</p>
+<h2 id="Mesh_Topology"><a class="header-anchor" href="#Mesh_Topology">#</a>Mesh Topology</h2>
+<p><code>网状结构（Mesh Topology）</code>为任意两两配对的电脑都提供了连接线路，这意味着如果有$N$台电脑，就需要$\frac{n^2-n}{2}$个连接。当增加电脑时，连接电缆的增加是平方级的，因此开销巨大，也因此网状结构在局域网中不常被使用</p>
+<h2 id="Star_Topology"><a class="header-anchor" href="#Star_Topology">#</a>Star Topology</h2>
+<p><code>星状结构（Star Topology）</code>是所有的电脑都连接在一个中心设备（Hub）上。注意星状结构并不严格要求中心设备真的在所有电脑的中心，与所有电脑的距离相同。</p>
+<h2 id="The_Reason_For_Multiple_Topologies"><a class="header-anchor" href="#The_Reason_For_Multiple_Topologies">#</a>The Reason For Multiple Topologies</h2>
+<p>每个结构都有各自的优点，如环状结构很适合各电脑间协调访问，但当其中一个设备出现问题时，通路就会出现问题。星状结构下单一设备出现了问题，其他设备都可以正常访问。总线结构有最少的连接需求，但与环状结构与相同的缺点。网状结构因为连接数量过多，通常不在局域网中使用。</p>
+<h1 id="Packet_Identification，Demultiplexing，Mac_Addresses"><a class="header-anchor" href="#Packet_Identification，Demultiplexing，Mac_Addresses">#</a>Packet Identification，Demultiplexing，Mac Addresses</h1>
+<p>IEEE为寻址（Addressing）创建了标准。在分组交换中，解复用是依赖于一个称为<code>地址（Address）</code>的标识。每个电脑都分配了一个独特的地址，每个传输的包中都包含其目标收件人（Intended Recipent）的地址。</p>
+<p>在IEEE的寻址规范中，每个地址是由48-bit二进制数据组成的，IEEE将其称为媒介访问控制地址（Media Access Control address,MAC address）。因为48位地址来源于以太网技术，所以也有人将其称为以太网地址（Ethernet Address）。</p>
+<p>IEEE为每块网卡（Network Interface Card，NIC）都分配了地址，因此当消费者购买了一张网卡时，其中就包含一个独一无二的地址。</p>
+<p>但IEEE并不是单独的为每个网卡分配地址，它是将前24位（3 Bytes）分配给设备供应商，然后设备供应商再决定后24位的数据。因此前24位称为组织唯一标识符（Organizationally Unique Identifier，OUI），后24位称为网络接口控制标识符（Network Interface Controller Specific）。</p>
+<p>组织唯一标识符的最高有效字节（Most Significant Byte，即大端模式下即最左端）的倒数两位有特殊含义。其最低位表示是单播（0）还是双播（1）。倒数第二位决定该设备是全球唯一（0）（Globally Unique）还是是本地分配（1）（Locally Assigned），全球唯一表明地址是IEEE分配，即世界上的每块网卡都有不同的表示，而本地分配是实验性网卡或者某组织自己地址空间等，即这张卡是在一个小范围内内部使用。</p>
+<h1 id="Unicast，Broadcast，And_Multicast_Addresses"><a class="header-anchor" href="#Unicast，Broadcast，And_Multicast_Addresses">#</a>Unicast，Broadcast，And Multicast Addresses</h1>
+<p>IEEE定义了三种对应包传递的方法：</p>
+<ol>
+<li>单播（Unicast）：目标地址是设定一个电脑，也仅这个电脑可收到包</li>
+<li>广播（broadcast）：网络中的所有电脑都可收到包</li>
+<li>多播（multicast）：目标地址是一系列的电脑，这些电脑都可以收到包。</li>
+</ol>
+<p>对于广播来说，因为是所有电脑都收到包，所以目标地址实际是没有意义的。将地址的48位全部设为1，则表示是广播模式。广播模式也可看作是多播模式的一个特殊情况。</p>
+<h1 id="Broadcast_Multicast_And_Efficient_Multi_Point_Delivery"><a class="header-anchor" href="#Broadcast_Multicast_And_Efficient_Multi_Point_Delivery">#</a>Broadcast,Multicast,And Efficient Multi-Point Delivery</h1>
+<p>广播和多播模式在局域网中特别有用，对于要传递给多台电脑的数据来说，用这两种方法进行传递特别的高效。</p>
+<p>对于大多数的LAN技术，都是通过一个共享的媒介进行传输。当有数据在媒介中传输时，每台电脑都将从媒介中获取包的拷贝，然后再判断包中的地址情况是否与自己复合，来决定是处理包的内容还是丢弃包的内容。</p>
+<p>因此局域网中的计算机在处理媒介中的包流程如下：</p>
+<ol>
+<li>从包中抽取出地址信息</li>
+<li>判断地址是否满足自己的单播地址，如果是则接受并处理包</li>
+<li>如果2失败，判断地址是否是广播模式，如果是则接受并处理包</li>
+<li>如果3失败，判断地址是否是多播模式，且电脑是多播模式指定的电脑组的一员，如果是则接受并处理包</li>
+<li>如果4失败，则丢弃包</li>
+</ol>
+<p>如在局域网情况下，如果多台电脑使用同一个媒介，且包需要传递给多态电脑，那么使用多播和广播模式，数据仅需要发送一次即可。</p>
+<h1 id="Frames_And_Framing"><a class="header-anchor" href="#Frames_And_Framing">#</a>Frames And Framing</h1>
+<p>在同步通信系统中，帧的概念是让接收者知道数据的开始和结束。但在更宽泛的概念下，帧是表示一系列bit或byte的特定结构，让接收方和发送方都能一致同意的特定格式。</p>
+<p>在分组交换中，帧的概念就对应包。在分组交换中，每个包都需要一个数据头，数据头（header）中包含目标地址。数据头后是有效负载（payload），即真正需要传输的原数据。在大部分的网络技术中，有效负载是不透明的即网络设备只能检查数据头。</p>
+<p>在整个包的前后还能加入可选的前置数据（Prelude）或后置数据（Postlude）。因此整个包的结构如下所示：</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-10-47-15.png" alt="包的结构"></p>
+<p>举一个例子，如果一个包有6个byte的数据头，然后任意长度的有效负载，在包的前后各有1byte表示包的开始和结束。且开始和结束标识用ASCII码中的SOH（Start Of Header）和EOT（End Of Transmission）表示，则整个包如下所示：</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-10-49-20.png" alt="包的例子"></p>
+<p>上述例子有一点点数据的浪费，因为如果包是一个接一个发的，那么后一个包的SOH会紧跟着前一个包的EOT。在实际中，只需要一个来区分两个包即可。</p>
+<p>虽然包的前置数据和后置数据是可选的，但在实际使用中，他们可以一定程度上提升异步传输数据的处理速度和对错误的检测。在异步传输中，如果接收方收到了EOT，它就知道数据包传输完成了，可以直接开始处理数据而不需要等到下一个包的到来再根据新包确定上个包是否完成。当发送端发送数据到一般崩溃时，因为接收端始终收不到EOT，也就能知道错误的发生。</p>
+<h1 id="Byte_And_Bit_Stuffing"><a class="header-anchor" href="#Byte_And_Bit_Stuffing">#</a>Byte And Bit Stuffing</h1>
+<p>在ASCII码中，SOH用十六进制0x01表示，EOT用0x04表示。如果有效负载中也出现了0x01和0x04，接收端就无法判定到底是真实数据还是前置或后置标识。</p>
+<p>一种称为字节填充（byte Stuffing）就是为了解决有效负载和特殊标记位有相同表示导致无法识别的问题。<br>
+该技术有时也称为数据填充（Data Stuffing）或字符填充（Character Stuffing）。该技术主要是</p>
+<p>字节装填是用另一个字符来替代特殊标识的出现。</p>
+<p>如我们选择用ASCII码中的ESC字符（Ox1B）来作为替换字符。在发送端当有效负载中出现SOH，那么就替换为&quot;ESC A&quot;，如果出现EOT,就替换为&quot;ESC B&quot;，如果出现了ESC就替换为&quot;ESC C&quot;。注意这个计算是针对有效负载的，当整个发送的有效负载中就不会与EOT和SOH相同的数据。对接收端而言，去找寻背后跟着&quot;A,B,C&quot;的ESC字符，然后将其替换回SOH和EOT的数据。发送端的替换过程如下所示：</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-11-22-32.png" alt="字节装填"></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://web.archive.org/web/20171217042848/http://www.cs.virginia.edu/~mngroup/projects/mpls/documents/thesis/node8.html">Switching technology</a><br>
+<a href="https://www.cnblogs.com/penghuwan/p/7686059.html#_label3_1">【计算机网络】数据交换技术和多路复用技术的正（nao）确(can)打开方式</a></p>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -2017,117 +2135,22 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
-    <title>《Computer Networks and Internets》 Ch 13 局域网：数据包，帧 和拓扑结构</title>
-    <url>/ch_13_local_area_networks_packets,_frames,_and_topologies/</url>
-    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一部分将介绍分组交换技术，拓扑结构，硬件地址寻址，帧的概念。</p>
-<h1 id="Circuit_Switching_And_Analog_Communication"><a class="header-anchor" href="#Circuit_Switching_And_Analog_Communication">#</a>Circuit Switching And Analog Communication</h1>
-<p><code>电路交换（Circuit Switching）</code>概念是指使用时在发送端和接收端之间建立不受干扰的通路的通信方法。电路交换通常与模拟电话技术相关。下图是电路交换的示意图：</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-08-28-27.png" alt="电路交换"></p>
-<p>电路交换的主要特点是：</p>
-<ol>
-<li>是点对点的通信</li>
-<li>有单独的步骤建立电路连接，使用电路，终止电路连接<br>
-例如在电话通信中，实际上有三步。第一步在电话发起人和接受者之间建立电路，第二步双方使用电路进行通信，第三步在通话结束后，终止通路。<br>
-这也是称为交换（Switched）电路的原因</li>
-<li>与固定的物理通路有相同的性能。</li>
-</ol>
-<p>电路交换建立的电路最终使用频分复用或者时分复用使用同一个媒介进行传输。电路建立的过程包括在频分复用或时分复用中分配频率或时间段。</p>
-<h1 id="Packet_Switching"><a class="header-anchor" href="#Packet_Switching">#</a>Packet Switching</h1>
-<p>分组交换（Packet Switching）使用一种统计意义上的复用，即多个信源之间竞争共享媒介的使用。电路交换通常在传统的电话通信中使用，而分组交换构成了因特网的基础。分组交换示意图如下：</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-08-37-20.png" alt="分组交换"></p>
-<p>注意，在11章中提到的复用技术，如频分复用和时分复用是对于物理存在的信道或者像电路交换这样生成的信道使用的，与分组交换并没有关系。分组交换本身就有统计复用（Statistic Multiplexing）的概念。多个信源在媒介空闲时竞争使用，当媒介为空，且只有一个信源需要传输数据时，该信源就会独占媒介。如果同时有多个信源要传输数据，则基本每个信源占据媒介的时间是平均的，轮流使用。</p>
-<p>分组交换的核心是将原数据切分成一个个小块方便传输，这些小块称作包（Packets），包中需要包括传送的目的地信息（在之后节会更详细说明）。分组交换传输的单位不是bit或者byte,而是包。不同的分组交换技术对于包的尺寸有不同的定义。</p>
-<p>分组交换的主要特点是：</p>
-<ol>
-<li>任意大小的异步传输</li>
-<li>在通信前没有建立通路的步骤</li>
-<li>性能取决于各信源的包的统计复用</li>
-</ol>
-<p>分组交换的主要优点在于成本的控制。对于电路交换来说，如果有$N$个电脑，则需要$N/2$个独立的路径（虽然在连接时才创建）。但对于分组交换只要一个共享的电路就行。</p>
-<h1 id="Local_And_Wide_Area_Packet_Networks"><a class="header-anchor" href="#Local_And_Wide_Area_Packet_Networks">#</a>Local And Wide Area Packet Networks</h1>
-<p>分组交换技术通常根据传输距离的距离进行分类。通常分为三类：</p>
-<ol>
-<li>局域网（Local Area Network,LAN）：最便宜，通常范围在房间级或者一个大楼。</li>
-<li>城域网（Metropolitan Area Network,MAN）中等开销，范围涵盖城市或者大都会。</li>
-<li>广域网（Wide Area Network,WAN）：最贵。范围通常包含城市与城市之间。</li>
-</ol>
-<p>在实际使用中，虽然城域网的概念被提出，但在商业上并不成功。基本广泛使用的只有局域网和广域网，城域网的概念在逐步被纳入广域网中。</p>
-<p>还有一些机构或者商家定义的类似的分类方式，如：</p>
-<ol>
-<li><code>个人局域网络（Personal Area Network，PAN）</code>，通常范围在几米内，如蓝牙通信等。</li>
-<li><code>芯片局域网络（Chip Area Network）</code>，芯片厂商提出的概念，通常是超大型电路（Very-Large-Scale-Integration,VLSI）中多个核之间的通信。</li>
-</ol>
-<h1 id="Standards_For_Packet_Format_And_Identification"><a class="header-anchor" href="#Standards_For_Packet_Format_And_Identification">#</a>Standards For Packet Format And Identification</h1>
-<p>每个在网络中传输的包都必须包含其目标收信人的标识。需要有规范来制定标识的格式以及添加的位置，在LAN领域最常用的标准是由IEEE（Institute Electrical And Electronics Engineers）创建的。</p>
-<p>IEEE是由一群关注于协议栈最下两层（物理层（Physical）和数据链接层（Data Link））的工程师构成的。协议栈的不同层由不同的机构负责，如IEFT关注传输层和因特网协议，WWW组织关注应用层。机构与其关注的协议如下图所示：</p>
-<p>在1980年，IEEE组织了<code>802项目局域网/城域网标准委员（Project 802 LAN/MAN Standards Commitee）</code>会为网络设定标准。</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-09-12-05.png" alt="组织和协议"></p>
-<h1 id="IEEE_802_Model_And_Standards"><a class="header-anchor" href="#IEEE_802_Model_And_Standards">#</a>IEEE 802 Model And Standards</h1>
-<p>IEEE将数据链接层又在细分为了两层，<code>逻辑链接控制层（Logical Link Control,LLC）</code>(第15章中描述)和<code>媒介访问控制层（Media Access Control,MAC）</code>。</p>
-<p>逻辑链接控制层设备的地址和在解复用中地址的使用。媒介访问控制层关注于多个计算机如何共享底层的媒介。</p>
-<p>IEEE对于协议的命名是采用多部分标识符，如$XXX.YYY.ZZZ$，$XXX$表示协议的分类，$YYY$表示协议的子分类，$ZZZ$是当子分类也非常大是，额外添加的标识。</p>
-<p>如局域网的规范在分类802中，这里的802并不是什么缩写或有实际的技术含义，仅仅是一个分类标识。IEEE不同的工作小组针对其细分的协议进行定义，如针对$802.1$或$802.2$。</p>
-<p>IEEE中有许多不同的工作小组。当有新技术需要协议时，由工业代表和学术协会共同形成工作小组，他们会定期开会商定协议的细节等，当协议的所有细节都确定后，IEEE会发表协议的标准文件。</p>
-<p>当协议最终发布后，工作小组可以选择解散或者如果协议非常重要或者仍需要后续工作，小组也可以继续活动。如果小组负责的部分协议不再有意义，如商业上不被接受，或者有更新更好的技术出现，小组也可以选择直接解散而不发表任何的规范。下图是802分类下的协议，有一些规范就已经被放弃（Disbanded）了。</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-09-25-59.png" alt="802协议"></p>
-<h2 id="LAN_Topologies"><a class="header-anchor" href="#LAN_Topologies">#</a>LAN Topologies</h2>
-<p>因为有许多不同的LAN技术，通常使用拓扑型或者网络的基本形状来进行分类。LAN有四个基本的拓扑型，<code>总线型结构（Bus）</code>，<code>环状结构（Ring）</code>，<code>星状结构（Star）</code>，<code>网状结构（Mesh）</code>。</p>
-<h2 id="Bus_Topology"><a class="header-anchor" href="#Bus_Topology">#</a>Bus Topology</h2>
-<p><code>总线型结构（Bus Topology）</code>是如同以太网一样，用一根电缆连接所有电脑，任何电脑都可以将数据传输到电缆上，然后所有的计算机都可以接受到数据。</p>
-<h2 id="Ring_Topology"><a class="header-anchor" href="#Ring_Topology">#</a>Ring Topology</h2>
-<p><code>环状结构（Ring Topology）</code>是多个电脑首尾相接的连接，直至成为环形。环形结构的优点是对于相连的两台设备来说连接是安全的，即使别的设备出现问题仍然可以连接。</p>
-<h2 id="Mesh_Topology"><a class="header-anchor" href="#Mesh_Topology">#</a>Mesh Topology</h2>
-<p><code>网状结构（Mesh Topology）</code>为任意两两配对的电脑都提供了连接线路，这意味着如果有$N$台电脑，就需要$\frac{n^2-n}{2}$个连接。当增加电脑时，连接电缆的增加是平方级的，因此开销巨大，也因此网状结构在局域网中不常被使用</p>
-<h2 id="Star_Topology"><a class="header-anchor" href="#Star_Topology">#</a>Star Topology</h2>
-<p><code>星状结构（Star Topology）</code>是所有的电脑都连接在一个中心设备（Hub）上。注意星状结构并不严格要求中心设备真的在所有电脑的中心，与所有电脑的距离相同。</p>
-<h2 id="The_Reason_For_Multiple_Topologies"><a class="header-anchor" href="#The_Reason_For_Multiple_Topologies">#</a>The Reason For Multiple Topologies</h2>
-<p>每个结构都有各自的优点，如环状结构很适合各电脑间协调访问，但当其中一个设备出现问题时，通路就会出现问题。星状结构下单一设备出现了问题，其他设备都可以正常访问。总线结构有最少的连接需求，但与环状结构与相同的缺点。网状结构因为连接数量过多，通常不在局域网中使用。</p>
-<h1 id="Packet_Identification，Demultiplexing，Mac_Addresses"><a class="header-anchor" href="#Packet_Identification，Demultiplexing，Mac_Addresses">#</a>Packet Identification，Demultiplexing，Mac Addresses</h1>
-<p>IEEE为寻址（Addressing）创建了标准。在分组交换中，解复用是依赖于一个称为<code>地址（Address）</code>的标识。每个电脑都分配了一个独特的地址，每个传输的包中都包含其目标收件人（Intended Recipent）的地址。</p>
-<p>在IEEE的寻址规范中，每个地址是由48-bit二进制数据组成的，IEEE将其称为媒介访问控制地址（Media Access Control address,MAC address）。因为48位地址来源于以太网技术，所以也有人将其称为以太网地址（Ethernet Address）。</p>
-<p>IEEE为每块网卡（Network Interface Card，NIC）都分配了地址，因此当消费者购买了一张网卡时，其中就包含一个独一无二的地址。</p>
-<p>但IEEE并不是单独的为每个网卡分配地址，它是将前24位（3 Bytes）分配给设备供应商，然后设备供应商再决定后24位的数据。因此前24位称为组织唯一标识符（Organizationally Unique Identifier，OUI），后24位称为网络接口控制标识符（Network Interface Controller Specific）。</p>
-<p>组织唯一标识符的最高有效字节（Most Significant Byte，即大端模式下即最左端）的倒数两位有特殊含义。其最低位表示是单播（0）还是双播（1）。倒数第二位决定该设备是全球唯一（0）（Globally Unique）还是是本地分配（1）（Locally Assigned），全球唯一表明地址是IEEE分配，即世界上的每块网卡都有不同的表示，而本地分配是实验性网卡或者某组织自己地址空间等，即这张卡是在一个小范围内内部使用。</p>
-<h1 id="Unicast，Broadcast，And_Multicast_Addresses"><a class="header-anchor" href="#Unicast，Broadcast，And_Multicast_Addresses">#</a>Unicast，Broadcast，And Multicast Addresses</h1>
-<p>IEEE定义了三种对应包传递的方法：</p>
-<ol>
-<li>单播（Unicast）：目标地址是设定一个电脑，也仅这个电脑可收到包</li>
-<li>广播（broadcast）：网络中的所有电脑都可收到包</li>
-<li>多播（multicast）：目标地址是一系列的电脑，这些电脑都可以收到包。</li>
-</ol>
-<p>对于广播来说，因为是所有电脑都收到包，所以目标地址实际是没有意义的。将地址的48位全部设为1，则表示是广播模式。广播模式也可看作是多播模式的一个特殊情况。</p>
-<h1 id="Broadcast_Multicast_And_Efficient_Multi_Point_Delivery"><a class="header-anchor" href="#Broadcast_Multicast_And_Efficient_Multi_Point_Delivery">#</a>Broadcast,Multicast,And Efficient Multi-Point Delivery</h1>
-<p>广播和多播模式在局域网中特别有用，对于要传递给多台电脑的数据来说，用这两种方法进行传递特别的高效。</p>
-<p>对于大多数的LAN技术，都是通过一个共享的媒介进行传输。当有数据在媒介中传输时，每台电脑都将从媒介中获取包的拷贝，然后再判断包中的地址情况是否与自己复合，来决定是处理包的内容还是丢弃包的内容。</p>
-<p>因此局域网中的计算机在处理媒介中的包流程如下：</p>
-<ol>
-<li>从包中抽取出地址信息</li>
-<li>判断地址是否满足自己的单播地址，如果是则接受并处理包</li>
-<li>如果2失败，判断地址是否是广播模式，如果是则接受并处理包</li>
-<li>如果3失败，判断地址是否是多播模式，且电脑是多播模式指定的电脑组的一员，如果是则接受并处理包</li>
-<li>如果4失败，则丢弃包</li>
-</ol>
-<p>如在局域网情况下，如果多台电脑使用同一个媒介，且包需要传递给多态电脑，那么使用多播和广播模式，数据仅需要发送一次即可。</p>
-<h1 id="Frames_And_Framing"><a class="header-anchor" href="#Frames_And_Framing">#</a>Frames And Framing</h1>
-<p>在同步通信系统中，帧的概念是让接收者知道数据的开始和结束。但在更宽泛的概念下，帧是表示一系列bit或byte的特定结构，让接收方和发送方都能一致同意的特定格式。</p>
-<p>在分组交换中，帧的概念就对应包。在分组交换中，每个包都需要一个数据头，数据头（header）中包含目标地址。数据头后是有效负载（payload），即真正需要传输的原数据。在大部分的网络技术中，有效负载是不透明的即网络设备只能检查数据头。</p>
-<p>在整个包的前后还能加入可选的前置数据（Prelude）或后置数据（Postlude）。因此整个包的结构如下所示：</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-10-47-15.png" alt="包的结构"></p>
-<p>举一个例子，如果一个包有6个byte的数据头，然后任意长度的有效负载，在包的前后各有1byte表示包的开始和结束。且开始和结束标识用ASCII码中的SOH（Start Of Header）和EOT（End Of Transmission）表示，则整个包如下所示：</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-10-49-20.png" alt="包的例子"></p>
-<p>上述例子有一点点数据的浪费，因为如果包是一个接一个发的，那么后一个包的SOH会紧跟着前一个包的EOT。在实际中，只需要一个来区分两个包即可。</p>
-<p>虽然包的前置数据和后置数据是可选的，但在实际使用中，他们可以一定程度上提升异步传输数据的处理速度和对错误的检测。在异步传输中，如果接收方收到了EOT，它就知道数据包传输完成了，可以直接开始处理数据而不需要等到下一个包的到来再根据新包确定上个包是否完成。当发送端发送数据到一般崩溃时，因为接收端始终收不到EOT，也就能知道错误的发生。</p>
-<h1 id="Byte_And_Bit_Stuffing"><a class="header-anchor" href="#Byte_And_Bit_Stuffing">#</a>Byte And Bit Stuffing</h1>
-<p>在ASCII码中，SOH用十六进制0x01表示，EOT用0x04表示。如果有效负载中也出现了0x01和0x04，接收端就无法判定到底是真实数据还是前置或后置标识。</p>
-<p>一种称为字节填充（byte Stuffing）就是为了解决有效负载和特殊标记位有相同表示导致无法识别的问题。<br>
-该技术有时也称为数据填充（Data Stuffing）或字符填充（Character Stuffing）。该技术主要是</p>
-<p>字节装填是用另一个字符来替代特殊标识的出现。</p>
-<p>如我们选择用ASCII码中的ESC字符（Ox1B）来作为替换字符。在发送端当有效负载中出现SOH，那么就替换为&quot;ESC A&quot;，如果出现EOT,就替换为&quot;ESC B&quot;，如果出现了ESC就替换为&quot;ESC C&quot;。注意这个计算是针对有效负载的，当整个发送的有效负载中就不会与EOT和SOH相同的数据。对接收端而言，去找寻背后跟着&quot;A,B,C&quot;的ESC字符，然后将其替换回SOH和EOT的数据。发送端的替换过程如下所示：</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-11-22-32.png" alt="字节装填"></p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="https://web.archive.org/web/20171217042848/http://www.cs.virginia.edu/~mngroup/projects/mpls/documents/thesis/node8.html">Switching technology</a><br>
-<a href="https://www.cnblogs.com/penghuwan/p/7686059.html#_label3_1">【计算机网络】数据交换技术和多路复用技术的正（nao）确(can)打开方式</a></p>
+    <title>《Computer Networks and Internets》 笔记汇总</title>
+    <url>/computer_networks_and_internets/</url>
+    <content><![CDATA[<h1 id="Introduction_And_Internet_Applications"><a class="header-anchor" href="#Introduction_And_Internet_Applications">#</a>Introduction And Internet Applications</h1>
+<p><a href="/ch_01_introduction_and_overview">Ch 01 Introduction And Overview</a></p>
+<h1 id="Data_Communication_Basics"><a class="header-anchor" href="#Data_Communication_Basics">#</a>Data Communication Basics</h1>
+<p><a href="/ch_05_overview_of_data_communications">Ch 05 Overview Of Data Communications</a></p>
+<p><a href="/ch_06_information_sources_and_signals">Ch 06 Information Sources And Signals</a></p>
+<p><a href="/ch_07_transmission_media">Ch 07 Transmission Media</a></p>
+<p><a href="/ch_08_reliability_and_channel_coding">Ch 08 Reliability And Channel Coding</a></p>
+<p><a href="/ch_10_modulation_and_modems">Ch 10 Modulation And Modems</a></p>
+<p><a href="/ch_11_multiplexing_and_demultiplexing">Ch 11 Multiplexing And Demultiplexing (Channelization)</a></p>
+<h1 id="Packet_Switching_And_Network_Technologies"><a class="header-anchor" href="#Packet_Switching_And_Network_Technologies">#</a>Packet Switching And Network Technologies</h1>
+<p><a href="/ch_13_local_area_networks_packets,_frames,_and_topologies">Ch 13 Local Area Networks Packets, Frames, And Topologies</a></p>
+<p><a href="/ch_14_the_ieee_mac_sublayer">Ch 14 The IEEE MAC Sublayer</a></p>
+<p><a href="/ch_16_wireless_networking_technologies">Ch 16 Wireless Networking Technologies</a></p>
+<p><a href="/ch_17_repeaters,_bridges,_and_switches">Ch 17 Repeaters, Bridges, And Switches</a></p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
@@ -2151,25 +2174,138 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
-    <title>《Computer Networks and Internets》 笔记汇总</title>
-    <url>/computer_networks_and_internets/</url>
-    <content><![CDATA[<h1 id="Introduction_And_Internet_Applications"><a class="header-anchor" href="#Introduction_And_Internet_Applications">#</a>Introduction And Internet Applications</h1>
-<p><a href="/ch_01_introduction_and_overview">Ch 01 Introduction And Overview</a></p>
-<h1 id="Data_Communication_Basics"><a class="header-anchor" href="#Data_Communication_Basics">#</a>Data Communication Basics</h1>
-<p><a href="/ch_05_overview_of_data_communications">Ch 05 Overview Of Data Communications</a></p>
-<p><a href="/ch_06_information_sources_and_signals">Ch 06 Information Sources And Signals</a></p>
-<p><a href="/ch_07_transmission_media">Ch 07 Transmission Media</a></p>
-<p><a href="/ch_08_reliability_and_channel_coding">Ch 08 Reliability And Channel Coding</a></p>
-<p><a href="/ch_10_modulation_and_modems">Ch 10 Modulation And Modems</a></p>
-<p><a href="/ch_11_multiplexing_and_demultiplexing">Ch 11 Multiplexing And Demultiplexing (Channelization)</a></p>
-<h1 id="Packet_Switching_And_Network_Technologies"><a class="header-anchor" href="#Packet_Switching_And_Network_Technologies">#</a>Packet Switching And Network Technologies</h1>
-<p><a href="/ch_13_local_area_networks_packets,_frames,_and_topologies">Ch 13 Local Area Networks Packets, Frames, And Topologies</a></p>
-<p><a href="/ch_14_the_ieee_mac_sublayer">Ch 14 The IEEE MAC Sublayer</a></p>
-<p><a href="/ch_16_wireless_networking_technologies">Ch 16 Wireless Networking Technologies</a></p>
-<p><a href="/ch_17_repeaters,_bridges,_and_switches">Ch 17 Repeaters, Bridges, And Switches</a></p>
+    <title>《Unix 编程艺术》 第一章 哲学</title>
+    <url>/di_1_zhang_zhe_xue/</url>
+    <content><![CDATA[<h1 id="1_4_Unix_之失"><a class="header-anchor" href="#1_4_Unix_之失">#</a>1.4 Unix 之失</h1>
+<p>最终的用户永远比操作系统设计人员更清楚他们究竟需要什么。</p>
+<p>用错误的方法解决正确的问题，总比用正确的方法解决错误的问题好</p>
+<h1 id="1_5_Unit_之得"><a class="header-anchor" href="#1_5_Unit_之得">#</a>1.5 Unit 之得</h1>
+<h2 id="1_5_2_跨平台可移植性和开放标准"><a class="header-anchor" href="#1_5_2_跨平台可移植性和开放标准">#</a>1.5.2 跨平台可移植性和开放标准</h2>
+<p>IEEE 早期定义的”可移植操作系统标准（Portable Operating System Standard, POS）“ 被社区为了读起来更像 Unix 而加了后缀变为 ”POSIX“。因为只有称之为 Unix API 等价物才能算是可移植操作系统标准比较可信的模型。</p>
+<h2 id="1_5_5_从头到家的灵活性"><a class="header-anchor" href="#1_5_5_从头到家的灵活性">#</a>1.5.5 从头到家的灵活性</h2>
+<p>许多操作系统自诩比 Unix 来的更”现代“，”友好“，它们漂亮外表的背后，却是以貌似精巧实则脆弱狭隘难用的编程接口，把用户和开发者禁锢在单一的界面方针下。在这样的操作系统中，完成系统任务很容易，而完成设计者没有预料到的需求，用户要么是无计可施，要么是痛苦不堪。</p>
+<p>Unix 传统是让各个程序接口小巧，简洁和正交。整个 Unix 系统，容易的事还是那么容易，困难的事，至少是可能做到的。</p>
+<h2 id="1_5_6_Unix_Hack_之趣"><a class="header-anchor" href="#1_5_6_Unix_Hack_之趣">#</a>1.5.6 Unix Hack 之趣</h2>
+<p>充满痛苦的开发环境只会浪费劳动力和创造力；这样的环境会在无形之中耗费大量时间，资金，机会。</p>
+<p>乐趣是一个符号，意味着效能，效率和高产。</p>
+<h1 id="1_6_Unix_哲学基础"><a class="header-anchor" href="#1_6_Unix_哲学基础">#</a>1.6 Unix 哲学基础</h1>
+<p>Doug Mcllroy （Unix 管道发明人，Unix 传统奠基人之一） 说：</p>
+<ol>
+<li>让每个程序做好一件事。如果有新任务，就重新开始，不要往原程序中加入新功能而搞得复杂</li>
+<li>假定每个程序的输出都会成为另一个程序的输入，哪怕那个程序还是未知的。输出中不要有无关的信息干扰。</li>
+<li>对拙劣的代码别犹豫，扔掉重写</li>
+<li>优先使用工具而不是拙劣的帮助来减轻编程任务的负担。工欲善其事，必先利其器。</li>
+</ol>
+<div class="note info simple"><p>同样可以将 Doug Mcllroy 描述中的“程序”替换为“模块” 去理解。</p>
+</div>
+<p>Rob Pike（最伟大的 C 语言大师之一），在 《Notes on C Programming》从另一个不同的角度表述 Unix 的哲学：</p>
+<ol>
+<li>你无法判定程序会在什么地方耗费运行时间。瓶颈经常出现在想象不到的地方，所以别胡乱找个地方改代码，除非你已经证实那就是瓶颈所在。</li>
+<li>在你没对代码进行估量，特别是没找到最耗时的那部分之前，别去优化速度。</li>
+<li>花哨的算法在 n 很小时通常很慢，而 n 通常很小。除非你确定 n 总是很大，否则不要用花哨的算法（即使 n 很大，也优先考虑原则 2）。</li>
+<li>花哨的算法比简单算法更容易出 Bug，更难实现。尽量使用简单的算法配合简单的数据结构。</li>
+<li>编程的核心是数据结构，而不是算法。</li>
+</ol>
+<p><strong>Ken Thompson（Unix 最初版本的设计者和实现者，对 Pike 原则 4 做了强调）：拿不准就穷举</strong></p>
+<p>Unix 的原则，可以概括为如下几点：</p>
+<ol>
+<li>模块原则：使用简洁的接口拼合简单的部件</li>
+<li>清晰原则：清晰胜于机巧</li>
+<li>组合原则：设计时考虑拼接组合</li>
+<li>分离原则：策略同机制分离，接口同引擎分离</li>
+<li>吝啬原则：除非确无它法，不要编写庞大的程序</li>
+<li>透明性原则：设计要可见，以便审查和调试</li>
+<li>健壮原则：健壮源于透明和简洁</li>
+<li>表示原则：把知识叠入数据以求逻辑质朴而健壮。</li>
+<li>通俗原则：接口设计避免标新立异。</li>
+<li>缄默原则：如果一个程序没什么好说的，就沉默。</li>
+<li>补救原则：出现异常时，马上退出并给出足够错误信息。</li>
+<li>经济原则：宁花机器一分，不花程序员一秒。</li>
+<li>生成原则：避免手工 hack，尽量编写程序去生成程序。</li>
+<li>优化原则：雕琢前先要有原型，跑之前先学会走。</li>
+<li>多样原则：绝不相信所谓的“不二法门”的断言。</li>
+<li>扩展原则：设计着眼未来，未来总比预想来的块。</li>
+</ol>
+<h2 id="模块原则：使用简洁的接口拼合简单的部件"><a class="header-anchor" href="#模块原则：使用简洁的接口拼合简单的部件">#</a>模块原则：使用简洁的接口拼合简单的部件</h2>
+<p>Brian Kernighan（Unix 小组的 3 号人物）曾经说过：“计算机编程的本质就是控制复杂度”。</p>
+<p>排错占用了大部分的开发时间，弄出一个拿得出手的可用系统，通常与其说出自才华横溢的设计成果，还不如说是跌跌撞撞的结果。</p>
+<p>要编制复杂软件而又不至于一败涂地的唯一方式就是降低其整体复杂度——用清晰的接口把若干简单的模块组合出一个复杂软件。如此一来，多数问题只会局限在某个局部，那么就还有希望对局部改进而不至于牵动全身。</p>
+<h2 id="清晰原则：清晰胜于机巧"><a class="header-anchor" href="#清晰原则：清晰胜于机巧">#</a>清晰原则：清晰胜于机巧</h2>
+<p>在写程序时，要想到你不是写给执行代码的计算机看的，而是给人——将来阅读维护源码的人，包括你自己——看的。</p>
+<p>为了取得程序一丁点的性能提升就大幅度增加技术的复杂性和晦涩性，这个买卖做不得——这不仅仅是因为复杂的代码冗余滋生 bug，也因为它会使日后的阅读和维护工作更加艰难。</p>
+<h2 id="组合原则：设计时考虑拼接组合"><a class="header-anchor" href="#组合原则：设计时考虑拼接组合">#</a>组合原则：设计时考虑拼接组合</h2>
+<p>如果程序彼此之间不能有通信，那么软件就难免会陷入复杂度的泥淖。</p>
+<p>Unix 传统极力提倡采用简单、文本化、面向流、设备无关的格式。…Unix 程序员偏爱这种做法并不是因为他们仇恨图形用户界面，而是因为如果程序不采用简单的文本输入输出流，他们就极难衔接。</p>
+<h2 id="分离原则：策略同机制分离"><a class="header-anchor" href="#分离原则：策略同机制分离">#</a>分离原则：策略同机制分离</h2>
+<p>策略和机制是按照不同你的时间尺度变化的，策略的变化要远远快于机制。</p>
+<div class="note info simple"><p>可以将机制视作规则，策略则是在规则下实现目的的方式。</p>
+<p>比如系统定义了消息机制，定义了消息的发送、接受、处理、返回</p>
+<p>应用可依赖机制通过不同的策略实现不同的功能。</p>
+</div>
+<h2 id="简洁原则：设计要简洁，复杂度能低则低"><a class="header-anchor" href="#简洁原则：设计要简洁，复杂度能低则低">#</a>简洁原则：设计要简洁，复杂度能低则低</h2>
+<p>程序员们都很聪明，常常以能玩转复杂东西和耍弄抽象概念的能力为傲，这一点无可厚非……但他们的设计能力大大超出他们的实现和排错能力，结果便是代价高昂的废品。</p>
+<p>过度的复杂性往往来自于项目的要求，而这些要求常常基于当月的推销热点，而不是基于顾客的需求和软件实际能够提供的功能。许多优秀的设计被市场推销所需要的大堆大堆“特性清单”扼杀——实际上这些特性几乎从没用过。然后恶性循环开始了：比别人花哨的方法就是把自己变得更花哨。很快，庞大臃肿变成了业界标准，每个人都在使用臃肿不堪、bug 极多的软件，连软件开发人员也不敢敝帚自珍。</p>
+<p>要避免这些陷阱，唯一的方法就是鼓励另一种软件文化，以简洁为美。</p>
+<h2 id="吝啬原则：除非确无它法，不要编写庞大的程序"><a class="header-anchor" href="#吝啬原则：除非确无它法，不要编写庞大的程序">#</a>吝啬原则：除非确无它法，不要编写庞大的程序</h2>
+<p>程序大了，维护起来就困难。由于人们对花费了大量精力才做出来的东西难以割舍，结果导致在庞大的程序中把投资浪费注定要失败或者并非最佳的方案上。</p>
+<h2 id="健壮原则：健壮源于透明与简洁"><a class="header-anchor" href="#健壮原则：健壮源于透明与简洁">#</a>健壮原则：健壮源于透明与简洁</h2>
+<p>让程序健壮的方法，就是让程序的内部逻辑更易于理解。要做到这一点主要靠 <code>透明化</code> 和 <code>简洁性</code>。</p>
+<p>软件的透明性就是指一眼能看出是怎么回事。人们不需要绞尽脑汁就能够推断出所有可能的情况，那么这个程序透明的。</p>
+<p>模块性是组织程序达到更简洁目的的一个方法。</p>
+<h2 id="表示原则：把知识叠入数据以求逻辑质朴而健壮"><a class="header-anchor" href="#表示原则：把知识叠入数据以求逻辑质朴而健壮">#</a>表示原则：把知识叠入数据以求逻辑质朴而健壮</h2>
+<p>数据要比编程逻辑更容易驾驭。如果要在复杂数据和复杂代码中选择一个，宁愿选择前者。在设计中，应该主动将代码的复杂度转移到数据之中去。</p>
+<h2 id="通俗原则：接口设计避免标新立异"><a class="header-anchor" href="#通俗原则：接口设计避免标新立异">#</a>通俗原则：接口设计避免标新立异</h2>
+<p>接口设计应该避免毫无来由的标新立异和自作聪明。</p>
+<p>最小立异原则的另一面是避免表象相似而实际却略有不同。这会极端危险，因为表象相似往往导致人们产生错误的假定。所以最好让不同的事物有明显区别，而不要看起来几乎一模一样。 —— Henry Spencer</p>
+<h2 id="缄默原则：如果一个程序没什么好说的，就保持沉默"><a class="header-anchor" href="#缄默原则：如果一个程序没什么好说的，就保持沉默">#</a>缄默原则：如果一个程序没什么好说的，就保持沉默</h2>
+<p>行为良好的程序应该默默工作，决不唠唠叨叨，碍手碍脚。沉默是金。</p>
+<p>设计良好的程序将用户的注意力视为有限的宝贵资源，只有在必要时才要求使用。</p>
+<h2 id="补救原则：出现异常时，马上退出并给出足量错误信息"><a class="header-anchor" href="#补救原则：出现异常时，马上退出并给出足量错误信息">#</a>补救原则：出现异常时，马上退出并给出足量错误信息</h2>
+<p>软件要尽可能从容地应付各种错误输入和自身的运行错误。但是，如果做不到这一点，就让程序尽可能以一种容易诊断错误的方式终止。</p>
+<p>如果补救措施明明没有成功，却悄无声息地埋下崩溃的隐患，直到很久以后才显现出来，这就是最坏的一种情况。</p>
+<p>“就算输入的数据很不规范，一个设计良好的程序也会尽量领会其中的意义，以尽量与别的程序协作；然后，要么响亮地倒塌，要么为工作链下一环的程序输出一个严谨干净正确的数据”—— Jonathan Postel（互联网主要架构者之一，第一个互联网 RFC 系列标准的编纂者）</p>
+<h2 id="经济原则：宁花机器一分，不花程序员一秒"><a class="header-anchor" href="#经济原则：宁花机器一分，不花程序员一秒">#</a>经济原则：宁花机器一分，不花程序员一秒</h2>
+<h2 id="生成原则：避免手工_hack，尽量编写程序去生成程序"><a class="header-anchor" href="#生成原则：避免手工_hack，尽量编写程序去生成程序">#</a>生成原则：避免手工 hack，尽量编写程序去生成程序</h2>
+<h2 id="优化原则：雕琢前先得有原型，跑之前先学会走"><a class="header-anchor" href="#优化原则：雕琢前先得有原型，跑之前先学会走">#</a>优化原则：雕琢前先得有原型，跑之前先学会走</h2>
+<p>”90% 的功能现在能实现，比 100% 的功能永远实现不了强“。</p>
+<p>先给你的设计做个未优化，运行缓慢，很耗内存但正确的实现，然后进行系统的调整，寻找那些可能通过牺牲最小的局部简洁性而获得较大性能提升的地方。</p>
+<p>借助原型化找出哪些功能不必实现，有助于对性能进行优化；那些不用写的代码显然无需优化。目前最强大的优化工具就是 delete 键。</p>
+<p>我最有成效的一天，就是扔掉了 1000 行代码 —— Ken Thompson（图灵奖获得者，GO 发明者）。</p>
+<h2 id="多样原则：决不相信所谓_”不二法门“_的断言"><a class="header-anchor" href="#多样原则：决不相信所谓_”不二法门“_的断言">#</a>多样原则：决不相信所谓 ”不二法门“ 的断言</h2>
+<p>设计一个僵化、封闭、不愿与外界沟通的软件，简直是一种病态的傲慢。</p>
+<p>Unix 奉行的是广泛采用多种语言、开放的可拓展系统和用户定制机制。</p>
+<h2 id="扩展原则：设计着眼未来，未来总比预想快"><a class="header-anchor" href="#扩展原则：设计着眼未来，未来总比预想快">#</a>扩展原则：设计着眼未来，未来总比预想快</h2>
+<h1 id="1_7_Unix_哲学之一言以蔽之"><a class="header-anchor" href="#1_7_Unix_哲学之一言以蔽之">#</a>1.7 Unix 哲学之一言以蔽之</h1>
+<p>KISS 原则： Keep It Simple, Stupid!</p>
+<h1 id="1_9_态度也要紧"><a class="header-anchor" href="#1_9_态度也要紧">#</a>1.9 态度也要紧</h1>
+<p>你必须相信，软件设计是一门艺术，值得你付出所有的智慧、创造力和激情。…………否则你就会在应该思考的时候急急忙忙跑去编程，你就会在该无情删繁就简的时候反而把问题复杂化——然后你还会反过来奇怪你的代码怎么会那么臃肿，那么难以调试。</p>
+<p>要良好地运用 Unix 哲学，你应该珍惜你的时间决不浪费。一旦某人己经解决了某个问题，就直接拿来利用，不要让骄傲或偏见拽住你又去重做一遍。</p>
+<p>永远不要蛮干：要多用巧劲，省下力气到需要的时候再用，好钢用在刀刃上。善用工具，尽可能将一切都自动化。</p>
 ]]></content>
       <tags>
-        <tag>计算机网络</tag>
+        <tag>编码规范</tag>
+        <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 笔记汇总</title>
+    <url>/head_first_design_patterns/</url>
+    <content><![CDATA[<p><a href="/ch_01_the_strategy_pattern">Ch 01 the Strategy Pattern</a></p>
+<p><a href="/ch_02_the_observer_pattern">Ch 02 the Observer Pattern</a></p>
+<p><a href="/ch_03_the_decorator_pattern">Ch 03 the Decorator Pattern</a></p>
+<p><a href="/ch_04_the_factory_pattern">Ch 04 the Factory Pattern</a></p>
+<p><a href="/ch_05_the_singleton_pattern">Ch 05 the Singleton Pattern</a></p>
+<p><a href="/ch_06_the_command_pattern">Ch 06 the Command Pattern</a></p>
+<p><a href="/ch_07_the_adapter_and_facade_patterns">Ch 07 the Adapter and Facade Patterns</a></p>
+<p><a href="/ch_08_the_template_method_pattern">Ch 08 the Template Method Pattern</a></p>
+<p><a href="/ch_09_the_iterator_and_composite_pattern">Ch 09 the Iterator and Composite Pattern</a></p>
+<p><a href="/ch_10_the_state_pattern">Ch 10 the State Pattern</a></p>
+<p><a href="/ch_11_the_proxy_pattern">Ch 11 the Proxy Pattern</a></p>
+<p><a href="/ch_12_the_compound_patterns">Ch 12 the Compound Patterns</a></p>
+<p><a href="/head_first_design_pattern_design_principles">Head First Design Pattern Design Principles</a></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -2226,24 +2362,19 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 笔记汇总</title>
-    <url>/head_first_design_patterns/</url>
-    <content><![CDATA[<p><a href="/ch_01_the_strategy_pattern">Ch 01 the Strategy Pattern</a></p>
-<p><a href="/ch_02_the_observer_pattern">Ch 02 the Observer Pattern</a></p>
-<p><a href="/ch_03_the_decorator_pattern">Ch 03 the Decorator Pattern</a></p>
-<p><a href="/ch_04_the_factory_pattern">Ch 04 the Factory Pattern</a></p>
-<p><a href="/ch_05_the_singleton_pattern">Ch 05 the Singleton Pattern</a></p>
-<p><a href="/ch_06_the_command_pattern">Ch 06 the Command Pattern</a></p>
-<p><a href="/ch_07_the_adapter_and_facade_patterns">Ch 07 the Adapter and Facade Patterns</a></p>
-<p><a href="/ch_08_the_template_method_pattern">Ch 08 the Template Method Pattern</a></p>
-<p><a href="/ch_09_the_iterator_and_composite_pattern">Ch 09 the Iterator and Composite Pattern</a></p>
-<p><a href="/ch_10_the_state_pattern">Ch 10 the State Pattern</a></p>
-<p><a href="/ch_11_the_proxy_pattern">Ch 11 the Proxy Pattern</a></p>
-<p><a href="/ch_12_the_compound_patterns">Ch 12 the Compound Patterns</a></p>
-<p><a href="/head_first_design_pattern_design_principles">Head First Design Pattern Design Principles</a></p>
+    <title>《Render Hell》 笔记汇总</title>
+    <url>/render_hell/</url>
+    <content><![CDATA[<ul>
+<li><a href="/book_1_overview">Book 1 Overview</a></li>
+<li><a href="/book_2_pipeline">Book 2 Pipeline</a></li>
+<li><a href="/book_3_problems">Book 3 Problems</a></li>
+<li><a href="/book_4_solutions">Book 4 Solutions</a></li>
+</ul>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell/">Render Hell 2.0 | Simon schreibt.</a></p>
 ]]></content>
       <tags>
-        <tag>设计模式</tag>
+        <tag>GPU</tag>
       </tags>
   </entry>
   <entry>
@@ -2299,22 +2430,6 @@ $16.20$介绍了软件无线电系统。</p>
         <tag>AI</tag>
         <tag>LLM</tag>
         <tag>程序员</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Render Hell》 笔记汇总</title>
-    <url>/render_hell/</url>
-    <content><![CDATA[<ul>
-<li><a href="/book_1_overview">Book 1 Overview</a></li>
-<li><a href="/book_2_pipeline">Book 2 Pipeline</a></li>
-<li><a href="/book_3_problems">Book 3 Problems</a></li>
-<li><a href="/book_4_solutions">Book 4 Solutions</a></li>
-</ul>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell/">Render Hell 2.0 | Simon schreibt.</a></p>
-]]></content>
-      <tags>
-        <tag>GPU</tag>
       </tags>
   </entry>
   <entry>
@@ -2511,6 +2626,39 @@ $16.20$介绍了软件无线电系统。</p>
         <tag>心理</tag>
         <tag>自然科学</tag>
         <tag>科普</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》</title>
+    <url>/unix_bian_cheng_yi_shu/</url>
+    <content><![CDATA[<h1 id="Part_1_Context"><a class="header-anchor" href="#Part_1_Context">#</a>Part 1 Context</h1>
+<p><a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a><br>
+第 2 章 历史——双流记<br>
+第 3 章 对比：Unix 哲学同其他哲学的比较</p>
+<h1 id="Part_2_Design"><a class="header-anchor" href="#Part_2_Design">#</a>Part 2 Design</h1>
+<p>第 4 章 模块性：保持清晰，保持简洁<br>
+第 5 章 文本化：好协议产生好实践<br>
+第 6 章 透明性：来点儿光<br>
+第 7 章 多道程序设计：分离进程为独立的功能A<br>
+第 8 章 微型语言：寻找歌唱的乐符<br>
+第 9 章 生成：提升规格说明的层次<br>
+第 10 章 配置：迈出正确的第一步<br>
+第 11 章 接口：Unix 环境下的用户接口设计模式<br>
+第 12 章 优化<br>
+第 13 章 复杂度：尽可能简单，但别简单过了头</p>
+<h1 id="Part_3_Implementation"><a class="header-anchor" href="#Part_3_Implementation">#</a>Part 3 Implementation</h1>
+<p>第 14 章 语言：C 还是非 C<br>
+第 15 章 工具：开发的战术<br>
+第 16 章 重用：论不要重新发明轮子</p>
+<h1 id="Part_3_Community"><a class="header-anchor" href="#Part_3_Community">#</a>Part 3 Community</h1>
+<p>第 17 章 可移植性：软件可移植性与遵循标准<br>
+第 18 章 文档：向网络世界阐释代码<br>
+第 19 章 开放源码：在 Unix 新社区中编程<br>
+第 20 章 未来：危机与机遇</p>
+]]></content>
+      <tags>
+        <tag>编码规范</tag>
+        <tag>系统设计</tag>
       </tags>
   </entry>
   <entry>
@@ -2843,6 +2991,9 @@ When you are famous it is hard to work on small problems. This is what did Shan
 <h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
 <p><a href="https://www.cs.virginia.edu/~robins/youandyourresearch.html">You and Your Research (virginia.edu)</a></p>
 ]]></content>
+      <tags>
+        <tag>摘抄</tag>
+      </tags>
   </entry>
   <entry>
     <title>《卓有成效的管理者》 摘抄</title>
@@ -3240,6 +3391,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
 <p>组织雇用管理者并不是要他去做他自己喜欢做的事。管理者的责任是要把该做的事做好，具体地说，就是要进行有效的决策。</p>
 ]]></content>
       <tags>
+        <tag>摘抄</tag>
         <tag>管理</tag>
       </tags>
   </entry>
