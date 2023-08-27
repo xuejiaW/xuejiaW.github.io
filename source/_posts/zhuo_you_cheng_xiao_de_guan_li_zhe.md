@@ -8,7 +8,7 @@ ISBN: 9787111604020
 Category: 经济理财-管理
 CompleteDate: 2023-03
 created: 2023-07-08
-updated: 2023-07-29
+updated: 2023-07-30
 published: true
 title: 《卓有成效的管理者》 摘抄
 date: 2023-07-09 11:33 
