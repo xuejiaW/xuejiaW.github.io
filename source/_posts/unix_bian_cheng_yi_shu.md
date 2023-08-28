@@ -1,6 +1,6 @@
 ---
 created: 2022-04-28
-updated: 2023-08-27
+updated: 2023-08-28
 tags:
 - 编码规范
 - 系统设计
@@ -17,8 +17,8 @@ date: 2023-08-27 22:20
 # Part 1 Context
 
 [第 1 章 哲学](/di_1_zhang_zhe_xue)
-第 2 章 历史——双流记
-第 3 章 对比：Unix 哲学同其他哲学的比较
+[第 2 章 历史——双流记](/di_2_zhang_li_shi——shuang_liu_ji)
+[第 3 章 对比：Unix 哲学同其他哲学的比较](/di_3_zhang_dui_bi：unix_zhe_xue_tong_qi_ta_zhe_xue_de_bi_jiao)
 
 # Part 2 Design
 
