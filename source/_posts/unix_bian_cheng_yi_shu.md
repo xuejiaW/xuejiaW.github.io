@@ -22,7 +22,7 @@ date: 2023-08-27 22:20
 
 # Part 2 Design
 
-第 4 章 模块性：保持清晰，保持简洁
+[第 4 章 模块性：保持清晰，保持简洁](/di_4_zhang_mo_kuai_xing：bao_chi_qing_xi，bao_chi_jian_jie)
 第 5 章 文本化：好协议产生好实践
 第 6 章 透明性：来点儿光
 第 7 章 多道程序设计：分离进程为独立的功能A
