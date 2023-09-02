@@ -5,7 +5,7 @@ tags:
 created: 2023-08-29
 updated: 2023-09-02
 published: true
-title: 《Good decision-making is good progress》 摘抄
+title: 《Good decision-making is good process》 摘抄
 date: 2023-09-02 11:15 
 desciption: 这篇文章提出了“针对一个问题做出决定的结果并不是最重要的，而做出决定的过程，才是决定是否是好决定的标准” 的看法。文章同时给出了一个解决好问题的应该有的过程：通过自己的术语定义问题，使用不同的视角探索解决方案，获取做出决定所需要的信息并尽可能地降低噪声，以及区分决定是早期决定还是晚期决定并以此做出不同策略。
 ---
