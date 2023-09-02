@@ -3,7 +3,7 @@ tags:
     - 系统设计
     - 编码规范
 created: 2022-06-05
-updated: 2023-08-31
+updated: 2023-09-01
 published: true
 title: 《Unix 编程艺术》第四章 模块化
 date: 2023-08-31 21:16 
