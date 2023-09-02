@@ -600,6 +600,29 @@
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 Ch 02 观察者模式</title>
+    <url>/ch_02_the_observer_pattern/</url>
+    <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
+<p>例如我们希望定义温度计和压力计，在天气信息发生变化时自动更新，而非自己反复的查询是否天气信息有发生变化。这里天气信息就是被观察者，而温度计和压力计就是观察者。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="观察者及被观察者接口"><a class="header-anchor" href="#观察者及被观察者接口">#</a>观察者及被观察者接口</h2>
+<figure class="highlight cs"><figcaption><span>被观察者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ISubject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">UnregisterObserver</span>(<span class="params">IObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">NotifyObservers</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>观察者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="观察者实现"><a class="header-anchor" href="#观察者实现">#</a>观察者实现</h2>
+<figure class="highlight cs"><figcaption><span>温度计</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TemperatureObserver</span> : <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ISubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TemperatureObserver</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">        <span class="keyword">this</span>.subject.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        WeatherData weatherData = subject <span class="keyword">as</span> WeatherData;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//注意这里我们是从主动从被观察者那里去获取数据</span></span><br><span class="line">        <span class="keyword">if</span> (weatherData != <span class="literal">null</span>)</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Temperature is &quot;</span> + weatherData.Temperature);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>压力计</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PressureObserver</span> : <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ISubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PressureObserver</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">        <span class="keyword">this</span>.subject.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        WeatherData weatherData = subject <span class="keyword">as</span> WeatherData;</span><br><span class="line">        <span class="keyword">if</span> (weatherData != <span class="literal">null</span>)</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Pressure is &quot;</span> + weatherData.Pressure);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="被观察者实现"><a class="header-anchor" href="#被观察者实现">#</a>被观察者实现</h2>
+<figure class="highlight cs"><figcaption><span>天气数据</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">WeatherData</span> : <span class="title">ISubject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;IObserver&gt; observersList;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Temperature &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Humidity &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Pressure &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WeatherData</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList = <span class="keyword">new</span> List&lt;IObserver&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">NotifyObservers</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.ForEach(o =&gt; o.Update(<span class="keyword">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IObserver o</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Add(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnregisterObserver</span>(<span class="params">IObserver o</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Remove(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">measurementsChanged</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        NotifyObservers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetMeasurements</span>(<span class="params"><span class="built_in">float</span> temperature, <span class="built_in">float</span> humidity, <span class="built_in">float</span> pressure</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.Temperature = temperature;</span><br><span class="line">        <span class="keyword">this</span>.Humidity = humidity;</span><br><span class="line">        <span class="keyword">this</span>.Pressure = pressure;</span><br><span class="line">        measurementsChanged();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">WeatherData weatherData = <span class="keyword">new</span> WeatherData();</span><br><span class="line">TemperatureObserver temperatureObserver = <span class="keyword">new</span> TemperatureObserver(weatherData);</span><br><span class="line">PressureObserver pressureObserver = <span class="keyword">new</span> PressureObserver(weatherData);</span><br><span class="line"></span><br><span class="line">weatherData.SetMeasurements(<span class="number">30</span>, <span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">20</span>, <span class="number">40</span>, <span class="number">5</span>);</span><br><span class="line">weatherData.UnregisterObserver(temperatureObserver);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">10</span>, <span class="number">50</span>, <span class="number">15</span>);</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_02_the_observer_pattern/2019-01-15-23-20-09.png" alt="观察者模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 04 工厂模式</title>
     <url>/ch_04_the_factory_pattern/</url>
     <content><![CDATA[<p>工厂模式是为了将对象的实例化与对对象的操作解耦。因为有时我们会根据情况的不同，实例化出对象的不同版本，而我们不希望这种对于情况的判断与逻辑代码耦合在一起。</p>
@@ -673,6 +696,45 @@
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 Ch 03 装饰模式</title>
+    <url>/ch_03_the_decorator_pattern/</url>
+    <content><![CDATA[<p>装饰模式（Decorator Pattern） 提供了一个动态增加一个类功能的方法，主要实现思想是通过一个作为装饰者的类（<code>Decorators</code>）包裹被装饰类（<code>Component</code>）（装饰类以及被装饰类都有共同的基类），<code>Decorators</code> 会在 <code>Component</code> 类的某一个函数执行前或后进行一些操作，进而达到增加功能的作用。</p>
+<p>装饰模式主要实现了“代码应该对扩展功能开放而对于修改关闭”的面向对象原则，它在增加新功能的前提下，不需要改动既有的代码，只需要增加新的 <code>Decorators</code> 并且包含既有的 <code>Component</code> 即可。</p>
+<p>例如我们要计算一杯咖啡的价格，而这杯咖啡的价格还会受到额外的配料的影响，比如要加抹茶需要额外支付 0.2 元，加奶泡需要额外支付 0.3 元等。如果对各种配料都各自使用一个类来表示，则会存在较多的类需要维护，而且一旦配料发生变化等，还需要进行代码修改。而使用装饰模式则可以将原始的咖啡作为被装饰类，而所有的配料都是装饰类，则配料的更改仅需要增加或删除外部的装饰类即可。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="装饰类及被装饰类基类"><a class="header-anchor" href="#装饰类及被装饰类基类">#</a>装饰类及被装饰类基类</h2>
+<figure class="highlight cs"><figcaption><span>被装饰类基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="built_in">string</span> description = <span class="string">&quot;UnKnown Beverage&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> description;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>装饰类基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CondimentDecorator</span> : <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> Beverage beverage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CondimentDecorator</span>(<span class="params">Beverage beverage</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.beverage = beverage;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info simple"><p>注意装饰类基类继承自被装饰类，并存有一个被装饰类的变量，因为装饰类需要在被装饰类操作的基础上进行一定额外的操作，所以它需要存有对被装饰类的引用，同时对外部而言调用者而言，它与被装饰类相同。</p>
+</div>
+<h2 id="被装饰类实现"><a class="header-anchor" href="#被装饰类实现">#</a>被装饰类实现</h2>
+<figure class="highlight cs"><figcaption><span>浓咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Espresso</span> : <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Espresso</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        description = <span class="string">&quot;Espresson&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1.99</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="装饰类实现"><a class="header-anchor" href="#装饰类实现">#</a>装饰类实现</h2>
+<figure class="highlight cs"><figcaption><span>酱油</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Soy</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Soy</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Soy&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.30</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>奶泡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Whip</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Whip</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Whip&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.30</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>抹茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Mocha</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mocha</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Mocha&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.20</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Espresso espresso = <span class="keyword">new</span> Espresso();</span><br><span class="line">Console.WriteLine(espresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + espresso.Cost());</span><br><span class="line"></span><br><span class="line">Beverage doubleMochaWhipEspresso = <span class="keyword">new</span> Mocha(<span class="keyword">new</span> Mocha(<span class="keyword">new</span> Whip(espresso)));</span><br><span class="line">Console.WriteLine(doubleMochaWhipEspresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + doubleMochaWhipEspresso.Cost());</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_03_the_decorator_pattern/2019-01-15-23-43-20.png" alt="装饰模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 05 单例模式</title>
+    <url>/ch_05_the_singleton_pattern/</url>
+    <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
     <url>/ch_05_overview_of_data_communications/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
@@ -734,69 +796,6 @@
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 05 单例模式</title>
-    <url>/ch_05_the_singleton_pattern/</url>
-    <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 03 装饰模式</title>
-    <url>/ch_03_the_decorator_pattern/</url>
-    <content><![CDATA[<p>装饰模式（Decorator Pattern） 提供了一个动态增加一个类功能的方法，主要实现思想是通过一个作为装饰者的类（<code>Decorators</code>）包裹被装饰类（<code>Component</code>）（装饰类以及被装饰类都有共同的基类），<code>Decorators</code> 会在 <code>Component</code> 类的某一个函数执行前或后进行一些操作，进而达到增加功能的作用。</p>
-<p>装饰模式主要实现了“代码应该对扩展功能开放而对于修改关闭”的面向对象原则，它在增加新功能的前提下，不需要改动既有的代码，只需要增加新的 <code>Decorators</code> 并且包含既有的 <code>Component</code> 即可。</p>
-<p>例如我们要计算一杯咖啡的价格，而这杯咖啡的价格还会受到额外的配料的影响，比如要加抹茶需要额外支付 0.2 元，加奶泡需要额外支付 0.3 元等。如果对各种配料都各自使用一个类来表示，则会存在较多的类需要维护，而且一旦配料发生变化等，还需要进行代码修改。而使用装饰模式则可以将原始的咖啡作为被装饰类，而所有的配料都是装饰类，则配料的更改仅需要增加或删除外部的装饰类即可。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="装饰类及被装饰类基类"><a class="header-anchor" href="#装饰类及被装饰类基类">#</a>装饰类及被装饰类基类</h2>
-<figure class="highlight cs"><figcaption><span>被装饰类基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="built_in">string</span> description = <span class="string">&quot;UnKnown Beverage&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> description;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>装饰类基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CondimentDecorator</span> : <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> Beverage beverage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CondimentDecorator</span>(<span class="params">Beverage beverage</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.beverage = beverage;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<div class="note info simple"><p>注意装饰类基类继承自被装饰类，并存有一个被装饰类的变量，因为装饰类需要在被装饰类操作的基础上进行一定额外的操作，所以它需要存有对被装饰类的引用，同时对外部而言调用者而言，它与被装饰类相同。</p>
-</div>
-<h2 id="被装饰类实现"><a class="header-anchor" href="#被装饰类实现">#</a>被装饰类实现</h2>
-<figure class="highlight cs"><figcaption><span>浓咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Espresso</span> : <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Espresso</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        description = <span class="string">&quot;Espresson&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1.99</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="装饰类实现"><a class="header-anchor" href="#装饰类实现">#</a>装饰类实现</h2>
-<figure class="highlight cs"><figcaption><span>酱油</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Soy</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Soy</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Soy&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.30</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>奶泡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Whip</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Whip</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Whip&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.30</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>抹茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Mocha</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mocha</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Mocha&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.20</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Espresso espresso = <span class="keyword">new</span> Espresso();</span><br><span class="line">Console.WriteLine(espresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + espresso.Cost());</span><br><span class="line"></span><br><span class="line">Beverage doubleMochaWhipEspresso = <span class="keyword">new</span> Mocha(<span class="keyword">new</span> Mocha(<span class="keyword">new</span> Whip(espresso)));</span><br><span class="line">Console.WriteLine(doubleMochaWhipEspresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + doubleMochaWhipEspresso.Cost());</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_03_the_decorator_pattern/2019-01-15-23-43-20.png" alt="装饰模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 06 命令模式</title>
-    <url>/ch_06_the_command_pattern/</url>
-    <content><![CDATA[<p>命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。</p>
-<p>命令模式由抽象命令类、具体命令类、接受者、调用者、客户类，五部分组成。其中接受者为被命令封装的类，调用者存放需要执行的类。</p>
-<p>我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="抽象命令类及实现"><a class="header-anchor" href="#抽象命令类及实现">#</a>抽象命令类及实现</h2>
-<figure class="highlight cs"><figcaption><span>抽象命令类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Undo</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>命令类实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOffCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOffCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOnCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOnCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command execute&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command undo&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="接受者"><a class="header-anchor" href="#接受者">#</a>接受者</h2>
-<figure class="highlight cs"><figcaption><span>灯</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Light</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is on&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="调用者"><a class="header-anchor" href="#调用者">#</a>调用者</h2>
-<figure class="highlight cs"><figcaption><span>远程控制</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">RemoteControl</span></span><br><span class="line">&#123;</span><br><span class="line">    Command[] commands;</span><br><span class="line">    Command lastCommond;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RemoteControl</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands = <span class="keyword">new</span> Command[<span class="number">2</span>] &#123; <span class="keyword">new</span> NoCommand(), <span class="keyword">new</span> NoCommand() &#125;;</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetCommand</span>(<span class="params"><span class="built_in">int</span> index, Command command</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index] = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnButtonClick</span>(<span class="params"><span class="built_in">int</span> index</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index].Execute();</span><br><span class="line">        lastCommond = commands[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnClickUndo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        lastCommond.Undo();</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="客户类"><a class="header-anchor" href="#客户类">#</a>客户类</h2>
-<figure class="highlight cs"><figcaption><span>函数入口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Light light = <span class="keyword">new</span> Light();</span><br><span class="line">    RemoteControl remoteControl = <span class="keyword">new</span> RemoteControl();</span><br><span class="line">    remoteControl.SetCommand(<span class="number">0</span>, <span class="keyword">new</span> LightOnCommand(light));</span><br><span class="line">    remoteControl.SetCommand(<span class="number">1</span>, <span class="keyword">new</span> LightOffCommand(light));</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">0</span>);</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">1</span>);</span><br><span class="line">    remoteControl.OnClickUndo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<p>运行结果：</p>
-<p><img src="/ch_06_the_command_pattern/2019-02-02-23-26-25.png" alt="命令模式测试结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -910,6 +909,30 @@ $$</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 06 命令模式</title>
+    <url>/ch_06_the_command_pattern/</url>
+    <content><![CDATA[<p>命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。</p>
+<p>命令模式由抽象命令类、具体命令类、接受者、调用者、客户类，五部分组成。其中接受者为被命令封装的类，调用者存放需要执行的类。</p>
+<p>我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="抽象命令类及实现"><a class="header-anchor" href="#抽象命令类及实现">#</a>抽象命令类及实现</h2>
+<figure class="highlight cs"><figcaption><span>抽象命令类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Undo</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>命令类实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOffCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOffCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOnCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOnCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command execute&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command undo&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接受者"><a class="header-anchor" href="#接受者">#</a>接受者</h2>
+<figure class="highlight cs"><figcaption><span>灯</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Light</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is on&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="调用者"><a class="header-anchor" href="#调用者">#</a>调用者</h2>
+<figure class="highlight cs"><figcaption><span>远程控制</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">RemoteControl</span></span><br><span class="line">&#123;</span><br><span class="line">    Command[] commands;</span><br><span class="line">    Command lastCommond;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RemoteControl</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands = <span class="keyword">new</span> Command[<span class="number">2</span>] &#123; <span class="keyword">new</span> NoCommand(), <span class="keyword">new</span> NoCommand() &#125;;</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetCommand</span>(<span class="params"><span class="built_in">int</span> index, Command command</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index] = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnButtonClick</span>(<span class="params"><span class="built_in">int</span> index</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index].Execute();</span><br><span class="line">        lastCommond = commands[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnClickUndo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        lastCommond.Undo();</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="客户类"><a class="header-anchor" href="#客户类">#</a>客户类</h2>
+<figure class="highlight cs"><figcaption><span>函数入口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Light light = <span class="keyword">new</span> Light();</span><br><span class="line">    RemoteControl remoteControl = <span class="keyword">new</span> RemoteControl();</span><br><span class="line">    remoteControl.SetCommand(<span class="number">0</span>, <span class="keyword">new</span> LightOnCommand(light));</span><br><span class="line">    remoteControl.SetCommand(<span class="number">1</span>, <span class="keyword">new</span> LightOffCommand(light));</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">0</span>);</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">1</span>);</span><br><span class="line">    remoteControl.OnClickUndo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<p>运行结果：</p>
+<p><img src="/ch_06_the_command_pattern/2019-02-02-23-26-25.png" alt="命令模式测试结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1166,59 +1189,6 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 02 观察者模式</title>
-    <url>/ch_02_the_observer_pattern/</url>
-    <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
-<p>例如我们希望定义温度计和压力计，在天气信息发生变化时自动更新，而非自己反复的查询是否天气信息有发生变化。这里天气信息就是被观察者，而温度计和压力计就是观察者。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="观察者及被观察者接口"><a class="header-anchor" href="#观察者及被观察者接口">#</a>观察者及被观察者接口</h2>
-<figure class="highlight cs"><figcaption><span>被观察者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ISubject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">UnregisterObserver</span>(<span class="params">IObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">NotifyObservers</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>观察者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="观察者实现"><a class="header-anchor" href="#观察者实现">#</a>观察者实现</h2>
-<figure class="highlight cs"><figcaption><span>温度计</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TemperatureObserver</span> : <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ISubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TemperatureObserver</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">        <span class="keyword">this</span>.subject.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        WeatherData weatherData = subject <span class="keyword">as</span> WeatherData;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//注意这里我们是从主动从被观察者那里去获取数据</span></span><br><span class="line">        <span class="keyword">if</span> (weatherData != <span class="literal">null</span>)</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Temperature is &quot;</span> + weatherData.Temperature);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>压力计</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PressureObserver</span> : <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ISubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PressureObserver</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">        <span class="keyword">this</span>.subject.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        WeatherData weatherData = subject <span class="keyword">as</span> WeatherData;</span><br><span class="line">        <span class="keyword">if</span> (weatherData != <span class="literal">null</span>)</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Pressure is &quot;</span> + weatherData.Pressure);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="被观察者实现"><a class="header-anchor" href="#被观察者实现">#</a>被观察者实现</h2>
-<figure class="highlight cs"><figcaption><span>天气数据</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">WeatherData</span> : <span class="title">ISubject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;IObserver&gt; observersList;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Temperature &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Humidity &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Pressure &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WeatherData</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList = <span class="keyword">new</span> List&lt;IObserver&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">NotifyObservers</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.ForEach(o =&gt; o.Update(<span class="keyword">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IObserver o</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Add(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnregisterObserver</span>(<span class="params">IObserver o</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Remove(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">measurementsChanged</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        NotifyObservers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetMeasurements</span>(<span class="params"><span class="built_in">float</span> temperature, <span class="built_in">float</span> humidity, <span class="built_in">float</span> pressure</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.Temperature = temperature;</span><br><span class="line">        <span class="keyword">this</span>.Humidity = humidity;</span><br><span class="line">        <span class="keyword">this</span>.Pressure = pressure;</span><br><span class="line">        measurementsChanged();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">WeatherData weatherData = <span class="keyword">new</span> WeatherData();</span><br><span class="line">TemperatureObserver temperatureObserver = <span class="keyword">new</span> TemperatureObserver(weatherData);</span><br><span class="line">PressureObserver pressureObserver = <span class="keyword">new</span> PressureObserver(weatherData);</span><br><span class="line"></span><br><span class="line">weatherData.SetMeasurements(<span class="number">30</span>, <span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">20</span>, <span class="number">40</span>, <span class="number">5</span>);</span><br><span class="line">weatherData.UnregisterObserver(temperatureObserver);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">10</span>, <span class="number">50</span>, <span class="number">15</span>);</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_02_the_observer_pattern/2019-01-15-23-20-09.png" alt="观察者模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 08 模板方法模式</title>
-    <url>/ch_08_the_template_method_pattern/</url>
-    <content><![CDATA[<p>模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。</p>
-<ul>
-<li>
-<p>工厂方法&gt;模式就是模版方法模式的一种运用。</p>
-</li>
-<li>
-<p>策略模式和模版方法模式都是将算法的实现抽象出来，不同的是策略模式的实现依靠组成，而模版方法模式依靠继承。</p>
-</li>
-</ul>
-<p>例如我们需要准备咖啡和茶，准备咖啡基本步骤为烧开水，加入咖啡粉，将咖啡倒入杯子，增加牛奶或糖（可选），准备茶的基本步骤为烧开水，加入茶粉，将茶倒入杯子，增加柠檬（可选）。我们发现在制作两个饮料的过程中，烧开水和倒入杯子这两个步骤是一样的，剩下的两个步骤，向烧开的水中增加相应的粉和增加配料，这两部分也是类似的，于是我们可以用模版方法模式，将这两步骤作为抽象方法。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="算法模版基类"><a class="header-anchor" href="#算法模版基类">#</a>算法模版基类</h2>
-<figure class="highlight cs"><figcaption><span>咖啡因饮料模版</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrepareRecipe</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        boilWater();</span><br><span class="line">        brew();</span><br><span class="line">        pourInCup();</span><br><span class="line">        <span class="keyword">if</span> (NeedCondiments())</span><br><span class="line">            addCondiments();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">brew</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">boilWater</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Boiling Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">pourInCup</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Pouring Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<div class="note info simple"><p>例子中<code>brew</code>和<code>addCondiments</code>即为模版函数，而<code>NeedCondiments</code>这种提供了基本实现，但派生类中仍然可以重写的函数被称为钩子（<code>Hook</code>）。</p>
-</div>
-<h2 id="咖啡因饮料实现"><a class="header-anchor" href="#咖啡因饮料实现">#</a>咖啡因饮料实现</h2>
-<figure class="highlight cs"><figcaption><span>咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Coffee</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Add sugar and Milk&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Dripping coffee through filter&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Tea</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Adding lemon&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Steeping the tea&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Coffee coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">Tea tea = <span class="keyword">new</span> Tea();</span><br><span class="line">coffee.PrepareRecipe();</span><br><span class="line">Console.WriteLine();</span><br><span class="line">tea.PrepareRecipe();</span><br></pre></td></tr></table></figure>
-<p>运行结果:</p>
-<p><img src="/ch_08_the_template_method_pattern/2019-02-03-15-59-58.png" alt="模版方法模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Computer Networks and Internets》 Ch 08 可靠性及信道编码</title>
     <url>/ch_08_reliability_and_channel_coding/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
@@ -1439,6 +1409,36 @@ $$</p>
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 Ch 08 模板方法模式</title>
+    <url>/ch_08_the_template_method_pattern/</url>
+    <content><![CDATA[<p>模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。</p>
+<ul>
+<li>
+<p>工厂方法&gt;模式就是模版方法模式的一种运用。</p>
+</li>
+<li>
+<p>策略模式和模版方法模式都是将算法的实现抽象出来，不同的是策略模式的实现依靠组成，而模版方法模式依靠继承。</p>
+</li>
+</ul>
+<p>例如我们需要准备咖啡和茶，准备咖啡基本步骤为烧开水，加入咖啡粉，将咖啡倒入杯子，增加牛奶或糖（可选），准备茶的基本步骤为烧开水，加入茶粉，将茶倒入杯子，增加柠檬（可选）。我们发现在制作两个饮料的过程中，烧开水和倒入杯子这两个步骤是一样的，剩下的两个步骤，向烧开的水中增加相应的粉和增加配料，这两部分也是类似的，于是我们可以用模版方法模式，将这两步骤作为抽象方法。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="算法模版基类"><a class="header-anchor" href="#算法模版基类">#</a>算法模版基类</h2>
+<figure class="highlight cs"><figcaption><span>咖啡因饮料模版</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrepareRecipe</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        boilWater();</span><br><span class="line">        brew();</span><br><span class="line">        pourInCup();</span><br><span class="line">        <span class="keyword">if</span> (NeedCondiments())</span><br><span class="line">            addCondiments();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">brew</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">boilWater</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Boiling Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">pourInCup</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Pouring Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info simple"><p>例子中<code>brew</code>和<code>addCondiments</code>即为模版函数，而<code>NeedCondiments</code>这种提供了基本实现，但派生类中仍然可以重写的函数被称为钩子（<code>Hook</code>）。</p>
+</div>
+<h2 id="咖啡因饮料实现"><a class="header-anchor" href="#咖啡因饮料实现">#</a>咖啡因饮料实现</h2>
+<figure class="highlight cs"><figcaption><span>咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Coffee</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Add sugar and Milk&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Dripping coffee through filter&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Tea</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Adding lemon&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Steeping the tea&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Coffee coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">Tea tea = <span class="keyword">new</span> Tea();</span><br><span class="line">coffee.PrepareRecipe();</span><br><span class="line">Console.WriteLine();</span><br><span class="line">tea.PrepareRecipe();</span><br></pre></td></tr></table></figure>
+<p>运行结果:</p>
+<p><img src="/ch_08_the_template_method_pattern/2019-02-03-15-59-58.png" alt="模版方法模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 09 模板方法模式</title>
     <url>/ch_09_the_iterator_and_composite_pattern/</url>
     <content><![CDATA[<h1 id="迭代器模式"><a class="header-anchor" href="#迭代器模式">#</a>迭代器模式</h1>
@@ -1554,6 +1554,28 @@ $$</p>
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 Ch 11 代理模式</title>
+    <url>/ch_11_the_proxy_pattern/</url>
+    <content><![CDATA[<p>代理模式（Proxy Pattern）为对象提供一个代理进而控制对其的访问。</p>
+<p>例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="抽象接口"><a class="header-anchor" href="#抽象接口">#</a>抽象接口</h2>
+<figure class="highlight cs"><figcaption><span>图片接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="抽象接口实现"><a class="header-anchor" href="#抽象接口实现">#</a>抽象接口实现</h2>
+<figure class="highlight cs"><figcaption><span>真实图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> width, height;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageIcon</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Thread.Sleep(<span class="number">5000</span>);<span class="comment">//Pretend there is some hard work to load the image</span></span><br><span class="line">        width = <span class="number">800</span>;</span><br><span class="line">        height = <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Width is &quot;</span> + width + <span class="string">&quot;,height is &quot;</span> + height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>代理图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageProxyIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ImageIcon icon = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageProxyIcon</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (icon != <span class="literal">null</span>)</span><br><span class="line">            icon.PrintIconWidthAndHeight();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!isLoading)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Is Loading Image...&quot;</span>);</span><br><span class="line">            isLoading = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">new</span> Thread(() =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                icon = <span class="keyword">new</span> ImageIcon();</span><br><span class="line">                icon.PrintIconWidthAndHeight();</span><br><span class="line">            &#125;).Start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">ImageProxyIcon proxyIcon = <span class="keyword">new</span> ImageProxyIcon();</span><br><span class="line">proxyIcon.PrintIconWidthAndHeight();</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_11_the_proxy_pattern/2019-02-07-14-10-11.png" alt="代理模式运行结果"></p>
+<div class="note info simple"><p>代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，<code>ImageProxyIcon</code>并没有为<code>ImageIcon</code>拓展什么功能，只是用了多线程来访问访问其中的函数。</p>
+</div>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Computer Networks and Internets》 Ch 11 复用与解复用</title>
     <url>/ch_11_multiplexing_and_demultiplexing/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
@@ -1646,28 +1668,6 @@ $$</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 11 代理模式</title>
-    <url>/ch_11_the_proxy_pattern/</url>
-    <content><![CDATA[<p>代理模式（Proxy Pattern）为对象提供一个代理进而控制对其的访问。</p>
-<p>例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="抽象接口"><a class="header-anchor" href="#抽象接口">#</a>抽象接口</h2>
-<figure class="highlight cs"><figcaption><span>图片接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="抽象接口实现"><a class="header-anchor" href="#抽象接口实现">#</a>抽象接口实现</h2>
-<figure class="highlight cs"><figcaption><span>真实图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> width, height;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageIcon</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Thread.Sleep(<span class="number">5000</span>);<span class="comment">//Pretend there is some hard work to load the image</span></span><br><span class="line">        width = <span class="number">800</span>;</span><br><span class="line">        height = <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Width is &quot;</span> + width + <span class="string">&quot;,height is &quot;</span> + height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>代理图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageProxyIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ImageIcon icon = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageProxyIcon</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (icon != <span class="literal">null</span>)</span><br><span class="line">            icon.PrintIconWidthAndHeight();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!isLoading)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Is Loading Image...&quot;</span>);</span><br><span class="line">            isLoading = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">new</span> Thread(() =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                icon = <span class="keyword">new</span> ImageIcon();</span><br><span class="line">                icon.PrintIconWidthAndHeight();</span><br><span class="line">            &#125;).Start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">ImageProxyIcon proxyIcon = <span class="keyword">new</span> ImageProxyIcon();</span><br><span class="line">proxyIcon.PrintIconWidthAndHeight();</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_11_the_proxy_pattern/2019-02-07-14-10-11.png" alt="代理模式运行结果"></p>
-<div class="note info simple"><p>代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，<code>ImageProxyIcon</code>并没有为<code>ImageIcon</code>拓展什么功能，只是用了多线程来访问访问其中的函数。</p>
-</div>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -2174,6 +2174,17 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
+    <title>《Unix 编程艺术》 第二章 历史</title>
+    <url>/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji/</url>
+    <content><![CDATA[<h1 id="2_1_Unix_起源于历史，1969_1995"><a class="header-anchor" href="#2_1_Unix_起源于历史，1969_1995">#</a>2.1 Unix 起源于历史，1969-1995</h1>
+<p>小型实验原型系统的后继产品往往备受令人讨厌的“第二版效应”折磨。由于迫切希望把所有首次开发时遗漏的功能都添加进去，往往导致设计十分庞大、过于复杂。其实，还有一个因不常遇到而鲜为人知的“第三版效应”：有时候，在第二系统不堪自身重负而崩溃之后，有可能返璞归真，走上正道。</p>
+]]></content>
+      <tags>
+        <tag>编码规范</tag>
+        <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Unix 编程艺术》 第一章 哲学</title>
     <url>/di_1_zhang_zhe_xue/</url>
     <content><![CDATA[<h1 id="1_4_Unix_之失"><a class="header-anchor" href="#1_4_Unix_之失">#</a>1.4 Unix 之失</h1>
@@ -2281,17 +2292,6 @@ $16.20$介绍了软件无线电系统。</p>
 <p>你必须相信，软件设计是一门艺术，值得你付出所有的智慧、创造力和激情。…………否则你就会在应该思考的时候急急忙忙跑去编程，你就会在该无情删繁就简的时候反而把问题复杂化——然后你还会反过来奇怪你的代码怎么会那么臃肿，那么难以调试。</p>
 <p>要良好地运用 Unix 哲学，你应该珍惜你的时间决不浪费。一旦某人己经解决了某个问题，就直接拿来利用，不要让骄傲或偏见拽住你又去重做一遍。</p>
 <p>永远不要蛮干：要多用巧劲，省下力气到需要的时候再用，好钢用在刀刃上。善用工具，尽可能将一切都自动化。</p>
-]]></content>
-      <tags>
-        <tag>编码规范</tag>
-        <tag>系统设计</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Unix 编程艺术》 第二章 历史</title>
-    <url>/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji/</url>
-    <content><![CDATA[<h1 id="2_1_Unix_起源于历史，1969_1995"><a class="header-anchor" href="#2_1_Unix_起源于历史，1969_1995">#</a>2.1 Unix 起源于历史，1969-1995</h1>
-<p>小型实验原型系统的后继产品往往备受令人讨厌的“第二版效应”折磨。由于迫切希望把所有首次开发时遗漏的功能都添加进去，往往导致设计十分庞大、过于复杂。其实，还有一个因不常遇到而鲜为人知的“第三版效应”：有时候，在第二系统不堪自身重负而崩溃之后，有可能返璞归真，走上正道。</p>
 ]]></content>
       <tags>
         <tag>编码规范</tag>
@@ -2504,6 +2504,25 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 - 设计原则总结</title>
+    <url>/head_first_design_pattern_design_principles/</url>
+    <content><![CDATA[<ol>
+<li>将变化的部分封装起来（Encapsulate what varies)</li>
+<li>组合优于继承（Favor composition over inheritance）</li>
+<li>面向接口编程而非实现（Program to interfaces, not implementations.）</li>
+<li>减少需要交互的类之间的耦合（Strive for loosely coupled designs between objects that interact）</li>
+<li>对拓展开放，对修改关闭（Classes should be open for extension but closed for modification.）</li>
+<li>依赖于抽象而非具体的类（ Depend on abstraction. Do not depend on concrete classes）</li>
+<li>暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）</li>
+<li>高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don’t call us ,we’ll call you）</li>
+<li>一个类应该有且只有一个被改变的理由（A class should have only one reason to change）</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Good decision-making is good process》 摘抄</title>
     <url>/good_decision-making_is_good_process/</url>
     <content><![CDATA[<h1 id="用自己的术语定义问题"><a class="header-anchor" href="#用自己的术语定义问题">#</a>用自己的术语定义问题</h1>
@@ -2565,25 +2584,6 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 - 设计原则总结</title>
-    <url>/head_first_design_pattern_design_principles/</url>
-    <content><![CDATA[<ol>
-<li>将变化的部分封装起来（Encapsulate what varies)</li>
-<li>组合优于继承（Favor composition over inheritance）</li>
-<li>面向接口编程而非实现（Program to interfaces, not implementations.）</li>
-<li>减少需要交互的类之间的耦合（Strive for loosely coupled designs between objects that interact）</li>
-<li>对拓展开放，对修改关闭（Classes should be open for extension but closed for modification.）</li>
-<li>依赖于抽象而非具体的类（ Depend on abstraction. Do not depend on concrete classes）</li>
-<li>暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）</li>
-<li>高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don’t call us ,we’ll call you）</li>
-<li>一个类应该有且只有一个被改变的理由（A class should have only one reason to change）</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Head First 设计模式》 笔记汇总</title>
     <url>/head_first_design_patterns/</url>
     <content><![CDATA[<p><a href="/ch_01_the_strategy_pattern">Ch 01 the Strategy Pattern</a></p>
@@ -2602,6 +2602,22 @@ $16.20$介绍了软件无线电系统。</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Render Hell》 笔记汇总</title>
+    <url>/render_hell/</url>
+    <content><![CDATA[<ul>
+<li><a href="/book_1_overview">Book 1 Overview</a></li>
+<li><a href="/book_2_pipeline">Book 2 Pipeline</a></li>
+<li><a href="/book_3_problems">Book 3 Problems</a></li>
+<li><a href="/book_4_solutions">Book 4 Solutions</a></li>
+</ul>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell/">Render Hell 2.0 | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
       </tags>
   </entry>
   <entry>
@@ -2657,22 +2673,6 @@ $16.20$介绍了软件无线电系统。</p>
         <tag>AI</tag>
         <tag>LLM</tag>
         <tag>程序员</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Render Hell》 笔记汇总</title>
-    <url>/render_hell/</url>
-    <content><![CDATA[<ul>
-<li><a href="/book_1_overview">Book 1 Overview</a></li>
-<li><a href="/book_2_pipeline">Book 2 Pipeline</a></li>
-<li><a href="/book_3_problems">Book 3 Problems</a></li>
-<li><a href="/book_4_solutions">Book 4 Solutions</a></li>
-</ul>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell/">Render Hell 2.0 | Simon schreibt.</a></p>
-]]></content>
-      <tags>
-        <tag>GPU</tag>
       </tags>
   </entry>
   <entry>
@@ -2777,35 +2777,46 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》</title>
-    <url>/unix_bian_cheng_yi_shu/</url>
-    <content><![CDATA[<h1 id="Part_1_Context"><a class="header-anchor" href="#Part_1_Context">#</a>Part 1 Context</h1>
-<p><a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a><br>
-<a href="/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji">第 2 章 历史——双流记</a><br>
-<a href="/di_3_zhang_dui_bi%EF%BC%9Aunix_zhe_xue_tong_qi_ta_zhe_xue_de_bi_jiao">第 3 章 对比：Unix 哲学同其他哲学的比较</a></p>
-<h1 id="Part_2_Design"><a class="header-anchor" href="#Part_2_Design">#</a>Part 2 Design</h1>
-<p><a href="/di_4_zhang_mo_kuai_xing%EF%BC%9Abao_chi_qing_xi%EF%BC%8Cbao_chi_jian_jie">第 4 章 模块性：保持清晰，保持简洁</a><br>
-第 5 章 文本化：好协议产生好实践<br>
-第 6 章 透明性：来点儿光<br>
-第 7 章 多道程序设计：分离进程为独立的功能A<br>
-第 8 章 微型语言：寻找歌唱的乐符<br>
-第 9 章 生成：提升规格说明的层次<br>
-第 10 章 配置：迈出正确的第一步<br>
-第 11 章 接口：Unix 环境下的用户接口设计模式<br>
-第 12 章 优化<br>
-第 13 章 复杂度：尽可能简单，但别简单过了头</p>
-<h1 id="Part_3_Implementation"><a class="header-anchor" href="#Part_3_Implementation">#</a>Part 3 Implementation</h1>
-<p>第 14 章 语言：C 还是非 C<br>
-第 15 章 工具：开发的战术<br>
-第 16 章 重用：论不要重新发明轮子</p>
-<h1 id="Part_3_Community"><a class="header-anchor" href="#Part_3_Community">#</a>Part 3 Community</h1>
-<p>第 17 章 可移植性：软件可移植性与遵循标准<br>
-第 18 章 文档：向网络世界阐释代码<br>
-第 19 章 开放源码：在 Unix 新社区中编程<br>
-第 20 章 未来：危机与机遇</p>
+    <title>《System, Math and Explosions》 摘抄</title>
+    <url>/system,_math_and_explosions/</url>
+    <content><![CDATA[<p>系统从根本上就是复杂地，因为它不仅仅包含事物的集合，还包含事物的连接关系。而连接关系增长的非常块。</p>
+<p>如下所示， 3 个点的集合只有 3 个连接，9 个点的集合有 36 个连接，最右侧的集合有 27 个点，链接已经增长到了 351 个，这种现象被称为<code>组合爆炸（Combinatorial Explosion）</code>：<br>
+<img src="/system,_math_and_explosions/image-20230902151352.png" alt="系统连接的复杂度"></p>
+<div class="note info simple"><p>直觉上，增长速度是指数级的，但是实际上是多项书的，但这不是这篇文章的重点。</p>
+</div>
+<h1 id="组合爆炸就是复杂性爆炸"><a class="header-anchor" href="#组合爆炸就是复杂性爆炸">#</a>组合爆炸就是复杂性爆炸</h1>
+<p>当系统内组件的数量线性增长时，组件间的连接关系会呈指数增长，也因此系统的复杂度增长的会非常快。</p>
+<h1 id="堆积如山的东西是不可预测的"><a class="header-anchor" href="#堆积如山的东西是不可预测的">#</a>堆积如山的东西是不可预测的</h1>
+<p>系统之所以是系统，是因为它的组件能相互协同工作。随着系统的发展，理解一切是如何工作的，或者系统是否还仍然有效，变得越来越困难。这会让人感到难以理解、脆弱和不可预测。到那时，系统就正式变成了一坨 *</p>
+<p>不可预测性尤其可怕。因为不可预测的结果可能是好的、坏的或可怕的。前一分钟可以是这三个的组合，下一分钟以上都不是。这就是混乱，混乱必然是不好的。</p>
+<h1 id="避免复杂性的方法也会造成复杂性"><a class="header-anchor" href="#避免复杂性的方法也会造成复杂性">#</a>避免复杂性的方法也会造成复杂性</h1>
+<p>人们已经磨练了很多工具来避免复杂性。但坏消息是治疗方法可能比疾病本身更糟糕。这并不是说这些工具本质上是不好的，而是它们具有经常被忽视的局限性。以下是一些局限性：</p>
+<h2 id="拆分混淆了复杂性"><a class="header-anchor" href="#拆分混淆了复杂性">#</a>拆分混淆了复杂性</h2>
+<p>尝试简化系统时，划分是首选方法。它是一个很好的工具，可以将一个大型的整体系统转变为一个由更小、更易于管理的子系统组成的系统。如下：</p>
+<p><img src="/system,_math_and_explosions/image-20230902153548.png" alt="拆分为小组件"></p>
+<p>可以将系统的划分，与公司的组织结构划分类比。组织结构是将庞大的系统（人员），分解为更小、更容易理解的子系统（部门）的典型定义。</p>
+<p>组织结构图一个问题是它们会在人与人之间制造人为障碍，使他们更难一起工作。这些分区实际上并不存在于人们的日常工作中，但无论如何都是为了简化的目标而创建的。团队变得孤立，过度专注于自己的目标，而失去了对更大方向的可见性。</p>
+<p>在一个系统中也是如此，如果要保证所有模块的连接与拆分前一致，将变得非常困难。因此在实际的拆分中，很可能会造就一个脱节的系统，其中的各个元素感觉不像是在一起工作的。</p>
+<h2 id="减少连接降低复杂度"><a class="header-anchor" href="#减少连接降低复杂度">#</a>减少连接降低复杂度</h2>
+<p>仅仅因为系统中的两个部分可以连接，并不意味着它们应该连接。明确减少各个部分之间的连接是降低复杂性的另一种明确方法。如下是一个仍然是 27 个点，但每个点只和自己同侧的点相连的图，可以看到连接数大大减少了：<br>
+<img src="/system,_math_and_explosions/image-20230902154148.png" alt="降低连接数"></p>
+<p>但整个解决方案不利的一面是，需要额外的认知负担来理解哪些部分相互连接以及如何连接，这个认知负担也会随着每个组件的每组选项的独特程度而增加。</p>
+<p>另一个缺陷是，规则很可能会变得越来越复杂，一旦一个系统开始有 “做_<strong>_，除非__</strong>，除非____” 的规则出现，就要假设已经有人无法连接这个规则了。</p>
+<h2 id="抽象创造了复杂性的层次"><a class="header-anchor" href="#抽象创造了复杂性的层次">#</a>抽象创造了复杂性的层次</h2>
+<p>另一个降低复杂性的尝试是，仅让系统的一个子集可以被使用：一个简单的公共系统向所有人开放，它由一个隐藏着的一个更大、更复杂的私有系统驱动，如下所示：</p>
+<p><img src="/system,_math_and_explosions/image-20230902154624.png" alt="抽象"></p>
+<p>这样的解决方案会减少认知负担，尤其是对于初学者而言。用户可以从强大的抽象系统中受益，但陷入麻烦的选择要少得多。</p>
+<p>当然也有缺点。首先，公共和私有系统意味着需要处理更多的系统。其次，抽象可能会带来长期混乱的风险，因为人们开始发现他们没有获得所有的选择。这就引出了这样的问题：“还有哪些其他选项对我来说不可用？”、“为什么我不能使用它们？”并且，“为什么系统要按照与我不同的规则进行游戏？”</p>
+<h1 id="降低复杂度的唯一真正办法"><a class="header-anchor" href="#降低复杂度的唯一真正办法">#</a>降低复杂度的唯一真正办法</h1>
+<p>如果使用得当，上概述的工具可能会非常有效。但数学就是数学。线性地移除系统中的部分，连接会减少得更快。治疗复杂性的症状通常只是重新分配它。简而言之，避免复杂性陷阱的最佳方法就是完全避免复杂性。</p>
+<h1 id="令人窒息的秩序_或_灾难性的混乱"><a class="header-anchor" href="#令人窒息的秩序_或_灾难性的混乱">#</a>令人窒息的秩序 或 灾难性的混乱</h1>
+<p>很少有人承认混乱有吸引性，但为何它还是那么普遍呢？一个答案是：因为接受混乱很舒服。</p>
+<p>避免混乱就是寻求冲突。 “是” 会助长复杂性爆炸，“不” 则让阻碍复杂度增长。 但 “不“ 会带来争议，这是痛苦的、排斥的、令人窒息的。“不” 不会让你成为聚会的焦点，而且通常需要令人难以置信的纪律才能维持。</p>
+<p>尽管 “不” 可能会让人不舒服，但这最终是防止爆炸变成爆炸的最简单方法。</p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://pjonori.blog/posts/systems-math-explosions/">Systems, math and explosions (in no particular order) (pjonori.blog)</a></p>
 ]]></content>
       <tags>
-        <tag>编码规范</tag>
         <tag>系统设计</tag>
       </tags>
   </entry>
@@ -2902,6 +2913,39 @@ $16.20$介绍了软件无线电系统。</p>
         <tag>心理</tag>
         <tag>自然科学</tag>
         <tag>科普</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》</title>
+    <url>/unix_bian_cheng_yi_shu/</url>
+    <content><![CDATA[<h1 id="Part_1_Context"><a class="header-anchor" href="#Part_1_Context">#</a>Part 1 Context</h1>
+<p><a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a><br>
+<a href="/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji">第 2 章 历史——双流记</a><br>
+<a href="/di_3_zhang_dui_bi%EF%BC%9Aunix_zhe_xue_tong_qi_ta_zhe_xue_de_bi_jiao">第 3 章 对比：Unix 哲学同其他哲学的比较</a></p>
+<h1 id="Part_2_Design"><a class="header-anchor" href="#Part_2_Design">#</a>Part 2 Design</h1>
+<p><a href="/di_4_zhang_mo_kuai_xing%EF%BC%9Abao_chi_qing_xi%EF%BC%8Cbao_chi_jian_jie">第 4 章 模块性：保持清晰，保持简洁</a><br>
+第 5 章 文本化：好协议产生好实践<br>
+第 6 章 透明性：来点儿光<br>
+第 7 章 多道程序设计：分离进程为独立的功能A<br>
+第 8 章 微型语言：寻找歌唱的乐符<br>
+第 9 章 生成：提升规格说明的层次<br>
+第 10 章 配置：迈出正确的第一步<br>
+第 11 章 接口：Unix 环境下的用户接口设计模式<br>
+第 12 章 优化<br>
+第 13 章 复杂度：尽可能简单，但别简单过了头</p>
+<h1 id="Part_3_Implementation"><a class="header-anchor" href="#Part_3_Implementation">#</a>Part 3 Implementation</h1>
+<p>第 14 章 语言：C 还是非 C<br>
+第 15 章 工具：开发的战术<br>
+第 16 章 重用：论不要重新发明轮子</p>
+<h1 id="Part_3_Community"><a class="header-anchor" href="#Part_3_Community">#</a>Part 3 Community</h1>
+<p>第 17 章 可移植性：软件可移植性与遵循标准<br>
+第 18 章 文档：向网络世界阐释代码<br>
+第 19 章 开放源码：在 Unix 新社区中编程<br>
+第 20 章 未来：危机与机遇</p>
+]]></content>
+      <tags>
+        <tag>编码规范</tag>
+        <tag>系统设计</tag>
       </tags>
   </entry>
   <entry>
