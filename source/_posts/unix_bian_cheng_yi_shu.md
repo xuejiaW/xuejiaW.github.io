@@ -1,6 +1,6 @@
 ---
 created: 2022-04-28
-updated: 2023-08-28
+updated: 2023-09-03
 tags:
 - 编码规范
 - 系统设计
@@ -25,10 +25,10 @@ date: 2023-08-27 22:20
 [第 4 章 模块性：保持清晰，保持简洁](/di_4_zhang_mo_kuai_xing：bao_chi_qing_xi，bao_chi_jian_jie)
 [第 5 章 文本化：好协议产生好实践](/di_5_zhang_wen_ben_hua：hao_xie_yi_chan_sheng_hao_shi_jian)
 [第 6 章 透明性：来点儿光](/di_6_zhang_tou_ming_xing：lai_dian_er_guang)
-第 7 章 多道程序设计：分离进程为独立的功能A
-第 8 章 微型语言：寻找歌唱的乐符
-第 9 章 生成：提升规格说明的层次
-第 10 章 配置：迈出正确的第一步
+[第 7 章 多道程序设计：分离进程为独立的功能](/di_7_zhang_duo_dao_cheng_xu_she_ji：fen_li_jin_cheng_wei_du_li_de_gong_neng)A
+[第 8 章 微型语言：寻找歌唱的乐符](/di_8_zhang_wei_xing_yu_yan：xun_zhao_ge_chang_de_le_fu)
+[第 9 章 生成：提升规格说明的层次](/di_9_zhang_sheng_cheng：ti_sheng_gui_ge_shuo_ming_de_ceng_ci)
+[第 10 章 配置：迈出正确的第一步](/di_10_zhang_pei_zhi：mai_chu_zheng_que_de_di_yi_bu)
 第 11 章 接口：Unix 环境下的用户接口设计模式
 第 12 章 优化
 第 13 章 复杂度：尽可能简单，但别简单过了头
