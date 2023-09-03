@@ -29,8 +29,8 @@ date: 2023-08-27 22:20
 [第 8 章 微型语言：寻找歌唱的乐符](/di_8_zhang_wei_xing_yu_yan：xun_zhao_ge_chang_de_le_fu)
 [第 9 章 生成：提升规格说明的层次](/di_9_zhang_sheng_cheng：ti_sheng_gui_ge_shuo_ming_de_ceng_ci)
 [第 10 章 配置：迈出正确的第一步](/di_10_zhang_pei_zhi：mai_chu_zheng_que_de_di_yi_bu)
-第 11 章 接口：Unix 环境下的用户接口设计模式
-第 12 章 优化
+[第 11 章 接口：Unix 环境下的用户接口设计模式](/di_11_zhang_jie_kou：unix_huan_jing_xia_de_yong_hu_jie_kou_she_ji_mo_shi)
+[第 12 章 优化](/di_12_zhang_you_hua)
 第 13 章 复杂度：尽可能简单，但别简单过了头
 
 # Part 3 Implementation
