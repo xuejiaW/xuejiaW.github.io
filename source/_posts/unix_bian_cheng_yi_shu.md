@@ -10,7 +10,7 @@ Cover: https://images-na.ssl-images-amazon.com/images/I/51DY+7Ow9uL._SX401_BO1,2
 ISBN: 978-4756149480
 published: true
 description: 《Unix 编程艺术》一书笔记汇总。该书虽然叫做 “编程艺术”，但和具体的编程却关系不大，更多的是系统设计和编码原则。
-title: 《Unix 编程艺术》
+title: 《Unix 编程艺术》笔记汇总
 date: 2023-08-27 22:20 
 ---
 
@@ -23,8 +23,8 @@ date: 2023-08-27 22:20
 # Part 2 Design
 
 [第 4 章 模块性：保持清晰，保持简洁](/di_4_zhang_mo_kuai_xing：bao_chi_qing_xi，bao_chi_jian_jie)
-第 5 章 文本化：好协议产生好实践
-第 6 章 透明性：来点儿光
+[第 5 章 文本化：好协议产生好实践](/di_5_zhang_wen_ben_hua：hao_xie_yi_chan_sheng_hao_shi_jian)
+[第 6 章 透明性：来点儿光](/di_6_zhang_tou_ming_xing：lai_dian_er_guang)
 第 7 章 多道程序设计：分离进程为独立的功能A
 第 8 章 微型语言：寻找歌唱的乐符
 第 9 章 生成：提升规格说明的层次

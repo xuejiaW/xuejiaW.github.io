@@ -12,7 +12,7 @@ Category: 科学技术-自然科学
 created: 2023-02-12
 updated: 2023-07-17
 Completecreated: 2023-02
-title: 《贪婪的多巴胺》 读书笔记
+title: 《贪婪的多巴胺》 摘抄
 published: true
 date: 2023-05-27
 ---
