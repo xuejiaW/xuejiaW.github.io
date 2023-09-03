@@ -245,6 +245,32 @@
       </tags>
   </entry>
   <entry>
+    <title>《Render Hell》 第三部分 常见问题</title>
+    <url>/book_3_problems/</url>
+    <content><![CDATA[<h1 id="Many_Draw_Calls_Many_Commands"><a class="header-anchor" href="#Many_Draw_Calls_Many_Commands">#</a>Many Draw Calls / Many Commands</h1>
+<p>对于一个 API 而言，它不仅仅是将命令发送给 GPU，它还会有额外的如驱动翻译等的开销，因此应当尽可能的使用更少的命令。</p>
+<div class="note info simple"><p>对于新的图形 API，如 DirectX12， Vulkan 等，命令的开销会相对较少，但仍然应当尽可能的减少命令的数量。</p>
+</div>
+<p>如果有一系列很小的 Mesh，相较于每个 Mesh 都使用一个 Drawcall，更理想的做法是将这些 Meshes 组合成一个更大的 Mesh，并通过一个 Drawcall 传送。</p>
+<p>因为对于 GPU 而言，绘制一个小 Mesh 的时间是非常快的，而 CPU 将数据发送给 GPU 的时间是相对较长的。</p>
+<p>如果是每一个 Mesh 一个 Draw Call 的处理方式，往往瓶颈会出现在 CPU 侧。</p>
+<h1 id="Many_Meshes_and_Materials"><a class="header-anchor" href="#Many_Meshes_and_Materials">#</a>Many Meshes and Materials</h1>
+<p>如果要渲染许多 Mesh 并使用不同的 Materials，除了需要用许多的命令外，还会额外带来 <code>Flush Pipeline</code> 的问题。</p>
+<p>如果多个 Meshes 是用同一种渲染状态，则在一个 Mesh 完成后，另一个 Mesh 可以被很快的装填。而如果更改了材质状态，则管线中的一部分数据需要被刷新，才能进行下一个 Mesh 的绘制，这会造成额外的开销。</p>
+<h1 id="Meshes_and_Multi_Materials"><a class="header-anchor" href="#Meshes_and_Multi_Materials">#</a>Meshes and Multi-Materials</h1>
+<p>如果一个 Mesh 被赋予了多个材质，则该 Mesh 会被切分成多份再被送入 Command Buffer 中，这无疑也会造成多个 Draw Call 的产生。如下示意图所示，球的左半部分和右半部分各需要一个 Draw Call：<br>
+<img src="/book_3_problems/copy_data_from_hdd_to_ram_vram_01_multimaterial.gif" alt="Multi-Materials"></p>
+<h1 id="Thin_Triangles"><a class="header-anchor" href="#Thin_Triangles">#</a>Thin Triangles</h1>
+<p>如在 Book 2 的 <a href="/book_2_pipeline/#Rasterizing">Rasterizing</a> 中所属，光栅化后的单位是 <code>pre-pixles</code> ，Warp 中的四个线程会被分给一个 <code>pre-pixels</code> 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：<br>
+<img src="/book_3_problems/pipeline_rasterizing03_.gif" alt="Thin Triangles 造成的性能浪费"></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book3/">Render Hell – Book III | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Render Hell》 第一部分 概览</title>
     <url>/book_1_overview/</url>
     <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
@@ -413,32 +439,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Render Hell》 第三部分 常见问题</title>
-    <url>/book_3_problems/</url>
-    <content><![CDATA[<h1 id="Many_Draw_Calls_Many_Commands"><a class="header-anchor" href="#Many_Draw_Calls_Many_Commands">#</a>Many Draw Calls / Many Commands</h1>
-<p>对于一个 API 而言，它不仅仅是将命令发送给 GPU，它还会有额外的如驱动翻译等的开销，因此应当尽可能的使用更少的命令。</p>
-<div class="note info simple"><p>对于新的图形 API，如 DirectX12， Vulkan 等，命令的开销会相对较少，但仍然应当尽可能的减少命令的数量。</p>
-</div>
-<p>如果有一系列很小的 Mesh，相较于每个 Mesh 都使用一个 Drawcall，更理想的做法是将这些 Meshes 组合成一个更大的 Mesh，并通过一个 Drawcall 传送。</p>
-<p>因为对于 GPU 而言，绘制一个小 Mesh 的时间是非常快的，而 CPU 将数据发送给 GPU 的时间是相对较长的。</p>
-<p>如果是每一个 Mesh 一个 Draw Call 的处理方式，往往瓶颈会出现在 CPU 侧。</p>
-<h1 id="Many_Meshes_and_Materials"><a class="header-anchor" href="#Many_Meshes_and_Materials">#</a>Many Meshes and Materials</h1>
-<p>如果要渲染许多 Mesh 并使用不同的 Materials，除了需要用许多的命令外，还会额外带来 <code>Flush Pipeline</code> 的问题。</p>
-<p>如果多个 Meshes 是用同一种渲染状态，则在一个 Mesh 完成后，另一个 Mesh 可以被很快的装填。而如果更改了材质状态，则管线中的一部分数据需要被刷新，才能进行下一个 Mesh 的绘制，这会造成额外的开销。</p>
-<h1 id="Meshes_and_Multi_Materials"><a class="header-anchor" href="#Meshes_and_Multi_Materials">#</a>Meshes and Multi-Materials</h1>
-<p>如果一个 Mesh 被赋予了多个材质，则该 Mesh 会被切分成多份再被送入 Command Buffer 中，这无疑也会造成多个 Draw Call 的产生。如下示意图所示，球的左半部分和右半部分各需要一个 Draw Call：<br>
-<img src="/book_3_problems/copy_data_from_hdd_to_ram_vram_01_multimaterial.gif" alt="Multi-Materials"></p>
-<h1 id="Thin_Triangles"><a class="header-anchor" href="#Thin_Triangles">#</a>Thin Triangles</h1>
-<p>如在 Book 2 的 <a href="/book_2_pipeline/#Rasterizing">Rasterizing</a> 中所属，光栅化后的单位是 <code>pre-pixles</code> ，Warp 中的四个线程会被分给一个 <code>pre-pixels</code> 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：<br>
-<img src="/book_3_problems/pipeline_rasterizing03_.gif" alt="Thin Triangles 造成的性能浪费"></p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell-book3/">Render Hell – Book III | Simon schreibt.</a></p>
-]]></content>
-      <tags>
-        <tag>GPU</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Render Hell》 第四部分 解决方法</title>
     <url>/book_4_solutions/</url>
     <content><![CDATA[<h1 id="Sorting"><a class="header-anchor" href="#Sorting">#</a>Sorting</h1>
@@ -469,28 +469,6 @@
 ]]></content>
       <tags>
         <tag>GPU</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 01 策略模式</title>
-    <url>/ch_01_the_strategy_pattern/</url>
-    <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
-<p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
-<p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="算法接口及实现类"><a class="header-anchor" href="#算法接口及实现类">#</a>算法接口及实现类</h2>
-<figure class="highlight cs"><figcaption><span>飞行方法接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>飞行方法实现</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyNoWay</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Can not fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithRocket</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with rocket&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithWings</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with wings&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="环境类"><a class="header-anchor" href="#环境类">#</a>环境类</h2>
-<figure class="highlight cs"><figcaption><span>鸭子基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehavior flyBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PerformFly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span>(<span class="params">IFlyBehavior fb</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior = fb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>鸭子派生类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BlackDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlackDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyWithWings());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a black duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RubberDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RubberDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a rubber duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">RubberDuck rubberDuck = <span class="keyword">new</span> RubberDuck();</span><br><span class="line">rubberDuck.disPlay();</span><br><span class="line">rubberDuck.PerformFly();</span><br><span class="line"></span><br><span class="line">BlackDuck blackDuck = <span class="keyword">new</span> BlackDuck();</span><br><span class="line">blackDuck.disPlay();</span><br><span class="line">blackDuck.PerformFly();</span><br><span class="line">blackDuck.setFlyBehavior(<span class="keyword">new</span> FlyWithRocket());</span><br><span class="line">blackDuck.PerformFly();</span><br></pre></td></tr></table></figure>
-<p>运行结果</p>
-<p><img src="/ch_01_the_strategy_pattern/2019-01-15-00-12-45.png" alt="策略模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -600,6 +578,28 @@
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 Ch 01 策略模式</title>
+    <url>/ch_01_the_strategy_pattern/</url>
+    <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
+<p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
+<p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="算法接口及实现类"><a class="header-anchor" href="#算法接口及实现类">#</a>算法接口及实现类</h2>
+<figure class="highlight cs"><figcaption><span>飞行方法接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>飞行方法实现</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyNoWay</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Can not fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithRocket</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with rocket&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithWings</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with wings&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="环境类"><a class="header-anchor" href="#环境类">#</a>环境类</h2>
+<figure class="highlight cs"><figcaption><span>鸭子基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehavior flyBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PerformFly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span>(<span class="params">IFlyBehavior fb</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior = fb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>鸭子派生类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BlackDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlackDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyWithWings());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a black duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RubberDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RubberDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a rubber duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">RubberDuck rubberDuck = <span class="keyword">new</span> RubberDuck();</span><br><span class="line">rubberDuck.disPlay();</span><br><span class="line">rubberDuck.PerformFly();</span><br><span class="line"></span><br><span class="line">BlackDuck blackDuck = <span class="keyword">new</span> BlackDuck();</span><br><span class="line">blackDuck.disPlay();</span><br><span class="line">blackDuck.PerformFly();</span><br><span class="line">blackDuck.setFlyBehavior(<span class="keyword">new</span> FlyWithRocket());</span><br><span class="line">blackDuck.PerformFly();</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<p><img src="/ch_01_the_strategy_pattern/2019-01-15-00-12-45.png" alt="策略模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 02 观察者模式</title>
     <url>/ch_02_the_observer_pattern/</url>
     <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
@@ -644,6 +644,82 @@
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Espresso espresso = <span class="keyword">new</span> Espresso();</span><br><span class="line">Console.WriteLine(espresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + espresso.Cost());</span><br><span class="line"></span><br><span class="line">Beverage doubleMochaWhipEspresso = <span class="keyword">new</span> Mocha(<span class="keyword">new</span> Mocha(<span class="keyword">new</span> Whip(espresso)));</span><br><span class="line">Console.WriteLine(doubleMochaWhipEspresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + doubleMochaWhipEspresso.Cost());</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
 <p><img src="/ch_03_the_decorator_pattern/2019-01-15-23-43-20.png" alt="装饰模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
+    <url>/ch_05_overview_of_data_communications/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
+<h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
+<p>数据通信是物理，数学和电气工程三个学科的混合领域。</p>
+<ol>
+<li>物理：信息的传输依赖于物理媒介</li>
+<li>数学：信息需要数字化</li>
+<li>电气工程：数据传输需要构建现实中的通信系统</li>
+</ol>
+<h1 id="Motivation_And_Scope_Of_The_Subject"><a class="header-anchor" href="#Motivation_And_Scope_Of_The_Subject">#</a>Motivation And Scope Of The Subject</h1>
+<p>在数据通信领域有三个重要的点，他们定义了数据通信的一些领域</p>
+<ol>
+<li>
+<p>传输的数据可以是任意类型的</p>
+<p>传输的数据并不一定是存储在计算机中的<code>bit</code>数据，也可以是从现实世界中获取的信息，如音频和视频。</p>
+</li>
+<li>
+<p>数据的传输依赖于物理系统</p>
+<p>数据是基于物理现象来传输的，例如电，电磁波。了解为什么这些物理现象可以被用来传输数据是很重要的。另外也需要理解物理系统的限制，因为这些限制引发的问题和这些问题如何被检测并解决。</p>
+</li>
+<li>
+<p>多个来源的信息可以共享基础媒介来传输</p>
+<p>媒介共享在计算机网络中是一个重要角色。了解哪些基础设施是可以被共享的，共享他们的优缺点，以及基于共享而设计的通信模型是很重要的。</p>
+</li>
+</ol>
+<h1 id="The_Conceptual_Pieces_Of_A_Communications_System"><a class="header-anchor" href="#The_Conceptual_Pieces_Of_A_Communications_System">#</a>The Conceptual Pieces Of A Communications System</h1>
+<p>每一个来源都需要一些方法来获取信息，调整信息为用于传播的模式，使用共享的物理媒介来传输信息。同时也需要一些方法从物理媒介中抽取出每条信息的目的地地址，并将信息传送给目标地址。整个过程如下图所示：</p>
+<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-24-24.png" alt="数据通信简单模型"></p>
+<p>上图是一个非常简化的模型，在实际操作中，在传输数据前，必须对数据进行数字化，也需要加入一些额外的信息防止错误发生。如果考虑到隐私，可能还需要进行加密。在使用共享媒介时，还要保证有方法可以分辨出每条信息且他们不会相互干扰。</p>
+<p>为了解释数据通信的每个部分，工程师们制订了一个概念框架来说明通信系统中的每个小主题是如何联系在一起的，概念框架如下图所示：</p>
+<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-28-26.png" alt="概念框架"></p>
+<h1 id="The_Subtopics_Of_Data_Communications"><a class="header-anchor" href="#The_Subtopics_Of_Data_Communications">#</a>The Subtopics Of Data Communications</h1>
+<p>上一节中的概念框架图中的每一部分都代表了数据通信中的一个小主题。这一节中简单介绍了图中的一些术语，之后的几章中会在对每一部分进行详细说。</p>
+<ol>
+<li>
+<p><code>数据来源(Information Sources)</code>可以是模拟数据或者数字电路。这一部分的关键内容包括信号的特征（<code>振幅(Amplitude)</code>，<code>频率(Frequency)</code>，<code>相位(Phase)</code>），周期性与非周期性，以及模拟信息和数字信息的转换。</p>
+</li>
+<li>
+<p><code>信源编码与解码(Source Encoder and Decoder)</code>。一旦信息被数字化后，信息就可以被转换，这一部分的关键内容包括数据压缩以及压缩后对于传输的影响</p>
+</li>
+<li>
+<p><code>加密与解密(Encryptor and Decryptor)</code>。为了保护信息和保证其可信度，在信息传送前需要进行加密，在接收后需要解密。这一部分的关键内容包括密码学技术与算法。</p>
+</li>
+<li>
+<p><code>信道编码与解码(Channel Encoder and Decoder)</code>。信道编码是用来检测也纠正传输错误。这一部分的关键内容包括检测和限制错误，以及实际应用的技术，如奇偶校验(parity checking)等。</p>
+</li>
+<li>
+<p><code>复用与解复用(Multiplexor and Demultiplexor)</code>。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。</p>
+</li>
+<li>
+<p><code>调制与解调(Modulator and Demodulator)</code>。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。</p>
+</li>
+<li>
+<p><code>物理通道与传输(Physical Channel and Transmission)</code>。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 05 单例模式</title>
+    <url>/ch_05_the_singleton_pattern/</url>
+    <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -720,82 +796,6 @@
 ]]></content>
       <tags>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 05 单例模式</title>
-    <url>/ch_05_the_singleton_pattern/</url>
-    <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
-    <url>/ch_05_overview_of_data_communications/</url>
-    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
-<h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
-<p>数据通信是物理，数学和电气工程三个学科的混合领域。</p>
-<ol>
-<li>物理：信息的传输依赖于物理媒介</li>
-<li>数学：信息需要数字化</li>
-<li>电气工程：数据传输需要构建现实中的通信系统</li>
-</ol>
-<h1 id="Motivation_And_Scope_Of_The_Subject"><a class="header-anchor" href="#Motivation_And_Scope_Of_The_Subject">#</a>Motivation And Scope Of The Subject</h1>
-<p>在数据通信领域有三个重要的点，他们定义了数据通信的一些领域</p>
-<ol>
-<li>
-<p>传输的数据可以是任意类型的</p>
-<p>传输的数据并不一定是存储在计算机中的<code>bit</code>数据，也可以是从现实世界中获取的信息，如音频和视频。</p>
-</li>
-<li>
-<p>数据的传输依赖于物理系统</p>
-<p>数据是基于物理现象来传输的，例如电，电磁波。了解为什么这些物理现象可以被用来传输数据是很重要的。另外也需要理解物理系统的限制，因为这些限制引发的问题和这些问题如何被检测并解决。</p>
-</li>
-<li>
-<p>多个来源的信息可以共享基础媒介来传输</p>
-<p>媒介共享在计算机网络中是一个重要角色。了解哪些基础设施是可以被共享的，共享他们的优缺点，以及基于共享而设计的通信模型是很重要的。</p>
-</li>
-</ol>
-<h1 id="The_Conceptual_Pieces_Of_A_Communications_System"><a class="header-anchor" href="#The_Conceptual_Pieces_Of_A_Communications_System">#</a>The Conceptual Pieces Of A Communications System</h1>
-<p>每一个来源都需要一些方法来获取信息，调整信息为用于传播的模式，使用共享的物理媒介来传输信息。同时也需要一些方法从物理媒介中抽取出每条信息的目的地地址，并将信息传送给目标地址。整个过程如下图所示：</p>
-<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-24-24.png" alt="数据通信简单模型"></p>
-<p>上图是一个非常简化的模型，在实际操作中，在传输数据前，必须对数据进行数字化，也需要加入一些额外的信息防止错误发生。如果考虑到隐私，可能还需要进行加密。在使用共享媒介时，还要保证有方法可以分辨出每条信息且他们不会相互干扰。</p>
-<p>为了解释数据通信的每个部分，工程师们制订了一个概念框架来说明通信系统中的每个小主题是如何联系在一起的，概念框架如下图所示：</p>
-<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-28-26.png" alt="概念框架"></p>
-<h1 id="The_Subtopics_Of_Data_Communications"><a class="header-anchor" href="#The_Subtopics_Of_Data_Communications">#</a>The Subtopics Of Data Communications</h1>
-<p>上一节中的概念框架图中的每一部分都代表了数据通信中的一个小主题。这一节中简单介绍了图中的一些术语，之后的几章中会在对每一部分进行详细说。</p>
-<ol>
-<li>
-<p><code>数据来源(Information Sources)</code>可以是模拟数据或者数字电路。这一部分的关键内容包括信号的特征（<code>振幅(Amplitude)</code>，<code>频率(Frequency)</code>，<code>相位(Phase)</code>），周期性与非周期性，以及模拟信息和数字信息的转换。</p>
-</li>
-<li>
-<p><code>信源编码与解码(Source Encoder and Decoder)</code>。一旦信息被数字化后，信息就可以被转换，这一部分的关键内容包括数据压缩以及压缩后对于传输的影响</p>
-</li>
-<li>
-<p><code>加密与解密(Encryptor and Decryptor)</code>。为了保护信息和保证其可信度，在信息传送前需要进行加密，在接收后需要解密。这一部分的关键内容包括密码学技术与算法。</p>
-</li>
-<li>
-<p><code>信道编码与解码(Channel Encoder and Decoder)</code>。信道编码是用来检测也纠正传输错误。这一部分的关键内容包括检测和限制错误，以及实际应用的技术，如奇偶校验(parity checking)等。</p>
-</li>
-<li>
-<p><code>复用与解复用(Multiplexor and Demultiplexor)</code>。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。</p>
-</li>
-<li>
-<p><code>调制与解调(Modulator and Demodulator)</code>。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。</p>
-</li>
-<li>
-<p><code>物理通道与传输(Physical Channel and Transmission)</code>。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -1409,42 +1409,6 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 09 模板方法模式</title>
-    <url>/ch_09_the_iterator_and_composite_pattern/</url>
-    <content><![CDATA[<h1 id="迭代器模式"><a class="header-anchor" href="#迭代器模式">#</a>迭代器模式</h1>
-<p>迭代器模式(Iterator Pattern)提供了一种访问聚合对象但不需要关心其内部实现方法的方式。</p>
-<p>例如我们存在两个菜单，第一个菜单表示早餐，第二个表示晚餐，第一个菜单其中的菜品用<code>List</code>来存储，第二个菜单其中的菜品用<code>Array</code>来存储。在这种情况下就需要使用迭代器模式，为两个菜单提供一个供外部调用的访问菜品的接口。</p>
-<h2 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h2>
-<p>我们在两个菜单类中添加<code>createIterator</code>函数来返回迭代器，对于外部调用者，如测试代码中的<code>PrintMenu</code>,它只需要调用<code>hasNext</code>及<code>next</code>即可而不需要关心菜单中的具体实现。</p>
-<h3 id="菜单"><a class="header-anchor" href="#菜单">#</a>菜单</h3>
-<figure class="highlight cs"><figcaption><span>Pancake菜单</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PancakeHouseMenu</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;MenuItem&gt; menuItemsList = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PancakeHouseMenu</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        menuItemsList = <span class="keyword">new</span> List&lt;MenuItem&gt;();</span><br><span class="line">        addItem(<span class="string">&quot;K&amp;B&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and toast&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>);</span><br><span class="line">        addItem(<span class="string">&quot;Regular&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and sausags&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>);</span><br><span class="line">        addItem(<span class="string">&quot;Blueberry&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and fresh blueberries&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Iterator <span class="title">createIterator</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PancakeIterator(menuItemsList);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addItem</span>(<span class="params"><span class="built_in">string</span> name, <span class="built_in">string</span> description, <span class="built_in">bool</span> vegetarian, <span class="built_in">float</span> price</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        MenuItem menuItem = <span class="keyword">new</span> MenuItem(name, description, vegetarian, price);</span><br><span class="line">        menuItemsList.Add(menuItem);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>Diner菜单</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DinerMenu</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="built_in">int</span> MaxItemsCount = <span class="number">6</span>;</span><br><span class="line">    <span class="keyword">private</span> MenuItem[] menuItemsArray = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> numberOfItems = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DinerMenu</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        menuItemsArray = <span class="keyword">new</span> MenuItem[MaxItemsCount];</span><br><span class="line">        addItem(<span class="string">&quot;Vegetarian BLT&quot;</span>, <span class="string">&quot;Fakin Bacon with tomato&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>);</span><br><span class="line">        addItem(<span class="string">&quot;BLT&quot;</span>, <span class="string">&quot;Bacon with tomato&quot;</span>, <span class="literal">true</span>, <span class="number">3.99f</span>);</span><br><span class="line">        addItem(<span class="string">&quot;Soup of the day&quot;</span>, <span class="string">&quot;Soup of the day and salad&quot;</span>, <span class="literal">false</span>, <span class="number">3.29f</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addItem</span>(<span class="params"><span class="built_in">string</span> name, <span class="built_in">string</span> description, <span class="built_in">bool</span> vegetarian, <span class="built_in">float</span> price</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (numberOfItems &gt;= MaxItemsCount)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        MenuItem menuItem = <span class="keyword">new</span> MenuItem(name, description, vegetarian, price);</span><br><span class="line">        menuItemsArray[numberOfItems++] = menuItem;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Iterator <span class="title">createIterator</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DinerMenuIterator(menuItemsArray);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="迭代器接口及实现"><a class="header-anchor" href="#迭代器接口及实现">#</a>迭代器接口及实现</h3>
-<figure class="highlight cs"><figcaption><span>迭代器接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Iterator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="built_in">bool</span> <span class="title">hasNext</span>()</span>;</span><br><span class="line">    <span class="function"><span class="built_in">object</span> <span class="title">next</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>迭代器实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PancakeIterator</span> : <span class="title">Iterator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;MenuItem&gt; itemsList = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> currentPosition = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PancakeIterator</span>(<span class="params">List&lt;MenuItem&gt; itemsList</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.itemsList = itemsList;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">hasNext</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> currentPosition &lt; itemsList.Count &amp;&amp; itemsList[currentPosition] != <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">object</span> <span class="title">next</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> itemsList[currentPosition++];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DinerMenuIterator</span> : <span class="title">Iterator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> MenuItem[] itemsArray = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> currentPosition = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DinerMenuIterator</span>(<span class="params">MenuItem[] items</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.itemsArray = items;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">hasNext</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> currentPosition &lt; itemsArray.Length &amp;&amp; itemsArray[currentPosition] != <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">object</span> <span class="title">next</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> itemsArray[currentPosition++];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h2>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    DinerMenu dinerMenu = <span class="keyword">new</span> DinerMenu();</span><br><span class="line">    PancakeHouseMenu pancakeHouseMenu = <span class="keyword">new</span> PancakeHouseMenu();</span><br><span class="line"></span><br><span class="line">    PrintMenu(dinerMenu.createIterator());</span><br><span class="line">    Console.WriteLine();</span><br><span class="line">    PrintMenu(pancakeHouseMenu.createIterator());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">PrintMenu</span>(<span class="params">Iterator iterator</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span> (iterator.hasNext())</span><br><span class="line">    &#123;</span><br><span class="line">        ((MenuItem)iterator.next()).Debug();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_09_the_iterator_and_composite_pattern/2019-02-03-23-36-01.png" alt="迭代器模式运行结果"></p>
-<h1 id="组合模式"><a class="header-anchor" href="#组合模式">#</a>组合模式</h1>
-<p>组合模式（Composite Pattern）是用树形结构来组合对象进而体现一种局部-整体的层次结构。组合模式可以让调用者以统一的方式对待单个物体和多个物体的组合。</p>
-<p>例如我们需要打印一个菜单上的所有菜品，但菜单中可能还包含子菜单，子菜单中又可能包含子菜单等等，但对于外部调用者而言则不希望关注这些细节。我们可以通过定义一个基类，无论是菜品还是菜单都继承自这个基类，这样对于菜单而言，无论是子菜单还是菜品都是同一个基类，可一起管理。对于外部调者而言只 x 需要关心这个基类即可。</p>
-<h2 id="代码示例-2"><a class="header-anchor" href="#代码示例-2">#</a>代码示例</h2>
-<h3 id="共同抽象类基类"><a class="header-anchor" href="#共同抽象类基类">#</a>共同抽象类基类</h3>
-<figure class="highlight cs"><figcaption><span>菜单元素</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">MenuComponent</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Add</span>(<span class="params">MenuComponent menuComponent</span>)</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Remove</span>(<span class="params">MenuComponent menuComponent</span>)</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> MenuComponent <span class="title">GetChild</span>(<span class="params"><span class="built_in">int</span> i</span>)</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">string</span> Description &#123; <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">float</span> Price &#123; <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> Vegetarian &#123; <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Debug</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(Name + <span class="string">&quot; , &quot;</span> + Description + <span class="string">&quot; , &quot;</span> + Vegetarian + <span class="string">&quot; , &quot;</span> + Price);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="菜单及菜品实现"><a class="header-anchor" href="#菜单及菜品实现">#</a>菜单及菜品实现</h3>
-<figure class="highlight cs"><figcaption><span>菜单</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Menu</span> : <span class="title">MenuComponent</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;MenuComponent&gt; menuComponetsList = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Menu</span>(<span class="params"><span class="built_in">string</span> name, <span class="built_in">string</span> description</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        menuComponetsList = <span class="keyword">new</span> List&lt;MenuComponent&gt;();</span><br><span class="line">        Name = name;</span><br><span class="line">        Description = description;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Add</span>(<span class="params">MenuComponent menuComponent</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        menuComponetsList.Add(menuComponent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Remove</span>(<span class="params">MenuComponent menuComponent</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        menuComponent.Remove(menuComponent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> MenuComponent <span class="title">GetChild</span>(<span class="params"><span class="built_in">int</span> i</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> menuComponetsList[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Debug</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(Name + <span class="string">&quot; , &quot;</span> + Description);</span><br><span class="line">        menuComponetsList.ForEach(menuComponent =&gt; menuComponent.Debug());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>菜品</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MenuItem</span> : <span class="title">MenuComponent</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MenuItem</span>(<span class="params"><span class="built_in">string</span> name, <span class="built_in">string</span> description, <span class="built_in">bool</span> vegetarian, <span class="built_in">float</span> price</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Name = name;</span><br><span class="line">        Description = description;</span><br><span class="line">        Vegetarian = vegetarian;</span><br><span class="line">        Price = price;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="测试代码及结果-2"><a class="header-anchor" href="#测试代码及结果-2">#</a>测试代码及结果</h2>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Menu menu = <span class="keyword">new</span> Menu(<span class="string">&quot;General Menu&quot;</span>, <span class="string">&quot;Holds all menus and menu items&quot;</span>);</span><br><span class="line">Menu dinnerMenu = <span class="keyword">new</span> Menu(<span class="string">&quot;Dinner Menu&quot;</span>, <span class="string">&quot;Holds dinner menu items&quot;</span>);</span><br><span class="line">Menu breakfastMenu = <span class="keyword">new</span> Menu(<span class="string">&quot;Breakfast Menu&quot;</span>, <span class="string">&quot;Holds Breakfast menu items&quot;</span>);</span><br><span class="line">menu.Add(dinnerMenu);</span><br><span class="line">menu.Add(breakfastMenu);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">breakfastMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;K&amp;B&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and toast&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>));</span><br><span class="line">breakfastMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;Regular&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and sausags&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>));</span><br><span class="line">breakfastMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;Blueberry&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and fresh blueberries&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>));</span><br><span class="line"></span><br><span class="line">dinnerMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;Vegetarian BLT&quot;</span>, <span class="string">&quot;Fakin Bacon with tomato&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>));</span><br><span class="line">dinnerMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;BLT&quot;</span>, <span class="string">&quot;Bacon with tomato&quot;</span>, <span class="literal">true</span>, <span class="number">3.99f</span>));</span><br><span class="line">dinnerMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;Soup of the day&quot;</span>, <span class="string">&quot;Soup of the day and salad&quot;</span>, <span class="literal">false</span>, <span class="number">3.29f</span>));</span><br><span class="line"></span><br><span class="line">menu.Debug();</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_09_the_iterator_and_composite_pattern/2019-02-06-16-23-58.png" alt="组合模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Head First 设计模式》 Ch 08 模板方法模式</title>
     <url>/ch_08_the_template_method_pattern/</url>
     <content><![CDATA[<p>模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。</p>
@@ -1528,6 +1492,42 @@ $$</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 09 模板方法模式</title>
+    <url>/ch_09_the_iterator_and_composite_pattern/</url>
+    <content><![CDATA[<h1 id="迭代器模式"><a class="header-anchor" href="#迭代器模式">#</a>迭代器模式</h1>
+<p>迭代器模式(Iterator Pattern)提供了一种访问聚合对象但不需要关心其内部实现方法的方式。</p>
+<p>例如我们存在两个菜单，第一个菜单表示早餐，第二个表示晚餐，第一个菜单其中的菜品用<code>List</code>来存储，第二个菜单其中的菜品用<code>Array</code>来存储。在这种情况下就需要使用迭代器模式，为两个菜单提供一个供外部调用的访问菜品的接口。</p>
+<h2 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h2>
+<p>我们在两个菜单类中添加<code>createIterator</code>函数来返回迭代器，对于外部调用者，如测试代码中的<code>PrintMenu</code>,它只需要调用<code>hasNext</code>及<code>next</code>即可而不需要关心菜单中的具体实现。</p>
+<h3 id="菜单"><a class="header-anchor" href="#菜单">#</a>菜单</h3>
+<figure class="highlight cs"><figcaption><span>Pancake菜单</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PancakeHouseMenu</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;MenuItem&gt; menuItemsList = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PancakeHouseMenu</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        menuItemsList = <span class="keyword">new</span> List&lt;MenuItem&gt;();</span><br><span class="line">        addItem(<span class="string">&quot;K&amp;B&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and toast&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>);</span><br><span class="line">        addItem(<span class="string">&quot;Regular&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and sausags&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>);</span><br><span class="line">        addItem(<span class="string">&quot;Blueberry&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and fresh blueberries&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Iterator <span class="title">createIterator</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PancakeIterator(menuItemsList);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addItem</span>(<span class="params"><span class="built_in">string</span> name, <span class="built_in">string</span> description, <span class="built_in">bool</span> vegetarian, <span class="built_in">float</span> price</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        MenuItem menuItem = <span class="keyword">new</span> MenuItem(name, description, vegetarian, price);</span><br><span class="line">        menuItemsList.Add(menuItem);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>Diner菜单</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DinerMenu</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="built_in">int</span> MaxItemsCount = <span class="number">6</span>;</span><br><span class="line">    <span class="keyword">private</span> MenuItem[] menuItemsArray = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> numberOfItems = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DinerMenu</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        menuItemsArray = <span class="keyword">new</span> MenuItem[MaxItemsCount];</span><br><span class="line">        addItem(<span class="string">&quot;Vegetarian BLT&quot;</span>, <span class="string">&quot;Fakin Bacon with tomato&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>);</span><br><span class="line">        addItem(<span class="string">&quot;BLT&quot;</span>, <span class="string">&quot;Bacon with tomato&quot;</span>, <span class="literal">true</span>, <span class="number">3.99f</span>);</span><br><span class="line">        addItem(<span class="string">&quot;Soup of the day&quot;</span>, <span class="string">&quot;Soup of the day and salad&quot;</span>, <span class="literal">false</span>, <span class="number">3.29f</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addItem</span>(<span class="params"><span class="built_in">string</span> name, <span class="built_in">string</span> description, <span class="built_in">bool</span> vegetarian, <span class="built_in">float</span> price</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (numberOfItems &gt;= MaxItemsCount)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        MenuItem menuItem = <span class="keyword">new</span> MenuItem(name, description, vegetarian, price);</span><br><span class="line">        menuItemsArray[numberOfItems++] = menuItem;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Iterator <span class="title">createIterator</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DinerMenuIterator(menuItemsArray);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="迭代器接口及实现"><a class="header-anchor" href="#迭代器接口及实现">#</a>迭代器接口及实现</h3>
+<figure class="highlight cs"><figcaption><span>迭代器接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Iterator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="built_in">bool</span> <span class="title">hasNext</span>()</span>;</span><br><span class="line">    <span class="function"><span class="built_in">object</span> <span class="title">next</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>迭代器实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PancakeIterator</span> : <span class="title">Iterator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;MenuItem&gt; itemsList = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> currentPosition = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PancakeIterator</span>(<span class="params">List&lt;MenuItem&gt; itemsList</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.itemsList = itemsList;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">hasNext</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> currentPosition &lt; itemsList.Count &amp;&amp; itemsList[currentPosition] != <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">object</span> <span class="title">next</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> itemsList[currentPosition++];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">DinerMenuIterator</span> : <span class="title">Iterator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> MenuItem[] itemsArray = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> currentPosition = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DinerMenuIterator</span>(<span class="params">MenuItem[] items</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.itemsArray = items;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">hasNext</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> currentPosition &lt; itemsArray.Length &amp;&amp; itemsArray[currentPosition] != <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">object</span> <span class="title">next</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> itemsArray[currentPosition++];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h2>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    DinerMenu dinerMenu = <span class="keyword">new</span> DinerMenu();</span><br><span class="line">    PancakeHouseMenu pancakeHouseMenu = <span class="keyword">new</span> PancakeHouseMenu();</span><br><span class="line"></span><br><span class="line">    PrintMenu(dinerMenu.createIterator());</span><br><span class="line">    Console.WriteLine();</span><br><span class="line">    PrintMenu(pancakeHouseMenu.createIterator());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">PrintMenu</span>(<span class="params">Iterator iterator</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span> (iterator.hasNext())</span><br><span class="line">    &#123;</span><br><span class="line">        ((MenuItem)iterator.next()).Debug();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_09_the_iterator_and_composite_pattern/2019-02-03-23-36-01.png" alt="迭代器模式运行结果"></p>
+<h1 id="组合模式"><a class="header-anchor" href="#组合模式">#</a>组合模式</h1>
+<p>组合模式（Composite Pattern）是用树形结构来组合对象进而体现一种局部-整体的层次结构。组合模式可以让调用者以统一的方式对待单个物体和多个物体的组合。</p>
+<p>例如我们需要打印一个菜单上的所有菜品，但菜单中可能还包含子菜单，子菜单中又可能包含子菜单等等，但对于外部调用者而言则不希望关注这些细节。我们可以通过定义一个基类，无论是菜品还是菜单都继承自这个基类，这样对于菜单而言，无论是子菜单还是菜品都是同一个基类，可一起管理。对于外部调者而言只 x 需要关心这个基类即可。</p>
+<h2 id="代码示例-2"><a class="header-anchor" href="#代码示例-2">#</a>代码示例</h2>
+<h3 id="共同抽象类基类"><a class="header-anchor" href="#共同抽象类基类">#</a>共同抽象类基类</h3>
+<figure class="highlight cs"><figcaption><span>菜单元素</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">MenuComponent</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Add</span>(<span class="params">MenuComponent menuComponent</span>)</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Remove</span>(<span class="params">MenuComponent menuComponent</span>)</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> MenuComponent <span class="title">GetChild</span>(<span class="params"><span class="built_in">int</span> i</span>)</span> &#123; <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(); &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">string</span> Description &#123; <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">float</span> Price &#123; <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> Vegetarian &#123; <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Debug</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(Name + <span class="string">&quot; , &quot;</span> + Description + <span class="string">&quot; , &quot;</span> + Vegetarian + <span class="string">&quot; , &quot;</span> + Price);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="菜单及菜品实现"><a class="header-anchor" href="#菜单及菜品实现">#</a>菜单及菜品实现</h3>
+<figure class="highlight cs"><figcaption><span>菜单</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Menu</span> : <span class="title">MenuComponent</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;MenuComponent&gt; menuComponetsList = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Menu</span>(<span class="params"><span class="built_in">string</span> name, <span class="built_in">string</span> description</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        menuComponetsList = <span class="keyword">new</span> List&lt;MenuComponent&gt;();</span><br><span class="line">        Name = name;</span><br><span class="line">        Description = description;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Add</span>(<span class="params">MenuComponent menuComponent</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        menuComponetsList.Add(menuComponent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Remove</span>(<span class="params">MenuComponent menuComponent</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        menuComponent.Remove(menuComponent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> MenuComponent <span class="title">GetChild</span>(<span class="params"><span class="built_in">int</span> i</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> menuComponetsList[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Debug</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(Name + <span class="string">&quot; , &quot;</span> + Description);</span><br><span class="line">        menuComponetsList.ForEach(menuComponent =&gt; menuComponent.Debug());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>菜品</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MenuItem</span> : <span class="title">MenuComponent</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MenuItem</span>(<span class="params"><span class="built_in">string</span> name, <span class="built_in">string</span> description, <span class="built_in">bool</span> vegetarian, <span class="built_in">float</span> price</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        Name = name;</span><br><span class="line">        Description = description;</span><br><span class="line">        Vegetarian = vegetarian;</span><br><span class="line">        Price = price;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="测试代码及结果-2"><a class="header-anchor" href="#测试代码及结果-2">#</a>测试代码及结果</h2>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Menu menu = <span class="keyword">new</span> Menu(<span class="string">&quot;General Menu&quot;</span>, <span class="string">&quot;Holds all menus and menu items&quot;</span>);</span><br><span class="line">Menu dinnerMenu = <span class="keyword">new</span> Menu(<span class="string">&quot;Dinner Menu&quot;</span>, <span class="string">&quot;Holds dinner menu items&quot;</span>);</span><br><span class="line">Menu breakfastMenu = <span class="keyword">new</span> Menu(<span class="string">&quot;Breakfast Menu&quot;</span>, <span class="string">&quot;Holds Breakfast menu items&quot;</span>);</span><br><span class="line">menu.Add(dinnerMenu);</span><br><span class="line">menu.Add(breakfastMenu);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">breakfastMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;K&amp;B&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and toast&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>));</span><br><span class="line">breakfastMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;Regular&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and sausags&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>));</span><br><span class="line">breakfastMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;Blueberry&#x27;s Pancake Breakfast&quot;</span>, <span class="string">&quot;Pancake with eggs and fresh blueberries&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>));</span><br><span class="line"></span><br><span class="line">dinnerMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;Vegetarian BLT&quot;</span>, <span class="string">&quot;Fakin Bacon with tomato&quot;</span>, <span class="literal">true</span>, <span class="number">2.99f</span>));</span><br><span class="line">dinnerMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;BLT&quot;</span>, <span class="string">&quot;Bacon with tomato&quot;</span>, <span class="literal">true</span>, <span class="number">3.99f</span>));</span><br><span class="line">dinnerMenu.Add(<span class="keyword">new</span> MenuItem(<span class="string">&quot;Soup of the day&quot;</span>, <span class="string">&quot;Soup of the day and salad&quot;</span>, <span class="literal">false</span>, <span class="number">3.29f</span>));</span><br><span class="line"></span><br><span class="line">menu.Debug();</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_09_the_iterator_and_composite_pattern/2019-02-06-16-23-58.png" alt="组合模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1697,6 +1697,212 @@ $$</p>
       </tags>
   </entry>
   <entry>
+    <title>《Computer Networks and Internets》 Ch 13 局域网：数据包，帧 和拓扑结构</title>
+    <url>/ch_13_local_area_networks_packets,_frames,_and_topologies/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一部分将介绍分组交换技术，拓扑结构，硬件地址寻址，帧的概念。</p>
+<h1 id="Circuit_Switching_And_Analog_Communication"><a class="header-anchor" href="#Circuit_Switching_And_Analog_Communication">#</a>Circuit Switching And Analog Communication</h1>
+<p><code>电路交换（Circuit Switching）</code>概念是指使用时在发送端和接收端之间建立不受干扰的通路的通信方法。电路交换通常与模拟电话技术相关。下图是电路交换的示意图：</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-08-28-27.png" alt="电路交换"></p>
+<p>电路交换的主要特点是：</p>
+<ol>
+<li>是点对点的通信</li>
+<li>有单独的步骤建立电路连接，使用电路，终止电路连接<br>
+例如在电话通信中，实际上有三步。第一步在电话发起人和接受者之间建立电路，第二步双方使用电路进行通信，第三步在通话结束后，终止通路。<br>
+这也是称为交换（Switched）电路的原因</li>
+<li>与固定的物理通路有相同的性能。</li>
+</ol>
+<p>电路交换建立的电路最终使用频分复用或者时分复用使用同一个媒介进行传输。电路建立的过程包括在频分复用或时分复用中分配频率或时间段。</p>
+<h1 id="Packet_Switching"><a class="header-anchor" href="#Packet_Switching">#</a>Packet Switching</h1>
+<p>分组交换（Packet Switching）使用一种统计意义上的复用，即多个信源之间竞争共享媒介的使用。电路交换通常在传统的电话通信中使用，而分组交换构成了因特网的基础。分组交换示意图如下：</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-08-37-20.png" alt="分组交换"></p>
+<p>注意，在11章中提到的复用技术，如频分复用和时分复用是对于物理存在的信道或者像电路交换这样生成的信道使用的，与分组交换并没有关系。分组交换本身就有统计复用（Statistic Multiplexing）的概念。多个信源在媒介空闲时竞争使用，当媒介为空，且只有一个信源需要传输数据时，该信源就会独占媒介。如果同时有多个信源要传输数据，则基本每个信源占据媒介的时间是平均的，轮流使用。</p>
+<p>分组交换的核心是将原数据切分成一个个小块方便传输，这些小块称作包（Packets），包中需要包括传送的目的地信息（在之后节会更详细说明）。分组交换传输的单位不是bit或者byte,而是包。不同的分组交换技术对于包的尺寸有不同的定义。</p>
+<p>分组交换的主要特点是：</p>
+<ol>
+<li>任意大小的异步传输</li>
+<li>在通信前没有建立通路的步骤</li>
+<li>性能取决于各信源的包的统计复用</li>
+</ol>
+<p>分组交换的主要优点在于成本的控制。对于电路交换来说，如果有$N$个电脑，则需要$N/2$个独立的路径（虽然在连接时才创建）。但对于分组交换只要一个共享的电路就行。</p>
+<h1 id="Local_And_Wide_Area_Packet_Networks"><a class="header-anchor" href="#Local_And_Wide_Area_Packet_Networks">#</a>Local And Wide Area Packet Networks</h1>
+<p>分组交换技术通常根据传输距离的距离进行分类。通常分为三类：</p>
+<ol>
+<li>局域网（Local Area Network,LAN）：最便宜，通常范围在房间级或者一个大楼。</li>
+<li>城域网（Metropolitan Area Network,MAN）中等开销，范围涵盖城市或者大都会。</li>
+<li>广域网（Wide Area Network,WAN）：最贵。范围通常包含城市与城市之间。</li>
+</ol>
+<p>在实际使用中，虽然城域网的概念被提出，但在商业上并不成功。基本广泛使用的只有局域网和广域网，城域网的概念在逐步被纳入广域网中。</p>
+<p>还有一些机构或者商家定义的类似的分类方式，如：</p>
+<ol>
+<li><code>个人局域网络（Personal Area Network，PAN）</code>，通常范围在几米内，如蓝牙通信等。</li>
+<li><code>芯片局域网络（Chip Area Network）</code>，芯片厂商提出的概念，通常是超大型电路（Very-Large-Scale-Integration,VLSI）中多个核之间的通信。</li>
+</ol>
+<h1 id="Standards_For_Packet_Format_And_Identification"><a class="header-anchor" href="#Standards_For_Packet_Format_And_Identification">#</a>Standards For Packet Format And Identification</h1>
+<p>每个在网络中传输的包都必须包含其目标收信人的标识。需要有规范来制定标识的格式以及添加的位置，在LAN领域最常用的标准是由IEEE（Institute Electrical And Electronics Engineers）创建的。</p>
+<p>IEEE是由一群关注于协议栈最下两层（物理层（Physical）和数据链接层（Data Link））的工程师构成的。协议栈的不同层由不同的机构负责，如IEFT关注传输层和因特网协议，WWW组织关注应用层。机构与其关注的协议如下图所示：</p>
+<p>在1980年，IEEE组织了<code>802项目局域网/城域网标准委员（Project 802 LAN/MAN Standards Commitee）</code>会为网络设定标准。</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-09-12-05.png" alt="组织和协议"></p>
+<h1 id="IEEE_802_Model_And_Standards"><a class="header-anchor" href="#IEEE_802_Model_And_Standards">#</a>IEEE 802 Model And Standards</h1>
+<p>IEEE将数据链接层又在细分为了两层，<code>逻辑链接控制层（Logical Link Control,LLC）</code>(第15章中描述)和<code>媒介访问控制层（Media Access Control,MAC）</code>。</p>
+<p>逻辑链接控制层设备的地址和在解复用中地址的使用。媒介访问控制层关注于多个计算机如何共享底层的媒介。</p>
+<p>IEEE对于协议的命名是采用多部分标识符，如$XXX.YYY.ZZZ$，$XXX$表示协议的分类，$YYY$表示协议的子分类，$ZZZ$是当子分类也非常大是，额外添加的标识。</p>
+<p>如局域网的规范在分类802中，这里的802并不是什么缩写或有实际的技术含义，仅仅是一个分类标识。IEEE不同的工作小组针对其细分的协议进行定义，如针对$802.1$或$802.2$。</p>
+<p>IEEE中有许多不同的工作小组。当有新技术需要协议时，由工业代表和学术协会共同形成工作小组，他们会定期开会商定协议的细节等，当协议的所有细节都确定后，IEEE会发表协议的标准文件。</p>
+<p>当协议最终发布后，工作小组可以选择解散或者如果协议非常重要或者仍需要后续工作，小组也可以继续活动。如果小组负责的部分协议不再有意义，如商业上不被接受，或者有更新更好的技术出现，小组也可以选择直接解散而不发表任何的规范。下图是802分类下的协议，有一些规范就已经被放弃（Disbanded）了。</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-09-25-59.png" alt="802协议"></p>
+<h2 id="LAN_Topologies"><a class="header-anchor" href="#LAN_Topologies">#</a>LAN Topologies</h2>
+<p>因为有许多不同的LAN技术，通常使用拓扑型或者网络的基本形状来进行分类。LAN有四个基本的拓扑型，<code>总线型结构（Bus）</code>，<code>环状结构（Ring）</code>，<code>星状结构（Star）</code>，<code>网状结构（Mesh）</code>。</p>
+<h2 id="Bus_Topology"><a class="header-anchor" href="#Bus_Topology">#</a>Bus Topology</h2>
+<p><code>总线型结构（Bus Topology）</code>是如同以太网一样，用一根电缆连接所有电脑，任何电脑都可以将数据传输到电缆上，然后所有的计算机都可以接受到数据。</p>
+<h2 id="Ring_Topology"><a class="header-anchor" href="#Ring_Topology">#</a>Ring Topology</h2>
+<p><code>环状结构（Ring Topology）</code>是多个电脑首尾相接的连接，直至成为环形。环形结构的优点是对于相连的两台设备来说连接是安全的，即使别的设备出现问题仍然可以连接。</p>
+<h2 id="Mesh_Topology"><a class="header-anchor" href="#Mesh_Topology">#</a>Mesh Topology</h2>
+<p><code>网状结构（Mesh Topology）</code>为任意两两配对的电脑都提供了连接线路，这意味着如果有$N$台电脑，就需要$\frac{n^2-n}{2}$个连接。当增加电脑时，连接电缆的增加是平方级的，因此开销巨大，也因此网状结构在局域网中不常被使用</p>
+<h2 id="Star_Topology"><a class="header-anchor" href="#Star_Topology">#</a>Star Topology</h2>
+<p><code>星状结构（Star Topology）</code>是所有的电脑都连接在一个中心设备（Hub）上。注意星状结构并不严格要求中心设备真的在所有电脑的中心，与所有电脑的距离相同。</p>
+<h2 id="The_Reason_For_Multiple_Topologies"><a class="header-anchor" href="#The_Reason_For_Multiple_Topologies">#</a>The Reason For Multiple Topologies</h2>
+<p>每个结构都有各自的优点，如环状结构很适合各电脑间协调访问，但当其中一个设备出现问题时，通路就会出现问题。星状结构下单一设备出现了问题，其他设备都可以正常访问。总线结构有最少的连接需求，但与环状结构与相同的缺点。网状结构因为连接数量过多，通常不在局域网中使用。</p>
+<h1 id="Packet_Identification，Demultiplexing，Mac_Addresses"><a class="header-anchor" href="#Packet_Identification，Demultiplexing，Mac_Addresses">#</a>Packet Identification，Demultiplexing，Mac Addresses</h1>
+<p>IEEE为寻址（Addressing）创建了标准。在分组交换中，解复用是依赖于一个称为<code>地址（Address）</code>的标识。每个电脑都分配了一个独特的地址，每个传输的包中都包含其目标收件人（Intended Recipent）的地址。</p>
+<p>在IEEE的寻址规范中，每个地址是由48-bit二进制数据组成的，IEEE将其称为媒介访问控制地址（Media Access Control address,MAC address）。因为48位地址来源于以太网技术，所以也有人将其称为以太网地址（Ethernet Address）。</p>
+<p>IEEE为每块网卡（Network Interface Card，NIC）都分配了地址，因此当消费者购买了一张网卡时，其中就包含一个独一无二的地址。</p>
+<p>但IEEE并不是单独的为每个网卡分配地址，它是将前24位（3 Bytes）分配给设备供应商，然后设备供应商再决定后24位的数据。因此前24位称为组织唯一标识符（Organizationally Unique Identifier，OUI），后24位称为网络接口控制标识符（Network Interface Controller Specific）。</p>
+<p>组织唯一标识符的最高有效字节（Most Significant Byte，即大端模式下即最左端）的倒数两位有特殊含义。其最低位表示是单播（0）还是双播（1）。倒数第二位决定该设备是全球唯一（0）（Globally Unique）还是是本地分配（1）（Locally Assigned），全球唯一表明地址是IEEE分配，即世界上的每块网卡都有不同的表示，而本地分配是实验性网卡或者某组织自己地址空间等，即这张卡是在一个小范围内内部使用。</p>
+<h1 id="Unicast，Broadcast，And_Multicast_Addresses"><a class="header-anchor" href="#Unicast，Broadcast，And_Multicast_Addresses">#</a>Unicast，Broadcast，And Multicast Addresses</h1>
+<p>IEEE定义了三种对应包传递的方法：</p>
+<ol>
+<li>单播（Unicast）：目标地址是设定一个电脑，也仅这个电脑可收到包</li>
+<li>广播（broadcast）：网络中的所有电脑都可收到包</li>
+<li>多播（multicast）：目标地址是一系列的电脑，这些电脑都可以收到包。</li>
+</ol>
+<p>对于广播来说，因为是所有电脑都收到包，所以目标地址实际是没有意义的。将地址的48位全部设为1，则表示是广播模式。广播模式也可看作是多播模式的一个特殊情况。</p>
+<h1 id="Broadcast_Multicast_And_Efficient_Multi_Point_Delivery"><a class="header-anchor" href="#Broadcast_Multicast_And_Efficient_Multi_Point_Delivery">#</a>Broadcast,Multicast,And Efficient Multi-Point Delivery</h1>
+<p>广播和多播模式在局域网中特别有用，对于要传递给多台电脑的数据来说，用这两种方法进行传递特别的高效。</p>
+<p>对于大多数的LAN技术，都是通过一个共享的媒介进行传输。当有数据在媒介中传输时，每台电脑都将从媒介中获取包的拷贝，然后再判断包中的地址情况是否与自己复合，来决定是处理包的内容还是丢弃包的内容。</p>
+<p>因此局域网中的计算机在处理媒介中的包流程如下：</p>
+<ol>
+<li>从包中抽取出地址信息</li>
+<li>判断地址是否满足自己的单播地址，如果是则接受并处理包</li>
+<li>如果2失败，判断地址是否是广播模式，如果是则接受并处理包</li>
+<li>如果3失败，判断地址是否是多播模式，且电脑是多播模式指定的电脑组的一员，如果是则接受并处理包</li>
+<li>如果4失败，则丢弃包</li>
+</ol>
+<p>如在局域网情况下，如果多台电脑使用同一个媒介，且包需要传递给多态电脑，那么使用多播和广播模式，数据仅需要发送一次即可。</p>
+<h1 id="Frames_And_Framing"><a class="header-anchor" href="#Frames_And_Framing">#</a>Frames And Framing</h1>
+<p>在同步通信系统中，帧的概念是让接收者知道数据的开始和结束。但在更宽泛的概念下，帧是表示一系列bit或byte的特定结构，让接收方和发送方都能一致同意的特定格式。</p>
+<p>在分组交换中，帧的概念就对应包。在分组交换中，每个包都需要一个数据头，数据头（header）中包含目标地址。数据头后是有效负载（payload），即真正需要传输的原数据。在大部分的网络技术中，有效负载是不透明的即网络设备只能检查数据头。</p>
+<p>在整个包的前后还能加入可选的前置数据（Prelude）或后置数据（Postlude）。因此整个包的结构如下所示：</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-10-47-15.png" alt="包的结构"></p>
+<p>举一个例子，如果一个包有6个byte的数据头，然后任意长度的有效负载，在包的前后各有1byte表示包的开始和结束。且开始和结束标识用ASCII码中的SOH（Start Of Header）和EOT（End Of Transmission）表示，则整个包如下所示：</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-10-49-20.png" alt="包的例子"></p>
+<p>上述例子有一点点数据的浪费，因为如果包是一个接一个发的，那么后一个包的SOH会紧跟着前一个包的EOT。在实际中，只需要一个来区分两个包即可。</p>
+<p>虽然包的前置数据和后置数据是可选的，但在实际使用中，他们可以一定程度上提升异步传输数据的处理速度和对错误的检测。在异步传输中，如果接收方收到了EOT，它就知道数据包传输完成了，可以直接开始处理数据而不需要等到下一个包的到来再根据新包确定上个包是否完成。当发送端发送数据到一般崩溃时，因为接收端始终收不到EOT，也就能知道错误的发生。</p>
+<h1 id="Byte_And_Bit_Stuffing"><a class="header-anchor" href="#Byte_And_Bit_Stuffing">#</a>Byte And Bit Stuffing</h1>
+<p>在ASCII码中，SOH用十六进制0x01表示，EOT用0x04表示。如果有效负载中也出现了0x01和0x04，接收端就无法判定到底是真实数据还是前置或后置标识。</p>
+<p>一种称为字节填充（byte Stuffing）就是为了解决有效负载和特殊标记位有相同表示导致无法识别的问题。<br>
+该技术有时也称为数据填充（Data Stuffing）或字符填充（Character Stuffing）。该技术主要是</p>
+<p>字节装填是用另一个字符来替代特殊标识的出现。</p>
+<p>如我们选择用ASCII码中的ESC字符（Ox1B）来作为替换字符。在发送端当有效负载中出现SOH，那么就替换为&quot;ESC A&quot;，如果出现EOT,就替换为&quot;ESC B&quot;，如果出现了ESC就替换为&quot;ESC C&quot;。注意这个计算是针对有效负载的，当整个发送的有效负载中就不会与EOT和SOH相同的数据。对接收端而言，去找寻背后跟着&quot;A,B,C&quot;的ESC字符，然后将其替换回SOH和EOT的数据。发送端的替换过程如下所示：</p>
+<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-11-22-32.png" alt="字节装填"></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://web.archive.org/web/20171217042848/http://www.cs.virginia.edu/~mngroup/projects/mpls/documents/thesis/node8.html">Switching technology</a><br>
+<a href="https://www.cnblogs.com/penghuwan/p/7686059.html#_label3_1">【计算机网络】数据交换技术和多路复用技术的正（nao）确(can)打开方式</a></p>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Computer Networks and Internets》 Ch 14 MAC 层</title>
+    <url>/ch_14_the_ieee_mac_sublayer/</url>
+    <content><![CDATA[<ul>
+<li>这一章原书中的Statiion一词，在笔记中翻译为<code>终端</code>。</li>
+</ul>
+<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一章将会深入讨论MAC层，包括多路访问协议（multi-access protocols）以及静态和动态信道分配。</p>
+<h1 id="A_Taxonomy_Of_Mechanisms_For_Shared_Access"><a class="header-anchor" href="#A_Taxonomy_Of_Mechanisms_For_Shared_Access">#</a>A Taxonomy Of Mechanisms For Shared Access</h1>
+<p>实现多个计算机通过一个共享媒介来访问数据主要有三种方法： （1）复用技术（Multiplexing Technique） （2）分布算法来控制访问（Distributed Algorithms For Controlled Access） （3）随机访问策略（Random Access Strategy）</p>
+<ul>
+<li>这里的复用技术与在11章中讨论的复用核心思想是相同的，但仍然有略微区别。11章中提到的是物理上的复用，通过复用器将信号合并在一起。这里的复用则是对于共享信道的逻辑划分，使不同的终端占用共享信道的部分资源，所以这里的复用技术也称为<code>信道协议（Channelization Protocols）</code>。</li>
+</ul>
+<p>下图展示了按照共享媒介所使用的方法的分类：</p>
+<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-27-22-55-32.png" alt="共享媒介的分类方法"></p>
+<h1 id="Static_And_Dynamic_Channel_Allocation"><a class="header-anchor" href="#Static_And_Dynamic_Channel_Allocation">#</a>Static And Dynamic Channel Allocation</h1>
+<p>信道分配是与第11章中提到的复用技术相关联的。以频分复用为例子，在第11章中是每个终端都有它的载波频率，终端与载波频率是一对一的关系，这就是<code>信道的静态分配（Static Channel Allocation）</code>。</p>
+<p>信道可以静态分配的前提是预先知道终端的存在，而且终端在传输过程中不会发生变化。而在许多的场景下，终端是会变化的，例如一个路由器负责房间内手机的信号，但是手机可以关闭或者离开房间，这就是终端的变化。</p>
+<p>在这种情况下就需要<code>信道的动态分配（Dynamic Channel Allocation）</code>，即当终端出现时才分配信道的资源给终端。</p>
+<h1 id="Channelization_Protocols"><a class="header-anchor" href="#Channelization_Protocols">#</a>Channelization Protocols</h1>
+<p>与第11章中的复用技术相似，信道分配也存在频分多路复用（Frequency Division Multi-Access），时分多路复用（Time Division Multi—Access），码分多路复用（Code Division Multi-Access）三种类型。</p>
+<h2 id="FDMA"><a class="header-anchor" href="#FDMA">#</a>FDMA</h2>
+<p>频分多路复用下每个终端都可以选择一个载波频率，这个频率并不会影响到其他的终端。在有些系统下存在一个中央控制器进而支持动态的频分多路复用：当一个新的终端出现，中央控制器用一个预留的信道与终端通信，然后分配一个未使用的载波频率给这个终端，之后终端都使用这个载波频率传输数据。</p>
+<h3 id="TDMA"><a class="header-anchor" href="#TDMA">#</a>TDMA</h3>
+<p>时分多路复用下，所有终端按顺序编号，如$1,2,3,…N$，并且会按这个顺序占据信道进行传输。如同频分多路复用，在某些系统下支持动态分配，即终端出现时再分配给他信道的占用时间段。</p>
+<h3 id="CDMA"><a class="header-anchor" href="#CDMA">#</a>CDMA</h3>
+<p>码分多路复用如同码分复用，通过数学方法将多个终端的数据合并在一起，再同时通过信道进行传输。</p>
+<h1 id="Controlled_Access_Protocols"><a class="header-anchor" href="#Controlled_Access_Protocols">#</a>Controlled Access Protocols</h1>
+<p>访问控制协议（Controlled Access Protocols）为统计复用提供了方法，主要分为三个类型：</p>
+<ol>
+<li>轮询（Polling）：控制中央持续的询问每一个终端是否要发送数据。</li>
+<li>预留（Reservation）：终端需要发送信息时，发出一个在下一次循环时发送数据的申请。</li>
+<li>令牌传递（Token Passing）：终端间循环传递一个令牌，当终端持有令牌时可以发送数据。</li>
+</ol>
+<h2 id="Polling"><a class="header-anchor" href="#Polling">#</a>Polling</h2>
+<p><code>轮询（Polling）</code>系统是存在一个中央控制器，这个控制器会询问其下的每个终端是否需要传递数据。轮询可以再细分为两种，<code>轮询调度顺序（Round Robin Order）</code>和<code>优先顺序（Priority Order）</code>。在轮询调度顺序下，每个终端都有相同的机会传递数据，而在优先顺序下，一些终端会有更多的机会去传递数据。</p>
+<p>轮询的算法实现伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For Centralized Controller:</span><br><span class="line">while(true)</span><br><span class="line">&#123;</span><br><span class="line">  Select a station S, and send a polling message to S;</span><br><span class="line">  Wait for S to respond by sending a packet or passing;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Reservation"><a class="header-anchor" href="#Reservation">#</a>Reservation</h2>
+<p><code>预留（Reservation）</code>系统多用在航天系统中，系统分为两个步骤，在第一步中需要传输数据的终端申请，所有申请的终端构成一张表，在第二步中表中的终端开始传输数据。通常第一步与第二步使用的是不同的信道，即有一个信道专门用来接受申请信息，另一个信道作为主信道传递每个终端的数据。</p>
+<p>预留的算法实现伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For Centralized Controller:</span><br><span class="line">While(true)</span><br><span class="line">&#123;</span><br><span class="line">  Form a list of stations that have a packet to send;</span><br><span class="line">  Allow stations on the list to tranmit;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Token_Passing"><a class="header-anchor" href="#Token_Passing">#</a>Token Passing</h2>
+<p><code>令牌传递（Token Passing）</code>被用在多个局域网（LAN）技术中，被用的最多的就是环形拓步结构中。在一个网络中，某一台计算机持有着一个特殊的控制命令，这个命令被称作为令牌，持有令牌的计算机可以发送数据，在发送完毕后将令牌传递给下一个计算机。</p>
+<p>令牌传递的算法实现伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For each computer:</span><br><span class="line">While(true)</span><br><span class="line">&#123;</span><br><span class="line">  Wait for the token to arrive;</span><br><span class="line">  Transmit a packet if one is waiting to be send;</span><br><span class="line">  Send the token to he next station;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>环形拓补结构中，存在物理的环形链接，所以令牌可以直接传递给相邻的下一个电脑。在其他的拓步结构中，所有的计算机都被赋予了一个逻辑顺序，因此可以获知下一个要收取令牌的电脑是哪个。</p>
+<h1 id="Random_Access_Protocols"><a class="header-anchor" href="#Random_Access_Protocols">#</a>Random Access Protocols</h1>
+<p>许多网络，特别是局域网络中，并不使用访问控制协议，而使用<code>随机访问协议（Random Access Protocols）</code>。随机访问协议下只有当终端存在数据要发送时，才会被给予权限（在访问控制协议中，每个终端都要被持续检查）。这里的<em>随机</em>是在所有终端都有数据要发送时的处理方式。随机访问协议也可以被分为三类：</p>
+<ol>
+<li>ALOHA：早期夏威夷的无线电网络中被使用的协议。在教科书中比较流行，因为便于分析，但在实际网络中已不再使用。</li>
+<li>CSMA/CD（Carrier Sense Multi-Access With Collision Detection）：原以太网的基础，现在也不再使用。</li>
+<li>CSMA/CA（Carrier Sense Multi-Access With Collision Avoidance）：Wifi无线网络的基础。</li>
+</ol>
+<h2 id="ALOHA"><a class="header-anchor" href="#ALOHA">#</a>ALOHA</h2>
+<p>在早期夏威夷的网络中使用，在这个系统下有一个强大的发送器被部署中在物理上的中心位置，其他的终端（通常对应一台计算机）在这个发送器周围部署，这些终端都没有足够的能量将数据直接传输给其他终端，因此需要通过中央的发送器。</p>
+<p>中央发送器用两个载波频率与每个终端通信，一个被称为入站频率（In Frequency，407.305MHZ），一个被称为出站频率（Outbound Frequency，413.475MHZ）。终端通过入站频率将数据传递给中央发送器，中央发送器通过出站频率将数据发送给每个终端。</p>
+<p>ALOHA的实现逻辑很直接：当终端有数据要发送时，使用入站频率将数据传递给中央数据站，中央数据站通过出站频率将数据传给所有的终端，终端检查数据是否是自己需要的。为了保证数据被正常发送，发送终端也需要监听出站频率，当发送的数据拷贝被传输回发送终端，发送终端确认数据被正常传递了，就会传输下一个数据。反之，则会在一段时间后尝试重新发送。</p>
+<p>当两个终端同时使用各自的入站频率传输数据时，两个数据会发送混淆，进而导致信息错误，将这种情况称为信道冲突（Collision）。协议通过等待一段时间后重新发送数据来解决冲突，重新发送数据前的等待时间的设定尤为关键，如果两个终端等待的时间相同，那么再次发送数据时仍然是同时发送则会继续导致冲突。因此等待时间是随机的，但是网络繁忙时，冲突的概率仍然会增加，因为即使是随机时间仍然可能会与其他的终端发生冲突。</p>
+<p>ALOHA示意图如下：</p>
+<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-12-56-15.png" alt="ALOHA示意图"></p>
+<h2 id="CSMA_CD"><a class="header-anchor" href="#CSMA_CD">#</a>CSMA/CD</h2>
+<p>1978年，数字设备联盟（Digital Equipment Corporation），英特尔（Intel）和施乐（Xerox）共同指定了个标准（DIX标准），也就是后来的以太网。最早的以太网技术使用一根长电缆连接每个电脑，这根长电缆就是共享媒介，与ALOHA使用中央发送器来实现数据传输不同，在以太网中每个终端都可以通过这个共享的线缆传输数据。以太网同样需要解决冲突问题，以太网主要引入了三个解决冲突的方法，统称为<code>具有冲突检测功能的载波侦听多路访问（CSMA/CD，Carrier Sense Multi-Access With Collision Detection）</code>：</p>
+<ol>
+<li>载波侦听（Carrier Sense）：</li>
+</ol>
+<p>在每个终端发送数据前，先监听线缆确定是否有其他的终端正在传输数据。</p>
+<ol start="2">
+<li>冲突检测（Collision Detection）：</li>
+</ol>
+<p>虽然有载波侦听，但如果在线缆空闲时，两个需要发送数据的终端同时监听，此时他们都发现线缆空闲，因此都开始传输数据，这时候仍然会造成冲突。因此在传输过程中，发送终端也会持续的监听线缆，如果发现线缆中的数据与发送的数据不同，说明已经发生了冲突，数据被干扰了，于是停止数据的发送。</p>
+<p>以太网的数据传输还有一些细节问题，如在检测到冲突时，发送端并不会立刻停止数据的发送，他仍然会传输数据一段时间，保证所有的其他终端都可以收到冲突信号。另外，当一个包被发送完后，发送终端需要等待一段时间，称为<code>包间间隙（Interpacket gap）</code>（在早期10Mbps的以太网中，包间间隙为9.6微秒），保证其他的终端可以检测到线缆的空闲并传递数据。</p>
+<ol start="3">
+<li>二进制指数补偿（Binary Exponential Backoff）</li>
+</ol>
+<p>如ALOHA一样，在发现了冲突后，发送端需要等待一段时间重新发送数据，这个等待时间是随机的，通常会设置一个最大延迟时间$d$，然后在$0\sim d$。如之前所述，在网络繁忙时，可能存在随机后终端仍然冲突的情况。二进制指数补偿是指在新一次冲突发生后，随机的范围变成$0\sim 2d$，如果再有冲突则变成$0\sim 4d$，依次类推。</p>
+<p>CSMA/CD算法实现伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For each Computer:</span><br><span class="line"></span><br><span class="line">Wait for a packet to be ready;</span><br><span class="line">Wait for the medium to be idle;</span><br><span class="line">Delay for the interpacket gap;</span><br><span class="line">Set x to be the standard backoff range d;</span><br><span class="line">Attempt to transmit the packet;</span><br><span class="line"></span><br><span class="line">While(Collision occured)</span><br><span class="line">&#123;</span><br><span class="line"> random a delay time q from 0 to x;</span><br><span class="line"> delay for q microseconds;</span><br><span class="line"> double x to be 2x</span><br><span class="line"> attempt to retransmit the packet</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="CSMA_CA"><a class="header-anchor" href="#CSMA_CA">#</a>CSMA/CA</h2>
+<p>CSMA/CD并不能被运用在无线网络中，因为无线网络中的设备存在一个最远距离$\delta$。即如果两个终端的距离大于$\delta$，则CSMA/DA中的载波监听就无法被应用，因为一个终端并不能知道另一个是否在发送信息。这种情况如下图所示，如果Computer1在发送信息，Computer3是无法得知的，因此冲突只有Computer2可以知晓，这种情况称为<code>隐藏终端问题(Hidden Station Problem)</code>。</p>
+<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-00-02.png" alt="隐藏终端问题"></p>
+<p>所以无线网络中使用<code>具有冲突规避的载波侦听多路访问（CSMA/CA，Carrier Sense Multi-Access With Collision Avoidance）</code>。以上图的例子，Computer3在发送数据前会先向所有它的$\delta$范围内的设备发出一个短信息表明自己需要发送数据了，接受到Computer3发出的短信息的设备会检查自己是否正在接受其他的数据，如果不是则回复可以发送的信号。如下图所示：</p>
+<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-08-19.png" alt="CSMA/CA图解"></p>
+<p>如果发送端没有收到接收方的回执，则会在随机时间后再次尝试发送。</p>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Computer Networks and Internets》 Ch 16 无线网络技术</title>
     <url>/ch_16_wireless_networking_technologies/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
@@ -1851,123 +2057,6 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
-    <title>《Computer Networks and Internets》 Ch 13 局域网：数据包，帧 和拓扑结构</title>
-    <url>/ch_13_local_area_networks_packets,_frames,_and_topologies/</url>
-    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一部分将介绍分组交换技术，拓扑结构，硬件地址寻址，帧的概念。</p>
-<h1 id="Circuit_Switching_And_Analog_Communication"><a class="header-anchor" href="#Circuit_Switching_And_Analog_Communication">#</a>Circuit Switching And Analog Communication</h1>
-<p><code>电路交换（Circuit Switching）</code>概念是指使用时在发送端和接收端之间建立不受干扰的通路的通信方法。电路交换通常与模拟电话技术相关。下图是电路交换的示意图：</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-08-28-27.png" alt="电路交换"></p>
-<p>电路交换的主要特点是：</p>
-<ol>
-<li>是点对点的通信</li>
-<li>有单独的步骤建立电路连接，使用电路，终止电路连接<br>
-例如在电话通信中，实际上有三步。第一步在电话发起人和接受者之间建立电路，第二步双方使用电路进行通信，第三步在通话结束后，终止通路。<br>
-这也是称为交换（Switched）电路的原因</li>
-<li>与固定的物理通路有相同的性能。</li>
-</ol>
-<p>电路交换建立的电路最终使用频分复用或者时分复用使用同一个媒介进行传输。电路建立的过程包括在频分复用或时分复用中分配频率或时间段。</p>
-<h1 id="Packet_Switching"><a class="header-anchor" href="#Packet_Switching">#</a>Packet Switching</h1>
-<p>分组交换（Packet Switching）使用一种统计意义上的复用，即多个信源之间竞争共享媒介的使用。电路交换通常在传统的电话通信中使用，而分组交换构成了因特网的基础。分组交换示意图如下：</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-08-37-20.png" alt="分组交换"></p>
-<p>注意，在11章中提到的复用技术，如频分复用和时分复用是对于物理存在的信道或者像电路交换这样生成的信道使用的，与分组交换并没有关系。分组交换本身就有统计复用（Statistic Multiplexing）的概念。多个信源在媒介空闲时竞争使用，当媒介为空，且只有一个信源需要传输数据时，该信源就会独占媒介。如果同时有多个信源要传输数据，则基本每个信源占据媒介的时间是平均的，轮流使用。</p>
-<p>分组交换的核心是将原数据切分成一个个小块方便传输，这些小块称作包（Packets），包中需要包括传送的目的地信息（在之后节会更详细说明）。分组交换传输的单位不是bit或者byte,而是包。不同的分组交换技术对于包的尺寸有不同的定义。</p>
-<p>分组交换的主要特点是：</p>
-<ol>
-<li>任意大小的异步传输</li>
-<li>在通信前没有建立通路的步骤</li>
-<li>性能取决于各信源的包的统计复用</li>
-</ol>
-<p>分组交换的主要优点在于成本的控制。对于电路交换来说，如果有$N$个电脑，则需要$N/2$个独立的路径（虽然在连接时才创建）。但对于分组交换只要一个共享的电路就行。</p>
-<h1 id="Local_And_Wide_Area_Packet_Networks"><a class="header-anchor" href="#Local_And_Wide_Area_Packet_Networks">#</a>Local And Wide Area Packet Networks</h1>
-<p>分组交换技术通常根据传输距离的距离进行分类。通常分为三类：</p>
-<ol>
-<li>局域网（Local Area Network,LAN）：最便宜，通常范围在房间级或者一个大楼。</li>
-<li>城域网（Metropolitan Area Network,MAN）中等开销，范围涵盖城市或者大都会。</li>
-<li>广域网（Wide Area Network,WAN）：最贵。范围通常包含城市与城市之间。</li>
-</ol>
-<p>在实际使用中，虽然城域网的概念被提出，但在商业上并不成功。基本广泛使用的只有局域网和广域网，城域网的概念在逐步被纳入广域网中。</p>
-<p>还有一些机构或者商家定义的类似的分类方式，如：</p>
-<ol>
-<li><code>个人局域网络（Personal Area Network，PAN）</code>，通常范围在几米内，如蓝牙通信等。</li>
-<li><code>芯片局域网络（Chip Area Network）</code>，芯片厂商提出的概念，通常是超大型电路（Very-Large-Scale-Integration,VLSI）中多个核之间的通信。</li>
-</ol>
-<h1 id="Standards_For_Packet_Format_And_Identification"><a class="header-anchor" href="#Standards_For_Packet_Format_And_Identification">#</a>Standards For Packet Format And Identification</h1>
-<p>每个在网络中传输的包都必须包含其目标收信人的标识。需要有规范来制定标识的格式以及添加的位置，在LAN领域最常用的标准是由IEEE（Institute Electrical And Electronics Engineers）创建的。</p>
-<p>IEEE是由一群关注于协议栈最下两层（物理层（Physical）和数据链接层（Data Link））的工程师构成的。协议栈的不同层由不同的机构负责，如IEFT关注传输层和因特网协议，WWW组织关注应用层。机构与其关注的协议如下图所示：</p>
-<p>在1980年，IEEE组织了<code>802项目局域网/城域网标准委员（Project 802 LAN/MAN Standards Commitee）</code>会为网络设定标准。</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-09-12-05.png" alt="组织和协议"></p>
-<h1 id="IEEE_802_Model_And_Standards"><a class="header-anchor" href="#IEEE_802_Model_And_Standards">#</a>IEEE 802 Model And Standards</h1>
-<p>IEEE将数据链接层又在细分为了两层，<code>逻辑链接控制层（Logical Link Control,LLC）</code>(第15章中描述)和<code>媒介访问控制层（Media Access Control,MAC）</code>。</p>
-<p>逻辑链接控制层设备的地址和在解复用中地址的使用。媒介访问控制层关注于多个计算机如何共享底层的媒介。</p>
-<p>IEEE对于协议的命名是采用多部分标识符，如$XXX.YYY.ZZZ$，$XXX$表示协议的分类，$YYY$表示协议的子分类，$ZZZ$是当子分类也非常大是，额外添加的标识。</p>
-<p>如局域网的规范在分类802中，这里的802并不是什么缩写或有实际的技术含义，仅仅是一个分类标识。IEEE不同的工作小组针对其细分的协议进行定义，如针对$802.1$或$802.2$。</p>
-<p>IEEE中有许多不同的工作小组。当有新技术需要协议时，由工业代表和学术协会共同形成工作小组，他们会定期开会商定协议的细节等，当协议的所有细节都确定后，IEEE会发表协议的标准文件。</p>
-<p>当协议最终发布后，工作小组可以选择解散或者如果协议非常重要或者仍需要后续工作，小组也可以继续活动。如果小组负责的部分协议不再有意义，如商业上不被接受，或者有更新更好的技术出现，小组也可以选择直接解散而不发表任何的规范。下图是802分类下的协议，有一些规范就已经被放弃（Disbanded）了。</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-09-25-59.png" alt="802协议"></p>
-<h2 id="LAN_Topologies"><a class="header-anchor" href="#LAN_Topologies">#</a>LAN Topologies</h2>
-<p>因为有许多不同的LAN技术，通常使用拓扑型或者网络的基本形状来进行分类。LAN有四个基本的拓扑型，<code>总线型结构（Bus）</code>，<code>环状结构（Ring）</code>，<code>星状结构（Star）</code>，<code>网状结构（Mesh）</code>。</p>
-<h2 id="Bus_Topology"><a class="header-anchor" href="#Bus_Topology">#</a>Bus Topology</h2>
-<p><code>总线型结构（Bus Topology）</code>是如同以太网一样，用一根电缆连接所有电脑，任何电脑都可以将数据传输到电缆上，然后所有的计算机都可以接受到数据。</p>
-<h2 id="Ring_Topology"><a class="header-anchor" href="#Ring_Topology">#</a>Ring Topology</h2>
-<p><code>环状结构（Ring Topology）</code>是多个电脑首尾相接的连接，直至成为环形。环形结构的优点是对于相连的两台设备来说连接是安全的，即使别的设备出现问题仍然可以连接。</p>
-<h2 id="Mesh_Topology"><a class="header-anchor" href="#Mesh_Topology">#</a>Mesh Topology</h2>
-<p><code>网状结构（Mesh Topology）</code>为任意两两配对的电脑都提供了连接线路，这意味着如果有$N$台电脑，就需要$\frac{n^2-n}{2}$个连接。当增加电脑时，连接电缆的增加是平方级的，因此开销巨大，也因此网状结构在局域网中不常被使用</p>
-<h2 id="Star_Topology"><a class="header-anchor" href="#Star_Topology">#</a>Star Topology</h2>
-<p><code>星状结构（Star Topology）</code>是所有的电脑都连接在一个中心设备（Hub）上。注意星状结构并不严格要求中心设备真的在所有电脑的中心，与所有电脑的距离相同。</p>
-<h2 id="The_Reason_For_Multiple_Topologies"><a class="header-anchor" href="#The_Reason_For_Multiple_Topologies">#</a>The Reason For Multiple Topologies</h2>
-<p>每个结构都有各自的优点，如环状结构很适合各电脑间协调访问，但当其中一个设备出现问题时，通路就会出现问题。星状结构下单一设备出现了问题，其他设备都可以正常访问。总线结构有最少的连接需求，但与环状结构与相同的缺点。网状结构因为连接数量过多，通常不在局域网中使用。</p>
-<h1 id="Packet_Identification，Demultiplexing，Mac_Addresses"><a class="header-anchor" href="#Packet_Identification，Demultiplexing，Mac_Addresses">#</a>Packet Identification，Demultiplexing，Mac Addresses</h1>
-<p>IEEE为寻址（Addressing）创建了标准。在分组交换中，解复用是依赖于一个称为<code>地址（Address）</code>的标识。每个电脑都分配了一个独特的地址，每个传输的包中都包含其目标收件人（Intended Recipent）的地址。</p>
-<p>在IEEE的寻址规范中，每个地址是由48-bit二进制数据组成的，IEEE将其称为媒介访问控制地址（Media Access Control address,MAC address）。因为48位地址来源于以太网技术，所以也有人将其称为以太网地址（Ethernet Address）。</p>
-<p>IEEE为每块网卡（Network Interface Card，NIC）都分配了地址，因此当消费者购买了一张网卡时，其中就包含一个独一无二的地址。</p>
-<p>但IEEE并不是单独的为每个网卡分配地址，它是将前24位（3 Bytes）分配给设备供应商，然后设备供应商再决定后24位的数据。因此前24位称为组织唯一标识符（Organizationally Unique Identifier，OUI），后24位称为网络接口控制标识符（Network Interface Controller Specific）。</p>
-<p>组织唯一标识符的最高有效字节（Most Significant Byte，即大端模式下即最左端）的倒数两位有特殊含义。其最低位表示是单播（0）还是双播（1）。倒数第二位决定该设备是全球唯一（0）（Globally Unique）还是是本地分配（1）（Locally Assigned），全球唯一表明地址是IEEE分配，即世界上的每块网卡都有不同的表示，而本地分配是实验性网卡或者某组织自己地址空间等，即这张卡是在一个小范围内内部使用。</p>
-<h1 id="Unicast，Broadcast，And_Multicast_Addresses"><a class="header-anchor" href="#Unicast，Broadcast，And_Multicast_Addresses">#</a>Unicast，Broadcast，And Multicast Addresses</h1>
-<p>IEEE定义了三种对应包传递的方法：</p>
-<ol>
-<li>单播（Unicast）：目标地址是设定一个电脑，也仅这个电脑可收到包</li>
-<li>广播（broadcast）：网络中的所有电脑都可收到包</li>
-<li>多播（multicast）：目标地址是一系列的电脑，这些电脑都可以收到包。</li>
-</ol>
-<p>对于广播来说，因为是所有电脑都收到包，所以目标地址实际是没有意义的。将地址的48位全部设为1，则表示是广播模式。广播模式也可看作是多播模式的一个特殊情况。</p>
-<h1 id="Broadcast_Multicast_And_Efficient_Multi_Point_Delivery"><a class="header-anchor" href="#Broadcast_Multicast_And_Efficient_Multi_Point_Delivery">#</a>Broadcast,Multicast,And Efficient Multi-Point Delivery</h1>
-<p>广播和多播模式在局域网中特别有用，对于要传递给多台电脑的数据来说，用这两种方法进行传递特别的高效。</p>
-<p>对于大多数的LAN技术，都是通过一个共享的媒介进行传输。当有数据在媒介中传输时，每台电脑都将从媒介中获取包的拷贝，然后再判断包中的地址情况是否与自己复合，来决定是处理包的内容还是丢弃包的内容。</p>
-<p>因此局域网中的计算机在处理媒介中的包流程如下：</p>
-<ol>
-<li>从包中抽取出地址信息</li>
-<li>判断地址是否满足自己的单播地址，如果是则接受并处理包</li>
-<li>如果2失败，判断地址是否是广播模式，如果是则接受并处理包</li>
-<li>如果3失败，判断地址是否是多播模式，且电脑是多播模式指定的电脑组的一员，如果是则接受并处理包</li>
-<li>如果4失败，则丢弃包</li>
-</ol>
-<p>如在局域网情况下，如果多台电脑使用同一个媒介，且包需要传递给多态电脑，那么使用多播和广播模式，数据仅需要发送一次即可。</p>
-<h1 id="Frames_And_Framing"><a class="header-anchor" href="#Frames_And_Framing">#</a>Frames And Framing</h1>
-<p>在同步通信系统中，帧的概念是让接收者知道数据的开始和结束。但在更宽泛的概念下，帧是表示一系列bit或byte的特定结构，让接收方和发送方都能一致同意的特定格式。</p>
-<p>在分组交换中，帧的概念就对应包。在分组交换中，每个包都需要一个数据头，数据头（header）中包含目标地址。数据头后是有效负载（payload），即真正需要传输的原数据。在大部分的网络技术中，有效负载是不透明的即网络设备只能检查数据头。</p>
-<p>在整个包的前后还能加入可选的前置数据（Prelude）或后置数据（Postlude）。因此整个包的结构如下所示：</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-10-47-15.png" alt="包的结构"></p>
-<p>举一个例子，如果一个包有6个byte的数据头，然后任意长度的有效负载，在包的前后各有1byte表示包的开始和结束。且开始和结束标识用ASCII码中的SOH（Start Of Header）和EOT（End Of Transmission）表示，则整个包如下所示：</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-10-49-20.png" alt="包的例子"></p>
-<p>上述例子有一点点数据的浪费，因为如果包是一个接一个发的，那么后一个包的SOH会紧跟着前一个包的EOT。在实际中，只需要一个来区分两个包即可。</p>
-<p>虽然包的前置数据和后置数据是可选的，但在实际使用中，他们可以一定程度上提升异步传输数据的处理速度和对错误的检测。在异步传输中，如果接收方收到了EOT，它就知道数据包传输完成了，可以直接开始处理数据而不需要等到下一个包的到来再根据新包确定上个包是否完成。当发送端发送数据到一般崩溃时，因为接收端始终收不到EOT，也就能知道错误的发生。</p>
-<h1 id="Byte_And_Bit_Stuffing"><a class="header-anchor" href="#Byte_And_Bit_Stuffing">#</a>Byte And Bit Stuffing</h1>
-<p>在ASCII码中，SOH用十六进制0x01表示，EOT用0x04表示。如果有效负载中也出现了0x01和0x04，接收端就无法判定到底是真实数据还是前置或后置标识。</p>
-<p>一种称为字节填充（byte Stuffing）就是为了解决有效负载和特殊标记位有相同表示导致无法识别的问题。<br>
-该技术有时也称为数据填充（Data Stuffing）或字符填充（Character Stuffing）。该技术主要是</p>
-<p>字节装填是用另一个字符来替代特殊标识的出现。</p>
-<p>如我们选择用ASCII码中的ESC字符（Ox1B）来作为替换字符。在发送端当有效负载中出现SOH，那么就替换为&quot;ESC A&quot;，如果出现EOT,就替换为&quot;ESC B&quot;，如果出现了ESC就替换为&quot;ESC C&quot;。注意这个计算是针对有效负载的，当整个发送的有效负载中就不会与EOT和SOH相同的数据。对接收端而言，去找寻背后跟着&quot;A,B,C&quot;的ESC字符，然后将其替换回SOH和EOT的数据。发送端的替换过程如下所示：</p>
-<p><img src="/ch_13_local_area_networks_packets,_frames,_and_topologies/2019-12-09-11-22-32.png" alt="字节装填"></p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="https://web.archive.org/web/20171217042848/http://www.cs.virginia.edu/~mngroup/projects/mpls/documents/thesis/node8.html">Switching technology</a><br>
-<a href="https://www.cnblogs.com/penghuwan/p/7686059.html#_label3_1">【计算机网络】数据交换技术和多路复用技术的正（nao）确(can)打开方式</a></p>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Computer Networks and Internets》 Ch 17 中继器，网桥和交换机</title>
     <url>/ch_17_repeaters,_bridges,_and_switches/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
@@ -2046,92 +2135,20 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
-    <title>《Computer Networks and Internets》 Ch 14 MAC 层</title>
-    <url>/ch_14_the_ieee_mac_sublayer/</url>
-    <content><![CDATA[<ul>
-<li>这一章原书中的Statiion一词，在笔记中翻译为<code>终端</code>。</li>
-</ul>
-<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一章将会深入讨论MAC层，包括多路访问协议（multi-access protocols）以及静态和动态信道分配。</p>
-<h1 id="A_Taxonomy_Of_Mechanisms_For_Shared_Access"><a class="header-anchor" href="#A_Taxonomy_Of_Mechanisms_For_Shared_Access">#</a>A Taxonomy Of Mechanisms For Shared Access</h1>
-<p>实现多个计算机通过一个共享媒介来访问数据主要有三种方法： （1）复用技术（Multiplexing Technique） （2）分布算法来控制访问（Distributed Algorithms For Controlled Access） （3）随机访问策略（Random Access Strategy）</p>
+    <title>耦合与内聚</title>
+    <url>/coupling/</url>
+    <content><![CDATA[<h1 id="耦合与内聚"><a class="header-anchor" href="#耦合与内聚">#</a>耦合与内聚</h1>
+<p>当一个类与另一个类存在关系时，称这两个类存在<code>依赖(Dependency )</code>或`耦合(Coupling)``。如果两个类相互依赖，则修改其中的一个就可能会影响到另一个的执行逻辑。</p>
+<p>当一个类的内部组件（如方法、属性等）彼此紧密关联，并共同完成某个功能时，称这个类具有<code>内聚(Cohesion)</code>。如果一个类内部的组件高度聚焦在明确的任务上，那么这个类更易于维护和理解。</p>
+<p>在最理想的情况下，代码应该是低耦合高内聚的：</p>
 <ul>
-<li>这里的复用技术与在11章中讨论的复用核心思想是相同的，但仍然有略微区别。11章中提到的是物理上的复用，通过复用器将信号合并在一起。这里的复用则是对于共享信道的逻辑划分，使不同的终端占用共享信道的部分资源，所以这里的复用技术也称为<code>信道协议（Channelization Protocols）</code>。</li>
+<li>耦合性表示的是对象间的交互（引用关系）。低耦合的表现是尽可能少的双向引用，循环引用。</li>
+<li>内聚则是同类型代码是否在一起，高内聚的表现为模块化。</li>
 </ul>
-<p>下图展示了按照共享媒介所使用的方法的分类：</p>
-<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-27-22-55-32.png" alt="共享媒介的分类方法"></p>
-<h1 id="Static_And_Dynamic_Channel_Allocation"><a class="header-anchor" href="#Static_And_Dynamic_Channel_Allocation">#</a>Static And Dynamic Channel Allocation</h1>
-<p>信道分配是与第11章中提到的复用技术相关联的。以频分复用为例子，在第11章中是每个终端都有它的载波频率，终端与载波频率是一对一的关系，这就是<code>信道的静态分配（Static Channel Allocation）</code>。</p>
-<p>信道可以静态分配的前提是预先知道终端的存在，而且终端在传输过程中不会发生变化。而在许多的场景下，终端是会变化的，例如一个路由器负责房间内手机的信号，但是手机可以关闭或者离开房间，这就是终端的变化。</p>
-<p>在这种情况下就需要<code>信道的动态分配（Dynamic Channel Allocation）</code>，即当终端出现时才分配信道的资源给终端。</p>
-<h1 id="Channelization_Protocols"><a class="header-anchor" href="#Channelization_Protocols">#</a>Channelization Protocols</h1>
-<p>与第11章中的复用技术相似，信道分配也存在频分多路复用（Frequency Division Multi-Access），时分多路复用（Time Division Multi—Access），码分多路复用（Code Division Multi-Access）三种类型。</p>
-<h2 id="FDMA"><a class="header-anchor" href="#FDMA">#</a>FDMA</h2>
-<p>频分多路复用下每个终端都可以选择一个载波频率，这个频率并不会影响到其他的终端。在有些系统下存在一个中央控制器进而支持动态的频分多路复用：当一个新的终端出现，中央控制器用一个预留的信道与终端通信，然后分配一个未使用的载波频率给这个终端，之后终端都使用这个载波频率传输数据。</p>
-<h3 id="TDMA"><a class="header-anchor" href="#TDMA">#</a>TDMA</h3>
-<p>时分多路复用下，所有终端按顺序编号，如$1,2,3,…N$，并且会按这个顺序占据信道进行传输。如同频分多路复用，在某些系统下支持动态分配，即终端出现时再分配给他信道的占用时间段。</p>
-<h3 id="CDMA"><a class="header-anchor" href="#CDMA">#</a>CDMA</h3>
-<p>码分多路复用如同码分复用，通过数学方法将多个终端的数据合并在一起，再同时通过信道进行传输。</p>
-<h1 id="Controlled_Access_Protocols"><a class="header-anchor" href="#Controlled_Access_Protocols">#</a>Controlled Access Protocols</h1>
-<p>访问控制协议（Controlled Access Protocols）为统计复用提供了方法，主要分为三个类型：</p>
-<ol>
-<li>轮询（Polling）：控制中央持续的询问每一个终端是否要发送数据。</li>
-<li>预留（Reservation）：终端需要发送信息时，发出一个在下一次循环时发送数据的申请。</li>
-<li>令牌传递（Token Passing）：终端间循环传递一个令牌，当终端持有令牌时可以发送数据。</li>
-</ol>
-<h2 id="Polling"><a class="header-anchor" href="#Polling">#</a>Polling</h2>
-<p><code>轮询（Polling）</code>系统是存在一个中央控制器，这个控制器会询问其下的每个终端是否需要传递数据。轮询可以再细分为两种，<code>轮询调度顺序（Round Robin Order）</code>和<code>优先顺序（Priority Order）</code>。在轮询调度顺序下，每个终端都有相同的机会传递数据，而在优先顺序下，一些终端会有更多的机会去传递数据。</p>
-<p>轮询的算法实现伪代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For Centralized Controller:</span><br><span class="line">while(true)</span><br><span class="line">&#123;</span><br><span class="line">  Select a station S, and send a polling message to S;</span><br><span class="line">  Wait for S to respond by sending a packet or passing;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Reservation"><a class="header-anchor" href="#Reservation">#</a>Reservation</h2>
-<p><code>预留（Reservation）</code>系统多用在航天系统中，系统分为两个步骤，在第一步中需要传输数据的终端申请，所有申请的终端构成一张表，在第二步中表中的终端开始传输数据。通常第一步与第二步使用的是不同的信道，即有一个信道专门用来接受申请信息，另一个信道作为主信道传递每个终端的数据。</p>
-<p>预留的算法实现伪代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For Centralized Controller:</span><br><span class="line">While(true)</span><br><span class="line">&#123;</span><br><span class="line">  Form a list of stations that have a packet to send;</span><br><span class="line">  Allow stations on the list to tranmit;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Token_Passing"><a class="header-anchor" href="#Token_Passing">#</a>Token Passing</h2>
-<p><code>令牌传递（Token Passing）</code>被用在多个局域网（LAN）技术中，被用的最多的就是环形拓步结构中。在一个网络中，某一台计算机持有着一个特殊的控制命令，这个命令被称作为令牌，持有令牌的计算机可以发送数据，在发送完毕后将令牌传递给下一个计算机。</p>
-<p>令牌传递的算法实现伪代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For each computer:</span><br><span class="line">While(true)</span><br><span class="line">&#123;</span><br><span class="line">  Wait for the token to arrive;</span><br><span class="line">  Transmit a packet if one is waiting to be send;</span><br><span class="line">  Send the token to he next station;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>环形拓补结构中，存在物理的环形链接，所以令牌可以直接传递给相邻的下一个电脑。在其他的拓步结构中，所有的计算机都被赋予了一个逻辑顺序，因此可以获知下一个要收取令牌的电脑是哪个。</p>
-<h1 id="Random_Access_Protocols"><a class="header-anchor" href="#Random_Access_Protocols">#</a>Random Access Protocols</h1>
-<p>许多网络，特别是局域网络中，并不使用访问控制协议，而使用<code>随机访问协议（Random Access Protocols）</code>。随机访问协议下只有当终端存在数据要发送时，才会被给予权限（在访问控制协议中，每个终端都要被持续检查）。这里的<em>随机</em>是在所有终端都有数据要发送时的处理方式。随机访问协议也可以被分为三类：</p>
-<ol>
-<li>ALOHA：早期夏威夷的无线电网络中被使用的协议。在教科书中比较流行，因为便于分析，但在实际网络中已不再使用。</li>
-<li>CSMA/CD（Carrier Sense Multi-Access With Collision Detection）：原以太网的基础，现在也不再使用。</li>
-<li>CSMA/CA（Carrier Sense Multi-Access With Collision Avoidance）：Wifi无线网络的基础。</li>
-</ol>
-<h2 id="ALOHA"><a class="header-anchor" href="#ALOHA">#</a>ALOHA</h2>
-<p>在早期夏威夷的网络中使用，在这个系统下有一个强大的发送器被部署中在物理上的中心位置，其他的终端（通常对应一台计算机）在这个发送器周围部署，这些终端都没有足够的能量将数据直接传输给其他终端，因此需要通过中央的发送器。</p>
-<p>中央发送器用两个载波频率与每个终端通信，一个被称为入站频率（In Frequency，407.305MHZ），一个被称为出站频率（Outbound Frequency，413.475MHZ）。终端通过入站频率将数据传递给中央发送器，中央发送器通过出站频率将数据发送给每个终端。</p>
-<p>ALOHA的实现逻辑很直接：当终端有数据要发送时，使用入站频率将数据传递给中央数据站，中央数据站通过出站频率将数据传给所有的终端，终端检查数据是否是自己需要的。为了保证数据被正常发送，发送终端也需要监听出站频率，当发送的数据拷贝被传输回发送终端，发送终端确认数据被正常传递了，就会传输下一个数据。反之，则会在一段时间后尝试重新发送。</p>
-<p>当两个终端同时使用各自的入站频率传输数据时，两个数据会发送混淆，进而导致信息错误，将这种情况称为信道冲突（Collision）。协议通过等待一段时间后重新发送数据来解决冲突，重新发送数据前的等待时间的设定尤为关键，如果两个终端等待的时间相同，那么再次发送数据时仍然是同时发送则会继续导致冲突。因此等待时间是随机的，但是网络繁忙时，冲突的概率仍然会增加，因为即使是随机时间仍然可能会与其他的终端发生冲突。</p>
-<p>ALOHA示意图如下：</p>
-<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-12-56-15.png" alt="ALOHA示意图"></p>
-<h2 id="CSMA_CD"><a class="header-anchor" href="#CSMA_CD">#</a>CSMA/CD</h2>
-<p>1978年，数字设备联盟（Digital Equipment Corporation），英特尔（Intel）和施乐（Xerox）共同指定了个标准（DIX标准），也就是后来的以太网。最早的以太网技术使用一根长电缆连接每个电脑，这根长电缆就是共享媒介，与ALOHA使用中央发送器来实现数据传输不同，在以太网中每个终端都可以通过这个共享的线缆传输数据。以太网同样需要解决冲突问题，以太网主要引入了三个解决冲突的方法，统称为<code>具有冲突检测功能的载波侦听多路访问（CSMA/CD，Carrier Sense Multi-Access With Collision Detection）</code>：</p>
-<ol>
-<li>载波侦听（Carrier Sense）：</li>
-</ol>
-<p>在每个终端发送数据前，先监听线缆确定是否有其他的终端正在传输数据。</p>
-<ol start="2">
-<li>冲突检测（Collision Detection）：</li>
-</ol>
-<p>虽然有载波侦听，但如果在线缆空闲时，两个需要发送数据的终端同时监听，此时他们都发现线缆空闲，因此都开始传输数据，这时候仍然会造成冲突。因此在传输过程中，发送终端也会持续的监听线缆，如果发现线缆中的数据与发送的数据不同，说明已经发生了冲突，数据被干扰了，于是停止数据的发送。</p>
-<p>以太网的数据传输还有一些细节问题，如在检测到冲突时，发送端并不会立刻停止数据的发送，他仍然会传输数据一段时间，保证所有的其他终端都可以收到冲突信号。另外，当一个包被发送完后，发送终端需要等待一段时间，称为<code>包间间隙（Interpacket gap）</code>（在早期10Mbps的以太网中，包间间隙为9.6微秒），保证其他的终端可以检测到线缆的空闲并传递数据。</p>
-<ol start="3">
-<li>二进制指数补偿（Binary Exponential Backoff）</li>
-</ol>
-<p>如ALOHA一样，在发现了冲突后，发送端需要等待一段时间重新发送数据，这个等待时间是随机的，通常会设置一个最大延迟时间$d$，然后在$0\sim d$。如之前所述，在网络繁忙时，可能存在随机后终端仍然冲突的情况。二进制指数补偿是指在新一次冲突发生后，随机的范围变成$0\sim 2d$，如果再有冲突则变成$0\sim 4d$，依次类推。</p>
-<p>CSMA/CD算法实现伪代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For each Computer:</span><br><span class="line"></span><br><span class="line">Wait for a packet to be ready;</span><br><span class="line">Wait for the medium to be idle;</span><br><span class="line">Delay for the interpacket gap;</span><br><span class="line">Set x to be the standard backoff range d;</span><br><span class="line">Attempt to transmit the packet;</span><br><span class="line"></span><br><span class="line">While(Collision occured)</span><br><span class="line">&#123;</span><br><span class="line"> random a delay time q from 0 to x;</span><br><span class="line"> delay for q microseconds;</span><br><span class="line"> double x to be 2x</span><br><span class="line"> attempt to retransmit the packet</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="CSMA_CA"><a class="header-anchor" href="#CSMA_CA">#</a>CSMA/CA</h2>
-<p>CSMA/CD并不能被运用在无线网络中，因为无线网络中的设备存在一个最远距离$\delta$。即如果两个终端的距离大于$\delta$，则CSMA/DA中的载波监听就无法被应用，因为一个终端并不能知道另一个是否在发送信息。这种情况如下图所示，如果Computer1在发送信息，Computer3是无法得知的，因此冲突只有Computer2可以知晓，这种情况称为<code>隐藏终端问题(Hidden Station Problem)</code>。</p>
-<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-00-02.png" alt="隐藏终端问题"></p>
-<p>所以无线网络中使用<code>具有冲突规避的载波侦听多路访问（CSMA/CA，Carrier Sense Multi-Access With Collision Avoidance）</code>。以上图的例子，Computer3在发送数据前会先向所有它的$\delta$范围内的设备发出一个短信息表明自己需要发送数据了，接受到Computer3发出的短信息的设备会检查自己是否正在接受其他的数据，如果不是则回复可以发送的信号。如下图所示：</p>
-<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-08-19.png" alt="CSMA/CA图解"></p>
-<p>如果发送端没有收到接收方的回执，则会在随机时间后再次尝试发送。</p>
+<p><img src="/coupling/image-20230611124256681.png" alt="耦合和内聚"></p>
 ]]></content>
       <tags>
-        <tag>计算机网络</tag>
+        <tag>编码规范</tag>
       </tags>
   </entry>
   <entry>
@@ -2154,23 +2171,6 @@ $16.20$介绍了软件无线电系统。</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>耦合与内聚</title>
-    <url>/coupling/</url>
-    <content><![CDATA[<h1 id="耦合与内聚"><a class="header-anchor" href="#耦合与内聚">#</a>耦合与内聚</h1>
-<p>当一个类与另一个类存在关系时，称这两个类存在<code>依赖(Dependency )</code>或`耦合(Coupling)``。如果两个类相互依赖，则修改其中的一个就可能会影响到另一个的执行逻辑。</p>
-<p>当一个类的内部组件（如方法、属性等）彼此紧密关联，并共同完成某个功能时，称这个类具有<code>内聚(Cohesion)</code>。如果一个类内部的组件高度聚焦在明确的任务上，那么这个类更易于维护和理解。</p>
-<p>在最理想的情况下，代码应该是低耦合高内聚的：</p>
-<ul>
-<li>耦合性表示的是对象间的交互（引用关系）。低耦合的表现是尽可能少的双向引用，循环引用。</li>
-<li>内聚则是同类型代码是否在一起，高内聚的表现为模块化。</li>
-</ul>
-<p><img src="/coupling/image-20230611124256681.png" alt="耦合和内聚"></p>
-]]></content>
-      <tags>
-        <tag>编码规范</tag>
       </tags>
   </entry>
   <entry>
@@ -2218,8 +2218,203 @@ $16.20$介绍了软件无线电系统。</p>
 </ul>
 ]]></content>
       <tags>
-        <tag>设计模式</tag>
         <tag>编码规范</tag>
+        <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》 第二章 历史</title>
+    <url>/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji/</url>
+    <content><![CDATA[<h1 id="2_1_Unix_起源于历史，1969_1995"><a class="header-anchor" href="#2_1_Unix_起源于历史，1969_1995">#</a>2.1 Unix 起源于历史，1969-1995</h1>
+<p>小型实验原型系统的后继产品往往备受令人讨厌的“第二版效应”折磨。由于迫切希望把所有首次开发时遗漏的功能都添加进去，往往导致设计十分庞大、过于复杂。其实，还有一个因不常遇到而鲜为人知的“第三版效应”：有时候，在第二系统不堪自身重负而崩溃之后，有可能返璞归真，走上正道。</p>
+]]></content>
+      <tags>
+        <tag>编码规范</tag>
+        <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》 第十二章 优化</title>
+    <url>/di_12_zhang_you_hua/</url>
+    <content><![CDATA[<p>这将是很短的一章，因为关于性能优化，Unix 的经验告诉我们最主要的就是如何知道何时不去优化。其次，最有效的优化往往是优化之外的其它事情，如：清晰干净的设计。</p>
+<h1 id="12_1_什么都别做，就站在那儿"><a class="header-anchor" href="#12_1_什么都别做，就站在那儿">#</a>12.1 什么都别做，就站在那儿</h1>
+<p>程序员工具箱中最强大的优化技术就是不做优化。</p>
+<p>有几个理由支持这项禅式的忠告。其中一个是摩尔定律的指数效应一一最聪明、最便宜、常常也是最迅速的性能提升方法，就是等上几个月，期望硬件性能更好。</p>
+<ul>
+<li>考虑到硬件和程序员时间成本比率，总是有更值得打发时间的事，别去优化一个工作中的系统</li>
+</ul>
+<p>这是有数学上的理由的。如果仅仅只是为了减少资源使用的一个常数部分而优化，那是很不值得的。更明智的做法是集中精力将时间复杂度或空间复杂度从 $O(n^2)$ 降至 $O(n)$ 或 $O(n logn)$ 或者类似的，从一个更高次的指数降下来。线性性能增益往往很快就会被摩尔定律覆盖了。</p>
+<h1 id="12_2_先估量，后优化"><a class="header-anchor" href="#12_2_先估量，后优化">#</a>12.2 先估量，后优化</h1>
+<p>如果有真凭实据证明应用程序运行缓慢，这时 (仅当此时)才可以考虑优化代码但付诸实施前，要先估量。</p>
+<p>最初的 Unix 程序员最先学到的经验之一就是要明确瓶颈所在，直觉实在是个糟糕的向导，即使特别熟悉可疑代码的人也不例外。</p>
+<h1 id="12_3_非定域性之害"><a class="header-anchor" href="#12_3_非定域性之害">#</a>12.3 非定域性之害</h1>
+<p>最有效的代码优化方法就是保持代码短小简单。</p>
+<p>随着机器资源成本的直线下降，庞大数据结构的平均开销也随之而降一一但是因为相邻级别缓存的切换开销上升了，大型结构突破缓存容量对性能的影响也就增加了。 因此在这里，“小即是美”的建议比以往更有用，尤其是考虑到核心数据结构必须留在最快的缓存里。该建议也同样适用于代码：通常，指令加载要比执行花费的时间更多。</p>
+<p>这彻底推翻了某些传统的建议。如循环分解，去掉相对昂贵的机器指令而增加代码的总行数，那是不值得的。在 3D 图形引擎中，优化旋转操作的 $sin(x)$ 函数表在现代机器中占据 $365 \times 4$ 字节的空间在。处理器缓冲速度没有内存查询快时，这显然是个速度优化。但是现在，比起函数表产生的附加 Cache Miss 的可能开销，每次重新计算可能更快。</p>
+<p>但在将来，也许随着缓存的增大又会反过来。更普遍的是，不妨悲观地认为，许多优化方法都是暂时的而且常常随着成本比例而变化。唯一的可行方案就是先衡量后再优化。</p>
+<h1 id="12_4_吞吐量和延迟"><a class="header-anchor" href="#12_4_吞吐量和延迟">#</a>12.4 吞吐量和延迟</h1>
+<h2 id="12_4_3_缓存操作结果"><a class="header-anchor" href="#12_4_3_缓存操作结果">#</a>12.4.3 缓存操作结果</h2>
+<p>认为迫切需要缓存的时候，明智的做法是能够从更深层次来考虑，并问问为什么缓存是必须的。这比将缓存的所有边界条件都考虑到要容易得多。</p>
+]]></content>
+      <tags>
+        <tag>编码规范</tag>
+        <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》 第十一章 接口</title>
+    <url>/di_11_zhang_jie_kou%EF%BC%9Aunix_huan_jing_xia_de_yong_hu_jie_kou_she_ji_mo_shi/</url>
+    <content><![CDATA[<p>在 Unix 接口设计的传统中，会反复涉足两个主题：</p>
+<ol>
+<li>与其他程序通信方式的前瞻性设计</li>
+<li><a href="/di_1_zhang_zhe_xue/#%E9%80%9A%E4%BF%97%E5%8E%9F%E5%88%99%EF%BC%9A%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1%E9%81%BF%E5%85%8D%E6%A0%87%E6%96%B0%E7%AB%8B%E5%BC%82">通俗原则：接口设计避免标新立异</a>，也可称为最小立异原则</li>
+</ol>
+<h1 id="11_3_接口设计评估"><a class="header-anchor" href="#11_3_接口设计评估">#</a>11.3 接口设计评估</h1>
+<div class="note info simple"><p>这里的接口，指的并非是代码的 <code>interface</code> 而是 UI</p>
+</div>
+<p>Unix 使用五种度量标准对接口风格进行分类：</p>
+<ul>
+<li>简洁：一个事务处理需要的动作时间及复杂度有较低的上限，可以用点击键量，鼠标手势量和需要多少秒注意力来衡量</li>
+<li>表现力：接口具有表现力是指接口可以触发相当广泛的行为。最具表现力的接口可以启动程序设计者没有预见的行为组合，并仍然给予用户有用和一致的结果。</li>
+<li>易用：接口的易用性同要求用户记忆的东西成反比</li>
+<li>透明：接口透明度时用户在使用接口时，几乎没有什么问题、数据或程序的相关状态需要记忆</li>
+<li>脚本化能力：指接口能够容易地为其它程序所使用，可脚本化的程序通常被其它程序作为组件使用，从而减少了定制代码的昂贵需求并使得重复任务的自动化相对容易。</li>
+</ul>
+<h1 id="11_4_CLI_和可视接口之间的权衡"><a class="header-anchor" href="#11_4_CLI_和可视接口之间的权衡">#</a>11.4 CLI 和可视接口之间的权衡</h1>
+<blockquote>
+<p>商业世界通常一窝蜂地支持初学者模式，因为</p>
+<ul>
+<li>购买决定基于冲动</li>
+<li>仅仅有个傻愣愣的 GUI，用户支持工作得以降到最少。<br>
+我发现许多非 Unix 系统常常令人沮丧，因为，比如，它们不提供对成百上千的文件进行某种处理的方法;想写一个脚本，又不支持。实质的问题是他们已经假定所有的用户总是入门级的，然后非难 Unix，因为 Unix 并不迎合这种模型<br>
+—— Mike Lesk</li>
+</ul>
+</blockquote>
+<h1 id="11_5_透明、表现力和可配置"><a class="header-anchor" href="#11_5_透明、表现力和可配置">#</a>11.5 透明、表现力和可配置</h1>
+<p>Unix 程序员默认地使得接口富有表现力和透明，并且更愿意牺牲易用性换取这些品质。</p>
+<ul>
+<li>这种态度常常被描述成，接口是“程序员写给程序员的”。但这过度简化了事情的某一重要方面。</li>
+<li>当 Unix 程序员倾向可配置能力和表现力而不是易用性时，并不是想当然地认为他的月标受众仅仅由其他程序员构成，他们深入骨髓的本能反应是，如果不了解终端用户的意图，最好不要迁就或者放马后炮。</li>
+</ul>
+<p>Unix 开发者对于不完全地支持是难以容忍地。也许 Windows 开发者会说“我们不需要支持标准地所有特征：多数用户不会在意，而且对他们来说太复杂了”，而一个 Unix 开发者可能会说“我们并不知道是不是有人永远都不会需要这种功能或者选项，所以我们必须支持它。”</p>
+<p>当 Unix 程序员和其他程序员一起工作时，这些态度会导致冲突，因为其他程序员可能会把这种设计认为是一种冒失的主观意愿，将用户置于对他们而言含混、无意义、其至是吓人的技术细节的负担之中。Mac 或 Windows 的程序员害怕只是因为少数人的高级需求而吓跑大多数用户。</p>
+<p>相反，Unix 程序员更愿意认为对表现力的忽视是一种逃避，或者甚至是一种对未来用户的背叛，这些未来用户对于他们自己的需求实际上会比现在的实现者还要清楚。具有讽刺意味的是，尽管 Unix 的这种态度常常被视作是程序员的一种傲慢，但它实质上是谦逊的另一种形式一-往往伴随着好多年的战争创伤而获得。</p>
+<h1 id="11_6_Unix_接口设计模式"><a class="header-anchor" href="#11_6_Unix_接口设计模式">#</a>11.6 Unix 接口设计模式</h1>
+<h2 id="11_6_1_过滤器模式"><a class="header-anchor" href="#11_6_1_过滤器模式">#</a>11.6.1 过滤器模式</h2>
+<p>过滤器程序接受标准输入的数据，转换成某种格式后，再将结果发送到标准输出端。</p>
+<p>在定义过滤器时，最好在心中牢记一些附带的原则：</p>
+<ol>
+<li>
+<p>牢记 Postel 原则:宽进严出。也就是说，尽可能自由宽松地接受输入格式，并输出结构良好的严谨输出格式。</p>
+<ul>
+<li>前者的做法减少了过滤器在面对非预期输入时出错的可能性，以及在某种情形下(或是在某一工具链中间)崩溃的可能性。</li>
+<li>后者提高了过滤器终有一天能够作为其它程序有用输入的可能性。</li>
+</ul>
+</li>
+<li>
+<p>在过滤时，不需要的信息也决不丢弃：这也提升了过滤器将来能够成为其它程序有用输入的可能。丢弃的信息，在管线后面就再也不能使用了</p>
+</li>
+<li>
+<p>在过滤时，绝不增加无用数据：避免增加不必要的信息，避免以可能让管线下游程序难以解析的格式输出。</p>
+<ul>
+<li>任何这样的附加物都应该是可选、并由开关控制的。如果程序需要输出日期的话，良好的实践是增加一个开关以强制转换成 ISO8601 标准的 YYYY-MM-DD 和 hh:mm:ss 一或者，更好是将标准格式作为默认的选项使用。</li>
+</ul>
+</li>
+</ol>
+<h2 id="11_6_2_Cantrip_模式"><a class="header-anchor" href="#11_6_2_Cantrip_模式">#</a>11.6.2 Cantrip 模式</h2>
+<p>cantrip 接口设计模式是其中最简单的。没有输入，没有输出，只被调用一次，产生退出状态数值。一个 cantrip 程序的行为只能由启动条件来控制。没有任何程序会比这种方式更具备脚本能力。</p>
+<p>Unix 设计者学会了当 cantrip 模式足以应付需要时，绝不编写更具交互性的程序。</p>
+<p>简单的控制台清屏实用程序 clear ，可能是最纯正的 cantrip 模式;</p>
+<h2 id="11_6_3_源模式"><a class="header-anchor" href="#11_6_3_源模式">#</a>11.6.3 源模式</h2>
+<p>“源”是一种类似过滤器的程序，不需要输入;它的输出只能在启动条件中控制。可以作为例证的程序是 ls。</p>
+<h2 id="11_6_7_Roguelike_模式"><a class="header-anchor" href="#11_6_7_Roguelike_模式">#</a>11.6.7 Roguelike 模式</h2>
+<p>Roguelike 程序是设计来运行在系统控制台、X 终端模拟器或视频显示终端上的游戏，使用全屏幕、支持可视界面风格，但使用字符阵列显示，而非图形和鼠标界面。</p>
+<p>Vi 和 Emacs 即为遵循这种模式的程序。</p>
+<h1 id="11_9_沉默是金"><a class="header-anchor" href="#11_9_沉默是金">#</a>11.9 沉默是金</h1>
+<p>长时间的操作要提供进度条。这是个好传统一一帮助用户有效地分时利用他的大脑暗示在等待完成的过程中可以离开去阅读邮件或是干点儿别的。</p>
+<p>不要杂乱地让 GUI 界面弹出确认消息除非必要的警示，而且进一步，父窗口最小化时应隐藏这些信息，又如果焦点不在父窗口时，应避免这些信息。<strong>界面设计师的工作是方便用户，而不是在用户面前碍眼</strong>。</p>
+<p>通常，老是告诉用户他们已经知道的事情是非常糟糕的风格(“程序<foo>正在启动··.”，或是“程序<foo>正在退出”就是两个经典违例)。</p>
+<ul>
+<li>接口设计作为整体应该遵从最小立异原则，但是信息内容应该符合最大惊奇原则。</li>
+<li>这个原则对于确认提示有着更强的力量。不断询问的答案几乎都为“是”的请求确认会造成用户根本不假思索就点击“是”，这个习惯会带来非常不幸的结果。程序应该只在有足够理由怀疑答案可能是“不不不!”的时候请求确认。并非意外却要求确认是糟糕设计的显著标志。任何确认提示本质上也许就是接口实际上需要一个撤销命令的标志</li>
+</ul>
+<p>如果为了调试,需要喋喋不休的进展消息，添加默认情况下禁用的高详细度(verbosity)选项。在发布产品时，尽可能多地将需要显示的正常消息转移到启用高详细度选项开关下。</p>
+]]></content>
+      <tags>
+        <tag>编码规范</tag>
+        <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》 第三章 对比</title>
+    <url>/di_3_zhang_dui_bi%EF%BC%9Aunix_zhe_xue_tong_qi_ta_zhe_xue_de_bi_jiao/</url>
+    <content><![CDATA[<h1 id="3_1_操作系统的风格元素"><a class="header-anchor" href="#3_1_操作系统的风格元素">#</a>3.1 操作系统的风格元素</h1>
+<h2 id="3_1_1_什么是操作系统的统一性理念"><a class="header-anchor" href="#3_1_1_什么是操作系统的统一性理念">#</a>3.1.1 什么是操作系统的统一性理念</h2>
+<p>Unix 有几个统一性的理念或象征，并塑造了它的 API 及由此形成的开发风格。其中最重要的一点应当是“一切皆文件”模型及在此基础上建立的管道概念。</p>
+<p>彻头彻尾的反 Unix 系统，就是没有任何统一性理念，胡乱堆砌起的一些唬人特性而已。</p>
+<h2 id="3_1_2_多任务能力"><a class="header-anchor" href="#3_1_2_多任务能力">#</a>3.1.2 多任务能力</h2>
+<p>Unix 系统拥有抢先式多任务（preemptive multitasking）能力。在 Unix 中，时间片由调度程序来分配，这个调度程序定期中断或抢断正在运行的进程而把控制权交给下一个进程。几乎所有的现代操作系统都支持抢占式调度。</p>
+<p>彻头彻尾的反 Unix 系统，就是绝无多任务处理能力一一或者通过对进程管理增设诸多的规定、限制和特殊情况来削弱多任务能力的一个废物。</p>
+<h2 id="3_1_3_协作进程"><a class="header-anchor" href="#3_1_3_协作进程">#</a>3.1.3 协作进程</h2>
+<p>在 Unix 中，低价的进程生成和简便的 <code>进程间通讯（IPC,Inter-Process Communication）</code> 使众多小工具、管道和过滤器组成一个均衡系统成为可能。</p>
+<p>如果操作系统的进程生成代价昂贵，且/或进程控制非常困难、不灵活，后果通常是：</p>
+<ul>
+<li>编写怪物般巨大的单个程序成为更自然的编程方式。</li>
+<li>很多策略必须在这些庞大程序中表述。</li>
+<li>当进程间不得不进行通讯时，要么只能采用笨拙、低效、不安全的机制（比如临时文件），要么就得依赖太多彼此的实现细节，要么彼此需了解对方的太多实现细节。</li>
+<li>广泛使用多线程来完成某些任务，而这些任务 Unix 只需用互通的多进程就能处理。</li>
+<li>必须学习和使用异步 IO。</li>
+</ul>
+<p>一个操作系统，如果没有灵活的 IPC 和使用 IPC 的强大传统，程序间就得通过共享结构复杂的数据实现通讯。由于一旦有新的程序加入通讯圈，圈子里所有程序的通讯问题都必须重新解决，所以解决方案的复杂度与协作程序数量的平方成正比。更糟糕的是，其中任何一个程序的数据结构发生变化，都说不定会给其它程序带来什么隐蔽的 bug。</p>
+<p>彻头彻尾的反 Unix 系统，就是让进程的生成代价高昂，让进程的控制因难而死板，让 IPC 可有可无，对它不予支持或支持很少。</p>
+<h2 id="3_1_4_内部边界"><a class="header-anchor" href="#3_1_4_内部边界">#</a>3.1.4 内部边界</h2>
+<p>Unix 至少设立了三层内部边界来防范恶意用户或有缺陷的程序：</p>
+<ol>
+<li>第一层是内存管理：Unix 用硬件自身的 <code>内存管理单元(MMU)</code> 来保证各自的进程不会侵入到其它进程的内存地址空间。</li>
+<li>第二层是为多用户设置的真正权限组——普通用户（非 Root 用户）的进程未经允许，就不能更改或者读取其他用户的文件。</li>
+<li>第三层是把涉及关键安全性的功能限制在尽可能小的可信代码块上 。在 Unix 中，即使是 shell（系统命令解释器）也不是什么特权程序。</li>
+</ol>
+<h2 id="3_1_5_文件属性和记录结构"><a class="header-anchor" href="#3_1_5_文件属性和记录结构">#</a>3.1.5 文件属性和记录结构</h2>
+<p>Unix 文件既没有记录结构也没有文件属性。</p>
+<p>对文件属性的操作系统支持会诱导程序员使用不透明的文件格式，让他们依靠文件属性将文件格式对应的解读程序绑在一起。</p>
+<h2 id="3_1_6_二进制文件格式"><a class="header-anchor" href="#3_1_6_二进制文件格式">#</a>3.1.6 二进制文件格式</h2>
+<p>彻头彻尾的反 Unix 系统，让所有文件格式都采用不透明的二进制格式，后者要用重量级的工具才能读取和编辑。</p>
+<h2 id="3_1_7_首选用户界面风格"><a class="header-anchor" href="#3_1_7_首选用户界面风格">#</a>3.1.7 首选用户界面风格</h2>
+<p>如果操作系统的 CLI 功能很弱或根本不存在，其后果会是：</p>
+<ul>
+<li>程序设计不会考虑以未预料到的方式相互协作——因为无法这样设计。输出不能用作输入。</li>
+<li>远程系统管理更难于实现，更难以使用，更强调网络。</li>
+<li>即便简单的非交互程序也将招致 GUI 开销或复杂的脚本接口。</li>
+<li>服务器、守护程序和后台进程几乎无法写出，至少很难以优雅的方式写出。</li>
+</ul>
+<p>彻头彻尾的反 Unix 系统，就是没有 CLI，没有脚本编程能力或者，存在 CLI 不能驱动的重要功能。</p>
+<h2 id="3_1_8_目标受众"><a class="header-anchor" href="#3_1_8_目标受众">#</a>3.1.8 目标受众</h2>
+<p>“客户端”可以理解为：轻量，只支持单个用户，能够在小型机器上运行，随需开关机器，没有抢先式多任务处理，为低延迟作了优化，大量资源都用在花哨的用户界面上。</p>
+<p>“服务器”可以解释为：重量，能够连续运行，为吞吐量优化，完全抢占式多任务处理以处理多重会话。所有的操作系统最初都是服务器操作系统。</p>
+<p>客户端操作系统更关注用户的视觉体验，而不是 7*24 小时的连续正常运行。</p>
+<p>彻头彻尾的反 Unix 系统，就是一个自认为比你自己更懂你在干什么的操作系统，然后雪上加霜的是，它还做错了。</p>
+<h2 id="3_1_9_开发的门坎"><a class="header-anchor" href="#3_1_9_开发的门坎">#</a>3.1.9 开发的门坎</h2>
+<p>区分操作系统的另一个重要尺度就是纯用户转变为开发者的门坎高度。这里有两个重要的成本：一是开发工具的金钱成本，另一个是成为一个熟练开发者的时间成本。</p>
+<h1 id="3_2_操作系统的比较"><a class="header-anchor" href="#3_2_操作系统的比较">#</a>3.2 操作系统的比较</h1>
+<h2 id="3_2_2_MacOS"><a class="header-anchor" href="#3_2_2_MacOS">#</a>3.2.2 MacOS</h2>
+<p>MacOS 有一个不同于 Unix 的坚定统一性理念：Mac 界面方针（the Mac InterfaceGuidelines）。</p>
+<p>这些方针非常详细地说明了应用程序 GUI 的表现形式和行为模式。这些原则的一致性在很多重要方面影响了 Mac 用户的文化。</p>
+<p>这些方针的主旨是：东西永远呆在你摆的地方。文档、目录和其它东西在桌面上都有固定的、系统不会弄乱的位置，重启后桌面依然保持原样。</p>
+<h2 id="3_2_4_Windows_NT"><a class="header-anchor" href="#3_2_4_Windows_NT">#</a>3.2.4 Windows NT</h2>
+<p>Windows NT(New Technology) 是微软为高端个人用户和服务器设计的操作系统；Windows XP 是 5.1.</p>
+<p>NT 是逐步堆积而成的，缺乏对应于 Unix “一切皆文件” 或 MacOS 左面的统一性理念。</p>
+<p>Unix 的系统配置和用户配置数据分散存放在众多的 dotfiles (名字以“.”开头的文件) 和系统数据文件中，而 NT 则集中存放在注册表中。以下后果贯穿于设计中：</p>
+<ul>
+<li>注册表使得整个系统完全不具备正交性。应用程序的单点故障就会损毁注册表，经常使得整个操作系统无法使用、必须重装。</li>
+<li>注册表蠕变 (registry creep) 现象：随着注册表的膨胀，越来越大的存取开销拖慢了所有程序的运行。</li>
+</ul>
+<h2 id="3_2_8_Linux"><a class="header-anchor" href="#3_2_8_Linux">#</a>3.2.8 Linux</h2>
+<p>Linux 并不含任何来自原始 Unix 源码树的代码，但却是一个按照 Unix 标准设计、行为像 Unix 的操作系统。</p>
+<p>包容竞争者的目标加上贴近终端用户的动力，促使 Linux 开发者广泛吸收非 Unix 操作系统的设计理念，甚至到了使传统 Unix 显得十分孤立的地步。</p>
+]]></content>
+      <tags>
+        <tag>编码规范</tag>
+        <tag>系统设计</tag>
       </tags>
   </entry>
   <entry>
@@ -2337,82 +2532,11 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第二章 历史</title>
-    <url>/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji/</url>
-    <content><![CDATA[<h1 id="2_1_Unix_起源于历史，1969_1995"><a class="header-anchor" href="#2_1_Unix_起源于历史，1969_1995">#</a>2.1 Unix 起源于历史，1969-1995</h1>
-<p>小型实验原型系统的后继产品往往备受令人讨厌的“第二版效应”折磨。由于迫切希望把所有首次开发时遗漏的功能都添加进去，往往导致设计十分庞大、过于复杂。其实，还有一个因不常遇到而鲜为人知的“第三版效应”：有时候，在第二系统不堪自身重负而崩溃之后，有可能返璞归真，走上正道。</p>
-]]></content>
-      <tags>
-        <tag>编码规范</tag>
-        <tag>系统设计</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Unix 编程艺术》 第三章 对比</title>
-    <url>/di_3_zhang_dui_bi%EF%BC%9Aunix_zhe_xue_tong_qi_ta_zhe_xue_de_bi_jiao/</url>
-    <content><![CDATA[<h1 id="3_1_操作系统的风格元素"><a class="header-anchor" href="#3_1_操作系统的风格元素">#</a>3.1 操作系统的风格元素</h1>
-<h2 id="3_1_1_什么是操作系统的统一性理念"><a class="header-anchor" href="#3_1_1_什么是操作系统的统一性理念">#</a>3.1.1 什么是操作系统的统一性理念</h2>
-<p>Unix 有几个统一性的理念或象征，并塑造了它的 API 及由此形成的开发风格。其中最重要的一点应当是“一切皆文件”模型及在此基础上建立的管道概念。</p>
-<p>彻头彻尾的反 Unix 系统，就是没有任何统一性理念，胡乱堆砌起的一些唬人特性而已。</p>
-<h2 id="3_1_2_多任务能力"><a class="header-anchor" href="#3_1_2_多任务能力">#</a>3.1.2 多任务能力</h2>
-<p>Unix 系统拥有抢先式多任务（preemptive multitasking）能力。在 Unix 中，时间片由调度程序来分配，这个调度程序定期中断或抢断正在运行的进程而把控制权交给下一个进程。几乎所有的现代操作系统都支持抢占式调度。</p>
-<p>彻头彻尾的反 Unix 系统，就是绝无多任务处理能力一一或者通过对进程管理增设诸多的规定、限制和特殊情况来削弱多任务能力的一个废物。</p>
-<h2 id="3_1_3_协作进程"><a class="header-anchor" href="#3_1_3_协作进程">#</a>3.1.3 协作进程</h2>
-<p>在 Unix 中，低价的进程生成和简便的 <code>进程间通讯（IPC,Inter-Process Communication）</code> 使众多小工具、管道和过滤器组成一个均衡系统成为可能。</p>
-<p>如果操作系统的进程生成代价昂贵，且/或进程控制非常困难、不灵活，后果通常是：</p>
-<ul>
-<li>编写怪物般巨大的单个程序成为更自然的编程方式。</li>
-<li>很多策略必须在这些庞大程序中表述。</li>
-<li>当进程间不得不进行通讯时，要么只能采用笨拙、低效、不安全的机制（比如临时文件），要么就得依赖太多彼此的实现细节，要么彼此需了解对方的太多实现细节。</li>
-<li>广泛使用多线程来完成某些任务，而这些任务 Unix 只需用互通的多进程就能处理。</li>
-<li>必须学习和使用异步 IO。</li>
-</ul>
-<p>一个操作系统，如果没有灵活的 IPC 和使用 IPC 的强大传统，程序间就得通过共享结构复杂的数据实现通讯。由于一旦有新的程序加入通讯圈，圈子里所有程序的通讯问题都必须重新解决，所以解决方案的复杂度与协作程序数量的平方成正比。更糟糕的是，其中任何一个程序的数据结构发生变化，都说不定会给其它程序带来什么隐蔽的 bug。</p>
-<p>彻头彻尾的反 Unix 系统，就是让进程的生成代价高昂，让进程的控制因难而死板，让 IPC 可有可无，对它不予支持或支持很少。</p>
-<h2 id="3_1_4_内部边界"><a class="header-anchor" href="#3_1_4_内部边界">#</a>3.1.4 内部边界</h2>
-<p>Unix 至少设立了三层内部边界来防范恶意用户或有缺陷的程序：</p>
-<ol>
-<li>第一层是内存管理：Unix 用硬件自身的 <code>内存管理单元(MMU)</code> 来保证各自的进程不会侵入到其它进程的内存地址空间。</li>
-<li>第二层是为多用户设置的真正权限组——普通用户（非 Root 用户）的进程未经允许，就不能更改或者读取其他用户的文件。</li>
-<li>第三层是把涉及关键安全性的功能限制在尽可能小的可信代码块上 。在 Unix 中，即使是 shell（系统命令解释器）也不是什么特权程序。</li>
-</ol>
-<h2 id="3_1_5_文件属性和记录结构"><a class="header-anchor" href="#3_1_5_文件属性和记录结构">#</a>3.1.5 文件属性和记录结构</h2>
-<p>Unix 文件既没有记录结构也没有文件属性。</p>
-<p>对文件属性的操作系统支持会诱导程序员使用不透明的文件格式，让他们依靠文件属性将文件格式对应的解读程序绑在一起。</p>
-<h2 id="3_1_6_二进制文件格式"><a class="header-anchor" href="#3_1_6_二进制文件格式">#</a>3.1.6 二进制文件格式</h2>
-<p>彻头彻尾的反 Unix 系统，让所有文件格式都采用不透明的二进制格式，后者要用重量级的工具才能读取和编辑。</p>
-<h2 id="3_1_7_首选用户界面风格"><a class="header-anchor" href="#3_1_7_首选用户界面风格">#</a>3.1.7 首选用户界面风格</h2>
-<p>如果操作系统的 CLI 功能很弱或根本不存在，其后果会是：</p>
-<ul>
-<li>程序设计不会考虑以未预料到的方式相互协作——因为无法这样设计。输出不能用作输入。</li>
-<li>远程系统管理更难于实现，更难以使用，更强调网络。</li>
-<li>即便简单的非交互程序也将招致 GUI 开销或复杂的脚本接口。</li>
-<li>服务器、守护程序和后台进程几乎无法写出，至少很难以优雅的方式写出。</li>
-</ul>
-<p>彻头彻尾的反 Unix 系统，就是没有 CLI，没有脚本编程能力或者，存在 CLI 不能驱动的重要功能。</p>
-<h2 id="3_1_8_目标受众"><a class="header-anchor" href="#3_1_8_目标受众">#</a>3.1.8 目标受众</h2>
-<p>“客户端”可以理解为：轻量，只支持单个用户，能够在小型机器上运行，随需开关机器，没有抢先式多任务处理，为低延迟作了优化，大量资源都用在花哨的用户界面上。</p>
-<p>“服务器”可以解释为：重量，能够连续运行，为吞吐量优化，完全抢占式多任务处理以处理多重会话。所有的操作系统最初都是服务器操作系统。</p>
-<p>客户端操作系统更关注用户的视觉体验，而不是 7*24 小时的连续正常运行。</p>
-<p>彻头彻尾的反 Unix 系统，就是一个自认为比你自己更懂你在干什么的操作系统，然后雪上加霜的是，它还做错了。</p>
-<h2 id="3_1_9_开发的门坎"><a class="header-anchor" href="#3_1_9_开发的门坎">#</a>3.1.9 开发的门坎</h2>
-<p>区分操作系统的另一个重要尺度就是纯用户转变为开发者的门坎高度。这里有两个重要的成本：一是开发工具的金钱成本，另一个是成为一个熟练开发者的时间成本。</p>
-<h1 id="3_2_操作系统的比较"><a class="header-anchor" href="#3_2_操作系统的比较">#</a>3.2 操作系统的比较</h1>
-<h2 id="3_2_2_MacOS"><a class="header-anchor" href="#3_2_2_MacOS">#</a>3.2.2 MacOS</h2>
-<p>MacOS 有一个不同于 Unix 的坚定统一性理念：Mac 界面方针（the Mac InterfaceGuidelines）。</p>
-<p>这些方针非常详细地说明了应用程序 GUI 的表现形式和行为模式。这些原则的一致性在很多重要方面影响了 Mac 用户的文化。</p>
-<p>这些方针的主旨是：东西永远呆在你摆的地方。文档、目录和其它东西在桌面上都有固定的、系统不会弄乱的位置，重启后桌面依然保持原样。</p>
-<h2 id="3_2_4_Windows_NT"><a class="header-anchor" href="#3_2_4_Windows_NT">#</a>3.2.4 Windows NT</h2>
-<p>Windows NT(New Technology) 是微软为高端个人用户和服务器设计的操作系统；Windows XP 是 5.1.</p>
-<p>NT 是逐步堆积而成的，缺乏对应于 Unix “一切皆文件” 或 MacOS 左面的统一性理念。</p>
-<p>Unix 的系统配置和用户配置数据分散存放在众多的 dotfiles (名字以“.”开头的文件) 和系统数据文件中，而 NT 则集中存放在注册表中。以下后果贯穿于设计中：</p>
-<ul>
-<li>注册表使得整个系统完全不具备正交性。应用程序的单点故障就会损毁注册表，经常使得整个操作系统无法使用、必须重装。</li>
-<li>注册表蠕变 (registry creep) 现象：随着注册表的膨胀，越来越大的存取开销拖慢了所有程序的运行。</li>
-</ul>
-<h2 id="3_2_8_Linux"><a class="header-anchor" href="#3_2_8_Linux">#</a>3.2.8 Linux</h2>
-<p>Linux 并不含任何来自原始 Unix 源码树的代码，但却是一个按照 Unix 标准设计、行为像 Unix 的操作系统。</p>
-<p>包容竞争者的目标加上贴近终端用户的动力，促使 Linux 开发者广泛吸收非 Unix 操作系统的设计理念，甚至到了使传统 Unix 显得十分孤立的地步。</p>
+    <title>《Unix 编程艺术》 第五章 文本化</title>
+    <url>/di_5_zhang_wen_ben_hua%EF%BC%9Ahao_xie_yi_chan_sheng_hao_shi_jian/</url>
+    <content><![CDATA[<p>序列化（保存）操作有时也称为 <code>列集(marshaling)</code>，其反向操作（载入）称为 <code>散集(unmarshaling)</code>。</p>
+<h1 id="文本化的重要性"><a class="header-anchor" href="#文本化的重要性">#</a>文本化的重要性</h1>
+<p>文本流是非常有用的通用格式，因为人无需专门工具就可以很容易地读写和编辑文本流，这些格式是透明的（或可以设计成透明的）。</p>
 ]]></content>
       <tags>
         <tag>编码规范</tag>
@@ -2519,6 +2643,27 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
+    <title>《Unix 编程艺术》 第七章 多道程序设计</title>
+    <url>/di_7_zhang_duo_dao_cheng_xu_she_ji%EF%BC%9Afen_li_jin_cheng_wei_du_li_de_gong_neng/</url>
+    <content><![CDATA[<p>多道程序设计是设计中的荒蛮之地，几乎没有好的实践方针。许多程序员尽管精于判断如何将代码分解成子过程，然而最终还是编写出单个庞然大物般的单进程程序，而这些程序往往失败在自身的内部复杂度之上。</p>
+<p>Unix 设计风格都运用“做单件事并做好” 的方法，强调用定义良好的进程间通信或共享文件来联通小型进程。</p>
+<p>尽管将程序划分成协作进程带来了全局复杂度降低的好处，但代价是我们必须更多地关注在进程间传递信息和命令的协议设计(在所有种类的软件系统中，接口都是 bug聚集之地)。<br>
+- 协议必须 <strong>看得出</strong> 很有表现力，即人们必须能够在头脑中尝试对通信程序的行为建模并验证其正确性。</p>
+<h1 id="7_1_从性能调整中分离复杂度控制"><a class="header-anchor" href="#7_1_从性能调整中分离复杂度控制">#</a>7.1 从性能调整中分离复杂度控制</h1>
+<p>在开发出可以把全局复杂度降至最低程度的干净体系之前，关注性能问题便是过早优化-万恶之源。</p>
+<p>使用线程是为了调整性能，线程不是降低而是提高了全局复杂度。因此，除非万不得已，尽量避免使用线程。</p>
+<ul>
+<li>基于线程的程序不仅产生普通的竞争问题，而且产生了新一类 bug：时许依赖，要重现这些问题都极其困难，遑论修复。</li>
+</ul>
+<h1 id="7_2_Unix_IPC_方法的分类"><a class="header-anchor" href="#7_2_Unix_IPC_方法的分类">#</a>7.2 Unix IPC 方法的分类</h1>
+<p>在使用更晚出现、更复杂的激发前，应当通过实证——用原型和基准检测结果——所有更早出现、更简单的技法都不管用。</p>
+]]></content>
+      <tags>
+        <tag>编码规范</tag>
+        <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Unix 编程艺术》 第六章 透明性</title>
     <url>/di_6_zhang_tou_ming_xing%EF%BC%9Alai_dian_er_guang/</url>
     <content><![CDATA[<div class="note info simple"><p>美在计算科学中的地位，要比在其它任何技术中的地位都重要，因为软件是太复杂了。美是抵御复杂的终极武器。 - David Gelernter</p>
@@ -2564,39 +2709,6 @@ $16.20$介绍了软件无线电系统。</p>
       <tags>
         <tag>设计模式</tag>
         <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Unix 编程艺术》 第五章 文本化</title>
-    <url>/di_5_zhang_wen_ben_hua%EF%BC%9Ahao_xie_yi_chan_sheng_hao_shi_jian/</url>
-    <content><![CDATA[<p>序列化（保存）操作有时也称为 <code>列集(marshaling)</code>，其反向操作（载入）称为 <code>散集(unmarshaling)</code>。</p>
-<h1 id="文本化的重要性"><a class="header-anchor" href="#文本化的重要性">#</a>文本化的重要性</h1>
-<p>文本流是非常有用的通用格式，因为人无需专门工具就可以很容易地读写和编辑文本流，这些格式是透明的（或可以设计成透明的）。</p>
-]]></content>
-      <tags>
-        <tag>编码规范</tag>
-        <tag>系统设计</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Unix 编程艺术》 第七章 多道程序设计</title>
-    <url>/di_7_zhang_duo_dao_cheng_xu_she_ji%EF%BC%9Afen_li_jin_cheng_wei_du_li_de_gong_neng/</url>
-    <content><![CDATA[<p>多道程序设计是设计中的荒蛮之地，几乎没有好的实践方针。许多程序员尽管精于判断如何将代码分解成子过程，然而最终还是编写出单个庞然大物般的单进程程序，而这些程序往往失败在自身的内部复杂度之上。</p>
-<p>Unix 设计风格都运用“做单件事并做好” 的方法，强调用定义良好的进程间通信或共享文件来联通小型进程。</p>
-<p>尽管将程序划分成协作进程带来了全局复杂度降低的好处，但代价是我们必须更多地关注在进程间传递信息和命令的协议设计(在所有种类的软件系统中，接口都是 bug聚集之地)。<br>
-- 协议必须 <strong>看得出</strong> 很有表现力，即人们必须能够在头脑中尝试对通信程序的行为建模并验证其正确性。</p>
-<h1 id="7_1_从性能调整中分离复杂度控制"><a class="header-anchor" href="#7_1_从性能调整中分离复杂度控制">#</a>7.1 从性能调整中分离复杂度控制</h1>
-<p>在开发出可以把全局复杂度降至最低程度的干净体系之前，关注性能问题便是过早优化-万恶之源。</p>
-<p>使用线程是为了调整性能，线程不是降低而是提高了全局复杂度。因此，除非万不得已，尽量避免使用线程。</p>
-<ul>
-<li>基于线程的程序不仅产生普通的竞争问题，而且产生了新一类 bug：时许依赖，要重现这些问题都极其困难，遑论修复。</li>
-</ul>
-<h1 id="7_2_Unix_IPC_方法的分类"><a class="header-anchor" href="#7_2_Unix_IPC_方法的分类">#</a>7.2 Unix IPC 方法的分类</h1>
-<p>在使用更晚出现、更复杂的激发前，应当通过实证——用原型和基准检测结果——所有更早出现、更简单的技法都不管用。</p>
-]]></content>
-      <tags>
-        <tag>编码规范</tag>
-        <tag>系统设计</tag>
       </tags>
   </entry>
   <entry>
@@ -2725,6 +2837,25 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 - 设计原则总结</title>
+    <url>/head_first_design_pattern_design_principles/</url>
+    <content><![CDATA[<ol>
+<li>将变化的部分封装起来（Encapsulate what varies)</li>
+<li>组合优于继承（Favor composition over inheritance）</li>
+<li>面向接口编程而非实现（Program to interfaces, not implementations.）</li>
+<li>减少需要交互的类之间的耦合（Strive for loosely coupled designs between objects that interact）</li>
+<li>对拓展开放，对修改关闭（Classes should be open for extension but closed for modification.）</li>
+<li>依赖于抽象而非具体的类（ Depend on abstraction. Do not depend on concrete classes）</li>
+<li>暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）</li>
+<li>高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don’t call us ,we’ll call you）</li>
+<li>一个类应该有且只有一个被改变的理由（A class should have only one reason to change）</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 笔记汇总</title>
     <url>/head_first_design_patterns/</url>
     <content><![CDATA[<p><a href="/ch_01_the_strategy_pattern">Ch 01 the Strategy Pattern</a></p>
@@ -2740,25 +2871,6 @@ $16.20$介绍了软件无线电系统。</p>
 <p><a href="/ch_11_the_proxy_pattern">Ch 11 the Proxy Pattern</a></p>
 <p><a href="/ch_12_the_compound_patterns">Ch 12 the Compound Patterns</a></p>
 <p><a href="/head_first_design_pattern_design_principles">Head First Design Pattern Design Principles</a></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 - 设计原则总结</title>
-    <url>/head_first_design_pattern_design_principles/</url>
-    <content><![CDATA[<ol>
-<li>将变化的部分封装起来（Encapsulate what varies)</li>
-<li>组合优于继承（Favor composition over inheritance）</li>
-<li>面向接口编程而非实现（Program to interfaces, not implementations.）</li>
-<li>减少需要交互的类之间的耦合（Strive for loosely coupled designs between objects that interact）</li>
-<li>对拓展开放，对修改关闭（Classes should be open for extension but closed for modification.）</li>
-<li>依赖于抽象而非具体的类（ Depend on abstraction. Do not depend on concrete classes）</li>
-<li>暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）</li>
-<li>高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don’t call us ,we’ll call you）</li>
-<li>一个类应该有且只有一个被改变的理由（A class should have only one reason to change）</li>
-</ol>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -2833,6 +2945,50 @@ $16.20$介绍了软件无线电系统。</p>
 ]]></content>
       <tags>
         <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《System, Math and Explosions》 摘抄</title>
+    <url>/system,_math_and_explosions/</url>
+    <content><![CDATA[<p>系统从根本上就是复杂地，因为它不仅仅包含事物的集合，还包含事物的连接关系。而连接关系增长的非常块。</p>
+<p>如下所示， 3 个点的集合只有 3 个连接，9 个点的集合有 36 个连接，最右侧的集合有 27 个点，链接已经增长到了 351 个，这种现象被称为<code>组合爆炸（Combinatorial Explosion）</code>：<br>
+<img src="/system,_math_and_explosions/image-20230902151352.png" alt="系统连接的复杂度"></p>
+<div class="note info simple"><p>直觉上，增长速度是指数级的，但是实际上是多项书的，但这不是这篇文章的重点。</p>
+</div>
+<h1 id="组合爆炸就是复杂性爆炸"><a class="header-anchor" href="#组合爆炸就是复杂性爆炸">#</a>组合爆炸就是复杂性爆炸</h1>
+<p>当系统内组件的数量线性增长时，组件间的连接关系会呈指数增长，也因此系统的复杂度增长的会非常快。</p>
+<h1 id="堆积如山的东西是不可预测的"><a class="header-anchor" href="#堆积如山的东西是不可预测的">#</a>堆积如山的东西是不可预测的</h1>
+<p>系统之所以是系统，是因为它的组件能相互协同工作。随着系统的发展，理解一切是如何工作的，或者系统是否还仍然有效，变得越来越困难。这会让人感到难以理解、脆弱和不可预测。到那时，系统就正式变成了一坨 *</p>
+<p>不可预测性尤其可怕。因为不可预测的结果可能是好的、坏的或可怕的。前一分钟可以是这三个的组合，下一分钟以上都不是。这就是混乱，混乱必然是不好的。</p>
+<h1 id="避免复杂性的方法也会造成复杂性"><a class="header-anchor" href="#避免复杂性的方法也会造成复杂性">#</a>避免复杂性的方法也会造成复杂性</h1>
+<p>人们已经磨练了很多工具来避免复杂性。但坏消息是治疗方法可能比疾病本身更糟糕。这并不是说这些工具本质上是不好的，而是它们具有经常被忽视的局限性。以下是一些局限性：</p>
+<h2 id="拆分混淆了复杂性"><a class="header-anchor" href="#拆分混淆了复杂性">#</a>拆分混淆了复杂性</h2>
+<p>尝试简化系统时，划分是首选方法。它是一个很好的工具，可以将一个大型的整体系统转变为一个由更小、更易于管理的子系统组成的系统。如下：</p>
+<p><img src="/system,_math_and_explosions/image-20230902153548.png" alt="拆分为小组件"></p>
+<p>可以将系统的划分，与公司的组织结构划分类比。组织结构是将庞大的系统（人员），分解为更小、更容易理解的子系统（部门）的典型定义。</p>
+<p>组织结构图一个问题是它们会在人与人之间制造人为障碍，使他们更难一起工作。这些分区实际上并不存在于人们的日常工作中，但无论如何都是为了简化的目标而创建的。团队变得孤立，过度专注于自己的目标，而失去了对更大方向的可见性。</p>
+<p>在一个系统中也是如此，如果要保证所有模块的连接与拆分前一致，将变得非常困难。因此在实际的拆分中，很可能会造就一个脱节的系统，其中的各个元素感觉不像是在一起工作的。</p>
+<h2 id="减少连接降低复杂度"><a class="header-anchor" href="#减少连接降低复杂度">#</a>减少连接降低复杂度</h2>
+<p>仅仅因为系统中的两个部分可以连接，并不意味着它们应该连接。明确减少各个部分之间的连接是降低复杂性的另一种明确方法。如下是一个仍然是 27 个点，但每个点只和自己同侧的点相连的图，可以看到连接数大大减少了：<br>
+<img src="/system,_math_and_explosions/image-20230902154148.png" alt="降低连接数"></p>
+<p>但整个解决方案不利的一面是，需要额外的认知负担来理解哪些部分相互连接以及如何连接，这个认知负担也会随着每个组件的每组选项的独特程度而增加。</p>
+<p>另一个缺陷是，规则很可能会变得越来越复杂，一旦一个系统开始有 “做_<strong>_，除非__</strong>，除非____” 的规则出现，就要假设已经有人无法连接这个规则了。</p>
+<h2 id="抽象创造了复杂性的层次"><a class="header-anchor" href="#抽象创造了复杂性的层次">#</a>抽象创造了复杂性的层次</h2>
+<p>另一个降低复杂性的尝试是，仅让系统的一个子集可以被使用：一个简单的公共系统向所有人开放，它由一个隐藏着的一个更大、更复杂的私有系统驱动，如下所示：</p>
+<p><img src="/system,_math_and_explosions/image-20230902154624.png" alt="抽象"></p>
+<p>这样的解决方案会减少认知负担，尤其是对于初学者而言。用户可以从强大的抽象系统中受益，但陷入麻烦的选择要少得多。</p>
+<p>当然也有缺点。首先，公共和私有系统意味着需要处理更多的系统。其次，抽象可能会带来长期混乱的风险，因为人们开始发现他们没有获得所有的选择。这就引出了这样的问题：“还有哪些其他选项对我来说不可用？”、“为什么我不能使用它们？”并且，“为什么系统要按照与我不同的规则进行游戏？”</p>
+<h1 id="降低复杂度的唯一真正办法"><a class="header-anchor" href="#降低复杂度的唯一真正办法">#</a>降低复杂度的唯一真正办法</h1>
+<p>如果使用得当，上概述的工具可能会非常有效。但数学就是数学。线性地移除系统中的部分，连接会减少得更快。治疗复杂性的症状通常只是重新分配它。简而言之，避免复杂性陷阱的最佳方法就是完全避免复杂性。</p>
+<h1 id="令人窒息的秩序_或_灾难性的混乱"><a class="header-anchor" href="#令人窒息的秩序_或_灾难性的混乱">#</a>令人窒息的秩序 或 灾难性的混乱</h1>
+<p>很少有人承认混乱有吸引性，但为何它还是那么普遍呢？一个答案是：因为接受混乱很舒服。</p>
+<p>避免混乱就是寻求冲突。 “是” 会助长复杂性爆炸，“不” 则让阻碍复杂度增长。 但 “不“ 会带来争议，这是痛苦的、排斥的、令人窒息的。“不” 不会让你成为聚会的焦点，而且通常需要令人难以置信的纪律才能维持。</p>
+<p>尽管 “不” 可能会让人不舒服，但这最终是防止爆炸变成爆炸的最简单方法。</p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://pjonori.blog/posts/systems-math-explosions/">Systems, math and explosions (in no particular order) (pjonori.blog)</a></p>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
       </tags>
   </entry>
   <entry>
@@ -2937,50 +3093,6 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
-    <title>《System, Math and Explosions》 摘抄</title>
-    <url>/system,_math_and_explosions/</url>
-    <content><![CDATA[<p>系统从根本上就是复杂地，因为它不仅仅包含事物的集合，还包含事物的连接关系。而连接关系增长的非常块。</p>
-<p>如下所示， 3 个点的集合只有 3 个连接，9 个点的集合有 36 个连接，最右侧的集合有 27 个点，链接已经增长到了 351 个，这种现象被称为<code>组合爆炸（Combinatorial Explosion）</code>：<br>
-<img src="/system,_math_and_explosions/image-20230902151352.png" alt="系统连接的复杂度"></p>
-<div class="note info simple"><p>直觉上，增长速度是指数级的，但是实际上是多项书的，但这不是这篇文章的重点。</p>
-</div>
-<h1 id="组合爆炸就是复杂性爆炸"><a class="header-anchor" href="#组合爆炸就是复杂性爆炸">#</a>组合爆炸就是复杂性爆炸</h1>
-<p>当系统内组件的数量线性增长时，组件间的连接关系会呈指数增长，也因此系统的复杂度增长的会非常快。</p>
-<h1 id="堆积如山的东西是不可预测的"><a class="header-anchor" href="#堆积如山的东西是不可预测的">#</a>堆积如山的东西是不可预测的</h1>
-<p>系统之所以是系统，是因为它的组件能相互协同工作。随着系统的发展，理解一切是如何工作的，或者系统是否还仍然有效，变得越来越困难。这会让人感到难以理解、脆弱和不可预测。到那时，系统就正式变成了一坨 *</p>
-<p>不可预测性尤其可怕。因为不可预测的结果可能是好的、坏的或可怕的。前一分钟可以是这三个的组合，下一分钟以上都不是。这就是混乱，混乱必然是不好的。</p>
-<h1 id="避免复杂性的方法也会造成复杂性"><a class="header-anchor" href="#避免复杂性的方法也会造成复杂性">#</a>避免复杂性的方法也会造成复杂性</h1>
-<p>人们已经磨练了很多工具来避免复杂性。但坏消息是治疗方法可能比疾病本身更糟糕。这并不是说这些工具本质上是不好的，而是它们具有经常被忽视的局限性。以下是一些局限性：</p>
-<h2 id="拆分混淆了复杂性"><a class="header-anchor" href="#拆分混淆了复杂性">#</a>拆分混淆了复杂性</h2>
-<p>尝试简化系统时，划分是首选方法。它是一个很好的工具，可以将一个大型的整体系统转变为一个由更小、更易于管理的子系统组成的系统。如下：</p>
-<p><img src="/system,_math_and_explosions/image-20230902153548.png" alt="拆分为小组件"></p>
-<p>可以将系统的划分，与公司的组织结构划分类比。组织结构是将庞大的系统（人员），分解为更小、更容易理解的子系统（部门）的典型定义。</p>
-<p>组织结构图一个问题是它们会在人与人之间制造人为障碍，使他们更难一起工作。这些分区实际上并不存在于人们的日常工作中，但无论如何都是为了简化的目标而创建的。团队变得孤立，过度专注于自己的目标，而失去了对更大方向的可见性。</p>
-<p>在一个系统中也是如此，如果要保证所有模块的连接与拆分前一致，将变得非常困难。因此在实际的拆分中，很可能会造就一个脱节的系统，其中的各个元素感觉不像是在一起工作的。</p>
-<h2 id="减少连接降低复杂度"><a class="header-anchor" href="#减少连接降低复杂度">#</a>减少连接降低复杂度</h2>
-<p>仅仅因为系统中的两个部分可以连接，并不意味着它们应该连接。明确减少各个部分之间的连接是降低复杂性的另一种明确方法。如下是一个仍然是 27 个点，但每个点只和自己同侧的点相连的图，可以看到连接数大大减少了：<br>
-<img src="/system,_math_and_explosions/image-20230902154148.png" alt="降低连接数"></p>
-<p>但整个解决方案不利的一面是，需要额外的认知负担来理解哪些部分相互连接以及如何连接，这个认知负担也会随着每个组件的每组选项的独特程度而增加。</p>
-<p>另一个缺陷是，规则很可能会变得越来越复杂，一旦一个系统开始有 “做_<strong>_，除非__</strong>，除非____” 的规则出现，就要假设已经有人无法连接这个规则了。</p>
-<h2 id="抽象创造了复杂性的层次"><a class="header-anchor" href="#抽象创造了复杂性的层次">#</a>抽象创造了复杂性的层次</h2>
-<p>另一个降低复杂性的尝试是，仅让系统的一个子集可以被使用：一个简单的公共系统向所有人开放，它由一个隐藏着的一个更大、更复杂的私有系统驱动，如下所示：</p>
-<p><img src="/system,_math_and_explosions/image-20230902154624.png" alt="抽象"></p>
-<p>这样的解决方案会减少认知负担，尤其是对于初学者而言。用户可以从强大的抽象系统中受益，但陷入麻烦的选择要少得多。</p>
-<p>当然也有缺点。首先，公共和私有系统意味着需要处理更多的系统。其次，抽象可能会带来长期混乱的风险，因为人们开始发现他们没有获得所有的选择。这就引出了这样的问题：“还有哪些其他选项对我来说不可用？”、“为什么我不能使用它们？”并且，“为什么系统要按照与我不同的规则进行游戏？”</p>
-<h1 id="降低复杂度的唯一真正办法"><a class="header-anchor" href="#降低复杂度的唯一真正办法">#</a>降低复杂度的唯一真正办法</h1>
-<p>如果使用得当，上概述的工具可能会非常有效。但数学就是数学。线性地移除系统中的部分，连接会减少得更快。治疗复杂性的症状通常只是重新分配它。简而言之，避免复杂性陷阱的最佳方法就是完全避免复杂性。</p>
-<h1 id="令人窒息的秩序_或_灾难性的混乱"><a class="header-anchor" href="#令人窒息的秩序_或_灾难性的混乱">#</a>令人窒息的秩序 或 灾难性的混乱</h1>
-<p>很少有人承认混乱有吸引性，但为何它还是那么普遍呢？一个答案是：因为接受混乱很舒服。</p>
-<p>避免混乱就是寻求冲突。 “是” 会助长复杂性爆炸，“不” 则让阻碍复杂度增长。 但 “不“ 会带来争议，这是痛苦的、排斥的、令人窒息的。“不” 不会让你成为聚会的焦点，而且通常需要令人难以置信的纪律才能维持。</p>
-<p>尽管 “不” 可能会让人不舒服，但这最终是防止爆炸变成爆炸的最简单方法。</p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="https://pjonori.blog/posts/systems-math-explosions/">Systems, math and explosions (in no particular order) (pjonori.blog)</a></p>
-]]></content>
-      <tags>
-        <tag>系统设计</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《贪婪的多巴胺》 摘抄</title>
     <url>/tan_lan_de_duo_ba_an/</url>
     <content><![CDATA[<p>《贪婪的多巴胺》 笔记摘抄。该书主要从生物学角度介绍了多巴胺对人行为及心理的影响。主要的包括：</p>
@@ -3073,39 +3185,6 @@ $16.20$介绍了软件无线电系统。</p>
         <tag>心理</tag>
         <tag>自然科学</tag>
         <tag>科普</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Unix 编程艺术》笔记汇总</title>
-    <url>/unix_bian_cheng_yi_shu/</url>
-    <content><![CDATA[<h1 id="Part_1_Context"><a class="header-anchor" href="#Part_1_Context">#</a>Part 1 Context</h1>
-<p><a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a><br>
-<a href="/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji">第 2 章 历史——双流记</a><br>
-<a href="/di_3_zhang_dui_bi%EF%BC%9Aunix_zhe_xue_tong_qi_ta_zhe_xue_de_bi_jiao">第 3 章 对比：Unix 哲学同其他哲学的比较</a></p>
-<h1 id="Part_2_Design"><a class="header-anchor" href="#Part_2_Design">#</a>Part 2 Design</h1>
-<p><a href="/di_4_zhang_mo_kuai_xing%EF%BC%9Abao_chi_qing_xi%EF%BC%8Cbao_chi_jian_jie">第 4 章 模块性：保持清晰，保持简洁</a><br>
-<a href="/di_5_zhang_wen_ben_hua%EF%BC%9Ahao_xie_yi_chan_sheng_hao_shi_jian">第 5 章 文本化：好协议产生好实践</a><br>
-<a href="/di_6_zhang_tou_ming_xing%EF%BC%9Alai_dian_er_guang">第 6 章 透明性：来点儿光</a><br>
-<a href="/di_7_zhang_duo_dao_cheng_xu_she_ji%EF%BC%9Afen_li_jin_cheng_wei_du_li_de_gong_neng">第 7 章 多道程序设计：分离进程为独立的功能</a>A<br>
-<a href="/di_8_zhang_wei_xing_yu_yan%EF%BC%9Axun_zhao_ge_chang_de_le_fu">第 8 章 微型语言：寻找歌唱的乐符</a><br>
-<a href="/di_9_zhang_sheng_cheng%EF%BC%9Ati_sheng_gui_ge_shuo_ming_de_ceng_ci">第 9 章 生成：提升规格说明的层次</a><br>
-<a href="/di_10_zhang_pei_zhi%EF%BC%9Amai_chu_zheng_que_de_di_yi_bu">第 10 章 配置：迈出正确的第一步</a><br>
-第 11 章 接口：Unix 环境下的用户接口设计模式<br>
-第 12 章 优化<br>
-第 13 章 复杂度：尽可能简单，但别简单过了头</p>
-<h1 id="Part_3_Implementation"><a class="header-anchor" href="#Part_3_Implementation">#</a>Part 3 Implementation</h1>
-<p>第 14 章 语言：C 还是非 C<br>
-第 15 章 工具：开发的战术<br>
-第 16 章 重用：论不要重新发明轮子</p>
-<h1 id="Part_3_Community"><a class="header-anchor" href="#Part_3_Community">#</a>Part 3 Community</h1>
-<p>第 17 章 可移植性：软件可移植性与遵循标准<br>
-第 18 章 文档：向网络世界阐释代码<br>
-第 19 章 开放源码：在 Unix 新社区中编程<br>
-第 20 章 未来：危机与机遇</p>
-]]></content>
-      <tags>
-        <tag>编码规范</tag>
-        <tag>系统设计</tag>
       </tags>
   </entry>
   <entry>
@@ -3440,6 +3519,39 @@ When you are famous it is hard to work on small problems. This is what did Shan
 ]]></content>
       <tags>
         <tag>摘抄</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》笔记汇总</title>
+    <url>/unix_bian_cheng_yi_shu/</url>
+    <content><![CDATA[<h1 id="Part_1_Context"><a class="header-anchor" href="#Part_1_Context">#</a>Part 1 Context</h1>
+<p><a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a><br>
+<a href="/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji">第 2 章 历史——双流记</a><br>
+<a href="/di_3_zhang_dui_bi%EF%BC%9Aunix_zhe_xue_tong_qi_ta_zhe_xue_de_bi_jiao">第 3 章 对比：Unix 哲学同其他哲学的比较</a></p>
+<h1 id="Part_2_Design"><a class="header-anchor" href="#Part_2_Design">#</a>Part 2 Design</h1>
+<p><a href="/di_4_zhang_mo_kuai_xing%EF%BC%9Abao_chi_qing_xi%EF%BC%8Cbao_chi_jian_jie">第 4 章 模块性：保持清晰，保持简洁</a><br>
+<a href="/di_5_zhang_wen_ben_hua%EF%BC%9Ahao_xie_yi_chan_sheng_hao_shi_jian">第 5 章 文本化：好协议产生好实践</a><br>
+<a href="/di_6_zhang_tou_ming_xing%EF%BC%9Alai_dian_er_guang">第 6 章 透明性：来点儿光</a><br>
+<a href="/di_7_zhang_duo_dao_cheng_xu_she_ji%EF%BC%9Afen_li_jin_cheng_wei_du_li_de_gong_neng">第 7 章 多道程序设计：分离进程为独立的功能</a>A<br>
+<a href="/di_8_zhang_wei_xing_yu_yan%EF%BC%9Axun_zhao_ge_chang_de_le_fu">第 8 章 微型语言：寻找歌唱的乐符</a><br>
+<a href="/di_9_zhang_sheng_cheng%EF%BC%9Ati_sheng_gui_ge_shuo_ming_de_ceng_ci">第 9 章 生成：提升规格说明的层次</a><br>
+<a href="/di_10_zhang_pei_zhi%EF%BC%9Amai_chu_zheng_que_de_di_yi_bu">第 10 章 配置：迈出正确的第一步</a><br>
+<a href="/di_11_zhang_jie_kou%EF%BC%9Aunix_huan_jing_xia_de_yong_hu_jie_kou_she_ji_mo_shi">第 11 章 接口：Unix 环境下的用户接口设计模式</a><br>
+<a href="/di_12_zhang_you_hua">第 12 章 优化</a><br>
+第 13 章 复杂度：尽可能简单，但别简单过了头</p>
+<h1 id="Part_3_Implementation"><a class="header-anchor" href="#Part_3_Implementation">#</a>Part 3 Implementation</h1>
+<p>第 14 章 语言：C 还是非 C<br>
+第 15 章 工具：开发的战术<br>
+第 16 章 重用：论不要重新发明轮子</p>
+<h1 id="Part_3_Community"><a class="header-anchor" href="#Part_3_Community">#</a>Part 3 Community</h1>
+<p>第 17 章 可移植性：软件可移植性与遵循标准<br>
+第 18 章 文档：向网络世界阐释代码<br>
+第 19 章 开放源码：在 Unix 新社区中编程<br>
+第 20 章 未来：危机与机遇</p>
+]]></content>
+      <tags>
+        <tag>编码规范</tag>
+        <tag>系统设计</tag>
       </tags>
   </entry>
   <entry>
