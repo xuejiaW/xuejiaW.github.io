@@ -36,8 +36,8 @@ date: 2023-08-27 22:20
 # Part 3 Implementation
 
 [第 14 章 语言：C 还是非 C](/di_14_zhang_yu_yan：c_hai_shi_fei_c)
-第 15 章 工具：开发的战术
-第 16 章 重用：论不要重新发明轮子
+[第 15 章 工具：开发的战术](/di_15_zhang_gong_ju：kai_fa_de_zhan_shu)
+[第 16 章 重用：论不要重新发明轮子](/di_16_zhang_zhong_yong：lun_bu_yao_zhong_xin_fa_ming_lun_zi)
 
 # Part 3 Community
 
