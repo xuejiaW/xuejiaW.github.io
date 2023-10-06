@@ -31,11 +31,11 @@ date: 2023-08-27 22:20
 [第 10 章 配置：迈出正确的第一步](/di_10_zhang_pei_zhi：mai_chu_zheng_que_de_di_yi_bu)
 [第 11 章 接口：Unix 环境下的用户接口设计模式](/di_11_zhang_jie_kou：unix_huan_jing_xia_de_yong_hu_jie_kou_she_ji_mo_shi)
 [第 12 章 优化](/di_12_zhang_you_hua)
-第 13 章 复杂度：尽可能简单，但别简单过了头
+[第 13 章 复杂度：尽可能简单，但别简单过了头](/di_13_zhang_fu_za_du：jin_ke_neng_jian_dan，dan_bie_jian_dan_guo_le_tou)
 
 # Part 3 Implementation
 
-第 14 章 语言：C 还是非 C
+[第 14 章 语言：C 还是非 C](/di_14_zhang_yu_yan：c_hai_shi_fei_c)
 第 15 章 工具：开发的战术
 第 16 章 重用：论不要重新发明轮子
 
