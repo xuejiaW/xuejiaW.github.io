@@ -2,7 +2,7 @@
 tags:
     - 系统设计
 created: 2023-08-27
-updated: 2023-10-06
+updated: 2023-10-07
 alias:
 - The Tale of J.Random Newbie
 - 

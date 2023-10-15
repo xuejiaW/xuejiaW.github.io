@@ -1,11 +1,11 @@
 ---
 created: 2022-01-20
-updated: 2023-05-31
+updated: 2023-10-07
 tags:
     - GPU
 Author: Simon
 Source: http://simonschreibt.de/gat/renderhell/](http://simonschreibt.de/gat/renderhell/
-Cover: https://d2y5h3osumboay.cloudfront.net/x780jv3ng7kltrzg0202jt5boush1mh4jhDf
+Cover: https://i.ytimg.com/vi/Nfkd8-kgjxE/maxresdefault.jpg
 title: 《Render Hell》 笔记汇总
 published: true
 date: 2023-05-30 22:43 

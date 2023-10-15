@@ -3,7 +3,7 @@ tags:
     - 设计模式
     - 编码规范
 created: 2023-08-26
-updated: 2023-10-06
+updated: 2023-10-07
 published: true
 title: 《Unix 编程艺术》 第十四章 语言
 date: 2023-10-06 15:09 
