@@ -2,7 +2,7 @@
 tags:
     - 管理
 created: 2023-09-04
-updated: 2023-09-09
+updated: 2023-10-26
 date: 2023-09-06 22:13 
 published: true
 title: 《Linus on Kernel Management Style》 翻译

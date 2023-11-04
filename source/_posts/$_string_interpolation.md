@@ -3,7 +3,7 @@ tags:
     - C#
     - String
 created: 2021-12-09
-updated: 2023-06-15
+updated: 2023-10-26
 date: 2023-06-13 21:55 
 published: true
 title: C# $ 字符串插值
@@ -16,6 +16,7 @@ description: 在C#中，$ 字符被用于字符串插值，这是一种简化字
 
 {% note info %}
 实际根据 `$` 使用场景的不同，编译器会选择用不同的方式实现字符串插值，`String.Format` 只是其中一种，具体见 [实现细节](/$_string_interpolation/#实现细节)
+
 {% endnote %}
 
 如下分别为使用 `$` 和 `String.Format`的示例：
@@ -103,10 +104,16 @@ On 12/10/2021, value is 1.123
 {% note info %}
 `:` 后的控制字符，相当于在调用 `ToString` 时作为形参控制表达式的输出。
 
+
+
 上述表达式等同于：
-~~~csharp
+
+```csharp
+
 Debug.Log("On " + date.ToString("d") + ", value is " + value.ToString("f3"));
-~~~
+
+```
+
 {% endnote %}
 
 ## 控制内插表达式的对齐方式
@@ -179,6 +186,7 @@ C:\Users\wxj\Documents
 
 {% note info %}
 C# 8.0 后，`$` 与 `@` 的先后顺序不会造成任何影响。在早期版本中，必须先写 `$` 再写 `@`。
+
 {% endnote %}
 
 在内插表达式中，如果需要输入 `{`，则按如下方式处理：

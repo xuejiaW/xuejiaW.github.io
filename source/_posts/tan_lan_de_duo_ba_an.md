@@ -10,7 +10,7 @@ Cover: https://wfqqreader-1252317822.image.myqcloud.com/cover/9/41626009/t7_4162
 ISBN: 9787521731583
 Category: 科学技术-自然科学
 created: 2023-02-12
-updated: 2023-10-13
+updated: 2023-10-25
 Completecreated: 2023-02
 title: 《贪婪的多巴胺》 摘抄
 published: true
