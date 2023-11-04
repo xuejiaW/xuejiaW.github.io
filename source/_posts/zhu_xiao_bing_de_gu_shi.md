@@ -2,10 +2,9 @@
 tags:
     - 系统设计
 created: 2023-08-27
-updated: 2023-10-07
+updated: 2023-10-17
 alias:
 - The Tale of J.Random Newbie
-- 
 title: 猪小兵的故事
 published: true
 date: 2023-10-06 15:29

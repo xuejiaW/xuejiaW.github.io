@@ -3,7 +3,7 @@ tags:
     - 设计模式
     - 编码规范
 created: 2022-06-20
-updated: 2023-09-03
+updated: 2023-10-26
 date: 2023-09-03 10:05 
 title: 《Unix 编程艺术》 第六章 透明性
 published: true
