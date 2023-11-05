@@ -5,7 +5,7 @@ tags:
 alias:
 - winget
 created: 2023-10-30
-updated: 2023-11-04
+updated: 2023-11-05
 published: true
 description: Windows Package Manager （winget） 是微软推出的基于命令行的包管理器，类似于 Chocolatey。在 winget 杠推出的时候，其功能非常的不健全，甚至于都没有 uninstall 支持，但在最新的 Win 11 中已经默认带上了 winget，且基本可以满足日常应用的安装。
 title: Windows Package Manager（winget）使用指南
@@ -16,7 +16,7 @@ date: 2023-11-04 19:26
 
 Windows Package Manager （winget） 是微软推出的基于命令行的包管理器，类似于 Chocolatey。
 
-{% note primary %}
+{% note info %}
 Package Manager 所管理的 Package，实际指应用（application / program）
 
 {% endnote %}
@@ -38,7 +38,7 @@ Add-AppxPackage Microsoft.UI.Xaml.2.7.x64.appx
 Add-AppxPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
 ```
 
-{% note primary %}
+{% note info %}
 在 Windows Sandbox 中不存在 Windows Store，因此只能使用命令行进行安装
 
 {% endnote %}
@@ -80,8 +80,8 @@ winget install Microsoft.AzureStorageExplorer; winget install Microsoft.VisualSt
 
 可以使用 `-h` 或 `--slient` 保证以静默方式安装。
 
-> [!Caution] 
-> 
+> [!Caution]
+>
 > 如果使用了静默安装，但安装要求管理员权限且当前命令行又不具有，则可能出现错误。
 > 因此建议在使用静默安装时，使用管理员权限打开命令行
 
@@ -112,6 +112,55 @@ winget upgrade <Package ID> -v <version> // 升级到特定的版本
 
 winget upgrade --all // 升级所有应用
 ```
+
+## Export
+
+可以使用 `export` 命令将本机安装的 Package 导出成 `json` 文件，加上 `--include-versions` 表示导出时需要包括版本。：
+
+```pwsh
+winget export -o <OutputPath> --include-versions
+```
+
+输出的 Json 如下：
+
+```json
+{
+    "$schema": "https://aka.ms/winget-packages.schema.2.0.json",
+    "CreationDate": "2023-11-05T11:37:19.847-00:00",
+    "Sources": [
+        {
+            "Packages": [
+                {
+                    "PackageIdentifier": "Notion.Notion",
+                    "Version": "2.2.4"
+                },
+                {
+                    "PackageIdentifier": "Anki.Anki",
+                    "Version": "2.1.66"
+                }
+            // ...
+            ],
+            "SourceDetails": {
+                "Argument": "https://cdn.winget.microsoft.com/cache",
+                "Identifier": "Microsoft.Winget.Source_8wekyb3d8bbwe",
+                "Name": "winget",
+                "Type": "Microsoft.PreIndexed.Package"
+            }
+        }
+    ],
+    "WinGetVersion": "1.6.2771"
+}
+```
+
+## Import
+
+可以使用 `import` 命令将通过 [Export](/windows_package_manager/#Export) 导出的 Package 进行安装。
+
+```pwsh
+winget import -i <JsonPath> --ignore-versions --ignore-unavailable
+```
+
+在 [Export](/windows_package_manager/#Export) 导出的文件中，很可能会出现版本已经不匹配或者其他无法安装的情况，因此建议加上 `--ignore-unavailable` 跳过无法安装的部分，避免阻塞整个流程。
 
 # winget Repository
 
