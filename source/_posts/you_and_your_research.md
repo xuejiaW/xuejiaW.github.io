@@ -1,8 +1,9 @@
 ---
 tags:
 - 摘抄
+- How-To
 created: 2023-06-18
-updated: 2023-10-26
+updated: 2023-11-06
 published: true
 title: 《You and Your Research》 摘抄
 date: 2023-06-27 21:28 

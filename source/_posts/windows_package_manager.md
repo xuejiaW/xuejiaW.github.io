@@ -5,7 +5,7 @@ tags:
 alias:
 - winget
 created: 2023-10-30
-updated: 2023-11-05
+updated: 2023-11-06
 published: true
 description: Windows Package Manager （winget） 是微软推出的基于命令行的包管理器，类似于 Chocolatey。在 winget 杠推出的时候，其功能非常的不健全，甚至于都没有 uninstall 支持，但在最新的 Win 11 中已经默认带上了 winget，且基本可以满足日常应用的安装。
 title: Windows Package Manager（winget）使用指南
@@ -57,9 +57,10 @@ winget search powershell
 示例和结果如下：
 ![winget search powershell](/windows_package_manager/image-20231102213901.png)
 
-> [!Note]
->
-> 开源项目 [winget-run](https://github.com/winget-run/wingetdotrun) （非微软维护），提供了在 [winget.run](https://winget.run/) 搜索 winget 支持的 Package 的功能：
+{% note info %}
+开源项目 [winget-run](https://github.com/winget-run/wingetdotrun) （非微软维护），提供了在网页中搜索 winget 支持的 Package 的功能：
+
+{% endnote %}
 
 ## Install
 
