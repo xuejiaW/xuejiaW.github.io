@@ -2,13 +2,13 @@
 tags:
     - Dotnet
 created: 2023-10-21
-updated: 2023-11-05
+updated: 2023-11-06
 alias:
     - .net Tools
 published: true
 title: .Net Tools 指南
 date: 2023-11-05 22:25 
-descriptions: .Net Tools 介绍，包含一个最简例子演示如何将编写的命令行程序生成为可全局运行的工具
+description: .Net Tools 介绍，包含一个最简例子演示如何将编写的命令行程序生成为可全局运行的工具
 ---
 
 # 创建一个 .Net Tool

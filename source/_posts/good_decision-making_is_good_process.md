@@ -1,9 +1,9 @@
 ---
 tags:
-    - 管理
     - 方法论
+    - How-To
 created: 2023-08-29
-updated: 2023-10-26
+updated: 2023-11-06
 published: true
 title: 《Good decision-making is good process》 摘抄
 date: 2023-09-02 11:15 

@@ -2,7 +2,7 @@
 tags:
     - 系统设计
 created: 2023-09-02
-updated: 2023-11-03
+updated: 2023-11-06
 published: true
 title: 《System, Math and Explosions》 摘抄
 date: 2023-09-02 21:33 
