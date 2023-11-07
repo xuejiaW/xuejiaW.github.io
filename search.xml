@@ -116,46 +116,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Render Hell》 第一部分 概览</title>
-    <url>/book_1_overview/</url>
-    <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
-</div>
-<h1 id="Copy_the_Data"><a class="header-anchor" href="#Copy_the_Data">#</a>Copy the Data</h1>
-<div class="note info simple"><p>之所以需要在不同的硬件间拷贝数据，是因为从不同硬件中读取数据的速度差异很大。因此对于当前需要频繁访问的数据，通常会选择将其拷贝到更为高速的内存部分中。</p>
-</div>
-<div class="note warning simple"><p>GPU 和 显卡 并不是相等的关系 GPU 全称为 Graphics Processing Unit，它指示显卡中的核心计算芯片。整个显卡中还包括显存（VRam），散热器等配件。</p>
-</div>
-<p>对于所有与绘制相关的资源，如贴图，模型，一开始都是存储在硬盘（HDD）上的 。在整个绘制过程中，它们会先被读取到内存（RAM）中，再被读取到显卡上的显存（VRAM）中。之所以要进行这么一个数据从 HDD 拷贝到 VRAM 中的操作，是因为显卡读取 VRAM 中的内容速度更快。整个过程如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_8-52-50_am.gif" alt="数据从内存拷贝到显存"></p>
-<p>又因为整个过程中数据是被 拷贝 的，因此当数据进入 VRAM 后，在 RAM 中的数据可以被正常销毁，不会影响到后续的绘制。如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_8-55-43_am.gif" alt="内存中数据可安全销毁"></p>
-<p>但是 GPU 访问 VRAM 速度仍然不够快，VRAM 中需要使用到的数据会进一步的被拷贝到 GPU 中的一小块内存上（ on-chip caches），这一块内存被称为 <code>L2 Cache</code> 。过程如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_9-18-41_am.gif" alt="L2 Cache"></p>
-<p>在 GPU 更靠近核心（Core）的地方，还有一片更小的内存，称为 <code>L1 Cache</code> 。因为更靠近核心，所以 <code>L1 Cache</code> 中数据的访问速度相对于 <code>L2 Cache</code> 也更快。 <code>L2 Cache</code> 中的数据在需要被操作时，也会先拷贝到 <code>L1 Cache</code> 中。</p>
-<p>在 <code>L1 Cache</code> 中的数据还会被进一步拷贝到 GPU 中被称为 <code>Register</code> 的内存区域，GPU Cores 会从该区域中读取数据，计算并将运算后结果放回到 <code>Register</code> 中：<br>
-<img src="/book_1_overview/gif_9-13-2021_9-25-58_am.gif" alt="Register"></p>
-<h1 id="Set_the_Render_State"><a class="header-anchor" href="#Set_the_Render_State">#</a>Set the Render State</h1>
-<p>对于除了 Mesh 数据外的数据，如顶点/像素着色器，纹理，材质，光照信息，是否半透明等信息都称为 <code>Render State</code> 。</p>
-<p>Mesh 数据会使用被设置的 <code>Render State</code> 进行渲染，图形 API 又是一个类似状态机的实现，即设置了 Render State 后，后续的 Mesh 都会使用该 State 进行渲染，直到有了新 State 被设置。示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_8-47-57_am.gif" alt="State"></p>
-<h1 id="Draw_Call"><a class="header-anchor" href="#Draw_Call">#</a>Draw Call</h1>
-<p><code>DrawCall</code> 是一个由 CPU 端发出，由 GPU 端接受的绘制 <strong>一个 Mesh</strong> 的指令。该指令只包含指向需要绘制的 Mesh 的指针，而如材质这样的信息是通过 Render State 进行传递，并不会在 <code>DrawCall</code> 中。示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_8-55-41_am.gif" alt="Draw Call"></p>
-<h1 id="Pipeline"><a class="header-anchor" href="#Pipeline">#</a>Pipeline</h1>
-<p>当 <code>DrawCall</code> 发送后，GPU 会获取当前的 Render State，和设置的顶点信息（Mesh），并通过渲染管线（Pipeline）将其一步步转换到最终屏幕上所见像素。在管线中，对于顶点和像素的工作会被划分到 GPU 的多个核心中平行处理。整个管线工作的简单示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_9-02-13_am.gif" alt="Pipeline"></p>
-<h1 id="Command_Buffer"><a class="header-anchor" href="#Command_Buffer">#</a>Command Buffer</h1>
-<p>CPU 并不是直接将数据传递给 GPU，而是通过 <code>Command Buffer</code> ，这样 CPU 和 GPU 就可以各自独立的工作。如果是直接传递的话，当 GPU 在忙碌时，CPU 无法将数据送给 GPU，就会造成 CPU 的堵塞。</p>
-<p>Command Buffer 是一个 <code>FIFO 存储器</code> ，即 GPU 只会取 CPU 最早 Push 进 Command Buffer 中的数据。 Command Buffer 的示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_9-12-25_am.gif" alt="Command Buffer"></p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell-book1/">Render Hell – Book I | Simon schreibt.</a></p>
-]]></content>
-      <tags>
-        <tag>GPU</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《5% 的改变》 摘抄</title>
     <url>/bai_fen_zhi_5_de_gai_bian/</url>
     <content><![CDATA[<h1 id="引言"><a class="header-anchor" href="#引言">#</a>引言</h1>
@@ -286,33 +246,66 @@
       </tags>
   </entry>
   <entry>
-    <title>《Render Hell》 第四部分 解决方法</title>
-    <url>/book_4_solutions/</url>
-    <content><![CDATA[<h1 id="Sorting"><a class="header-anchor" href="#Sorting">#</a>Sorting</h1>
-<p>对于多个 Meshes，多个 Materials 的情况，可以通过排序将同一种 Material 的 Mesh 放在一起减少 Render State 的切换，如下所示：<br>
-<img src="/book_4_solutions/optimisation_sorting_01.gif" alt="重新排序以减少 State 切换"></p>
-<h1 id="Batching"><a class="header-anchor" href="#Batching">#</a>Batching</h1>
-<p>在排序完，仍然存在的问题是多个 Meshes 会造成多个 Commands 进而引起过多开销。因此应当将多个 Meshes 结合在一起，通过一次 Draw Call 进行渲染。在调用 API 前将多个 Meshes 合并在一起的过程称为 <code>Batch</code> 。</p>
-<p><img src="/book_4_solutions/optimisation_batching_02.gif" alt="Batching"></p>
-<div class="note info simple"><p>在 RAM 中将多个 Mesh 结合在一起也是需要开销的（CPU 时间），因此通常选择将静态的 Mesh，如房子，石头等Batch 在一起。 而如果是一系列运动的子弹，因为它们的位置每帧都会移动，所以相当于每帧都需要重新 <code>Batch</code>，这会造成巨大的开销。</p>
+    <title>《Render Hell》 第一部分 概览</title>
+    <url>/book_1_overview/</url>
+    <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
 </div>
-<p>Batch 还会造成一个额外的问题。在未进行 Batch 时，如果一个 Mesh 在 Frustum 外，则它会被直接 Cull 掉。但如果将多个 Meshes Batch 成一个大 Mesh，则即使只有其中的一小部分处在 Frustum 中，整个 Mesh 仍然会被认为需要被绘制。</p>
-<p>因此相对于 <code>Batching</code>，更好的解决方法是 <code>Instancing</code></p>
-<h1 id="Instancing"><a class="header-anchor" href="#Instancing">#</a>Instancing</h1>
-<p><code>Instancing</code> 是提交一次 Mesh，但会告知 GPU 绘制多次，并在 RAM 中指定每次绘制时需要用的状态。因此 <code>Instancing</code> 适合同一个 Mesh 要多次绘制的情况，如草，子弹。示意图如下所示：<br>
-<img src="/book_4_solutions/20200129181033200.gif" alt="Instancing"></p>
-<h1 id="Multi_Material_Shader"><a class="header-anchor" href="#Multi_Material_Shader">#</a>Multi-Material Shader</h1>
-<p>为了解决 Book3 中提到的 <a href="/book_3_problems/#Meshes_and_Multi-Materials">Meshes and Multi-Materials</a> 导致多 Draw Call 的问题，一个解决思路是将多个材质需要用到的数据合并在一个 Shader 中，相当于将多个 Material 合并成了一个 Material。</p>
-<p>如原来每个材质需要一个 Diffuse Texture，一个 Normal Texture，可以使用一个包含两个 Diffuse Texture， 两个 Normal Texture 的材质来取代原来的两个材质，并在 Shader 中通过 Blending 的方式达成之前的效果。</p>
-<div class="note warning simple"><p>这种实现方式虽然减少了 DrawCall 的数量，但会造成 Blending 的大量额外开销，因此最终性能可能反而下降。</p>
+<h1 id="Copy_the_Data"><a class="header-anchor" href="#Copy_the_Data">#</a>Copy the Data</h1>
+<div class="note info simple"><p>之所以需要在不同的硬件间拷贝数据，是因为从不同硬件中读取数据的速度差异很大。因此对于当前需要频繁访问的数据，通常会选择将其拷贝到更为高速的内存部分中。</p>
 </div>
-<h1 id="Skinned_Meshes"><a class="header-anchor" href="#Skinned_Meshes">#</a>Skinned Meshes</h1>
-<p>如之前的描述，如果需要通过 Batch 来解决多个子弹占用多个 Draw Call 的问题，则会因为子弹需要每帧移动而造成每帧重新 Batch，这会造成巨大的开销。</p>
-<p>有一个解决思路是将所有这些子弹结合在一起作为 Skinned Mesh，其中每个子弹作为一个 Bone，在后续的帧中只需要更新这些 Bone 的位置，而不需要重新进行合并。</p>
-<div class="note warning simple"><p>当出现了子弹增加或减少时，则需要重新合并 Mesh</p>
+<div class="note warning simple"><p>GPU 和 显卡 并不是相等的关系 GPU 全称为 Graphics Processing Unit，它指示显卡中的核心计算芯片。整个显卡中还包括显存（VRam），散热器等配件。</p>
 </div>
+<p>对于所有与绘制相关的资源，如贴图，模型，一开始都是存储在硬盘（HDD）上的 。在整个绘制过程中，它们会先被读取到内存（RAM）中，再被读取到显卡上的显存（VRAM）中。之所以要进行这么一个数据从 HDD 拷贝到 VRAM 中的操作，是因为显卡读取 VRAM 中的内容速度更快。整个过程如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_8-52-50_am.gif" alt="数据从内存拷贝到显存"></p>
+<p>又因为整个过程中数据是被 拷贝 的，因此当数据进入 VRAM 后，在 RAM 中的数据可以被正常销毁，不会影响到后续的绘制。如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_8-55-43_am.gif" alt="内存中数据可安全销毁"></p>
+<p>但是 GPU 访问 VRAM 速度仍然不够快，VRAM 中需要使用到的数据会进一步的被拷贝到 GPU 中的一小块内存上（ on-chip caches），这一块内存被称为 <code>L2 Cache</code> 。过程如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_9-18-41_am.gif" alt="L2 Cache"></p>
+<p>在 GPU 更靠近核心（Core）的地方，还有一片更小的内存，称为 <code>L1 Cache</code> 。因为更靠近核心，所以 <code>L1 Cache</code> 中数据的访问速度相对于 <code>L2 Cache</code> 也更快。 <code>L2 Cache</code> 中的数据在需要被操作时，也会先拷贝到 <code>L1 Cache</code> 中。</p>
+<p>在 <code>L1 Cache</code> 中的数据还会被进一步拷贝到 GPU 中被称为 <code>Register</code> 的内存区域，GPU Cores 会从该区域中读取数据，计算并将运算后结果放回到 <code>Register</code> 中：<br>
+<img src="/book_1_overview/gif_9-13-2021_9-25-58_am.gif" alt="Register"></p>
+<h1 id="Set_the_Render_State"><a class="header-anchor" href="#Set_the_Render_State">#</a>Set the Render State</h1>
+<p>对于除了 Mesh 数据外的数据，如顶点/像素着色器，纹理，材质，光照信息，是否半透明等信息都称为 <code>Render State</code> 。</p>
+<p>Mesh 数据会使用被设置的 <code>Render State</code> 进行渲染，图形 API 又是一个类似状态机的实现，即设置了 Render State 后，后续的 Mesh 都会使用该 State 进行渲染，直到有了新 State 被设置。示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_8-47-57_am.gif" alt="State"></p>
+<h1 id="Draw_Call"><a class="header-anchor" href="#Draw_Call">#</a>Draw Call</h1>
+<p><code>DrawCall</code> 是一个由 CPU 端发出，由 GPU 端接受的绘制 <strong>一个 Mesh</strong> 的指令。该指令只包含指向需要绘制的 Mesh 的指针，而如材质这样的信息是通过 Render State 进行传递，并不会在 <code>DrawCall</code> 中。示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_8-55-41_am.gif" alt="Draw Call"></p>
+<h1 id="Pipeline"><a class="header-anchor" href="#Pipeline">#</a>Pipeline</h1>
+<p>当 <code>DrawCall</code> 发送后，GPU 会获取当前的 Render State，和设置的顶点信息（Mesh），并通过渲染管线（Pipeline）将其一步步转换到最终屏幕上所见像素。在管线中，对于顶点和像素的工作会被划分到 GPU 的多个核心中平行处理。整个管线工作的简单示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_9-02-13_am.gif" alt="Pipeline"></p>
+<h1 id="Command_Buffer"><a class="header-anchor" href="#Command_Buffer">#</a>Command Buffer</h1>
+<p>CPU 并不是直接将数据传递给 GPU，而是通过 <code>Command Buffer</code> ，这样 CPU 和 GPU 就可以各自独立的工作。如果是直接传递的话，当 GPU 在忙碌时，CPU 无法将数据送给 GPU，就会造成 CPU 的堵塞。</p>
+<p>Command Buffer 是一个 <code>FIFO 存储器</code> ，即 GPU 只会取 CPU 最早 Push 进 Command Buffer 中的数据。 Command Buffer 的示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_9-12-25_am.gif" alt="Command Buffer"></p>
 <h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell-book4/">Render Hell – Book IV | Simon schreibt.</a></p>
+<p><a href="http://simonschreibt.de/gat/renderhell-book1/">Render Hell – Book I | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Render Hell》 第三部分 常见问题</title>
+    <url>/book_3_problems/</url>
+    <content><![CDATA[<h1 id="Many_Draw_Calls_Many_Commands"><a class="header-anchor" href="#Many_Draw_Calls_Many_Commands">#</a>Many Draw Calls / Many Commands</h1>
+<p>对于一个 API 而言，它不仅仅是将命令发送给 GPU，它还会有额外的如驱动翻译等的开销，因此应当尽可能的使用更少的命令。</p>
+<div class="note info simple"><p>对于新的图形 API，如 DirectX12， Vulkan 等，命令的开销会相对较少，但仍然应当尽可能的减少命令的数量。</p>
+</div>
+<p>如果有一系列很小的 Mesh，相较于每个 Mesh 都使用一个 Drawcall，更理想的做法是将这些 Meshes 组合成一个更大的 Mesh，并通过一个 Drawcall 传送。</p>
+<p>因为对于 GPU 而言，绘制一个小 Mesh 的时间是非常快的，而 CPU 将数据发送给 GPU 的时间是相对较长的。</p>
+<p>如果是每一个 Mesh 一个 Draw Call 的处理方式，往往瓶颈会出现在 CPU 侧。</p>
+<h1 id="Many_Meshes_and_Materials"><a class="header-anchor" href="#Many_Meshes_and_Materials">#</a>Many Meshes and Materials</h1>
+<p>如果要渲染许多 Mesh 并使用不同的 Materials，除了需要用许多的命令外，还会额外带来 <code>Flush Pipeline</code> 的问题。</p>
+<p>如果多个 Meshes 是用同一种渲染状态，则在一个 Mesh 完成后，另一个 Mesh 可以被很快的装填。而如果更改了材质状态，则管线中的一部分数据需要被刷新，才能进行下一个 Mesh 的绘制，这会造成额外的开销。</p>
+<h1 id="Meshes_and_Multi_Materials"><a class="header-anchor" href="#Meshes_and_Multi_Materials">#</a>Meshes and Multi-Materials</h1>
+<p>如果一个 Mesh 被赋予了多个材质，则该 Mesh 会被切分成多份再被送入 Command Buffer 中，这无疑也会造成多个 Draw Call 的产生。如下示意图所示，球的左半部分和右半部分各需要一个 Draw Call：<br>
+<img src="/book_3_problems/copy_data_from_hdd_to_ram_vram_01_multimaterial.gif" alt="Multi-Materials"></p>
+<h1 id="Thin_Triangles"><a class="header-anchor" href="#Thin_Triangles">#</a>Thin Triangles</h1>
+<p>如在 Book 2 的 <a href="/book_2_pipeline/#Rasterizing">Rasterizing</a> 中所属，光栅化后的单位是 <code>pre-pixles</code> ，Warp 中的四个线程会被分给一个 <code>pre-pixels</code> 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：<br>
+<img src="/book_3_problems/pipeline_rasterizing03_.gif" alt="Thin Triangles 造成的性能浪费"></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book3/">Render Hell – Book III | Simon schreibt.</a></p>
 ]]></content>
       <tags>
         <tag>GPU</tag>
@@ -447,48 +440,33 @@
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 01 策略模式</title>
-    <url>/ch_01_the_strategy_pattern/</url>
-    <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
-<p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
-<p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="算法接口及实现类"><a class="header-anchor" href="#算法接口及实现类">#</a>算法接口及实现类</h2>
-<figure class="highlight cs"><figcaption><span>飞行方法接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>飞行方法实现</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyNoWay</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Can not fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithRocket</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with rocket&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithWings</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with wings&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="环境类"><a class="header-anchor" href="#环境类">#</a>环境类</h2>
-<figure class="highlight cs"><figcaption><span>鸭子基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehavior flyBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PerformFly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span>(<span class="params">IFlyBehavior fb</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior = fb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>鸭子派生类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BlackDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlackDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyWithWings());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a black duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RubberDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RubberDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a rubber duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">RubberDuck rubberDuck = <span class="keyword">new</span> RubberDuck();</span><br><span class="line">rubberDuck.disPlay();</span><br><span class="line">rubberDuck.PerformFly();</span><br><span class="line"></span><br><span class="line">BlackDuck blackDuck = <span class="keyword">new</span> BlackDuck();</span><br><span class="line">blackDuck.disPlay();</span><br><span class="line">blackDuck.PerformFly();</span><br><span class="line">blackDuck.setFlyBehavior(<span class="keyword">new</span> FlyWithRocket());</span><br><span class="line">blackDuck.PerformFly();</span><br></pre></td></tr></table></figure>
-<p>运行结果</p>
-<p><img src="/ch_01_the_strategy_pattern/2019-01-15-00-12-45.png" alt="策略模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Render Hell》 第三部分 常见问题</title>
-    <url>/book_3_problems/</url>
-    <content><![CDATA[<h1 id="Many_Draw_Calls_Many_Commands"><a class="header-anchor" href="#Many_Draw_Calls_Many_Commands">#</a>Many Draw Calls / Many Commands</h1>
-<p>对于一个 API 而言，它不仅仅是将命令发送给 GPU，它还会有额外的如驱动翻译等的开销，因此应当尽可能的使用更少的命令。</p>
-<div class="note info simple"><p>对于新的图形 API，如 DirectX12， Vulkan 等，命令的开销会相对较少，但仍然应当尽可能的减少命令的数量。</p>
+    <title>《Render Hell》 第四部分 解决方法</title>
+    <url>/book_4_solutions/</url>
+    <content><![CDATA[<h1 id="Sorting"><a class="header-anchor" href="#Sorting">#</a>Sorting</h1>
+<p>对于多个 Meshes，多个 Materials 的情况，可以通过排序将同一种 Material 的 Mesh 放在一起减少 Render State 的切换，如下所示：<br>
+<img src="/book_4_solutions/optimisation_sorting_01.gif" alt="重新排序以减少 State 切换"></p>
+<h1 id="Batching"><a class="header-anchor" href="#Batching">#</a>Batching</h1>
+<p>在排序完，仍然存在的问题是多个 Meshes 会造成多个 Commands 进而引起过多开销。因此应当将多个 Meshes 结合在一起，通过一次 Draw Call 进行渲染。在调用 API 前将多个 Meshes 合并在一起的过程称为 <code>Batch</code> 。</p>
+<p><img src="/book_4_solutions/optimisation_batching_02.gif" alt="Batching"></p>
+<div class="note info simple"><p>在 RAM 中将多个 Mesh 结合在一起也是需要开销的（CPU 时间），因此通常选择将静态的 Mesh，如房子，石头等Batch 在一起。 而如果是一系列运动的子弹，因为它们的位置每帧都会移动，所以相当于每帧都需要重新 <code>Batch</code>，这会造成巨大的开销。</p>
 </div>
-<p>如果有一系列很小的 Mesh，相较于每个 Mesh 都使用一个 Drawcall，更理想的做法是将这些 Meshes 组合成一个更大的 Mesh，并通过一个 Drawcall 传送。</p>
-<p>因为对于 GPU 而言，绘制一个小 Mesh 的时间是非常快的，而 CPU 将数据发送给 GPU 的时间是相对较长的。</p>
-<p>如果是每一个 Mesh 一个 Draw Call 的处理方式，往往瓶颈会出现在 CPU 侧。</p>
-<h1 id="Many_Meshes_and_Materials"><a class="header-anchor" href="#Many_Meshes_and_Materials">#</a>Many Meshes and Materials</h1>
-<p>如果要渲染许多 Mesh 并使用不同的 Materials，除了需要用许多的命令外，还会额外带来 <code>Flush Pipeline</code> 的问题。</p>
-<p>如果多个 Meshes 是用同一种渲染状态，则在一个 Mesh 完成后，另一个 Mesh 可以被很快的装填。而如果更改了材质状态，则管线中的一部分数据需要被刷新，才能进行下一个 Mesh 的绘制，这会造成额外的开销。</p>
-<h1 id="Meshes_and_Multi_Materials"><a class="header-anchor" href="#Meshes_and_Multi_Materials">#</a>Meshes and Multi-Materials</h1>
-<p>如果一个 Mesh 被赋予了多个材质，则该 Mesh 会被切分成多份再被送入 Command Buffer 中，这无疑也会造成多个 Draw Call 的产生。如下示意图所示，球的左半部分和右半部分各需要一个 Draw Call：<br>
-<img src="/book_3_problems/copy_data_from_hdd_to_ram_vram_01_multimaterial.gif" alt="Multi-Materials"></p>
-<h1 id="Thin_Triangles"><a class="header-anchor" href="#Thin_Triangles">#</a>Thin Triangles</h1>
-<p>如在 Book 2 的 <a href="/book_2_pipeline/#Rasterizing">Rasterizing</a> 中所属，光栅化后的单位是 <code>pre-pixles</code> ，Warp 中的四个线程会被分给一个 <code>pre-pixels</code> 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：<br>
-<img src="/book_3_problems/pipeline_rasterizing03_.gif" alt="Thin Triangles 造成的性能浪费"></p>
+<p>Batch 还会造成一个额外的问题。在未进行 Batch 时，如果一个 Mesh 在 Frustum 外，则它会被直接 Cull 掉。但如果将多个 Meshes Batch 成一个大 Mesh，则即使只有其中的一小部分处在 Frustum 中，整个 Mesh 仍然会被认为需要被绘制。</p>
+<p>因此相对于 <code>Batching</code>，更好的解决方法是 <code>Instancing</code></p>
+<h1 id="Instancing"><a class="header-anchor" href="#Instancing">#</a>Instancing</h1>
+<p><code>Instancing</code> 是提交一次 Mesh，但会告知 GPU 绘制多次，并在 RAM 中指定每次绘制时需要用的状态。因此 <code>Instancing</code> 适合同一个 Mesh 要多次绘制的情况，如草，子弹。示意图如下所示：<br>
+<img src="/book_4_solutions/20200129181033200.gif" alt="Instancing"></p>
+<h1 id="Multi_Material_Shader"><a class="header-anchor" href="#Multi_Material_Shader">#</a>Multi-Material Shader</h1>
+<p>为了解决 Book3 中提到的 <a href="/book_3_problems/#Meshes_and_Multi-Materials">Meshes and Multi-Materials</a> 导致多 Draw Call 的问题，一个解决思路是将多个材质需要用到的数据合并在一个 Shader 中，相当于将多个 Material 合并成了一个 Material。</p>
+<p>如原来每个材质需要一个 Diffuse Texture，一个 Normal Texture，可以使用一个包含两个 Diffuse Texture， 两个 Normal Texture 的材质来取代原来的两个材质，并在 Shader 中通过 Blending 的方式达成之前的效果。</p>
+<div class="note warning simple"><p>这种实现方式虽然减少了 DrawCall 的数量，但会造成 Blending 的大量额外开销，因此最终性能可能反而下降。</p>
+</div>
+<h1 id="Skinned_Meshes"><a class="header-anchor" href="#Skinned_Meshes">#</a>Skinned Meshes</h1>
+<p>如之前的描述，如果需要通过 Batch 来解决多个子弹占用多个 Draw Call 的问题，则会因为子弹需要每帧移动而造成每帧重新 Batch，这会造成巨大的开销。</p>
+<p>有一个解决思路是将所有这些子弹结合在一起作为 Skinned Mesh，其中每个子弹作为一个 Bone，在后续的帧中只需要更新这些 Bone 的位置，而不需要重新进行合并。</p>
+<div class="note warning simple"><p>当出现了子弹增加或减少时，则需要重新合并 Mesh</p>
+</div>
 <h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell-book3/">Render Hell – Book III | Simon schreibt.</a></p>
+<p><a href="http://simonschreibt.de/gat/renderhell-book4/">Render Hell – Book IV | Simon schreibt.</a></p>
 ]]></content>
       <tags>
         <tag>GPU</tag>
@@ -601,6 +579,28 @@
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 Ch 01 策略模式</title>
+    <url>/ch_01_the_strategy_pattern/</url>
+    <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
+<p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
+<p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="算法接口及实现类"><a class="header-anchor" href="#算法接口及实现类">#</a>算法接口及实现类</h2>
+<figure class="highlight cs"><figcaption><span>飞行方法接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Fly</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>飞行方法实现</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyNoWay</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Can not fly&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithRocket</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with rocket&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">FlyWithWings</span> : <span class="title">IFlyBehavior</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Fly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Fly with wings&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="环境类"><a class="header-anchor" href="#环境类">#</a>环境类</h2>
+<figure class="highlight cs"><figcaption><span>鸭子基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IFlyBehavior flyBehavior;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Duck</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PerformFly</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior.Fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFlyBehavior</span>(<span class="params">IFlyBehavior fb</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        flyBehavior = fb;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>鸭子派生类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BlackDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlackDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyWithWings());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a black duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RubberDuck</span> : <span class="title">Duck</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RubberDuck</span>() : <span class="title">base</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        setFlyBehavior(<span class="keyword">new</span> FlyNoWay());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">disPlay</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;I am a rubber duck&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">RubberDuck rubberDuck = <span class="keyword">new</span> RubberDuck();</span><br><span class="line">rubberDuck.disPlay();</span><br><span class="line">rubberDuck.PerformFly();</span><br><span class="line"></span><br><span class="line">BlackDuck blackDuck = <span class="keyword">new</span> BlackDuck();</span><br><span class="line">blackDuck.disPlay();</span><br><span class="line">blackDuck.PerformFly();</span><br><span class="line">blackDuck.setFlyBehavior(<span class="keyword">new</span> FlyWithRocket());</span><br><span class="line">blackDuck.PerformFly();</span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<p><img src="/ch_01_the_strategy_pattern/2019-01-15-00-12-45.png" alt="策略模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 02 观察者模式</title>
     <url>/ch_02_the_observer_pattern/</url>
     <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
@@ -648,70 +648,6 @@
 ]]></content>
       <tags>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
-    <url>/ch_05_overview_of_data_communications/</url>
-    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
-<h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
-<p>数据通信是物理，数学和电气工程三个学科的混合领域。</p>
-<ol>
-<li>物理：信息的传输依赖于物理媒介</li>
-<li>数学：信息需要数字化</li>
-<li>电气工程：数据传输需要构建现实中的通信系统</li>
-</ol>
-<h1 id="Motivation_And_Scope_Of_The_Subject"><a class="header-anchor" href="#Motivation_And_Scope_Of_The_Subject">#</a>Motivation And Scope Of The Subject</h1>
-<p>在数据通信领域有三个重要的点，他们定义了数据通信的一些领域</p>
-<ol>
-<li>
-<p>传输的数据可以是任意类型的</p>
-<p>传输的数据并不一定是存储在计算机中的<code>bit</code>数据，也可以是从现实世界中获取的信息，如音频和视频。</p>
-</li>
-<li>
-<p>数据的传输依赖于物理系统</p>
-<p>数据是基于物理现象来传输的，例如电，电磁波。了解为什么这些物理现象可以被用来传输数据是很重要的。另外也需要理解物理系统的限制，因为这些限制引发的问题和这些问题如何被检测并解决。</p>
-</li>
-<li>
-<p>多个来源的信息可以共享基础媒介来传输</p>
-<p>媒介共享在计算机网络中是一个重要角色。了解哪些基础设施是可以被共享的，共享他们的优缺点，以及基于共享而设计的通信模型是很重要的。</p>
-</li>
-</ol>
-<h1 id="The_Conceptual_Pieces_Of_A_Communications_System"><a class="header-anchor" href="#The_Conceptual_Pieces_Of_A_Communications_System">#</a>The Conceptual Pieces Of A Communications System</h1>
-<p>每一个来源都需要一些方法来获取信息，调整信息为用于传播的模式，使用共享的物理媒介来传输信息。同时也需要一些方法从物理媒介中抽取出每条信息的目的地地址，并将信息传送给目标地址。整个过程如下图所示：</p>
-<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-24-24.png" alt="数据通信简单模型"></p>
-<p>上图是一个非常简化的模型，在实际操作中，在传输数据前，必须对数据进行数字化，也需要加入一些额外的信息防止错误发生。如果考虑到隐私，可能还需要进行加密。在使用共享媒介时，还要保证有方法可以分辨出每条信息且他们不会相互干扰。</p>
-<p>为了解释数据通信的每个部分，工程师们制订了一个概念框架来说明通信系统中的每个小主题是如何联系在一起的，概念框架如下图所示：</p>
-<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-28-26.png" alt="概念框架"></p>
-<h1 id="The_Subtopics_Of_Data_Communications"><a class="header-anchor" href="#The_Subtopics_Of_Data_Communications">#</a>The Subtopics Of Data Communications</h1>
-<p>上一节中的概念框架图中的每一部分都代表了数据通信中的一个小主题。这一节中简单介绍了图中的一些术语，之后的几章中会在对每一部分进行详细说。</p>
-<ol>
-<li>
-<p><code>数据来源(Information Sources)</code>可以是模拟数据或者数字电路。这一部分的关键内容包括信号的特征（<code>振幅(Amplitude)</code>，<code>频率(Frequency)</code>，<code>相位(Phase)</code>），周期性与非周期性，以及模拟信息和数字信息的转换。</p>
-</li>
-<li>
-<p><code>信源编码与解码(Source Encoder and Decoder)</code>。一旦信息被数字化后，信息就可以被转换，这一部分的关键内容包括数据压缩以及压缩后对于传输的影响</p>
-</li>
-<li>
-<p><code>加密与解密(Encryptor and Decryptor)</code>。为了保护信息和保证其可信度，在信息传送前需要进行加密，在接收后需要解密。这一部分的关键内容包括密码学技术与算法。</p>
-</li>
-<li>
-<p><code>信道编码与解码(Channel Encoder and Decoder)</code>。信道编码是用来检测也纠正传输错误。这一部分的关键内容包括检测和限制错误，以及实际应用的技术，如奇偶校验(parity checking)等。</p>
-</li>
-<li>
-<p><code>复用与解复用(Multiplexor and Demultiplexor)</code>。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。</p>
-</li>
-<li>
-<p><code>调制与解调(Modulator and Demodulator)</code>。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。</p>
-</li>
-<li>
-<p><code>物理通道与传输(Physical Channel and Transmission)</code>。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -794,6 +730,94 @@
 <h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
 <figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
+    <url>/ch_05_overview_of_data_communications/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
+<h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
+<p>数据通信是物理，数学和电气工程三个学科的混合领域。</p>
+<ol>
+<li>物理：信息的传输依赖于物理媒介</li>
+<li>数学：信息需要数字化</li>
+<li>电气工程：数据传输需要构建现实中的通信系统</li>
+</ol>
+<h1 id="Motivation_And_Scope_Of_The_Subject"><a class="header-anchor" href="#Motivation_And_Scope_Of_The_Subject">#</a>Motivation And Scope Of The Subject</h1>
+<p>在数据通信领域有三个重要的点，他们定义了数据通信的一些领域</p>
+<ol>
+<li>
+<p>传输的数据可以是任意类型的</p>
+<p>传输的数据并不一定是存储在计算机中的<code>bit</code>数据，也可以是从现实世界中获取的信息，如音频和视频。</p>
+</li>
+<li>
+<p>数据的传输依赖于物理系统</p>
+<p>数据是基于物理现象来传输的，例如电，电磁波。了解为什么这些物理现象可以被用来传输数据是很重要的。另外也需要理解物理系统的限制，因为这些限制引发的问题和这些问题如何被检测并解决。</p>
+</li>
+<li>
+<p>多个来源的信息可以共享基础媒介来传输</p>
+<p>媒介共享在计算机网络中是一个重要角色。了解哪些基础设施是可以被共享的，共享他们的优缺点，以及基于共享而设计的通信模型是很重要的。</p>
+</li>
+</ol>
+<h1 id="The_Conceptual_Pieces_Of_A_Communications_System"><a class="header-anchor" href="#The_Conceptual_Pieces_Of_A_Communications_System">#</a>The Conceptual Pieces Of A Communications System</h1>
+<p>每一个来源都需要一些方法来获取信息，调整信息为用于传播的模式，使用共享的物理媒介来传输信息。同时也需要一些方法从物理媒介中抽取出每条信息的目的地地址，并将信息传送给目标地址。整个过程如下图所示：</p>
+<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-24-24.png" alt="数据通信简单模型"></p>
+<p>上图是一个非常简化的模型，在实际操作中，在传输数据前，必须对数据进行数字化，也需要加入一些额外的信息防止错误发生。如果考虑到隐私，可能还需要进行加密。在使用共享媒介时，还要保证有方法可以分辨出每条信息且他们不会相互干扰。</p>
+<p>为了解释数据通信的每个部分，工程师们制订了一个概念框架来说明通信系统中的每个小主题是如何联系在一起的，概念框架如下图所示：</p>
+<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-28-26.png" alt="概念框架"></p>
+<h1 id="The_Subtopics_Of_Data_Communications"><a class="header-anchor" href="#The_Subtopics_Of_Data_Communications">#</a>The Subtopics Of Data Communications</h1>
+<p>上一节中的概念框架图中的每一部分都代表了数据通信中的一个小主题。这一节中简单介绍了图中的一些术语，之后的几章中会在对每一部分进行详细说。</p>
+<ol>
+<li>
+<p><code>数据来源(Information Sources)</code>可以是模拟数据或者数字电路。这一部分的关键内容包括信号的特征（<code>振幅(Amplitude)</code>，<code>频率(Frequency)</code>，<code>相位(Phase)</code>），周期性与非周期性，以及模拟信息和数字信息的转换。</p>
+</li>
+<li>
+<p><code>信源编码与解码(Source Encoder and Decoder)</code>。一旦信息被数字化后，信息就可以被转换，这一部分的关键内容包括数据压缩以及压缩后对于传输的影响</p>
+</li>
+<li>
+<p><code>加密与解密(Encryptor and Decryptor)</code>。为了保护信息和保证其可信度，在信息传送前需要进行加密，在接收后需要解密。这一部分的关键内容包括密码学技术与算法。</p>
+</li>
+<li>
+<p><code>信道编码与解码(Channel Encoder and Decoder)</code>。信道编码是用来检测也纠正传输错误。这一部分的关键内容包括检测和限制错误，以及实际应用的技术，如奇偶校验(parity checking)等。</p>
+</li>
+<li>
+<p><code>复用与解复用(Multiplexor and Demultiplexor)</code>。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。</p>
+</li>
+<li>
+<p><code>调制与解调(Modulator and Demodulator)</code>。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。</p>
+</li>
+<li>
+<p><code>物理通道与传输(Physical Channel and Transmission)</code>。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 06 命令模式</title>
+    <url>/ch_06_the_command_pattern/</url>
+    <content><![CDATA[<p>命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。</p>
+<p>命令模式由抽象命令类、具体命令类、接受者、调用者、客户类，五部分组成。其中接受者为被命令封装的类，调用者存放需要执行的类。</p>
+<p>我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="抽象命令类及实现"><a class="header-anchor" href="#抽象命令类及实现">#</a>抽象命令类及实现</h2>
+<figure class="highlight cs"><figcaption><span>抽象命令类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Undo</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>命令类实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOffCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOffCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOnCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOnCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command execute&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command undo&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接受者"><a class="header-anchor" href="#接受者">#</a>接受者</h2>
+<figure class="highlight cs"><figcaption><span>灯</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Light</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is on&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="调用者"><a class="header-anchor" href="#调用者">#</a>调用者</h2>
+<figure class="highlight cs"><figcaption><span>远程控制</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">RemoteControl</span></span><br><span class="line">&#123;</span><br><span class="line">    Command[] commands;</span><br><span class="line">    Command lastCommond;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RemoteControl</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands = <span class="keyword">new</span> Command[<span class="number">2</span>] &#123; <span class="keyword">new</span> NoCommand(), <span class="keyword">new</span> NoCommand() &#125;;</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetCommand</span>(<span class="params"><span class="built_in">int</span> index, Command command</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index] = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnButtonClick</span>(<span class="params"><span class="built_in">int</span> index</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index].Execute();</span><br><span class="line">        lastCommond = commands[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnClickUndo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        lastCommond.Undo();</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="客户类"><a class="header-anchor" href="#客户类">#</a>客户类</h2>
+<figure class="highlight cs"><figcaption><span>函数入口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Light light = <span class="keyword">new</span> Light();</span><br><span class="line">    RemoteControl remoteControl = <span class="keyword">new</span> RemoteControl();</span><br><span class="line">    remoteControl.SetCommand(<span class="number">0</span>, <span class="keyword">new</span> LightOnCommand(light));</span><br><span class="line">    remoteControl.SetCommand(<span class="number">1</span>, <span class="keyword">new</span> LightOffCommand(light));</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">0</span>);</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">1</span>);</span><br><span class="line">    remoteControl.OnClickUndo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<p>运行结果：</p>
+<p><img src="/ch_06_the_command_pattern/2019-02-02-23-26-25.png" alt="命令模式测试结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -910,30 +934,6 @@ $$</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 06 命令模式</title>
-    <url>/ch_06_the_command_pattern/</url>
-    <content><![CDATA[<p>命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。</p>
-<p>命令模式由抽象命令类、具体命令类、接受者、调用者、客户类，五部分组成。其中接受者为被命令封装的类，调用者存放需要执行的类。</p>
-<p>我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="抽象命令类及实现"><a class="header-anchor" href="#抽象命令类及实现">#</a>抽象命令类及实现</h2>
-<figure class="highlight cs"><figcaption><span>抽象命令类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Undo</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>命令类实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOffCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOffCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOnCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOnCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command execute&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command undo&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="接受者"><a class="header-anchor" href="#接受者">#</a>接受者</h2>
-<figure class="highlight cs"><figcaption><span>灯</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Light</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is on&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="调用者"><a class="header-anchor" href="#调用者">#</a>调用者</h2>
-<figure class="highlight cs"><figcaption><span>远程控制</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">RemoteControl</span></span><br><span class="line">&#123;</span><br><span class="line">    Command[] commands;</span><br><span class="line">    Command lastCommond;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RemoteControl</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands = <span class="keyword">new</span> Command[<span class="number">2</span>] &#123; <span class="keyword">new</span> NoCommand(), <span class="keyword">new</span> NoCommand() &#125;;</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetCommand</span>(<span class="params"><span class="built_in">int</span> index, Command command</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index] = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnButtonClick</span>(<span class="params"><span class="built_in">int</span> index</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index].Execute();</span><br><span class="line">        lastCommond = commands[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnClickUndo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        lastCommond.Undo();</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="客户类"><a class="header-anchor" href="#客户类">#</a>客户类</h2>
-<figure class="highlight cs"><figcaption><span>函数入口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Light light = <span class="keyword">new</span> Light();</span><br><span class="line">    RemoteControl remoteControl = <span class="keyword">new</span> RemoteControl();</span><br><span class="line">    remoteControl.SetCommand(<span class="number">0</span>, <span class="keyword">new</span> LightOnCommand(light));</span><br><span class="line">    remoteControl.SetCommand(<span class="number">1</span>, <span class="keyword">new</span> LightOffCommand(light));</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">0</span>);</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">1</span>);</span><br><span class="line">    remoteControl.OnClickUndo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<p>运行结果：</p>
-<p><img src="/ch_06_the_command_pattern/2019-02-02-23-26-25.png" alt="命令模式测试结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1190,36 +1190,6 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 08 模板方法模式</title>
-    <url>/ch_08_the_template_method_pattern/</url>
-    <content><![CDATA[<p>模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。</p>
-<ul>
-<li>
-<p>工厂方法&gt;模式就是模版方法模式的一种运用。</p>
-</li>
-<li>
-<p>策略模式和模版方法模式都是将算法的实现抽象出来，不同的是策略模式的实现依靠组成，而模版方法模式依靠继承。</p>
-</li>
-</ul>
-<p>例如我们需要准备咖啡和茶，准备咖啡基本步骤为烧开水，加入咖啡粉，将咖啡倒入杯子，增加牛奶或糖（可选），准备茶的基本步骤为烧开水，加入茶粉，将茶倒入杯子，增加柠檬（可选）。我们发现在制作两个饮料的过程中，烧开水和倒入杯子这两个步骤是一样的，剩下的两个步骤，向烧开的水中增加相应的粉和增加配料，这两部分也是类似的，于是我们可以用模版方法模式，将这两步骤作为抽象方法。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="算法模版基类"><a class="header-anchor" href="#算法模版基类">#</a>算法模版基类</h2>
-<figure class="highlight cs"><figcaption><span>咖啡因饮料模版</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrepareRecipe</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        boilWater();</span><br><span class="line">        brew();</span><br><span class="line">        pourInCup();</span><br><span class="line">        <span class="keyword">if</span> (NeedCondiments())</span><br><span class="line">            addCondiments();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">brew</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">boilWater</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Boiling Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">pourInCup</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Pouring Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<div class="note info simple"><p>例子中<code>brew</code>和<code>addCondiments</code>即为模版函数，而<code>NeedCondiments</code>这种提供了基本实现，但派生类中仍然可以重写的函数被称为钩子（<code>Hook</code>）。</p>
-</div>
-<h2 id="咖啡因饮料实现"><a class="header-anchor" href="#咖啡因饮料实现">#</a>咖啡因饮料实现</h2>
-<figure class="highlight cs"><figcaption><span>咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Coffee</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Add sugar and Milk&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Dripping coffee through filter&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Tea</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Adding lemon&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Steeping the tea&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Coffee coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">Tea tea = <span class="keyword">new</span> Tea();</span><br><span class="line">coffee.PrepareRecipe();</span><br><span class="line">Console.WriteLine();</span><br><span class="line">tea.PrepareRecipe();</span><br></pre></td></tr></table></figure>
-<p>运行结果:</p>
-<p><img src="/ch_08_the_template_method_pattern/2019-02-03-15-59-58.png" alt="模版方法模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Computer Networks and Internets》 Ch 08 可靠性及信道编码</title>
     <url>/ch_08_reliability_and_channel_coding/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
@@ -1440,6 +1410,36 @@ $$</p>
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 Ch 08 模板方法模式</title>
+    <url>/ch_08_the_template_method_pattern/</url>
+    <content><![CDATA[<p>模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。</p>
+<ul>
+<li>
+<p>工厂方法&gt;模式就是模版方法模式的一种运用。</p>
+</li>
+<li>
+<p>策略模式和模版方法模式都是将算法的实现抽象出来，不同的是策略模式的实现依靠组成，而模版方法模式依靠继承。</p>
+</li>
+</ul>
+<p>例如我们需要准备咖啡和茶，准备咖啡基本步骤为烧开水，加入咖啡粉，将咖啡倒入杯子，增加牛奶或糖（可选），准备茶的基本步骤为烧开水，加入茶粉，将茶倒入杯子，增加柠檬（可选）。我们发现在制作两个饮料的过程中，烧开水和倒入杯子这两个步骤是一样的，剩下的两个步骤，向烧开的水中增加相应的粉和增加配料，这两部分也是类似的，于是我们可以用模版方法模式，将这两步骤作为抽象方法。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="算法模版基类"><a class="header-anchor" href="#算法模版基类">#</a>算法模版基类</h2>
+<figure class="highlight cs"><figcaption><span>咖啡因饮料模版</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrepareRecipe</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        boilWater();</span><br><span class="line">        brew();</span><br><span class="line">        pourInCup();</span><br><span class="line">        <span class="keyword">if</span> (NeedCondiments())</span><br><span class="line">            addCondiments();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">brew</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">boilWater</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Boiling Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">pourInCup</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Pouring Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info simple"><p>例子中<code>brew</code>和<code>addCondiments</code>即为模版函数，而<code>NeedCondiments</code>这种提供了基本实现，但派生类中仍然可以重写的函数被称为钩子（<code>Hook</code>）。</p>
+</div>
+<h2 id="咖啡因饮料实现"><a class="header-anchor" href="#咖啡因饮料实现">#</a>咖啡因饮料实现</h2>
+<figure class="highlight cs"><figcaption><span>咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Coffee</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Add sugar and Milk&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Dripping coffee through filter&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Tea</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Adding lemon&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Steeping the tea&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Coffee coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">Tea tea = <span class="keyword">new</span> Tea();</span><br><span class="line">coffee.PrepareRecipe();</span><br><span class="line">Console.WriteLine();</span><br><span class="line">tea.PrepareRecipe();</span><br></pre></td></tr></table></figure>
+<p>运行结果:</p>
+<p><img src="/ch_08_the_template_method_pattern/2019-02-03-15-59-58.png" alt="模版方法模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 09 模板方法模式</title>
     <url>/ch_09_the_iterator_and_composite_pattern/</url>
     <content><![CDATA[<h1 id="迭代器模式"><a class="header-anchor" href="#迭代器模式">#</a>迭代器模式</h1>
@@ -1555,54 +1555,6 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 11 代理模式</title>
-    <url>/ch_11_the_proxy_pattern/</url>
-    <content><![CDATA[<p>代理模式（Proxy Pattern）为对象提供一个代理进而控制对其的访问。</p>
-<p>例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="抽象接口"><a class="header-anchor" href="#抽象接口">#</a>抽象接口</h2>
-<figure class="highlight cs"><figcaption><span>图片接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="抽象接口实现"><a class="header-anchor" href="#抽象接口实现">#</a>抽象接口实现</h2>
-<figure class="highlight cs"><figcaption><span>真实图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> width, height;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageIcon</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Thread.Sleep(<span class="number">5000</span>);<span class="comment">//Pretend there is some hard work to load the image</span></span><br><span class="line">        width = <span class="number">800</span>;</span><br><span class="line">        height = <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Width is &quot;</span> + width + <span class="string">&quot;,height is &quot;</span> + height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>代理图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageProxyIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ImageIcon icon = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageProxyIcon</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (icon != <span class="literal">null</span>)</span><br><span class="line">            icon.PrintIconWidthAndHeight();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!isLoading)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Is Loading Image...&quot;</span>);</span><br><span class="line">            isLoading = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">new</span> Thread(() =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                icon = <span class="keyword">new</span> ImageIcon();</span><br><span class="line">                icon.PrintIconWidthAndHeight();</span><br><span class="line">            &#125;).Start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">ImageProxyIcon proxyIcon = <span class="keyword">new</span> ImageProxyIcon();</span><br><span class="line">proxyIcon.PrintIconWidthAndHeight();</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_11_the_proxy_pattern/2019-02-07-14-10-11.png" alt="代理模式运行结果"></p>
-<div class="note info simple"><p>代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，<code>ImageProxyIcon</code>并没有为<code>ImageIcon</code>拓展什么功能，只是用了多线程来访问访问其中的函数。</p>
-</div>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 12 复合模式</title>
-    <url>/ch_12_the_compound_patterns/</url>
-    <content><![CDATA[<p>复合模式（Compound Pattern）是通过两个或以上的设计模式形成一个可以解决一般性问题的通用框架。</p>
-<p>MVC 框架就是一种组合模式，<code>Controller</code>和<code>View</code>之间使用了策略模式， <code>View</code>中只存<code>Controller</code>的接口，进而达到可以随时切换不同<code>Controller</code>的目的。<code>Model</code>和<code>View</code>之间使用了观察者模式，<code>View</code>作为观察者，<code>Model</code>作为被观察者，当<code>Model</code>的数据发生变化时，<code>View</code>相应改变。而<code>View</code>本身使用了组合模式，比如按钮中可能存在子按钮，窗口中存在子窗口等等。</p>
-<p>我们以音量调节作为一个最简的 MVC 框架示例。</p>
-<div class="note info simple"><p>关于 MVC 更多的减少，见 MVC</p>
-</div>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="框架接口"><a class="header-anchor" href="#框架接口">#</a>框架接口</h2>
-<figure class="highlight cs"><figcaption><span>观察者接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IVolumeObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">VolumeUpdated</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>Model接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IVolumeModel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> Volume &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">UnRegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>Controller接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IViewController</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">VolumeUp</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">VolumeDown</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetVolume</span>(<span class="params"><span class="built_in">int</span> volume</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="接口实现"><a class="header-anchor" href="#接口实现">#</a>接口实现</h2>
-<figure class="highlight cs"><figcaption><span>Model</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VolumeModel</span> : <span class="title">IVolumeModel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> volume = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> Volume</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> volume; &#125;</span><br><span class="line">        <span class="keyword">set</span></span><br><span class="line">        &#123;</span><br><span class="line">            volume = <span class="keyword">value</span>;</span><br><span class="line">            observersList.ForEach(observer =&gt; observer.VolumeUpdated());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> List&lt;IVolumeObserver&gt; observersList = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VolumeModel</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList = <span class="keyword">new</span> List&lt;IVolumeObserver&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Add(observer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnRegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Remove(observer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>View</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VolumeView</span> : <span class="title">IVolumeObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IViewController controller = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> IVolumeModel model = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VolumeView</span>(<span class="params">IViewController controller, IVolumeModel model</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.controller = controller;</span><br><span class="line">        <span class="keyword">this</span>.model = model;</span><br><span class="line">        <span class="keyword">this</span>.model.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;View: volume init is &quot;</span> + model.Volume);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnVolumeUpButtonClick</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        controller.VolumeUp();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnVolumeDownButtonClick</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        controller.VolumeDown();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">VolumeUpdated</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;View: volume updated &quot;</span> + model.Volume);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~VolumeView()</span><br><span class="line">    &#123;</span><br><span class="line">        model.UnRegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>Controller</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VolumeController</span> : <span class="title">IViewController</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> VolumeModel model = <span class="literal">null</span>;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">VolumeController</span>(<span class="params">VolumeModel model</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>.model = model;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetVolume</span>(<span class="params"><span class="built_in">int</span> volume</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            model.Volume = volume;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">VolumeDown</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            --model.Volume;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">VolumeUp</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            ++model.Volume;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">VolumeModel model = <span class="keyword">new</span> VolumeModel();</span><br><span class="line">VolumeView view = <span class="keyword">new</span> VolumeView(<span class="keyword">new</span> VolumeController(model), model);</span><br><span class="line">view.OnVolumeUpButtonClick();</span><br><span class="line">view.OnVolumeUpButtonClick();</span><br><span class="line">view.OnVolumeDownButtonClick();</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_12_the_compound_patterns/2019-02-07-15-53-23.png" alt="复合模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Computer Networks and Internets》 Ch 11 复用与解复用</title>
     <url>/ch_11_multiplexing_and_demultiplexing/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
@@ -1695,6 +1647,54 @@ $$</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 11 代理模式</title>
+    <url>/ch_11_the_proxy_pattern/</url>
+    <content><![CDATA[<p>代理模式（Proxy Pattern）为对象提供一个代理进而控制对其的访问。</p>
+<p>例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="抽象接口"><a class="header-anchor" href="#抽象接口">#</a>抽象接口</h2>
+<figure class="highlight cs"><figcaption><span>图片接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="抽象接口实现"><a class="header-anchor" href="#抽象接口实现">#</a>抽象接口实现</h2>
+<figure class="highlight cs"><figcaption><span>真实图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> width, height;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageIcon</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Thread.Sleep(<span class="number">5000</span>);<span class="comment">//Pretend there is some hard work to load the image</span></span><br><span class="line">        width = <span class="number">800</span>;</span><br><span class="line">        height = <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Width is &quot;</span> + width + <span class="string">&quot;,height is &quot;</span> + height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>代理图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageProxyIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ImageIcon icon = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageProxyIcon</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (icon != <span class="literal">null</span>)</span><br><span class="line">            icon.PrintIconWidthAndHeight();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!isLoading)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Is Loading Image...&quot;</span>);</span><br><span class="line">            isLoading = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">new</span> Thread(() =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                icon = <span class="keyword">new</span> ImageIcon();</span><br><span class="line">                icon.PrintIconWidthAndHeight();</span><br><span class="line">            &#125;).Start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">ImageProxyIcon proxyIcon = <span class="keyword">new</span> ImageProxyIcon();</span><br><span class="line">proxyIcon.PrintIconWidthAndHeight();</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_11_the_proxy_pattern/2019-02-07-14-10-11.png" alt="代理模式运行结果"></p>
+<div class="note info simple"><p>代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，<code>ImageProxyIcon</code>并没有为<code>ImageIcon</code>拓展什么功能，只是用了多线程来访问访问其中的函数。</p>
+</div>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 12 复合模式</title>
+    <url>/ch_12_the_compound_patterns/</url>
+    <content><![CDATA[<p>复合模式（Compound Pattern）是通过两个或以上的设计模式形成一个可以解决一般性问题的通用框架。</p>
+<p>MVC 框架就是一种组合模式，<code>Controller</code>和<code>View</code>之间使用了策略模式， <code>View</code>中只存<code>Controller</code>的接口，进而达到可以随时切换不同<code>Controller</code>的目的。<code>Model</code>和<code>View</code>之间使用了观察者模式，<code>View</code>作为观察者，<code>Model</code>作为被观察者，当<code>Model</code>的数据发生变化时，<code>View</code>相应改变。而<code>View</code>本身使用了组合模式，比如按钮中可能存在子按钮，窗口中存在子窗口等等。</p>
+<p>我们以音量调节作为一个最简的 MVC 框架示例。</p>
+<div class="note info simple"><p>关于 MVC 更多的减少，见 MVC</p>
+</div>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="框架接口"><a class="header-anchor" href="#框架接口">#</a>框架接口</h2>
+<figure class="highlight cs"><figcaption><span>观察者接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IVolumeObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">VolumeUpdated</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>Model接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IVolumeModel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> Volume &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">UnRegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>Controller接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IViewController</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">VolumeUp</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">VolumeDown</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetVolume</span>(<span class="params"><span class="built_in">int</span> volume</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接口实现"><a class="header-anchor" href="#接口实现">#</a>接口实现</h2>
+<figure class="highlight cs"><figcaption><span>Model</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VolumeModel</span> : <span class="title">IVolumeModel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> volume = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> Volume</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> volume; &#125;</span><br><span class="line">        <span class="keyword">set</span></span><br><span class="line">        &#123;</span><br><span class="line">            volume = <span class="keyword">value</span>;</span><br><span class="line">            observersList.ForEach(observer =&gt; observer.VolumeUpdated());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> List&lt;IVolumeObserver&gt; observersList = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VolumeModel</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList = <span class="keyword">new</span> List&lt;IVolumeObserver&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Add(observer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnRegisterObserver</span>(<span class="params">IVolumeObserver observer</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Remove(observer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>View</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VolumeView</span> : <span class="title">IVolumeObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> IViewController controller = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> IVolumeModel model = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VolumeView</span>(<span class="params">IViewController controller, IVolumeModel model</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.controller = controller;</span><br><span class="line">        <span class="keyword">this</span>.model = model;</span><br><span class="line">        <span class="keyword">this</span>.model.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;View: volume init is &quot;</span> + model.Volume);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnVolumeUpButtonClick</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        controller.VolumeUp();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnVolumeDownButtonClick</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        controller.VolumeDown();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">VolumeUpdated</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;View: volume updated &quot;</span> + model.Volume);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~VolumeView()</span><br><span class="line">    &#123;</span><br><span class="line">        model.UnRegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>Controller</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VolumeController</span> : <span class="title">IViewController</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> VolumeModel model = <span class="literal">null</span>;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">VolumeController</span>(<span class="params">VolumeModel model</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>.model = model;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetVolume</span>(<span class="params"><span class="built_in">int</span> volume</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            model.Volume = volume;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">VolumeDown</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            --model.Volume;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">VolumeUp</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            ++model.Volume;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">VolumeModel model = <span class="keyword">new</span> VolumeModel();</span><br><span class="line">VolumeView view = <span class="keyword">new</span> VolumeView(<span class="keyword">new</span> VolumeController(model), model);</span><br><span class="line">view.OnVolumeUpButtonClick();</span><br><span class="line">view.OnVolumeUpButtonClick();</span><br><span class="line">view.OnVolumeDownButtonClick();</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_12_the_compound_patterns/2019-02-07-15-53-23.png" alt="复合模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1809,6 +1809,95 @@ $$</p>
 <h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
 <p><a href="https://web.archive.org/web/20171217042848/http://www.cs.virginia.edu/~mngroup/projects/mpls/documents/thesis/node8.html">Switching technology</a><br>
 <a href="https://www.cnblogs.com/penghuwan/p/7686059.html#_label3_1">【计算机网络】数据交换技术和多路复用技术的正（nao）确(can)打开方式</a></p>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Computer Networks and Internets》 Ch 14 MAC 层</title>
+    <url>/ch_14_the_ieee_mac_sublayer/</url>
+    <content><![CDATA[<ul>
+<li>这一章原书中的Statiion一词，在笔记中翻译为<code>终端</code>。</li>
+</ul>
+<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一章将会深入讨论MAC层，包括多路访问协议（multi-access protocols）以及静态和动态信道分配。</p>
+<h1 id="A_Taxonomy_Of_Mechanisms_For_Shared_Access"><a class="header-anchor" href="#A_Taxonomy_Of_Mechanisms_For_Shared_Access">#</a>A Taxonomy Of Mechanisms For Shared Access</h1>
+<p>实现多个计算机通过一个共享媒介来访问数据主要有三种方法： （1）复用技术（Multiplexing Technique） （2）分布算法来控制访问（Distributed Algorithms For Controlled Access） （3）随机访问策略（Random Access Strategy）</p>
+<ul>
+<li>这里的复用技术与在11章中讨论的复用核心思想是相同的，但仍然有略微区别。11章中提到的是物理上的复用，通过复用器将信号合并在一起。这里的复用则是对于共享信道的逻辑划分，使不同的终端占用共享信道的部分资源，所以这里的复用技术也称为<code>信道协议（Channelization Protocols）</code>。</li>
+</ul>
+<p>下图展示了按照共享媒介所使用的方法的分类：</p>
+<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-27-22-55-32.png" alt="共享媒介的分类方法"></p>
+<h1 id="Static_And_Dynamic_Channel_Allocation"><a class="header-anchor" href="#Static_And_Dynamic_Channel_Allocation">#</a>Static And Dynamic Channel Allocation</h1>
+<p>信道分配是与第11章中提到的复用技术相关联的。以频分复用为例子，在第11章中是每个终端都有它的载波频率，终端与载波频率是一对一的关系，这就是<code>信道的静态分配（Static Channel Allocation）</code>。</p>
+<p>信道可以静态分配的前提是预先知道终端的存在，而且终端在传输过程中不会发生变化。而在许多的场景下，终端是会变化的，例如一个路由器负责房间内手机的信号，但是手机可以关闭或者离开房间，这就是终端的变化。</p>
+<p>在这种情况下就需要<code>信道的动态分配（Dynamic Channel Allocation）</code>，即当终端出现时才分配信道的资源给终端。</p>
+<h1 id="Channelization_Protocols"><a class="header-anchor" href="#Channelization_Protocols">#</a>Channelization Protocols</h1>
+<p>与第11章中的复用技术相似，信道分配也存在频分多路复用（Frequency Division Multi-Access），时分多路复用（Time Division Multi—Access），码分多路复用（Code Division Multi-Access）三种类型。</p>
+<h2 id="FDMA"><a class="header-anchor" href="#FDMA">#</a>FDMA</h2>
+<p>频分多路复用下每个终端都可以选择一个载波频率，这个频率并不会影响到其他的终端。在有些系统下存在一个中央控制器进而支持动态的频分多路复用：当一个新的终端出现，中央控制器用一个预留的信道与终端通信，然后分配一个未使用的载波频率给这个终端，之后终端都使用这个载波频率传输数据。</p>
+<h3 id="TDMA"><a class="header-anchor" href="#TDMA">#</a>TDMA</h3>
+<p>时分多路复用下，所有终端按顺序编号，如$1,2,3,…N$，并且会按这个顺序占据信道进行传输。如同频分多路复用，在某些系统下支持动态分配，即终端出现时再分配给他信道的占用时间段。</p>
+<h3 id="CDMA"><a class="header-anchor" href="#CDMA">#</a>CDMA</h3>
+<p>码分多路复用如同码分复用，通过数学方法将多个终端的数据合并在一起，再同时通过信道进行传输。</p>
+<h1 id="Controlled_Access_Protocols"><a class="header-anchor" href="#Controlled_Access_Protocols">#</a>Controlled Access Protocols</h1>
+<p>访问控制协议（Controlled Access Protocols）为统计复用提供了方法，主要分为三个类型：</p>
+<ol>
+<li>轮询（Polling）：控制中央持续的询问每一个终端是否要发送数据。</li>
+<li>预留（Reservation）：终端需要发送信息时，发出一个在下一次循环时发送数据的申请。</li>
+<li>令牌传递（Token Passing）：终端间循环传递一个令牌，当终端持有令牌时可以发送数据。</li>
+</ol>
+<h2 id="Polling"><a class="header-anchor" href="#Polling">#</a>Polling</h2>
+<p><code>轮询（Polling）</code>系统是存在一个中央控制器，这个控制器会询问其下的每个终端是否需要传递数据。轮询可以再细分为两种，<code>轮询调度顺序（Round Robin Order）</code>和<code>优先顺序（Priority Order）</code>。在轮询调度顺序下，每个终端都有相同的机会传递数据，而在优先顺序下，一些终端会有更多的机会去传递数据。</p>
+<p>轮询的算法实现伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For Centralized Controller:</span><br><span class="line">while(true)</span><br><span class="line">&#123;</span><br><span class="line">  Select a station S, and send a polling message to S;</span><br><span class="line">  Wait for S to respond by sending a packet or passing;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Reservation"><a class="header-anchor" href="#Reservation">#</a>Reservation</h2>
+<p><code>预留（Reservation）</code>系统多用在航天系统中，系统分为两个步骤，在第一步中需要传输数据的终端申请，所有申请的终端构成一张表，在第二步中表中的终端开始传输数据。通常第一步与第二步使用的是不同的信道，即有一个信道专门用来接受申请信息，另一个信道作为主信道传递每个终端的数据。</p>
+<p>预留的算法实现伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For Centralized Controller:</span><br><span class="line">While(true)</span><br><span class="line">&#123;</span><br><span class="line">  Form a list of stations that have a packet to send;</span><br><span class="line">  Allow stations on the list to tranmit;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Token_Passing"><a class="header-anchor" href="#Token_Passing">#</a>Token Passing</h2>
+<p><code>令牌传递（Token Passing）</code>被用在多个局域网（LAN）技术中，被用的最多的就是环形拓步结构中。在一个网络中，某一台计算机持有着一个特殊的控制命令，这个命令被称作为令牌，持有令牌的计算机可以发送数据，在发送完毕后将令牌传递给下一个计算机。</p>
+<p>令牌传递的算法实现伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For each computer:</span><br><span class="line">While(true)</span><br><span class="line">&#123;</span><br><span class="line">  Wait for the token to arrive;</span><br><span class="line">  Transmit a packet if one is waiting to be send;</span><br><span class="line">  Send the token to he next station;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>环形拓补结构中，存在物理的环形链接，所以令牌可以直接传递给相邻的下一个电脑。在其他的拓步结构中，所有的计算机都被赋予了一个逻辑顺序，因此可以获知下一个要收取令牌的电脑是哪个。</p>
+<h1 id="Random_Access_Protocols"><a class="header-anchor" href="#Random_Access_Protocols">#</a>Random Access Protocols</h1>
+<p>许多网络，特别是局域网络中，并不使用访问控制协议，而使用<code>随机访问协议（Random Access Protocols）</code>。随机访问协议下只有当终端存在数据要发送时，才会被给予权限（在访问控制协议中，每个终端都要被持续检查）。这里的<em>随机</em>是在所有终端都有数据要发送时的处理方式。随机访问协议也可以被分为三类：</p>
+<ol>
+<li>ALOHA：早期夏威夷的无线电网络中被使用的协议。在教科书中比较流行，因为便于分析，但在实际网络中已不再使用。</li>
+<li>CSMA/CD（Carrier Sense Multi-Access With Collision Detection）：原以太网的基础，现在也不再使用。</li>
+<li>CSMA/CA（Carrier Sense Multi-Access With Collision Avoidance）：Wifi无线网络的基础。</li>
+</ol>
+<h2 id="ALOHA"><a class="header-anchor" href="#ALOHA">#</a>ALOHA</h2>
+<p>在早期夏威夷的网络中使用，在这个系统下有一个强大的发送器被部署中在物理上的中心位置，其他的终端（通常对应一台计算机）在这个发送器周围部署，这些终端都没有足够的能量将数据直接传输给其他终端，因此需要通过中央的发送器。</p>
+<p>中央发送器用两个载波频率与每个终端通信，一个被称为入站频率（In Frequency，407.305MHZ），一个被称为出站频率（Outbound Frequency，413.475MHZ）。终端通过入站频率将数据传递给中央发送器，中央发送器通过出站频率将数据发送给每个终端。</p>
+<p>ALOHA的实现逻辑很直接：当终端有数据要发送时，使用入站频率将数据传递给中央数据站，中央数据站通过出站频率将数据传给所有的终端，终端检查数据是否是自己需要的。为了保证数据被正常发送，发送终端也需要监听出站频率，当发送的数据拷贝被传输回发送终端，发送终端确认数据被正常传递了，就会传输下一个数据。反之，则会在一段时间后尝试重新发送。</p>
+<p>当两个终端同时使用各自的入站频率传输数据时，两个数据会发送混淆，进而导致信息错误，将这种情况称为信道冲突（Collision）。协议通过等待一段时间后重新发送数据来解决冲突，重新发送数据前的等待时间的设定尤为关键，如果两个终端等待的时间相同，那么再次发送数据时仍然是同时发送则会继续导致冲突。因此等待时间是随机的，但是网络繁忙时，冲突的概率仍然会增加，因为即使是随机时间仍然可能会与其他的终端发生冲突。</p>
+<p>ALOHA示意图如下：</p>
+<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-12-56-15.png" alt="ALOHA示意图"></p>
+<h2 id="CSMA_CD"><a class="header-anchor" href="#CSMA_CD">#</a>CSMA/CD</h2>
+<p>1978年，数字设备联盟（Digital Equipment Corporation），英特尔（Intel）和施乐（Xerox）共同指定了个标准（DIX标准），也就是后来的以太网。最早的以太网技术使用一根长电缆连接每个电脑，这根长电缆就是共享媒介，与ALOHA使用中央发送器来实现数据传输不同，在以太网中每个终端都可以通过这个共享的线缆传输数据。以太网同样需要解决冲突问题，以太网主要引入了三个解决冲突的方法，统称为<code>具有冲突检测功能的载波侦听多路访问（CSMA/CD，Carrier Sense Multi-Access With Collision Detection）</code>：</p>
+<ol>
+<li>载波侦听（Carrier Sense）：</li>
+</ol>
+<p>在每个终端发送数据前，先监听线缆确定是否有其他的终端正在传输数据。</p>
+<ol start="2">
+<li>冲突检测（Collision Detection）：</li>
+</ol>
+<p>虽然有载波侦听，但如果在线缆空闲时，两个需要发送数据的终端同时监听，此时他们都发现线缆空闲，因此都开始传输数据，这时候仍然会造成冲突。因此在传输过程中，发送终端也会持续的监听线缆，如果发现线缆中的数据与发送的数据不同，说明已经发生了冲突，数据被干扰了，于是停止数据的发送。</p>
+<p>以太网的数据传输还有一些细节问题，如在检测到冲突时，发送端并不会立刻停止数据的发送，他仍然会传输数据一段时间，保证所有的其他终端都可以收到冲突信号。另外，当一个包被发送完后，发送终端需要等待一段时间，称为<code>包间间隙（Interpacket gap）</code>（在早期10Mbps的以太网中，包间间隙为9.6微秒），保证其他的终端可以检测到线缆的空闲并传递数据。</p>
+<ol start="3">
+<li>二进制指数补偿（Binary Exponential Backoff）</li>
+</ol>
+<p>如ALOHA一样，在发现了冲突后，发送端需要等待一段时间重新发送数据，这个等待时间是随机的，通常会设置一个最大延迟时间$d$，然后在$0\sim d$。如之前所述，在网络繁忙时，可能存在随机后终端仍然冲突的情况。二进制指数补偿是指在新一次冲突发生后，随机的范围变成$0\sim 2d$，如果再有冲突则变成$0\sim 4d$，依次类推。</p>
+<p>CSMA/CD算法实现伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For each Computer:</span><br><span class="line"></span><br><span class="line">Wait for a packet to be ready;</span><br><span class="line">Wait for the medium to be idle;</span><br><span class="line">Delay for the interpacket gap;</span><br><span class="line">Set x to be the standard backoff range d;</span><br><span class="line">Attempt to transmit the packet;</span><br><span class="line"></span><br><span class="line">While(Collision occured)</span><br><span class="line">&#123;</span><br><span class="line"> random a delay time q from 0 to x;</span><br><span class="line"> delay for q microseconds;</span><br><span class="line"> double x to be 2x</span><br><span class="line"> attempt to retransmit the packet</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="CSMA_CA"><a class="header-anchor" href="#CSMA_CA">#</a>CSMA/CA</h2>
+<p>CSMA/CD并不能被运用在无线网络中，因为无线网络中的设备存在一个最远距离$\delta$。即如果两个终端的距离大于$\delta$，则CSMA/DA中的载波监听就无法被应用，因为一个终端并不能知道另一个是否在发送信息。这种情况如下图所示，如果Computer1在发送信息，Computer3是无法得知的，因此冲突只有Computer2可以知晓，这种情况称为<code>隐藏终端问题(Hidden Station Problem)</code>。</p>
+<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-00-02.png" alt="隐藏终端问题"></p>
+<p>所以无线网络中使用<code>具有冲突规避的载波侦听多路访问（CSMA/CA，Carrier Sense Multi-Access With Collision Avoidance）</code>。以上图的例子，Computer3在发送数据前会先向所有它的$\delta$范围内的设备发出一个短信息表明自己需要发送数据了，接受到Computer3发出的短信息的设备会检查自己是否正在接受其他的数据，如果不是则回复可以发送的信号。如下图所示：</p>
+<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-08-19.png" alt="CSMA/CA图解"></p>
+<p>如果发送端没有收到接收方的回执，则会在随机时间后再次尝试发送。</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
@@ -1963,95 +2052,6 @@ $16.20$介绍了软件无线电系统。</p>
 <p><img src="/ch_16_wireless_networking_technologies/2019-12-30-23-53-54.png" alt="软件无线电可以设定的特性"></p>
 <p>软件无线电的一大特性是可以同时使用多个天线，称实现了多天线同时传输和接受的系统为<code>MIMO（Multiple-Input Multiple-Output）</code>系统。</p>
 <p>通过软件来设定通信特性也有一定的危险性，如用户可以选择被政府限制的频率来发送数据或者占据为紧急服务预留的频道。因此这个技术也需要严格规范。</p>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Computer Networks and Internets》 Ch 14 MAC 层</title>
-    <url>/ch_14_the_ieee_mac_sublayer/</url>
-    <content><![CDATA[<ul>
-<li>这一章原书中的Statiion一词，在笔记中翻译为<code>终端</code>。</li>
-</ul>
-<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一章将会深入讨论MAC层，包括多路访问协议（multi-access protocols）以及静态和动态信道分配。</p>
-<h1 id="A_Taxonomy_Of_Mechanisms_For_Shared_Access"><a class="header-anchor" href="#A_Taxonomy_Of_Mechanisms_For_Shared_Access">#</a>A Taxonomy Of Mechanisms For Shared Access</h1>
-<p>实现多个计算机通过一个共享媒介来访问数据主要有三种方法： （1）复用技术（Multiplexing Technique） （2）分布算法来控制访问（Distributed Algorithms For Controlled Access） （3）随机访问策略（Random Access Strategy）</p>
-<ul>
-<li>这里的复用技术与在11章中讨论的复用核心思想是相同的，但仍然有略微区别。11章中提到的是物理上的复用，通过复用器将信号合并在一起。这里的复用则是对于共享信道的逻辑划分，使不同的终端占用共享信道的部分资源，所以这里的复用技术也称为<code>信道协议（Channelization Protocols）</code>。</li>
-</ul>
-<p>下图展示了按照共享媒介所使用的方法的分类：</p>
-<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-27-22-55-32.png" alt="共享媒介的分类方法"></p>
-<h1 id="Static_And_Dynamic_Channel_Allocation"><a class="header-anchor" href="#Static_And_Dynamic_Channel_Allocation">#</a>Static And Dynamic Channel Allocation</h1>
-<p>信道分配是与第11章中提到的复用技术相关联的。以频分复用为例子，在第11章中是每个终端都有它的载波频率，终端与载波频率是一对一的关系，这就是<code>信道的静态分配（Static Channel Allocation）</code>。</p>
-<p>信道可以静态分配的前提是预先知道终端的存在，而且终端在传输过程中不会发生变化。而在许多的场景下，终端是会变化的，例如一个路由器负责房间内手机的信号，但是手机可以关闭或者离开房间，这就是终端的变化。</p>
-<p>在这种情况下就需要<code>信道的动态分配（Dynamic Channel Allocation）</code>，即当终端出现时才分配信道的资源给终端。</p>
-<h1 id="Channelization_Protocols"><a class="header-anchor" href="#Channelization_Protocols">#</a>Channelization Protocols</h1>
-<p>与第11章中的复用技术相似，信道分配也存在频分多路复用（Frequency Division Multi-Access），时分多路复用（Time Division Multi—Access），码分多路复用（Code Division Multi-Access）三种类型。</p>
-<h2 id="FDMA"><a class="header-anchor" href="#FDMA">#</a>FDMA</h2>
-<p>频分多路复用下每个终端都可以选择一个载波频率，这个频率并不会影响到其他的终端。在有些系统下存在一个中央控制器进而支持动态的频分多路复用：当一个新的终端出现，中央控制器用一个预留的信道与终端通信，然后分配一个未使用的载波频率给这个终端，之后终端都使用这个载波频率传输数据。</p>
-<h3 id="TDMA"><a class="header-anchor" href="#TDMA">#</a>TDMA</h3>
-<p>时分多路复用下，所有终端按顺序编号，如$1,2,3,…N$，并且会按这个顺序占据信道进行传输。如同频分多路复用，在某些系统下支持动态分配，即终端出现时再分配给他信道的占用时间段。</p>
-<h3 id="CDMA"><a class="header-anchor" href="#CDMA">#</a>CDMA</h3>
-<p>码分多路复用如同码分复用，通过数学方法将多个终端的数据合并在一起，再同时通过信道进行传输。</p>
-<h1 id="Controlled_Access_Protocols"><a class="header-anchor" href="#Controlled_Access_Protocols">#</a>Controlled Access Protocols</h1>
-<p>访问控制协议（Controlled Access Protocols）为统计复用提供了方法，主要分为三个类型：</p>
-<ol>
-<li>轮询（Polling）：控制中央持续的询问每一个终端是否要发送数据。</li>
-<li>预留（Reservation）：终端需要发送信息时，发出一个在下一次循环时发送数据的申请。</li>
-<li>令牌传递（Token Passing）：终端间循环传递一个令牌，当终端持有令牌时可以发送数据。</li>
-</ol>
-<h2 id="Polling"><a class="header-anchor" href="#Polling">#</a>Polling</h2>
-<p><code>轮询（Polling）</code>系统是存在一个中央控制器，这个控制器会询问其下的每个终端是否需要传递数据。轮询可以再细分为两种，<code>轮询调度顺序（Round Robin Order）</code>和<code>优先顺序（Priority Order）</code>。在轮询调度顺序下，每个终端都有相同的机会传递数据，而在优先顺序下，一些终端会有更多的机会去传递数据。</p>
-<p>轮询的算法实现伪代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For Centralized Controller:</span><br><span class="line">while(true)</span><br><span class="line">&#123;</span><br><span class="line">  Select a station S, and send a polling message to S;</span><br><span class="line">  Wait for S to respond by sending a packet or passing;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Reservation"><a class="header-anchor" href="#Reservation">#</a>Reservation</h2>
-<p><code>预留（Reservation）</code>系统多用在航天系统中，系统分为两个步骤，在第一步中需要传输数据的终端申请，所有申请的终端构成一张表，在第二步中表中的终端开始传输数据。通常第一步与第二步使用的是不同的信道，即有一个信道专门用来接受申请信息，另一个信道作为主信道传递每个终端的数据。</p>
-<p>预留的算法实现伪代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For Centralized Controller:</span><br><span class="line">While(true)</span><br><span class="line">&#123;</span><br><span class="line">  Form a list of stations that have a packet to send;</span><br><span class="line">  Allow stations on the list to tranmit;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Token_Passing"><a class="header-anchor" href="#Token_Passing">#</a>Token Passing</h2>
-<p><code>令牌传递（Token Passing）</code>被用在多个局域网（LAN）技术中，被用的最多的就是环形拓步结构中。在一个网络中，某一台计算机持有着一个特殊的控制命令，这个命令被称作为令牌，持有令牌的计算机可以发送数据，在发送完毕后将令牌传递给下一个计算机。</p>
-<p>令牌传递的算法实现伪代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For each computer:</span><br><span class="line">While(true)</span><br><span class="line">&#123;</span><br><span class="line">  Wait for the token to arrive;</span><br><span class="line">  Transmit a packet if one is waiting to be send;</span><br><span class="line">  Send the token to he next station;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>环形拓补结构中，存在物理的环形链接，所以令牌可以直接传递给相邻的下一个电脑。在其他的拓步结构中，所有的计算机都被赋予了一个逻辑顺序，因此可以获知下一个要收取令牌的电脑是哪个。</p>
-<h1 id="Random_Access_Protocols"><a class="header-anchor" href="#Random_Access_Protocols">#</a>Random Access Protocols</h1>
-<p>许多网络，特别是局域网络中，并不使用访问控制协议，而使用<code>随机访问协议（Random Access Protocols）</code>。随机访问协议下只有当终端存在数据要发送时，才会被给予权限（在访问控制协议中，每个终端都要被持续检查）。这里的<em>随机</em>是在所有终端都有数据要发送时的处理方式。随机访问协议也可以被分为三类：</p>
-<ol>
-<li>ALOHA：早期夏威夷的无线电网络中被使用的协议。在教科书中比较流行，因为便于分析，但在实际网络中已不再使用。</li>
-<li>CSMA/CD（Carrier Sense Multi-Access With Collision Detection）：原以太网的基础，现在也不再使用。</li>
-<li>CSMA/CA（Carrier Sense Multi-Access With Collision Avoidance）：Wifi无线网络的基础。</li>
-</ol>
-<h2 id="ALOHA"><a class="header-anchor" href="#ALOHA">#</a>ALOHA</h2>
-<p>在早期夏威夷的网络中使用，在这个系统下有一个强大的发送器被部署中在物理上的中心位置，其他的终端（通常对应一台计算机）在这个发送器周围部署，这些终端都没有足够的能量将数据直接传输给其他终端，因此需要通过中央的发送器。</p>
-<p>中央发送器用两个载波频率与每个终端通信，一个被称为入站频率（In Frequency，407.305MHZ），一个被称为出站频率（Outbound Frequency，413.475MHZ）。终端通过入站频率将数据传递给中央发送器，中央发送器通过出站频率将数据发送给每个终端。</p>
-<p>ALOHA的实现逻辑很直接：当终端有数据要发送时，使用入站频率将数据传递给中央数据站，中央数据站通过出站频率将数据传给所有的终端，终端检查数据是否是自己需要的。为了保证数据被正常发送，发送终端也需要监听出站频率，当发送的数据拷贝被传输回发送终端，发送终端确认数据被正常传递了，就会传输下一个数据。反之，则会在一段时间后尝试重新发送。</p>
-<p>当两个终端同时使用各自的入站频率传输数据时，两个数据会发送混淆，进而导致信息错误，将这种情况称为信道冲突（Collision）。协议通过等待一段时间后重新发送数据来解决冲突，重新发送数据前的等待时间的设定尤为关键，如果两个终端等待的时间相同，那么再次发送数据时仍然是同时发送则会继续导致冲突。因此等待时间是随机的，但是网络繁忙时，冲突的概率仍然会增加，因为即使是随机时间仍然可能会与其他的终端发生冲突。</p>
-<p>ALOHA示意图如下：</p>
-<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-12-56-15.png" alt="ALOHA示意图"></p>
-<h2 id="CSMA_CD"><a class="header-anchor" href="#CSMA_CD">#</a>CSMA/CD</h2>
-<p>1978年，数字设备联盟（Digital Equipment Corporation），英特尔（Intel）和施乐（Xerox）共同指定了个标准（DIX标准），也就是后来的以太网。最早的以太网技术使用一根长电缆连接每个电脑，这根长电缆就是共享媒介，与ALOHA使用中央发送器来实现数据传输不同，在以太网中每个终端都可以通过这个共享的线缆传输数据。以太网同样需要解决冲突问题，以太网主要引入了三个解决冲突的方法，统称为<code>具有冲突检测功能的载波侦听多路访问（CSMA/CD，Carrier Sense Multi-Access With Collision Detection）</code>：</p>
-<ol>
-<li>载波侦听（Carrier Sense）：</li>
-</ol>
-<p>在每个终端发送数据前，先监听线缆确定是否有其他的终端正在传输数据。</p>
-<ol start="2">
-<li>冲突检测（Collision Detection）：</li>
-</ol>
-<p>虽然有载波侦听，但如果在线缆空闲时，两个需要发送数据的终端同时监听，此时他们都发现线缆空闲，因此都开始传输数据，这时候仍然会造成冲突。因此在传输过程中，发送终端也会持续的监听线缆，如果发现线缆中的数据与发送的数据不同，说明已经发生了冲突，数据被干扰了，于是停止数据的发送。</p>
-<p>以太网的数据传输还有一些细节问题，如在检测到冲突时，发送端并不会立刻停止数据的发送，他仍然会传输数据一段时间，保证所有的其他终端都可以收到冲突信号。另外，当一个包被发送完后，发送终端需要等待一段时间，称为<code>包间间隙（Interpacket gap）</code>（在早期10Mbps的以太网中，包间间隙为9.6微秒），保证其他的终端可以检测到线缆的空闲并传递数据。</p>
-<ol start="3">
-<li>二进制指数补偿（Binary Exponential Backoff）</li>
-</ol>
-<p>如ALOHA一样，在发现了冲突后，发送端需要等待一段时间重新发送数据，这个等待时间是随机的，通常会设置一个最大延迟时间$d$，然后在$0\sim d$。如之前所述，在网络繁忙时，可能存在随机后终端仍然冲突的情况。二进制指数补偿是指在新一次冲突发生后，随机的范围变成$0\sim 2d$，如果再有冲突则变成$0\sim 4d$，依次类推。</p>
-<p>CSMA/CD算法实现伪代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For each Computer:</span><br><span class="line"></span><br><span class="line">Wait for a packet to be ready;</span><br><span class="line">Wait for the medium to be idle;</span><br><span class="line">Delay for the interpacket gap;</span><br><span class="line">Set x to be the standard backoff range d;</span><br><span class="line">Attempt to transmit the packet;</span><br><span class="line"></span><br><span class="line">While(Collision occured)</span><br><span class="line">&#123;</span><br><span class="line"> random a delay time q from 0 to x;</span><br><span class="line"> delay for q microseconds;</span><br><span class="line"> double x to be 2x</span><br><span class="line"> attempt to retransmit the packet</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="CSMA_CA"><a class="header-anchor" href="#CSMA_CA">#</a>CSMA/CA</h2>
-<p>CSMA/CD并不能被运用在无线网络中，因为无线网络中的设备存在一个最远距离$\delta$。即如果两个终端的距离大于$\delta$，则CSMA/DA中的载波监听就无法被应用，因为一个终端并不能知道另一个是否在发送信息。这种情况如下图所示，如果Computer1在发送信息，Computer3是无法得知的，因此冲突只有Computer2可以知晓，这种情况称为<code>隐藏终端问题(Hidden Station Problem)</code>。</p>
-<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-00-02.png" alt="隐藏终端问题"></p>
-<p>所以无线网络中使用<code>具有冲突规避的载波侦听多路访问（CSMA/CA，Carrier Sense Multi-Access With Collision Avoidance）</code>。以上图的例子，Computer3在发送数据前会先向所有它的$\delta$范围内的设备发出一个短信息表明自己需要发送数据了，接受到Computer3发出的短信息的设备会检查自己是否正在接受其他的数据，如果不是则回复可以发送的信号。如下图所示：</p>
-<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-08-19.png" alt="CSMA/CA图解"></p>
-<p>如果发送端没有收到接收方的回执，则会在随机时间后再次尝试发送。</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
@@ -2227,6 +2227,34 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
+    <title>《Unix 编程艺术》 第十二章 优化</title>
+    <url>/di_12_zhang_you_hua/</url>
+    <content><![CDATA[<p>这将是很短的一章，因为关于性能优化，Unix 的经验告诉我们最主要的就是如何知道何时不去优化。其次，最有效的优化往往是优化之外的其它事情，如：清晰干净的设计。</p>
+<h1 id="12_1_什么都别做，就站在那儿"><a class="header-anchor" href="#12_1_什么都别做，就站在那儿">#</a>12.1 什么都别做，就站在那儿</h1>
+<p>程序员工具箱中最强大的优化技术就是不做优化。</p>
+<p>有几个理由支持这项禅式的忠告。其中一个是摩尔定律的指数效应一一最聪明、最便宜、常常也是最迅速的性能提升方法，就是等上几个月，期望硬件性能更好。</p>
+<ul>
+<li>考虑到硬件和程序员时间成本比率，总是有更值得打发时间的事，别去优化一个工作中的系统</li>
+</ul>
+<p>这是有数学上的理由的。如果仅仅只是为了减少资源使用的一个常数部分而优化，那是很不值得的。更明智的做法是集中精力将时间复杂度或空间复杂度从 $O(n^2)$ 降至 $O(n)$ 或 $O(n logn)$ 或者类似的，从一个更高次的指数降下来。线性性能增益往往很快就会被摩尔定律覆盖了。</p>
+<h1 id="12_2_先估量，后优化"><a class="header-anchor" href="#12_2_先估量，后优化">#</a>12.2 先估量，后优化</h1>
+<p>如果有真凭实据证明应用程序运行缓慢，这时 (仅当此时)才可以考虑优化代码但付诸实施前，要先估量。</p>
+<p>最初的 Unix 程序员最先学到的经验之一就是要明确瓶颈所在，直觉实在是个糟糕的向导，即使特别熟悉可疑代码的人也不例外。</p>
+<h1 id="12_3_非定域性之害"><a class="header-anchor" href="#12_3_非定域性之害">#</a>12.3 非定域性之害</h1>
+<p>最有效的代码优化方法就是保持代码短小简单。</p>
+<p>随着机器资源成本的直线下降，庞大数据结构的平均开销也随之而降一一但是因为相邻级别缓存的切换开销上升了，大型结构突破缓存容量对性能的影响也就增加了。 因此在这里，“小即是美”的建议比以往更有用，尤其是考虑到核心数据结构必须留在最快的缓存里。该建议也同样适用于代码：通常，指令加载要比执行花费的时间更多。</p>
+<p>这彻底推翻了某些传统的建议。如循环分解，去掉相对昂贵的机器指令而增加代码的总行数，那是不值得的。在 3D 图形引擎中，优化旋转操作的 $sin(x)$ 函数表在现代机器中占据 $365 \times 4$ 字节的空间在。处理器缓冲速度没有内存查询快时，这显然是个速度优化。但是现在，比起函数表产生的附加 Cache Miss 的可能开销，每次重新计算可能更快。</p>
+<p>但在将来，也许随着缓存的增大又会反过来。更普遍的是，不妨悲观地认为，许多优化方法都是暂时的而且常常随着成本比例而变化。唯一的可行方案就是先衡量后再优化。</p>
+<h1 id="12_4_吞吐量和延迟"><a class="header-anchor" href="#12_4_吞吐量和延迟">#</a>12.4 吞吐量和延迟</h1>
+<h2 id="12_4_3_缓存操作结果"><a class="header-anchor" href="#12_4_3_缓存操作结果">#</a>12.4.3 缓存操作结果</h2>
+<p>认为迫切需要缓存的时候，明智的做法是能够从更深层次来考虑，并问问为什么缓存是必须的。这比将缓存的所有边界条件都考虑到要容易得多。</p>
+]]></content>
+      <tags>
+        <tag>编码规范</tag>
+        <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Unix 编程艺术》 第十一章 接口</title>
     <url>/di_11_zhang_jie_kou%EF%BC%9Aunix_huan_jing_xia_de_yong_hu_jie_kou_she_ji_mo_shi/</url>
     <content><![CDATA[<p>在 Unix 接口设计的传统中，会反复涉足两个主题：</p>
@@ -2311,34 +2339,6 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第十二章 优化</title>
-    <url>/di_12_zhang_you_hua/</url>
-    <content><![CDATA[<p>这将是很短的一章，因为关于性能优化，Unix 的经验告诉我们最主要的就是如何知道何时不去优化。其次，最有效的优化往往是优化之外的其它事情，如：清晰干净的设计。</p>
-<h1 id="12_1_什么都别做，就站在那儿"><a class="header-anchor" href="#12_1_什么都别做，就站在那儿">#</a>12.1 什么都别做，就站在那儿</h1>
-<p>程序员工具箱中最强大的优化技术就是不做优化。</p>
-<p>有几个理由支持这项禅式的忠告。其中一个是摩尔定律的指数效应一一最聪明、最便宜、常常也是最迅速的性能提升方法，就是等上几个月，期望硬件性能更好。</p>
-<ul>
-<li>考虑到硬件和程序员时间成本比率，总是有更值得打发时间的事，别去优化一个工作中的系统</li>
-</ul>
-<p>这是有数学上的理由的。如果仅仅只是为了减少资源使用的一个常数部分而优化，那是很不值得的。更明智的做法是集中精力将时间复杂度或空间复杂度从 $O(n^2)$ 降至 $O(n)$ 或 $O(n logn)$ 或者类似的，从一个更高次的指数降下来。线性性能增益往往很快就会被摩尔定律覆盖了。</p>
-<h1 id="12_2_先估量，后优化"><a class="header-anchor" href="#12_2_先估量，后优化">#</a>12.2 先估量，后优化</h1>
-<p>如果有真凭实据证明应用程序运行缓慢，这时 (仅当此时)才可以考虑优化代码但付诸实施前，要先估量。</p>
-<p>最初的 Unix 程序员最先学到的经验之一就是要明确瓶颈所在，直觉实在是个糟糕的向导，即使特别熟悉可疑代码的人也不例外。</p>
-<h1 id="12_3_非定域性之害"><a class="header-anchor" href="#12_3_非定域性之害">#</a>12.3 非定域性之害</h1>
-<p>最有效的代码优化方法就是保持代码短小简单。</p>
-<p>随着机器资源成本的直线下降，庞大数据结构的平均开销也随之而降一一但是因为相邻级别缓存的切换开销上升了，大型结构突破缓存容量对性能的影响也就增加了。 因此在这里，“小即是美”的建议比以往更有用，尤其是考虑到核心数据结构必须留在最快的缓存里。该建议也同样适用于代码：通常，指令加载要比执行花费的时间更多。</p>
-<p>这彻底推翻了某些传统的建议。如循环分解，去掉相对昂贵的机器指令而增加代码的总行数，那是不值得的。在 3D 图形引擎中，优化旋转操作的 $sin(x)$ 函数表在现代机器中占据 $365 \times 4$ 字节的空间在。处理器缓冲速度没有内存查询快时，这显然是个速度优化。但是现在，比起函数表产生的附加 Cache Miss 的可能开销，每次重新计算可能更快。</p>
-<p>但在将来，也许随着缓存的增大又会反过来。更普遍的是，不妨悲观地认为，许多优化方法都是暂时的而且常常随着成本比例而变化。唯一的可行方案就是先衡量后再优化。</p>
-<h1 id="12_4_吞吐量和延迟"><a class="header-anchor" href="#12_4_吞吐量和延迟">#</a>12.4 吞吐量和延迟</h1>
-<h2 id="12_4_3_缓存操作结果"><a class="header-anchor" href="#12_4_3_缓存操作结果">#</a>12.4.3 缓存操作结果</h2>
-<p>认为迫切需要缓存的时候，明智的做法是能够从更深层次来考虑，并问问为什么缓存是必须的。这比将缓存的所有边界条件都考虑到要容易得多。</p>
-]]></content>
-      <tags>
-        <tag>编码规范</tag>
-        <tag>系统设计</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Unix 编程艺术》 第十三章 复杂度</title>
     <url>/di_13_zhang_fu_za_du%EF%BC%9Ajin_ke_neng_jian_dan%EF%BC%8Cdan_bie_jian_dan_guo_le_tou/</url>
     <content><![CDATA[<p>在<a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a> 末，将 Unix 的哲学概括为“KeepItSimple,Stupid!”。贯穿整个“设计”部分的不变主题就是尽可能保持简单设计的重要性。但什么是“尽可能的简单”?又如何断定?</p>
@@ -2395,47 +2395,6 @@ $16.20$介绍了软件无线电系统。</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第十五章 工具</title>
-    <url>/di_15_zhang_gong_ju%EF%BC%9Akai_fa_de_zhan_shu/</url>
-    <content><![CDATA[<h1 id="15_4_make：自动化编译"><a class="header-anchor" href="#15_4_make：自动化编译">#</a>15.4 make：自动化编译</h1>
-<h2 id="15_4_3_通用生成目标"><a class="header-anchor" href="#15_4_3_通用生成目标">#</a>15.4.3 通用生成目标</h2>
-<p>关于通用生成目标应该表示什么，以及它们该如何命名已经有了一组良好的约定。遵从这些会让自己的 makefile 更容易理解和使用：</p>
-<ul>
-<li>
-<p>all： 生成工程中所有可以执行者。通常全部产品并没有明确的定义;往往指工程中高阶的目标文件(并且，并非偶然地，常常有文档说明会包括哪些)。它通常应该是 makcfile 的第一个生成目标，因此它往往是开发者不带参数键入 make 就执行的那一个</p>
-</li>
-<li>
-<p>test： 运行程序的自动测试套件，典型地，包括一组单元测试(Unit Test)来查找递归 bug，或是其它在开发过程中偏离预期行为的误差。“test”目标也可以由软件的最终用户来确保安装程序能够正常工作。</p>
-</li>
-</ul>
-<ul>
-<li>clean：删除 make a11 时产生的所有文件(例如二进制可执行文件和目标文件)。make clean 应该将软件的编译过程重置到良好的初始状态。</li>
-</ul>
-<h1 id="15_5_版本控制系统"><a class="header-anchor" href="#15_5_版本控制系统">#</a>15.5 版本控制系统</h1>
-<h2 id="15_5_1_为什么需要版本控制"><a class="header-anchor" href="#15_5_1_为什么需要版本控制">#</a>15.5.1 为什么需要版本控制</h2>
-<p>如果改变了代码却发现并不可行，如何恢复到一个已知的良好版本?如果回归是困难的或不可靠的，改变代码就太过冒险(有可能会崩掉整个项目，或者为自己凭空增加许多小时的痛苦工作)</p>
-<p>几乎同样重要的是变化追踪。知道代码已经发生了改变，但知道为什么吗？稍后再看它们却很容易就忘记了改变的原因。如果项目存在合作者，又如何知道在自己不注意时合作者改变了什么，另外，每个修改该由谁负责?</p>
-<blockquote>
-<p>常常令人惊奇地发现，即使没有合作者，问问自己从上一个已知的良好版本后改变了什么也非常有用。这也常常会揭露不必要的改变，例如被遗忘的调试码，我现在在检入 (check in)变化前，一般就会做这项工作。<br>
-—— Henry Spencer</p>
-</blockquote>
-<h1 id="15_6_运行期调试"><a class="header-anchor" href="#15_6_运行期调试">#</a>15.6 运行期调试</h1>
-<p>只要拥有超过一星期编程经验的人都会知道，让程序符合正确的语法是调试中相对容易的部分。困难的是在这之后，需要了解为什么语法正确的程序并不如期望的那样运行。</p>
-<h1 id="15_7_性能分析"><a class="header-anchor" href="#15_7_性能分析">#</a>15.7 性能分析</h1>
-<p>作为通用法则程序 90%的执行时间都耗费在 10%的代码上。性能分析软件（Profilers）可以帮助确定那 10%抑制程序速度的区域。这可以让程序跑得更快。</p>
-<p>但在 Unix 传统中，profiler 有个更为重要的功能。它能够让人不去优化其余 90%的代码。这很棒，并不仅仅由于这样节省了工作。其实不去优化余下 90% 代码真正有价值的效应是降低了整体复杂度，减少了 bug。</p>
-<p>做好设计，首先考虑什么是正确的，然后再调整效率。</p>
-<h1 id="15_8_使用_Emacs_整合工具"><a class="header-anchor" href="#15_8_使用_Emacs_整合工具">#</a>15.8 使用 Emacs 整合工具</h1>
-<h2 id="15_8_4_Emacs_和_Profiling"><a class="header-anchor" href="#15_8_4_Emacs_和_Profiling">#</a>15.8.4 Emacs 和 Profiling</h2>
-<p>别蛮干—这会浪费时间和生产力。如果发现在低层次的机械开发部分花费了太多时间的话，先站住。应该运用 Unix 折学。使用工具自动化或半自动化地完成任务。</p>
-<p>然后，作为对所有继承的回报，将自己的解决方案作为开源软件放置在互联网上帮助把程序员同行们从蛮千中解放出来。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Unix 编程艺术》 第十四章 语言</title>
     <url>/di_14_zhang_yu_yan%EF%BC%9Ac_hai_shi_fei_c/</url>
     <content><![CDATA[<h1 id="14_1_Unix_下语言的丰饶"><a class="header-anchor" href="#14_1_Unix_下语言的丰饶">#</a>14.1 Unix 下语言的丰饶</h1>
@@ -2480,6 +2439,47 @@ $16.20$介绍了软件无线电系统。</p>
 <h2 id="14_4_7_Java"><a class="header-anchor" href="#14_4_7_Java">#</a>14.4.7 Java</h2>
 <p>Java 编程语言的设计目标是“write once, run anywhere（一次编写，到处运行）”并且支持网页中嵌入交互程序(即 applets)，可在任一个浏览器中运行。由于其所有者 Sun Microsystems 的一系列技术和战略失误，Java 没有实现这两个最初的设计目标。但它在系统编程和应用编程方面仍然十分强大，足以挑战 C 和 C++。</p>
 <p>尽管远比 C++ 小巧简单，但 Java 设计非常聪明地抓住了自动管理内存的巨大优势也抓住了支持 OO 设计这一虽小却并非不重要的优点。Java 保留了大量的类 C 语法，大多数程序员对此感觉非常舒服。它也包括支持动态载入的 C 调用并支持在 C 中把 Java 作为嵌入语言调用。Sun 公司在网上提供良好 Java 文档的工作完成得非常出色，这一点作用也不可小觑。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》 第十五章 工具</title>
+    <url>/di_15_zhang_gong_ju%EF%BC%9Akai_fa_de_zhan_shu/</url>
+    <content><![CDATA[<h1 id="15_4_make：自动化编译"><a class="header-anchor" href="#15_4_make：自动化编译">#</a>15.4 make：自动化编译</h1>
+<h2 id="15_4_3_通用生成目标"><a class="header-anchor" href="#15_4_3_通用生成目标">#</a>15.4.3 通用生成目标</h2>
+<p>关于通用生成目标应该表示什么，以及它们该如何命名已经有了一组良好的约定。遵从这些会让自己的 makefile 更容易理解和使用：</p>
+<ul>
+<li>
+<p>all： 生成工程中所有可以执行者。通常全部产品并没有明确的定义;往往指工程中高阶的目标文件(并且，并非偶然地，常常有文档说明会包括哪些)。它通常应该是 makcfile 的第一个生成目标，因此它往往是开发者不带参数键入 make 就执行的那一个</p>
+</li>
+<li>
+<p>test： 运行程序的自动测试套件，典型地，包括一组单元测试(Unit Test)来查找递归 bug，或是其它在开发过程中偏离预期行为的误差。“test”目标也可以由软件的最终用户来确保安装程序能够正常工作。</p>
+</li>
+</ul>
+<ul>
+<li>clean：删除 make a11 时产生的所有文件(例如二进制可执行文件和目标文件)。make clean 应该将软件的编译过程重置到良好的初始状态。</li>
+</ul>
+<h1 id="15_5_版本控制系统"><a class="header-anchor" href="#15_5_版本控制系统">#</a>15.5 版本控制系统</h1>
+<h2 id="15_5_1_为什么需要版本控制"><a class="header-anchor" href="#15_5_1_为什么需要版本控制">#</a>15.5.1 为什么需要版本控制</h2>
+<p>如果改变了代码却发现并不可行，如何恢复到一个已知的良好版本?如果回归是困难的或不可靠的，改变代码就太过冒险(有可能会崩掉整个项目，或者为自己凭空增加许多小时的痛苦工作)</p>
+<p>几乎同样重要的是变化追踪。知道代码已经发生了改变，但知道为什么吗？稍后再看它们却很容易就忘记了改变的原因。如果项目存在合作者，又如何知道在自己不注意时合作者改变了什么，另外，每个修改该由谁负责?</p>
+<blockquote>
+<p>常常令人惊奇地发现，即使没有合作者，问问自己从上一个已知的良好版本后改变了什么也非常有用。这也常常会揭露不必要的改变，例如被遗忘的调试码，我现在在检入 (check in)变化前，一般就会做这项工作。<br>
+—— Henry Spencer</p>
+</blockquote>
+<h1 id="15_6_运行期调试"><a class="header-anchor" href="#15_6_运行期调试">#</a>15.6 运行期调试</h1>
+<p>只要拥有超过一星期编程经验的人都会知道，让程序符合正确的语法是调试中相对容易的部分。困难的是在这之后，需要了解为什么语法正确的程序并不如期望的那样运行。</p>
+<h1 id="15_7_性能分析"><a class="header-anchor" href="#15_7_性能分析">#</a>15.7 性能分析</h1>
+<p>作为通用法则程序 90%的执行时间都耗费在 10%的代码上。性能分析软件（Profilers）可以帮助确定那 10%抑制程序速度的区域。这可以让程序跑得更快。</p>
+<p>但在 Unix 传统中，profiler 有个更为重要的功能。它能够让人不去优化其余 90%的代码。这很棒，并不仅仅由于这样节省了工作。其实不去优化余下 90% 代码真正有价值的效应是降低了整体复杂度，减少了 bug。</p>
+<p>做好设计，首先考虑什么是正确的，然后再调整效率。</p>
+<h1 id="15_8_使用_Emacs_整合工具"><a class="header-anchor" href="#15_8_使用_Emacs_整合工具">#</a>15.8 使用 Emacs 整合工具</h1>
+<h2 id="15_8_4_Emacs_和_Profiling"><a class="header-anchor" href="#15_8_4_Emacs_和_Profiling">#</a>15.8.4 Emacs 和 Profiling</h2>
+<p>别蛮干—这会浪费时间和生产力。如果发现在低层次的机械开发部分花费了太多时间的话，先站住。应该运用 Unix 折学。使用工具自动化或半自动化地完成任务。</p>
+<p>然后，作为对所有继承的回报，将自己的解决方案作为开源软件放置在互联网上帮助把程序员同行们从蛮千中解放出来。</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -2568,6 +2568,44 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
+    <title>《Unix 编程艺术》 第十八章 文档</title>
+    <url>/di_18_zhang_wen_dang%EF%BC%9Axiang_wang_luo_shi_jie_chan_shi_dai_ma/</url>
+    <content><![CDATA[<blockquote>
+<p>我从没见过一个愿意阅读 17000 页文档的人，如果有，我会杀了他，这样人的基因必须抹去<br>
+—— Joseph Costello</p>
+</blockquote>
+<h1 id="18_1_文档概念"><a class="header-anchor" href="#18_1_文档概念">#</a>18.1 文档概念</h1>
+<p>所见即所得（WYSIWYG）的文档程序同以标记为中心的工具之间的差异。</p>
+<ul>
+<li>大多数的桌面出版程序和字处理器都属于前者:：具备图形用户界面、键入的文字可以真接插入到文档在屏幕上的表示之中，并尽可能地接近最终的打印版本。</li>
+<li>在以标记为中心的系统中，相对应地，主文本通常就是包含明确可见控制标记的纯文本，跟期望的输出完全不同。标记的源文件可以由普通的文本编辑器修改，但必须传入某个格式器程序来渲染输出以供打印或显示。</li>
+</ul>
+<p>实话实说，WYSIWYG 的文档处理器并不真正所见即所得。大多数程序的界面，并没有真正消除屏幕显示和打印输出的差异，只是让你看不出来而已。这样做其实违反了最小立异原则：界面的可视部分鼓励将程序作为打字机使用，但实际上并不能这么用，而你的输入又时不时地产生无法预料或是非期望的结果。</p>
+<p>再实事求是点，WYSIWYG 系统实际依赖的是标记码，只不过额外支付了巨大的努力以期将此隐藏在一般使用中。这又违反了透明原则：因为无法了解所有的标记，就难以标记位置错误的损坏文档。</p>
+<h1 id="18_2_Unix_风格"><a class="header-anchor" href="#18_2_Unix_风格">#</a>18.2 Unix 风格</h1>
+<h2 id="18_2_1_大文档偏爱"><a class="header-anchor" href="#18_2_1_大文档偏爱">#</a>18.2.1 大文档偏爱</h2>
+<p>对不透明二进制文档格式的厌烦情绪——尤其是不透明的专有二进制格式——也在拒绝 WYSIWYG 工具的过程中起到了一定作用。</p>
+<p>另一方面，PostScript（图像打印机的现行控制语言标准）刚可以使用，Unix 程序员就投入了极大的热情；这门语言整洁优美地符合 Unix 传统的域专用语言。现代的开源 Unix 系统都有优秀的 PostScript 和可移植文档格式（Portable Document Format，PDF）工具。</p>
+<h2 id="18_2_2_文化风格"><a class="header-anchor" href="#18_2_2_文化风格">#</a>18.2.2 文化风格</h2>
+<p>Unix 手册页传统上也包含一个叫做 BUGS 的部分。在其它地方，技术作者为了让软件产品看起来更漂亮，常常省略或一笔带过那些己知的 bug。</p>
+<p>而在 Unix 文化中，同行彼此瓦相事无巨细地揭露软件的已知缺陷而用户也认为一个简单但详细的 BUGS 部分是高质量软件的表征。</p>
+<p>隐瞒了 BUGS 部分或是改头换面为诸如 LIMITATIONS 或 ISSUES 或 APPLICATIONUSAGE 等轻描淡写词语、从而打破这个约定的商业 Unix 发布版本，无一例外地走上了不归之路。</p>
+<h1 id="18_3_各种_Unix_文档格式"><a class="header-anchor" href="#18_3_各种_Unix_文档格式">#</a>18.3 各种 Unix 文档格式</h1>
+<h2 id="18_3_2_Tex"><a class="header-anchor" href="#18_3_2_Tex">#</a>18.3.2 Tex</h2>
+<p>TEX 是个威力强大的排版程序，如同 Emacs 编辑器一样，最初也来自 Unix 文化之外，但现在却在 Unix 文化中落地生根。它是由著名的计算机科学家 Donald Knuth 在 1970 年代晚期发明的，那时的他腻烦了印刷排版的一一特别是数学方面的一一排版质量。</p>
+<p>人们通常也不需要手工编写大量原始的 TEX 宏：而是使用宏命令包以及各式各样的辅助程序。一个特别的宏命今包，LATEX，几乎无所不能，而且大多数人所谓在使用 TEX 创作时实际上几乎总是指用 LATEX 编写。</p>
+<p>TEX 一个通常用户不可见的重要用法就是，其它文档处理工具宁愿生成 LATEX 来转换成 PostScrint，而不是尝试自己生成 PostScript。</p>
+<h1 id="18_6_编写_Unix_文档的最佳实践"><a class="header-anchor" href="#18_6_编写_Unix_文档的最佳实践">#</a>18.6 编写 Unix 文档的最佳实践</h1>
+<p>数量多不会被认为是质量高。尤其是，决不要因为害怕别人看不懂而省略功能细节，也决不要为了面子而不对存在的问题提出警示。不愿坦露问题才会损害信誉和用户，坦白的问题则不会。</p>
+<p>如果项日规模比较大，应该发布三种不同的文档：手册页作为参考资料，教程手册和常见问题解答列表。</p>
+<p>手册页应该为传统的 Unix 用户以传统风格的命令引用形式早现。考虑非技术用户入门手册应该多用全称，少用缩写。而 FAQ 应该随着软件支持群体对软件常用问题及如何回答的深入了解而不断改进。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Unix 编程艺术》 第十九章 开放源码</title>
     <url>/di_19_zhang_kai_fang_yuan_ma%EF%BC%9Azai_unix_xin_she_qu_zhong_bian_cheng/</url>
     <content><![CDATA[<p>当 Unix 实践最接近开放源码时，就欣欣向荣，反之则停滞不前。</p>
@@ -2630,24 +2668,6 @@ Henry Spencer</p>
 <h2 id="19_2_5_良好的交流实践"><a class="header-anchor" href="#19_2_5_良好的交流实践">#</a>19.2.5 良好的交流实践</h2>
 <h3 id="19_2_5_4_提供项目邮件列表"><a class="header-anchor" href="#19_2_5_4_提供项目邮件列表">#</a>19.2.5.4 提供项目邮件列表</h3>
 <p>通告列表应严格控制。通信量最多一月几条：这个列表的整体目标是，向希望知道某些重要事情何时发生的人们提供信息，但并不需要知道日常繁冗的细节。如果这个列表在他们的邮箱中开始带来严重的混乱，许多人会立刻取消订阅。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Unix 编程艺术》 第二十章 未来</title>
-    <url>/di_20_zhang_wei_lai%EF%BC%9Awei_ji_yu_ji_yu/</url>
-    <content><![CDATA[<h1 id="20_5_Unix_文化中的问题"><a class="header-anchor" href="#20_5_Unix_文化中的问题">#</a>20.5 Unix 文化中的问题</h1>
-<p>在 2000 年，当花了三天时间参加了一个 Macintosh 开发者会议之后，我愈发清晰地意识到了更大的心理问题。沉浸在一个同 Unix 世界假设基础完全相反的编程环境中真是个给人启迪的经历。</p>
-<p>Macintosh 程序员最为关心用户体验。他们是建筑设计师和装饰家。他们由外而内进行设计，首先就问“我们需要支持哪种交互?”，然后构建隐藏其后的程序逻辑来满足用户界面设计的需求。</p>
-<p>这就会导致程序外观非常漂亮而内部结构脆弱摇摆。一个声名狼籍的例子，在 MacOs 9 以前的发布版本中，内存管理器有时对于那些退出但仍占用内存的程序，竟然要求用户手动回收内存。Unix 支持者本能地反感这类病态设计：他们不能理解 Macintosh 的人怎么能够忍受这些。</p>
-<p>比起来，Unix 程序员先考虑基础设施。我们是水管工和砖瓦匠。我们的设计由里而外，构建强大的引擎以解决抽象定义问题（例如 “我们如何通过不可靠的链接和硬件而获得从 A 点到 B 点的可靠信息包流交换”)。然而引擎外，我们的包装难看，甚至接口常常相当丑陋。。Macintosh 人也本能地反感这种病态设计，他们也不能理解 Unix 的人怎么能够忍受这些。</p>
-<p>两种设计哲学都有正确的一面，但是两个阵营却难以理解彼此的立场。Unix 开发者典型的反应就是把 Macintosh 软件当作是给无知人的绣花枕头而抛弃，然后继续构建能够吸引其它 Unix 开发者的软件。如果终端用户并不喜欢，那是终端用户的不对，他们了解多了之后，会回来的。</p>
-<p>在 2003 年，在我们的态度中存在深深的矛盾——精英和大众之间的摩擦。我们希望影响和改变这世界 92%的人，对他们来说，计算机就意味着游戏、多媒体、漂亮的 GUI 界面… 我们正花费主要努力在诸如 GNOME 以及 KDE 等设计来给予 Unix 美妙外观的项目。但在内心深处，我们仍旧认为自己是精英，不能或不想去甄别或是倾听以王大婶为代表的普通用户需求。</p>
-<p>对于非技术最终用户，我们构建的软件往往不是令人迷惑无法理解，就是样子难看故意屈尊似的，又或两者兼有。即使我们怀着尽可能高的热情尝试去做对用户友好的事，却可悲地前后矛盾。对于完成这份工作，我们从旧学派 Unix 继承的许多态度和反应都是不恰当的。即使我们想要倾听或帮助王大婶，我们也不知道如何去做一一我们设计了我们的服务类目、关心她并提供“解决方案”，但她却发现这同她存在的问题一样可怕。</p>
-<p>我们在文化上面临的巨大挑战是，… 我们是否能够承认，不仅是在思想上，也是在日常实践的施行上，承认 Macintosh 支持者也抓住了要点。他们的要点也是基于普遍实际，而非 Mac 专用方式。… 交互设计也包含了大量坚实的真理，需要为每个 Unix 程序员所知道。</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -2769,44 +2789,6 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第十八章 文档</title>
-    <url>/di_18_zhang_wen_dang%EF%BC%9Axiang_wang_luo_shi_jie_chan_shi_dai_ma/</url>
-    <content><![CDATA[<blockquote>
-<p>我从没见过一个愿意阅读 17000 页文档的人，如果有，我会杀了他，这样人的基因必须抹去<br>
-—— Joseph Costello</p>
-</blockquote>
-<h1 id="18_1_文档概念"><a class="header-anchor" href="#18_1_文档概念">#</a>18.1 文档概念</h1>
-<p>所见即所得（WYSIWYG）的文档程序同以标记为中心的工具之间的差异。</p>
-<ul>
-<li>大多数的桌面出版程序和字处理器都属于前者:：具备图形用户界面、键入的文字可以真接插入到文档在屏幕上的表示之中，并尽可能地接近最终的打印版本。</li>
-<li>在以标记为中心的系统中，相对应地，主文本通常就是包含明确可见控制标记的纯文本，跟期望的输出完全不同。标记的源文件可以由普通的文本编辑器修改，但必须传入某个格式器程序来渲染输出以供打印或显示。</li>
-</ul>
-<p>实话实说，WYSIWYG 的文档处理器并不真正所见即所得。大多数程序的界面，并没有真正消除屏幕显示和打印输出的差异，只是让你看不出来而已。这样做其实违反了最小立异原则：界面的可视部分鼓励将程序作为打字机使用，但实际上并不能这么用，而你的输入又时不时地产生无法预料或是非期望的结果。</p>
-<p>再实事求是点，WYSIWYG 系统实际依赖的是标记码，只不过额外支付了巨大的努力以期将此隐藏在一般使用中。这又违反了透明原则：因为无法了解所有的标记，就难以标记位置错误的损坏文档。</p>
-<h1 id="18_2_Unix_风格"><a class="header-anchor" href="#18_2_Unix_风格">#</a>18.2 Unix 风格</h1>
-<h2 id="18_2_1_大文档偏爱"><a class="header-anchor" href="#18_2_1_大文档偏爱">#</a>18.2.1 大文档偏爱</h2>
-<p>对不透明二进制文档格式的厌烦情绪——尤其是不透明的专有二进制格式——也在拒绝 WYSIWYG 工具的过程中起到了一定作用。</p>
-<p>另一方面，PostScript（图像打印机的现行控制语言标准）刚可以使用，Unix 程序员就投入了极大的热情；这门语言整洁优美地符合 Unix 传统的域专用语言。现代的开源 Unix 系统都有优秀的 PostScript 和可移植文档格式（Portable Document Format，PDF）工具。</p>
-<h2 id="18_2_2_文化风格"><a class="header-anchor" href="#18_2_2_文化风格">#</a>18.2.2 文化风格</h2>
-<p>Unix 手册页传统上也包含一个叫做 BUGS 的部分。在其它地方，技术作者为了让软件产品看起来更漂亮，常常省略或一笔带过那些己知的 bug。</p>
-<p>而在 Unix 文化中，同行彼此瓦相事无巨细地揭露软件的已知缺陷而用户也认为一个简单但详细的 BUGS 部分是高质量软件的表征。</p>
-<p>隐瞒了 BUGS 部分或是改头换面为诸如 LIMITATIONS 或 ISSUES 或 APPLICATIONUSAGE 等轻描淡写词语、从而打破这个约定的商业 Unix 发布版本，无一例外地走上了不归之路。</p>
-<h1 id="18_3_各种_Unix_文档格式"><a class="header-anchor" href="#18_3_各种_Unix_文档格式">#</a>18.3 各种 Unix 文档格式</h1>
-<h2 id="18_3_2_Tex"><a class="header-anchor" href="#18_3_2_Tex">#</a>18.3.2 Tex</h2>
-<p>TEX 是个威力强大的排版程序，如同 Emacs 编辑器一样，最初也来自 Unix 文化之外，但现在却在 Unix 文化中落地生根。它是由著名的计算机科学家 Donald Knuth 在 1970 年代晚期发明的，那时的他腻烦了印刷排版的一一特别是数学方面的一一排版质量。</p>
-<p>人们通常也不需要手工编写大量原始的 TEX 宏：而是使用宏命令包以及各式各样的辅助程序。一个特别的宏命今包，LATEX，几乎无所不能，而且大多数人所谓在使用 TEX 创作时实际上几乎总是指用 LATEX 编写。</p>
-<p>TEX 一个通常用户不可见的重要用法就是，其它文档处理工具宁愿生成 LATEX 来转换成 PostScrint，而不是尝试自己生成 PostScript。</p>
-<h1 id="18_6_编写_Unix_文档的最佳实践"><a class="header-anchor" href="#18_6_编写_Unix_文档的最佳实践">#</a>18.6 编写 Unix 文档的最佳实践</h1>
-<p>数量多不会被认为是质量高。尤其是，决不要因为害怕别人看不懂而省略功能细节，也决不要为了面子而不对存在的问题提出警示。不愿坦露问题才会损害信誉和用户，坦白的问题则不会。</p>
-<p>如果项日规模比较大，应该发布三种不同的文档：手册页作为参考资料，教程手册和常见问题解答列表。</p>
-<p>手册页应该为传统的 Unix 用户以传统风格的命令引用形式早现。考虑非技术用户入门手册应该多用全称，少用缩写。而 FAQ 应该随着软件支持群体对软件常用问题及如何回答的深入了解而不断改进。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Unix 编程艺术》 第二章 历史</title>
     <url>/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji/</url>
     <content><![CDATA[<h1 id="2_1_Unix_起源于历史，1969_1995"><a class="header-anchor" href="#2_1_Unix_起源于历史，1969_1995">#</a>2.1 Unix 起源于历史，1969-1995</h1>
@@ -2815,6 +2797,24 @@ Henry Spencer</p>
       <tags>
         <tag>编码规范</tag>
         <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》 第二十章 未来</title>
+    <url>/di_20_zhang_wei_lai%EF%BC%9Awei_ji_yu_ji_yu/</url>
+    <content><![CDATA[<h1 id="20_5_Unix_文化中的问题"><a class="header-anchor" href="#20_5_Unix_文化中的问题">#</a>20.5 Unix 文化中的问题</h1>
+<p>在 2000 年，当花了三天时间参加了一个 Macintosh 开发者会议之后，我愈发清晰地意识到了更大的心理问题。沉浸在一个同 Unix 世界假设基础完全相反的编程环境中真是个给人启迪的经历。</p>
+<p>Macintosh 程序员最为关心用户体验。他们是建筑设计师和装饰家。他们由外而内进行设计，首先就问“我们需要支持哪种交互?”，然后构建隐藏其后的程序逻辑来满足用户界面设计的需求。</p>
+<p>这就会导致程序外观非常漂亮而内部结构脆弱摇摆。一个声名狼籍的例子，在 MacOs 9 以前的发布版本中，内存管理器有时对于那些退出但仍占用内存的程序，竟然要求用户手动回收内存。Unix 支持者本能地反感这类病态设计：他们不能理解 Macintosh 的人怎么能够忍受这些。</p>
+<p>比起来，Unix 程序员先考虑基础设施。我们是水管工和砖瓦匠。我们的设计由里而外，构建强大的引擎以解决抽象定义问题（例如 “我们如何通过不可靠的链接和硬件而获得从 A 点到 B 点的可靠信息包流交换”)。然而引擎外，我们的包装难看，甚至接口常常相当丑陋。。Macintosh 人也本能地反感这种病态设计，他们也不能理解 Unix 的人怎么能够忍受这些。</p>
+<p>两种设计哲学都有正确的一面，但是两个阵营却难以理解彼此的立场。Unix 开发者典型的反应就是把 Macintosh 软件当作是给无知人的绣花枕头而抛弃，然后继续构建能够吸引其它 Unix 开发者的软件。如果终端用户并不喜欢，那是终端用户的不对，他们了解多了之后，会回来的。</p>
+<p>在 2003 年，在我们的态度中存在深深的矛盾——精英和大众之间的摩擦。我们希望影响和改变这世界 92%的人，对他们来说，计算机就意味着游戏、多媒体、漂亮的 GUI 界面… 我们正花费主要努力在诸如 GNOME 以及 KDE 等设计来给予 Unix 美妙外观的项目。但在内心深处，我们仍旧认为自己是精英，不能或不想去甄别或是倾听以王大婶为代表的普通用户需求。</p>
+<p>对于非技术最终用户，我们构建的软件往往不是令人迷惑无法理解，就是样子难看故意屈尊似的，又或两者兼有。即使我们怀着尽可能高的热情尝试去做对用户友好的事，却可悲地前后矛盾。对于完成这份工作，我们从旧学派 Unix 继承的许多态度和反应都是不恰当的。即使我们想要倾听或帮助王大婶，我们也不知道如何去做一一我们设计了我们的服务类目、关心她并提供“解决方案”，但她却发现这同她存在的问题一样可怕。</p>
+<p>我们在文化上面临的巨大挑战是，… 我们是否能够承认，不仅是在思想上，也是在日常实践的施行上，承认 Macintosh 支持者也抓住了要点。他们的要点也是基于普遍实际，而非 Mac 专用方式。… 交互设计也包含了大量坚实的真理，需要为每个 Unix 程序员所知道。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>编码规范</tag>
       </tags>
   </entry>
   <entry>
@@ -3255,46 +3255,6 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 - 设计原则总结</title>
-    <url>/head_first_design_pattern_design_principles/</url>
-    <content><![CDATA[<ol>
-<li>将变化的部分封装起来（Encapsulate what varies)</li>
-<li>组合优于继承（Favor composition over inheritance）</li>
-<li>面向接口编程而非实现（Program to interfaces, not implementations.）</li>
-<li>减少需要交互的类之间的耦合（Strive for loosely coupled designs between objects that interact）</li>
-<li>对拓展开放，对修改关闭（Classes should be open for extension but closed for modification.）</li>
-<li>依赖于抽象而非具体的类（ Depend on abstraction. Do not depend on concrete classes）</li>
-<li>暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）</li>
-<li>高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don’t call us ,we’ll call you）</li>
-<li>一个类应该有且只有一个被改变的理由（A class should have only one reason to change）</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 笔记汇总</title>
-    <url>/head_first_design_patterns/</url>
-    <content><![CDATA[<p><a href="/ch_01_the_strategy_pattern">Ch 01 the Strategy Pattern</a></p>
-<p><a href="/ch_02_the_observer_pattern">Ch 02 the Observer Pattern</a></p>
-<p><a href="/ch_03_the_decorator_pattern">Ch 03 the Decorator Pattern</a></p>
-<p><a href="/ch_04_the_factory_pattern">Ch 04 the Factory Pattern</a></p>
-<p><a href="/ch_05_the_singleton_pattern">Ch 05 the Singleton Pattern</a></p>
-<p><a href="/ch_06_the_command_pattern">Ch 06 the Command Pattern</a></p>
-<p><a href="/ch_07_the_adapter_and_facade_patterns">Ch 07 the Adapter and Facade Patterns</a></p>
-<p><a href="/ch_08_the_template_method_pattern">Ch 08 the Template Method Pattern</a></p>
-<p><a href="/ch_09_the_iterator_and_composite_pattern">Ch 09 the Iterator and Composite Pattern</a></p>
-<p><a href="/ch_10_the_state_pattern">Ch 10 the State Pattern</a></p>
-<p><a href="/ch_11_the_proxy_pattern">Ch 11 the Proxy Pattern</a></p>
-<p><a href="/ch_12_the_compound_patterns">Ch 12 the Compound Patterns</a></p>
-<p><a href="/head_first_design_pattern_design_principles">Head First Design Pattern Design Principles</a></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《蛤蟆先生去看心理医生》 摘抄</title>
     <url>/ha_ma_xian_sheng_qu_kan_xin_li_yi_sheng/</url>
     <content><![CDATA[<h1 id="第三章_初见咨询师"><a class="header-anchor" href="#第三章_初见咨询师">#</a>第三章 初见咨询师</h1>
@@ -3559,6 +3519,25 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 - 设计原则总结</title>
+    <url>/head_first_design_pattern_design_principles/</url>
+    <content><![CDATA[<ol>
+<li>将变化的部分封装起来（Encapsulate what varies)</li>
+<li>组合优于继承（Favor composition over inheritance）</li>
+<li>面向接口编程而非实现（Program to interfaces, not implementations.）</li>
+<li>减少需要交互的类之间的耦合（Strive for loosely coupled designs between objects that interact）</li>
+<li>对拓展开放，对修改关闭（Classes should be open for extension but closed for modification.）</li>
+<li>依赖于抽象而非具体的类（ Depend on abstraction. Do not depend on concrete classes）</li>
+<li>暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）</li>
+<li>高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don’t call us ,we’ll call you）</li>
+<li>一个类应该有且只有一个被改变的理由（A class should have only one reason to change）</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SOLID 原则</title>
     <url>/solid/</url>
     <content><![CDATA[<p><code>SOLID</code> 原则是面向对象编程中的五个重要设计原则，有助于增强软件的可维护性、可扩展性和可读性。</p>
@@ -3797,6 +3776,27 @@ Henry Spencer</p>
         <tag>心理</tag>
         <tag>自然科学</tag>
         <tag>科普</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 笔记汇总</title>
+    <url>/head_first_design_patterns/</url>
+    <content><![CDATA[<p><a href="/ch_01_the_strategy_pattern">Ch 01 the Strategy Pattern</a></p>
+<p><a href="/ch_02_the_observer_pattern">Ch 02 the Observer Pattern</a></p>
+<p><a href="/ch_03_the_decorator_pattern">Ch 03 the Decorator Pattern</a></p>
+<p><a href="/ch_04_the_factory_pattern">Ch 04 the Factory Pattern</a></p>
+<p><a href="/ch_05_the_singleton_pattern">Ch 05 the Singleton Pattern</a></p>
+<p><a href="/ch_06_the_command_pattern">Ch 06 the Command Pattern</a></p>
+<p><a href="/ch_07_the_adapter_and_facade_patterns">Ch 07 the Adapter and Facade Patterns</a></p>
+<p><a href="/ch_08_the_template_method_pattern">Ch 08 the Template Method Pattern</a></p>
+<p><a href="/ch_09_the_iterator_and_composite_pattern">Ch 09 the Iterator and Composite Pattern</a></p>
+<p><a href="/ch_10_the_state_pattern">Ch 10 the State Pattern</a></p>
+<p><a href="/ch_11_the_proxy_pattern">Ch 11 the Proxy Pattern</a></p>
+<p><a href="/ch_12_the_compound_patterns">Ch 12 the Compound Patterns</a></p>
+<p><a href="/head_first_design_pattern_design_principles">Head First Design Pattern Design Principles</a></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
