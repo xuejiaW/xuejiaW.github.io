@@ -1,14 +1,14 @@
 ---
 tags:
-    - Dotnet
+  - Dotnet
 created: 2023-10-21
-updated: 2023-11-06
-alias:
-    - .net Tools
+updated: 2023-11-08
+aliases:
+  - .net Tools
 published: true
-title: .Net Tools 指南
-date: 2023-11-05 22:25 
-description: .Net Tools 介绍，包含一个最简例子演示如何将编写的命令行程序生成为可全局运行的工具
+title: .Net Tools 创建指南
+date: 2023-11-05 22:25
+description: .Net Tools 创建教程，包含一个最简例子（一个在命令行输出字符的小牛）演示如何将编写的命令行程序生成为可全局运行的工具
 ---
 
 # 创建一个 .Net Tool
@@ -96,7 +96,6 @@ namespace example.cowsay
     __________________
                          \
                           \
-                           ^__^
                              (oo)\_______
                              (__)        )\/\
                                  ||------||
@@ -132,7 +131,6 @@ Usage:
     __________________
                          \
                           \
-                           ^__^
                              (oo)\_______
                              (__)        )\/\
                                  ||------||
@@ -147,6 +145,7 @@ Usage:
 <PackAsTool>true</PackAsTool>
 <ToolCommandName>cowsay</ToolCommandName>
 <PackageOutputPath>./nupkg</PackageOutputPath>
+<Version> 1.0.1 </Version>
 ```
 
 其中：
@@ -154,6 +153,7 @@ Usage:
 - `<PackAsTool>` 标签是用来指定是否将项目打包为一个 .Net Tool
 - `<ToolCommandName>` 标签是用来指定打包后的 .Net Tool 的名称，该名称会用于后续在 CLI 中调用
 - `<PackageOutputPath>` 标签是用来指定打包后的 .Net Tool 的输出路径。
+- `<Version>` 标签标识打包后的 .Net Tool 的版本
 
 此时在 `example.cowsay` 文件夹下执行 `pack` 命令进行打包：
 
@@ -165,12 +165,12 @@ dotnet pack
 
 ```powershell
 ├───nupkg
-│       example.cowsay.1.0.0.nupkg
+│       example.cowsay.1.0.1.nupkg
 ```
 
 ## 安装 Global Tool
 
-当 [打包 Tool](/dot_net_tools/#打包-tool) 生成了一个可安装的 .Net Tool 后，就可以使用 `dotnet tool install` 命令来安装该 Tool：
+当 [打包 Tool](/create_.net_tools/#打包-tool) 生成了一个可安装的 .Net Tool 后，就可以使用 `dotnet tool install` 命令来安装该 Tool：
 
 ```powershell
 dotnet tool install --global --add-source <sourcePath> <toolName>
@@ -188,7 +188,6 @@ Tool 'example.cowsay' (version '1.0.0') was successfully installed.
     __________________
                          \
                           \
-                           ^__^
                              (oo)\_______
                              (__)        )\/\
                                  ||------||
@@ -220,6 +219,14 @@ dotnet tool install --tool-path <path> --add-source <sourcePath> <toolName>
 
 ```powershell
 dotnet tool uninstall --tool-path <path> <toolName>
+```
+
+## 更新 Tool
+
+如果修改了 Tool 并重新进行了 [打包 Tool](/create_.net_tools/#打包_Tool) 操作，可以使用 `update` 进行 tool 的更新：
+```powershell
+dotnet tool update --global --add-source <sourcePath> <toolName>
+// dotnet tool update --global --add-source .\nupkg obsidian2hexo-cli
 ```
 
 # Reference

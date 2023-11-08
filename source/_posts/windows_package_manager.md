@@ -5,7 +5,7 @@ tags:
 alias:
 - winget
 created: 2023-10-30
-updated: 2023-11-06
+updated: 2023-11-08
 published: true
 description: Windows Package Manager （winget） 是微软推出的基于命令行的包管理器，类似于 Chocolatey。在 winget 杠推出的时候，其功能非常的不健全，甚至于都没有 uninstall 支持，但在最新的 Win 11 中已经默认带上了 winget，且基本可以满足日常应用的安装。
 title: Windows Package Manager（winget）使用指南
@@ -22,6 +22,13 @@ Package Manager 所管理的 Package，实际指应用（application / program�
 {% endnote %}
 
 理想情况下，开发人员使用 Package Manager 来指定开发所需的环境，Package 按照来说明安装和配置工具。Package Manager 可以减少准备环境所花费的时间，并且有助于确保在计算机上安装相同版本的包。
+
+{% note info %}
+下部分基于 winget 版本 1.6.2771。
+
+部分 Windows 安装时自带 winget 1.2 版本，在实际使用时会遇到各种问题。 
+
+{% endnote %}
 
 # 安装
 
@@ -82,7 +89,7 @@ winget install Microsoft.AzureStorageExplorer; winget install Microsoft.VisualSt
 可以使用 `-h` 或 `--slient` 保证以静默方式安装。
 
 > [!Caution]
->
+
 > 如果使用了静默安装，但安装要求管理员权限且当前命令行又不具有，则可能出现错误。
 > 因此建议在使用静默安装时，使用管理员权限打开命令行
 
