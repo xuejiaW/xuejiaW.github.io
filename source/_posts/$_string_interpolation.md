@@ -179,7 +179,7 @@ C:\Users\wxj\Documents
 C:\Users\wxj\Documents
 ```
 
-{% note info %}
+{% note primary %}
 C# 8.0 后，`$` 与 `@` 的先后顺序不会造成任何影响。在早期版本中，必须先写 `$` 再写 `@`。
 
 {% endnote %}
