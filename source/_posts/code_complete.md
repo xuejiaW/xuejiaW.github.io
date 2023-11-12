@@ -36,9 +36,9 @@ Preface
 
 # Creating High-Quality Code
 
-Ch 05 Design in Construction
+[Ch 05 Design in Construction](/ch_05_design_in_construction)
 
-- Ch 05 Design Checklist
+- [Ch 05 Design Checklist](/ch_05_design_checklist)
 
 Ch 06 Working Classes
 Ch 07 High-Quality Routines

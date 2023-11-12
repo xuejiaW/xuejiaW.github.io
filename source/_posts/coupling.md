@@ -25,4 +25,4 @@ description: 本篇简略的介绍内聚与耦合的概念，并以图描绘模�
 
 ![耦合和内聚](/coupling/image-20230611124256681.png)
 
-- Code Complete 中关于耦合的讨论：保持松耦合
+- Code Complete 中关于耦合的讨论：[保持松耦合](/ch_05_design_in_construction/#保持松耦合)
