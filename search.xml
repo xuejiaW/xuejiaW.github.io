@@ -248,6 +248,46 @@
       </tags>
   </entry>
   <entry>
+    <title>《Render Hell》 第一部分 概览</title>
+    <url>/book_1_overview/</url>
+    <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
+</div>
+<h1 id="Copy_the_Data"><a class="header-anchor" href="#Copy_the_Data">#</a>Copy the Data</h1>
+<div class="note info simple"><p>之所以需要在不同的硬件间拷贝数据，是因为从不同硬件中读取数据的速度差异很大。因此对于当前需要频繁访问的数据，通常会选择将其拷贝到更为高速的内存部分中。</p>
+</div>
+<div class="note warning simple"><p>GPU 和 显卡 并不是相等的关系 GPU 全称为 Graphics Processing Unit，它指示显卡中的核心计算芯片。整个显卡中还包括显存（VRam），散热器等配件。</p>
+</div>
+<p>对于所有与绘制相关的资源，如贴图，模型，一开始都是存储在硬盘（HDD）上的 。在整个绘制过程中，它们会先被读取到内存（RAM）中，再被读取到显卡上的显存（VRAM）中。之所以要进行这么一个数据从 HDD 拷贝到 VRAM 中的操作，是因为显卡读取 VRAM 中的内容速度更快。整个过程如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_8-52-50_am.gif" alt="数据从内存拷贝到显存"></p>
+<p>又因为整个过程中数据是被 拷贝 的，因此当数据进入 VRAM 后，在 RAM 中的数据可以被正常销毁，不会影响到后续的绘制。如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_8-55-43_am.gif" alt="内存中数据可安全销毁"></p>
+<p>但是 GPU 访问 VRAM 速度仍然不够快，VRAM 中需要使用到的数据会进一步的被拷贝到 GPU 中的一小块内存上（ on-chip caches），这一块内存被称为 <code>L2 Cache</code> 。过程如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_9-18-41_am.gif" alt="L2 Cache"></p>
+<p>在 GPU 更靠近核心（Core）的地方，还有一片更小的内存，称为 <code>L1 Cache</code> 。因为更靠近核心，所以 <code>L1 Cache</code> 中数据的访问速度相对于 <code>L2 Cache</code> 也更快。 <code>L2 Cache</code> 中的数据在需要被操作时，也会先拷贝到 <code>L1 Cache</code> 中。</p>
+<p>在 <code>L1 Cache</code> 中的数据还会被进一步拷贝到 GPU 中被称为 <code>Register</code> 的内存区域，GPU Cores 会从该区域中读取数据，计算并将运算后结果放回到 <code>Register</code> 中：<br>
+<img src="/book_1_overview/gif_9-13-2021_9-25-58_am.gif" alt="Register"></p>
+<h1 id="Set_the_Render_State"><a class="header-anchor" href="#Set_the_Render_State">#</a>Set the Render State</h1>
+<p>对于除了 Mesh 数据外的数据，如顶点/像素着色器，纹理，材质，光照信息，是否半透明等信息都称为 <code>Render State</code> 。</p>
+<p>Mesh 数据会使用被设置的 <code>Render State</code> 进行渲染，图形 API 又是一个类似状态机的实现，即设置了 Render State 后，后续的 Mesh 都会使用该 State 进行渲染，直到有了新 State 被设置。示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_8-47-57_am.gif" alt="State"></p>
+<h1 id="Draw_Call"><a class="header-anchor" href="#Draw_Call">#</a>Draw Call</h1>
+<p><code>DrawCall</code> 是一个由 CPU 端发出，由 GPU 端接受的绘制 <strong>一个 Mesh</strong> 的指令。该指令只包含指向需要绘制的 Mesh 的指针，而如材质这样的信息是通过 Render State 进行传递，并不会在 <code>DrawCall</code> 中。示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_8-55-41_am.gif" alt="Draw Call"></p>
+<h1 id="Pipeline"><a class="header-anchor" href="#Pipeline">#</a>Pipeline</h1>
+<p>当 <code>DrawCall</code> 发送后，GPU 会获取当前的 Render State，和设置的顶点信息（Mesh），并通过渲染管线（Pipeline）将其一步步转换到最终屏幕上所见像素。在管线中，对于顶点和像素的工作会被划分到 GPU 的多个核心中平行处理。整个管线工作的简单示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_9-02-13_am.gif" alt="Pipeline"></p>
+<h1 id="Command_Buffer"><a class="header-anchor" href="#Command_Buffer">#</a>Command Buffer</h1>
+<p>CPU 并不是直接将数据传递给 GPU，而是通过 <code>Command Buffer</code> ，这样 CPU 和 GPU 就可以各自独立的工作。如果是直接传递的话，当 GPU 在忙碌时，CPU 无法将数据送给 GPU，就会造成 CPU 的堵塞。</p>
+<p>Command Buffer 是一个 <code>FIFO 存储器</code> ，即 GPU 只会取 CPU 最早 Push 进 Command Buffer 中的数据。 Command Buffer 的示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_9-12-25_am.gif" alt="Command Buffer"></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book1/">Render Hell – Book I | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Render Hell》 第二部分 管线</title>
     <url>/book_2_pipeline/</url>
     <content><![CDATA[<h1 id="GPU_Core"><a class="header-anchor" href="#GPU_Core">#</a>GPU Core</h1>
@@ -370,46 +410,6 @@
 </li>
 </ol>
 </section>
-]]></content>
-      <tags>
-        <tag>GPU</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Render Hell》 第一部分 概览</title>
-    <url>/book_1_overview/</url>
-    <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
-</div>
-<h1 id="Copy_the_Data"><a class="header-anchor" href="#Copy_the_Data">#</a>Copy the Data</h1>
-<div class="note info simple"><p>之所以需要在不同的硬件间拷贝数据，是因为从不同硬件中读取数据的速度差异很大。因此对于当前需要频繁访问的数据，通常会选择将其拷贝到更为高速的内存部分中。</p>
-</div>
-<div class="note warning simple"><p>GPU 和 显卡 并不是相等的关系 GPU 全称为 Graphics Processing Unit，它指示显卡中的核心计算芯片。整个显卡中还包括显存（VRam），散热器等配件。</p>
-</div>
-<p>对于所有与绘制相关的资源，如贴图，模型，一开始都是存储在硬盘（HDD）上的 。在整个绘制过程中，它们会先被读取到内存（RAM）中，再被读取到显卡上的显存（VRAM）中。之所以要进行这么一个数据从 HDD 拷贝到 VRAM 中的操作，是因为显卡读取 VRAM 中的内容速度更快。整个过程如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_8-52-50_am.gif" alt="数据从内存拷贝到显存"></p>
-<p>又因为整个过程中数据是被 拷贝 的，因此当数据进入 VRAM 后，在 RAM 中的数据可以被正常销毁，不会影响到后续的绘制。如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_8-55-43_am.gif" alt="内存中数据可安全销毁"></p>
-<p>但是 GPU 访问 VRAM 速度仍然不够快，VRAM 中需要使用到的数据会进一步的被拷贝到 GPU 中的一小块内存上（ on-chip caches），这一块内存被称为 <code>L2 Cache</code> 。过程如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_9-18-41_am.gif" alt="L2 Cache"></p>
-<p>在 GPU 更靠近核心（Core）的地方，还有一片更小的内存，称为 <code>L1 Cache</code> 。因为更靠近核心，所以 <code>L1 Cache</code> 中数据的访问速度相对于 <code>L2 Cache</code> 也更快。 <code>L2 Cache</code> 中的数据在需要被操作时，也会先拷贝到 <code>L1 Cache</code> 中。</p>
-<p>在 <code>L1 Cache</code> 中的数据还会被进一步拷贝到 GPU 中被称为 <code>Register</code> 的内存区域，GPU Cores 会从该区域中读取数据，计算并将运算后结果放回到 <code>Register</code> 中：<br>
-<img src="/book_1_overview/gif_9-13-2021_9-25-58_am.gif" alt="Register"></p>
-<h1 id="Set_the_Render_State"><a class="header-anchor" href="#Set_the_Render_State">#</a>Set the Render State</h1>
-<p>对于除了 Mesh 数据外的数据，如顶点/像素着色器，纹理，材质，光照信息，是否半透明等信息都称为 <code>Render State</code> 。</p>
-<p>Mesh 数据会使用被设置的 <code>Render State</code> 进行渲染，图形 API 又是一个类似状态机的实现，即设置了 Render State 后，后续的 Mesh 都会使用该 State 进行渲染，直到有了新 State 被设置。示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_8-47-57_am.gif" alt="State"></p>
-<h1 id="Draw_Call"><a class="header-anchor" href="#Draw_Call">#</a>Draw Call</h1>
-<p><code>DrawCall</code> 是一个由 CPU 端发出，由 GPU 端接受的绘制 <strong>一个 Mesh</strong> 的指令。该指令只包含指向需要绘制的 Mesh 的指针，而如材质这样的信息是通过 Render State 进行传递，并不会在 <code>DrawCall</code> 中。示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_8-55-41_am.gif" alt="Draw Call"></p>
-<h1 id="Pipeline"><a class="header-anchor" href="#Pipeline">#</a>Pipeline</h1>
-<p>当 <code>DrawCall</code> 发送后，GPU 会获取当前的 Render State，和设置的顶点信息（Mesh），并通过渲染管线（Pipeline）将其一步步转换到最终屏幕上所见像素。在管线中，对于顶点和像素的工作会被划分到 GPU 的多个核心中平行处理。整个管线工作的简单示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_9-02-13_am.gif" alt="Pipeline"></p>
-<h1 id="Command_Buffer"><a class="header-anchor" href="#Command_Buffer">#</a>Command Buffer</h1>
-<p>CPU 并不是直接将数据传递给 GPU，而是通过 <code>Command Buffer</code> ，这样 CPU 和 GPU 就可以各自独立的工作。如果是直接传递的话，当 GPU 在忙碌时，CPU 无法将数据送给 GPU，就会造成 CPU 的堵塞。</p>
-<p>Command Buffer 是一个 <code>FIFO 存储器</code> ，即 GPU 只会取 CPU 最早 Push 进 Command Buffer 中的数据。 Command Buffer 的示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_9-12-25_am.gif" alt="Command Buffer"></p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell-book1/">Render Hell – Book I | Simon schreibt.</a></p>
 ]]></content>
       <tags>
         <tag>GPU</tag>
@@ -778,6 +778,29 @@
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 Ch 02 观察者模式</title>
+    <url>/ch_02_the_observer_pattern/</url>
+    <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
+<p>例如我们希望定义温度计和压力计，在天气信息发生变化时自动更新，而非自己反复的查询是否天气信息有发生变化。这里天气信息就是被观察者，而温度计和压力计就是观察者。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="观察者及被观察者接口"><a class="header-anchor" href="#观察者及被观察者接口">#</a>观察者及被观察者接口</h2>
+<figure class="highlight cs"><figcaption><span>被观察者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ISubject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">UnregisterObserver</span>(<span class="params">IObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">NotifyObservers</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>观察者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="观察者实现"><a class="header-anchor" href="#观察者实现">#</a>观察者实现</h2>
+<figure class="highlight cs"><figcaption><span>温度计</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TemperatureObserver</span> : <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ISubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TemperatureObserver</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">        <span class="keyword">this</span>.subject.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        WeatherData weatherData = subject <span class="keyword">as</span> WeatherData;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//注意这里我们是从主动从被观察者那里去获取数据</span></span><br><span class="line">        <span class="keyword">if</span> (weatherData != <span class="literal">null</span>)</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Temperature is &quot;</span> + weatherData.Temperature);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>压力计</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PressureObserver</span> : <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ISubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PressureObserver</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">        <span class="keyword">this</span>.subject.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        WeatherData weatherData = subject <span class="keyword">as</span> WeatherData;</span><br><span class="line">        <span class="keyword">if</span> (weatherData != <span class="literal">null</span>)</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Pressure is &quot;</span> + weatherData.Pressure);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="被观察者实现"><a class="header-anchor" href="#被观察者实现">#</a>被观察者实现</h2>
+<figure class="highlight cs"><figcaption><span>天气数据</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">WeatherData</span> : <span class="title">ISubject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;IObserver&gt; observersList;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Temperature &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Humidity &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Pressure &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WeatherData</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList = <span class="keyword">new</span> List&lt;IObserver&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">NotifyObservers</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.ForEach(o =&gt; o.Update(<span class="keyword">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IObserver o</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Add(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnregisterObserver</span>(<span class="params">IObserver o</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Remove(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">measurementsChanged</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        NotifyObservers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetMeasurements</span>(<span class="params"><span class="built_in">float</span> temperature, <span class="built_in">float</span> humidity, <span class="built_in">float</span> pressure</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.Temperature = temperature;</span><br><span class="line">        <span class="keyword">this</span>.Humidity = humidity;</span><br><span class="line">        <span class="keyword">this</span>.Pressure = pressure;</span><br><span class="line">        measurementsChanged();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">WeatherData weatherData = <span class="keyword">new</span> WeatherData();</span><br><span class="line">TemperatureObserver temperatureObserver = <span class="keyword">new</span> TemperatureObserver(weatherData);</span><br><span class="line">PressureObserver pressureObserver = <span class="keyword">new</span> PressureObserver(weatherData);</span><br><span class="line"></span><br><span class="line">weatherData.SetMeasurements(<span class="number">30</span>, <span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">20</span>, <span class="number">40</span>, <span class="number">5</span>);</span><br><span class="line">weatherData.UnregisterObserver(temperatureObserver);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">10</span>, <span class="number">50</span>, <span class="number">15</span>);</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_02_the_observer_pattern/2019-01-15-23-20-09.png" alt="观察者模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Code Complete》 架构检查清单</title>
     <url>/ch_03_architecture_checklist/</url>
     <content><![CDATA[<p>以下是一个好的架构应该解决的问题列表。该列表并不是要成为架构的综合指南，而是一种实用的方式来评估程序员获得的内容是否足够有营养。</p>
@@ -821,29 +844,6 @@
       <tags>
         <tag>系统设计</tag>
         <tag>工程实践</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 02 观察者模式</title>
-    <url>/ch_02_the_observer_pattern/</url>
-    <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
-<p>例如我们希望定义温度计和压力计，在天气信息发生变化时自动更新，而非自己反复的查询是否天气信息有发生变化。这里天气信息就是被观察者，而温度计和压力计就是观察者。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="观察者及被观察者接口"><a class="header-anchor" href="#观察者及被观察者接口">#</a>观察者及被观察者接口</h2>
-<figure class="highlight cs"><figcaption><span>被观察者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ISubject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">UnregisterObserver</span>(<span class="params">IObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">NotifyObservers</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>观察者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="观察者实现"><a class="header-anchor" href="#观察者实现">#</a>观察者实现</h2>
-<figure class="highlight cs"><figcaption><span>温度计</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TemperatureObserver</span> : <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ISubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TemperatureObserver</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">        <span class="keyword">this</span>.subject.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        WeatherData weatherData = subject <span class="keyword">as</span> WeatherData;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//注意这里我们是从主动从被观察者那里去获取数据</span></span><br><span class="line">        <span class="keyword">if</span> (weatherData != <span class="literal">null</span>)</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Temperature is &quot;</span> + weatherData.Temperature);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>压力计</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PressureObserver</span> : <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ISubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PressureObserver</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">        <span class="keyword">this</span>.subject.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        WeatherData weatherData = subject <span class="keyword">as</span> WeatherData;</span><br><span class="line">        <span class="keyword">if</span> (weatherData != <span class="literal">null</span>)</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Pressure is &quot;</span> + weatherData.Pressure);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="被观察者实现"><a class="header-anchor" href="#被观察者实现">#</a>被观察者实现</h2>
-<figure class="highlight cs"><figcaption><span>天气数据</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">WeatherData</span> : <span class="title">ISubject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;IObserver&gt; observersList;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Temperature &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Humidity &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Pressure &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WeatherData</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList = <span class="keyword">new</span> List&lt;IObserver&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">NotifyObservers</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.ForEach(o =&gt; o.Update(<span class="keyword">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IObserver o</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Add(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnregisterObserver</span>(<span class="params">IObserver o</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Remove(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">measurementsChanged</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        NotifyObservers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetMeasurements</span>(<span class="params"><span class="built_in">float</span> temperature, <span class="built_in">float</span> humidity, <span class="built_in">float</span> pressure</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.Temperature = temperature;</span><br><span class="line">        <span class="keyword">this</span>.Humidity = humidity;</span><br><span class="line">        <span class="keyword">this</span>.Pressure = pressure;</span><br><span class="line">        measurementsChanged();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">WeatherData weatherData = <span class="keyword">new</span> WeatherData();</span><br><span class="line">TemperatureObserver temperatureObserver = <span class="keyword">new</span> TemperatureObserver(weatherData);</span><br><span class="line">PressureObserver pressureObserver = <span class="keyword">new</span> PressureObserver(weatherData);</span><br><span class="line"></span><br><span class="line">weatherData.SetMeasurements(<span class="number">30</span>, <span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">20</span>, <span class="number">40</span>, <span class="number">5</span>);</span><br><span class="line">weatherData.UnregisterObserver(temperatureObserver);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">10</span>, <span class="number">50</span>, <span class="number">15</span>);</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_02_the_observer_pattern/2019-01-15-23-20-09.png" alt="观察者模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1151,30 +1151,67 @@
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 03 装饰模式</title>
-    <url>/ch_03_the_decorator_pattern/</url>
-    <content><![CDATA[<p>装饰模式（Decorator Pattern） 提供了一个动态增加一个类功能的方法，主要实现思想是通过一个作为装饰者的类（<code>Decorators</code>）包裹被装饰类（<code>Component</code>）（装饰类以及被装饰类都有共同的基类），<code>Decorators</code> 会在 <code>Component</code> 类的某一个函数执行前或后进行一些操作，进而达到增加功能的作用。</p>
-<p>装饰模式主要实现了“代码应该对扩展功能开放而对于修改关闭”的面向对象原则，它在增加新功能的前提下，不需要改动既有的代码，只需要增加新的 <code>Decorators</code> 并且包含既有的 <code>Component</code> 即可。</p>
-<p>例如我们要计算一杯咖啡的价格，而这杯咖啡的价格还会受到额外的配料的影响，比如要加抹茶需要额外支付 0.2 元，加奶泡需要额外支付 0.3 元等。如果对各种配料都各自使用一个类来表示，则会存在较多的类需要维护，而且一旦配料发生变化等，还需要进行代码修改。而使用装饰模式则可以将原始的咖啡作为被装饰类，而所有的配料都是装饰类，则配料的更改仅需要增加或删除外部的装饰类即可。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="装饰类及被装饰类基类"><a class="header-anchor" href="#装饰类及被装饰类基类">#</a>装饰类及被装饰类基类</h2>
-<figure class="highlight cs"><figcaption><span>被装饰类基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="built_in">string</span> description = <span class="string">&quot;UnKnown Beverage&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> description;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>装饰类基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CondimentDecorator</span> : <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> Beverage beverage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CondimentDecorator</span>(<span class="params">Beverage beverage</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.beverage = beverage;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<div class="note info simple"><p>注意装饰类基类继承自被装饰类，并存有一个被装饰类的变量，因为装饰类需要在被装饰类操作的基础上进行一定额外的操作，所以它需要存有对被装饰类的引用，同时对外部而言调用者而言，它与被装饰类相同。</p>
+    <title>《Code Complete》第四章：关键构建决策</title>
+    <url>/ch_04_key_construction_decisions/</url>
+    <content><![CDATA[<h1 id="4_1_编程语言的选择"><a class="header-anchor" href="#4_1_编程语言的选择">#</a>4.1 编程语言的选择</h1>
+<p>编程语言的选择会通过多种方式影响生产力和代码质量。</p>
+<p>程序员使用熟悉的语言比使用不熟悉的语言更有效率。IBM 的一项早期研究发现，对一个语言有丰富经验的程序员的工作效率是那些经验很少的程序员的三倍多</p>
+<p>使用高级语言的程序员比使用低级语言的程序员可以获得更好的生产力和质量。高级语言相对于低级语言在生产效率、可靠性和可阅读性提高了 5 到 15 倍。高级语言相对于低级语言有更高的表达能力，即每行代码可以实现更多的任务。</p>
+<p>萨丕尔-沃夫假说 认为人思考某个想法的能力取决于他是否知道能够表达该想法的词语。如果你不认识单词，你就无法表达想法。也因此程序员可能会类似地受到他们的语言的影响。</p>
+<p>编程语言对程序员思维影响的证据很常见，如一些拥有 A 语言背景的人去使用 B 语言开发，他们很可能只是通过 B 语言来实现 A 语言的特色，而忽略了 B 语言本身的能力。</p>
+<h1 id="4_2_编码约定"><a class="header-anchor" href="#4_2_编码约定">#</a>4.2 编码约定</h1>
+<p>在复杂的项目中，架构赋予项目结构平衡，而编码约定则提供实现层的和谐。如果没有统一的编码风格，编写的代码将在风格上存在杂乱的变化。而这些变化会消耗开发者的大脑——大脑会需要分出一部分精力去理解编码风格差异。成功编程的关键之一是避免任意变化，以便让开发者的大脑可以专注于真正需要关心的逻辑上。</p>
+<div class="note info simple"><p>如果你有一幅画的伟大设计，但一部分是古典派，一部分是印象派，一部分是立体派，该怎么办？无论你多么严格地遵循其宏伟的设计，它都不具有概念完整性。它看起来像一幅廉价拼贴画。</p>
 </div>
-<h2 id="被装饰类实现"><a class="header-anchor" href="#被装饰类实现">#</a>被装饰类实现</h2>
-<figure class="highlight cs"><figcaption><span>浓咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Espresso</span> : <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Espresso</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        description = <span class="string">&quot;Espresson&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1.99</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="装饰类实现"><a class="header-anchor" href="#装饰类实现">#</a>装饰类实现</h2>
-<figure class="highlight cs"><figcaption><span>酱油</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Soy</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Soy</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Soy&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.30</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>奶泡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Whip</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Whip</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Whip&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.30</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>抹茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Mocha</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mocha</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Mocha&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.20</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Espresso espresso = <span class="keyword">new</span> Espresso();</span><br><span class="line">Console.WriteLine(espresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + espresso.Cost());</span><br><span class="line"></span><br><span class="line">Beverage doubleMochaWhipEspresso = <span class="keyword">new</span> Mocha(<span class="keyword">new</span> Mocha(<span class="keyword">new</span> Whip(espresso)));</span><br><span class="line">Console.WriteLine(doubleMochaWhipEspresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + doubleMochaWhipEspresso.Cost());</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_03_the_decorator_pattern/2019-01-15-23-43-20.png" alt="装饰模式运行结果"></p>
+<p>在开始构建之前，需要阐明你将使用的编程约定。编码约定的细节将非常精确，以至于在编写软件后几乎不可能对其进行改造。</p>
+<h1 id="4_3_你在科技浪潮中的位置"><a class="header-anchor" href="#4_3_你在科技浪潮中的位置">#</a>4.3 你在科技浪潮中的位置</h1>
+<p>理解**用一种语言编程（Programming in one language）**和 <strong>利用一种语言编程（Programming into one language）</strong> 之间的区别对于理解本书至关重要。</p>
+<p>大多数重要的编程原则并不取决于特定的语言，而是取决于你使用它们的方式。如果你的语言缺乏你想要使用的结构或者容易出现其他类型的问题，请尝试弥补它们。发明你自己的编码约定、标准、类库和其他增强语言的方式。</p>
+<p>如，VB 语言本身并不支持数据和业务的解耦，但可以通过约定 <code>.fsm</code> 文件仅可以支持查询查询数据库和将数据存储回数据库，将对于数据库业务的访问的工作难度降低，因为后续所有的开发者都可以基于这个约定知道 <code>.fsm</code> 本身并不会修改数据库。这就是作者通过约定对 VB 语言的加强。</p>
+<h1 id="4_4_构建实践的选择"><a class="header-anchor" href="#4_4_构建实践的选择">#</a>4.4 构建实践的选择</h1>
+<p>准备构建的一部分是决定你将强调哪些可用的良好实践。一些项目使用结对编程并优先编写测试，而另一些项目则使用单独开发和事后的测试。根据项目的实际情况，这两种选择都可能发挥很好的作用。</p>
+<p>以下清单总结了在构建过程中应有意识地决定包含或排除的具体实践，这些实践的细节将在本书的其他部分进行阐述：<br>
+<a href="/ch_04_construction_practices_checklists">Ch 04 Construction Practices Checklists</a></p>
 ]]></content>
       <tags>
-        <tag>设计模式</tag>
+        <tag>工程实践</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Code Complete》第四章：构建实践检查清单</title>
+    <url>/ch_04_construction_practices_checklists/</url>
+    <content><![CDATA[<p>这一节中包含有在编码时，需要检查的内容。</p>
+<h1 id="Coding"><a class="header-anchor" href="#Coding">#</a>Coding</h1>
+<ul>
+<li>[ ] 你是否定义了在编写代码时，多少工作应该在编码之前完成预先设计，多少工作在真正编码时在键盘上完成？</li>
+<li>[ ] 你是否定义了命名、注释和布局的编码约定？</li>
+<li>[ ] 你是否定义了架构所隐含的特定编码实践，例如如何处理错误条件、如何解决安全性、类接口将使用哪些约定、重用代码将应用哪些标准、在编码时应该多大程度的考虑性能问题等等？</li>
+<li>[ ] 你是否已确定如何使用某语言进行编程，而不是受到该语言的限制？（<strong>利用语言</strong> 还是 <strong>用语言</strong>）</li>
+</ul>
+<h1 id="团队合作"><a class="header-anchor" href="#团队合作">#</a>团队合作</h1>
+<ul>
+<li>[ ] 你是否定义了集成过程——也就是说，你是否定义了程序员在将代码合入主代码前必须执行的具体步骤？</li>
+<li>[ ] 程序员会结对编程，还是单独编程，还是两者的组合？（测试和开发的结合关系）</li>
+</ul>
+<h1 id="质量保证"><a class="header-anchor" href="#质量保证">#</a>质量保证</h1>
+<ul>
+<li>[ ] 程序员会在编写代码之前为其代码编写测试用例吗？</li>
+<li>[ ] 程序员是否会为他们的代码编写单元测试，无论他们是事先写还是事后写？</li>
+<li>[ ] 程序员在合入代码之前会在调试器中单步执行代码？</li>
+<li>[ ] 程序员会在合入代码之前对其进行集成测试吗？</li>
+<li>[ ] 程序员会审查或检查彼此的代码吗？</li>
+</ul>
+<h1 id="工具"><a class="header-anchor" href="#工具">#</a>工具</h1>
+<ul>
+<li>[ ] 你选择了版本控制工具吗？</li>
+<li>[ ] 你是否选择了编程语言，语言版本或编译器版本？</li>
+<li>[ ] 你是否选择了某框架，或者明确决定不使用框架？</li>
+<li>[ ] 你是否允许使用非标准语言功能？</li>
+<li>[ ] 你是否已经确定并获得了你需要使用的其他工具——编辑器、重构工具、调试器、测试框架、语法检查器等等？</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>工程实践</tag>
       </tags>
   </entry>
   <entry>
@@ -1245,6 +1282,33 @@
 <h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
 <p><a href="https://dzone.com/articles/factory-method-vs-abstract">https://dzone.com/articles/factory-method-vs-abstract</a><br>
 <a href="https://stackoverflow.com/questions/5739611/differences-between-abstract-factory-pattern-and-factory-method">https://stackoverflow.com/questions/5739611/differences-between-abstract-factory-pattern-and-factory-method</a></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 03 装饰模式</title>
+    <url>/ch_03_the_decorator_pattern/</url>
+    <content><![CDATA[<p>装饰模式（Decorator Pattern） 提供了一个动态增加一个类功能的方法，主要实现思想是通过一个作为装饰者的类（<code>Decorators</code>）包裹被装饰类（<code>Component</code>）（装饰类以及被装饰类都有共同的基类），<code>Decorators</code> 会在 <code>Component</code> 类的某一个函数执行前或后进行一些操作，进而达到增加功能的作用。</p>
+<p>装饰模式主要实现了“代码应该对扩展功能开放而对于修改关闭”的面向对象原则，它在增加新功能的前提下，不需要改动既有的代码，只需要增加新的 <code>Decorators</code> 并且包含既有的 <code>Component</code> 即可。</p>
+<p>例如我们要计算一杯咖啡的价格，而这杯咖啡的价格还会受到额外的配料的影响，比如要加抹茶需要额外支付 0.2 元，加奶泡需要额外支付 0.3 元等。如果对各种配料都各自使用一个类来表示，则会存在较多的类需要维护，而且一旦配料发生变化等，还需要进行代码修改。而使用装饰模式则可以将原始的咖啡作为被装饰类，而所有的配料都是装饰类，则配料的更改仅需要增加或删除外部的装饰类即可。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="装饰类及被装饰类基类"><a class="header-anchor" href="#装饰类及被装饰类基类">#</a>装饰类及被装饰类基类</h2>
+<figure class="highlight cs"><figcaption><span>被装饰类基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="built_in">string</span> description = <span class="string">&quot;UnKnown Beverage&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> description;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>装饰类基类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CondimentDecorator</span> : <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">protected</span> Beverage beverage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CondimentDecorator</span>(<span class="params">Beverage beverage</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.beverage = beverage;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info simple"><p>注意装饰类基类继承自被装饰类，并存有一个被装饰类的变量，因为装饰类需要在被装饰类操作的基础上进行一定额外的操作，所以它需要存有对被装饰类的引用，同时对外部而言调用者而言，它与被装饰类相同。</p>
+</div>
+<h2 id="被装饰类实现"><a class="header-anchor" href="#被装饰类实现">#</a>被装饰类实现</h2>
+<figure class="highlight cs"><figcaption><span>浓咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Espresso</span> : <span class="title">Beverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Espresso</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        description = <span class="string">&quot;Espresson&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1.99</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="装饰类实现"><a class="header-anchor" href="#装饰类实现">#</a>装饰类实现</h2>
+<figure class="highlight cs"><figcaption><span>酱油</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Soy</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Soy</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Soy&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.30</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>奶泡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Whip</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Whip</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Whip&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.30</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>抹茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Mocha</span> : <span class="title">CondimentDecorator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mocha</span>(<span class="params">Beverage beverage</span>) : <span class="title">base</span>(<span class="params">beverage</span>)</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">string</span> <span class="title">getDescription</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> beverage.getDescription() + <span class="string">&quot;, Mocha&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">double</span> <span class="title">Cost</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.20</span> + beverage.Cost();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Espresso espresso = <span class="keyword">new</span> Espresso();</span><br><span class="line">Console.WriteLine(espresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + espresso.Cost());</span><br><span class="line"></span><br><span class="line">Beverage doubleMochaWhipEspresso = <span class="keyword">new</span> Mocha(<span class="keyword">new</span> Mocha(<span class="keyword">new</span> Whip(espresso)));</span><br><span class="line">Console.WriteLine(doubleMochaWhipEspresso.getDescription() + <span class="string">&quot; Cost: &quot;</span> + doubleMochaWhipEspresso.Cost());</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_03_the_decorator_pattern/2019-01-15-23-43-20.png" alt="装饰模式运行结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -2177,28 +2241,6 @@ $$</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 11 代理模式</title>
-    <url>/ch_11_the_proxy_pattern/</url>
-    <content><![CDATA[<p>代理模式（Proxy Pattern）为对象提供一个代理进而控制对其的访问。</p>
-<p>例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="抽象接口"><a class="header-anchor" href="#抽象接口">#</a>抽象接口</h2>
-<figure class="highlight cs"><figcaption><span>图片接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="抽象接口实现"><a class="header-anchor" href="#抽象接口实现">#</a>抽象接口实现</h2>
-<figure class="highlight cs"><figcaption><span>真实图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> width, height;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageIcon</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Thread.Sleep(<span class="number">5000</span>);<span class="comment">//Pretend there is some hard work to load the image</span></span><br><span class="line">        width = <span class="number">800</span>;</span><br><span class="line">        height = <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Width is &quot;</span> + width + <span class="string">&quot;,height is &quot;</span> + height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>代理图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageProxyIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ImageIcon icon = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageProxyIcon</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (icon != <span class="literal">null</span>)</span><br><span class="line">            icon.PrintIconWidthAndHeight();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!isLoading)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Is Loading Image...&quot;</span>);</span><br><span class="line">            isLoading = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">new</span> Thread(() =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                icon = <span class="keyword">new</span> ImageIcon();</span><br><span class="line">                icon.PrintIconWidthAndHeight();</span><br><span class="line">            &#125;).Start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">ImageProxyIcon proxyIcon = <span class="keyword">new</span> ImageProxyIcon();</span><br><span class="line">proxyIcon.PrintIconWidthAndHeight();</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_11_the_proxy_pattern/2019-02-07-14-10-11.png" alt="代理模式运行结果"></p>
-<div class="note info simple"><p>代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，<code>ImageProxyIcon</code>并没有为<code>ImageIcon</code>拓展什么功能，只是用了多线程来访问访问其中的函数。</p>
-</div>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Head First 设计模式》 Ch 12 复合模式</title>
     <url>/ch_12_the_compound_patterns/</url>
     <content><![CDATA[<p>复合模式（Compound Pattern）是通过两个或以上的设计模式形成一个可以解决一般性问题的通用框架。</p>
@@ -2219,6 +2261,28 @@ $$</p>
 <figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">VolumeModel model = <span class="keyword">new</span> VolumeModel();</span><br><span class="line">VolumeView view = <span class="keyword">new</span> VolumeView(<span class="keyword">new</span> VolumeController(model), model);</span><br><span class="line">view.OnVolumeUpButtonClick();</span><br><span class="line">view.OnVolumeUpButtonClick();</span><br><span class="line">view.OnVolumeDownButtonClick();</span><br></pre></td></tr></table></figure>
 <p>运行结果：</p>
 <p><img src="/ch_12_the_compound_patterns/2019-02-07-15-53-23.png" alt="复合模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 11 代理模式</title>
+    <url>/ch_11_the_proxy_pattern/</url>
+    <content><![CDATA[<p>代理模式（Proxy Pattern）为对象提供一个代理进而控制对其的访问。</p>
+<p>例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="抽象接口"><a class="header-anchor" href="#抽象接口">#</a>抽象接口</h2>
+<figure class="highlight cs"><figcaption><span>图片接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="抽象接口实现"><a class="header-anchor" href="#抽象接口实现">#</a>抽象接口实现</h2>
+<figure class="highlight cs"><figcaption><span>真实图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> width, height;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageIcon</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Thread.Sleep(<span class="number">5000</span>);<span class="comment">//Pretend there is some hard work to load the image</span></span><br><span class="line">        width = <span class="number">800</span>;</span><br><span class="line">        height = <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Width is &quot;</span> + width + <span class="string">&quot;,height is &quot;</span> + height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>代理图片类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageProxyIcon</span> : <span class="title">Icon</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ImageIcon icon = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">bool</span> isLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageProxyIcon</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrintIconWidthAndHeight</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (icon != <span class="literal">null</span>)</span><br><span class="line">            icon.PrintIconWidthAndHeight();</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (!isLoading)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(DateTime.Now.ToLongTimeString() + <span class="string">&quot;: Is Loading Image...&quot;</span>);</span><br><span class="line">            isLoading = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">new</span> Thread(() =&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                icon = <span class="keyword">new</span> ImageIcon();</span><br><span class="line">                icon.PrintIconWidthAndHeight();</span><br><span class="line">            &#125;).Start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">ImageProxyIcon proxyIcon = <span class="keyword">new</span> ImageProxyIcon();</span><br><span class="line">proxyIcon.PrintIconWidthAndHeight();</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_11_the_proxy_pattern/2019-02-07-14-10-11.png" alt="代理模式运行结果"></p>
+<div class="note info simple"><p>代理模式与装饰模式很像，不同的是装饰模式的目的是在原先的类外扩展某些功能，而代理模式只是控制原先类中某些接口的访问。例如上例子中，<code>ImageProxyIcon</code>并没有为<code>ImageIcon</code>拓展什么功能，只是用了多线程来访问访问其中的函数。</p>
+</div>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -2675,10 +2739,16 @@ $16.20$介绍了软件无线电系统。</p>
 <li><a href="/ch_03_architecture_checklist">Ch 03 Architecture Checklist</a></li>
 <li><a href="/ch_03_prerequisites_checklist">Ch 03 Prerequisites Checklist</a></li>
 </ul>
-<p>Ch 04 Key Construction Decisions</p>
+<p><a href="/ch_04_key_construction_decisions">Ch 04 Key Construction Decisions</a></p>
+<ul>
+<li><a href="/ch_04_construction_practices_checklists">Ch 04 Construction Practices Checklists</a></li>
+</ul>
 <h1 id="Creating_High_Quality_Code"><a class="header-anchor" href="#Creating_High_Quality_Code">#</a>Creating High-Quality Code</h1>
-<p>Ch 05 Design in Construction<br>
-Ch 06 Working Classes<br>
+<p>Ch 05 Design in Construction</p>
+<ul>
+<li>Ch 05 Design Checklist</li>
+</ul>
+<p>Ch 06 Working Classes<br>
 Ch 07 High-Quality Routines<br>
 Ch 08 Defensive Programming<br>
 Ch 09 The Pseudocode Programming Process</p>
@@ -2874,34 +2944,6 @@ Ch 34 Themes in Software Craftsmanship</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第十二章 优化</title>
-    <url>/di_12_zhang_you_hua/</url>
-    <content><![CDATA[<p>这将是很短的一章，因为关于性能优化，Unix 的经验告诉我们最主要的就是如何知道何时不去优化。其次，最有效的优化往往是优化之外的其它事情，如：清晰干净的设计。</p>
-<h1 id="12_1_什么都别做，就站在那儿"><a class="header-anchor" href="#12_1_什么都别做，就站在那儿">#</a>12.1 什么都别做，就站在那儿</h1>
-<p>程序员工具箱中最强大的优化技术就是不做优化。</p>
-<p>有几个理由支持这项禅式的忠告。其中一个是摩尔定律的指数效应一一最聪明、最便宜、常常也是最迅速的性能提升方法，就是等上几个月，期望硬件性能更好。</p>
-<ul>
-<li>考虑到硬件和程序员时间成本比率，总是有更值得打发时间的事，别去优化一个工作中的系统</li>
-</ul>
-<p>这是有数学上的理由的。如果仅仅只是为了减少资源使用的一个常数部分而优化，那是很不值得的。更明智的做法是集中精力将时间复杂度或空间复杂度从 $O(n^2)$ 降至 $O(n)$ 或 $O(n logn)$ 或者类似的，从一个更高次的指数降下来。线性性能增益往往很快就会被摩尔定律覆盖了。</p>
-<h1 id="12_2_先估量，后优化"><a class="header-anchor" href="#12_2_先估量，后优化">#</a>12.2 先估量，后优化</h1>
-<p>如果有真凭实据证明应用程序运行缓慢，这时 (仅当此时)才可以考虑优化代码但付诸实施前，要先估量。</p>
-<p>最初的 Unix 程序员最先学到的经验之一就是要明确瓶颈所在，直觉实在是个糟糕的向导，即使特别熟悉可疑代码的人也不例外。</p>
-<h1 id="12_3_非定域性之害"><a class="header-anchor" href="#12_3_非定域性之害">#</a>12.3 非定域性之害</h1>
-<p>最有效的代码优化方法就是保持代码短小简单。</p>
-<p>随着机器资源成本的直线下降，庞大数据结构的平均开销也随之而降一一但是因为相邻级别缓存的切换开销上升了，大型结构突破缓存容量对性能的影响也就增加了。 因此在这里，“小即是美”的建议比以往更有用，尤其是考虑到核心数据结构必须留在最快的缓存里。该建议也同样适用于代码：通常，指令加载要比执行花费的时间更多。</p>
-<p>这彻底推翻了某些传统的建议。如循环分解，去掉相对昂贵的机器指令而增加代码的总行数，那是不值得的。在 3D 图形引擎中，优化旋转操作的 $sin(x)$ 函数表在现代机器中占据 $365 \times 4$ 字节的空间在。处理器缓冲速度没有内存查询快时，这显然是个速度优化。但是现在，比起函数表产生的附加 Cache Miss 的可能开销，每次重新计算可能更快。</p>
-<p>但在将来，也许随着缓存的增大又会反过来。更普遍的是，不妨悲观地认为，许多优化方法都是暂时的而且常常随着成本比例而变化。唯一的可行方案就是先衡量后再优化。</p>
-<h1 id="12_4_吞吐量和延迟"><a class="header-anchor" href="#12_4_吞吐量和延迟">#</a>12.4 吞吐量和延迟</h1>
-<h2 id="12_4_3_缓存操作结果"><a class="header-anchor" href="#12_4_3_缓存操作结果">#</a>12.4.3 缓存操作结果</h2>
-<p>认为迫切需要缓存的时候，明智的做法是能够从更深层次来考虑，并问问为什么缓存是必须的。这比将缓存的所有边界条件都考虑到要容易得多。</p>
-]]></content>
-      <tags>
-        <tag>系统设计</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Unix 编程艺术》 第十一章 接口</title>
     <url>/di_11_zhang_jie_kou%EF%BC%9Aunix_huan_jing_xia_de_yong_hu_jie_kou_she_ji_mo_shi/</url>
     <content><![CDATA[<p>在 Unix 接口设计的传统中，会反复涉足两个主题：</p>
@@ -2988,6 +3030,34 @@ Ch 34 Themes in Software Craftsmanship</p>
       </tags>
   </entry>
   <entry>
+    <title>《Unix 编程艺术》 第十二章 优化</title>
+    <url>/di_12_zhang_you_hua/</url>
+    <content><![CDATA[<p>这将是很短的一章，因为关于性能优化，Unix 的经验告诉我们最主要的就是如何知道何时不去优化。其次，最有效的优化往往是优化之外的其它事情，如：清晰干净的设计。</p>
+<h1 id="12_1_什么都别做，就站在那儿"><a class="header-anchor" href="#12_1_什么都别做，就站在那儿">#</a>12.1 什么都别做，就站在那儿</h1>
+<p>程序员工具箱中最强大的优化技术就是不做优化。</p>
+<p>有几个理由支持这项禅式的忠告。其中一个是摩尔定律的指数效应一一最聪明、最便宜、常常也是最迅速的性能提升方法，就是等上几个月，期望硬件性能更好。</p>
+<ul>
+<li>考虑到硬件和程序员时间成本比率，总是有更值得打发时间的事，别去优化一个工作中的系统</li>
+</ul>
+<p>这是有数学上的理由的。如果仅仅只是为了减少资源使用的一个常数部分而优化，那是很不值得的。更明智的做法是集中精力将时间复杂度或空间复杂度从 $O(n^2)$ 降至 $O(n)$ 或 $O(n logn)$ 或者类似的，从一个更高次的指数降下来。线性性能增益往往很快就会被摩尔定律覆盖了。</p>
+<h1 id="12_2_先估量，后优化"><a class="header-anchor" href="#12_2_先估量，后优化">#</a>12.2 先估量，后优化</h1>
+<p>如果有真凭实据证明应用程序运行缓慢，这时 (仅当此时)才可以考虑优化代码但付诸实施前，要先估量。</p>
+<p>最初的 Unix 程序员最先学到的经验之一就是要明确瓶颈所在，直觉实在是个糟糕的向导，即使特别熟悉可疑代码的人也不例外。</p>
+<h1 id="12_3_非定域性之害"><a class="header-anchor" href="#12_3_非定域性之害">#</a>12.3 非定域性之害</h1>
+<p>最有效的代码优化方法就是保持代码短小简单。</p>
+<p>随着机器资源成本的直线下降，庞大数据结构的平均开销也随之而降一一但是因为相邻级别缓存的切换开销上升了，大型结构突破缓存容量对性能的影响也就增加了。 因此在这里，“小即是美”的建议比以往更有用，尤其是考虑到核心数据结构必须留在最快的缓存里。该建议也同样适用于代码：通常，指令加载要比执行花费的时间更多。</p>
+<p>这彻底推翻了某些传统的建议。如循环分解，去掉相对昂贵的机器指令而增加代码的总行数，那是不值得的。在 3D 图形引擎中，优化旋转操作的 $sin(x)$ 函数表在现代机器中占据 $365 \times 4$ 字节的空间在。处理器缓冲速度没有内存查询快时，这显然是个速度优化。但是现在，比起函数表产生的附加 Cache Miss 的可能开销，每次重新计算可能更快。</p>
+<p>但在将来，也许随着缓存的增大又会反过来。更普遍的是，不妨悲观地认为，许多优化方法都是暂时的而且常常随着成本比例而变化。唯一的可行方案就是先衡量后再优化。</p>
+<h1 id="12_4_吞吐量和延迟"><a class="header-anchor" href="#12_4_吞吐量和延迟">#</a>12.4 吞吐量和延迟</h1>
+<h2 id="12_4_3_缓存操作结果"><a class="header-anchor" href="#12_4_3_缓存操作结果">#</a>12.4.3 缓存操作结果</h2>
+<p>认为迫切需要缓存的时候，明智的做法是能够从更深层次来考虑，并问问为什么缓存是必须的。这比将缓存的所有边界条件都考虑到要容易得多。</p>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Unix 编程艺术》 第十三章 复杂度</title>
     <url>/di_13_zhang_fu_za_du%EF%BC%9Ajin_ke_neng_jian_dan%EF%BC%8Cdan_bie_jian_dan_guo_le_tou/</url>
     <content><![CDATA[<p>在<a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a> 末，将 Unix 的哲学概括为“KeepItSimple,Stupid!”。贯穿整个“设计”部分的不变主题就是尽可能保持简单设计的重要性。但什么是“尽可能的简单”?又如何断定?</p>
@@ -3044,40 +3114,39 @@ Ch 34 Themes in Software Craftsmanship</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第十五章 工具</title>
-    <url>/di_15_zhang_gong_ju%EF%BC%9Akai_fa_de_zhan_shu/</url>
-    <content><![CDATA[<h1 id="15_4_make：自动化编译"><a class="header-anchor" href="#15_4_make：自动化编译">#</a>15.4 make：自动化编译</h1>
-<h2 id="15_4_3_通用生成目标"><a class="header-anchor" href="#15_4_3_通用生成目标">#</a>15.4.3 通用生成目标</h2>
-<p>关于通用生成目标应该表示什么，以及它们该如何命名已经有了一组良好的约定。遵从这些会让自己的 makefile 更容易理解和使用：</p>
-<ul>
-<li>
-<p>all： 生成工程中所有可以执行者。通常全部产品并没有明确的定义;往往指工程中高阶的目标文件(并且，并非偶然地，常常有文档说明会包括哪些)。它通常应该是 makcfile 的第一个生成目标，因此它往往是开发者不带参数键入 make 就执行的那一个</p>
-</li>
-<li>
-<p>test： 运行程序的自动测试套件，典型地，包括一组单元测试(Unit Test)来查找递归 bug，或是其它在开发过程中偏离预期行为的误差。“test”目标也可以由软件的最终用户来确保安装程序能够正常工作。</p>
-</li>
-</ul>
-<ul>
-<li>clean：删除 make a11 时产生的所有文件(例如二进制可执行文件和目标文件)。make clean 应该将软件的编译过程重置到良好的初始状态。</li>
-</ul>
-<h1 id="15_5_版本控制系统"><a class="header-anchor" href="#15_5_版本控制系统">#</a>15.5 版本控制系统</h1>
-<h2 id="15_5_1_为什么需要版本控制"><a class="header-anchor" href="#15_5_1_为什么需要版本控制">#</a>15.5.1 为什么需要版本控制</h2>
-<p>如果改变了代码却发现并不可行，如何恢复到一个已知的良好版本?如果回归是困难的或不可靠的，改变代码就太过冒险(有可能会崩掉整个项目，或者为自己凭空增加许多小时的痛苦工作)</p>
-<p>几乎同样重要的是变化追踪。知道代码已经发生了改变，但知道为什么吗？稍后再看它们却很容易就忘记了改变的原因。如果项目存在合作者，又如何知道在自己不注意时合作者改变了什么，另外，每个修改该由谁负责?</p>
+    <title>《Unix 编程艺术》 第十六章 重用</title>
+    <url>/di_16_zhang_zhong_yong%EF%BC%9Alun_bu_yao_zhong_xin_fa_ming_lun_zi/</url>
+    <content><![CDATA[<p>不愿做不必要的工作是程序员的一大美德。</p>
+<p>和其它耗在软件开发的花费比起来，时间无疑是最宝贵和最有价值的: 所以相应地，该耗费在解决新问题，而不是对那些已存在确切解决方案的问题老调重弹。这种态度对于开发投入来说，无论是在人员资本的“软”含义，还是在投资经济收益的“硬”含义都可以收到最好的回报。</p>
 <blockquote>
-<p>常常令人惊奇地发现，即使没有合作者，问问自己从上一个已知的良好版本后改变了什么也非常有用。这也常常会揭露不必要的改变，例如被遗忘的调试码，我现在在检入 (check in)变化前，一般就会做这项工作。<br>
-—— Henry Spencer</p>
+<p>重新发明轮子之所以糟糕不仅因为浪费时间，还因为它浪费的时间往往是平方级。走捷径往往产生粗糙、未经思考的版本，长期而言这是假性节约，但通过这种方式来节省重新发明时间的诱惑几乎总是无法抵抗的。<br>
+–Henry Spencer</p>
 </blockquote>
-<h1 id="15_6_运行期调试"><a class="header-anchor" href="#15_6_运行期调试">#</a>15.6 运行期调试</h1>
-<p>只要拥有超过一星期编程经验的人都会知道，让程序符合正确的语法是调试中相对容易的部分。困难的是在这之后，需要了解为什么语法正确的程序并不如期望的那样运行。</p>
-<h1 id="15_7_性能分析"><a class="header-anchor" href="#15_7_性能分析">#</a>15.7 性能分析</h1>
-<p>作为通用法则程序 90%的执行时间都耗费在 10%的代码上。性能分析软件（Profilers）可以帮助确定那 10%抑制程序速度的区域。这可以让程序跑得更快。</p>
-<p>但在 Unix 传统中，profiler 有个更为重要的功能。它能够让人不去优化其余 90%的代码。这很棒，并不仅仅由于这样节省了工作。其实不去优化余下 90% 代码真正有价值的效应是降低了整体复杂度，减少了 bug。</p>
-<p>做好设计，首先考虑什么是正确的，然后再调整效率。</p>
-<h1 id="15_8_使用_Emacs_整合工具"><a class="header-anchor" href="#15_8_使用_Emacs_整合工具">#</a>15.8 使用 Emacs 整合工具</h1>
-<h2 id="15_8_4_Emacs_和_Profiling"><a class="header-anchor" href="#15_8_4_Emacs_和_Profiling">#</a>15.8.4 Emacs 和 Profiling</h2>
-<p>别蛮干—这会浪费时间和生产力。如果发现在低层次的机械开发部分花费了太多时间的话，先站住。应该运用 Unix 折学。使用工具自动化或半自动化地完成任务。</p>
-<p>然后，作为对所有继承的回报，将自己的解决方案作为开源软件放置在互联网上帮助把程序员同行们从蛮千中解放出来。</p>
+<p>Unix 的经验是，养成良好的习惯，尝试通过最少的新发明，组合现有组件以形成原型，而非匆忙地编写独立的、只能使用一次的代码。</p>
+<h1 id="16_1_猪小兵的故事"><a class="header-anchor" href="#16_1_猪小兵的故事">#</a>16.1 猪小兵的故事</h1>
+<p><a href="/zhu_xiao_bing_de_gu_shi">猪小兵的故事</a></p>
+<h1 id="16_2_透明性是重用的关键"><a class="header-anchor" href="#16_2_透明性是重用的关键">#</a>16.2 透明性是重用的关键</h1>
+<p>猪小兵的多数麻烦（也意味着大规模质量问题）归根结底是透明性一一或者更确切地说，是缺乏透明性。</p>
+<p>无法修正不通内情的东西。实际上，任何具有非平凡 API 的软件如果无法深入肌理，都无法被正确的使用。</p>
+<p>只有文档，不仅在实践上不足，在原则上同样不够：文档并不能传达代码具现的所有细微差别之处。</p>
+<p>有了源码，可以装备程序来进行衡测，可以通过编译来进行调试，这样在晦涩模糊的情况下就更容易探询程序的行为。而如果需要改变程序的行为，当然也可以做到。</p>
+<p>需要源码还有另外一个重要的原因。Unix 程序员在几十年中学到了“只有变化才是永恒”，的经验，而源码是可以永续的。</p>
+<p>源码是必需的，因为即使不想或不需要改动软件，可能还得在新的环境中重新编译以保证它能继续运行。</p>
+<p>透明性的重要，以及代码遗留问题，是要求重用代码开源以供检验和修改的两个理由。</p>
+<h1 id="16_3_从重用到开源"><a class="header-anchor" href="#16_3_从重用到开源">#</a>16.3 从重用到开源</h1>
+<p>软件开发者希望他们使用的代码是透明的。更进一步，他们在换工作时不希望失去他们的工具包以及他们的专有经验。他们厌倦了成为受害者，腻烦了被生硬的工具和知识产权壁垒弄得灰心丧气，受够了不断地重新发明轮子。</p>
+<p>这些就是开放源码的动力，从猪小兵痛苦的初步重用经历中产生的动力。这其中涉及了自我意识，设计最好的实践需要情感的投入，而不是冷漠无聊的过程。软件开发者同其它任何类型的工匠和技师一样;他们想要成为艺术家，这并不是什么私密。他们有艺术家的动力和需求，也有拥有听众的欲望。他们不仅仅希望重用代码，他们也希望自己的代码得到重用。这种势在必行的意念驱动，超越和颠覆了任何短期经济目标的达成，也不是闭源软件生产所能够满足的。</p>
+<h1 id="16_4_生命中最美好的就是“开放”"><a class="header-anchor" href="#16_4_生命中最美好的就是“开放”">#</a>16.4 生命中最美好的就是“开放”</h1>
+<p>来自 Unix 世界以外的人们（特别是非技术人员）往往倾向于认为开源（或“自由”）软件必然比商业软件差，是假冒伪劣的，不可靠的，带来的麻烦只会比所能免除的更多。</p>
+<h3 id="为什么开源软件很可能产出质量特别高的软件"><a class="header-anchor" href="#为什么开源软件很可能产出质量特别高的软件">#</a>为什么开源软件很可能产出质量特别高的软件</h3>
+<p>但这遗漏了重要一点：一般来说，编写开源软件的人都很在乎它，也需要它，自己使用而且通过发布这个软件在同行中赢得个人声誉。他们的时间也往往更少地耗费在会议、反馈设计更改或是各种官僚的开销中。他们也因此具有更强的动力和更好的立场来完成卓越的工作，远远超过那些薪水的奴隶。</p>
+<p>开源用户社区（那些同行）不会羞于抓 bug，而且他们的标准很高。发布不够格软件的作者会承受许多的社会压力来修正或撤回代码，如果需要的话还能得到许多专家级的帮助。结果，成熟的开源软件包一般都是高质量的而且常常在功能上比任何专有等价物都要高级。这些开源软件或许看起来并不漂亮，想看懂文档或许也不容易，但其至关重要的部分通常都会工作得相当漂亮。</p>
+<p>在同行评审效应之外，另外一个可以推测出质量上佳的理由是：在开源世界的开发者，从来不会受最终期限的压迫，不会一闭眼、一拍脑门就发布软件。因此开源实践同其余地方的一个区别就是，1.0 级别的版本实际上意味着软件可以使用了。事实上，0.90 或者更高的的版本号就相当可靠，表明代码已经是成品了，但是开发者还是不敢拿这个软件来赌自己的声誉。</p>
+<h3 id="如何评价一个开源软件是否可靠"><a class="header-anchor" href="#如何评价一个开源软件是否可靠">#</a>如何评价一个开源软件是否可靠</h3>
+<p>评估开源软件包的方法是阅读其文档和快速浏览它的部分代码。如果所见的代码编写恰当，文档完备，那么鼓励使用。如果能够证明软件包已经有些年头并且存在实质具体的用户反馈，就可以断定它是相当可靠的（无论如何还是测测为佳）。</p>
+<p>在 README 文件以及项目新闻或源码发布历史文件中，所提到的除原作者之外的人数，是度量成熟度以及用户反馈量大小的好方法。很多人呈报修正和补丁本身就是良好的表征，既表明存在一个相当重要的用户群保持着对软件作者的敦促和警醒，也表明软件维护者是恪守职责的，能够对反馈作出响应并订正错误。当然，这也是一个暗示，如果早先的代码是充满 bug 的雷区，不用等到最近的爆炸，早就有受惊的人群踩得响噼里啪啦的了。</p>
+<h1 id="16_6_使用开源软件的问题"><a class="header-anchor" href="#16_6_使用开源软件的问题">#</a>16.6 使用开源软件的问题</h1>
+<p>文档通常是个更严重的问题，许多高质量的开源软件包的应用范围和它们在技术上的领先不相协调，就是因为它们的文档很糟糕。Unix 传统鼓励了太过专门的文档风格，这种风格 （尽管或许会在技术上涵盖软件包所有的功能特征）往往假设其阅读者也相当熟悉应用程序的定义域，并且阅读得非常仔细。</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -3136,46 +3205,6 @@ Ch 34 Themes in Software Craftsmanship</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第十六章 重用</title>
-    <url>/di_16_zhang_zhong_yong%EF%BC%9Alun_bu_yao_zhong_xin_fa_ming_lun_zi/</url>
-    <content><![CDATA[<p>不愿做不必要的工作是程序员的一大美德。</p>
-<p>和其它耗在软件开发的花费比起来，时间无疑是最宝贵和最有价值的: 所以相应地，该耗费在解决新问题，而不是对那些已存在确切解决方案的问题老调重弹。这种态度对于开发投入来说，无论是在人员资本的“软”含义，还是在投资经济收益的“硬”含义都可以收到最好的回报。</p>
-<blockquote>
-<p>重新发明轮子之所以糟糕不仅因为浪费时间，还因为它浪费的时间往往是平方级。走捷径往往产生粗糙、未经思考的版本，长期而言这是假性节约，但通过这种方式来节省重新发明时间的诱惑几乎总是无法抵抗的。<br>
-–Henry Spencer</p>
-</blockquote>
-<p>Unix 的经验是，养成良好的习惯，尝试通过最少的新发明，组合现有组件以形成原型，而非匆忙地编写独立的、只能使用一次的代码。</p>
-<h1 id="16_1_猪小兵的故事"><a class="header-anchor" href="#16_1_猪小兵的故事">#</a>16.1 猪小兵的故事</h1>
-<p><a href="/zhu_xiao_bing_de_gu_shi">猪小兵的故事</a></p>
-<h1 id="16_2_透明性是重用的关键"><a class="header-anchor" href="#16_2_透明性是重用的关键">#</a>16.2 透明性是重用的关键</h1>
-<p>猪小兵的多数麻烦（也意味着大规模质量问题）归根结底是透明性一一或者更确切地说，是缺乏透明性。</p>
-<p>无法修正不通内情的东西。实际上，任何具有非平凡 API 的软件如果无法深入肌理，都无法被正确的使用。</p>
-<p>只有文档，不仅在实践上不足，在原则上同样不够：文档并不能传达代码具现的所有细微差别之处。</p>
-<p>有了源码，可以装备程序来进行衡测，可以通过编译来进行调试，这样在晦涩模糊的情况下就更容易探询程序的行为。而如果需要改变程序的行为，当然也可以做到。</p>
-<p>需要源码还有另外一个重要的原因。Unix 程序员在几十年中学到了“只有变化才是永恒”，的经验，而源码是可以永续的。</p>
-<p>源码是必需的，因为即使不想或不需要改动软件，可能还得在新的环境中重新编译以保证它能继续运行。</p>
-<p>透明性的重要，以及代码遗留问题，是要求重用代码开源以供检验和修改的两个理由。</p>
-<h1 id="16_3_从重用到开源"><a class="header-anchor" href="#16_3_从重用到开源">#</a>16.3 从重用到开源</h1>
-<p>软件开发者希望他们使用的代码是透明的。更进一步，他们在换工作时不希望失去他们的工具包以及他们的专有经验。他们厌倦了成为受害者，腻烦了被生硬的工具和知识产权壁垒弄得灰心丧气，受够了不断地重新发明轮子。</p>
-<p>这些就是开放源码的动力，从猪小兵痛苦的初步重用经历中产生的动力。这其中涉及了自我意识，设计最好的实践需要情感的投入，而不是冷漠无聊的过程。软件开发者同其它任何类型的工匠和技师一样;他们想要成为艺术家，这并不是什么私密。他们有艺术家的动力和需求，也有拥有听众的欲望。他们不仅仅希望重用代码，他们也希望自己的代码得到重用。这种势在必行的意念驱动，超越和颠覆了任何短期经济目标的达成，也不是闭源软件生产所能够满足的。</p>
-<h1 id="16_4_生命中最美好的就是“开放”"><a class="header-anchor" href="#16_4_生命中最美好的就是“开放”">#</a>16.4 生命中最美好的就是“开放”</h1>
-<p>来自 Unix 世界以外的人们（特别是非技术人员）往往倾向于认为开源（或“自由”）软件必然比商业软件差，是假冒伪劣的，不可靠的，带来的麻烦只会比所能免除的更多。</p>
-<h3 id="为什么开源软件很可能产出质量特别高的软件"><a class="header-anchor" href="#为什么开源软件很可能产出质量特别高的软件">#</a>为什么开源软件很可能产出质量特别高的软件</h3>
-<p>但这遗漏了重要一点：一般来说，编写开源软件的人都很在乎它，也需要它，自己使用而且通过发布这个软件在同行中赢得个人声誉。他们的时间也往往更少地耗费在会议、反馈设计更改或是各种官僚的开销中。他们也因此具有更强的动力和更好的立场来完成卓越的工作，远远超过那些薪水的奴隶。</p>
-<p>开源用户社区（那些同行）不会羞于抓 bug，而且他们的标准很高。发布不够格软件的作者会承受许多的社会压力来修正或撤回代码，如果需要的话还能得到许多专家级的帮助。结果，成熟的开源软件包一般都是高质量的而且常常在功能上比任何专有等价物都要高级。这些开源软件或许看起来并不漂亮，想看懂文档或许也不容易，但其至关重要的部分通常都会工作得相当漂亮。</p>
-<p>在同行评审效应之外，另外一个可以推测出质量上佳的理由是：在开源世界的开发者，从来不会受最终期限的压迫，不会一闭眼、一拍脑门就发布软件。因此开源实践同其余地方的一个区别就是，1.0 级别的版本实际上意味着软件可以使用了。事实上，0.90 或者更高的的版本号就相当可靠，表明代码已经是成品了，但是开发者还是不敢拿这个软件来赌自己的声誉。</p>
-<h3 id="如何评价一个开源软件是否可靠"><a class="header-anchor" href="#如何评价一个开源软件是否可靠">#</a>如何评价一个开源软件是否可靠</h3>
-<p>评估开源软件包的方法是阅读其文档和快速浏览它的部分代码。如果所见的代码编写恰当，文档完备，那么鼓励使用。如果能够证明软件包已经有些年头并且存在实质具体的用户反馈，就可以断定它是相当可靠的（无论如何还是测测为佳）。</p>
-<p>在 README 文件以及项目新闻或源码发布历史文件中，所提到的除原作者之外的人数，是度量成熟度以及用户反馈量大小的好方法。很多人呈报修正和补丁本身就是良好的表征，既表明存在一个相当重要的用户群保持着对软件作者的敦促和警醒，也表明软件维护者是恪守职责的，能够对反馈作出响应并订正错误。当然，这也是一个暗示，如果早先的代码是充满 bug 的雷区，不用等到最近的爆炸，早就有受惊的人群踩得响噼里啪啦的了。</p>
-<h1 id="16_6_使用开源软件的问题"><a class="header-anchor" href="#16_6_使用开源软件的问题">#</a>16.6 使用开源软件的问题</h1>
-<p>文档通常是个更严重的问题，许多高质量的开源软件包的应用范围和它们在技术上的领先不相协调，就是因为它们的文档很糟糕。Unix 传统鼓励了太过专门的文档风格，这种风格 （尽管或许会在技术上涵盖软件包所有的功能特征）往往假设其阅读者也相当熟悉应用程序的定义域，并且阅读得非常仔细。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Unix 编程艺术》 第十七章 可移植性</title>
     <url>/di_17_zhang_ke_yi_zhi_xing%EF%BC%9Aruan_jian_ke_yi_zhi_xing_yu_zun_xun_biao_zhun/</url>
     <content><![CDATA[<p>移植性一直是 Unix 的主要优势。Unix 程序员往往设想硬件是易变的，只有 Unix API 本是稳定的。</p>
@@ -3210,6 +3239,47 @@ Ch 34 Themes in Software Craftsmanship</p>
 Henry Spencer</p>
 </blockquote>
 <p>最后,确保代码移植性最有效的一个环节就是不要依赖于专有技术。永远不会知道所依赖的闭源库 / 工具 / 代码生成器或网络协议何时会结束生命，接口何时会以某种非向后兼容的方式改变，从而崩溃掉已有的项目。而使用开源代码，即使前沿版本的改变方式足以崩溃已有的项目，也有前行之路：因为可以获取源码，如果需要，就可以向前移植项目到新的平台。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》 第十五章 工具</title>
+    <url>/di_15_zhang_gong_ju%EF%BC%9Akai_fa_de_zhan_shu/</url>
+    <content><![CDATA[<h1 id="15_4_make：自动化编译"><a class="header-anchor" href="#15_4_make：自动化编译">#</a>15.4 make：自动化编译</h1>
+<h2 id="15_4_3_通用生成目标"><a class="header-anchor" href="#15_4_3_通用生成目标">#</a>15.4.3 通用生成目标</h2>
+<p>关于通用生成目标应该表示什么，以及它们该如何命名已经有了一组良好的约定。遵从这些会让自己的 makefile 更容易理解和使用：</p>
+<ul>
+<li>
+<p>all： 生成工程中所有可以执行者。通常全部产品并没有明确的定义;往往指工程中高阶的目标文件(并且，并非偶然地，常常有文档说明会包括哪些)。它通常应该是 makcfile 的第一个生成目标，因此它往往是开发者不带参数键入 make 就执行的那一个</p>
+</li>
+<li>
+<p>test： 运行程序的自动测试套件，典型地，包括一组单元测试(Unit Test)来查找递归 bug，或是其它在开发过程中偏离预期行为的误差。“test”目标也可以由软件的最终用户来确保安装程序能够正常工作。</p>
+</li>
+</ul>
+<ul>
+<li>clean：删除 make a11 时产生的所有文件(例如二进制可执行文件和目标文件)。make clean 应该将软件的编译过程重置到良好的初始状态。</li>
+</ul>
+<h1 id="15_5_版本控制系统"><a class="header-anchor" href="#15_5_版本控制系统">#</a>15.5 版本控制系统</h1>
+<h2 id="15_5_1_为什么需要版本控制"><a class="header-anchor" href="#15_5_1_为什么需要版本控制">#</a>15.5.1 为什么需要版本控制</h2>
+<p>如果改变了代码却发现并不可行，如何恢复到一个已知的良好版本?如果回归是困难的或不可靠的，改变代码就太过冒险(有可能会崩掉整个项目，或者为自己凭空增加许多小时的痛苦工作)</p>
+<p>几乎同样重要的是变化追踪。知道代码已经发生了改变，但知道为什么吗？稍后再看它们却很容易就忘记了改变的原因。如果项目存在合作者，又如何知道在自己不注意时合作者改变了什么，另外，每个修改该由谁负责?</p>
+<blockquote>
+<p>常常令人惊奇地发现，即使没有合作者，问问自己从上一个已知的良好版本后改变了什么也非常有用。这也常常会揭露不必要的改变，例如被遗忘的调试码，我现在在检入 (check in)变化前，一般就会做这项工作。<br>
+—— Henry Spencer</p>
+</blockquote>
+<h1 id="15_6_运行期调试"><a class="header-anchor" href="#15_6_运行期调试">#</a>15.6 运行期调试</h1>
+<p>只要拥有超过一星期编程经验的人都会知道，让程序符合正确的语法是调试中相对容易的部分。困难的是在这之后，需要了解为什么语法正确的程序并不如期望的那样运行。</p>
+<h1 id="15_7_性能分析"><a class="header-anchor" href="#15_7_性能分析">#</a>15.7 性能分析</h1>
+<p>作为通用法则程序 90%的执行时间都耗费在 10%的代码上。性能分析软件（Profilers）可以帮助确定那 10%抑制程序速度的区域。这可以让程序跑得更快。</p>
+<p>但在 Unix 传统中，profiler 有个更为重要的功能。它能够让人不去优化其余 90%的代码。这很棒，并不仅仅由于这样节省了工作。其实不去优化余下 90% 代码真正有价值的效应是降低了整体复杂度，减少了 bug。</p>
+<p>做好设计，首先考虑什么是正确的，然后再调整效率。</p>
+<h1 id="15_8_使用_Emacs_整合工具"><a class="header-anchor" href="#15_8_使用_Emacs_整合工具">#</a>15.8 使用 Emacs 整合工具</h1>
+<h2 id="15_8_4_Emacs_和_Profiling"><a class="header-anchor" href="#15_8_4_Emacs_和_Profiling">#</a>15.8.4 Emacs 和 Profiling</h2>
+<p>别蛮干—这会浪费时间和生产力。如果发现在低层次的机械开发部分花费了太多时间的话，先站住。应该运用 Unix 折学。使用工具自动化或半自动化地完成任务。</p>
+<p>然后，作为对所有继承的回报，将自己的解决方案作为开源软件放置在互联网上帮助把程序员同行们从蛮千中解放出来。</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -3438,6 +3508,17 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
+    <title>《Unix 编程艺术》 第二章 历史</title>
+    <url>/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji/</url>
+    <content><![CDATA[<h1 id="2_1_Unix_起源于历史，1969_1995"><a class="header-anchor" href="#2_1_Unix_起源于历史，1969_1995">#</a>2.1 Unix 起源于历史，1969-1995</h1>
+<p>小型实验原型系统的后继产品往往备受令人讨厌的“第二版效应”折磨。由于迫切希望把所有首次开发时遗漏的功能都添加进去，往往导致设计十分庞大、过于复杂。其实，还有一个因不常遇到而鲜为人知的“第三版效应”：有时候，在第二系统不堪自身重负而崩溃之后，有可能返璞归真，走上正道。</p>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Unix 编程艺术》 第二十章 未来</title>
     <url>/di_20_zhang_wei_lai%EF%BC%9Awei_ji_yu_ji_yu/</url>
     <content><![CDATA[<h1 id="20_5_Unix_文化中的问题"><a class="header-anchor" href="#20_5_Unix_文化中的问题">#</a>20.5 Unix 文化中的问题</h1>
@@ -3452,17 +3533,6 @@ Henry Spencer</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Unix 编程艺术》 第二章 历史</title>
-    <url>/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji/</url>
-    <content><![CDATA[<h1 id="2_1_Unix_起源于历史，1969_1995"><a class="header-anchor" href="#2_1_Unix_起源于历史，1969_1995">#</a>2.1 Unix 起源于历史，1969-1995</h1>
-<p>小型实验原型系统的后继产品往往备受令人讨厌的“第二版效应”折磨。由于迫切希望把所有首次开发时遗漏的功能都添加进去，往往导致设计十分庞大、过于复杂。其实，还有一个因不常遇到而鲜为人知的“第三版效应”：有时候，在第二系统不堪自身重负而崩溃之后，有可能返璞归真，走上正道。</p>
-]]></content>
-      <tags>
-        <tag>系统设计</tag>
         <tag>编码规范</tag>
       </tags>
   </entry>
@@ -3638,18 +3708,6 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第五章 文本化</title>
-    <url>/di_5_zhang_wen_ben_hua%EF%BC%9Ahao_xie_yi_chan_sheng_hao_shi_jian/</url>
-    <content><![CDATA[<p>序列化（保存）操作有时也称为 <code>列集(marshaling)</code>，其反向操作（载入）称为 <code>散集(unmarshaling)</code>。</p>
-<h1 id="文本化的重要性"><a class="header-anchor" href="#文本化的重要性">#</a>文本化的重要性</h1>
-<p>文本流是非常有用的通用格式，因为人无需专门工具就可以很容易地读写和编辑文本流，这些格式是透明的（或可以设计成透明的）。</p>
-]]></content>
-      <tags>
-        <tag>系统设计</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Unix 编程艺术》 第六章 透明性</title>
     <url>/di_6_zhang_tou_ming_xing%EF%BC%9Alai_dian_er_guang/</url>
     <content><![CDATA[<div class="note info simple"><p>美在计算科学中的地位，要比在其它任何技术中的地位都重要，因为软件是太复杂了。美是抵御复杂的终极武器。 - David Gelernter</p>
@@ -3698,6 +3756,18 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
+    <title>《Unix 编程艺术》 第五章 文本化</title>
+    <url>/di_5_zhang_wen_ben_hua%EF%BC%9Ahao_xie_yi_chan_sheng_hao_shi_jian/</url>
+    <content><![CDATA[<p>序列化（保存）操作有时也称为 <code>列集(marshaling)</code>，其反向操作（载入）称为 <code>散集(unmarshaling)</code>。</p>
+<h1 id="文本化的重要性"><a class="header-anchor" href="#文本化的重要性">#</a>文本化的重要性</h1>
+<p>文本流是非常有用的通用格式，因为人无需专门工具就可以很容易地读写和编辑文本流，这些格式是透明的（或可以设计成透明的）。</p>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Unix 编程艺术》 第七章 多道程序设计</title>
     <url>/di_7_zhang_duo_dao_cheng_xu_she_ji%EF%BC%9Afen_li_jin_cheng_wei_du_li_de_gong_neng/</url>
     <content><![CDATA[<p>多道程序设计是设计中的荒蛮之地，几乎没有好的实践方针。许多程序员尽管精于判断如何将代码分解成子过程，然而最终还是编写出单个庞然大物般的单进程程序，而这些程序往往失败在自身的内部复杂度之上。</p>
@@ -3719,16 +3789,6 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第八章 微型语言</title>
-    <url>/di_8_zhang_wei_xing_yu_yan%EF%BC%9Axun_zhao_ge_chang_de_le_fu/</url>
-    <content><![CDATA[<p>Unix 有个长期传统，即包容小型的、为专门应用领域特质、大量减少程序行数的语言。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Unix 编程艺术》 第九章 生成</title>
     <url>/di_9_zhang_sheng_cheng%EF%BC%9Ati_sheng_gui_ge_shuo_ming_de_ceng_ci/</url>
     <content><![CDATA[<p>数据比程序逻辑更易驾驭。尽可能把设计的复杂度从程序代码转移到数据中是个好实践，选择便于人类维护和操作的数据表示法也是好实践。</p>
@@ -3745,6 +3805,16 @@ Henry Spencer</p>
 ]]></content>
       <tags>
         <tag>系统设计</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》 第八章 微型语言</title>
+    <url>/di_8_zhang_wei_xing_yu_yan%EF%BC%9Axun_zhao_ge_chang_de_le_fu/</url>
+    <content><![CDATA[<p>Unix 有个长期传统，即包容小型的、为专门应用领域特质、大量减少程序行数的语言。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
         <tag>编码规范</tag>
       </tags>
   </entry>
@@ -3841,25 +3911,6 @@ Henry Spencer</p>
       <tags>
         <tag>方法论</tag>
         <tag>How-To</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 - 设计原则总结</title>
-    <url>/head_first_design_pattern_design_principles/</url>
-    <content><![CDATA[<ol>
-<li>将变化的部分封装起来（Encapsulate what varies)</li>
-<li>组合优于继承（Favor composition over inheritance）</li>
-<li>面向接口编程而非实现（Program to interfaces, not implementations.）</li>
-<li>减少需要交互的类之间的耦合（Strive for loosely coupled designs between objects that interact）</li>
-<li>对拓展开放，对修改关闭（Classes should be open for extension but closed for modification.）</li>
-<li>依赖于抽象而非具体的类（ Depend on abstraction. Do not depend on concrete classes）</li>
-<li>暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）</li>
-<li>高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don’t call us ,we’ll call you）</li>
-<li>一个类应该有且只有一个被改变的理由（A class should have only one reason to change）</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -3995,6 +4046,25 @@ Henry Spencer</p>
 <p><a href="/ch_11_the_proxy_pattern">Ch 11 the Proxy Pattern</a></p>
 <p><a href="/ch_12_the_compound_patterns">Ch 12 the Compound Patterns</a></p>
 <p><a href="/head_first_design_pattern_design_principles">Head First Design Pattern Design Principles</a></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 - 设计原则总结</title>
+    <url>/head_first_design_pattern_design_principles/</url>
+    <content><![CDATA[<ol>
+<li>将变化的部分封装起来（Encapsulate what varies)</li>
+<li>组合优于继承（Favor composition over inheritance）</li>
+<li>面向接口编程而非实现（Program to interfaces, not implementations.）</li>
+<li>减少需要交互的类之间的耦合（Strive for loosely coupled designs between objects that interact）</li>
+<li>对拓展开放，对修改关闭（Classes should be open for extension but closed for modification.）</li>
+<li>依赖于抽象而非具体的类（ Depend on abstraction. Do not depend on concrete classes）</li>
+<li>暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）</li>
+<li>高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don’t call us ,we’ll call you）</li>
+<li>一个类应该有且只有一个被改变的理由（A class should have only one reason to change）</li>
+</ol>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -4297,79 +4367,6 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>Windows Package Manager（winget）使用指南</title>
-    <url>/windows_package_manager/</url>
-    <content><![CDATA[<h1 id="介绍"><a class="header-anchor" href="#介绍">#</a>介绍</h1>
-<p>Windows Package Manager （winget） 是微软推出的基于命令行的包管理器，类似于 Chocolatey。</p>
-<div class="note info simple"><p>Package Manager 所管理的 Package，实际指应用（application / program）</p>
-</div>
-<p>理想情况下，开发人员使用 Package Manager 来指定开发所需的环境，Package 按照来说明安装和配置工具。Package Manager 可以减少准备环境所花费的时间，并且有助于确保在计算机上安装相同版本的包。</p>
-<div class="note info simple"><p>下部分基于 winget 版本 1.6.2771。</p>
-<p>部分 Windows 安装时自带 winget 1.2 版本，在实际使用时会遇到各种问题。</p>
-</div>
-<h1 id="安装"><a class="header-anchor" href="#安装">#</a>安装</h1>
-<p>可以通过在 Win Store 上安装 <code>App Installer</code> 来安装 winget。也可以通过命令行直接安装：</p>
-<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line"><span class="variable">$progressPreference</span> = <span class="string">&#x27;Continue&#x27;</span></span><br><span class="line"><span class="built_in">Write-Information</span> <span class="string">&quot;Downloading WinGet and its dependencies...&quot;</span></span><br><span class="line"><span class="built_in">Invoke-WebRequest</span> <span class="literal">-Uri</span> https://aka.ms/getwinget <span class="literal">-OutFile</span> Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle</span><br><span class="line"><span class="built_in">Invoke-WebRequest</span> <span class="literal">-Uri</span> https://aka.ms/Microsoft.VCLibs.x64.<span class="number">14.00</span>.Desktop.appx <span class="literal">-OutFile</span> Microsoft.VCLibs.x64.<span class="number">14.00</span>.Desktop.appx</span><br><span class="line"><span class="built_in">Invoke-WebRequest</span> <span class="literal">-Uri</span> https://github.com/microsoft/microsoft<span class="literal">-ui-xaml</span>/releases/download/v2.<span class="number">7.3</span>/Microsoft.UI.Xaml.<span class="number">2.7</span>.x64.appx <span class="literal">-OutFile</span> Microsoft.UI.Xaml.<span class="number">2.7</span>.x64.appx</span><br><span class="line"><span class="built_in">Add-AppxPackage</span> Microsoft.VCLibs.x64.<span class="number">14.00</span>.Desktop.appx</span><br><span class="line"><span class="built_in">Add-AppxPackage</span> Microsoft.UI.Xaml.<span class="number">2.7</span>.x64.appx</span><br><span class="line"><span class="built_in">Add-AppxPackage</span> Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle</span><br></pre></td></tr></table></figure>
-<div class="note info simple"><p>在 Windows Sandbox 中不存在 Windows Store，因此只能使用命令行进行安装</p>
-</div>
-<h1 id="命令"><a class="header-anchor" href="#命令">#</a>命令</h1>
-<h2 id="Search"><a class="header-anchor" href="#Search">#</a>Search</h2>
-<p>使用 <code>search</code> 命令进行搜索：</p>
-<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget search &lt;packageName&gt;</span><br><span class="line">winget search powershell</span><br></pre></td></tr></table></figure>
-<p>示例和结果如下：<br>
-<img src="/windows_package_manager/image-20231102213901.png" alt="winget search powershell"></p>
-<div class="note info simple"><p>开源项目 <a href="https://github.com/winget-run/wingetdotrun">winget-run</a> （非微软维护），提供了在网页中搜索 winget 支持的 Package 的功能：</p>
-</div>
-<h2 id="Install"><a class="header-anchor" href="#Install">#</a>Install</h2>
-<p>可以使用 <code>install</code> 安装应用，推荐使用 Search 结果中的 ID 来进行安装以避免冲突：</p>
-<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget install &lt;Package ID&gt;</span><br><span class="line">// winget install Microsoft.PowerShell</span><br></pre></td></tr></table></figure>
-<p>可以通过 <code>;</code> 风格多个安装命令，如：</p>
-<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget install Microsoft.AzureStorageExplorer; winget install Microsoft.VisualStudioCode;  winget install Microsoft.AzureCLI</span><br></pre></td></tr></table></figure>
-<p>可以使用 <code>-v</code> 约定安装的版本，未指定的情况下将安装最新版本。</p>
-<p>可以使用 <code>-h</code> 或 <code>--slient</code> 保证以静默方式安装。</p>
-<blockquote>
-<p>[!Caution]</p>
-</blockquote>
-<blockquote>
-<p>如果使用了静默安装，但安装要求管理员权限且当前命令行又不具有，则可能出现错误。<br>
-因此建议在使用静默安装时，使用管理员权限打开命令行</p>
-</blockquote>
-<h2 id="Uninstall"><a class="header-anchor" href="#Uninstall">#</a>Uninstall</h2>
-<p>使用 <code>uninstall</code> 卸载应用：</p>
-<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget uninstall &lt;Package ID&gt;</span><br><span class="line">// winget uninstall Microsoft.PowerShell</span><br></pre></td></tr></table></figure>
-<p>可以使用 <code>-h</code> 或 <code>--slient</code> 保证以静默方式安装。</p>
-<h2 id="Upgrade"><a class="header-anchor" href="#Upgrade">#</a>Upgrade</h2>
-<p>可以使用 <code>upgrade</code> 命令列出系统内所以可以通过 <code>winget</code> 进行升级的应用：<br>
-<img src="/windows_package_manager/image-20231102220234.png" alt="winget upgrade"></p>
-<p>同样使用 <code>upgrade</code> 命令进行升级：</p>
-<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget upgrade &lt;Package ID&gt;</span><br><span class="line">// winget upgrade microsoft.powertoys</span><br><span class="line"></span><br><span class="line">winget upgrade &lt;Package ID&gt; <span class="literal">-v</span> &lt;version&gt; // 升级到特定的版本</span><br><span class="line">// winget upgrade microsoft.powertoys <span class="literal">-v</span> <span class="number">0.41</span>.<span class="number">3</span></span><br><span class="line"></span><br><span class="line">winget upgrade <span class="literal">--all</span> // 升级所有应用</span><br></pre></td></tr></table></figure>
-<h2 id="Export"><a class="header-anchor" href="#Export">#</a>Export</h2>
-<p>可以使用 <code>export</code> 命令将本机安装的 Package 导出成 <code>json</code> 文件，加上 <code>--include-versions</code> 表示导出时需要包括版本。：</p>
-<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget export <span class="literal">-o</span> &lt;OutputPath&gt; <span class="literal">--include-versions</span></span><br></pre></td></tr></table></figure>
-<p>输出的 Json 如下：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;$schema&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://aka.ms/winget-packages.schema.2.0.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;CreationDate&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2023-11-05T11:37:19.847-00:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;Sources&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Packages&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;PackageIdentifier&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Notion.Notion&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;Version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.2.4&quot;</span></span><br><span class="line">                <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;PackageIdentifier&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Anki.Anki&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;Version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.1.66&quot;</span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;SourceDetails&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;Argument&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://cdn.winget.microsoft.com/cache&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;Identifier&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Microsoft.Winget.Source_8wekyb3d8bbwe&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;Name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;winget&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;Type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Microsoft.PreIndexed.Package&quot;</span></span><br><span class="line">            <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;WinGetVersion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.6.2771&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="Import"><a class="header-anchor" href="#Import">#</a>Import</h2>
-<p>可以使用 <code>import</code> 命令将通过 <a href="/windows_package_manager/#Export">Export</a> 导出的 Package 进行安装。</p>
-<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget import <span class="literal">-i</span> &lt;JsonPath&gt; <span class="literal">--ignore-versions</span> <span class="literal">--ignore-unavailable</span></span><br></pre></td></tr></table></figure>
-<p>在 <a href="/windows_package_manager/#Export">Export</a> 导出的文件中，很可能会出现版本已经不匹配或者其他无法安装的情况，因此建议加上 <code>--ignore-unavailable</code> 跳过无法安装的部分，避免阻塞整个流程。</p>
-<h1 id="winget_Repository"><a class="header-anchor" href="#winget_Repository">#</a>winget Repository</h1>
-<p>winget 默认应用的安装来源是 <a href="https://github.com/microsoft/winget-pkgs">Windows Package Manager Community Repository</a>。这是一个开源的项目，在项目的 <code>manifests</code> 文件夹下，按名称分类了每一个社区中提供的 Package。</p>
-<p>以 PowerShell 为例子，在仓库中，<code>7.3.0</code> 版本对应的 Manifest 文件为 <a href="https://github.com/microsoft/winget-pkgs/blob/master/manifests/m/Microsoft/PowerShell/7.3.2.0/Microsoft.PowerShell.installer.yaml">https://github.com/microsoft/winget-pkgs/blob/master/manifests/m/Microsoft/PowerShell/7.3.2.0/Microsoft.PowerShell.installer.yaml</a>。</p>
-<p>文件中最重要的就是 <code>Installer</code>，如其中这一段表示了 <code>x64</code> 结构的安装路径：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">Installers:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">Architecture:</span> <span class="string">x64</span></span><br><span class="line">  <span class="attr">InstallerType:</span> <span class="string">wix</span></span><br><span class="line">  <span class="attr">InstallerUrl:</span> <span class="string">https://github.com/PowerShell/PowerShell/releases/download/v7.3.2/PowerShell-7.3.2-win-x64.msi</span></span><br><span class="line">  <span class="attr">InstallerSha256:</span> <span class="string">A4F7D081C5F74BC8D6C75F1DFEE382B7FD9335361181748FEE590ECDBC96CB26</span></span><br></pre></td></tr></table></figure>
-<h2 id="在社区中发布_Package"><a class="header-anchor" href="#在社区中发布_Package">#</a>在社区中发布 Package</h2>
-<p>Microsoft Learn：<a href="https://learn.microsoft.com/en-us/training/modules/explore-windows-package-manager-tool/6-contribute-to-repository">Contribute to the Windows Package Manager repository - Training | Microsoft Learn</a></p>
-<p>Documentation： <a href="https://learn.microsoft.com/en-us/windows/package-manager/package/repository">Submit your manifest to the repository | Microsoft Learn</a></p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="https://learn.microsoft.com/en-us/training/modules/explore-windows-package-manager-tool/">Explore the Windows Package Manager tool - Training | Microsoft Learn</a></p>
-<p><a href="https://learn.microsoft.com/en-us/windows/package-manager/">Windows Package Manager | Microsoft Learn</a></p>
-]]></content>
-      <tags>
-        <tag>Windows</tag>
-        <tag>CLI</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《贪婪的多巴胺》 摘抄</title>
     <url>/tan_lan_de_duo_ba_an/</url>
     <content><![CDATA[<p>《贪婪的多巴胺》 笔记摘抄。该书主要从生物学角度介绍了多巴胺对人行为及心理的影响。主要的包括：</p>
@@ -4495,6 +4492,79 @@ Henry Spencer</p>
       <tags>
         <tag>系统设计</tag>
         <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Windows Package Manager（winget）使用指南</title>
+    <url>/windows_package_manager/</url>
+    <content><![CDATA[<h1 id="介绍"><a class="header-anchor" href="#介绍">#</a>介绍</h1>
+<p>Windows Package Manager （winget） 是微软推出的基于命令行的包管理器，类似于 Chocolatey。</p>
+<div class="note info simple"><p>Package Manager 所管理的 Package，实际指应用（application / program）</p>
+</div>
+<p>理想情况下，开发人员使用 Package Manager 来指定开发所需的环境，Package 按照来说明安装和配置工具。Package Manager 可以减少准备环境所花费的时间，并且有助于确保在计算机上安装相同版本的包。</p>
+<div class="note info simple"><p>下部分基于 winget 版本 1.6.2771。</p>
+<p>部分 Windows 安装时自带 winget 1.2 版本，在实际使用时会遇到各种问题。</p>
+</div>
+<h1 id="安装"><a class="header-anchor" href="#安装">#</a>安装</h1>
+<p>可以通过在 Win Store 上安装 <code>App Installer</code> 来安装 winget。也可以通过命令行直接安装：</p>
+<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line"><span class="variable">$progressPreference</span> = <span class="string">&#x27;Continue&#x27;</span></span><br><span class="line"><span class="built_in">Write-Information</span> <span class="string">&quot;Downloading WinGet and its dependencies...&quot;</span></span><br><span class="line"><span class="built_in">Invoke-WebRequest</span> <span class="literal">-Uri</span> https://aka.ms/getwinget <span class="literal">-OutFile</span> Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle</span><br><span class="line"><span class="built_in">Invoke-WebRequest</span> <span class="literal">-Uri</span> https://aka.ms/Microsoft.VCLibs.x64.<span class="number">14.00</span>.Desktop.appx <span class="literal">-OutFile</span> Microsoft.VCLibs.x64.<span class="number">14.00</span>.Desktop.appx</span><br><span class="line"><span class="built_in">Invoke-WebRequest</span> <span class="literal">-Uri</span> https://github.com/microsoft/microsoft<span class="literal">-ui-xaml</span>/releases/download/v2.<span class="number">7.3</span>/Microsoft.UI.Xaml.<span class="number">2.7</span>.x64.appx <span class="literal">-OutFile</span> Microsoft.UI.Xaml.<span class="number">2.7</span>.x64.appx</span><br><span class="line"><span class="built_in">Add-AppxPackage</span> Microsoft.VCLibs.x64.<span class="number">14.00</span>.Desktop.appx</span><br><span class="line"><span class="built_in">Add-AppxPackage</span> Microsoft.UI.Xaml.<span class="number">2.7</span>.x64.appx</span><br><span class="line"><span class="built_in">Add-AppxPackage</span> Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle</span><br></pre></td></tr></table></figure>
+<div class="note info simple"><p>在 Windows Sandbox 中不存在 Windows Store，因此只能使用命令行进行安装</p>
+</div>
+<h1 id="命令"><a class="header-anchor" href="#命令">#</a>命令</h1>
+<h2 id="Search"><a class="header-anchor" href="#Search">#</a>Search</h2>
+<p>使用 <code>search</code> 命令进行搜索：</p>
+<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget search &lt;packageName&gt;</span><br><span class="line">winget search powershell</span><br></pre></td></tr></table></figure>
+<p>示例和结果如下：<br>
+<img src="/windows_package_manager/image-20231102213901.png" alt="winget search powershell"></p>
+<div class="note info simple"><p>开源项目 <a href="https://github.com/winget-run/wingetdotrun">winget-run</a> （非微软维护），提供了在网页中搜索 winget 支持的 Package 的功能：</p>
+</div>
+<h2 id="Install"><a class="header-anchor" href="#Install">#</a>Install</h2>
+<p>可以使用 <code>install</code> 安装应用，推荐使用 Search 结果中的 ID 来进行安装以避免冲突：</p>
+<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget install &lt;Package ID&gt;</span><br><span class="line">// winget install Microsoft.PowerShell</span><br></pre></td></tr></table></figure>
+<p>可以通过 <code>;</code> 风格多个安装命令，如：</p>
+<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget install Microsoft.AzureStorageExplorer; winget install Microsoft.VisualStudioCode;  winget install Microsoft.AzureCLI</span><br></pre></td></tr></table></figure>
+<p>可以使用 <code>-v</code> 约定安装的版本，未指定的情况下将安装最新版本。</p>
+<p>可以使用 <code>-h</code> 或 <code>--slient</code> 保证以静默方式安装。</p>
+<blockquote>
+<p>[!Caution]</p>
+</blockquote>
+<blockquote>
+<p>如果使用了静默安装，但安装要求管理员权限且当前命令行又不具有，则可能出现错误。<br>
+因此建议在使用静默安装时，使用管理员权限打开命令行</p>
+</blockquote>
+<h2 id="Uninstall"><a class="header-anchor" href="#Uninstall">#</a>Uninstall</h2>
+<p>使用 <code>uninstall</code> 卸载应用：</p>
+<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget uninstall &lt;Package ID&gt;</span><br><span class="line">// winget uninstall Microsoft.PowerShell</span><br></pre></td></tr></table></figure>
+<p>可以使用 <code>-h</code> 或 <code>--slient</code> 保证以静默方式安装。</p>
+<h2 id="Upgrade"><a class="header-anchor" href="#Upgrade">#</a>Upgrade</h2>
+<p>可以使用 <code>upgrade</code> 命令列出系统内所以可以通过 <code>winget</code> 进行升级的应用：<br>
+<img src="/windows_package_manager/image-20231102220234.png" alt="winget upgrade"></p>
+<p>同样使用 <code>upgrade</code> 命令进行升级：</p>
+<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget upgrade &lt;Package ID&gt;</span><br><span class="line">// winget upgrade microsoft.powertoys</span><br><span class="line"></span><br><span class="line">winget upgrade &lt;Package ID&gt; <span class="literal">-v</span> &lt;version&gt; // 升级到特定的版本</span><br><span class="line">// winget upgrade microsoft.powertoys <span class="literal">-v</span> <span class="number">0.41</span>.<span class="number">3</span></span><br><span class="line"></span><br><span class="line">winget upgrade <span class="literal">--all</span> // 升级所有应用</span><br></pre></td></tr></table></figure>
+<h2 id="Export"><a class="header-anchor" href="#Export">#</a>Export</h2>
+<p>可以使用 <code>export</code> 命令将本机安装的 Package 导出成 <code>json</code> 文件，加上 <code>--include-versions</code> 表示导出时需要包括版本。：</p>
+<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget export <span class="literal">-o</span> &lt;OutputPath&gt; <span class="literal">--include-versions</span></span><br></pre></td></tr></table></figure>
+<p>输出的 Json 如下：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;$schema&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://aka.ms/winget-packages.schema.2.0.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;CreationDate&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2023-11-05T11:37:19.847-00:00&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;Sources&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;Packages&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;PackageIdentifier&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Notion.Notion&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;Version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.2.4&quot;</span></span><br><span class="line">                <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;PackageIdentifier&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Anki.Anki&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;Version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.1.66&quot;</span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;SourceDetails&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;Argument&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://cdn.winget.microsoft.com/cache&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;Identifier&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Microsoft.Winget.Source_8wekyb3d8bbwe&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;Name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;winget&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;Type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Microsoft.PreIndexed.Package&quot;</span></span><br><span class="line">            <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;WinGetVersion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.6.2771&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Import"><a class="header-anchor" href="#Import">#</a>Import</h2>
+<p>可以使用 <code>import</code> 命令将通过 <a href="/windows_package_manager/#Export">Export</a> 导出的 Package 进行安装。</p>
+<figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget import <span class="literal">-i</span> &lt;JsonPath&gt; <span class="literal">--ignore-versions</span> <span class="literal">--ignore-unavailable</span></span><br></pre></td></tr></table></figure>
+<p>在 <a href="/windows_package_manager/#Export">Export</a> 导出的文件中，很可能会出现版本已经不匹配或者其他无法安装的情况，因此建议加上 <code>--ignore-unavailable</code> 跳过无法安装的部分，避免阻塞整个流程。</p>
+<h1 id="winget_Repository"><a class="header-anchor" href="#winget_Repository">#</a>winget Repository</h1>
+<p>winget 默认应用的安装来源是 <a href="https://github.com/microsoft/winget-pkgs">Windows Package Manager Community Repository</a>。这是一个开源的项目，在项目的 <code>manifests</code> 文件夹下，按名称分类了每一个社区中提供的 Package。</p>
+<p>以 PowerShell 为例子，在仓库中，<code>7.3.0</code> 版本对应的 Manifest 文件为 <a href="https://github.com/microsoft/winget-pkgs/blob/master/manifests/m/Microsoft/PowerShell/7.3.2.0/Microsoft.PowerShell.installer.yaml">https://github.com/microsoft/winget-pkgs/blob/master/manifests/m/Microsoft/PowerShell/7.3.2.0/Microsoft.PowerShell.installer.yaml</a>。</p>
+<p>文件中最重要的就是 <code>Installer</code>，如其中这一段表示了 <code>x64</code> 结构的安装路径：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">Installers:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">Architecture:</span> <span class="string">x64</span></span><br><span class="line">  <span class="attr">InstallerType:</span> <span class="string">wix</span></span><br><span class="line">  <span class="attr">InstallerUrl:</span> <span class="string">https://github.com/PowerShell/PowerShell/releases/download/v7.3.2/PowerShell-7.3.2-win-x64.msi</span></span><br><span class="line">  <span class="attr">InstallerSha256:</span> <span class="string">A4F7D081C5F74BC8D6C75F1DFEE382B7FD9335361181748FEE590ECDBC96CB26</span></span><br></pre></td></tr></table></figure>
+<h2 id="在社区中发布_Package"><a class="header-anchor" href="#在社区中发布_Package">#</a>在社区中发布 Package</h2>
+<p>Microsoft Learn：<a href="https://learn.microsoft.com/en-us/training/modules/explore-windows-package-manager-tool/6-contribute-to-repository">Contribute to the Windows Package Manager repository - Training | Microsoft Learn</a></p>
+<p>Documentation： <a href="https://learn.microsoft.com/en-us/windows/package-manager/package/repository">Submit your manifest to the repository | Microsoft Learn</a></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://learn.microsoft.com/en-us/training/modules/explore-windows-package-manager-tool/">Explore the Windows Package Manager tool - Training | Microsoft Learn</a></p>
+<p><a href="https://learn.microsoft.com/en-us/windows/package-manager/">Windows Package Manager | Microsoft Learn</a></p>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
+        <tag>CLI</tag>
       </tags>
   </entry>
   <entry>
