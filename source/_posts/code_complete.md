@@ -30,11 +30,16 @@ Preface
 - [Ch 03 Architecture Checklist](/ch_03_architecture_checklist)
 - [Ch 03 Prerequisites Checklist](/ch_03_prerequisites_checklist)
 
-Ch 04 Key Construction Decisions
+[Ch 04 Key Construction Decisions](/ch_04_key_construction_decisions)
+
+- [Ch 04 Construction Practices Checklists](/ch_04_construction_practices_checklists)
 
 # Creating High-Quality Code
 
 Ch 05 Design in Construction
+
+- Ch 05 Design Checklist
+
 Ch 06 Working Classes
 Ch 07 High-Quality Routines
 Ch 08 Defensive Programming
