@@ -1,10 +1,12 @@
 ---
 created: 2022-04-28
-updated: 2023-10-27
+updated: 2023-11-14
 tags:
     - 系统设计
     - 编码规范
 published: true
+alias:
+- Unix 原则
 title: 《Unix 编程艺术》 第一章 哲学
 date: 2023-08-27 22:24 
 description: 第一章中，概述了 Unix 哲学的基础以及 Unix 的十六条原则，所有的哲学和原则最核心的就是控制复杂度：KISS（Keep It Simple, Stupid）
