@@ -118,46 +118,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Render Hell》 第一部分 概览</title>
-    <url>/book_1_overview/</url>
-    <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
-</div>
-<h1 id="Copy_the_Data"><a class="header-anchor" href="#Copy_the_Data">#</a>Copy the Data</h1>
-<div class="note info simple"><p>之所以需要在不同的硬件间拷贝数据，是因为从不同硬件中读取数据的速度差异很大。因此对于当前需要频繁访问的数据，通常会选择将其拷贝到更为高速的内存部分中。</p>
-</div>
-<div class="note warning simple"><p>GPU 和 显卡 并不是相等的关系 GPU 全称为 Graphics Processing Unit，它指示显卡中的核心计算芯片。整个显卡中还包括显存（VRam），散热器等配件。</p>
-</div>
-<p>对于所有与绘制相关的资源，如贴图，模型，一开始都是存储在硬盘（HDD）上的 。在整个绘制过程中，它们会先被读取到内存（RAM）中，再被读取到显卡上的显存（VRAM）中。之所以要进行这么一个数据从 HDD 拷贝到 VRAM 中的操作，是因为显卡读取 VRAM 中的内容速度更快。整个过程如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_8-52-50_am.gif" alt="数据从内存拷贝到显存"></p>
-<p>又因为整个过程中数据是被 拷贝 的，因此当数据进入 VRAM 后，在 RAM 中的数据可以被正常销毁，不会影响到后续的绘制。如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_8-55-43_am.gif" alt="内存中数据可安全销毁"></p>
-<p>但是 GPU 访问 VRAM 速度仍然不够快，VRAM 中需要使用到的数据会进一步的被拷贝到 GPU 中的一小块内存上（ on-chip caches），这一块内存被称为 <code>L2 Cache</code> 。过程如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_9-18-41_am.gif" alt="L2 Cache"></p>
-<p>在 GPU 更靠近核心（Core）的地方，还有一片更小的内存，称为 <code>L1 Cache</code> 。因为更靠近核心，所以 <code>L1 Cache</code> 中数据的访问速度相对于 <code>L2 Cache</code> 也更快。 <code>L2 Cache</code> 中的数据在需要被操作时，也会先拷贝到 <code>L1 Cache</code> 中。</p>
-<p>在 <code>L1 Cache</code> 中的数据还会被进一步拷贝到 GPU 中被称为 <code>Register</code> 的内存区域，GPU Cores 会从该区域中读取数据，计算并将运算后结果放回到 <code>Register</code> 中：<br>
-<img src="/book_1_overview/gif_9-13-2021_9-25-58_am.gif" alt="Register"></p>
-<h1 id="Set_the_Render_State"><a class="header-anchor" href="#Set_the_Render_State">#</a>Set the Render State</h1>
-<p>对于除了 Mesh 数据外的数据，如顶点/像素着色器，纹理，材质，光照信息，是否半透明等信息都称为 <code>Render State</code> 。</p>
-<p>Mesh 数据会使用被设置的 <code>Render State</code> 进行渲染，图形 API 又是一个类似状态机的实现，即设置了 Render State 后，后续的 Mesh 都会使用该 State 进行渲染，直到有了新 State 被设置。示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_8-47-57_am.gif" alt="State"></p>
-<h1 id="Draw_Call"><a class="header-anchor" href="#Draw_Call">#</a>Draw Call</h1>
-<p><code>DrawCall</code> 是一个由 CPU 端发出，由 GPU 端接受的绘制 <strong>一个 Mesh</strong> 的指令。该指令只包含指向需要绘制的 Mesh 的指针，而如材质这样的信息是通过 Render State 进行传递，并不会在 <code>DrawCall</code> 中。示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_8-55-41_am.gif" alt="Draw Call"></p>
-<h1 id="Pipeline"><a class="header-anchor" href="#Pipeline">#</a>Pipeline</h1>
-<p>当 <code>DrawCall</code> 发送后，GPU 会获取当前的 Render State，和设置的顶点信息（Mesh），并通过渲染管线（Pipeline）将其一步步转换到最终屏幕上所见像素。在管线中，对于顶点和像素的工作会被划分到 GPU 的多个核心中平行处理。整个管线工作的简单示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_9-02-13_am.gif" alt="Pipeline"></p>
-<h1 id="Command_Buffer"><a class="header-anchor" href="#Command_Buffer">#</a>Command Buffer</h1>
-<p>CPU 并不是直接将数据传递给 GPU，而是通过 <code>Command Buffer</code> ，这样 CPU 和 GPU 就可以各自独立的工作。如果是直接传递的话，当 GPU 在忙碌时，CPU 无法将数据送给 GPU，就会造成 CPU 的堵塞。</p>
-<p>Command Buffer 是一个 <code>FIFO 存储器</code> ，即 GPU 只会取 CPU 最早 Push 进 Command Buffer 中的数据。 Command Buffer 的示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_9-12-25_am.gif" alt="Command Buffer"></p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell-book1/">Render Hell – Book I | Simon schreibt.</a></p>
-]]></content>
-      <tags>
-        <tag>GPU</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《5% 的改变》 摘抄</title>
     <url>/bai_fen_zhi_5_de_gai_bian/</url>
     <content><![CDATA[<h1 id="引言"><a class="header-anchor" href="#引言">#</a>引言</h1>
@@ -288,32 +248,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Render Hell》 第三部分 常见问题</title>
-    <url>/book_3_problems/</url>
-    <content><![CDATA[<h1 id="Many_Draw_Calls_Many_Commands"><a class="header-anchor" href="#Many_Draw_Calls_Many_Commands">#</a>Many Draw Calls / Many Commands</h1>
-<p>对于一个 API 而言，它不仅仅是将命令发送给 GPU，它还会有额外的如驱动翻译等的开销，因此应当尽可能的使用更少的命令。</p>
-<div class="note info simple"><p>对于新的图形 API，如 DirectX12， Vulkan 等，命令的开销会相对较少，但仍然应当尽可能的减少命令的数量。</p>
-</div>
-<p>如果有一系列很小的 Mesh，相较于每个 Mesh 都使用一个 Drawcall，更理想的做法是将这些 Meshes 组合成一个更大的 Mesh，并通过一个 Drawcall 传送。</p>
-<p>因为对于 GPU 而言，绘制一个小 Mesh 的时间是非常快的，而 CPU 将数据发送给 GPU 的时间是相对较长的。</p>
-<p>如果是每一个 Mesh 一个 Draw Call 的处理方式，往往瓶颈会出现在 CPU 侧。</p>
-<h1 id="Many_Meshes_and_Materials"><a class="header-anchor" href="#Many_Meshes_and_Materials">#</a>Many Meshes and Materials</h1>
-<p>如果要渲染许多 Mesh 并使用不同的 Materials，除了需要用许多的命令外，还会额外带来 <code>Flush Pipeline</code> 的问题。</p>
-<p>如果多个 Meshes 是用同一种渲染状态，则在一个 Mesh 完成后，另一个 Mesh 可以被很快的装填。而如果更改了材质状态，则管线中的一部分数据需要被刷新，才能进行下一个 Mesh 的绘制，这会造成额外的开销。</p>
-<h1 id="Meshes_and_Multi_Materials"><a class="header-anchor" href="#Meshes_and_Multi_Materials">#</a>Meshes and Multi-Materials</h1>
-<p>如果一个 Mesh 被赋予了多个材质，则该 Mesh 会被切分成多份再被送入 Command Buffer 中，这无疑也会造成多个 Draw Call 的产生。如下示意图所示，球的左半部分和右半部分各需要一个 Draw Call：<br>
-<img src="/book_3_problems/copy_data_from_hdd_to_ram_vram_01_multimaterial.gif" alt="Multi-Materials"></p>
-<h1 id="Thin_Triangles"><a class="header-anchor" href="#Thin_Triangles">#</a>Thin Triangles</h1>
-<p>如在 Book 2 的 <a href="/book_2_pipeline/#Rasterizing">Rasterizing</a> 中所属，光栅化后的单位是 <code>pre-pixles</code> ，Warp 中的四个线程会被分给一个 <code>pre-pixels</code> 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：<br>
-<img src="/book_3_problems/pipeline_rasterizing03_.gif" alt="Thin Triangles 造成的性能浪费"></p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell-book3/">Render Hell – Book III | Simon schreibt.</a></p>
-]]></content>
-      <tags>
-        <tag>GPU</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Render Hell》 第二部分 管线</title>
     <url>/book_2_pipeline/</url>
     <content><![CDATA[<h1 id="GPU_Core"><a class="header-anchor" href="#GPU_Core">#</a>GPU Core</h1>
@@ -436,6 +370,72 @@
 </li>
 </ol>
 </section>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Render Hell》 第一部分 概览</title>
+    <url>/book_1_overview/</url>
+    <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
+</div>
+<h1 id="Copy_the_Data"><a class="header-anchor" href="#Copy_the_Data">#</a>Copy the Data</h1>
+<div class="note info simple"><p>之所以需要在不同的硬件间拷贝数据，是因为从不同硬件中读取数据的速度差异很大。因此对于当前需要频繁访问的数据，通常会选择将其拷贝到更为高速的内存部分中。</p>
+</div>
+<div class="note warning simple"><p>GPU 和 显卡 并不是相等的关系 GPU 全称为 Graphics Processing Unit，它指示显卡中的核心计算芯片。整个显卡中还包括显存（VRam），散热器等配件。</p>
+</div>
+<p>对于所有与绘制相关的资源，如贴图，模型，一开始都是存储在硬盘（HDD）上的 。在整个绘制过程中，它们会先被读取到内存（RAM）中，再被读取到显卡上的显存（VRAM）中。之所以要进行这么一个数据从 HDD 拷贝到 VRAM 中的操作，是因为显卡读取 VRAM 中的内容速度更快。整个过程如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_8-52-50_am.gif" alt="数据从内存拷贝到显存"></p>
+<p>又因为整个过程中数据是被 拷贝 的，因此当数据进入 VRAM 后，在 RAM 中的数据可以被正常销毁，不会影响到后续的绘制。如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_8-55-43_am.gif" alt="内存中数据可安全销毁"></p>
+<p>但是 GPU 访问 VRAM 速度仍然不够快，VRAM 中需要使用到的数据会进一步的被拷贝到 GPU 中的一小块内存上（ on-chip caches），这一块内存被称为 <code>L2 Cache</code> 。过程如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_9-18-41_am.gif" alt="L2 Cache"></p>
+<p>在 GPU 更靠近核心（Core）的地方，还有一片更小的内存，称为 <code>L1 Cache</code> 。因为更靠近核心，所以 <code>L1 Cache</code> 中数据的访问速度相对于 <code>L2 Cache</code> 也更快。 <code>L2 Cache</code> 中的数据在需要被操作时，也会先拷贝到 <code>L1 Cache</code> 中。</p>
+<p>在 <code>L1 Cache</code> 中的数据还会被进一步拷贝到 GPU 中被称为 <code>Register</code> 的内存区域，GPU Cores 会从该区域中读取数据，计算并将运算后结果放回到 <code>Register</code> 中：<br>
+<img src="/book_1_overview/gif_9-13-2021_9-25-58_am.gif" alt="Register"></p>
+<h1 id="Set_the_Render_State"><a class="header-anchor" href="#Set_the_Render_State">#</a>Set the Render State</h1>
+<p>对于除了 Mesh 数据外的数据，如顶点/像素着色器，纹理，材质，光照信息，是否半透明等信息都称为 <code>Render State</code> 。</p>
+<p>Mesh 数据会使用被设置的 <code>Render State</code> 进行渲染，图形 API 又是一个类似状态机的实现，即设置了 Render State 后，后续的 Mesh 都会使用该 State 进行渲染，直到有了新 State 被设置。示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_8-47-57_am.gif" alt="State"></p>
+<h1 id="Draw_Call"><a class="header-anchor" href="#Draw_Call">#</a>Draw Call</h1>
+<p><code>DrawCall</code> 是一个由 CPU 端发出，由 GPU 端接受的绘制 <strong>一个 Mesh</strong> 的指令。该指令只包含指向需要绘制的 Mesh 的指针，而如材质这样的信息是通过 Render State 进行传递，并不会在 <code>DrawCall</code> 中。示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_8-55-41_am.gif" alt="Draw Call"></p>
+<h1 id="Pipeline"><a class="header-anchor" href="#Pipeline">#</a>Pipeline</h1>
+<p>当 <code>DrawCall</code> 发送后，GPU 会获取当前的 Render State，和设置的顶点信息（Mesh），并通过渲染管线（Pipeline）将其一步步转换到最终屏幕上所见像素。在管线中，对于顶点和像素的工作会被划分到 GPU 的多个核心中平行处理。整个管线工作的简单示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_9-02-13_am.gif" alt="Pipeline"></p>
+<h1 id="Command_Buffer"><a class="header-anchor" href="#Command_Buffer">#</a>Command Buffer</h1>
+<p>CPU 并不是直接将数据传递给 GPU，而是通过 <code>Command Buffer</code> ，这样 CPU 和 GPU 就可以各自独立的工作。如果是直接传递的话，当 GPU 在忙碌时，CPU 无法将数据送给 GPU，就会造成 CPU 的堵塞。</p>
+<p>Command Buffer 是一个 <code>FIFO 存储器</code> ，即 GPU 只会取 CPU 最早 Push 进 Command Buffer 中的数据。 Command Buffer 的示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_9-12-25_am.gif" alt="Command Buffer"></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book1/">Render Hell – Book I | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Render Hell》 第三部分 常见问题</title>
+    <url>/book_3_problems/</url>
+    <content><![CDATA[<h1 id="Many_Draw_Calls_Many_Commands"><a class="header-anchor" href="#Many_Draw_Calls_Many_Commands">#</a>Many Draw Calls / Many Commands</h1>
+<p>对于一个 API 而言，它不仅仅是将命令发送给 GPU，它还会有额外的如驱动翻译等的开销，因此应当尽可能的使用更少的命令。</p>
+<div class="note info simple"><p>对于新的图形 API，如 DirectX12， Vulkan 等，命令的开销会相对较少，但仍然应当尽可能的减少命令的数量。</p>
+</div>
+<p>如果有一系列很小的 Mesh，相较于每个 Mesh 都使用一个 Drawcall，更理想的做法是将这些 Meshes 组合成一个更大的 Mesh，并通过一个 Drawcall 传送。</p>
+<p>因为对于 GPU 而言，绘制一个小 Mesh 的时间是非常快的，而 CPU 将数据发送给 GPU 的时间是相对较长的。</p>
+<p>如果是每一个 Mesh 一个 Draw Call 的处理方式，往往瓶颈会出现在 CPU 侧。</p>
+<h1 id="Many_Meshes_and_Materials"><a class="header-anchor" href="#Many_Meshes_and_Materials">#</a>Many Meshes and Materials</h1>
+<p>如果要渲染许多 Mesh 并使用不同的 Materials，除了需要用许多的命令外，还会额外带来 <code>Flush Pipeline</code> 的问题。</p>
+<p>如果多个 Meshes 是用同一种渲染状态，则在一个 Mesh 完成后，另一个 Mesh 可以被很快的装填。而如果更改了材质状态，则管线中的一部分数据需要被刷新，才能进行下一个 Mesh 的绘制，这会造成额外的开销。</p>
+<h1 id="Meshes_and_Multi_Materials"><a class="header-anchor" href="#Meshes_and_Multi_Materials">#</a>Meshes and Multi-Materials</h1>
+<p>如果一个 Mesh 被赋予了多个材质，则该 Mesh 会被切分成多份再被送入 Command Buffer 中，这无疑也会造成多个 Draw Call 的产生。如下示意图所示，球的左半部分和右半部分各需要一个 Draw Call：<br>
+<img src="/book_3_problems/copy_data_from_hdd_to_ram_vram_01_multimaterial.gif" alt="Multi-Materials"></p>
+<h1 id="Thin_Triangles"><a class="header-anchor" href="#Thin_Triangles">#</a>Thin Triangles</h1>
+<p>如在 Book 2 的 <a href="/book_2_pipeline/#Rasterizing">Rasterizing</a> 中所属，光栅化后的单位是 <code>pre-pixles</code> ，Warp 中的四个线程会被分给一个 <code>pre-pixels</code> 。对于一些没有真正覆盖三角形的 Pixels 而言，它们的颜色并无意义，因此虽然它们在 pre-pixels 中但并不会有线程去计算它们的颜色，这也就造成了 Warp 中线程的浪费。这种性能浪费会比较常见的出现在狭长的三角形中，如下示意图所示：<br>
+<img src="/book_3_problems/pipeline_rasterizing03_.gif" alt="Thin Triangles 造成的性能浪费"></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book3/">Render Hell – Book III | Simon schreibt.</a></p>
 ]]></content>
       <tags>
         <tag>GPU</tag>
@@ -847,6 +847,21 @@
       </tags>
   </entry>
   <entry>
+    <title>《Code Complete》先决条件检查清单</title>
+    <url>/ch_03_prerequisites_checklist/</url>
+    <content><![CDATA[<p>关于所有上游先决条件的检查表：</p>
+<ul>
+<li>[ ] 你是否已经确定了你正在从事的软件项目的类型并适当地调整了你的方法（迭代 或 顺序）？</li>
+<li>[ ] 需求是否足够明确，足以开始构建？（更详细的请参考，<a href="/ch_03_requirement_checklist">Ch 03 Requirement Checklist</a>）</li>
+<li>[ ] 架构是否足够明确，足以开始构建（更详细的请参考 <a href="/ch_03_architecture_checklist">Ch 03 Architecture Checklist</a></li>
+<li>[ ] 你项目中的特有的风险是否已经得到了解决，以保证在施工时不会面临不必要的风险？</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>工程实践</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Code Complete》第三章：测量两次，切割一次——前期准备</title>
     <url>/ch_03_measure_twice,_cut_once_upstream_prerequisites/</url>
     <content><![CDATA[<p>与建筑施工一样，项目的成败很大程度上在施工开始前就已经确定。如果地基没有打好或者规划不充分，施工期间你能做的最好的事情就是将损害降到最低。</p>
@@ -1136,21 +1151,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Code Complete》先决条件检查清单</title>
-    <url>/ch_03_prerequisites_checklist/</url>
-    <content><![CDATA[<p>关于所有上游先决条件的检查表：</p>
-<ul>
-<li>[ ] 你是否已经确定了你正在从事的软件项目的类型并适当地调整了你的方法（迭代 或 顺序）？</li>
-<li>[ ] 需求是否足够明确，足以开始构建？（更详细的请参考，<a href="/ch_03_requirement_checklist">Ch 03 Requirement Checklist</a>）</li>
-<li>[ ] 架构是否足够明确，足以开始构建（更详细的请参考 <a href="/ch_03_architecture_checklist">Ch 03 Architecture Checklist</a></li>
-<li>[ ] 你项目中的特有的风险是否已经得到了解决，以保证在施工时不会面临不必要的风险？</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>工程实践</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Head First 设计模式》 Ch 03 装饰模式</title>
     <url>/ch_03_the_decorator_pattern/</url>
     <content><![CDATA[<p>装饰模式（Decorator Pattern） 提供了一个动态增加一个类功能的方法，主要实现思想是通过一个作为装饰者的类（<code>Decorators</code>）包裹被装饰类（<code>Component</code>）（装饰类以及被装饰类都有共同的基类），<code>Decorators</code> 会在 <code>Component</code> 类的某一个函数执行前或后进行一些操作，进而达到增加功能的作用。</p>
@@ -1208,6 +1208,65 @@
 <li>[ ] 你是否选择了某框架，或者明确决定不使用框架？</li>
 <li>[ ] 你是否允许使用非标准语言功能？</li>
 <li>[ ] 你是否已经确定并获得了你需要使用的其他工具——编辑器、重构工具、调试器、测试框架、语法检查器等等？</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>工程实践</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Code Complete》第四章：关键构建决策</title>
+    <url>/ch_04_key_construction_decisions/</url>
+    <content><![CDATA[<h1 id="4_1_编程语言的选择"><a class="header-anchor" href="#4_1_编程语言的选择">#</a>4.1 编程语言的选择</h1>
+<p>编程语言的选择会通过多种方式影响生产力和代码质量。</p>
+<p>程序员使用熟悉的语言比使用不熟悉的语言更有效率。IBM 的一项早期研究发现，对一个语言有丰富经验的程序员的工作效率是那些经验很少的程序员的三倍多</p>
+<p>使用高级语言的程序员比使用低级语言的程序员可以获得更好的生产力和质量。高级语言相对于低级语言在生产效率、可靠性和可阅读性提高了 5 到 15 倍。高级语言相对于低级语言有更高的表达能力，即每行代码可以实现更多的任务。</p>
+<p>萨丕尔-沃夫假说 认为人思考某个想法的能力取决于他是否知道能够表达该想法的词语。如果你不认识单词，你就无法表达想法。也因此程序员可能会类似地受到他们的语言的影响。</p>
+<p>编程语言对程序员思维影响的证据很常见，如一些拥有 A 语言背景的人去使用 B 语言开发，他们很可能只是通过 B 语言来实现 A 语言的特色，而忽略了 B 语言本身的能力。</p>
+<h1 id="4_2_编码约定"><a class="header-anchor" href="#4_2_编码约定">#</a>4.2 编码约定</h1>
+<p>在复杂的项目中，架构赋予项目结构平衡，而编码约定则提供实现层的和谐。如果没有统一的编码风格，编写的代码将在风格上存在杂乱的变化。而这些变化会消耗开发者的大脑——大脑会需要分出一部分精力去理解编码风格差异。成功编程的关键之一是避免任意变化，以便让开发者的大脑可以专注于真正需要关心的逻辑上。</p>
+<div class="note info simple"><p>如果你有一幅画的伟大设计，但一部分是古典派，一部分是印象派，一部分是立体派，该怎么办？无论你多么严格地遵循其宏伟的设计，它都不具有概念完整性。它看起来像一幅廉价拼贴画。</p>
+</div>
+<p>在开始构建之前，需要阐明你将使用的编程约定。编码约定的细节将非常精确，以至于在编写软件后几乎不可能对其进行改造。</p>
+<h1 id="4_3_你在科技浪潮中的位置"><a class="header-anchor" href="#4_3_你在科技浪潮中的位置">#</a>4.3 你在科技浪潮中的位置</h1>
+<p>理解**用一种语言编程（Programming in one language）**和 <strong>利用一种语言编程（Programming into one language）</strong> 之间的区别对于理解本书至关重要。</p>
+<p>大多数重要的编程原则并不取决于特定的语言，而是取决于你使用它们的方式。如果你的语言缺乏你想要使用的结构或者容易出现其他类型的问题，请尝试弥补它们。发明你自己的编码约定、标准、类库和其他增强语言的方式。</p>
+<p>如，VB 语言本身并不支持数据和业务的解耦，但可以通过约定 <code>.fsm</code> 文件仅可以支持查询查询数据库和将数据存储回数据库，将对于数据库业务的访问的工作难度降低，因为后续所有的开发者都可以基于这个约定知道 <code>.fsm</code> 本身并不会修改数据库。这就是作者通过约定对 VB 语言的加强。</p>
+<h1 id="4_4_构建实践的选择"><a class="header-anchor" href="#4_4_构建实践的选择">#</a>4.4 构建实践的选择</h1>
+<p>准备构建的一部分是决定你将强调哪些可用的良好实践。一些项目使用结对编程并优先编写测试，而另一些项目则使用单独开发和事后的测试。根据项目的实际情况，这两种选择都可能发挥很好的作用。</p>
+<p>以下清单总结了在构建过程中应有意识地决定包含或排除的具体实践，这些实践的细节将在本书的其他部分进行阐述：<br>
+<a href="/ch_04_construction_practices_checklists">Ch 04 Construction Practices Checklists</a></p>
+]]></content>
+      <tags>
+        <tag>工程实践</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Code Complete》 设计检查清单</title>
+    <url>/ch_05_design_checklist/</url>
+    <content><![CDATA[<p>设计清单，帮助你在设计完成后，确认自己的设计是否理想，合适。</p>
+<h1 id="设计实践"><a class="header-anchor" href="#设计实践">#</a>设计实践</h1>
+<ul>
+<li>[ ] 你是否进行过<a href="/ch_05_design_in_construction/#%E8%BF%AD%E4%BB%A3">迭代</a>，选择多次尝试中最好的设计而不是第一次尝试就选定了设计？</li>
+<li>[ ] 你是否尝试过多种不同的方式 <a href="/ch_05_design_in_construction/#%E5%88%86%E8%80%8C%E6%B2%BB%E4%B9%8B">拆解</a> 系统，并确认那种方式最好？</li>
+<li>[ ] 你是否通过使用了<a href="/ch_05_design_in_construction/#%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%E7%9A%84%E8%AE%BA%E6%8D%AE">自上而下</a> 和 <a href="/ch_05_design_in_construction/#%E8%87%AA%E4%B8%8B%E8%80%8C%E4%B8%8A%E7%9A%84%E8%AE%BA%E6%8D%AE">自下而上</a> 的方法处理设计问题？</li>
+<li>[ ] 你是否对系统中存在的风险或不熟悉的部分进行了 <a href="/ch_05_design_in_construction/#%E5%AE%9E%E9%AA%8C%E5%8E%9F%E5%9E%8B%E5%88%B6%E4%BD%9C">实验原型制作</a>，用以回答特定的问题并使用了最少的一次性代码？</li>
+<li>[ ] 你的设计是否已经被其他人正式或非正式的审查过？</li>
+<li>[ ] 你是否已经将设计推进到了实现起来显而易见的<a href="/ch_05_design_in_construction/#%E5%A4%9A%E5%B0%91%E8%AE%BE%E8%AE%A1%E5%B0%B1%E8%B6%B3%E5%A4%9F%E4%BA%86%EF%BC%9F">程度</a>？</li>
+<li>[ ] 你是否使用 <a href="/ch_05_design_in_construction/#%E8%AE%B0%E5%BD%95%E4%BD%A0%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%B7%A5%E4%BD%9C">记录了你的设计工作</a> ？</li>
+</ul>
+<h1 id="设计目标"><a class="header-anchor" href="#设计目标">#</a>设计目标</h1>
+<ul>
+<li>[ ] 设计是否充分解决了在架构级别确认并推迟的问题？</li>
+<li>[ ] 设计是否有对系统进行分层？</li>
+<li>[ ] 你对于系统拆分为子系统，Packakge 和类的方式是否满意？</li>
+<li>[ ] 你对于类进一步拆分成函数的方式是否满意？</li>
+<li>[ ] 设计是否有限制类之间的交互数量，并达到最少？</li>
+<li>[ ] 设计是否让子系统和类可以在未来复用到其他的系统中？</li>
+<li>[ ] 设计是否让程序易于维护？</li>
+<li>[ ] 设计是否精益（Lean）？它的所有部分都是必要存在的吗？</li>
+<li>[ ] 设计是否使用了标准的方案，并避免了外部的，难以理解的元素的使用？</li>
+<li>[ ] 总体而言，该设计是否有助于最大程度的减少 <a href="/ch_05_design_in_construction/#%E6%9C%AC%E8%B4%A8%E5%92%8C%E6%84%8F%E5%A4%96%E7%9A%84bbuu%E5%9B%B0%E9%9A%BE">本质和意外的复杂性</a></li>
 </ul>
 ]]></content>
       <tags>
@@ -1285,65 +1344,6 @@
 ]]></content>
       <tags>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Code Complete》第四章：关键构建决策</title>
-    <url>/ch_04_key_construction_decisions/</url>
-    <content><![CDATA[<h1 id="4_1_编程语言的选择"><a class="header-anchor" href="#4_1_编程语言的选择">#</a>4.1 编程语言的选择</h1>
-<p>编程语言的选择会通过多种方式影响生产力和代码质量。</p>
-<p>程序员使用熟悉的语言比使用不熟悉的语言更有效率。IBM 的一项早期研究发现，对一个语言有丰富经验的程序员的工作效率是那些经验很少的程序员的三倍多</p>
-<p>使用高级语言的程序员比使用低级语言的程序员可以获得更好的生产力和质量。高级语言相对于低级语言在生产效率、可靠性和可阅读性提高了 5 到 15 倍。高级语言相对于低级语言有更高的表达能力，即每行代码可以实现更多的任务。</p>
-<p>萨丕尔-沃夫假说 认为人思考某个想法的能力取决于他是否知道能够表达该想法的词语。如果你不认识单词，你就无法表达想法。也因此程序员可能会类似地受到他们的语言的影响。</p>
-<p>编程语言对程序员思维影响的证据很常见，如一些拥有 A 语言背景的人去使用 B 语言开发，他们很可能只是通过 B 语言来实现 A 语言的特色，而忽略了 B 语言本身的能力。</p>
-<h1 id="4_2_编码约定"><a class="header-anchor" href="#4_2_编码约定">#</a>4.2 编码约定</h1>
-<p>在复杂的项目中，架构赋予项目结构平衡，而编码约定则提供实现层的和谐。如果没有统一的编码风格，编写的代码将在风格上存在杂乱的变化。而这些变化会消耗开发者的大脑——大脑会需要分出一部分精力去理解编码风格差异。成功编程的关键之一是避免任意变化，以便让开发者的大脑可以专注于真正需要关心的逻辑上。</p>
-<div class="note info simple"><p>如果你有一幅画的伟大设计，但一部分是古典派，一部分是印象派，一部分是立体派，该怎么办？无论你多么严格地遵循其宏伟的设计，它都不具有概念完整性。它看起来像一幅廉价拼贴画。</p>
-</div>
-<p>在开始构建之前，需要阐明你将使用的编程约定。编码约定的细节将非常精确，以至于在编写软件后几乎不可能对其进行改造。</p>
-<h1 id="4_3_你在科技浪潮中的位置"><a class="header-anchor" href="#4_3_你在科技浪潮中的位置">#</a>4.3 你在科技浪潮中的位置</h1>
-<p>理解**用一种语言编程（Programming in one language）**和 <strong>利用一种语言编程（Programming into one language）</strong> 之间的区别对于理解本书至关重要。</p>
-<p>大多数重要的编程原则并不取决于特定的语言，而是取决于你使用它们的方式。如果你的语言缺乏你想要使用的结构或者容易出现其他类型的问题，请尝试弥补它们。发明你自己的编码约定、标准、类库和其他增强语言的方式。</p>
-<p>如，VB 语言本身并不支持数据和业务的解耦，但可以通过约定 <code>.fsm</code> 文件仅可以支持查询查询数据库和将数据存储回数据库，将对于数据库业务的访问的工作难度降低，因为后续所有的开发者都可以基于这个约定知道 <code>.fsm</code> 本身并不会修改数据库。这就是作者通过约定对 VB 语言的加强。</p>
-<h1 id="4_4_构建实践的选择"><a class="header-anchor" href="#4_4_构建实践的选择">#</a>4.4 构建实践的选择</h1>
-<p>准备构建的一部分是决定你将强调哪些可用的良好实践。一些项目使用结对编程并优先编写测试，而另一些项目则使用单独开发和事后的测试。根据项目的实际情况，这两种选择都可能发挥很好的作用。</p>
-<p>以下清单总结了在构建过程中应有意识地决定包含或排除的具体实践，这些实践的细节将在本书的其他部分进行阐述：<br>
-<a href="/ch_04_construction_practices_checklists">Ch 04 Construction Practices Checklists</a></p>
-]]></content>
-      <tags>
-        <tag>工程实践</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《代码大全》 设计检查清单</title>
-    <url>/ch_05_design_checklist/</url>
-    <content><![CDATA[<p>设计清单，帮助你在设计完成后，确认自己的设计是否理想，合适。</p>
-<h1 id="设计实践"><a class="header-anchor" href="#设计实践">#</a>设计实践</h1>
-<ul>
-<li>[ ] 你是否进行过<a href="/ch_05_design_in_construction/#%E8%BF%AD%E4%BB%A3">迭代</a>，选择多次尝试中最好的设计而不是第一次尝试就选定了设计？</li>
-<li>[ ] 你是否尝试过多种不同的方式 <a href="/ch_05_design_in_construction/#%E5%88%86%E8%80%8C%E6%B2%BB%E4%B9%8B">拆解</a> 系统，并确认那种方式最好？</li>
-<li>[ ] 你是否通过使用了<a href="/ch_05_design_in_construction/#%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%E7%9A%84%E8%AE%BA%E6%8D%AE">自上而下</a> 和 <a href="/ch_05_design_in_construction/#%E8%87%AA%E4%B8%8B%E8%80%8C%E4%B8%8A%E7%9A%84%E8%AE%BA%E6%8D%AE">自下而上</a> 的方法处理设计问题？</li>
-<li>[ ] 你是否对系统中存在的风险或不熟悉的部分进行了 <a href="/ch_05_design_in_construction/#%E5%AE%9E%E9%AA%8C%E5%8E%9F%E5%9E%8B%E5%88%B6%E4%BD%9C">实验原型制作</a>，用以回答特定的问题并使用了最少的一次性代码？</li>
-<li>[ ] 你的设计是否已经被其他人正式或非正式的审查过？</li>
-<li>[ ] 你是否已经将设计推进到了实现起来显而易见的<a href="/ch_05_design_in_construction/#%E5%A4%9A%E5%B0%91%E8%AE%BE%E8%AE%A1%E5%B0%B1%E8%B6%B3%E5%A4%9F%E4%BA%86%EF%BC%9F">程度</a>？</li>
-<li>[ ] 你是否使用 <a href="/ch_05_design_in_construction/#%E8%AE%B0%E5%BD%95%E4%BD%A0%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%B7%A5%E4%BD%9C">记录了你的设计工作</a> ？</li>
-</ul>
-<h1 id="设计目标"><a class="header-anchor" href="#设计目标">#</a>设计目标</h1>
-<ul>
-<li>[ ] 设计是否充分解决了在架构级别确认并推迟的问题？</li>
-<li>[ ] 设计是否有对系统进行分层？</li>
-<li>[ ] 你对于系统拆分为子系统，Packakge 和类的方式是否满意？</li>
-<li>[ ] 你对于类进一步拆分成函数的方式是否满意？</li>
-<li>[ ] 设计是否有限制类之间的交互数量，并达到最少？</li>
-<li>[ ] 设计是否让子系统和类可以在未来复用到其他的系统中？</li>
-<li>[ ] 设计是否让程序易于维护？</li>
-<li>[ ] 设计是否精益（Lean）？它的所有部分都是必要存在的吗？</li>
-<li>[ ] 设计是否使用了标准的方案，并避免了外部的，难以理解的元素的使用？</li>
-<li>[ ] 总体而言，该设计是否有助于最大程度的减少 <a href="/ch_05_design_in_construction/#%E6%9C%AC%E8%B4%A8%E5%92%8C%E6%84%8F%E5%A4%96%E7%9A%84bbuu%E5%9B%B0%E9%9A%BE">本质和意外的复杂性</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>工程实践</tag>
       </tags>
   </entry>
   <entry>
@@ -3618,6 +3618,57 @@ Ch 34 Themes in Software Craftsmanship</p>
       </tags>
   </entry>
   <entry>
+    <title>《Unix 编程艺术》 第十四章 语言</title>
+    <url>/di_14_zhang_yu_yan%EF%BC%9Ac_hai_shi_fei_c/</url>
+    <content><![CDATA[<h1 id="14_1_Unix_下语言的丰饶"><a class="header-anchor" href="#14_1_Unix_下语言的丰饶">#</a>14.1 Unix 下语言的丰饶</h1>
+<p>Unix 上运行的语言种类完全可能超过计算史上其它所有操作系统的总和，至少有两个充分的理由造成了这种巨大的多样性：</p>
+<ol>
+<li>Unix 广泛用于研究和教学平台。</li>
+<li>Unix 传统鼓励专门领域语言的设计，和现在一般称为“脚本语言”的东西——为了把其它应用程序和工具胶合起来而专门设计的语言。</li>
+</ol>
+<p>“脚本语言”是个有点整脚的术语。很多通常这么称呼的主要语言 (PerlTcl、Python 等)都已经超越了最初意义的脚本用途，已经成为威力相当强大的独立通用编程语言。</p>
+<p>把所有这些语言都纳入“脚本语言”的部分原因在于，这些语言都具有非常一致的发展历程。在运行期完成解释使得动态存储管理的自动化相对容易，而这几平要求采用引用（存储地址不透明且无法进行运算）而不是传值或显式指针。使用引用可使下一步更容易实现运行期的多态性和 OO。</p>
+<h1 id="14_2_为什么不是_C"><a class="header-anchor" href="#14_2_为什么不是_C">#</a>14.2 为什么不是 C</h1>
+<p>C 和 C++以增加实现时间和调试时间为代价来优化效率。尽管以 C 或 C++编写对时间要求极高的系统程序或应用程序内核似乎还有意义，然而自从这些语言在 1980 年代崛起，世界已经发生了很大变化。在 2003 年，用几平同样的价钱能够买到的处理器快了 1000 倍，内存大了 1000 倍,，磁盘容量也大了 10000 倍。</p>
+<p>急剧下降的成本从根本上改变了编程的经济含义。大多数情况下，和 C 一样节约机器资源已经不再有任何意义。相反地，经济方面的最优选择已经变成尽可能减少调试时间、尽可能延长人类对代码的长期可维护性。</p>
+<p>C 和 C++的中心问题在于它们要求程序员自己完成内存管理—声明变量、显式管理链表、设置缓冲大小、检测或防止缓冲溢出，以及分配和回收动态存储。…尽管缺乏确凿坚实的数据，但很多经验丰富的程序员都相信，内存管理产生的 bug 时真实代码持续产生错误的最大单体来源。</p>
+<h1 id="14_3_解释型语言和混合策略"><a class="header-anchor" href="#14_3_解释型语言和混合策略">#</a>14.3 解释型语言和混合策略</h1>
+<p>避免手工管理内存的语言通过在运行期可执行体中嵌入一个内存管理器来完成内存管理。</p>
+<p>通常情况下，这些语言的运行环境分成程序部分（运行脚本本身）和解释器部分解释器管理动态存储。在 Unix（以及其它现代操作系统）中解释器内核由多个程序部分共享，减少了各个程序的实际开销。</p>
+<h1 id="14_4_语言评估"><a class="header-anchor" href="#14_4_语言评估">#</a>14.4 语言评估</h1>
+<p>混合语言是一种知识密集型（而不是编码密集型）的编程。要让它能够工作，我们不仅应该具备相当数量的多种语言应用知识，并且还必须具备能够判断这些语言在什么地方最适合、以及怎样把它们组合在一起的潜经验。</p>
+<h2 id="14_4_1_C"><a class="header-anchor" href="#14_4_1_C">#</a>14.4.1 C</h2>
+<p>尽管存在内存管理问题，但 C 语言还有一些仍然可以在其中称王称霸的生态环境要求速度最快并且具有实时需求的程序，或者与 OS 内核紧密联系的程序非常适合用 C 编写。</p>
+<p>即使更高级的语言能够满足编程的要求，我们仍然要学习 C，其中一个充分理由就是 C 能帮助我们学会在硬件体系层次上考虑问题。</p>
+<h2 id="14_4_2_C"><a class="header-anchor" href="#14_4_2_C">#</a>14.4.2 C++</h2>
+<p>当 C++在 1980 年代中期首次公布于世时，面向对象 （OO）语言正被大肆吹捧为解决软件复杂度问题的“银弹”。</p>
+<p>C++面向对象的特性对于其前辈 C 而言是个压倒性的优点其拥期望 C++能够迅速废掉更古老的 C 语言。</p>
+<p>这种情况当然并没有发生。部分可归因于 C++本身的问题:对向后兼容 C 的要求迫使 C++在设计中做出了许多妥协。而且这个要求阻碍了 C++完全自动化动态内存管理从而无法解决 C 语言最严重的问题。后来，薄弱、不成熟的标准化努力，并不能限制各个不同编译器实现者之间的功能特征竞赛，C++变得过分精微复杂了。</p>
+<p>对 C 的向上兼容；面向对象的平台；STL 和泛型等最前沿的技术工具——C++ 试图满足所有人的所有要求，但代价是 C++ 比任何一个程序员所能处理的复杂度都要高。C++ 的主要设让者已经承认他不指望任何一个程序员能够完全掌握 C++。</p>
+<p>Unix 黑客对此并没有很好的反应：一段匿名但非常著名的评论这样描述“C++:狗被钉上软肢而变成的章鱼”。</p>
+<p>C++ 最根本的问题还是在于它根本上只是另外一种传统语言。在标准模板库发明后，C++的内存管理控制有所改善，比 C 好得多，但仍然十分脆弱：除非代码仅使用对象，否则控制仍旧无用。对许多类型的应用而言，C++的 OO 特性并不重要，没有带来多少优势，陡增复杂度而已。</p>
+<p>总结：C++的最佳之处是编译效率以及面向对象和泛型编程的结合。最糟之处是它非常怪异复杂，往往鼓励过分复杂的设计。</p>
+<h2 id="14_4_3_Shell"><a class="header-anchor" href="#14_4_3_Shell">#</a>14.4.3 Shell</h2>
+<p>简单 shell 程序的编写极其容易和自然。Unix 使用解释型语言的快速原型设计传统就始于 shell。</p>
+<p>然而，随着程序规模越来越大，这些程序往往变得非常专用。部分 shell 语法（特别是其引用和声明语法规则）变得十分混乱。为了 shell 作为交互式命令行解释器的实用性而在设计中对语言部分做了折中，这些缺点就是这么来的。</p>
+<p>现在 shell 只是为最简单的包装器(那些语言使用在包装器上是大材小用)和系统启动时的初始化脚本而保留。复杂的 shell 脚本经常产生可移植性问题，主要原因并不在于 shell 本身而在于 shell 使用了某些它假定存在的程序。</p>
+<p>总结：shell 的最佳之处在于书写小型脚本非常自然快捷。最糟之处在于大型 shell 脚本必须依靠大量辅助命令，而这些辅助命今不一定在所有日标机器上都表现一致甚至不一定存在。要在大型 shell 脚本中分析依赖关系并不容易。</p>
+<h2 id="14_4_6_Python"><a class="header-anchor" href="#14_4_6_Python">#</a>14.4.6 Python</h2>
+<p>Python 的语法介于 C 语言和 Modula 系列语言之间，但有个非常罕见的特征，即代码块结构实际上用缩进来控制。</p>
+<p>Python 语言的设计是非常于净优雅，具有非常出色的模块化特性。它提供了设计者用面向对象风格编码的可能，但并不把这个选择强加于设计者(可以用更加经典的类 C 方式编码）。</p>
+<p>Python 在纯执行速度方面无法同 C 或 C++竞争(尽管在现今快速处理器上应用混合语言策略使这点已经相对不那么重要)。实际上，人们通常认为 Python 是主要脚本语言中效率最低、速度最慢的语言，这是它为运行期类型多态付出的代价。</p>
+<p>然而当心，别因为这些原因而拒绝 Python，Python 能够提供的性能实际上已经满足人多数应用程序，即使那些似乎需要更好性能的程序通常也受到网络等待或磁盘等待等外部延时的限制，从而完全抵消了 Python 解释型开销产生的影响。</p>
+<p>总结：Python 的最佳之处在于它鼓励清晰、易读的代码，易学易用，又能够扩展到大型项目。最糟之处在于，不仅相对于编译语言，而且相对于其它脚本语言，它也是效率低下、速度缓慢的。</p>
+<h2 id="14_4_7_Java"><a class="header-anchor" href="#14_4_7_Java">#</a>14.4.7 Java</h2>
+<p>Java 编程语言的设计目标是“write once, run anywhere（一次编写，到处运行）”并且支持网页中嵌入交互程序(即 applets)，可在任一个浏览器中运行。由于其所有者 Sun Microsystems 的一系列技术和战略失误，Java 没有实现这两个最初的设计目标。但它在系统编程和应用编程方面仍然十分强大，足以挑战 C 和 C++。</p>
+<p>尽管远比 C++ 小巧简单，但 Java 设计非常聪明地抓住了自动管理内存的巨大优势也抓住了支持 OO 设计这一虽小却并非不重要的优点。Java 保留了大量的类 C 语法，大多数程序员对此感觉非常舒服。它也包括支持动态载入的 C 调用并支持在 C 中把 Java 作为嵌入语言调用。Sun 公司在网上提供良好 Java 文档的工作完成得非常出色，这一点作用也不可小觑。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Unix 编程艺术》 第十三章 复杂度</title>
     <url>/di_13_zhang_fu_za_du%EF%BC%9Ajin_ke_neng_jian_dan%EF%BC%8Cdan_bie_jian_dan_guo_le_tou/</url>
     <content><![CDATA[<p>在<a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a> 末，将 Unix 的哲学概括为“KeepItSimple,Stupid!”。贯穿整个“设计”部分的不变主题就是尽可能保持简单设计的重要性。但什么是“尽可能的简单”?又如何断定?</p>
@@ -3674,50 +3725,40 @@ Ch 34 Themes in Software Craftsmanship</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第十四章 语言</title>
-    <url>/di_14_zhang_yu_yan%EF%BC%9Ac_hai_shi_fei_c/</url>
-    <content><![CDATA[<h1 id="14_1_Unix_下语言的丰饶"><a class="header-anchor" href="#14_1_Unix_下语言的丰饶">#</a>14.1 Unix 下语言的丰饶</h1>
-<p>Unix 上运行的语言种类完全可能超过计算史上其它所有操作系统的总和，至少有两个充分的理由造成了这种巨大的多样性：</p>
-<ol>
-<li>Unix 广泛用于研究和教学平台。</li>
-<li>Unix 传统鼓励专门领域语言的设计，和现在一般称为“脚本语言”的东西——为了把其它应用程序和工具胶合起来而专门设计的语言。</li>
-</ol>
-<p>“脚本语言”是个有点整脚的术语。很多通常这么称呼的主要语言 (PerlTcl、Python 等)都已经超越了最初意义的脚本用途，已经成为威力相当强大的独立通用编程语言。</p>
-<p>把所有这些语言都纳入“脚本语言”的部分原因在于，这些语言都具有非常一致的发展历程。在运行期完成解释使得动态存储管理的自动化相对容易，而这几平要求采用引用（存储地址不透明且无法进行运算）而不是传值或显式指针。使用引用可使下一步更容易实现运行期的多态性和 OO。</p>
-<h1 id="14_2_为什么不是_C"><a class="header-anchor" href="#14_2_为什么不是_C">#</a>14.2 为什么不是 C</h1>
-<p>C 和 C++以增加实现时间和调试时间为代价来优化效率。尽管以 C 或 C++编写对时间要求极高的系统程序或应用程序内核似乎还有意义，然而自从这些语言在 1980 年代崛起，世界已经发生了很大变化。在 2003 年，用几平同样的价钱能够买到的处理器快了 1000 倍，内存大了 1000 倍,，磁盘容量也大了 10000 倍。</p>
-<p>急剧下降的成本从根本上改变了编程的经济含义。大多数情况下，和 C 一样节约机器资源已经不再有任何意义。相反地，经济方面的最优选择已经变成尽可能减少调试时间、尽可能延长人类对代码的长期可维护性。</p>
-<p>C 和 C++的中心问题在于它们要求程序员自己完成内存管理—声明变量、显式管理链表、设置缓冲大小、检测或防止缓冲溢出，以及分配和回收动态存储。…尽管缺乏确凿坚实的数据，但很多经验丰富的程序员都相信，内存管理产生的 bug 时真实代码持续产生错误的最大单体来源。</p>
-<h1 id="14_3_解释型语言和混合策略"><a class="header-anchor" href="#14_3_解释型语言和混合策略">#</a>14.3 解释型语言和混合策略</h1>
-<p>避免手工管理内存的语言通过在运行期可执行体中嵌入一个内存管理器来完成内存管理。</p>
-<p>通常情况下，这些语言的运行环境分成程序部分（运行脚本本身）和解释器部分解释器管理动态存储。在 Unix（以及其它现代操作系统）中解释器内核由多个程序部分共享，减少了各个程序的实际开销。</p>
-<h1 id="14_4_语言评估"><a class="header-anchor" href="#14_4_语言评估">#</a>14.4 语言评估</h1>
-<p>混合语言是一种知识密集型（而不是编码密集型）的编程。要让它能够工作，我们不仅应该具备相当数量的多种语言应用知识，并且还必须具备能够判断这些语言在什么地方最适合、以及怎样把它们组合在一起的潜经验。</p>
-<h2 id="14_4_1_C"><a class="header-anchor" href="#14_4_1_C">#</a>14.4.1 C</h2>
-<p>尽管存在内存管理问题，但 C 语言还有一些仍然可以在其中称王称霸的生态环境要求速度最快并且具有实时需求的程序，或者与 OS 内核紧密联系的程序非常适合用 C 编写。</p>
-<p>即使更高级的语言能够满足编程的要求，我们仍然要学习 C，其中一个充分理由就是 C 能帮助我们学会在硬件体系层次上考虑问题。</p>
-<h2 id="14_4_2_C"><a class="header-anchor" href="#14_4_2_C">#</a>14.4.2 C++</h2>
-<p>当 C++在 1980 年代中期首次公布于世时，面向对象 （OO）语言正被大肆吹捧为解决软件复杂度问题的“银弹”。</p>
-<p>C++面向对象的特性对于其前辈 C 而言是个压倒性的优点其拥期望 C++能够迅速废掉更古老的 C 语言。</p>
-<p>这种情况当然并没有发生。部分可归因于 C++本身的问题:对向后兼容 C 的要求迫使 C++在设计中做出了许多妥协。而且这个要求阻碍了 C++完全自动化动态内存管理从而无法解决 C 语言最严重的问题。后来，薄弱、不成熟的标准化努力，并不能限制各个不同编译器实现者之间的功能特征竞赛，C++变得过分精微复杂了。</p>
-<p>对 C 的向上兼容；面向对象的平台；STL 和泛型等最前沿的技术工具——C++ 试图满足所有人的所有要求，但代价是 C++ 比任何一个程序员所能处理的复杂度都要高。C++ 的主要设让者已经承认他不指望任何一个程序员能够完全掌握 C++。</p>
-<p>Unix 黑客对此并没有很好的反应：一段匿名但非常著名的评论这样描述“C++:狗被钉上软肢而变成的章鱼”。</p>
-<p>C++ 最根本的问题还是在于它根本上只是另外一种传统语言。在标准模板库发明后，C++的内存管理控制有所改善，比 C 好得多，但仍然十分脆弱：除非代码仅使用对象，否则控制仍旧无用。对许多类型的应用而言，C++的 OO 特性并不重要，没有带来多少优势，陡增复杂度而已。</p>
-<p>总结：C++的最佳之处是编译效率以及面向对象和泛型编程的结合。最糟之处是它非常怪异复杂，往往鼓励过分复杂的设计。</p>
-<h2 id="14_4_3_Shell"><a class="header-anchor" href="#14_4_3_Shell">#</a>14.4.3 Shell</h2>
-<p>简单 shell 程序的编写极其容易和自然。Unix 使用解释型语言的快速原型设计传统就始于 shell。</p>
-<p>然而，随着程序规模越来越大，这些程序往往变得非常专用。部分 shell 语法（特别是其引用和声明语法规则）变得十分混乱。为了 shell 作为交互式命令行解释器的实用性而在设计中对语言部分做了折中，这些缺点就是这么来的。</p>
-<p>现在 shell 只是为最简单的包装器(那些语言使用在包装器上是大材小用)和系统启动时的初始化脚本而保留。复杂的 shell 脚本经常产生可移植性问题，主要原因并不在于 shell 本身而在于 shell 使用了某些它假定存在的程序。</p>
-<p>总结：shell 的最佳之处在于书写小型脚本非常自然快捷。最糟之处在于大型 shell 脚本必须依靠大量辅助命令，而这些辅助命今不一定在所有日标机器上都表现一致甚至不一定存在。要在大型 shell 脚本中分析依赖关系并不容易。</p>
-<h2 id="14_4_6_Python"><a class="header-anchor" href="#14_4_6_Python">#</a>14.4.6 Python</h2>
-<p>Python 的语法介于 C 语言和 Modula 系列语言之间，但有个非常罕见的特征，即代码块结构实际上用缩进来控制。</p>
-<p>Python 语言的设计是非常于净优雅，具有非常出色的模块化特性。它提供了设计者用面向对象风格编码的可能，但并不把这个选择强加于设计者(可以用更加经典的类 C 方式编码）。</p>
-<p>Python 在纯执行速度方面无法同 C 或 C++竞争(尽管在现今快速处理器上应用混合语言策略使这点已经相对不那么重要)。实际上，人们通常认为 Python 是主要脚本语言中效率最低、速度最慢的语言，这是它为运行期类型多态付出的代价。</p>
-<p>然而当心，别因为这些原因而拒绝 Python，Python 能够提供的性能实际上已经满足人多数应用程序，即使那些似乎需要更好性能的程序通常也受到网络等待或磁盘等待等外部延时的限制，从而完全抵消了 Python 解释型开销产生的影响。</p>
-<p>总结：Python 的最佳之处在于它鼓励清晰、易读的代码，易学易用，又能够扩展到大型项目。最糟之处在于，不仅相对于编译语言，而且相对于其它脚本语言，它也是效率低下、速度缓慢的。</p>
-<h2 id="14_4_7_Java"><a class="header-anchor" href="#14_4_7_Java">#</a>14.4.7 Java</h2>
-<p>Java 编程语言的设计目标是“write once, run anywhere（一次编写，到处运行）”并且支持网页中嵌入交互程序(即 applets)，可在任一个浏览器中运行。由于其所有者 Sun Microsystems 的一系列技术和战略失误，Java 没有实现这两个最初的设计目标。但它在系统编程和应用编程方面仍然十分强大，足以挑战 C 和 C++。</p>
-<p>尽管远比 C++ 小巧简单，但 Java 设计非常聪明地抓住了自动管理内存的巨大优势也抓住了支持 OO 设计这一虽小却并非不重要的优点。Java 保留了大量的类 C 语法，大多数程序员对此感觉非常舒服。它也包括支持动态载入的 C 调用并支持在 C 中把 Java 作为嵌入语言调用。Sun 公司在网上提供良好 Java 文档的工作完成得非常出色，这一点作用也不可小觑。</p>
+    <title>《Unix 编程艺术》 第十五章 工具</title>
+    <url>/di_15_zhang_gong_ju%EF%BC%9Akai_fa_de_zhan_shu/</url>
+    <content><![CDATA[<h1 id="15_4_make：自动化编译"><a class="header-anchor" href="#15_4_make：自动化编译">#</a>15.4 make：自动化编译</h1>
+<h2 id="15_4_3_通用生成目标"><a class="header-anchor" href="#15_4_3_通用生成目标">#</a>15.4.3 通用生成目标</h2>
+<p>关于通用生成目标应该表示什么，以及它们该如何命名已经有了一组良好的约定。遵从这些会让自己的 makefile 更容易理解和使用：</p>
+<ul>
+<li>
+<p>all： 生成工程中所有可以执行者。通常全部产品并没有明确的定义;往往指工程中高阶的目标文件(并且，并非偶然地，常常有文档说明会包括哪些)。它通常应该是 makcfile 的第一个生成目标，因此它往往是开发者不带参数键入 make 就执行的那一个</p>
+</li>
+<li>
+<p>test： 运行程序的自动测试套件，典型地，包括一组单元测试(Unit Test)来查找递归 bug，或是其它在开发过程中偏离预期行为的误差。“test”目标也可以由软件的最终用户来确保安装程序能够正常工作。</p>
+</li>
+</ul>
+<ul>
+<li>clean：删除 make a11 时产生的所有文件(例如二进制可执行文件和目标文件)。make clean 应该将软件的编译过程重置到良好的初始状态。</li>
+</ul>
+<h1 id="15_5_版本控制系统"><a class="header-anchor" href="#15_5_版本控制系统">#</a>15.5 版本控制系统</h1>
+<h2 id="15_5_1_为什么需要版本控制"><a class="header-anchor" href="#15_5_1_为什么需要版本控制">#</a>15.5.1 为什么需要版本控制</h2>
+<p>如果改变了代码却发现并不可行，如何恢复到一个已知的良好版本?如果回归是困难的或不可靠的，改变代码就太过冒险(有可能会崩掉整个项目，或者为自己凭空增加许多小时的痛苦工作)</p>
+<p>几乎同样重要的是变化追踪。知道代码已经发生了改变，但知道为什么吗？稍后再看它们却很容易就忘记了改变的原因。如果项目存在合作者，又如何知道在自己不注意时合作者改变了什么，另外，每个修改该由谁负责?</p>
+<blockquote>
+<p>常常令人惊奇地发现，即使没有合作者，问问自己从上一个已知的良好版本后改变了什么也非常有用。这也常常会揭露不必要的改变，例如被遗忘的调试码，我现在在检入 (check in)变化前，一般就会做这项工作。<br>
+—— Henry Spencer</p>
+</blockquote>
+<h1 id="15_6_运行期调试"><a class="header-anchor" href="#15_6_运行期调试">#</a>15.6 运行期调试</h1>
+<p>只要拥有超过一星期编程经验的人都会知道，让程序符合正确的语法是调试中相对容易的部分。困难的是在这之后，需要了解为什么语法正确的程序并不如期望的那样运行。</p>
+<h1 id="15_7_性能分析"><a class="header-anchor" href="#15_7_性能分析">#</a>15.7 性能分析</h1>
+<p>作为通用法则程序 90%的执行时间都耗费在 10%的代码上。性能分析软件（Profilers）可以帮助确定那 10%抑制程序速度的区域。这可以让程序跑得更快。</p>
+<p>但在 Unix 传统中，profiler 有个更为重要的功能。它能够让人不去优化其余 90%的代码。这很棒，并不仅仅由于这样节省了工作。其实不去优化余下 90% 代码真正有价值的效应是降低了整体复杂度，减少了 bug。</p>
+<p>做好设计，首先考虑什么是正确的，然后再调整效率。</p>
+<h1 id="15_8_使用_Emacs_整合工具"><a class="header-anchor" href="#15_8_使用_Emacs_整合工具">#</a>15.8 使用 Emacs 整合工具</h1>
+<h2 id="15_8_4_Emacs_和_Profiling"><a class="header-anchor" href="#15_8_4_Emacs_和_Profiling">#</a>15.8.4 Emacs 和 Profiling</h2>
+<p>别蛮干—这会浪费时间和生产力。如果发现在低层次的机械开发部分花费了太多时间的话，先站住。应该运用 Unix 折学。使用工具自动化或半自动化地完成任务。</p>
+<p>然后，作为对所有继承的回报，将自己的解决方案作为开源软件放置在互联网上帮助把程序员同行们从蛮千中解放出来。</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -3765,40 +3806,37 @@ Ch 34 Themes in Software Craftsmanship</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第十五章 工具</title>
-    <url>/di_15_zhang_gong_ju%EF%BC%9Akai_fa_de_zhan_shu/</url>
-    <content><![CDATA[<h1 id="15_4_make：自动化编译"><a class="header-anchor" href="#15_4_make：自动化编译">#</a>15.4 make：自动化编译</h1>
-<h2 id="15_4_3_通用生成目标"><a class="header-anchor" href="#15_4_3_通用生成目标">#</a>15.4.3 通用生成目标</h2>
-<p>关于通用生成目标应该表示什么，以及它们该如何命名已经有了一组良好的约定。遵从这些会让自己的 makefile 更容易理解和使用：</p>
-<ul>
-<li>
-<p>all： 生成工程中所有可以执行者。通常全部产品并没有明确的定义;往往指工程中高阶的目标文件(并且，并非偶然地，常常有文档说明会包括哪些)。它通常应该是 makcfile 的第一个生成目标，因此它往往是开发者不带参数键入 make 就执行的那一个</p>
-</li>
-<li>
-<p>test： 运行程序的自动测试套件，典型地，包括一组单元测试(Unit Test)来查找递归 bug，或是其它在开发过程中偏离预期行为的误差。“test”目标也可以由软件的最终用户来确保安装程序能够正常工作。</p>
-</li>
-</ul>
-<ul>
-<li>clean：删除 make a11 时产生的所有文件(例如二进制可执行文件和目标文件)。make clean 应该将软件的编译过程重置到良好的初始状态。</li>
-</ul>
-<h1 id="15_5_版本控制系统"><a class="header-anchor" href="#15_5_版本控制系统">#</a>15.5 版本控制系统</h1>
-<h2 id="15_5_1_为什么需要版本控制"><a class="header-anchor" href="#15_5_1_为什么需要版本控制">#</a>15.5.1 为什么需要版本控制</h2>
-<p>如果改变了代码却发现并不可行，如何恢复到一个已知的良好版本?如果回归是困难的或不可靠的，改变代码就太过冒险(有可能会崩掉整个项目，或者为自己凭空增加许多小时的痛苦工作)</p>
-<p>几乎同样重要的是变化追踪。知道代码已经发生了改变，但知道为什么吗？稍后再看它们却很容易就忘记了改变的原因。如果项目存在合作者，又如何知道在自己不注意时合作者改变了什么，另外，每个修改该由谁负责?</p>
-<blockquote>
-<p>常常令人惊奇地发现，即使没有合作者，问问自己从上一个已知的良好版本后改变了什么也非常有用。这也常常会揭露不必要的改变，例如被遗忘的调试码，我现在在检入 (check in)变化前，一般就会做这项工作。<br>
-—— Henry Spencer</p>
+    <title>《Unix 编程艺术》 第十八章 文档</title>
+    <url>/di_18_zhang_wen_dang%EF%BC%9Axiang_wang_luo_shi_jie_chan_shi_dai_ma/</url>
+    <content><![CDATA[<blockquote>
+<p>我从没见过一个愿意阅读 17000 页文档的人，如果有，我会杀了他，这样人的基因必须抹去<br>
+—— Joseph Costello</p>
 </blockquote>
-<h1 id="15_6_运行期调试"><a class="header-anchor" href="#15_6_运行期调试">#</a>15.6 运行期调试</h1>
-<p>只要拥有超过一星期编程经验的人都会知道，让程序符合正确的语法是调试中相对容易的部分。困难的是在这之后，需要了解为什么语法正确的程序并不如期望的那样运行。</p>
-<h1 id="15_7_性能分析"><a class="header-anchor" href="#15_7_性能分析">#</a>15.7 性能分析</h1>
-<p>作为通用法则程序 90%的执行时间都耗费在 10%的代码上。性能分析软件（Profilers）可以帮助确定那 10%抑制程序速度的区域。这可以让程序跑得更快。</p>
-<p>但在 Unix 传统中，profiler 有个更为重要的功能。它能够让人不去优化其余 90%的代码。这很棒，并不仅仅由于这样节省了工作。其实不去优化余下 90% 代码真正有价值的效应是降低了整体复杂度，减少了 bug。</p>
-<p>做好设计，首先考虑什么是正确的，然后再调整效率。</p>
-<h1 id="15_8_使用_Emacs_整合工具"><a class="header-anchor" href="#15_8_使用_Emacs_整合工具">#</a>15.8 使用 Emacs 整合工具</h1>
-<h2 id="15_8_4_Emacs_和_Profiling"><a class="header-anchor" href="#15_8_4_Emacs_和_Profiling">#</a>15.8.4 Emacs 和 Profiling</h2>
-<p>别蛮干—这会浪费时间和生产力。如果发现在低层次的机械开发部分花费了太多时间的话，先站住。应该运用 Unix 折学。使用工具自动化或半自动化地完成任务。</p>
-<p>然后，作为对所有继承的回报，将自己的解决方案作为开源软件放置在互联网上帮助把程序员同行们从蛮千中解放出来。</p>
+<h1 id="18_1_文档概念"><a class="header-anchor" href="#18_1_文档概念">#</a>18.1 文档概念</h1>
+<p>所见即所得（WYSIWYG）的文档程序同以标记为中心的工具之间的差异。</p>
+<ul>
+<li>大多数的桌面出版程序和字处理器都属于前者:：具备图形用户界面、键入的文字可以真接插入到文档在屏幕上的表示之中，并尽可能地接近最终的打印版本。</li>
+<li>在以标记为中心的系统中，相对应地，主文本通常就是包含明确可见控制标记的纯文本，跟期望的输出完全不同。标记的源文件可以由普通的文本编辑器修改，但必须传入某个格式器程序来渲染输出以供打印或显示。</li>
+</ul>
+<p>实话实说，WYSIWYG 的文档处理器并不真正所见即所得。大多数程序的界面，并没有真正消除屏幕显示和打印输出的差异，只是让你看不出来而已。这样做其实违反了最小立异原则：界面的可视部分鼓励将程序作为打字机使用，但实际上并不能这么用，而你的输入又时不时地产生无法预料或是非期望的结果。</p>
+<p>再实事求是点，WYSIWYG 系统实际依赖的是标记码，只不过额外支付了巨大的努力以期将此隐藏在一般使用中。这又违反了透明原则：因为无法了解所有的标记，就难以标记位置错误的损坏文档。</p>
+<h1 id="18_2_Unix_风格"><a class="header-anchor" href="#18_2_Unix_风格">#</a>18.2 Unix 风格</h1>
+<h2 id="18_2_1_大文档偏爱"><a class="header-anchor" href="#18_2_1_大文档偏爱">#</a>18.2.1 大文档偏爱</h2>
+<p>对不透明二进制文档格式的厌烦情绪——尤其是不透明的专有二进制格式——也在拒绝 WYSIWYG 工具的过程中起到了一定作用。</p>
+<p>另一方面，PostScript（图像打印机的现行控制语言标准）刚可以使用，Unix 程序员就投入了极大的热情；这门语言整洁优美地符合 Unix 传统的域专用语言。现代的开源 Unix 系统都有优秀的 PostScript 和可移植文档格式（Portable Document Format，PDF）工具。</p>
+<h2 id="18_2_2_文化风格"><a class="header-anchor" href="#18_2_2_文化风格">#</a>18.2.2 文化风格</h2>
+<p>Unix 手册页传统上也包含一个叫做 BUGS 的部分。在其它地方，技术作者为了让软件产品看起来更漂亮，常常省略或一笔带过那些己知的 bug。</p>
+<p>而在 Unix 文化中，同行彼此瓦相事无巨细地揭露软件的已知缺陷而用户也认为一个简单但详细的 BUGS 部分是高质量软件的表征。</p>
+<p>隐瞒了 BUGS 部分或是改头换面为诸如 LIMITATIONS 或 ISSUES 或 APPLICATIONUSAGE 等轻描淡写词语、从而打破这个约定的商业 Unix 发布版本，无一例外地走上了不归之路。</p>
+<h1 id="18_3_各种_Unix_文档格式"><a class="header-anchor" href="#18_3_各种_Unix_文档格式">#</a>18.3 各种 Unix 文档格式</h1>
+<h2 id="18_3_2_Tex"><a class="header-anchor" href="#18_3_2_Tex">#</a>18.3.2 Tex</h2>
+<p>TEX 是个威力强大的排版程序，如同 Emacs 编辑器一样，最初也来自 Unix 文化之外，但现在却在 Unix 文化中落地生根。它是由著名的计算机科学家 Donald Knuth 在 1970 年代晚期发明的，那时的他腻烦了印刷排版的一一特别是数学方面的一一排版质量。</p>
+<p>人们通常也不需要手工编写大量原始的 TEX 宏：而是使用宏命令包以及各式各样的辅助程序。一个特别的宏命今包，LATEX，几乎无所不能，而且大多数人所谓在使用 TEX 创作时实际上几乎总是指用 LATEX 编写。</p>
+<p>TEX 一个通常用户不可见的重要用法就是，其它文档处理工具宁愿生成 LATEX 来转换成 PostScrint，而不是尝试自己生成 PostScript。</p>
+<h1 id="18_6_编写_Unix_文档的最佳实践"><a class="header-anchor" href="#18_6_编写_Unix_文档的最佳实践">#</a>18.6 编写 Unix 文档的最佳实践</h1>
+<p>数量多不会被认为是质量高。尤其是，决不要因为害怕别人看不懂而省略功能细节，也决不要为了面子而不对存在的问题提出警示。不愿坦露问题才会损害信誉和用户，坦白的问题则不会。</p>
+<p>如果项日规模比较大，应该发布三种不同的文档：手册页作为参考资料，教程手册和常见问题解答列表。</p>
+<p>手册页应该为传统的 Unix 用户以传统风格的命令引用形式早现。考虑非技术用户入门手册应该多用全称，少用缩写。而 FAQ 应该随着软件支持群体对软件常用问题及如何回答的深入了解而不断改进。</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -3840,44 +3878,6 @@ Ch 34 Themes in Software Craftsmanship</p>
 Henry Spencer</p>
 </blockquote>
 <p>最后,确保代码移植性最有效的一个环节就是不要依赖于专有技术。永远不会知道所依赖的闭源库 / 工具 / 代码生成器或网络协议何时会结束生命，接口何时会以某种非向后兼容的方式改变，从而崩溃掉已有的项目。而使用开源代码，即使前沿版本的改变方式足以崩溃已有的项目，也有前行之路：因为可以获取源码，如果需要，就可以向前移植项目到新的平台。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Unix 编程艺术》 第十八章 文档</title>
-    <url>/di_18_zhang_wen_dang%EF%BC%9Axiang_wang_luo_shi_jie_chan_shi_dai_ma/</url>
-    <content><![CDATA[<blockquote>
-<p>我从没见过一个愿意阅读 17000 页文档的人，如果有，我会杀了他，这样人的基因必须抹去<br>
-—— Joseph Costello</p>
-</blockquote>
-<h1 id="18_1_文档概念"><a class="header-anchor" href="#18_1_文档概念">#</a>18.1 文档概念</h1>
-<p>所见即所得（WYSIWYG）的文档程序同以标记为中心的工具之间的差异。</p>
-<ul>
-<li>大多数的桌面出版程序和字处理器都属于前者:：具备图形用户界面、键入的文字可以真接插入到文档在屏幕上的表示之中，并尽可能地接近最终的打印版本。</li>
-<li>在以标记为中心的系统中，相对应地，主文本通常就是包含明确可见控制标记的纯文本，跟期望的输出完全不同。标记的源文件可以由普通的文本编辑器修改，但必须传入某个格式器程序来渲染输出以供打印或显示。</li>
-</ul>
-<p>实话实说，WYSIWYG 的文档处理器并不真正所见即所得。大多数程序的界面，并没有真正消除屏幕显示和打印输出的差异，只是让你看不出来而已。这样做其实违反了最小立异原则：界面的可视部分鼓励将程序作为打字机使用，但实际上并不能这么用，而你的输入又时不时地产生无法预料或是非期望的结果。</p>
-<p>再实事求是点，WYSIWYG 系统实际依赖的是标记码，只不过额外支付了巨大的努力以期将此隐藏在一般使用中。这又违反了透明原则：因为无法了解所有的标记，就难以标记位置错误的损坏文档。</p>
-<h1 id="18_2_Unix_风格"><a class="header-anchor" href="#18_2_Unix_风格">#</a>18.2 Unix 风格</h1>
-<h2 id="18_2_1_大文档偏爱"><a class="header-anchor" href="#18_2_1_大文档偏爱">#</a>18.2.1 大文档偏爱</h2>
-<p>对不透明二进制文档格式的厌烦情绪——尤其是不透明的专有二进制格式——也在拒绝 WYSIWYG 工具的过程中起到了一定作用。</p>
-<p>另一方面，PostScript（图像打印机的现行控制语言标准）刚可以使用，Unix 程序员就投入了极大的热情；这门语言整洁优美地符合 Unix 传统的域专用语言。现代的开源 Unix 系统都有优秀的 PostScript 和可移植文档格式（Portable Document Format，PDF）工具。</p>
-<h2 id="18_2_2_文化风格"><a class="header-anchor" href="#18_2_2_文化风格">#</a>18.2.2 文化风格</h2>
-<p>Unix 手册页传统上也包含一个叫做 BUGS 的部分。在其它地方，技术作者为了让软件产品看起来更漂亮，常常省略或一笔带过那些己知的 bug。</p>
-<p>而在 Unix 文化中，同行彼此瓦相事无巨细地揭露软件的已知缺陷而用户也认为一个简单但详细的 BUGS 部分是高质量软件的表征。</p>
-<p>隐瞒了 BUGS 部分或是改头换面为诸如 LIMITATIONS 或 ISSUES 或 APPLICATIONUSAGE 等轻描淡写词语、从而打破这个约定的商业 Unix 发布版本，无一例外地走上了不归之路。</p>
-<h1 id="18_3_各种_Unix_文档格式"><a class="header-anchor" href="#18_3_各种_Unix_文档格式">#</a>18.3 各种 Unix 文档格式</h1>
-<h2 id="18_3_2_Tex"><a class="header-anchor" href="#18_3_2_Tex">#</a>18.3.2 Tex</h2>
-<p>TEX 是个威力强大的排版程序，如同 Emacs 编辑器一样，最初也来自 Unix 文化之外，但现在却在 Unix 文化中落地生根。它是由著名的计算机科学家 Donald Knuth 在 1970 年代晚期发明的，那时的他腻烦了印刷排版的一一特别是数学方面的一一排版质量。</p>
-<p>人们通常也不需要手工编写大量原始的 TEX 宏：而是使用宏命令包以及各式各样的辅助程序。一个特别的宏命今包，LATEX，几乎无所不能，而且大多数人所谓在使用 TEX 创作时实际上几乎总是指用 LATEX 编写。</p>
-<p>TEX 一个通常用户不可见的重要用法就是，其它文档处理工具宁愿生成 LATEX 来转换成 PostScrint，而不是尝试自己生成 PostScript。</p>
-<h1 id="18_6_编写_Unix_文档的最佳实践"><a class="header-anchor" href="#18_6_编写_Unix_文档的最佳实践">#</a>18.6 编写 Unix 文档的最佳实践</h1>
-<p>数量多不会被认为是质量高。尤其是，决不要因为害怕别人看不懂而省略功能细节，也决不要为了面子而不对存在的问题提出警示。不愿坦露问题才会损害信誉和用户，坦白的问题则不会。</p>
-<p>如果项日规模比较大，应该发布三种不同的文档：手册页作为参考资料，教程手册和常见问题解答列表。</p>
-<p>手册页应该为传统的 Unix 用户以传统风格的命令引用形式早现。考虑非技术用户入门手册应该多用全称，少用缩写。而 FAQ 应该随着软件支持群体对软件常用问题及如何回答的深入了解而不断改进。</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -4328,16 +4328,6 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第八章 微型语言</title>
-    <url>/di_8_zhang_wei_xing_yu_yan%EF%BC%9Axun_zhao_ge_chang_de_le_fu/</url>
-    <content><![CDATA[<p>Unix 有个长期传统，即包容小型的、为专门应用领域特质、大量减少程序行数的语言。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Unix 编程艺术》 第七章 多道程序设计</title>
     <url>/di_7_zhang_duo_dao_cheng_xu_she_ji%EF%BC%9Afen_li_jin_cheng_wei_du_li_de_gong_neng/</url>
     <content><![CDATA[<p>多道程序设计是设计中的荒蛮之地，几乎没有好的实践方针。许多程序员尽管精于判断如何将代码分解成子过程，然而最终还是编写出单个庞然大物般的单进程程序，而这些程序往往失败在自身的内部复杂度之上。</p>
@@ -4355,6 +4345,16 @@ Henry Spencer</p>
 ]]></content>
       <tags>
         <tag>系统设计</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》 第八章 微型语言</title>
+    <url>/di_8_zhang_wei_xing_yu_yan%EF%BC%9Axun_zhao_ge_chang_de_le_fu/</url>
+    <content><![CDATA[<p>Unix 有个长期传统，即包容小型的、为专门应用领域特质、大量减少程序行数的语言。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
         <tag>编码规范</tag>
       </tags>
   </entry>
@@ -4471,6 +4471,25 @@ Henry Spencer</p>
       <tags>
         <tag>方法论</tag>
         <tag>How-To</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 - 设计原则总结</title>
+    <url>/head_first_design_pattern_design_principles/</url>
+    <content><![CDATA[<ol>
+<li>将变化的部分封装起来（Encapsulate what varies)</li>
+<li>组合优于继承（Favor composition over inheritance）</li>
+<li>面向接口编程而非实现（Program to interfaces, not implementations.）</li>
+<li>减少需要交互的类之间的耦合（Strive for loosely coupled designs between objects that interact）</li>
+<li>对拓展开放，对修改关闭（Classes should be open for extension but closed for modification.）</li>
+<li>依赖于抽象而非具体的类（ Depend on abstraction. Do not depend on concrete classes）</li>
+<li>暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）</li>
+<li>高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don’t call us ,we’ll call you）</li>
+<li>一个类应该有且只有一个被改变的理由（A class should have only one reason to change）</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -4591,25 +4610,6 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 - 设计原则总结</title>
-    <url>/head_first_design_pattern_design_principles/</url>
-    <content><![CDATA[<ol>
-<li>将变化的部分封装起来（Encapsulate what varies)</li>
-<li>组合优于继承（Favor composition over inheritance）</li>
-<li>面向接口编程而非实现（Program to interfaces, not implementations.）</li>
-<li>减少需要交互的类之间的耦合（Strive for loosely coupled designs between objects that interact）</li>
-<li>对拓展开放，对修改关闭（Classes should be open for extension but closed for modification.）</li>
-<li>依赖于抽象而非具体的类（ Depend on abstraction. Do not depend on concrete classes）</li>
-<li>暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）</li>
-<li>高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don’t call us ,we’ll call you）</li>
-<li>一个类应该有且只有一个被改变的理由（A class should have only one reason to change）</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Head First 设计模式》 笔记汇总</title>
     <url>/head_first_design_patterns/</url>
     <content><![CDATA[<p><a href="/ch_01_the_strategy_pattern">Ch 01 the Strategy Pattern</a></p>
@@ -4710,6 +4710,22 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
+    <title>《Render Hell》 笔记汇总</title>
+    <url>/render_hell/</url>
+    <content><![CDATA[<ul>
+<li><a href="/book_1_overview">Book 1 Overview</a></li>
+<li><a href="/book_2_pipeline">Book 2 Pipeline</a></li>
+<li><a href="/book_3_problems">Book 3 Problems</a></li>
+<li><a href="/book_4_solutions">Book 4 Solutions</a></li>
+</ul>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell/">Render Hell 2.0 | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《LLM 对程序员的冲击和影响》摘抄</title>
     <url>/llm_dui_cheng_xu_yuan_de_chong_ji_he_ying_xiang/</url>
     <content><![CDATA[<h1 id="LLM_的局限"><a class="header-anchor" href="#LLM_的局限">#</a>LLM 的局限</h1>
@@ -4762,22 +4778,6 @@ Henry Spencer</p>
         <tag>AI</tag>
         <tag>LLM</tag>
         <tag>程序员</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Render Hell》 笔记汇总</title>
-    <url>/render_hell/</url>
-    <content><![CDATA[<ul>
-<li><a href="/book_1_overview">Book 1 Overview</a></li>
-<li><a href="/book_2_pipeline">Book 2 Pipeline</a></li>
-<li><a href="/book_3_problems">Book 3 Problems</a></li>
-<li><a href="/book_4_solutions">Book 4 Solutions</a></li>
-</ul>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell/">Render Hell 2.0 | Simon schreibt.</a></p>
-]]></content>
-      <tags>
-        <tag>GPU</tag>
       </tags>
   </entry>
   <entry>
@@ -5128,32 +5128,6 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>猪小兵的故事</title>
-    <url>/zhu_xiao_bing_de_gu_shi/</url>
-    <content><![CDATA[<p>程序员为什么会重新发明轮子？原因很多，从狭隘的技术原因到程序员心理状态，再到软件生产系统的经济学，方方面面都会导致如此行为，这种特有的顽疾正在蔓延。</p>
-<p>猪小兵是个刚走出大学的程序员，拿到了第一份正式工作，让我们假设他或她已经知道了代码重用的价值并且满怀青春的准备大干一把。</p>
-<p>小兵的第一个项目是随团队编制一个大型应用。为了实例说明的方便，让我们认为那是一个帮助终端用户能够智能构造查询和浏览庞大数据库的 GUI。项目经理已经组合了他们认为适合的工具和组件集，不仅包括开发语言，也包括许多程序库。</p>
-<p>那些程序库对于项目来说至关重要。它们包装了许多服务–下到窗口构件和网络连接，上至诸如交互帮助的整个子系统–否则需要特别大量的额外编码，会严重影响工作预算和发布时间。</p>
-<p>小兵有些担心发布时间。他或许缺乏经验，但他知道管理上有个趋势，说得好听点，进度上比较&quot;积极&quot;。</p>
-<p>一切要比他想的费时和痛苦。在程序库表面光鲜的示例程序下，正在重用的组件似乎在一些边界情况下表现得无法预料或具有破坏性—而这些边界情况在他的代码中常常遇到。小兵经常奇怪写程序库的家伙究竟是怎么想的。但他没法知道，因为组件的文档不全–那些文档是技术文员写的，他们既不是程序员，想问题的方式也不像程序员。他也不能通过阅读源码来了解程序库究竟是干什么的，因为程序库是处于专有许可证下不透明的目标码。</p>
-<p>小兵不得不为组件问题不断的编写复杂的迂回代码，使用程序库已经到了得不偿失的地步。迂回方法使得他的代码越变越糟。他碰到了程序库的软肋，库无法简单的像其规格说明那样完成某些至关重要的任务。有时他也确信肯定有某种方法可以让这个黑盒子跑起来，但却无法断定究竟是什么方法。</p>
-<p>小兵发现，随着在程序库上花费的精力越多，他的调试时间就越成指数级的上升。代码处于崩溃和内存泄露的痛苦之中，追下来又往往发觉祸根就是那个程序库，或者是某些他无法查看和修改的代码。小兵知道再追也许会追回自己的代码，但是没有源代码，就算想追回到自己的代码也是不可能的。</p>
-<p>项目进度在变缓，梦想成为架构师的小兵发现，自己简直成了砖瓦匠，正在试图用堆不起的砖盖房，而且压力一大就会塌掉。而经理并不想听到新手的借口，大声的抱怨组件质量太差，那些选择组件的经理和高级人员之间肯定会找他的麻烦。而且即使能够成功说服他们，改换组件也将是一个复杂的提议。</p>
-<p>除非小兵非常，非常幸运，他不可能在项目的有生之年修正程序库的 bug。在清醒的时候，他也意识到库里面也有许多能工作的代码，他太注意那些 bug 和疏漏了。他很愿意能够坐下来同组件的开发者好好谈谈，他们又不是白痴，从他们的代码能看出来，他们一样是程序员，也工作在一个令人受挫的系统中。但是小兵甚至不知道他们是谁—而且即使能知道，他们就职的软件商也多半不会让他们同他讨论这个问题。</p>
-<p>绝望中，小兵开始打造自己的砖块—用较稳定的库模拟不太稳定的库，并且开始从零编写自己的实现。用来置换的代码是他自己的，思维模式他一清二楚，并且能够反复阅读，更新认识，比起被替代的不透明组件和迂回方法所混合的代码，往往工作的相对更好也更容易调试。</p>
-<p>小兵学到一个教训：越少用别人的代码，他的代码产量越高。这个经验满足了他的自尊。像其他所有年轻的程序员一样，在思想深处都觉得自己比别人聪明。他的经历也似乎在表面上证明了这一点。所以小兵开始构建属于自己的工具包，一个自己用起来更顺手的工具包。</p>
-<p>不幸的是，小兵此时获得的自己动手的习惯性思维，是一个短期的局部优化，会引发长期的问题。他或许可以编写更多行的代码，但是如果不能重用，这些代码产生的实际价值很可能会相当大幅度的降低。代码多并不等于代码好，至少在编写低层次代码和大量重复投入时是如此。</p>
-<p>在换工作时，小兵至少还得准备经历一个挫折。他很可能发现带不走他的工具包。如果他带着在公司编写的代码走出公司大门，其旧雇主就有理由认为他侵犯了知识产权。如果承认重用了旧代码，新雇主如果知道了，也大有可能很不爽。</p>
-<p>即使小兵能够偷偷摸摸的在新工作中使用原先的代码，他也会发现自己的工具包用处不大。新雇主也许使用一套不同的专有工具，语言和程序库。极有可能的是，在每个新项目中，小兵都不得不学习一个稍微新一点的技术并重新发明一套轮子。</p>
-<p>这样，程序员重用代码便是技术问题，知识产权壁垒，行政问题以及个人自我意识的综合。成千上万的小兵们年复一年的随着年龄的增长，变得越来越愤世嫉俗，也越来越习惯那种系统。对于多数软件行业的现状，这就是巨大的时间，资本和人力资源浪费。</p>
-<p>小兵经历反映的职业文化可以折射出大部分的情况。软件公司有种&quot;非自己做不可&quot;的强烈情节。他们对于代码重用是矛盾复杂的，一方面为了赶进度逼迫程序员使用功能不足但很有市场的商业组件，同时又拒绝重用程序员自己经过良好测试的代码。这些软件公司费力生产的是大量专用重复的软件，其实编制软件的程序员知道结果会是垃圾，但除了自己的代码，别的哪也动不了。</p>
-<p>代码好不容易写出来了就决不能扔，只有不断修修补补，即使所有的人都知道扔掉重写会更好些，这个教条，就是在这种文化里形成的最接近代码重用的对等物。这种文化产生的产品，即使其中涉及的每位人员都尽最大努力最好工作，随着时间的推移，写出的程序还是会变得越来越臃肿，bug 也越来越多。</p>
-]]></content>
-      <tags>
-        <tag>系统设计</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《You and Your Research》 摘抄</title>
     <url>/you_and_your_research/</url>
     <content><![CDATA[<p>这篇摘抄来源于对 <em>理查德·卫斯理·汉明（Richard Wesley Hamming）</em> 在 1986 年 3 月 7 日 的名为 <code>You and Your Research</code> 演讲的转录。</p>
@@ -5486,6 +5460,32 @@ When you are famous it is hard to work on small problems. This is what did Shan
       <tags>
         <tag>摘抄</tag>
         <tag>How-To</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>猪小兵的故事</title>
+    <url>/zhu_xiao_bing_de_gu_shi/</url>
+    <content><![CDATA[<p>程序员为什么会重新发明轮子？原因很多，从狭隘的技术原因到程序员心理状态，再到软件生产系统的经济学，方方面面都会导致如此行为，这种特有的顽疾正在蔓延。</p>
+<p>猪小兵是个刚走出大学的程序员，拿到了第一份正式工作，让我们假设他或她已经知道了代码重用的价值并且满怀青春的准备大干一把。</p>
+<p>小兵的第一个项目是随团队编制一个大型应用。为了实例说明的方便，让我们认为那是一个帮助终端用户能够智能构造查询和浏览庞大数据库的 GUI。项目经理已经组合了他们认为适合的工具和组件集，不仅包括开发语言，也包括许多程序库。</p>
+<p>那些程序库对于项目来说至关重要。它们包装了许多服务–下到窗口构件和网络连接，上至诸如交互帮助的整个子系统–否则需要特别大量的额外编码，会严重影响工作预算和发布时间。</p>
+<p>小兵有些担心发布时间。他或许缺乏经验，但他知道管理上有个趋势，说得好听点，进度上比较&quot;积极&quot;。</p>
+<p>一切要比他想的费时和痛苦。在程序库表面光鲜的示例程序下，正在重用的组件似乎在一些边界情况下表现得无法预料或具有破坏性—而这些边界情况在他的代码中常常遇到。小兵经常奇怪写程序库的家伙究竟是怎么想的。但他没法知道，因为组件的文档不全–那些文档是技术文员写的，他们既不是程序员，想问题的方式也不像程序员。他也不能通过阅读源码来了解程序库究竟是干什么的，因为程序库是处于专有许可证下不透明的目标码。</p>
+<p>小兵不得不为组件问题不断的编写复杂的迂回代码，使用程序库已经到了得不偿失的地步。迂回方法使得他的代码越变越糟。他碰到了程序库的软肋，库无法简单的像其规格说明那样完成某些至关重要的任务。有时他也确信肯定有某种方法可以让这个黑盒子跑起来，但却无法断定究竟是什么方法。</p>
+<p>小兵发现，随着在程序库上花费的精力越多，他的调试时间就越成指数级的上升。代码处于崩溃和内存泄露的痛苦之中，追下来又往往发觉祸根就是那个程序库，或者是某些他无法查看和修改的代码。小兵知道再追也许会追回自己的代码，但是没有源代码，就算想追回到自己的代码也是不可能的。</p>
+<p>项目进度在变缓，梦想成为架构师的小兵发现，自己简直成了砖瓦匠，正在试图用堆不起的砖盖房，而且压力一大就会塌掉。而经理并不想听到新手的借口，大声的抱怨组件质量太差，那些选择组件的经理和高级人员之间肯定会找他的麻烦。而且即使能够成功说服他们，改换组件也将是一个复杂的提议。</p>
+<p>除非小兵非常，非常幸运，他不可能在项目的有生之年修正程序库的 bug。在清醒的时候，他也意识到库里面也有许多能工作的代码，他太注意那些 bug 和疏漏了。他很愿意能够坐下来同组件的开发者好好谈谈，他们又不是白痴，从他们的代码能看出来，他们一样是程序员，也工作在一个令人受挫的系统中。但是小兵甚至不知道他们是谁—而且即使能知道，他们就职的软件商也多半不会让他们同他讨论这个问题。</p>
+<p>绝望中，小兵开始打造自己的砖块—用较稳定的库模拟不太稳定的库，并且开始从零编写自己的实现。用来置换的代码是他自己的，思维模式他一清二楚，并且能够反复阅读，更新认识，比起被替代的不透明组件和迂回方法所混合的代码，往往工作的相对更好也更容易调试。</p>
+<p>小兵学到一个教训：越少用别人的代码，他的代码产量越高。这个经验满足了他的自尊。像其他所有年轻的程序员一样，在思想深处都觉得自己比别人聪明。他的经历也似乎在表面上证明了这一点。所以小兵开始构建属于自己的工具包，一个自己用起来更顺手的工具包。</p>
+<p>不幸的是，小兵此时获得的自己动手的习惯性思维，是一个短期的局部优化，会引发长期的问题。他或许可以编写更多行的代码，但是如果不能重用，这些代码产生的实际价值很可能会相当大幅度的降低。代码多并不等于代码好，至少在编写低层次代码和大量重复投入时是如此。</p>
+<p>在换工作时，小兵至少还得准备经历一个挫折。他很可能发现带不走他的工具包。如果他带着在公司编写的代码走出公司大门，其旧雇主就有理由认为他侵犯了知识产权。如果承认重用了旧代码，新雇主如果知道了，也大有可能很不爽。</p>
+<p>即使小兵能够偷偷摸摸的在新工作中使用原先的代码，他也会发现自己的工具包用处不大。新雇主也许使用一套不同的专有工具，语言和程序库。极有可能的是，在每个新项目中，小兵都不得不学习一个稍微新一点的技术并重新发明一套轮子。</p>
+<p>这样，程序员重用代码便是技术问题，知识产权壁垒，行政问题以及个人自我意识的综合。成千上万的小兵们年复一年的随着年龄的增长，变得越来越愤世嫉俗，也越来越习惯那种系统。对于多数软件行业的现状，这就是巨大的时间，资本和人力资源浪费。</p>
+<p>小兵经历反映的职业文化可以折射出大部分的情况。软件公司有种&quot;非自己做不可&quot;的强烈情节。他们对于代码重用是矛盾复杂的，一方面为了赶进度逼迫程序员使用功能不足但很有市场的商业组件，同时又拒绝重用程序员自己经过良好测试的代码。这些软件公司费力生产的是大量专用重复的软件，其实编制软件的程序员知道结果会是垃圾，但除了自己的代码，别的哪也动不了。</p>
+<p>代码好不容易写出来了就决不能扔，只有不断修修补补，即使所有的人都知道扔掉重写会更好些，这个教条，就是在这种文化里形成的最接近代码重用的对等物。这种文化产生的产品，即使其中涉及的每位人员都尽最大努力最好工作，随着时间的推移，写出的程序还是会变得越来越臃肿，bug 也越来越多。</p>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
       </tags>
   </entry>
   <entry>
