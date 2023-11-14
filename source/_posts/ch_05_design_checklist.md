@@ -2,10 +2,10 @@
 tags:
 - 工程实践 
 created: 2023-11-11
-updated: 2023-11-12
+updated: 2023-11-14
 date: 2023-11-12 22:29 
 published: true
-title: 《代码大全》 设计检查清单
+title: 《Code Complete》 设计检查清单
 ---
 
 设计清单，帮助你在设计完成后，确认自己的设计是否理想，合适。

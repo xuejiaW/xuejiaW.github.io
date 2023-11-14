@@ -2,7 +2,7 @@
 tags:
 - 工程实践
 created: 2023-09-21
-updated: 2023-11-12
+updated: 2023-11-14
 published: true
 title: 《Code Complete》先决条件检查清单
 date: 2023-11-12 17:38 
