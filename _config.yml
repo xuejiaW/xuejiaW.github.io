@@ -28,8 +28,8 @@ filename_case: 0
 render_drafts: false
 post_asset_folder: true
 marked:
-  prependRoot: false
-  postAsset: true
+    prependRoot: false
+    postAsset: true
 relative_link: false
 future: true
 highlight:
@@ -50,9 +50,10 @@ per_page: 10
 pagination_dir: page
 theme: butterfly
 deploy:
-    type: git
-    repository: git@github.com:xuejiaW/xuejiaW.github.io.git
-    branch: master
+    - type: git
+      repository: git@github.com:xuejiaW/xuejiaW.github.io.git
+      branch: master
+    - type: cjh_google_url_submitter
 symbols_count_time:
     symbols: true
     time: true
@@ -71,40 +72,58 @@ pandoc:
     extensions:
         - "-implicit_figures"
 kramed:
-  gfm: true
-  pedantic: false
-  sanitize: false
-  tables: true
-  breaks: true
-  smartLists: true
-  smartypants: true
+    gfm: true
+    pedantic: false
+    sanitize: false
+    tables: true
+    breaks: true
+    smartLists: true
+    smartypants: true
 
 markdown:
-  renderer: 'markdown-it'
-  anchors:
-    level: 1
-    collisionSuffix: ''
-    permalink: true
-    permalinkClass: header-anchor
-    permalinkSide: 'left'
-    permalinkSymbol: '#'
-    case: 0
-    separator: '_'
-  plugins:
-    - name: 'markdown-it-footnote'
+    renderer: "markdown-it"
+    anchors:
+        level: 1
+        collisionSuffix: ""
+        permalink: true
+        permalinkClass: header-anchor
+        permalinkSide: "left"
+        permalinkSymbol: "#"
+        case: 0
+        separator: "_"
+    plugins:
+        - name: "markdown-it-footnote"
 feed:
-  enable: true
-  type: atom
-  path: atom.xml
-  limit: 20
-  hub:
-  content:
-  content_limit: 140
-  content_limit_delim: ' '
-  order_by: -date
-  icon: icon.png
-  autodiscovery: true
-  template:
+    enable: true
+    type: atom
+    path: atom.xml
+    limit: 20
+    hub:
+    content:
+    content_limit: 140
+    content_limit_delim: " "
+    order_by: -date
+    icon: icon.png
+    autodiscovery: true
+    template:
 nofollow:
-  enable: true
-  field: site
+    enable: true
+    field: site
+hexo_submit_urls_to_search_engine:
+    submit_condition: count #链接被提交的条件，可选值：count | period 现仅支持count
+    count: 20 # 提交最新的20个链接
+    period: 900 # 提交修改时间在 900 秒内的链接
+    google: 1 # 是否向Google提交，可选值：1 | 0（0：否；1：是）
+    bing: 0 # 是否向bing提交，可选值：1 | 0（0：否；1：是）
+    baidu: 0 # 是否向baidu提交，可选值：1 | 0（0：否；1：是）
+    txt_path: submit_urls.txt ## 文本文档名， 需要推送的链接会保存在此文本文档里
+    baidu_host: https://tuncle.blog/ ## 在百度站长平台中注册的域名
+    baidu_token: 请按照文档说明获取 ## 请注意这是您的秘钥， 所以请不要把它直接发布在公众仓库里!
+    bing_host: https://tuncle.blog/ ## 在 bing 站长平台中注册的域名
+    bing_token: 请按照文档说明获取 ## 请注意这是您的秘钥， 所以请不要把它直接发布在公众仓库里!
+    google_host: https://tuncle.blog/ ## 在google站长平台中注册的域名
+    google_key_file: engaged-yen-405013-7a08706f59d2.json #存放google key的json文件，放于网站根目录（与hexo _config.yml文件位置相同），请不要把json文件内容直接发布在公众仓库里!
+    google_proxy: http://127.0.0.1:7890 # 向谷歌提交网址所使用的系统 http 代理，填 0 不使用
+    replace: 0 # 是否替换链接中的部分字符串，可选值：1 | 0（0：否；1：是）
+    find_what:
+    replace_with:
