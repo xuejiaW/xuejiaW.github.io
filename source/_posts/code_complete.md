@@ -11,7 +11,7 @@ ISBN: 978-0735619678
 Category: 软件工程
 CompleteDate: 
 created: 2023-09-09
-updated: 2023-11-14
+updated: 2023-11-16
 published: true
 title: 《Code Complete》 笔记汇总
 description: 《Code Complete》（译名 《代码大全》）一书笔记，本书被誉为“软件开发领域的圣经”，其作者 Steve McConnel 多年在微软负责软件工程的最佳实践和过程改进。本书关注代码构建质量和工程可维护性，书中结合了非常多的日常开发中会遇到的案例，绝不仅是形而上学的进行理论分析。

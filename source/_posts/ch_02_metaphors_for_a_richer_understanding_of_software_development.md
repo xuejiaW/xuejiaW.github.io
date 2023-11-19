@@ -3,7 +3,7 @@ tags:
     - 系统设计
     - 工程实践
 created: 2023-09-16
-updated: 2023-11-14
+updated: 2023-11-17
 published: true
 date: 2023-11-12 14:30
 title: 《Code Complete》第二章：丰富软件开发理解的隐喻
