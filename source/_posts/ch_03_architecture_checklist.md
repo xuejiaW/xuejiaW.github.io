@@ -3,7 +3,7 @@ tags:
     - 工程实践
     - 系统设计
 created: 2023-09-20
-updated: 2023-11-14
+updated: 2023-11-18
 date: 2023-11-12 17:36 
 title: 《Code Complete》 架构检查清单
 published: true

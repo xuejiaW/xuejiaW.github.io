@@ -3,7 +3,7 @@ tags:
     - 系统设计
     - 工程实践
 created: 2023-09-17
-updated: 2023-11-14
+updated: 2023-11-18
 date: 2023-11-12 17:48  
 published: true
 title: 《Code Complete》第三章：测量两次，切割一次——前期准备
