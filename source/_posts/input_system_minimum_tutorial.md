@@ -3,7 +3,7 @@ tags:
     - Unity
     - Tutorial
 created: 2023-11-16
-updated: 2023-11-19
+updated: 2023-11-24
 title: Unity Input System Step-By-Step 最简教程
 published: true
 date: 2023-11-19 15:33 
@@ -68,7 +68,7 @@ Input System 依赖 Unity 2019.1 及以上版本，本文档基于 Unity 2022.3.
 
 {% endnote %}
 
-此时你可以在 `Window -> Analysis -> Input Debugger` 中打开 `Input Debugger` 窗口，该窗口中可以显示当前连接的输入设备：
+此时你可以在 `Window -> Analysis -> Input Debugger` 中打开 Input Debugger 窗口，该窗口中可以显示当前连接的输入设备：
 ![](2023-11-16-16-20-42.png)
 
 此时的工程状态见：
@@ -161,13 +161,13 @@ public class PlayerController : MonoBehaviour
 双击创建的资源（本例中为 `BallControls.inputactions` ） 后会打开空白的 Input Actions 窗口：
 ![Empty Input Assets](/input_system_minimum_tutorial/2023-11-17-15-37-34.png)
 
-此时点击画面左侧的 `+` 号可以创建出 Action Map，我们将新增的 Action Map 命名为 `BallPlayer`：
+此时点击画面左侧的 `+` 号可以创建出 Input Action Map，我们将新增的 Input Action Map 命名为 `BallPlayer`：
 ![](/input_system_minimum_tutorial/gif-2023-11-17-15-44-11.gif)
 
-在窗口中间，可以为这个 Action Map 创建一些 Action，如下过程，创建了 `Buttons` 这个 Action：
+在窗口中间，可以为这个 Input Action Map 创建一些 Input Action，如下过程，创建了 `Buttons` 这个 Input Action：
 ![](/input_system_minimum_tutorial/gif-2023-11-17-15-49-12.gif)
 
-在窗口的右侧，可以为 Action 创建一系列 Binding，如下步骤分别绑定了 `GamePad` 的 `East Button` 和 `West Button` ：
+在窗口的右侧，可以为 Input Action 创建一系列 Input Binding，如下步骤分别绑定了 `GamePad` 的 `East Button` 和 `West Button` ：
 ![](/input_system_minimum_tutorial/gif-2023-11-17-15-52-42.gif)
 
 {% note primary %}
@@ -178,13 +178,13 @@ public class PlayerController : MonoBehaviour
 你也可以继续为 `Buttons` Action 绑定 Keyboard 的 `F1` 和 `F2` 按键，步骤如上，当绑定完成后，整个 `Buttons` Action 如下所示：
 ![](/input_system_minimum_tutorial/image-20231117155554.png)
 
-进一步创建 `Move` Action ，与 `Buttons` 不同是，`Move` 需要将 Action Type 设置为 `Value`，且 Control Type 为 `Vector2`，这表示 Action 会返回 `Vector2` 数据：
+进一步创建 `Move` Input Action ，与 `Buttons` 不同是，`Move` 需要将 Action Type 设置为 `Value`，且 Control Type 为 `Vector2`，这表示 Action 会返回 `Vector2` 数据：
 ![](/input_system_minimum_tutorial/gif-2023-11-17-15-59-17.gif)
 
-如之前步骤一样，为该 `Move` Action 绑定 `Left Stick`，绑定后结果如下：
+如之前步骤一样，为该 `Move` Input Action 绑定 `Left Stick`，绑定后结果如下：
 ![](/input_system_minimum_tutorial/2023-11-17-16-05-20.png)
 
-也可以将键盘上的按键绑定至 `Move` Action，如下所示，其逻辑为使用四个按键分别表示 `Vector2` 四个方向（$+x,-x,+y,-y$）：
+也可以将键盘上的按键绑定至 `Move` Input Action，如下所示，其逻辑为使用四个按键分别表示 `Vector2` 四个方向（$+x,-x,+y,-y$）：
 ![](/input_system_minimum_tutorial/2023-11-17-16-17-41.png)
 
 分别为上下左右四个方向设定四个按键 `K,J,H,L`，结果如下所示：
@@ -250,9 +250,9 @@ public class BallController : MonoBehaviour
 }
 ```
 
-可以看到，该脚本使用了 [InputActionAsset.FindActionMap](https://docs.unity3d.com/packages/com.unity.inputsystem@1.7/api/unityengine.inputsystem.inputactionasset.html#unityengine_inputsystem_inputactionasset_findactionmap_system_string_system_boolean) 找寻之前创建的 `BallPlayer` Action Map，并在 `OnEnable` 和 `OnDisable` 时启用和禁用该 Action Map。
+可以看到，该脚本使用了 [InputActionAsset.FindActionMap](https://docs.unity3d.com/packages/com.unity.inputsystem@1.7/api/unityengine.inputsystem.inputactionasset.html#unityengine_inputsystem_inputactionasset_findactionmap_system_string_system_boolean) 找寻之前创建的 `BallPlayer` Input Action Map，并在 `OnEnable` 和 `OnDisable` 时启用和禁用该 Input Action Map。
 
-另外脚本中通过 [InputActionMap.FindAction](https://docs.unity3d.com/packages/com.unity.inputsystem@1.7/api/unityengine.inputsystem.inputactionmap.html#unityengine_inputsystem_inputactionmap_findaction_system_string_system_boolean) 找寻之前创建的 `Buttons` 和 `Move` Action，并监听了 Action 的 `performed` 事件，触发对应的回调函数 `OnButton` 和 `OnMove`。
+另外脚本中通过 [InputActionMap.FindAction](https://docs.unity3d.com/packages/com.unity.inputsystem@1.7/api/unityengine.inputsystem.inputactionmap.html#unityengine_inputsystem_inputactionmap_findaction_system_string_system_boolean) 找寻之前创建的 `Buttons` 和 `Move` Action，并监听了 Input Action 的 `performed` 事件，触发对应的回调函数 `OnButton` 和 `OnMove`。
 
 至此 `BallController` 脚本已经完全实现了之前 `Player Input` + `PlayerController` 的功能，因此在 `Player` 游戏物体上仅需要 `BallController` 脚本即可，注意要将之前创建的 `BallControls.inputactions` 挂载至脚本中：
 ![](/input_system_minimum_tutorial/2023-11-17-17-30-55.png)
@@ -264,7 +264,7 @@ public class BallController : MonoBehaviour
 
 ### 基于 Actions Asset 自动生成对应类
 
-在 [手动解析 Actions Asset](/input_system_minimum_tutorial/#手动解析_Actions_Asset) 中需要手动管理 `Actions Asset` 并从中读取 Action Map 和 Action。
+在 [手动解析 Actions Asset](/input_system_minimum_tutorial/#手动解析_Actions_Asset) 中需要手动管理 `Actions Asset` 并从中读取 Input Action Map 和 Input Action。
 
 上述的读取过程，会随着 `Action Assets` 中的数据变更而出现潜在的失效（如命名错误），因此 Unity 提供了从 `Action Assets` 中自动创建相应脚本的能力，可以简化上述步骤。
 
@@ -318,7 +318,7 @@ public class BallController_AutoScripts : MonoBehaviour
 }
 ```
 
-此时不再需要手动获取 Action Map 和 Action，只需要使用 `<ActionControls>.<ActionMapName>.<Action>` 的风格直接访问即可。
+此时不再需要手动获取 Input Action Map 和 Input Action，只需要使用 `<ActionControls>.<ActionMapName>.<Action>` 的风格直接访问即可。
 
 此时将之前挂载在 `Player` 上的的 `BallController` 脚本换为 `BallController_AutoScripts` 脚本，并运行，可以看到效果与之前的效果无差别。
 
