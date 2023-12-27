@@ -1,10 +1,11 @@
 ---
 tags:
-    - 工具
-    - CLI
-    - 效率提升
+  - 工具
+  - CLI
+  - 效率提升
 created: 2023-11-26
-updated: 2023-11-26
+updated: 2023-12-27
+date: 2023-11-27 21:50
 title: Powershell 模块：ZLocation
 published: true
 description: ZLocation 是 PowerShell 中的一个 Module，其可以追踪访问各个地址的历时，并通过 `z` 命令快速访问你最常使用的目录，有效的降低了每次通过反复 `cd` 来进入路径的操作数量。
@@ -31,6 +32,7 @@ Import-Module ZLocation
 ZLocation 有以下的使用方式：
 
 1. 使用 `z` 命令，获取当前 ZLocation 所有记录的地址，如下所示：
+
     ```powershell
     ❯ z
     Weight Path
@@ -43,10 +45,11 @@ ZLocation 有以下的使用方式：
         7.00 D:\Project2\unity
         3.00 D:\Project2\unity\SubProject1
     ```
-   
-   输出的左侧 `Weight` 为地址的权重，权重越高，表示该地址越常用。
+
+    输出的左侧 `Weight` 为地址的权重，权重越高，表示该地址越常用。
 
 2. 通过 `z -l <location>` 命令，输出所有匹配 `<location>` 的所有路径中。
+
     ```powershell
     ❯ z -l unity
     Weight Path
@@ -55,32 +58,33 @@ ZLocation 有以下的使用方式：
      34.00 D:\Project1\unity
       7.00 D:\Project2\unity
     ```
-    
+
     > [!tip]
     >
-    > `<location>` 模糊匹配的是路径最后的节点，如有地址 `D:\Project2\unity\SubProject1`，其并不会出现在 `z -l unity` 的输出中，因为i根节点 `SubProject1` 中并不包含有 `unity`。
+    > `<location>` 模糊匹配的是路径最后的节点，如有地址 `D:\Project2\unity\SubProject1`，其并不会出现在 `z -l unity` 的输出中，因为 i 根节点 `SubProject1` 中并不包含有 `unity`。
 
 3. 通过 `z <location>` 命令，跳转到匹配 `<location>` 的所有路径中最常用（根据权重决定）的那个。
-    ![z location](/zlocation/gif-2023-11-26-21-28-41.gif)
+   ![z location](/zlocation/gif-2023-11-26-21-28-41.gif)
 
     可以看到跳转的路径，即为 `z -l <location>` 中权重最高的路径。
 
 4. 通过 `z <location> [TAB]` 在匹配的路径中进行选择。
-    ![使用 Tab 切换](/zlocation/gif-2023-11-26-21-30-06.gif)
+   ![使用 Tab 切换](/zlocation/gif-2023-11-26-21-30-06.gif)
 
 5. 通过 `z -` 命令返回使用 `z <location>` 跳转前的路径。
 
 6. 通过 `z <subLocation 1> <subLocation 2>` 进行跳转路径的选择控制。
 
     因为 `z <location>` 只会跳转到匹配的路径中权重最高的那个，如记录了以下地址：
+
     ```powershell
     35.00 D:\Project1\unity
     7.00 D:\Project2\unity
     ```
 
     如果使用 `z unity`，则会跳转到 `D:\Project1\unity`
-    
-    但有时，我们明确的知道是想要跳转到  `D:\Project2\unity`，此时就可以使用 `z 2 unity` 进行跳转。
+
+    但有时，我们明确的知道是想要跳转到 `D:\Project2\unity`，此时就可以使用 `z 2 unity` 进行跳转。
 
     > [!caution]
     >
@@ -98,7 +102,6 @@ ZLocation 的实现原理，是修改 Powershell 的 [Prompt](https://learn.micr
 因为修改的是 Prompt，所以即使是使用 `cd` 进行路径跳转，也会记录在文件中。
 
 {% endnote %}
-
 
 ## 实现函数
 

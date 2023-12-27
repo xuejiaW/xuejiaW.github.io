@@ -5,13 +5,13 @@ tags:
 Author:
   - Steve McConnell
 Alias:
-- 代码大全
+  - 代码大全
 Cover: https://d1b14unh5d6w7g.cloudfront.net/0735619670.01.S001.JUMBOXXX.jpg?Expires=1694316384&Signature=UQcJfo3PqSKmxoQNqRaiqv5147nDwUyzDbT3EOw9NXv2UQ9TqgpUVTmZTGkVwaV9FpCa-3oUiWKmU7zcXhclnQPoZnFV~-QjZER-PzdrbFuOL3ZZDdl7jcisqyb8Jzi0DZR6EHNVSUiFwd2ErtdzvSMIdzVyVHqplqyrM-b~hCQ_&Key-Pair-Id=APKAIUO27P366FGALUMQ
 ISBN: 978-0735619678
 Category: 软件工程
 CompleteDate: 
 created: 2023-09-09
-updated: 2023-11-16
+updated: 2023-12-27
 published: true
 title: 《Code Complete》 笔记汇总
 description: 《Code Complete》（译名 《代码大全》）一书笔记，本书被誉为“软件开发领域的圣经”，其作者 Steve McConnel 多年在微软负责软件工程的最佳实践和过程改进。本书关注代码构建质量和工程可维护性，书中结合了非常多的日常开发中会遇到的案例，绝不仅是形而上学的进行理论分析。
@@ -26,21 +26,24 @@ Preface
 [Ch 02 Metaphors for a Richer Understanding of Software Development](/ch_02_metaphors_for_a_richer_understanding_of_software_development)
 [Ch 03 Measure Twice, Cut Once_Upstream Prerequisites](/ch_03_measure_twice,_cut_once_upstream_prerequisites)
 
-- [Ch 03 Requirement Checklist](/ch_03_requirement_checklist)
-- [Ch 03 Architecture Checklist](/ch_03_architecture_checklist)
-- [Ch 03 Prerequisites Checklist](/ch_03_prerequisites_checklist)
+-   [Ch 03 Requirement Checklist](/ch_03_requirement_checklist)
+-   [Ch 03 Architecture Checklist](/ch_03_architecture_checklist)
+-   [Ch 03 Prerequisites Checklist](/ch_03_prerequisites_checklist)
 
 [Ch 04 Key Construction Decisions](/ch_04_key_construction_decisions)
 
-- [Ch 04 Construction Practices Checklists](/ch_04_construction_practices_checklists)
+-   [Ch 04 Construction Practices Checklists](/ch_04_construction_practices_checklists)
 
 # Creating High-Quality Code
 
 [Ch 05 Design in Construction](/ch_05_design_in_construction)
 
-- [Ch 05 Design Checklist](/ch_05_design_checklist)
+-   [Ch 05 Design Checklist](/ch_05_design_checklist)
 
-Ch 06 Working Classes
+[Ch 06 Working Classes](/ch_06_working_classes)
+
+-   Ch 06 Class Quality Checklist
+
 Ch 07 High-Quality Routines
 Ch 08 Defensive Programming
 Ch 09 The Pseudocode Programming Process
