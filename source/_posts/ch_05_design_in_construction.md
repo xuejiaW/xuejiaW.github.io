@@ -230,9 +230,11 @@ When I am working on a problem I never think about beauty. I think only how to s
 
 但在软件设计时，则完全不同。由于设计是不确定的，因此熟练应用一组有效的启发式方法是优秀软件设计的核心活动。
 
+> 算法是一组用于执行特定任务的明确定义的指令。算法是可预测的、确定性的，并且不受偶然性的影响。算法会告诉你如何从 A 点到 B 点：不走弯路，不绕道到 D、E 和 F 点。 
+> ———— [《Code Complete》第二章：丰富软件开发理解的隐喻](/ch_02_metaphors_for_a_richer_understanding_of_software_development)
 
-
-
+> 启发式是一种帮助您寻找答案的技术。其结果可能会受到偶然性的影响，因为启发式方法只告诉您如何查看，而不是告诉您要查找什么。它不会告诉你如何从 A 点直接到达 B 点；它甚至可能不知道 A 点和 B 点在哪里。 
+> ———— [《Code Complete》第二章：丰富软件开发理解的隐喻](/ch_02_metaphors_for_a_richer_understanding_of_software_development)
 
 以下是一些启发式的进行设计的方法：
 

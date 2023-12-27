@@ -88,10 +88,12 @@ winget install Microsoft.AzureStorageExplorer; winget install Microsoft.VisualSt
 
 可以使用 `-h` 或 `--slient` 保证以静默方式安装。
 
-> [!Caution]
+{% note warning %}
+如果使用了静默安装，但安装要求管理员权限且当前命令行又不具有，则可能出现错误。
 
-> 如果使用了静默安装，但安装要求管理员权限且当前命令行又不具有，则可能出现错误。
-> 因此建议在使用静默安装时，使用管理员权限打开命令行
+因此建议在使用静默安装时，使用管理员权限打开命令行
+
+{% endnote %}
 
 ## Uninstall
 
