@@ -1,123 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>C# $ 字符串插值</title>
-    <url>/$_string_interpolation/</url>
-    <content><![CDATA[<h1 id="字符"><a class="header-anchor" href="#字符">#</a>$ 字符</h1>
-<p>字符串插值（String Interpolation）有许多的实现方式，其中使用 <code>$</code> 字符在现代 C# 中时比较推荐的方式，它提供类似于 <code>String.Format</code> 的效果。</p>
-<div class="note info simple"><p>实际根据 <code>$</code> 使用场景的不同，编译器会选择用不同的方式实现字符串插值，<code>String.Format</code> 只是其中一种，具体见 <a href="/$_string_interpolation/#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82">实现细节</a></p>
-</div>
-<p>如下分别为使用 <code>$</code> 和 <code>String.Format</code>的示例：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span> <span class="keyword">value</span> = <span class="number">3</span>;</span><br><span class="line">Debug.Log(<span class="string">$&quot;Value is <span class="subst">&#123;<span class="keyword">value</span>&#125;</span>&quot;</span>);</span><br><span class="line">Debug.Log(String.Format(<span class="string">&quot;Value is &#123;0&#125;&quot;</span>, <span class="keyword">value</span>));</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Value is 3</span><br><span class="line">Value is 3</span><br></pre></td></tr></table></figure>
-<h1 id="使用方式"><a class="header-anchor" href="#使用方式">#</a>使用方式</h1>
-<h2 id="创建内插字符串"><a class="header-anchor" href="#创建内插字符串">#</a>创建内插字符串</h2>
-<p><code>字符串插值（String Interpolation）</code> 是用来将表达式插入到字符串中的方式，简单的示例如下所示：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> name = <span class="string">&quot;wxj&quot;</span>;</span><br><span class="line">Debug.Log(<span class="string">$&quot;Hello,<span class="subst">&#123;name&#125;</span>.&quot;</span>);</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Hello,wxj.</span><br></pre></td></tr></table></figure>
-<p>其中 <code>$&quot;Hello,&#123;name&#125;.&quot;)</code> 被称为 <code>内插字符串表达式（interpolated string expression）</code>（下简称 <code>内插表达式</code>），最后输出的 <code>Hello,wxj.</code> 被称为 <code>结果字符串（result string）</code></p>
-<p>由上例可以看出字符串插值的两个必要因素：</p>
-<ol>
-<li>在字符串前需要有 <code>$</code> 字符标记，且该字符与后续的 <code>&quot;</code> 间不能有空格。</li>
-<li>在内插表达式内部可以有一个或多个 <code>&#123;&#125;</code> ，其中包含着任何返回结果的 C# 表达式，表达式的返回值也可以为 <code>null</code>。</li>
-</ol>
-<h2 id="包含不同的数据类型"><a class="header-anchor" href="#包含不同的数据类型">#</a>包含不同的数据类型</h2>
-<p>对于内插表达式中的各 C# 表达式可以是任何类型的，如下所示：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> item = (Name: <span class="string">&quot;eggplant&quot;</span>, Price: <span class="number">1.99</span>m, perPackage: <span class="number">3</span>);</span><br><span class="line"><span class="keyword">var</span> date = DateTime.Now;</span><br><span class="line">Debug.Log(<span class="string">$&quot;On <span class="subst">&#123;date&#125;</span>, the price of <span class="subst">&#123;item.Name&#125;</span> was <span class="subst">&#123;item.Price&#125;</span> per <span class="subst">&#123;item.perPackage&#125;</span> items.&quot;</span>);</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">On 12/10/2021 8:26:07 AM, the price of eggplant was 1.99 per 3 items.</span><br></pre></td></tr></table></figure>
-<p>可以看到该内插字符串表达式中包含有各种类型的表达式（<code>string</code>，<code>Decimal</code>，<code>int</code>，<code>DeltaTime</code>），在最终的结果中都被正确的解析。</p>
-<p>内插字符串表达式，各表达式都会被转换为 <code>string</code>，且规则如下：</p>
-<ol>
-<li>如果表达式结果为 <code>null</code> ，将其转换为空字符串。</li>
-<li>如果表达式结果不为 <code>null</code>，对其调用 <code>ToString</code> 函数。</li>
-</ol>
-<h2 id="控制内插表达式的格式"><a class="header-anchor" href="#控制内插表达式的格式">#</a>控制内插表达式的格式</h2>
-<p>在内插表达式中，还可以控制各表达式转换到 <code>string</code> 时的格式，如下所示：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">DateTime date = DateTime.Now;</span><br><span class="line"><span class="built_in">float</span> <span class="keyword">value</span> = <span class="number">1.12345678f</span>;</span><br><span class="line">Debug.Log(<span class="string">$&quot;On <span class="subst">&#123;date&#125;</span>, value is <span class="subst">&#123;<span class="keyword">value</span>&#125;</span>&quot;</span>);</span><br><span class="line">Debug.Log(<span class="string">$&quot;On <span class="subst">&#123;date:d&#125;</span>, value is <span class="subst">&#123;<span class="keyword">value</span>:f3&#125;</span>&quot;</span>);</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">On 12/10/2021 8:39:56 AM, value is 1.123457</span><br><span class="line">On 12/10/2021, value is 1.123</span><br></pre></td></tr></table></figure>
-<p>在内插表达式中的各表达式中可以通过 <code>:</code> 后加控制的字符格式化输出。如上例中的 <code>d</code> 和 <code>f3</code> 即为控制字符。</p>
-<div class="note info simple"><p><code>:</code> 后的控制字符，相当于在调用 <code>ToString</code> 时作为形参控制表达式的输出。</p>
-</div>
-<blockquote>
-<p>上述表达式等同于：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Debug.Log(<span class="string">&quot;On &quot;</span> + date.ToString(<span class="string">&quot;d&quot;</span>) + <span class="string">&quot;, value is &quot;</span> + <span class="keyword">value</span>.ToString(<span class="string">&quot;f3&quot;</span>));</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="控制内插表达式的对齐方式"><a class="header-anchor" href="#控制内插表达式的对齐方式">#</a>控制内插表达式的对齐方式</h2>
-<p>在内插表达式中的个表达式中可以通过 <code>,</code> 后加数字来控制字符宽度和对其方式，如下所示：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> inventory = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">int</span>&gt;()</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="string">&quot;hammer, ball pein&quot;</span>] = <span class="number">14</span>,</span><br><span class="line">    [<span class="string">&quot;hammer, ball pein a&quot;</span>] = <span class="number">18</span>,</span><br><span class="line">    [<span class="string">&quot;hammer, cross pein&quot;</span>] = <span class="number">5</span>,</span><br><span class="line">    [<span class="string">&quot;screwdriver, Phillips #2&quot;</span>] = <span class="number">14</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> result = <span class="string">$&quot;|<span class="subst">&#123;<span class="string">&quot;Item&quot;</span>,<span class="number">-25</span>&#125;</span>|<span class="subst">&#123;<span class="string">&quot;Quantity&quot;</span>,<span class="number">10</span>&#125;</span>|\n&quot;</span>;</span><br><span class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> inventory)</span><br><span class="line">    result += <span class="string">$&quot;|<span class="subst">&#123;item.Key,<span class="number">-25</span>&#125;</span>|<span class="subst">&#123;item.Value,<span class="number">10</span>&#125;</span>|\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">Debug.Log(result);</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">|Item                     |  Quantity|</span><br><span class="line">|hammer, ball pein        |        14|</span><br><span class="line">|hammer, ball pein a      |        18|</span><br><span class="line">|hammer, cross pein       |         5|</span><br><span class="line">|screwdriver, Phillips #2 |        14|</span><br></pre></td></tr></table></figure>
-<p>其中逗号后的数字，如果为负数，则输出为左对齐，如果为正数则右对齐。数字本身表示最少的<strong>字符数</strong>。因此如果显示系统中每个字符的宽度是不相等的话，如 <code>i</code> 和 <code>a</code> 的宽度在某些显示系统下会有较大差异，则即使控制字符宽度也无法实现对其的效果。</p>
-<p>如下为相同输出结果在 Unity 的 Console 面板中的展示：<br>
-<img src="/$_string_interpolation/image-20211210201354094.png" alt="对齐输出"></p>
-<p>表达式格式和对齐方式也可以一起设定，但需要首先设定对其方式，再设定格式。如下首先控制了左对齐，且字符数为 10 个，又设定输出格式为当前小时数：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Debug.Log(<span class="string">$&quot;[<span class="subst">&#123;DateTime.Now,<span class="number">-10</span>:HH&#125;</span>]&quot;</span>);</span><br></pre></td></tr></table></figure>
-<p>结果为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">[10        ]</span><br></pre></td></tr></table></figure>
-<h2 id="内插表达式中使用转义序列"><a class="header-anchor" href="#内插表达式中使用转义序列">#</a>内插表达式中使用转义序列</h2>
-<p>如果要在内插表达式中可以使用转义序列，当需要多次使用转义序列时也可使用 原义标识符@ 替代。</p>
-<p>如下所示，分别使用使用了转义序列和原文标识符：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">string userName = &quot;wxj&quot;;</span><br><span class="line">string stringWithEscapes = $&quot;C:\\Users\\&#123;userName&#125;\\Documents&quot;;</span><br><span class="line">string verbatimInterpolated = $@&quot;C:\Users\&#123;userName&#125;\Documents&quot;;</span><br><span class="line">Debug.Log(stringWithEscapes);</span><br><span class="line">Debug.Log(verbatimInterpolated);</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">C:\Users\wxj\Documents</span><br><span class="line">C:\Users\wxj\Documents</span><br></pre></td></tr></table></figure>
-<div class="note primary simple"><p>C# 8.0 后，<code>$</code> 与 <code>@</code> 的先后顺序不会造成任何影响。在早期版本中，必须先写 <code>$</code> 再写 <code>@</code>。</p>
-</div>
-<p>在内插表达式中，如果需要输入 <code>&#123;</code>，则按如下方式处理：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span>[] values = <span class="keyword">new</span> <span class="built_in">int</span>[] &#123; <span class="number">1</span>, <span class="number">2</span> &#125;;</span><br><span class="line">Debug.Log(<span class="string">$&quot;Value is &#123;&#123;<span class="subst">&#123;values[<span class="number">0</span>]&#125;</span>, <span class="subst">&#123;values[<span class="number">1</span>]&#125;</span>&#125;&#125;&quot;</span>);</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Value is &#123;1, 2&#125;</span><br></pre></td></tr></table></figure>
-<p>也可以通过 <code>$@</code> 的结合控制换行，如下：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> publishDate = <span class="keyword">new</span> DateTime(<span class="number">2017</span>, <span class="number">12</span>, <span class="number">14</span>);</span><br><span class="line"><span class="built_in">string</span> str = <span class="string">$@&quot;This post published on <span class="subst">&#123;publishDate:yyyy-MM-dd&#125;</span> is about</span></span><br><span class="line"><span class="string">interpolated strings.&quot;</span>;</span><br><span class="line">Debug.Log(str);</span><br></pre></td></tr></table></figure>
-<p>此时输出为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">This post published on 2017-12-14 is about</span><br><span class="line">interpolated strings.</span><br></pre></td></tr></table></figure>
-<h2 id="内插表达式中使用_运算符"><a class="header-anchor" href="#内插表达式中使用_运算符">#</a>内插表达式中使用 ?: 运算符</h2>
-<p>因为 <code>:</code> 在内插表达式中用来指定格式，因此当使用 <code>?:</code> 运算符时，必须定义在括号内。如下所示：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">System.Random random = <span class="keyword">new</span> System.Random();</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i != <span class="number">3</span>; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    Debug.Log(<span class="string">$&quot;Value is <span class="subst">&#123;(random.Next() % <span class="number">2</span> == <span class="number">1</span> ? <span class="string">&quot;Odd&quot;</span> : <span class="string">&quot;Even&quot;</span>)&#125;</span>&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Even</span><br><span class="line">Odd</span><br><span class="line">Odd</span><br></pre></td></tr></table></figure>
-<h1 id="实现细节"><a class="header-anchor" href="#实现细节">#</a>实现细节</h1>
-<p>根据 <code>$</code> 的实现方式的不同，编译器会选择用不同的方式实现字符串插值。</p>
-<h2 id="string_Concat"><a class="header-anchor" href="#string_Concat">#</a>string.Concat</h2>
-<p>当插值的对象为类型为 string 时，编译器会选择使用 <code>string.Concat</code>。</p>
-<p>如下代码：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> name = <span class="string">&quot;meziantou&quot;</span>;</span><br><span class="line"><span class="built_in">string</span> hello = <span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>!&quot;</span>;</span><br></pre></td></tr></table></figure>
-<p>编译器会将其转换为：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> name = <span class="string">&quot;meziantou&quot;</span>;</span><br><span class="line"><span class="built_in">string</span> hello = <span class="built_in">string</span>.Concat(<span class="string">&quot;Hello &quot;</span>, name, <span class="string">&quot;!&quot;</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="string_Format"><a class="header-anchor" href="#string_Format">#</a>string.Format</h2>
-<p>如果插值的对象为类型为非 string 时，编译器会选择使用 <code>string.Format</code>。</p>
-<p>如下代码：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">DateTime now = DateTime.Now;</span><br><span class="line"><span class="built_in">string</span> str = <span class="string">$&quot;It is <span class="subst">&#123;now&#125;</span>&quot;</span>;</span><br></pre></td></tr></table></figure>
-<p>编译器会将其转换为：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">DateTime now = DateTime.Now;</span><br><span class="line"><span class="built_in">string</span> str = <span class="built_in">string</span>.Format(<span class="string">&quot;It is &#123;0&#125;&quot;</span>, now);</span><br></pre></td></tr></table></figure>
-<h2 id="FormattableString"><a class="header-anchor" href="#FormattableString">#</a>FormattableString</h2>
-<p>如果插值的对象为类型为 <a href="/formattable_string">Formattable String</a> 时，编译器会选择使用 <code>FormattableStringFactory.Create</code> 创建一个新的 <code>FormattableString</code>。</p>
-<p>如下代码：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">object</span> value1 = <span class="string">&quot;Foo&quot;</span>;</span><br><span class="line"><span class="built_in">object</span> value2 = <span class="string">&quot;Bar&quot;</span>;</span><br><span class="line">FormattableString str = <span class="string">$&quot;Test <span class="subst">&#123;value1&#125;</span> <span class="subst">&#123;value2&#125;</span>&quot;</span>;</span><br></pre></td></tr></table></figure>
-<p>编译器会将其转换为：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">object</span> value1 = <span class="string">&quot;Foo&quot;</span>;</span><br><span class="line"><span class="built_in">object</span> value2 = <span class="string">&quot;Bar&quot;</span>;</span><br><span class="line">FormattableString str = FormattableStringFactory.Create(<span class="string">&quot;Test &#123;0&#125; &#123;1&#125;&quot;</span>, <span class="keyword">new</span> <span class="built_in">object</span>[] &#123; value1, value2 &#125;);</span><br></pre></td></tr></table></figure>
-<p>当真正需要使用该 string 时，会调用 <code>FormattableString.ToString</code> 方法，将其转换为 string。</p>
-<h2 id="constants（C_10）"><a class="header-anchor" href="#constants（C_10）">#</a>constants（C# 10）</h2>
-<p>在 C# 10 中，支持将内插表达式的结果作为常量。如下所示：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> Username = <span class="string">&quot;meziantou&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> Hello = <span class="string">$&quot;Hello <span class="subst">&#123;Username&#125;</span>!&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// In previous C# version, you need to use the following concat syntax</span></span><br><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> Hello2 = <span class="string">&quot;Hello &quot;</span> + Username + <span class="string">&quot;!&quot;</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="Interpolated_string_handlers（C_10）"><a class="header-anchor" href="#Interpolated_string_handlers（C_10）">#</a>Interpolated string handlers（C# 10）</h2>
-<p>C# 10 中针对高性能场景，引入了 <code>InterpolatedStringHandlerArgument</code>，具体见：<br>
-<a href="https://devblogs.microsoft.com/dotnet/string-interpolation-in-c-10-and-net-6/?wt.mc_id=dt-mvp-5003978">String Interpolation in C# 10 and .NET 6 - .NET Blog (microsoft.com)</a></p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated">$ - string interpolation - C# reference | Microsoft Docs</a></p>
-<p><a href="https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/exploration/interpolated-strings-local">String interpolation - C# tutorial | Microsoft Docs</a></p>
-<p><a href="https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/string-interpolation">String interpolation in C# | Microsoft Docs</a></p>
-<p><a href="https://www.meziantou.net/interpolated-strings-advanced-usages.htm#interpolated-strings-a9996a-2">Interpolated strings: advanced usages - Meziantou’s blog</a></p>
-]]></content>
-      <tags>
-        <tag>C#</tag>
-        <tag>String</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《5% 的改变》 摘抄</title>
     <url>/bai_fen_zhi_5_de_gai_bian/</url>
     <content><![CDATA[<h1 id="引言"><a class="header-anchor" href="#引言">#</a>引言</h1>
@@ -248,43 +131,120 @@
       </tags>
   </entry>
   <entry>
-    <title>《Render Hell》 第一部分 概览</title>
-    <url>/book_1_overview/</url>
-    <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
+    <title>C# $ 字符串插值</title>
+    <url>/$_string_interpolation/</url>
+    <content><![CDATA[<h1 id="字符"><a class="header-anchor" href="#字符">#</a>$ 字符</h1>
+<p>字符串插值（String Interpolation）有许多的实现方式，其中使用 <code>$</code> 字符在现代 C# 中时比较推荐的方式，它提供类似于 <code>String.Format</code> 的效果。</p>
+<div class="note info simple"><p>实际根据 <code>$</code> 使用场景的不同，编译器会选择用不同的方式实现字符串插值，<code>String.Format</code> 只是其中一种，具体见 <a href="/$_string_interpolation/#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82">实现细节</a></p>
 </div>
-<h1 id="Copy_the_Data"><a class="header-anchor" href="#Copy_the_Data">#</a>Copy the Data</h1>
-<div class="note info simple"><p>之所以需要在不同的硬件间拷贝数据，是因为从不同硬件中读取数据的速度差异很大。因此对于当前需要频繁访问的数据，通常会选择将其拷贝到更为高速的内存部分中。</p>
+<p>如下分别为使用 <code>$</code> 和 <code>String.Format</code>的示例：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span> <span class="keyword">value</span> = <span class="number">3</span>;</span><br><span class="line">Debug.Log(<span class="string">$&quot;Value is <span class="subst">&#123;<span class="keyword">value</span>&#125;</span>&quot;</span>);</span><br><span class="line">Debug.Log(String.Format(<span class="string">&quot;Value is &#123;0&#125;&quot;</span>, <span class="keyword">value</span>));</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Value is 3</span><br><span class="line">Value is 3</span><br></pre></td></tr></table></figure>
+<h1 id="使用方式"><a class="header-anchor" href="#使用方式">#</a>使用方式</h1>
+<h2 id="创建内插字符串"><a class="header-anchor" href="#创建内插字符串">#</a>创建内插字符串</h2>
+<p><code>字符串插值（String Interpolation）</code> 是用来将表达式插入到字符串中的方式，简单的示例如下所示：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> name = <span class="string">&quot;wxj&quot;</span>;</span><br><span class="line">Debug.Log(<span class="string">$&quot;Hello,<span class="subst">&#123;name&#125;</span>.&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Hello,wxj.</span><br></pre></td></tr></table></figure>
+<p>其中 <code>$&quot;Hello,&#123;name&#125;.&quot;)</code> 被称为 <code>内插字符串表达式（interpolated string expression）</code>（下简称 <code>内插表达式</code>），最后输出的 <code>Hello,wxj.</code> 被称为 <code>结果字符串（result string）</code></p>
+<p>由上例可以看出字符串插值的两个必要因素：</p>
+<ol>
+<li>在字符串前需要有 <code>$</code> 字符标记，且该字符与后续的 <code>&quot;</code> 间不能有空格。</li>
+<li>在内插表达式内部可以有一个或多个 <code>&#123;&#125;</code> ，其中包含着任何返回结果的 C# 表达式，表达式的返回值也可以为 <code>null</code>。</li>
+</ol>
+<h2 id="包含不同的数据类型"><a class="header-anchor" href="#包含不同的数据类型">#</a>包含不同的数据类型</h2>
+<p>对于内插表达式中的各 C# 表达式可以是任何类型的，如下所示：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> item = (Name: <span class="string">&quot;eggplant&quot;</span>, Price: <span class="number">1.99</span>m, perPackage: <span class="number">3</span>);</span><br><span class="line"><span class="keyword">var</span> date = DateTime.Now;</span><br><span class="line">Debug.Log(<span class="string">$&quot;On <span class="subst">&#123;date&#125;</span>, the price of <span class="subst">&#123;item.Name&#125;</span> was <span class="subst">&#123;item.Price&#125;</span> per <span class="subst">&#123;item.perPackage&#125;</span> items.&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">On 12/10/2021 8:26:07 AM, the price of eggplant was 1.99 per 3 items.</span><br></pre></td></tr></table></figure>
+<p>可以看到该内插字符串表达式中包含有各种类型的表达式（<code>string</code>，<code>Decimal</code>，<code>int</code>，<code>DeltaTime</code>），在最终的结果中都被正确的解析。</p>
+<p>内插字符串表达式，各表达式都会被转换为 <code>string</code>，且规则如下：</p>
+<ol>
+<li>如果表达式结果为 <code>null</code> ，将其转换为空字符串。</li>
+<li>如果表达式结果不为 <code>null</code>，对其调用 <code>ToString</code> 函数。</li>
+</ol>
+<h2 id="控制内插表达式的格式"><a class="header-anchor" href="#控制内插表达式的格式">#</a>控制内插表达式的格式</h2>
+<p>在内插表达式中，还可以控制各表达式转换到 <code>string</code> 时的格式，如下所示：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">DateTime date = DateTime.Now;</span><br><span class="line"><span class="built_in">float</span> <span class="keyword">value</span> = <span class="number">1.12345678f</span>;</span><br><span class="line">Debug.Log(<span class="string">$&quot;On <span class="subst">&#123;date&#125;</span>, value is <span class="subst">&#123;<span class="keyword">value</span>&#125;</span>&quot;</span>);</span><br><span class="line">Debug.Log(<span class="string">$&quot;On <span class="subst">&#123;date:d&#125;</span>, value is <span class="subst">&#123;<span class="keyword">value</span>:f3&#125;</span>&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">On 12/10/2021 8:39:56 AM, value is 1.123457</span><br><span class="line">On 12/10/2021, value is 1.123</span><br></pre></td></tr></table></figure>
+<p>在内插表达式中的各表达式中可以通过 <code>:</code> 后加控制的字符格式化输出。如上例中的 <code>d</code> 和 <code>f3</code> 即为控制字符。</p>
+<div class="note info simple"><p><code>:</code> 后的控制字符，相当于在调用 <code>ToString</code> 时作为形参控制表达式的输出。</p>
 </div>
-<div class="note warning simple"><p>GPU 和 显卡 并不是相等的关系 GPU 全称为 Graphics Processing Unit，它指示显卡中的核心计算芯片。整个显卡中还包括显存（VRam），散热器等配件。</p>
+<blockquote>
+<p>上述表达式等同于：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Debug.Log(<span class="string">&quot;On &quot;</span> + date.ToString(<span class="string">&quot;d&quot;</span>) + <span class="string">&quot;, value is &quot;</span> + <span class="keyword">value</span>.ToString(<span class="string">&quot;f3&quot;</span>));</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="控制内插表达式的对齐方式"><a class="header-anchor" href="#控制内插表达式的对齐方式">#</a>控制内插表达式的对齐方式</h2>
+<p>在内插表达式中的个表达式中可以通过 <code>,</code> 后加数字来控制字符宽度和对其方式，如下所示：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> inventory = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">int</span>&gt;()</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="string">&quot;hammer, ball pein&quot;</span>] = <span class="number">14</span>,</span><br><span class="line">    [<span class="string">&quot;hammer, ball pein a&quot;</span>] = <span class="number">18</span>,</span><br><span class="line">    [<span class="string">&quot;hammer, cross pein&quot;</span>] = <span class="number">5</span>,</span><br><span class="line">    [<span class="string">&quot;screwdriver, Phillips #2&quot;</span>] = <span class="number">14</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> result = <span class="string">$&quot;|<span class="subst">&#123;<span class="string">&quot;Item&quot;</span>,<span class="number">-25</span>&#125;</span>|<span class="subst">&#123;<span class="string">&quot;Quantity&quot;</span>,<span class="number">10</span>&#125;</span>|\n&quot;</span>;</span><br><span class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> inventory)</span><br><span class="line">    result += <span class="string">$&quot;|<span class="subst">&#123;item.Key,<span class="number">-25</span>&#125;</span>|<span class="subst">&#123;item.Value,<span class="number">10</span>&#125;</span>|\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">Debug.Log(result);</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">|Item                     |  Quantity|</span><br><span class="line">|hammer, ball pein        |        14|</span><br><span class="line">|hammer, ball pein a      |        18|</span><br><span class="line">|hammer, cross pein       |         5|</span><br><span class="line">|screwdriver, Phillips #2 |        14|</span><br></pre></td></tr></table></figure>
+<p>其中逗号后的数字，如果为负数，则输出为左对齐，如果为正数则右对齐。数字本身表示最少的<strong>字符数</strong>。因此如果显示系统中每个字符的宽度是不相等的话，如 <code>i</code> 和 <code>a</code> 的宽度在某些显示系统下会有较大差异，则即使控制字符宽度也无法实现对其的效果。</p>
+<p>如下为相同输出结果在 Unity 的 Console 面板中的展示：<br>
+<img src="/$_string_interpolation/image-20211210201354094.png" alt="对齐输出"></p>
+<p>表达式格式和对齐方式也可以一起设定，但需要首先设定对其方式，再设定格式。如下首先控制了左对齐，且字符数为 10 个，又设定输出格式为当前小时数：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Debug.Log(<span class="string">$&quot;[<span class="subst">&#123;DateTime.Now,<span class="number">-10</span>:HH&#125;</span>]&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>结果为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">[10        ]</span><br></pre></td></tr></table></figure>
+<h2 id="内插表达式中使用转义序列"><a class="header-anchor" href="#内插表达式中使用转义序列">#</a>内插表达式中使用转义序列</h2>
+<p>如果要在内插表达式中可以使用转义序列，当需要多次使用转义序列时也可使用 原义标识符@ 替代。</p>
+<p>如下所示，分别使用使用了转义序列和原文标识符：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">string userName = &quot;wxj&quot;;</span><br><span class="line">string stringWithEscapes = $&quot;C:\\Users\\&#123;userName&#125;\\Documents&quot;;</span><br><span class="line">string verbatimInterpolated = $@&quot;C:\Users\&#123;userName&#125;\Documents&quot;;</span><br><span class="line">Debug.Log(stringWithEscapes);</span><br><span class="line">Debug.Log(verbatimInterpolated);</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">C:\Users\wxj\Documents</span><br><span class="line">C:\Users\wxj\Documents</span><br></pre></td></tr></table></figure>
+<div class="note primary simple"><p>C# 8.0 后，<code>$</code> 与 <code>@</code> 的先后顺序不会造成任何影响。在早期版本中，必须先写 <code>$</code> 再写 <code>@</code>。</p>
 </div>
-<p>对于所有与绘制相关的资源，如贴图，模型，一开始都是存储在硬盘（HDD）上的 。在整个绘制过程中，它们会先被读取到内存（RAM）中，再被读取到显卡上的显存（VRAM）中。之所以要进行这么一个数据从 HDD 拷贝到 VRAM 中的操作，是因为显卡读取 VRAM 中的内容速度更快。整个过程如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_8-52-50_am.gif" alt="数据从内存拷贝到显存"></p>
-<p>又因为整个过程中数据是被 拷贝 的，因此当数据进入 VRAM 后，在 RAM 中的数据可以被正常销毁，不会影响到后续的绘制。如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_8-55-43_am.gif" alt="内存中数据可安全销毁"></p>
-<p>但是 GPU 访问 VRAM 速度仍然不够快，VRAM 中需要使用到的数据会进一步的被拷贝到 GPU 中的一小块内存上（ on-chip caches），这一块内存被称为 <code>L2 Cache</code> 。过程如下所示：<br>
-<img src="/book_1_overview/gif_9-13-2021_9-18-41_am.gif" alt="L2 Cache"></p>
-<p>在 GPU 更靠近核心（Core）的地方，还有一片更小的内存，称为 <code>L1 Cache</code> 。因为更靠近核心，所以 <code>L1 Cache</code> 中数据的访问速度相对于 <code>L2 Cache</code> 也更快。 <code>L2 Cache</code> 中的数据在需要被操作时，也会先拷贝到 <code>L1 Cache</code> 中。</p>
-<p>在 <code>L1 Cache</code> 中的数据还会被进一步拷贝到 GPU 中被称为 <code>Register</code> 的内存区域，GPU Cores 会从该区域中读取数据，计算并将运算后结果放回到 <code>Register</code> 中：<br>
-<img src="/book_1_overview/gif_9-13-2021_9-25-58_am.gif" alt="Register"></p>
-<h1 id="Set_the_Render_State"><a class="header-anchor" href="#Set_the_Render_State">#</a>Set the Render State</h1>
-<p>对于除了 Mesh 数据外的数据，如顶点/像素着色器，纹理，材质，光照信息，是否半透明等信息都称为 <code>Render State</code> 。</p>
-<p>Mesh 数据会使用被设置的 <code>Render State</code> 进行渲染，图形 API 又是一个类似状态机的实现，即设置了 Render State 后，后续的 Mesh 都会使用该 State 进行渲染，直到有了新 State 被设置。示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_8-47-57_am.gif" alt="State"></p>
-<h1 id="Draw_Call"><a class="header-anchor" href="#Draw_Call">#</a>Draw Call</h1>
-<p><code>DrawCall</code> 是一个由 CPU 端发出，由 GPU 端接受的绘制 <strong>一个 Mesh</strong> 的指令。该指令只包含指向需要绘制的 Mesh 的指针，而如材质这样的信息是通过 Render State 进行传递，并不会在 <code>DrawCall</code> 中。示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_8-55-41_am.gif" alt="Draw Call"></p>
-<h1 id="Pipeline"><a class="header-anchor" href="#Pipeline">#</a>Pipeline</h1>
-<p>当 <code>DrawCall</code> 发送后，GPU 会获取当前的 Render State，和设置的顶点信息（Mesh），并通过渲染管线（Pipeline）将其一步步转换到最终屏幕上所见像素。在管线中，对于顶点和像素的工作会被划分到 GPU 的多个核心中平行处理。整个管线工作的简单示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_9-02-13_am.gif" alt="Pipeline"></p>
-<h1 id="Command_Buffer"><a class="header-anchor" href="#Command_Buffer">#</a>Command Buffer</h1>
-<p>CPU 并不是直接将数据传递给 GPU，而是通过 <code>Command Buffer</code> ，这样 CPU 和 GPU 就可以各自独立的工作。如果是直接传递的话，当 GPU 在忙碌时，CPU 无法将数据送给 GPU，就会造成 CPU 的堵塞。</p>
-<p>Command Buffer 是一个 <code>FIFO 存储器</code> ，即 GPU 只会取 CPU 最早 Push 进 Command Buffer 中的数据。 Command Buffer 的示意图如下所示：<br>
-<img src="/book_1_overview/gif_9-14-2021_9-12-25_am.gif" alt="Command Buffer"></p>
+<p>在内插表达式中，如果需要输入 <code>&#123;</code>，则按如下方式处理：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span>[] values = <span class="keyword">new</span> <span class="built_in">int</span>[] &#123; <span class="number">1</span>, <span class="number">2</span> &#125;;</span><br><span class="line">Debug.Log(<span class="string">$&quot;Value is &#123;&#123;<span class="subst">&#123;values[<span class="number">0</span>]&#125;</span>, <span class="subst">&#123;values[<span class="number">1</span>]&#125;</span>&#125;&#125;&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Value is &#123;1, 2&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以通过 <code>$@</code> 的结合控制换行，如下：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> publishDate = <span class="keyword">new</span> DateTime(<span class="number">2017</span>, <span class="number">12</span>, <span class="number">14</span>);</span><br><span class="line"><span class="built_in">string</span> str = <span class="string">$@&quot;This post published on <span class="subst">&#123;publishDate:yyyy-MM-dd&#125;</span> is about</span></span><br><span class="line"><span class="string">interpolated strings.&quot;</span>;</span><br><span class="line">Debug.Log(str);</span><br></pre></td></tr></table></figure>
+<p>此时输出为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">This post published on 2017-12-14 is about</span><br><span class="line">interpolated strings.</span><br></pre></td></tr></table></figure>
+<h2 id="内插表达式中使用_运算符"><a class="header-anchor" href="#内插表达式中使用_运算符">#</a>内插表达式中使用 ?: 运算符</h2>
+<p>因为 <code>:</code> 在内插表达式中用来指定格式，因此当使用 <code>?:</code> 运算符时，必须定义在括号内。如下所示：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">System.Random random = <span class="keyword">new</span> System.Random();</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i != <span class="number">3</span>; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    Debug.Log(<span class="string">$&quot;Value is <span class="subst">&#123;(random.Next() % <span class="number">2</span> == <span class="number">1</span> ? <span class="string">&quot;Odd&quot;</span> : <span class="string">&quot;Even&quot;</span>)&#125;</span>&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Even</span><br><span class="line">Odd</span><br><span class="line">Odd</span><br></pre></td></tr></table></figure>
+<h1 id="实现细节"><a class="header-anchor" href="#实现细节">#</a>实现细节</h1>
+<p>根据 <code>$</code> 的实现方式的不同，编译器会选择用不同的方式实现字符串插值。</p>
+<h2 id="string_Concat"><a class="header-anchor" href="#string_Concat">#</a>string.Concat</h2>
+<p>当插值的对象为类型为 string 时，编译器会选择使用 <code>string.Concat</code>。</p>
+<p>如下代码：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> name = <span class="string">&quot;meziantou&quot;</span>;</span><br><span class="line"><span class="built_in">string</span> hello = <span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>!&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器会将其转换为：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> name = <span class="string">&quot;meziantou&quot;</span>;</span><br><span class="line"><span class="built_in">string</span> hello = <span class="built_in">string</span>.Concat(<span class="string">&quot;Hello &quot;</span>, name, <span class="string">&quot;!&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="string_Format"><a class="header-anchor" href="#string_Format">#</a>string.Format</h2>
+<p>如果插值的对象为类型为非 string 时，编译器会选择使用 <code>string.Format</code>。</p>
+<p>如下代码：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">DateTime now = DateTime.Now;</span><br><span class="line"><span class="built_in">string</span> str = <span class="string">$&quot;It is <span class="subst">&#123;now&#125;</span>&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器会将其转换为：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">DateTime now = DateTime.Now;</span><br><span class="line"><span class="built_in">string</span> str = <span class="built_in">string</span>.Format(<span class="string">&quot;It is &#123;0&#125;&quot;</span>, now);</span><br></pre></td></tr></table></figure>
+<h2 id="FormattableString"><a class="header-anchor" href="#FormattableString">#</a>FormattableString</h2>
+<p>如果插值的对象为类型为 <a href="/formattable_string">Formattable String</a> 时，编译器会选择使用 <code>FormattableStringFactory.Create</code> 创建一个新的 <code>FormattableString</code>。</p>
+<p>如下代码：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">object</span> value1 = <span class="string">&quot;Foo&quot;</span>;</span><br><span class="line"><span class="built_in">object</span> value2 = <span class="string">&quot;Bar&quot;</span>;</span><br><span class="line">FormattableString str = <span class="string">$&quot;Test <span class="subst">&#123;value1&#125;</span> <span class="subst">&#123;value2&#125;</span>&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器会将其转换为：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">object</span> value1 = <span class="string">&quot;Foo&quot;</span>;</span><br><span class="line"><span class="built_in">object</span> value2 = <span class="string">&quot;Bar&quot;</span>;</span><br><span class="line">FormattableString str = FormattableStringFactory.Create(<span class="string">&quot;Test &#123;0&#125; &#123;1&#125;&quot;</span>, <span class="keyword">new</span> <span class="built_in">object</span>[] &#123; value1, value2 &#125;);</span><br></pre></td></tr></table></figure>
+<p>当真正需要使用该 string 时，会调用 <code>FormattableString.ToString</code> 方法，将其转换为 string。</p>
+<h2 id="constants（C_10）"><a class="header-anchor" href="#constants（C_10）">#</a>constants（C# 10）</h2>
+<p>在 C# 10 中，支持将内插表达式的结果作为常量。如下所示：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> Username = <span class="string">&quot;meziantou&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> Hello = <span class="string">$&quot;Hello <span class="subst">&#123;Username&#125;</span>!&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// In previous C# version, you need to use the following concat syntax</span></span><br><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> Hello2 = <span class="string">&quot;Hello &quot;</span> + Username + <span class="string">&quot;!&quot;</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="Interpolated_string_handlers（C_10）"><a class="header-anchor" href="#Interpolated_string_handlers（C_10）">#</a>Interpolated string handlers（C# 10）</h2>
+<p>C# 10 中针对高性能场景，引入了 <code>InterpolatedStringHandlerArgument</code>，具体见：<br>
+<a href="https://devblogs.microsoft.com/dotnet/string-interpolation-in-c-10-and-net-6/?wt.mc_id=dt-mvp-5003978">String Interpolation in C# 10 and .NET 6 - .NET Blog (microsoft.com)</a></p>
 <h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell-book1/">Render Hell – Book I | Simon schreibt.</a></p>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated">$ - string interpolation - C# reference | Microsoft Docs</a></p>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/exploration/interpolated-strings-local">String interpolation - C# tutorial | Microsoft Docs</a></p>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/csharp/tutorials/string-interpolation">String interpolation in C# | Microsoft Docs</a></p>
+<p><a href="https://www.meziantou.net/interpolated-strings-advanced-usages.htm#interpolated-strings-a9996a-2">Interpolated strings: advanced usages - Meziantou’s blog</a></p>
 ]]></content>
       <tags>
-        <tag>GPU</tag>
+        <tag>C#</tag>
+        <tag>String</tag>
       </tags>
   </entry>
   <entry>
@@ -416,6 +376,46 @@
       </tags>
   </entry>
   <entry>
+    <title>《Render Hell》 第一部分 概览</title>
+    <url>/book_1_overview/</url>
+    <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
+</div>
+<h1 id="Copy_the_Data"><a class="header-anchor" href="#Copy_the_Data">#</a>Copy the Data</h1>
+<div class="note info simple"><p>之所以需要在不同的硬件间拷贝数据，是因为从不同硬件中读取数据的速度差异很大。因此对于当前需要频繁访问的数据，通常会选择将其拷贝到更为高速的内存部分中。</p>
+</div>
+<div class="note warning simple"><p>GPU 和 显卡 并不是相等的关系 GPU 全称为 Graphics Processing Unit，它指示显卡中的核心计算芯片。整个显卡中还包括显存（VRam），散热器等配件。</p>
+</div>
+<p>对于所有与绘制相关的资源，如贴图，模型，一开始都是存储在硬盘（HDD）上的 。在整个绘制过程中，它们会先被读取到内存（RAM）中，再被读取到显卡上的显存（VRAM）中。之所以要进行这么一个数据从 HDD 拷贝到 VRAM 中的操作，是因为显卡读取 VRAM 中的内容速度更快。整个过程如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_8-52-50_am.gif" alt="数据从内存拷贝到显存"></p>
+<p>又因为整个过程中数据是被 拷贝 的，因此当数据进入 VRAM 后，在 RAM 中的数据可以被正常销毁，不会影响到后续的绘制。如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_8-55-43_am.gif" alt="内存中数据可安全销毁"></p>
+<p>但是 GPU 访问 VRAM 速度仍然不够快，VRAM 中需要使用到的数据会进一步的被拷贝到 GPU 中的一小块内存上（ on-chip caches），这一块内存被称为 <code>L2 Cache</code> 。过程如下所示：<br>
+<img src="/book_1_overview/gif_9-13-2021_9-18-41_am.gif" alt="L2 Cache"></p>
+<p>在 GPU 更靠近核心（Core）的地方，还有一片更小的内存，称为 <code>L1 Cache</code> 。因为更靠近核心，所以 <code>L1 Cache</code> 中数据的访问速度相对于 <code>L2 Cache</code> 也更快。 <code>L2 Cache</code> 中的数据在需要被操作时，也会先拷贝到 <code>L1 Cache</code> 中。</p>
+<p>在 <code>L1 Cache</code> 中的数据还会被进一步拷贝到 GPU 中被称为 <code>Register</code> 的内存区域，GPU Cores 会从该区域中读取数据，计算并将运算后结果放回到 <code>Register</code> 中：<br>
+<img src="/book_1_overview/gif_9-13-2021_9-25-58_am.gif" alt="Register"></p>
+<h1 id="Set_the_Render_State"><a class="header-anchor" href="#Set_the_Render_State">#</a>Set the Render State</h1>
+<p>对于除了 Mesh 数据外的数据，如顶点/像素着色器，纹理，材质，光照信息，是否半透明等信息都称为 <code>Render State</code> 。</p>
+<p>Mesh 数据会使用被设置的 <code>Render State</code> 进行渲染，图形 API 又是一个类似状态机的实现，即设置了 Render State 后，后续的 Mesh 都会使用该 State 进行渲染，直到有了新 State 被设置。示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_8-47-57_am.gif" alt="State"></p>
+<h1 id="Draw_Call"><a class="header-anchor" href="#Draw_Call">#</a>Draw Call</h1>
+<p><code>DrawCall</code> 是一个由 CPU 端发出，由 GPU 端接受的绘制 <strong>一个 Mesh</strong> 的指令。该指令只包含指向需要绘制的 Mesh 的指针，而如材质这样的信息是通过 Render State 进行传递，并不会在 <code>DrawCall</code> 中。示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_8-55-41_am.gif" alt="Draw Call"></p>
+<h1 id="Pipeline"><a class="header-anchor" href="#Pipeline">#</a>Pipeline</h1>
+<p>当 <code>DrawCall</code> 发送后，GPU 会获取当前的 Render State，和设置的顶点信息（Mesh），并通过渲染管线（Pipeline）将其一步步转换到最终屏幕上所见像素。在管线中，对于顶点和像素的工作会被划分到 GPU 的多个核心中平行处理。整个管线工作的简单示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_9-02-13_am.gif" alt="Pipeline"></p>
+<h1 id="Command_Buffer"><a class="header-anchor" href="#Command_Buffer">#</a>Command Buffer</h1>
+<p>CPU 并不是直接将数据传递给 GPU，而是通过 <code>Command Buffer</code> ，这样 CPU 和 GPU 就可以各自独立的工作。如果是直接传递的话，当 GPU 在忙碌时，CPU 无法将数据送给 GPU，就会造成 CPU 的堵塞。</p>
+<p>Command Buffer 是一个 <code>FIFO 存储器</code> ，即 GPU 只会取 CPU 最早 Push 进 Command Buffer 中的数据。 Command Buffer 的示意图如下所示：<br>
+<img src="/book_1_overview/gif_9-14-2021_9-12-25_am.gif" alt="Command Buffer"></p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book1/">Render Hell – Book I | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Render Hell》 第三部分 常见问题</title>
     <url>/book_3_problems/</url>
     <content><![CDATA[<h1 id="Many_Draw_Calls_Many_Commands"><a class="header-anchor" href="#Many_Draw_Calls_Many_Commands">#</a>Many Draw Calls / Many Commands</h1>
@@ -436,39 +436,6 @@
 <img src="/book_3_problems/pipeline_rasterizing03_.gif" alt="Thin Triangles 造成的性能浪费"></p>
 <h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
 <p><a href="http://simonschreibt.de/gat/renderhell-book3/">Render Hell – Book III | Simon schreibt.</a></p>
-]]></content>
-      <tags>
-        <tag>GPU</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Render Hell》 第四部分 解决方法</title>
-    <url>/book_4_solutions/</url>
-    <content><![CDATA[<h1 id="Sorting"><a class="header-anchor" href="#Sorting">#</a>Sorting</h1>
-<p>对于多个 Meshes，多个 Materials 的情况，可以通过排序将同一种 Material 的 Mesh 放在一起减少 Render State 的切换，如下所示：<br>
-<img src="/book_4_solutions/optimisation_sorting_01.gif" alt="重新排序以减少 State 切换"></p>
-<h1 id="Batching"><a class="header-anchor" href="#Batching">#</a>Batching</h1>
-<p>在排序完，仍然存在的问题是多个 Meshes 会造成多个 Commands 进而引起过多开销。因此应当将多个 Meshes 结合在一起，通过一次 Draw Call 进行渲染。在调用 API 前将多个 Meshes 合并在一起的过程称为 <code>Batch</code> 。</p>
-<p><img src="/book_4_solutions/optimisation_batching_02.gif" alt="Batching"></p>
-<div class="note info simple"><p>在 RAM 中将多个 Mesh 结合在一起也是需要开销的（CPU 时间），因此通常选择将静态的 Mesh，如房子，石头等Batch 在一起。 而如果是一系列运动的子弹，因为它们的位置每帧都会移动，所以相当于每帧都需要重新 <code>Batch</code>，这会造成巨大的开销。</p>
-</div>
-<p>Batch 还会造成一个额外的问题。在未进行 Batch 时，如果一个 Mesh 在 Frustum 外，则它会被直接 Cull 掉。但如果将多个 Meshes Batch 成一个大 Mesh，则即使只有其中的一小部分处在 Frustum 中，整个 Mesh 仍然会被认为需要被绘制。</p>
-<p>因此相对于 <code>Batching</code>，更好的解决方法是 <code>Instancing</code></p>
-<h1 id="Instancing"><a class="header-anchor" href="#Instancing">#</a>Instancing</h1>
-<p><code>Instancing</code> 是提交一次 Mesh，但会告知 GPU 绘制多次，并在 RAM 中指定每次绘制时需要用的状态。因此 <code>Instancing</code> 适合同一个 Mesh 要多次绘制的情况，如草，子弹。示意图如下所示：<br>
-<img src="/book_4_solutions/20200129181033200.gif" alt="Instancing"></p>
-<h1 id="Multi_Material_Shader"><a class="header-anchor" href="#Multi_Material_Shader">#</a>Multi-Material Shader</h1>
-<p>为了解决 Book3 中提到的 <a href="/book_3_problems/#Meshes_and_Multi-Materials">Meshes and Multi-Materials</a> 导致多 Draw Call 的问题，一个解决思路是将多个材质需要用到的数据合并在一个 Shader 中，相当于将多个 Material 合并成了一个 Material。</p>
-<p>如原来每个材质需要一个 Diffuse Texture，一个 Normal Texture，可以使用一个包含两个 Diffuse Texture， 两个 Normal Texture 的材质来取代原来的两个材质，并在 Shader 中通过 Blending 的方式达成之前的效果。</p>
-<div class="note warning simple"><p>这种实现方式虽然减少了 DrawCall 的数量，但会造成 Blending 的大量额外开销，因此最终性能可能反而下降。</p>
-</div>
-<h1 id="Skinned_Meshes"><a class="header-anchor" href="#Skinned_Meshes">#</a>Skinned Meshes</h1>
-<p>如之前的描述，如果需要通过 Batch 来解决多个子弹占用多个 Draw Call 的问题，则会因为子弹需要每帧移动而造成每帧重新 Batch，这会造成巨大的开销。</p>
-<p>有一个解决思路是将所有这些子弹结合在一起作为 Skinned Mesh，其中每个子弹作为一个 Bone，在后续的帧中只需要更新这些 Bone 的位置，而不需要重新进行合并。</p>
-<div class="note warning simple"><p>当出现了子弹增加或减少时，则需要重新合并 Mesh</p>
-</div>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="http://simonschreibt.de/gat/renderhell-book4/">Render Hell – Book IV | Simon schreibt.</a></p>
 ]]></content>
       <tags>
         <tag>GPU</tag>
@@ -581,6 +548,39 @@
       </tags>
   </entry>
   <entry>
+    <title>《Render Hell》 第四部分 解决方法</title>
+    <url>/book_4_solutions/</url>
+    <content><![CDATA[<h1 id="Sorting"><a class="header-anchor" href="#Sorting">#</a>Sorting</h1>
+<p>对于多个 Meshes，多个 Materials 的情况，可以通过排序将同一种 Material 的 Mesh 放在一起减少 Render State 的切换，如下所示：<br>
+<img src="/book_4_solutions/optimisation_sorting_01.gif" alt="重新排序以减少 State 切换"></p>
+<h1 id="Batching"><a class="header-anchor" href="#Batching">#</a>Batching</h1>
+<p>在排序完，仍然存在的问题是多个 Meshes 会造成多个 Commands 进而引起过多开销。因此应当将多个 Meshes 结合在一起，通过一次 Draw Call 进行渲染。在调用 API 前将多个 Meshes 合并在一起的过程称为 <code>Batch</code> 。</p>
+<p><img src="/book_4_solutions/optimisation_batching_02.gif" alt="Batching"></p>
+<div class="note info simple"><p>在 RAM 中将多个 Mesh 结合在一起也是需要开销的（CPU 时间），因此通常选择将静态的 Mesh，如房子，石头等Batch 在一起。 而如果是一系列运动的子弹，因为它们的位置每帧都会移动，所以相当于每帧都需要重新 <code>Batch</code>，这会造成巨大的开销。</p>
+</div>
+<p>Batch 还会造成一个额外的问题。在未进行 Batch 时，如果一个 Mesh 在 Frustum 外，则它会被直接 Cull 掉。但如果将多个 Meshes Batch 成一个大 Mesh，则即使只有其中的一小部分处在 Frustum 中，整个 Mesh 仍然会被认为需要被绘制。</p>
+<p>因此相对于 <code>Batching</code>，更好的解决方法是 <code>Instancing</code></p>
+<h1 id="Instancing"><a class="header-anchor" href="#Instancing">#</a>Instancing</h1>
+<p><code>Instancing</code> 是提交一次 Mesh，但会告知 GPU 绘制多次，并在 RAM 中指定每次绘制时需要用的状态。因此 <code>Instancing</code> 适合同一个 Mesh 要多次绘制的情况，如草，子弹。示意图如下所示：<br>
+<img src="/book_4_solutions/20200129181033200.gif" alt="Instancing"></p>
+<h1 id="Multi_Material_Shader"><a class="header-anchor" href="#Multi_Material_Shader">#</a>Multi-Material Shader</h1>
+<p>为了解决 Book3 中提到的 <a href="/book_3_problems/#Meshes_and_Multi-Materials">Meshes and Multi-Materials</a> 导致多 Draw Call 的问题，一个解决思路是将多个材质需要用到的数据合并在一个 Shader 中，相当于将多个 Material 合并成了一个 Material。</p>
+<p>如原来每个材质需要一个 Diffuse Texture，一个 Normal Texture，可以使用一个包含两个 Diffuse Texture， 两个 Normal Texture 的材质来取代原来的两个材质，并在 Shader 中通过 Blending 的方式达成之前的效果。</p>
+<div class="note warning simple"><p>这种实现方式虽然减少了 DrawCall 的数量，但会造成 Blending 的大量额外开销，因此最终性能可能反而下降。</p>
+</div>
+<h1 id="Skinned_Meshes"><a class="header-anchor" href="#Skinned_Meshes">#</a>Skinned Meshes</h1>
+<p>如之前的描述，如果需要通过 Batch 来解决多个子弹占用多个 Draw Call 的问题，则会因为子弹需要每帧移动而造成每帧重新 Batch，这会造成巨大的开销。</p>
+<p>有一个解决思路是将所有这些子弹结合在一起作为 Skinned Mesh，其中每个子弹作为一个 Bone，在后续的帧中只需要更新这些 Bone 的位置，而不需要重新进行合并。</p>
+<div class="note warning simple"><p>当出现了子弹增加或减少时，则需要重新合并 Mesh</p>
+</div>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="http://simonschreibt.de/gat/renderhell-book4/">Render Hell – Book IV | Simon schreibt.</a></p>
+]]></content>
+      <tags>
+        <tag>GPU</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Head First 设计模式》 Ch 01 策略模式</title>
     <url>/ch_01_the_strategy_pattern/</url>
     <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
@@ -603,6 +603,58 @@
       </tags>
   </entry>
   <entry>
+    <title>《Code Complete》第一章：欢迎来到软件构建</title>
+    <url>/ch_01_welcome_to_software_construction/</url>
+    <content><![CDATA[<p>这本书是关于软件<strong>构建</strong>的，构建是建造的过程。在一些语境下，构建过程可能包括规划、设计、检查等部分，但大多情况下“构建”是指创建某些东西时真正动手的那部分。</p>
+<h1 id="什么是软件构建？"><a class="header-anchor" href="#什么是软件构建？">#</a>什么是软件构建？</h1>
+<p>软件开发是一个复杂的过程，在过去 25 年中，研究人员已经确定了软件开发中的许多不同活动，包括：</p>
+<ul>
+<li>问题定义</li>
+<li>需求开发（创建出需求的过程）</li>
+<li>构建规划</li>
+<li>软件架构设计</li>
+<li>详细设计</li>
+<li>编码和调试</li>
+<li>单元测试</li>
+<li>集成测试</li>
+<li>一体化</li>
+<li>系统测试</li>
+<li>问题修复</li>
+</ul>
+<p>如果你之前经历的项目流程不太正式，你可能会<em>觉得</em>上述这些活动是繁文缛节。而如果你之前经历的项目流程很正规，你就会<em>知道</em>上述的这些活动确实是繁文缛节。上述这些活动，完全不遵守或完全遵守都是不合适的，你需要找到其中的平衡点。无疑，这很难。</p>
+<p>上述流程中，只有一部分属于<strong>构建</strong>，管理、需求开发、软件架构、UI 设计，系统测试和维护这些都不属于构建。构建设计范围如下所示，其中被黄色覆盖的部分才是与构建相关的工作：<br>
+<img src="/ch_01_welcome_to_software_construction/image-20230916104532.png" alt="构建"></p>
+<p>以下是构建时涉及的具体任务：</p>
+<ul>
+<li>验证前序任务（如需求开发，架构设计等）是否已经完成，以便后续能够顺利执行</li>
+<li>确定如何测试代码</li>
+<li>设计和编写类与调用时序</li>
+<li>创建和命名变量/常量</li>
+<li>选择控制结构并组织代码语句</li>
+<li>单元测试，集成测试和调试自己的代码</li>
+<li>审阅其他成员的设计和代码，并让他们审阅你的设计的和代码</li>
+<li>通过格式化和注释来完善代码</li>
+<li>将创建出来的代码组件集成到系统中</li>
+<li>优化代码，让其更快和使用更少的资源</li>
+</ul>
+<h1 id="为什么软件构建很重要"><a class="header-anchor" href="#为什么软件构建很重要">#</a>为什么软件构建很重要</h1>
+<p>构建是软件开发的重要组成部分。根据项目的规模，构建通常占项目总时间的 30% 到 80%。任何占用如此多项目时间的事情必然会影响项目的成功。</p>
+<p>构建是软件开发的核心活动。需求和架构在构建前完成，以便你可以有效地进行构建。系统测试（严格意义上的独立测试）是在构建后进行的，以验证构建是否正确完成。</p>
+<p>构建的产品，即源代码，通常是对软件的唯一准确描述。在许多项目中，程序员唯一可用的文档就是代码本身。需求规范和设计文档可能会过时，但源代码始终是最新的。因此，源代码必须具有尽可能高的质量。</p>
+<p>构建是唯一可以保证软件开发完成的活动。</p>
+<ul>
+<li>理想的软件项目在施工开始之前会经过仔细的需求开发和架构设计。</li>
+<li>理想的项目在施工后经过全面的、统计控制的系统测试。</li>
+<li>不完美的现实项目常常会跳过需求和设计而直接进入施工阶段。但无论一个项目多么仓促或计划多么糟糕，你都不能放弃建设；</li>
+</ul>
+<p>归根结底，程序员对如何进行构造的理解决定了它是否一名优秀的程序员，这就是本书其余部分的主题。</p>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
+        <tag>工程实践</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Code Complete》第二章：丰富软件开发理解的隐喻</title>
     <url>/ch_02_metaphors_for_a_richer_understanding_of_software_development/</url>
     <content><![CDATA[<p>计算机科学拥有在所有领域中最丰富多彩的语言，在计算机科学中，我们会听到诸如 “病毒”，“特洛伊木马”，“蠕虫”，“崩溃” 等一系列看似与计算机无直接关系的词汇。</p>
@@ -611,6 +663,10 @@
 </div>
 <h1 id="隐喻的重要性"><a class="header-anchor" href="#隐喻的重要性">#</a>隐喻的重要性</h1>
 <p>重要的发展往往时从类比中产生的。通过将不了解的主题与更了解的主题进行比较，你就可以得出一定的见解，从而更好的理解不熟悉的主题。这种隐喻被称作为 “建模”。</p>
+<blockquote>
+<p>当我们需要在许多不同的选项中进行选择时，模型会很有帮助。它们让我们想象不同的场景，以便选出最佳的一个。<br>
+———— <a href="/tan_lan_de_duo_ba_an">《贪婪的多巴胺》 摘抄</a></p>
+</blockquote>
 <p>科学史上充满了基于利用隐喻力量的发现：</p>
 <ul>
 <li>化学家凯库勒做了一个梦，梦中他看到一条蛇用嘴叼着尾巴。当他醒来时，他意识到基于类似环状形状的分子结构可以解释苯的性质，进一步的实验证实了这一假设。</li>
@@ -719,58 +775,6 @@
 <h2 id="结合隐喻"><a class="header-anchor" href="#结合隐喻">#</a>结合隐喻</h2>
 <p>因为隐喻是启发式的而不是算法式的，所以它们并不相互排斥。你可以使用任何能够激发你自己或团队内其他人思考的隐喻或隐喻的组合。</p>
 <p>使用隐喻是一件模糊的事情。你必须扩展它们才能从它们提供的启发式见解中受益。但如果你把它们延伸得太远或方向错误，它们就会误导你，正如你可以滥用任何强大的工具一样。</p>
-]]></content>
-      <tags>
-        <tag>系统设计</tag>
-        <tag>工程实践</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Code Complete》第一章：欢迎来到软件构建</title>
-    <url>/ch_01_welcome_to_software_construction/</url>
-    <content><![CDATA[<p>这本书是关于软件<strong>构建</strong>的，构建是建造的过程。在一些语境下，构建过程可能包括规划、设计、检查等部分，但大多情况下“构建”是指创建某些东西时真正动手的那部分。</p>
-<h1 id="什么是软件构建？"><a class="header-anchor" href="#什么是软件构建？">#</a>什么是软件构建？</h1>
-<p>软件开发是一个复杂的过程，在过去 25 年中，研究人员已经确定了软件开发中的许多不同活动，包括：</p>
-<ul>
-<li>问题定义</li>
-<li>需求开发（创建出需求的过程）</li>
-<li>构建规划</li>
-<li>软件架构设计</li>
-<li>详细设计</li>
-<li>编码和调试</li>
-<li>单元测试</li>
-<li>集成测试</li>
-<li>一体化</li>
-<li>系统测试</li>
-<li>问题修复</li>
-</ul>
-<p>如果你之前经历的项目流程不太正式，你可能会<em>觉得</em>上述这些活动是繁文缛节。而如果你之前经历的项目流程很正规，你就会<em>知道</em>上述的这些活动确实是繁文缛节。上述这些活动，完全不遵守或完全遵守都是不合适的，你需要找到其中的平衡点。无疑，这很难。</p>
-<p>上述流程中，只有一部分属于<strong>构建</strong>，管理、需求开发、软件架构、UI 设计，系统测试和维护这些都不属于构建。构建设计范围如下所示，其中被黄色覆盖的部分才是与构建相关的工作：<br>
-<img src="/ch_01_welcome_to_software_construction/image-20230916104532.png" alt="构建"></p>
-<p>以下是构建时涉及的具体任务：</p>
-<ul>
-<li>验证前序任务（如需求开发，架构设计等）是否已经完成，以便后续能够顺利执行</li>
-<li>确定如何测试代码</li>
-<li>设计和编写类与调用时序</li>
-<li>创建和命名变量/常量</li>
-<li>选择控制结构并组织代码语句</li>
-<li>单元测试，集成测试和调试自己的代码</li>
-<li>审阅其他成员的设计和代码，并让他们审阅你的设计的和代码</li>
-<li>通过格式化和注释来完善代码</li>
-<li>将创建出来的代码组件集成到系统中</li>
-<li>优化代码，让其更快和使用更少的资源</li>
-</ul>
-<h1 id="为什么软件构建很重要"><a class="header-anchor" href="#为什么软件构建很重要">#</a>为什么软件构建很重要</h1>
-<p>构建是软件开发的重要组成部分。根据项目的规模，构建通常占项目总时间的 30% 到 80%。任何占用如此多项目时间的事情必然会影响项目的成功。</p>
-<p>构建是软件开发的核心活动。需求和架构在构建前完成，以便你可以有效地进行构建。系统测试（严格意义上的独立测试）是在构建后进行的，以验证构建是否正确完成。</p>
-<p>构建的产品，即源代码，通常是对软件的唯一准确描述。在许多项目中，程序员唯一可用的文档就是代码本身。需求规范和设计文档可能会过时，但源代码始终是最新的。因此，源代码必须具有尽可能高的质量。</p>
-<p>构建是唯一可以保证软件开发完成的活动。</p>
-<ul>
-<li>理想的软件项目在施工开始之前会经过仔细的需求开发和架构设计。</li>
-<li>理想的项目在施工后经过全面的、统计控制的系统测试。</li>
-<li>不完美的现实项目常常会跳过需求和设计而直接进入施工阶段。但无论一个项目多么仓促或计划多么糟糕，你都不能放弃建设；</li>
-</ul>
-<p>归根结底，程序员对如何进行构造的理解决定了它是否一名优秀的程序员，这就是本书其余部分的主题。</p>
 ]]></content>
       <tags>
         <tag>系统设计</tag>
@@ -1350,6 +1354,82 @@
       </tags>
   </entry>
   <entry>
+    <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
+    <url>/ch_05_overview_of_data_communications/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
+<h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
+<p>数据通信是物理，数学和电气工程三个学科的混合领域。</p>
+<ol>
+<li>物理：信息的传输依赖于物理媒介</li>
+<li>数学：信息需要数字化</li>
+<li>电气工程：数据传输需要构建现实中的通信系统</li>
+</ol>
+<h1 id="Motivation_And_Scope_Of_The_Subject"><a class="header-anchor" href="#Motivation_And_Scope_Of_The_Subject">#</a>Motivation And Scope Of The Subject</h1>
+<p>在数据通信领域有三个重要的点，他们定义了数据通信的一些领域</p>
+<ol>
+<li>
+<p>传输的数据可以是任意类型的</p>
+<p>传输的数据并不一定是存储在计算机中的<code>bit</code>数据，也可以是从现实世界中获取的信息，如音频和视频。</p>
+</li>
+<li>
+<p>数据的传输依赖于物理系统</p>
+<p>数据是基于物理现象来传输的，例如电，电磁波。了解为什么这些物理现象可以被用来传输数据是很重要的。另外也需要理解物理系统的限制，因为这些限制引发的问题和这些问题如何被检测并解决。</p>
+</li>
+<li>
+<p>多个来源的信息可以共享基础媒介来传输</p>
+<p>媒介共享在计算机网络中是一个重要角色。了解哪些基础设施是可以被共享的，共享他们的优缺点，以及基于共享而设计的通信模型是很重要的。</p>
+</li>
+</ol>
+<h1 id="The_Conceptual_Pieces_Of_A_Communications_System"><a class="header-anchor" href="#The_Conceptual_Pieces_Of_A_Communications_System">#</a>The Conceptual Pieces Of A Communications System</h1>
+<p>每一个来源都需要一些方法来获取信息，调整信息为用于传播的模式，使用共享的物理媒介来传输信息。同时也需要一些方法从物理媒介中抽取出每条信息的目的地地址，并将信息传送给目标地址。整个过程如下图所示：</p>
+<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-24-24.png" alt="数据通信简单模型"></p>
+<p>上图是一个非常简化的模型，在实际操作中，在传输数据前，必须对数据进行数字化，也需要加入一些额外的信息防止错误发生。如果考虑到隐私，可能还需要进行加密。在使用共享媒介时，还要保证有方法可以分辨出每条信息且他们不会相互干扰。</p>
+<p>为了解释数据通信的每个部分，工程师们制订了一个概念框架来说明通信系统中的每个小主题是如何联系在一起的，概念框架如下图所示：</p>
+<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-28-26.png" alt="概念框架"></p>
+<h1 id="The_Subtopics_Of_Data_Communications"><a class="header-anchor" href="#The_Subtopics_Of_Data_Communications">#</a>The Subtopics Of Data Communications</h1>
+<p>上一节中的概念框架图中的每一部分都代表了数据通信中的一个小主题。这一节中简单介绍了图中的一些术语，之后的几章中会在对每一部分进行详细说。</p>
+<ol>
+<li>
+<p><code>数据来源(Information Sources)</code>可以是模拟数据或者数字电路。这一部分的关键内容包括信号的特征（<code>振幅(Amplitude)</code>，<code>频率(Frequency)</code>，<code>相位(Phase)</code>），周期性与非周期性，以及模拟信息和数字信息的转换。</p>
+</li>
+<li>
+<p><code>信源编码与解码(Source Encoder and Decoder)</code>。一旦信息被数字化后，信息就可以被转换，这一部分的关键内容包括数据压缩以及压缩后对于传输的影响</p>
+</li>
+<li>
+<p><code>加密与解密(Encryptor and Decryptor)</code>。为了保护信息和保证其可信度，在信息传送前需要进行加密，在接收后需要解密。这一部分的关键内容包括密码学技术与算法。</p>
+</li>
+<li>
+<p><code>信道编码与解码(Channel Encoder and Decoder)</code>。信道编码是用来检测也纠正传输错误。这一部分的关键内容包括检测和限制错误，以及实际应用的技术，如奇偶校验(parity checking)等。</p>
+</li>
+<li>
+<p><code>复用与解复用(Multiplexor and Demultiplexor)</code>。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。</p>
+</li>
+<li>
+<p><code>调制与解调(Modulator and Demodulator)</code>。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。</p>
+</li>
+<li>
+<p><code>物理通道与传输(Physical Channel and Transmission)</code>。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，</p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 05 单例模式</title>
+    <url>/ch_05_the_singleton_pattern/</url>
+    <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Code Complete》 第五章：构建中的设计</title>
     <url>/ch_05_design_in_construction/</url>
     <content><![CDATA[<p>在小型项目中，许多 <em>理论上处于编码外</em> 的活动也会被认为是编码。在一些较大的项目中，架构仅解决了系统级的问题，而将许多设计工作留在编码部分。在真正的大型项目中，前期的设计可能会足够的详细，让编码真正的只需要关心编码本身，但这种详细的设计实际上很少会出现。</p>
@@ -1499,6 +1579,14 @@
 <h1 id="5_3_用启发式的方式进行设计"><a class="header-anchor" href="#5_3_用启发式的方式进行设计">#</a>5.3 用启发式的方式进行设计</h1>
 <p>程序员往往倾向于算法“做 A，B，C， 然后你会得到 X，Y，Z“，当一样的步骤产生了不一样的结果后，程序员会感到恼火。这种对确定性的渴望，非常适合于编程的过程。</p>
 <p>但在软件设计时，则完全不同。由于设计是不确定的，因此熟练应用一组有效的启发式方法是优秀软件设计的核心活动。</p>
+<blockquote>
+<p>算法是一组用于执行特定任务的明确定义的指令。算法是可预测的、确定性的，并且不受偶然性的影响。算法会告诉你如何从 A 点到 B 点：不走弯路，不绕道到 D、E 和 F 点。<br>
+———— <a href="/ch_02_metaphors_for_a_richer_understanding_of_software_development">《Code Complete》第二章：丰富软件开发理解的隐喻</a></p>
+</blockquote>
+<blockquote>
+<p>启发式是一种帮助您寻找答案的技术。其结果可能会受到偶然性的影响，因为启发式方法只告诉您如何查看，而不是告诉您要查找什么。它不会告诉你如何从 A 点直接到达 B 点；它甚至可能不知道 A 点和 B 点在哪里。<br>
+———— <a href="/ch_02_metaphors_for_a_richer_understanding_of_software_development">《Code Complete》第二章：丰富软件开发理解的隐喻</a></p>
+</blockquote>
 <p>以下是一些启发式的进行设计的方法：</p>
 <div class="note info simple"><p>以下是一些进行软件设计时，可以考虑的方向，期望这些方向可以启发你对于软件设计的思考。</p>
 </div>
@@ -1874,82 +1962,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
-    <url>/ch_05_overview_of_data_communications/</url>
-    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
-<h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
-<p>数据通信是物理，数学和电气工程三个学科的混合领域。</p>
-<ol>
-<li>物理：信息的传输依赖于物理媒介</li>
-<li>数学：信息需要数字化</li>
-<li>电气工程：数据传输需要构建现实中的通信系统</li>
-</ol>
-<h1 id="Motivation_And_Scope_Of_The_Subject"><a class="header-anchor" href="#Motivation_And_Scope_Of_The_Subject">#</a>Motivation And Scope Of The Subject</h1>
-<p>在数据通信领域有三个重要的点，他们定义了数据通信的一些领域</p>
-<ol>
-<li>
-<p>传输的数据可以是任意类型的</p>
-<p>传输的数据并不一定是存储在计算机中的<code>bit</code>数据，也可以是从现实世界中获取的信息，如音频和视频。</p>
-</li>
-<li>
-<p>数据的传输依赖于物理系统</p>
-<p>数据是基于物理现象来传输的，例如电，电磁波。了解为什么这些物理现象可以被用来传输数据是很重要的。另外也需要理解物理系统的限制，因为这些限制引发的问题和这些问题如何被检测并解决。</p>
-</li>
-<li>
-<p>多个来源的信息可以共享基础媒介来传输</p>
-<p>媒介共享在计算机网络中是一个重要角色。了解哪些基础设施是可以被共享的，共享他们的优缺点，以及基于共享而设计的通信模型是很重要的。</p>
-</li>
-</ol>
-<h1 id="The_Conceptual_Pieces_Of_A_Communications_System"><a class="header-anchor" href="#The_Conceptual_Pieces_Of_A_Communications_System">#</a>The Conceptual Pieces Of A Communications System</h1>
-<p>每一个来源都需要一些方法来获取信息，调整信息为用于传播的模式，使用共享的物理媒介来传输信息。同时也需要一些方法从物理媒介中抽取出每条信息的目的地地址，并将信息传送给目标地址。整个过程如下图所示：</p>
-<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-24-24.png" alt="数据通信简单模型"></p>
-<p>上图是一个非常简化的模型，在实际操作中，在传输数据前，必须对数据进行数字化，也需要加入一些额外的信息防止错误发生。如果考虑到隐私，可能还需要进行加密。在使用共享媒介时，还要保证有方法可以分辨出每条信息且他们不会相互干扰。</p>
-<p>为了解释数据通信的每个部分，工程师们制订了一个概念框架来说明通信系统中的每个小主题是如何联系在一起的，概念框架如下图所示：</p>
-<p><img src="/ch_05_overview_of_data_communications/2019-11-25-23-28-26.png" alt="概念框架"></p>
-<h1 id="The_Subtopics_Of_Data_Communications"><a class="header-anchor" href="#The_Subtopics_Of_Data_Communications">#</a>The Subtopics Of Data Communications</h1>
-<p>上一节中的概念框架图中的每一部分都代表了数据通信中的一个小主题。这一节中简单介绍了图中的一些术语，之后的几章中会在对每一部分进行详细说。</p>
-<ol>
-<li>
-<p><code>数据来源(Information Sources)</code>可以是模拟数据或者数字电路。这一部分的关键内容包括信号的特征（<code>振幅(Amplitude)</code>，<code>频率(Frequency)</code>，<code>相位(Phase)</code>），周期性与非周期性，以及模拟信息和数字信息的转换。</p>
-</li>
-<li>
-<p><code>信源编码与解码(Source Encoder and Decoder)</code>。一旦信息被数字化后，信息就可以被转换，这一部分的关键内容包括数据压缩以及压缩后对于传输的影响</p>
-</li>
-<li>
-<p><code>加密与解密(Encryptor and Decryptor)</code>。为了保护信息和保证其可信度，在信息传送前需要进行加密，在接收后需要解密。这一部分的关键内容包括密码学技术与算法。</p>
-</li>
-<li>
-<p><code>信道编码与解码(Channel Encoder and Decoder)</code>。信道编码是用来检测也纠正传输错误。这一部分的关键内容包括检测和限制错误，以及实际应用的技术，如奇偶校验(parity checking)等。</p>
-</li>
-<li>
-<p><code>复用与解复用(Multiplexor and Demultiplexor)</code>。复用是指让多个来源的信息结合在一起并保证可以使用同一个媒介传输的方式。这一部分的关键内容包括介绍同时复用以及分时复用的技术。</p>
-</li>
-<li>
-<p><code>调制与解调(Modulator and Demodulator)</code>。调制是指让用电磁波传递信息的方式。这一部分的关键内容包括模拟信息与数字信息的调制方式，用来进行调制与解调的设备。</p>
-</li>
-<li>
-<p><code>物理通道与传输(Physical Channel and Transmission)</code>。 这一部分的关键内容包括传输媒介与传输方式（如并行，串行），带宽，噪声，干扰，信道容量，</p>
-</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 05 单例模式</title>
-    <url>/ch_05_the_singleton_pattern/</url>
-    <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Computer Networks and Internets》 Ch 06 信源与信号</title>
     <url>/ch_06_information_sources_and_signals/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
@@ -2156,6 +2168,8 @@ $$</p>
 <p>如有一个接口 <code>int GetString()</code>，其中返回值 <code>int</code> 就是编程部分，编译器会保证返回值必然是 <code>int</code> 类型，而 <code>GetString</code> 就是语义部分，虽然函数名中有 <code>String</code>，但编译器无法保证返回值是 <code>String</code> 类型，如在这个例子中，它实际上返回的是 <code>int</code> 类型。</p>
 <p>语义部分需要通过注释和文档来进行约定，但这并不安全，所以应当尽可能的将语义部分转化为编程部分。</p>
 <div class="note info simple"><p>即使你无法做到完全的编程化，即让编译器帮你检查，最起码你应该在运行时当事情未按约定执行时，给出足够的错误信息，即：</p>
+<p>软件要尽可能从容地应付各种错误输入和自身的运行错误。但是，如果做不到这一点，就让程序尽可能以一种容易诊断错误的方式终止。</p>
+<p>———— <a href="/di_1_zhang_zhe_xue">《Unix 编程艺术》 第一章 哲学</a></p>
 </div>
 <h3 id="小心接口的逐渐腐蚀"><a class="header-anchor" href="#小心接口的逐渐腐蚀">#</a>小心接口的逐渐腐蚀</h3>
 <p>当类被修改和拓展时，你很可能发现需要增加的功能和类原始的接口不太符合，而这些接口放到其他实现由显得不太合适或比较麻烦，此时就很可能出现接口腐蚀，最终会产生如下的一个 <code>Employee</code> 类：</p>
@@ -2163,6 +2177,10 @@ $$</p>
 <p>可以看出早期干净的对于 <code>Employee</code> 的抽象已经变成了一系列松散相关的函数的大杂烩。检查邮政编码，手机号等工作和 <code>Employee</code> 本身并不相关，这破坏了 <a href="/ch_06_working_classes/#%E4%BB%85%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA_adt">仅实现一个 ADT</a> 原则。而且也出现了一系列 SQL 的低层次函数的，导致破坏了 <a href="/ch_06_working_classes/#%E6%8F%90%E4%BE%9B%E7%9B%B8%E5%90%8C%E7%9A%84%E6%8A%BD%E8%B1%A1%E7%AD%89%E7%BA%A7">提供相同的抽象等级</a> 的原则。</p>
 <h2 id="良好的封装"><a class="header-anchor" href="#良好的封装">#</a>良好的封装</h2>
 <p>封装和抽象强相关，而且封装是比抽象更强的概念：</p>
+<blockquote>
+<p>封装是抽象的延续： <strong>抽象</strong> 说，“你可以以高维度的方式（忽略细节）观察一个物体。 <strong>封装</strong> 说：“此外，您不允许以任何其他维度观察对象。你现在看到的一切就是你被允许看到的一切”<br>
+———— <a href="/ch_05_design_in_construction">《Code Complete》 第五章：构建中的设计</a></p>
+</blockquote>
 <p>根据经验之谈，如果没有封装，那么抽象终将崩溃。所以要么你同时拥有抽象和封装，要么两者都没有。</p>
 <p>为了达到良好的封装，你应该：</p>
 <h3 id="尽量减少类和成员的可访问性"><a class="header-anchor" href="#尽量减少类和成员的可访问性">#</a>尽量减少类和成员的可访问性</h3>
@@ -2209,12 +2227,8 @@ $$</p>
 <p>而类内部的设计和实现也同样很重要，本节将讨论组合，继承，成员函数，成员变量，类耦合，构造函数，值类型与应用类型等问题。</p>
 <h2 id="组合"><a class="header-anchor" href="#组合">#</a>组合</h2>
 <p>组合（Containment）通常表示类之间 <em>Has a</em> 的关系，如 <code>Employee</code> <em>Has a</em> <code>Name</code>，<code>Employee</code> <em>Has a</em> <code>Phone</code>。所以 <code>Name</code> 和 <code>Phone</code> 是 <code>Employee</code> 的成员变量。</p>
-<blockquote>
-<p>[!caution]</p>
-</blockquote>
-<blockquote>
-<p>在 C++ 中，你可以使用 <code>private inheritance</code> 来表示组合关系。这样做的主要目的，是可以访问到一个类中的 `protected`` 对象，但这种方法违反了封装性，应当通过其他的方法来实现。</p>
-</blockquote>
+<div class="note warning simple"><p>在 C++ 中，你可以使用 <code>private inheritance</code> 来表示组合关系。这样做的主要目的，是可以访问到一个类中的 `protected`` 对象，但这种方法违反了封装性，应当通过其他的方法来实现。</p>
+</div>
 <p>如果一个类有超过 7 个数据成员，那你要警惕了。研究表示， 7 个左右（上下浮动 2 个）是一个人在执行其他任务时可以记住的数据的数量。如果一个类包含有超过 7 个成员数据，你可以考虑将其拆分为多个较小的类。</p>
 <h2 id="继承"><a class="header-anchor" href="#继承">#</a>继承</h2>
 <p>继承（Inheritance）表示一个类是另一个类的特化。继承的目的主要是将公用的代码和数据集中在基类中，避免多个位置重复定义编写类似的代码和数据，以降低维护的复杂性。</p>
@@ -2425,6 +2439,226 @@ $$</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Computer Networks and Internets》 Ch 08 可靠性及信道编码</title>
+    <url>/ch_08_reliability_and_channel_coding/</url>
+    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一部分将介绍信息传输过程中发生错误的原因，以及纠错的方式——信道编码。本部分将着重介绍前向错误纠正技术，并引出汉明距离等概念。</p>
+<h1 id="The_Three_Main_Sources_Of_Transmission_Errors"><a class="header-anchor" href="#The_Three_Main_Sources_Of_Transmission_Errors">#</a>The Three Main Sources Of Transmission Errors</h1>
+<p>传输中发生的错误可以分为三大类：</p>
+<ol>
+<li>干扰（Interference）：如第七章所述，环境中存在许多电磁干扰，这些电磁干扰会阻碍无线电传输和线缆中的信号传输。</li>
+<li>失真（Distortion）：所有的物理系统都会造成信号的失真。光纤中的光因为移动距离的增加，时域会发生扩张（频域也因此变化）。信道容量会导致一些频率的信号被过滤掉。放在线缆旁边的金属可能会改变线缆内信号的频率，金属也能干扰无线电信号。</li>
+<li>衰弱（Attenuation）：信号在媒介中传输的过程中，信号会逐渐衰弱。</li>
+</ol>
+<p>香农定理给出了减少错误的思路：提高信噪比。</p>
+<p>但无论如何噪声不可能被完全的消除，所以许多方法致力于检测错误，在某些情况下自动修复错误。</p>
+<p>但是错误的监测机制无疑是会为系统增加开销的，因此系统设计时要考虑在错误影响与错误检测开销间做权衡，如金融系统，1bit 的错误可能会造成很严重的错误，但是在图片中 1bit 的错误可能根本无法被识别到。</p>
+<h1 id="Effect_Of_Transmission_Errors_On_Data"><a class="header-anchor" href="#Effect_Of_Transmission_Errors_On_Data">#</a>Effect Of Transmission Errors On Data</h1>
+<p>这里要区分传输错误与数据错误，数据是由传输信号在经过例如解码，解调后得到的。传输错误最后都会导致最后的数据出错。主要有三类传输造成的数据错误：</p>
+<ol>
+<li>
+<p>单元位错误（Single Bit Error）：即一系列数据中，只有一位数据被改变了。这通常是因为传输信号的短时间（称为脉冲，Spike）干扰造成的。</p>
+</li>
+<li>
+<p>突发性错误：一系列数据中有多位数据被改变，通常是由长时间的干扰造成的。错误长度是由错误开始位到错误结束位直接的位数决定。如下表，错误的数据由加粗表示，错误长度是 7：</p>
+<table>
+<thead>
+<tr>
+<th>发送</th>
+<th>1</th>
+<th>0</th>
+<th>1</th>
+<th>1</th>
+<th>0</th>
+<th>0</th>
+<th>0</th>
+<th>1</th>
+<th>0</th>
+<th>1</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>接收</td>
+<td>1</td>
+<td>0</td>
+<td><strong>0</strong></td>
+<td>1</td>
+<td><strong>1</strong></td>
+<td>0</td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<h1 id="Two_Strategies_For_Handling_Channel_Errors"><a class="header-anchor" href="#Two_Strategies_For_Handling_Channel_Errors">#</a>Two Strategies For Handling Channel Errors</h1>
+<p>有一系列的方法解决数据错误并增加数据的可靠性，这些方法统称为<code>信道编码(Channel Coding)</code>，这些方法可以被分为两类：<code>前向错误纠正技术（Forward Error Correction，FEC）</code>，<code>自动重传请求技术（Automatic Repeat reQuest，ARQ）</code>。</p>
+<p>前向错误纠正技术的主题思想是在发送的数据中增加额外的信息，接收端可以根据这些额外信息来判断是否有错误发生，有些方法可以检测出究竟是哪一位数据发生了错误，并在可能的情况下纠正错误。</p>
+<p>自动重传请求技术是让接收端和发送端互换数据来保证数据被正确的传递。</p>
+<h1 id="Block_And_Convolutional_Error_Codes"><a class="header-anchor" href="#Block_And_Convolutional_Error_Codes">#</a>Block And Convolutional Error Codes</h1>
+<p>前向错误纠正技术可以再细分为两类：</p>
+<ol>
+<li>分组错误码（Block Error Codes）：分组错误码是将数据分成一块块的，然后对每一块都增加额外信息。每一块的额外信息只针对于该块数据本身。</li>
+<li>卷积错误码（Convolutional Error Codes）：卷积错误码是将数据看作一系列 bits，增加的额外信息是由当前的 bit 和之前的 bit 共同决定的。</li>
+</ol>
+<p>卷积错误码相对于分组错误码需要更多的计算，但是也更能检测出错误。</p>
+<h1 id="An_Example_Block_Error_Code_Single_Parity_Checking"><a class="header-anchor" href="#An_Example_Block_Error_Code_Single_Parity_Checking">#</a>An Example Block Error Code: Single Parity Checking</h1>
+<p>单一奇偶校验检查（Single Parity Checking）是分组错误码检测的一个例子，可以再分为偶校验检查和奇校验检查。如果将数据分为 $n$ bit 一组，那么每一组增加一位数据，当是偶校验时，$n$ 位数据+1 位额外数据应该一共有偶数个 1，当是奇校验时，$n$ 位数据+1 位额外数据应该一共有奇数个 1。下表为 8 位数据时的例子：</p>
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>偶校验</th>
+<th>奇校验</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00000000</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>01011011</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>01010101</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>单一奇偶校验是一个比较弱的信道编码，他只能检测错误，但无法检测出错误具体出现在哪一位，也无法纠正错误。而且当有偶数个位发生错误时，错误就无法被检测出来。</p>
+<h1 id="The_Mathematics_of_Block_Error_Codes_And_n_k_Notation"><a class="header-anchor" href="#The_Mathematics_of_Block_Error_Codes_And_n_k_Notation">#</a>The Mathematics of Block Error Codes And (n,k) Notation</h1>
+<p>如有 $k$ 位 bit 的数据，我们将所有 $2^k$ 种可能出现的数据称为<code>数据字(Datawords)</code>，在这些数据中增加 $r$ 位额外数据，一共有 $n=k+r$ 个数据，所有 $2^n$ 种可能称为<code>编码字(codeworks)</code>，其中编码字中合法的部分，即额外添加的数据与原数据时符合规则的部分，称为<code>码书(Codebook)</code>，并将这种方法标记为$(n,k)$</p>
+<p>如单一奇偶校验中，$k=8,r=1$，因此一共有 256 个数据字，也对应了有 256 个合法的编码字，一共有 512 个编码字。</p>
+<p>在理想状态下，合法编码字中的任一一位被改变了，改变后的编码字就不是合法编码字。但是在单一奇偶校验的例子中，如果同时改变了合法编码字中的两位，那么结果仍然是一个合法编码字。</p>
+<p>没有一个信道编码可以达到理想状态，所以要考虑的就是，合法编码字最少多少位数据要被同时改变，才能产生另一个合法编码字。在单一数字编码中，这个位数为 2。</p>
+<h1 id="Hamming_Distance：A_Measure_Of_A_Code’s_Strength"><a class="header-anchor" href="#Hamming_Distance：A_Measure_Of_A_Code’s_Strength">#</a>Hamming Distance：A Measure Of A Code’s Strength</h1>
+<p>汉明距离（Hamming Distance）是用来测量一个合法编码字要转换为另一个合法编码字最少要改变的数据位数的方法中需要用到的概念。如果给定两个$n$长度的字符，两个字符的汉明距离就是两个字符间不同的数据数量。</p>
+<p>如$d(000,001)=1,d(000,101)=2,d(000,111)=3,d(101,001)=1$。</p>
+<p>可以先对两个字符求异或，然后计算异或出来的字符 1 的总数，即为汉明距离。</p>
+<h1 id="The_Hamming_Distance_Among_String_In_A_Codebook"><a class="header-anchor" href="#The_Hamming_Distance_Among_String_In_A_Codebook">#</a>The Hamming Distance Among String In A Codebook</h1>
+<p>为了计算出一个合法编码字要转换为另一个合法编码字最少要改变的数据位数，先要计算出码书中所有编码字组合的汉明距离。如对 2 位 bit 数据进行单一奇校验检测：</p>
+<table>
+<thead>
+<tr>
+<th>数据字</th>
+<th>编码字</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>001</td>
+</tr>
+<tr>
+<td>01</td>
+<td>010</td>
+</tr>
+<tr>
+<td>10</td>
+<td>100</td>
+</tr>
+<tr>
+<td>11</td>
+<td>111</td>
+</tr>
+</tbody>
+</table>
+<p>一共有 4 个编码字，4 个编码字一一配对一共有 6 种可能，$d(001,010)=2,d(010,100)=2,d(001,100)=2,d(010,111)=2,d(001,111)=2,d(100,111)=2$。6 种可能中最小的汉明距离是 2，所以最少需要更改 2 位数据才能从一个合法编码字变为另一个合法编码字。</p>
+<p>因此计算从一个合法编码字转换为另一个合法编码字最少要改变的数据位数过程是，计算出所有码书中的编码字（即合法编码字）两两配对后的所有汉明距离 $d_{min}$，其中的最小值即为所求值。</p>
+<h1 id="The_Tradeoff_Between_Error_Detection_And_Overhead"><a class="header-anchor" href="#The_Tradeoff_Between_Error_Detection_And_Overhead">#</a>The Tradeoff Between Error Detection And Overhead</h1>
+<p>对于一个编码，最多的能被检测出来的错误位数为$e=d_{min}-1$，如单一奇偶校验，因为$d_{min}=2$，所以最多能正确检测出来的错误位数为 1。</p>
+<p>虽然$d_{min}$越大能检测出来的错误位数越多，但这也意味着要增加更多的额外数据，对于$(n,k)$的编码，工程师用编码率（Code Rate）$R=\frac{k}{n}$来表示为了检测出错误信息的编码开销。</p>
+<h1 id="Error_Correction_With_Row_And_Column_RAC_Parity"><a class="header-anchor" href="#Error_Correction_With_Row_And_Column_RAC_Parity">#</a>Error Correction With Row And Column(RAC) Parity</h1>
+<p>奇偶校验本身是不能进行错误纠正的，但是通过<code>行列奇偶校验（Row And Column Parity）</code>就可以做到。如一共有 12 个 bit 的原始数据，即$k=12$，排成三行四列每一列每一行都进行奇偶校验，增加一个额外位，则一共 8 个额外位，即$r=8，n=k+r=20$，因此这是一个$(20,12)$的编码，如下图所示：</p>
+<p><img src="/ch_08_reliability_and_channel_coding/2019-12-05-14-46-47.png" alt="行列奇偶校验"></p>
+<p>因此如果一位数据出错，会同时在对应的行和列校验位感知到，因此就可以定位到错误的数据，取反后就能纠正数据。</p>
+<p>奇偶校验数据的$d_{min}$还是 2，因此如果错误的位数大于 1，当是偶数时无法被检测到，当是奇数时虽然能检测出错误，但无法纠正。</p>
+<h1 id="The_16_Bit_Checksum_Used_In_The_Internet"><a class="header-anchor" href="#The_16_Bit_Checksum_Used_In_The_Internet">#</a>The 16-Bit Checksum Used In The Internet</h1>
+<p>有个称为<code>因特网校验和（Internet checksum）</code>的信道编码方法在网络中扮演了重要角色。这个算法的输入可以是任意长度，将输入拆分为一段段 16 字节的的部分，如果不能长度不能被 16 整除，则最后补 0。如下图所示：</p>
+<p><img src="/ch_08_reliability_and_channel_coding/2019-12-06-17-25-08.png" alt="拆分为16字节"></p>
+<p>算法的流程如下：</p>
+<ol>
+<li>将输入拆分为以 16-bit 为一组</li>
+<li>定义一个 32-bit 的变量（这里称为$C$）作为结果。</li>
+<li>将每一组 16-bit 的数据累加给$C$</li>
+<li>将$C$的前 16 位累加给后 16 位</li>
+<li>将$C$的后 16 位取反，如果取反后全是 0，则将其改为全是 1</li>
+<li>此时$C$的 16 位即为校验和。</li>
+</ol>
+<p>可以看出最后的校验和也是 16 位的数据，将校验和作为新的一组 16-bit 放在原数据后（经过了补 0 的原数据）发送出去。接收端接受信息后重复算法流程，如果数据没有发生错误，最后接收端计算出的校验和应该是 FFFF。</p>
+<p>下面以两个例子进行说明：</p>
+<ol>
+<li>
+<p>例子 1<br>
+如果发送端输入数据为<code>0100 1000 0110 0101</code>，<code>0110 1100 0110 1100</code>，<code>0110 1111 0010 0001</code>，计算过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">+  0110 1111 0010 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  0010 0011 1111 0010</span><br></pre></td></tr></table></figure>
+<p>将高 16 位移到后 16 位</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  0010 0011 1111 0010</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  0010 0011 1111 0011</span><br></pre></td></tr></table></figure>
+<p>取反后得到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1101 1100 0000 1100</span><br></pre></td></tr></table></figure>
+<p>这即为校验和</p>
+<p>对于接收端，因为将校验和也一并发送了过去，所以接收端的计算过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">   0110 1111 0010 0001</span><br><span class="line">+  1101 1100 0000 1100</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
+<p>将高 16 位移到后 16 位</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+<p>取反后得到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
+<p>因为全为 0，所以改为全为 1</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>例子 2<br>
+如果发送端输入数据为<code>1111 1111 1111 1111</code>，<code>1111 1111 1111 1111</code>，<code>0000 0000 0000 0001</code>，计算过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">+  0000 0000 0000 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+<p>将高 16 位移到后 16 位</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1111</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
+<p>此时虽然高 16 仍然有数值，但不需要再次累加，后 16 位取反后得到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 11111</span><br></pre></td></tr></table></figure>
+<p>这即为校验和</p>
+<p>对于接收端，因为将校验和也一并发送了过去，所以接收端的计算过程如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">   0000 0000 0000 0001</span><br><span class="line">+  1111 1111 1111 1111</span><br><span class="line">----------------------------</span><br><span class="line">10 1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
+<p>将高 16 位移到后 16 位</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                  10</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
+<p>取反后得到：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Cyclic_Redundancy_Codes_CRCs"><a class="header-anchor" href="#Cyclic_Redundancy_Codes_CRCs">#</a>Cyclic Redundancy Codes(CRCs)</h1>
+<p>在高速网络中，有一个称为<code>循环冗余码(Cyclic Redundancy Codes,CRCs)</code>的信道编码方法。循环冗余码有三个主要优点：</p>
+<ol>
+<li>可以对任意长度的数据进行计算</li>
+<li>可以充分的检测出错误</li>
+<li>可以通过硬件实现，所以非常的高效</li>
+</ol>
+<p>求$CRC$的计算过程可以看作是两个二进制数的相除，一个代表原数据，一个代表一个特定的除数（可根据不同的情况设置，除数的设置决定错误检测的能力），如果需要求得$N$长度的$CRC$，则需要$N+1$长度的被除数。二进制数相除的过程可以看作是多项式相除，如果原数据是$1010$，除数设置为$1011$，则计算过程如下图：</p>
+<p><img src="/ch_08_reliability_and_channel_coding/2019-12-07-00-01-18.png" alt="CRC计算过程"></p>
+<h1 id="An_Efficient_Hardware_Implementation_Of_CRC"><a class="header-anchor" href="#An_Efficient_Hardware_Implementation_Of_CRC">#</a>An Efficient Hardware Implementation Of CRC</h1>
+<p>CRC 算法的实现硬件是由<code>移位寄存器(Shift Register)</code>和<code>异或门(Exclusive or gates)</code>构成的。在计算 CRC 前，硬件会初始化将移位寄存器中的所有位改为 0，上例中的除数$1011$，对应的硬件图如下：</p>
+<p><img src="/ch_08_reliability_and_channel_coding/2019-12-07-00-06-02.png" alt="1011硬件"></p>
+<p>TODO：为什么这么设计的原因。</p>
+<h1 id="Automatic_Repeat_Request_ARQ_Mechanisms"><a class="header-anchor" href="#Automatic_Repeat_Request_ARQ_Mechanisms">#</a>Automatic Repeat Request(ARQ) Mechanisms</h1>
+<p>自动重传请求技术（Automatic Repeat Request,ARQ）需要发送端和接收端传递信息来检测错误。当一方发送数据给另一方时，接收方需要传递一个回执给发送方。如果在一段时间后发送方仍然没有收到回执，则认为数据丢失，重新发送数据。</p>
+<p>自动重传请求技术适合只能检测错误，但不能修复错误的系统。当接收方检测出数据有错误后，将数据丢弃并不传递回执，那么发送方就会再次发送数据。</p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://en.wikipedia.org/wiki/polynomial_long_division">多项式除法</a><br>
+<a href="https://heasarc.gsfc.nasa.gov/docs/heasarc/ofwg/docs/general/checksum/node11.html">1’s Complement Arithmetic</a></p>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -2669,226 +2903,6 @@ $$</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Computer Networks and Internets》 Ch 08 可靠性及信道编码</title>
-    <url>/ch_08_reliability_and_channel_coding/</url>
-    <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一部分将介绍信息传输过程中发生错误的原因，以及纠错的方式——信道编码。本部分将着重介绍前向错误纠正技术，并引出汉明距离等概念。</p>
-<h1 id="The_Three_Main_Sources_Of_Transmission_Errors"><a class="header-anchor" href="#The_Three_Main_Sources_Of_Transmission_Errors">#</a>The Three Main Sources Of Transmission Errors</h1>
-<p>传输中发生的错误可以分为三大类：</p>
-<ol>
-<li>干扰（Interference）：如第七章所述，环境中存在许多电磁干扰，这些电磁干扰会阻碍无线电传输和线缆中的信号传输。</li>
-<li>失真（Distortion）：所有的物理系统都会造成信号的失真。光纤中的光因为移动距离的增加，时域会发生扩张（频域也因此变化）。信道容量会导致一些频率的信号被过滤掉。放在线缆旁边的金属可能会改变线缆内信号的频率，金属也能干扰无线电信号。</li>
-<li>衰弱（Attenuation）：信号在媒介中传输的过程中，信号会逐渐衰弱。</li>
-</ol>
-<p>香农定理给出了减少错误的思路：提高信噪比。</p>
-<p>但无论如何噪声不可能被完全的消除，所以许多方法致力于检测错误，在某些情况下自动修复错误。</p>
-<p>但是错误的监测机制无疑是会为系统增加开销的，因此系统设计时要考虑在错误影响与错误检测开销间做权衡，如金融系统，1bit 的错误可能会造成很严重的错误，但是在图片中 1bit 的错误可能根本无法被识别到。</p>
-<h1 id="Effect_Of_Transmission_Errors_On_Data"><a class="header-anchor" href="#Effect_Of_Transmission_Errors_On_Data">#</a>Effect Of Transmission Errors On Data</h1>
-<p>这里要区分传输错误与数据错误，数据是由传输信号在经过例如解码，解调后得到的。传输错误最后都会导致最后的数据出错。主要有三类传输造成的数据错误：</p>
-<ol>
-<li>
-<p>单元位错误（Single Bit Error）：即一系列数据中，只有一位数据被改变了。这通常是因为传输信号的短时间（称为脉冲，Spike）干扰造成的。</p>
-</li>
-<li>
-<p>突发性错误：一系列数据中有多位数据被改变，通常是由长时间的干扰造成的。错误长度是由错误开始位到错误结束位直接的位数决定。如下表，错误的数据由加粗表示，错误长度是 7：</p>
-<table>
-<thead>
-<tr>
-<th>发送</th>
-<th>1</th>
-<th>0</th>
-<th>1</th>
-<th>1</th>
-<th>0</th>
-<th>0</th>
-<th>0</th>
-<th>1</th>
-<th>0</th>
-<th>1</th>
-<th>1</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>接收</td>
-<td>1</td>
-<td>0</td>
-<td><strong>0</strong></td>
-<td>1</td>
-<td><strong>1</strong></td>
-<td>0</td>
-<td><strong>1</strong></td>
-<td><strong>0</strong></td>
-<td><strong>1</strong></td>
-<td>1</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-</li>
-</ol>
-<h1 id="Two_Strategies_For_Handling_Channel_Errors"><a class="header-anchor" href="#Two_Strategies_For_Handling_Channel_Errors">#</a>Two Strategies For Handling Channel Errors</h1>
-<p>有一系列的方法解决数据错误并增加数据的可靠性，这些方法统称为<code>信道编码(Channel Coding)</code>，这些方法可以被分为两类：<code>前向错误纠正技术（Forward Error Correction，FEC）</code>，<code>自动重传请求技术（Automatic Repeat reQuest，ARQ）</code>。</p>
-<p>前向错误纠正技术的主题思想是在发送的数据中增加额外的信息，接收端可以根据这些额外信息来判断是否有错误发生，有些方法可以检测出究竟是哪一位数据发生了错误，并在可能的情况下纠正错误。</p>
-<p>自动重传请求技术是让接收端和发送端互换数据来保证数据被正确的传递。</p>
-<h1 id="Block_And_Convolutional_Error_Codes"><a class="header-anchor" href="#Block_And_Convolutional_Error_Codes">#</a>Block And Convolutional Error Codes</h1>
-<p>前向错误纠正技术可以再细分为两类：</p>
-<ol>
-<li>分组错误码（Block Error Codes）：分组错误码是将数据分成一块块的，然后对每一块都增加额外信息。每一块的额外信息只针对于该块数据本身。</li>
-<li>卷积错误码（Convolutional Error Codes）：卷积错误码是将数据看作一系列 bits，增加的额外信息是由当前的 bit 和之前的 bit 共同决定的。</li>
-</ol>
-<p>卷积错误码相对于分组错误码需要更多的计算，但是也更能检测出错误。</p>
-<h1 id="An_Example_Block_Error_Code_Single_Parity_Checking"><a class="header-anchor" href="#An_Example_Block_Error_Code_Single_Parity_Checking">#</a>An Example Block Error Code: Single Parity Checking</h1>
-<p>单一奇偶校验检查（Single Parity Checking）是分组错误码检测的一个例子，可以再分为偶校验检查和奇校验检查。如果将数据分为 $n$ bit 一组，那么每一组增加一位数据，当是偶校验时，$n$ 位数据+1 位额外数据应该一共有偶数个 1，当是奇校验时，$n$ 位数据+1 位额外数据应该一共有奇数个 1。下表为 8 位数据时的例子：</p>
-<table>
-<thead>
-<tr>
-<th>原始数据</th>
-<th>偶校验</th>
-<th>奇校验</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>00000000</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>01011011</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>01010101</td>
-<td>0</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<p>单一奇偶校验是一个比较弱的信道编码，他只能检测错误，但无法检测出错误具体出现在哪一位，也无法纠正错误。而且当有偶数个位发生错误时，错误就无法被检测出来。</p>
-<h1 id="The_Mathematics_of_Block_Error_Codes_And_n_k_Notation"><a class="header-anchor" href="#The_Mathematics_of_Block_Error_Codes_And_n_k_Notation">#</a>The Mathematics of Block Error Codes And (n,k) Notation</h1>
-<p>如有 $k$ 位 bit 的数据，我们将所有 $2^k$ 种可能出现的数据称为<code>数据字(Datawords)</code>，在这些数据中增加 $r$ 位额外数据，一共有 $n=k+r$ 个数据，所有 $2^n$ 种可能称为<code>编码字(codeworks)</code>，其中编码字中合法的部分，即额外添加的数据与原数据时符合规则的部分，称为<code>码书(Codebook)</code>，并将这种方法标记为$(n,k)$</p>
-<p>如单一奇偶校验中，$k=8,r=1$，因此一共有 256 个数据字，也对应了有 256 个合法的编码字，一共有 512 个编码字。</p>
-<p>在理想状态下，合法编码字中的任一一位被改变了，改变后的编码字就不是合法编码字。但是在单一奇偶校验的例子中，如果同时改变了合法编码字中的两位，那么结果仍然是一个合法编码字。</p>
-<p>没有一个信道编码可以达到理想状态，所以要考虑的就是，合法编码字最少多少位数据要被同时改变，才能产生另一个合法编码字。在单一数字编码中，这个位数为 2。</p>
-<h1 id="Hamming_Distance：A_Measure_Of_A_Code’s_Strength"><a class="header-anchor" href="#Hamming_Distance：A_Measure_Of_A_Code’s_Strength">#</a>Hamming Distance：A Measure Of A Code’s Strength</h1>
-<p>汉明距离（Hamming Distance）是用来测量一个合法编码字要转换为另一个合法编码字最少要改变的数据位数的方法中需要用到的概念。如果给定两个$n$长度的字符，两个字符的汉明距离就是两个字符间不同的数据数量。</p>
-<p>如$d(000,001)=1,d(000,101)=2,d(000,111)=3,d(101,001)=1$。</p>
-<p>可以先对两个字符求异或，然后计算异或出来的字符 1 的总数，即为汉明距离。</p>
-<h1 id="The_Hamming_Distance_Among_String_In_A_Codebook"><a class="header-anchor" href="#The_Hamming_Distance_Among_String_In_A_Codebook">#</a>The Hamming Distance Among String In A Codebook</h1>
-<p>为了计算出一个合法编码字要转换为另一个合法编码字最少要改变的数据位数，先要计算出码书中所有编码字组合的汉明距离。如对 2 位 bit 数据进行单一奇校验检测：</p>
-<table>
-<thead>
-<tr>
-<th>数据字</th>
-<th>编码字</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>00</td>
-<td>001</td>
-</tr>
-<tr>
-<td>01</td>
-<td>010</td>
-</tr>
-<tr>
-<td>10</td>
-<td>100</td>
-</tr>
-<tr>
-<td>11</td>
-<td>111</td>
-</tr>
-</tbody>
-</table>
-<p>一共有 4 个编码字，4 个编码字一一配对一共有 6 种可能，$d(001,010)=2,d(010,100)=2,d(001,100)=2,d(010,111)=2,d(001,111)=2,d(100,111)=2$。6 种可能中最小的汉明距离是 2，所以最少需要更改 2 位数据才能从一个合法编码字变为另一个合法编码字。</p>
-<p>因此计算从一个合法编码字转换为另一个合法编码字最少要改变的数据位数过程是，计算出所有码书中的编码字（即合法编码字）两两配对后的所有汉明距离 $d_{min}$，其中的最小值即为所求值。</p>
-<h1 id="The_Tradeoff_Between_Error_Detection_And_Overhead"><a class="header-anchor" href="#The_Tradeoff_Between_Error_Detection_And_Overhead">#</a>The Tradeoff Between Error Detection And Overhead</h1>
-<p>对于一个编码，最多的能被检测出来的错误位数为$e=d_{min}-1$，如单一奇偶校验，因为$d_{min}=2$，所以最多能正确检测出来的错误位数为 1。</p>
-<p>虽然$d_{min}$越大能检测出来的错误位数越多，但这也意味着要增加更多的额外数据，对于$(n,k)$的编码，工程师用编码率（Code Rate）$R=\frac{k}{n}$来表示为了检测出错误信息的编码开销。</p>
-<h1 id="Error_Correction_With_Row_And_Column_RAC_Parity"><a class="header-anchor" href="#Error_Correction_With_Row_And_Column_RAC_Parity">#</a>Error Correction With Row And Column(RAC) Parity</h1>
-<p>奇偶校验本身是不能进行错误纠正的，但是通过<code>行列奇偶校验（Row And Column Parity）</code>就可以做到。如一共有 12 个 bit 的原始数据，即$k=12$，排成三行四列每一列每一行都进行奇偶校验，增加一个额外位，则一共 8 个额外位，即$r=8，n=k+r=20$，因此这是一个$(20,12)$的编码，如下图所示：</p>
-<p><img src="/ch_08_reliability_and_channel_coding/2019-12-05-14-46-47.png" alt="行列奇偶校验"></p>
-<p>因此如果一位数据出错，会同时在对应的行和列校验位感知到，因此就可以定位到错误的数据，取反后就能纠正数据。</p>
-<p>奇偶校验数据的$d_{min}$还是 2，因此如果错误的位数大于 1，当是偶数时无法被检测到，当是奇数时虽然能检测出错误，但无法纠正。</p>
-<h1 id="The_16_Bit_Checksum_Used_In_The_Internet"><a class="header-anchor" href="#The_16_Bit_Checksum_Used_In_The_Internet">#</a>The 16-Bit Checksum Used In The Internet</h1>
-<p>有个称为<code>因特网校验和（Internet checksum）</code>的信道编码方法在网络中扮演了重要角色。这个算法的输入可以是任意长度，将输入拆分为一段段 16 字节的的部分，如果不能长度不能被 16 整除，则最后补 0。如下图所示：</p>
-<p><img src="/ch_08_reliability_and_channel_coding/2019-12-06-17-25-08.png" alt="拆分为16字节"></p>
-<p>算法的流程如下：</p>
-<ol>
-<li>将输入拆分为以 16-bit 为一组</li>
-<li>定义一个 32-bit 的变量（这里称为$C$）作为结果。</li>
-<li>将每一组 16-bit 的数据累加给$C$</li>
-<li>将$C$的前 16 位累加给后 16 位</li>
-<li>将$C$的后 16 位取反，如果取反后全是 0，则将其改为全是 1</li>
-<li>此时$C$的 16 位即为校验和。</li>
-</ol>
-<p>可以看出最后的校验和也是 16 位的数据，将校验和作为新的一组 16-bit 放在原数据后（经过了补 0 的原数据）发送出去。接收端接受信息后重复算法流程，如果数据没有发生错误，最后接收端计算出的校验和应该是 FFFF。</p>
-<p>下面以两个例子进行说明：</p>
-<ol>
-<li>
-<p>例子 1<br>
-如果发送端输入数据为<code>0100 1000 0110 0101</code>，<code>0110 1100 0110 1100</code>，<code>0110 1111 0010 0001</code>，计算过程如下：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">+  0110 1111 0010 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  0010 0011 1111 0010</span><br></pre></td></tr></table></figure>
-<p>将高 16 位移到后 16 位</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  0010 0011 1111 0010</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  0010 0011 1111 0011</span><br></pre></td></tr></table></figure>
-<p>取反后得到：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1101 1100 0000 1100</span><br></pre></td></tr></table></figure>
-<p>这即为校验和</p>
-<p>对于接收端，因为将校验和也一并发送了过去，所以接收端的计算过程如下：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   0100 1000 0110 0101</span><br><span class="line">   0110 1100 0110 1100</span><br><span class="line">   0110 1111 0010 0001</span><br><span class="line">+  1101 1100 0000 1100</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
-<p>将高 16 位移到后 16 位</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">  1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
-<p>取反后得到：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
-<p>因为全为 0，所以改为全为 1</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>例子 2<br>
-如果发送端输入数据为<code>1111 1111 1111 1111</code>，<code>1111 1111 1111 1111</code>，<code>0000 0000 0000 0001</code>，计算过程如下：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">+  0000 0000 0000 0001</span><br><span class="line">----------------------------</span><br><span class="line">1  1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
-<p>将高 16 位移到后 16 位</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1111</span><br><span class="line">+                   1</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
-<p>此时虽然高 16 仍然有数值，但不需要再次累加，后 16 位取反后得到：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 11111</span><br></pre></td></tr></table></figure>
-<p>这即为校验和</p>
-<p>对于接收端，因为将校验和也一并发送了过去，所以接收端的计算过程如下：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">   1111 1111 1111 1111</span><br><span class="line">   1111 1111 1111 1111</span><br><span class="line">   0000 0000 0000 0001</span><br><span class="line">+  1111 1111 1111 1111</span><br><span class="line">----------------------------</span><br><span class="line">10 1111 1111 1111 1110</span><br></pre></td></tr></table></figure>
-<p>将高 16 位移到后 16 位</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">  1111 1111 1111 1110</span><br><span class="line">+                  10</span><br><span class="line">-------------------------</span><br><span class="line">1 0000 0000 0000 0000</span><br></pre></td></tr></table></figure>
-<p>取反后得到：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">1111 1111 1111 1111</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="Cyclic_Redundancy_Codes_CRCs"><a class="header-anchor" href="#Cyclic_Redundancy_Codes_CRCs">#</a>Cyclic Redundancy Codes(CRCs)</h1>
-<p>在高速网络中，有一个称为<code>循环冗余码(Cyclic Redundancy Codes,CRCs)</code>的信道编码方法。循环冗余码有三个主要优点：</p>
-<ol>
-<li>可以对任意长度的数据进行计算</li>
-<li>可以充分的检测出错误</li>
-<li>可以通过硬件实现，所以非常的高效</li>
-</ol>
-<p>求$CRC$的计算过程可以看作是两个二进制数的相除，一个代表原数据，一个代表一个特定的除数（可根据不同的情况设置，除数的设置决定错误检测的能力），如果需要求得$N$长度的$CRC$，则需要$N+1$长度的被除数。二进制数相除的过程可以看作是多项式相除，如果原数据是$1010$，除数设置为$1011$，则计算过程如下图：</p>
-<p><img src="/ch_08_reliability_and_channel_coding/2019-12-07-00-01-18.png" alt="CRC计算过程"></p>
-<h1 id="An_Efficient_Hardware_Implementation_Of_CRC"><a class="header-anchor" href="#An_Efficient_Hardware_Implementation_Of_CRC">#</a>An Efficient Hardware Implementation Of CRC</h1>
-<p>CRC 算法的实现硬件是由<code>移位寄存器(Shift Register)</code>和<code>异或门(Exclusive or gates)</code>构成的。在计算 CRC 前，硬件会初始化将移位寄存器中的所有位改为 0，上例中的除数$1011$，对应的硬件图如下：</p>
-<p><img src="/ch_08_reliability_and_channel_coding/2019-12-07-00-06-02.png" alt="1011硬件"></p>
-<p>TODO：为什么这么设计的原因。</p>
-<h1 id="Automatic_Repeat_Request_ARQ_Mechanisms"><a class="header-anchor" href="#Automatic_Repeat_Request_ARQ_Mechanisms">#</a>Automatic Repeat Request(ARQ) Mechanisms</h1>
-<p>自动重传请求技术（Automatic Repeat Request,ARQ）需要发送端和接收端传递信息来检测错误。当一方发送数据给另一方时，接收方需要传递一个回执给发送方。如果在一段时间后发送方仍然没有收到回执，则认为数据丢失，重新发送数据。</p>
-<p>自动重传请求技术适合只能检测错误，但不能修复错误的系统。当接收方检测出数据有错误后，将数据丢弃并不传递回执，那么发送方就会再次发送数据。</p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="https://en.wikipedia.org/wiki/polynomial_long_division">多项式除法</a><br>
-<a href="https://heasarc.gsfc.nasa.gov/docs/heasarc/ofwg/docs/general/checksum/node11.html">1’s Complement Arithmetic</a></p>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
       </tags>
   </entry>
   <entry>
@@ -3267,6 +3281,95 @@ $$</p>
       </tags>
   </entry>
   <entry>
+    <title>《Computer Networks and Internets》 Ch 14 MAC 层</title>
+    <url>/ch_14_the_ieee_mac_sublayer/</url>
+    <content><![CDATA[<ul>
+<li>这一章原书中的Statiion一词，在笔记中翻译为<code>终端</code>。</li>
+</ul>
+<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
+<p>这一章将会深入讨论MAC层，包括多路访问协议（multi-access protocols）以及静态和动态信道分配。</p>
+<h1 id="A_Taxonomy_Of_Mechanisms_For_Shared_Access"><a class="header-anchor" href="#A_Taxonomy_Of_Mechanisms_For_Shared_Access">#</a>A Taxonomy Of Mechanisms For Shared Access</h1>
+<p>实现多个计算机通过一个共享媒介来访问数据主要有三种方法： （1）复用技术（Multiplexing Technique） （2）分布算法来控制访问（Distributed Algorithms For Controlled Access） （3）随机访问策略（Random Access Strategy）</p>
+<ul>
+<li>这里的复用技术与在11章中讨论的复用核心思想是相同的，但仍然有略微区别。11章中提到的是物理上的复用，通过复用器将信号合并在一起。这里的复用则是对于共享信道的逻辑划分，使不同的终端占用共享信道的部分资源，所以这里的复用技术也称为<code>信道协议（Channelization Protocols）</code>。</li>
+</ul>
+<p>下图展示了按照共享媒介所使用的方法的分类：</p>
+<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-27-22-55-32.png" alt="共享媒介的分类方法"></p>
+<h1 id="Static_And_Dynamic_Channel_Allocation"><a class="header-anchor" href="#Static_And_Dynamic_Channel_Allocation">#</a>Static And Dynamic Channel Allocation</h1>
+<p>信道分配是与第11章中提到的复用技术相关联的。以频分复用为例子，在第11章中是每个终端都有它的载波频率，终端与载波频率是一对一的关系，这就是<code>信道的静态分配（Static Channel Allocation）</code>。</p>
+<p>信道可以静态分配的前提是预先知道终端的存在，而且终端在传输过程中不会发生变化。而在许多的场景下，终端是会变化的，例如一个路由器负责房间内手机的信号，但是手机可以关闭或者离开房间，这就是终端的变化。</p>
+<p>在这种情况下就需要<code>信道的动态分配（Dynamic Channel Allocation）</code>，即当终端出现时才分配信道的资源给终端。</p>
+<h1 id="Channelization_Protocols"><a class="header-anchor" href="#Channelization_Protocols">#</a>Channelization Protocols</h1>
+<p>与第11章中的复用技术相似，信道分配也存在频分多路复用（Frequency Division Multi-Access），时分多路复用（Time Division Multi—Access），码分多路复用（Code Division Multi-Access）三种类型。</p>
+<h2 id="FDMA"><a class="header-anchor" href="#FDMA">#</a>FDMA</h2>
+<p>频分多路复用下每个终端都可以选择一个载波频率，这个频率并不会影响到其他的终端。在有些系统下存在一个中央控制器进而支持动态的频分多路复用：当一个新的终端出现，中央控制器用一个预留的信道与终端通信，然后分配一个未使用的载波频率给这个终端，之后终端都使用这个载波频率传输数据。</p>
+<h3 id="TDMA"><a class="header-anchor" href="#TDMA">#</a>TDMA</h3>
+<p>时分多路复用下，所有终端按顺序编号，如$1,2,3,…N$，并且会按这个顺序占据信道进行传输。如同频分多路复用，在某些系统下支持动态分配，即终端出现时再分配给他信道的占用时间段。</p>
+<h3 id="CDMA"><a class="header-anchor" href="#CDMA">#</a>CDMA</h3>
+<p>码分多路复用如同码分复用，通过数学方法将多个终端的数据合并在一起，再同时通过信道进行传输。</p>
+<h1 id="Controlled_Access_Protocols"><a class="header-anchor" href="#Controlled_Access_Protocols">#</a>Controlled Access Protocols</h1>
+<p>访问控制协议（Controlled Access Protocols）为统计复用提供了方法，主要分为三个类型：</p>
+<ol>
+<li>轮询（Polling）：控制中央持续的询问每一个终端是否要发送数据。</li>
+<li>预留（Reservation）：终端需要发送信息时，发出一个在下一次循环时发送数据的申请。</li>
+<li>令牌传递（Token Passing）：终端间循环传递一个令牌，当终端持有令牌时可以发送数据。</li>
+</ol>
+<h2 id="Polling"><a class="header-anchor" href="#Polling">#</a>Polling</h2>
+<p><code>轮询（Polling）</code>系统是存在一个中央控制器，这个控制器会询问其下的每个终端是否需要传递数据。轮询可以再细分为两种，<code>轮询调度顺序（Round Robin Order）</code>和<code>优先顺序（Priority Order）</code>。在轮询调度顺序下，每个终端都有相同的机会传递数据，而在优先顺序下，一些终端会有更多的机会去传递数据。</p>
+<p>轮询的算法实现伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For Centralized Controller:</span><br><span class="line">while(true)</span><br><span class="line">&#123;</span><br><span class="line">  Select a station S, and send a polling message to S;</span><br><span class="line">  Wait for S to respond by sending a packet or passing;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Reservation"><a class="header-anchor" href="#Reservation">#</a>Reservation</h2>
+<p><code>预留（Reservation）</code>系统多用在航天系统中，系统分为两个步骤，在第一步中需要传输数据的终端申请，所有申请的终端构成一张表，在第二步中表中的终端开始传输数据。通常第一步与第二步使用的是不同的信道，即有一个信道专门用来接受申请信息，另一个信道作为主信道传递每个终端的数据。</p>
+<p>预留的算法实现伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For Centralized Controller:</span><br><span class="line">While(true)</span><br><span class="line">&#123;</span><br><span class="line">  Form a list of stations that have a packet to send;</span><br><span class="line">  Allow stations on the list to tranmit;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Token_Passing"><a class="header-anchor" href="#Token_Passing">#</a>Token Passing</h2>
+<p><code>令牌传递（Token Passing）</code>被用在多个局域网（LAN）技术中，被用的最多的就是环形拓步结构中。在一个网络中，某一台计算机持有着一个特殊的控制命令，这个命令被称作为令牌，持有令牌的计算机可以发送数据，在发送完毕后将令牌传递给下一个计算机。</p>
+<p>令牌传递的算法实现伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For each computer:</span><br><span class="line">While(true)</span><br><span class="line">&#123;</span><br><span class="line">  Wait for the token to arrive;</span><br><span class="line">  Transmit a packet if one is waiting to be send;</span><br><span class="line">  Send the token to he next station;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>环形拓补结构中，存在物理的环形链接，所以令牌可以直接传递给相邻的下一个电脑。在其他的拓步结构中，所有的计算机都被赋予了一个逻辑顺序，因此可以获知下一个要收取令牌的电脑是哪个。</p>
+<h1 id="Random_Access_Protocols"><a class="header-anchor" href="#Random_Access_Protocols">#</a>Random Access Protocols</h1>
+<p>许多网络，特别是局域网络中，并不使用访问控制协议，而使用<code>随机访问协议（Random Access Protocols）</code>。随机访问协议下只有当终端存在数据要发送时，才会被给予权限（在访问控制协议中，每个终端都要被持续检查）。这里的<em>随机</em>是在所有终端都有数据要发送时的处理方式。随机访问协议也可以被分为三类：</p>
+<ol>
+<li>ALOHA：早期夏威夷的无线电网络中被使用的协议。在教科书中比较流行，因为便于分析，但在实际网络中已不再使用。</li>
+<li>CSMA/CD（Carrier Sense Multi-Access With Collision Detection）：原以太网的基础，现在也不再使用。</li>
+<li>CSMA/CA（Carrier Sense Multi-Access With Collision Avoidance）：Wifi无线网络的基础。</li>
+</ol>
+<h2 id="ALOHA"><a class="header-anchor" href="#ALOHA">#</a>ALOHA</h2>
+<p>在早期夏威夷的网络中使用，在这个系统下有一个强大的发送器被部署中在物理上的中心位置，其他的终端（通常对应一台计算机）在这个发送器周围部署，这些终端都没有足够的能量将数据直接传输给其他终端，因此需要通过中央的发送器。</p>
+<p>中央发送器用两个载波频率与每个终端通信，一个被称为入站频率（In Frequency，407.305MHZ），一个被称为出站频率（Outbound Frequency，413.475MHZ）。终端通过入站频率将数据传递给中央发送器，中央发送器通过出站频率将数据发送给每个终端。</p>
+<p>ALOHA的实现逻辑很直接：当终端有数据要发送时，使用入站频率将数据传递给中央数据站，中央数据站通过出站频率将数据传给所有的终端，终端检查数据是否是自己需要的。为了保证数据被正常发送，发送终端也需要监听出站频率，当发送的数据拷贝被传输回发送终端，发送终端确认数据被正常传递了，就会传输下一个数据。反之，则会在一段时间后尝试重新发送。</p>
+<p>当两个终端同时使用各自的入站频率传输数据时，两个数据会发送混淆，进而导致信息错误，将这种情况称为信道冲突（Collision）。协议通过等待一段时间后重新发送数据来解决冲突，重新发送数据前的等待时间的设定尤为关键，如果两个终端等待的时间相同，那么再次发送数据时仍然是同时发送则会继续导致冲突。因此等待时间是随机的，但是网络繁忙时，冲突的概率仍然会增加，因为即使是随机时间仍然可能会与其他的终端发生冲突。</p>
+<p>ALOHA示意图如下：</p>
+<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-12-56-15.png" alt="ALOHA示意图"></p>
+<h2 id="CSMA_CD"><a class="header-anchor" href="#CSMA_CD">#</a>CSMA/CD</h2>
+<p>1978年，数字设备联盟（Digital Equipment Corporation），英特尔（Intel）和施乐（Xerox）共同指定了个标准（DIX标准），也就是后来的以太网。最早的以太网技术使用一根长电缆连接每个电脑，这根长电缆就是共享媒介，与ALOHA使用中央发送器来实现数据传输不同，在以太网中每个终端都可以通过这个共享的线缆传输数据。以太网同样需要解决冲突问题，以太网主要引入了三个解决冲突的方法，统称为<code>具有冲突检测功能的载波侦听多路访问（CSMA/CD，Carrier Sense Multi-Access With Collision Detection）</code>：</p>
+<ol>
+<li>载波侦听（Carrier Sense）：</li>
+</ol>
+<p>在每个终端发送数据前，先监听线缆确定是否有其他的终端正在传输数据。</p>
+<ol start="2">
+<li>冲突检测（Collision Detection）：</li>
+</ol>
+<p>虽然有载波侦听，但如果在线缆空闲时，两个需要发送数据的终端同时监听，此时他们都发现线缆空闲，因此都开始传输数据，这时候仍然会造成冲突。因此在传输过程中，发送终端也会持续的监听线缆，如果发现线缆中的数据与发送的数据不同，说明已经发生了冲突，数据被干扰了，于是停止数据的发送。</p>
+<p>以太网的数据传输还有一些细节问题，如在检测到冲突时，发送端并不会立刻停止数据的发送，他仍然会传输数据一段时间，保证所有的其他终端都可以收到冲突信号。另外，当一个包被发送完后，发送终端需要等待一段时间，称为<code>包间间隙（Interpacket gap）</code>（在早期10Mbps的以太网中，包间间隙为9.6微秒），保证其他的终端可以检测到线缆的空闲并传递数据。</p>
+<ol start="3">
+<li>二进制指数补偿（Binary Exponential Backoff）</li>
+</ol>
+<p>如ALOHA一样，在发现了冲突后，发送端需要等待一段时间重新发送数据，这个等待时间是随机的，通常会设置一个最大延迟时间$d$，然后在$0\sim d$。如之前所述，在网络繁忙时，可能存在随机后终端仍然冲突的情况。二进制指数补偿是指在新一次冲突发生后，随机的范围变成$0\sim 2d$，如果再有冲突则变成$0\sim 4d$，依次类推。</p>
+<p>CSMA/CD算法实现伪代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For each Computer:</span><br><span class="line"></span><br><span class="line">Wait for a packet to be ready;</span><br><span class="line">Wait for the medium to be idle;</span><br><span class="line">Delay for the interpacket gap;</span><br><span class="line">Set x to be the standard backoff range d;</span><br><span class="line">Attempt to transmit the packet;</span><br><span class="line"></span><br><span class="line">While(Collision occured)</span><br><span class="line">&#123;</span><br><span class="line"> random a delay time q from 0 to x;</span><br><span class="line"> delay for q microseconds;</span><br><span class="line"> double x to be 2x</span><br><span class="line"> attempt to retransmit the packet</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="CSMA_CA"><a class="header-anchor" href="#CSMA_CA">#</a>CSMA/CA</h2>
+<p>CSMA/CD并不能被运用在无线网络中，因为无线网络中的设备存在一个最远距离$\delta$。即如果两个终端的距离大于$\delta$，则CSMA/DA中的载波监听就无法被应用，因为一个终端并不能知道另一个是否在发送信息。这种情况如下图所示，如果Computer1在发送信息，Computer3是无法得知的，因此冲突只有Computer2可以知晓，这种情况称为<code>隐藏终端问题(Hidden Station Problem)</code>。</p>
+<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-00-02.png" alt="隐藏终端问题"></p>
+<p>所以无线网络中使用<code>具有冲突规避的载波侦听多路访问（CSMA/CA，Carrier Sense Multi-Access With Collision Avoidance）</code>。以上图的例子，Computer3在发送数据前会先向所有它的$\delta$范围内的设备发出一个短信息表明自己需要发送数据了，接受到Computer3发出的短信息的设备会检查自己是否正在接受其他的数据，如果不是则回复可以发送的信号。如下图所示：</p>
+<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-08-19.png" alt="CSMA/CA图解"></p>
+<p>如果发送端没有收到接收方的回执，则会在随机时间后再次尝试发送。</p>
+]]></content>
+      <tags>
+        <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Computer Networks and Internets》 Ch 16 无线网络技术</title>
     <url>/ch_16_wireless_networking_technologies/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
@@ -3415,95 +3518,6 @@ $16.20$介绍了软件无线电系统。</p>
 <p><img src="/ch_16_wireless_networking_technologies/2019-12-30-23-53-54.png" alt="软件无线电可以设定的特性"></p>
 <p>软件无线电的一大特性是可以同时使用多个天线，称实现了多天线同时传输和接受的系统为<code>MIMO（Multiple-Input Multiple-Output）</code>系统。</p>
 <p>通过软件来设定通信特性也有一定的危险性，如用户可以选择被政府限制的频率来发送数据或者占据为紧急服务预留的频道。因此这个技术也需要严格规范。</p>
-]]></content>
-      <tags>
-        <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Computer Networks and Internets》 Ch 14 MAC 层</title>
-    <url>/ch_14_the_ieee_mac_sublayer/</url>
-    <content><![CDATA[<ul>
-<li>这一章原书中的Statiion一词，在笔记中翻译为<code>终端</code>。</li>
-</ul>
-<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
-<p>这一章将会深入讨论MAC层，包括多路访问协议（multi-access protocols）以及静态和动态信道分配。</p>
-<h1 id="A_Taxonomy_Of_Mechanisms_For_Shared_Access"><a class="header-anchor" href="#A_Taxonomy_Of_Mechanisms_For_Shared_Access">#</a>A Taxonomy Of Mechanisms For Shared Access</h1>
-<p>实现多个计算机通过一个共享媒介来访问数据主要有三种方法： （1）复用技术（Multiplexing Technique） （2）分布算法来控制访问（Distributed Algorithms For Controlled Access） （3）随机访问策略（Random Access Strategy）</p>
-<ul>
-<li>这里的复用技术与在11章中讨论的复用核心思想是相同的，但仍然有略微区别。11章中提到的是物理上的复用，通过复用器将信号合并在一起。这里的复用则是对于共享信道的逻辑划分，使不同的终端占用共享信道的部分资源，所以这里的复用技术也称为<code>信道协议（Channelization Protocols）</code>。</li>
-</ul>
-<p>下图展示了按照共享媒介所使用的方法的分类：</p>
-<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-27-22-55-32.png" alt="共享媒介的分类方法"></p>
-<h1 id="Static_And_Dynamic_Channel_Allocation"><a class="header-anchor" href="#Static_And_Dynamic_Channel_Allocation">#</a>Static And Dynamic Channel Allocation</h1>
-<p>信道分配是与第11章中提到的复用技术相关联的。以频分复用为例子，在第11章中是每个终端都有它的载波频率，终端与载波频率是一对一的关系，这就是<code>信道的静态分配（Static Channel Allocation）</code>。</p>
-<p>信道可以静态分配的前提是预先知道终端的存在，而且终端在传输过程中不会发生变化。而在许多的场景下，终端是会变化的，例如一个路由器负责房间内手机的信号，但是手机可以关闭或者离开房间，这就是终端的变化。</p>
-<p>在这种情况下就需要<code>信道的动态分配（Dynamic Channel Allocation）</code>，即当终端出现时才分配信道的资源给终端。</p>
-<h1 id="Channelization_Protocols"><a class="header-anchor" href="#Channelization_Protocols">#</a>Channelization Protocols</h1>
-<p>与第11章中的复用技术相似，信道分配也存在频分多路复用（Frequency Division Multi-Access），时分多路复用（Time Division Multi—Access），码分多路复用（Code Division Multi-Access）三种类型。</p>
-<h2 id="FDMA"><a class="header-anchor" href="#FDMA">#</a>FDMA</h2>
-<p>频分多路复用下每个终端都可以选择一个载波频率，这个频率并不会影响到其他的终端。在有些系统下存在一个中央控制器进而支持动态的频分多路复用：当一个新的终端出现，中央控制器用一个预留的信道与终端通信，然后分配一个未使用的载波频率给这个终端，之后终端都使用这个载波频率传输数据。</p>
-<h3 id="TDMA"><a class="header-anchor" href="#TDMA">#</a>TDMA</h3>
-<p>时分多路复用下，所有终端按顺序编号，如$1,2,3,…N$，并且会按这个顺序占据信道进行传输。如同频分多路复用，在某些系统下支持动态分配，即终端出现时再分配给他信道的占用时间段。</p>
-<h3 id="CDMA"><a class="header-anchor" href="#CDMA">#</a>CDMA</h3>
-<p>码分多路复用如同码分复用，通过数学方法将多个终端的数据合并在一起，再同时通过信道进行传输。</p>
-<h1 id="Controlled_Access_Protocols"><a class="header-anchor" href="#Controlled_Access_Protocols">#</a>Controlled Access Protocols</h1>
-<p>访问控制协议（Controlled Access Protocols）为统计复用提供了方法，主要分为三个类型：</p>
-<ol>
-<li>轮询（Polling）：控制中央持续的询问每一个终端是否要发送数据。</li>
-<li>预留（Reservation）：终端需要发送信息时，发出一个在下一次循环时发送数据的申请。</li>
-<li>令牌传递（Token Passing）：终端间循环传递一个令牌，当终端持有令牌时可以发送数据。</li>
-</ol>
-<h2 id="Polling"><a class="header-anchor" href="#Polling">#</a>Polling</h2>
-<p><code>轮询（Polling）</code>系统是存在一个中央控制器，这个控制器会询问其下的每个终端是否需要传递数据。轮询可以再细分为两种，<code>轮询调度顺序（Round Robin Order）</code>和<code>优先顺序（Priority Order）</code>。在轮询调度顺序下，每个终端都有相同的机会传递数据，而在优先顺序下，一些终端会有更多的机会去传递数据。</p>
-<p>轮询的算法实现伪代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For Centralized Controller:</span><br><span class="line">while(true)</span><br><span class="line">&#123;</span><br><span class="line">  Select a station S, and send a polling message to S;</span><br><span class="line">  Wait for S to respond by sending a packet or passing;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Reservation"><a class="header-anchor" href="#Reservation">#</a>Reservation</h2>
-<p><code>预留（Reservation）</code>系统多用在航天系统中，系统分为两个步骤，在第一步中需要传输数据的终端申请，所有申请的终端构成一张表，在第二步中表中的终端开始传输数据。通常第一步与第二步使用的是不同的信道，即有一个信道专门用来接受申请信息，另一个信道作为主信道传递每个终端的数据。</p>
-<p>预留的算法实现伪代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For Centralized Controller:</span><br><span class="line">While(true)</span><br><span class="line">&#123;</span><br><span class="line">  Form a list of stations that have a packet to send;</span><br><span class="line">  Allow stations on the list to tranmit;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Token_Passing"><a class="header-anchor" href="#Token_Passing">#</a>Token Passing</h2>
-<p><code>令牌传递（Token Passing）</code>被用在多个局域网（LAN）技术中，被用的最多的就是环形拓步结构中。在一个网络中，某一台计算机持有着一个特殊的控制命令，这个命令被称作为令牌，持有令牌的计算机可以发送数据，在发送完毕后将令牌传递给下一个计算机。</p>
-<p>令牌传递的算法实现伪代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For each computer:</span><br><span class="line">While(true)</span><br><span class="line">&#123;</span><br><span class="line">  Wait for the token to arrive;</span><br><span class="line">  Transmit a packet if one is waiting to be send;</span><br><span class="line">  Send the token to he next station;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>环形拓补结构中，存在物理的环形链接，所以令牌可以直接传递给相邻的下一个电脑。在其他的拓步结构中，所有的计算机都被赋予了一个逻辑顺序，因此可以获知下一个要收取令牌的电脑是哪个。</p>
-<h1 id="Random_Access_Protocols"><a class="header-anchor" href="#Random_Access_Protocols">#</a>Random Access Protocols</h1>
-<p>许多网络，特别是局域网络中，并不使用访问控制协议，而使用<code>随机访问协议（Random Access Protocols）</code>。随机访问协议下只有当终端存在数据要发送时，才会被给予权限（在访问控制协议中，每个终端都要被持续检查）。这里的<em>随机</em>是在所有终端都有数据要发送时的处理方式。随机访问协议也可以被分为三类：</p>
-<ol>
-<li>ALOHA：早期夏威夷的无线电网络中被使用的协议。在教科书中比较流行，因为便于分析，但在实际网络中已不再使用。</li>
-<li>CSMA/CD（Carrier Sense Multi-Access With Collision Detection）：原以太网的基础，现在也不再使用。</li>
-<li>CSMA/CA（Carrier Sense Multi-Access With Collision Avoidance）：Wifi无线网络的基础。</li>
-</ol>
-<h2 id="ALOHA"><a class="header-anchor" href="#ALOHA">#</a>ALOHA</h2>
-<p>在早期夏威夷的网络中使用，在这个系统下有一个强大的发送器被部署中在物理上的中心位置，其他的终端（通常对应一台计算机）在这个发送器周围部署，这些终端都没有足够的能量将数据直接传输给其他终端，因此需要通过中央的发送器。</p>
-<p>中央发送器用两个载波频率与每个终端通信，一个被称为入站频率（In Frequency，407.305MHZ），一个被称为出站频率（Outbound Frequency，413.475MHZ）。终端通过入站频率将数据传递给中央发送器，中央发送器通过出站频率将数据发送给每个终端。</p>
-<p>ALOHA的实现逻辑很直接：当终端有数据要发送时，使用入站频率将数据传递给中央数据站，中央数据站通过出站频率将数据传给所有的终端，终端检查数据是否是自己需要的。为了保证数据被正常发送，发送终端也需要监听出站频率，当发送的数据拷贝被传输回发送终端，发送终端确认数据被正常传递了，就会传输下一个数据。反之，则会在一段时间后尝试重新发送。</p>
-<p>当两个终端同时使用各自的入站频率传输数据时，两个数据会发送混淆，进而导致信息错误，将这种情况称为信道冲突（Collision）。协议通过等待一段时间后重新发送数据来解决冲突，重新发送数据前的等待时间的设定尤为关键，如果两个终端等待的时间相同，那么再次发送数据时仍然是同时发送则会继续导致冲突。因此等待时间是随机的，但是网络繁忙时，冲突的概率仍然会增加，因为即使是随机时间仍然可能会与其他的终端发生冲突。</p>
-<p>ALOHA示意图如下：</p>
-<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-12-56-15.png" alt="ALOHA示意图"></p>
-<h2 id="CSMA_CD"><a class="header-anchor" href="#CSMA_CD">#</a>CSMA/CD</h2>
-<p>1978年，数字设备联盟（Digital Equipment Corporation），英特尔（Intel）和施乐（Xerox）共同指定了个标准（DIX标准），也就是后来的以太网。最早的以太网技术使用一根长电缆连接每个电脑，这根长电缆就是共享媒介，与ALOHA使用中央发送器来实现数据传输不同，在以太网中每个终端都可以通过这个共享的线缆传输数据。以太网同样需要解决冲突问题，以太网主要引入了三个解决冲突的方法，统称为<code>具有冲突检测功能的载波侦听多路访问（CSMA/CD，Carrier Sense Multi-Access With Collision Detection）</code>：</p>
-<ol>
-<li>载波侦听（Carrier Sense）：</li>
-</ol>
-<p>在每个终端发送数据前，先监听线缆确定是否有其他的终端正在传输数据。</p>
-<ol start="2">
-<li>冲突检测（Collision Detection）：</li>
-</ol>
-<p>虽然有载波侦听，但如果在线缆空闲时，两个需要发送数据的终端同时监听，此时他们都发现线缆空闲，因此都开始传输数据，这时候仍然会造成冲突。因此在传输过程中，发送终端也会持续的监听线缆，如果发现线缆中的数据与发送的数据不同，说明已经发生了冲突，数据被干扰了，于是停止数据的发送。</p>
-<p>以太网的数据传输还有一些细节问题，如在检测到冲突时，发送端并不会立刻停止数据的发送，他仍然会传输数据一段时间，保证所有的其他终端都可以收到冲突信号。另外，当一个包被发送完后，发送终端需要等待一段时间，称为<code>包间间隙（Interpacket gap）</code>（在早期10Mbps的以太网中，包间间隙为9.6微秒），保证其他的终端可以检测到线缆的空闲并传递数据。</p>
-<ol start="3">
-<li>二进制指数补偿（Binary Exponential Backoff）</li>
-</ol>
-<p>如ALOHA一样，在发现了冲突后，发送端需要等待一段时间重新发送数据，这个等待时间是随机的，通常会设置一个最大延迟时间$d$，然后在$0\sim d$。如之前所述，在网络繁忙时，可能存在随机后终端仍然冲突的情况。二进制指数补偿是指在新一次冲突发生后，随机的范围变成$0\sim 2d$，如果再有冲突则变成$0\sim 4d$，依次类推。</p>
-<p>CSMA/CD算法实现伪代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">For each Computer:</span><br><span class="line"></span><br><span class="line">Wait for a packet to be ready;</span><br><span class="line">Wait for the medium to be idle;</span><br><span class="line">Delay for the interpacket gap;</span><br><span class="line">Set x to be the standard backoff range d;</span><br><span class="line">Attempt to transmit the packet;</span><br><span class="line"></span><br><span class="line">While(Collision occured)</span><br><span class="line">&#123;</span><br><span class="line"> random a delay time q from 0 to x;</span><br><span class="line"> delay for q microseconds;</span><br><span class="line"> double x to be 2x</span><br><span class="line"> attempt to retransmit the packet</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="CSMA_CA"><a class="header-anchor" href="#CSMA_CA">#</a>CSMA/CA</h2>
-<p>CSMA/CD并不能被运用在无线网络中，因为无线网络中的设备存在一个最远距离$\delta$。即如果两个终端的距离大于$\delta$，则CSMA/DA中的载波监听就无法被应用，因为一个终端并不能知道另一个是否在发送信息。这种情况如下图所示，如果Computer1在发送信息，Computer3是无法得知的，因此冲突只有Computer2可以知晓，这种情况称为<code>隐藏终端问题(Hidden Station Problem)</code>。</p>
-<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-00-02.png" alt="隐藏终端问题"></p>
-<p>所以无线网络中使用<code>具有冲突规避的载波侦听多路访问（CSMA/CA，Carrier Sense Multi-Access With Collision Avoidance）</code>。以上图的例子，Computer3在发送数据前会先向所有它的$\delta$范围内的设备发出一个短信息表明自己需要发送数据了，接受到Computer3发出的短信息的设备会检查自己是否正在接受其他的数据，如果不是则回复可以发送的信号。如下图所示：</p>
-<p><img src="/ch_14_the_ieee_mac_sublayer/2019-12-28-15-08-19.png" alt="CSMA/CA图解"></p>
-<p>如果发送端没有收到接收方的回执，则会在随机时间后再次尝试发送。</p>
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
@@ -3695,6 +3709,55 @@ Ch 34 Themes in Software Craftsmanship</p>
       </tags>
   </entry>
   <entry>
+    <title>《Unix 编程艺术》 第十章 配置</title>
+    <url>/di_10_zhang_pei_zhi%EF%BC%9Amai_chu_zheng_que_de_di_yi_bu/</url>
+    <content><![CDATA[<h1 id="10_1_什么应是可配置的"><a class="header-anchor" href="#10_1_什么应是可配置的">#</a>10.1 什么应是可配置的</h1>
+<p>对于问题：什么应是可配置的？<br>
+无畏的 Unix 回答是“一切”。Unix 程序员只要可能，就建立机制而把策略决定权交给用户。这种方式产生的程序往往功能强大，专家用户用起来会非常顺手。但它所产生的接口往往选项过多，并且配置文件像杂草一样疯长，从而彻底打击了新手和一般用户。</p>
+<p>Unix 并不打算修改这种为同行和最老练用户设计的倾向。所以，也许把问题反过来，问问“什么不应该可配置”更加有用。Unix 实践的确在这方面提供了一些指导。</p>
+<ol>
+<li>对于能够可靠的进行自动检测的东西，就不要提供配置开关。
+<ul>
+<li>应当尽量用自动检测来减少配置开关的数量，或者在运行时不断尝试直到成功。如果觉得这个方法不够优雅或太昂贵，问问自己是不是掉进了过早优化的陷阱。</li>
+<li>一个很好的经验法则是：提高适应能力，除非这样做会产生超过 0.7 秒的延迟。0.7 秒是一个魔数，因为，正如 Jef Raskin 设计 Canon Cat 计算机时的发现，人们几乎觉察不到少于 0.7 秒的启动延时;人们还没有来得及转移注意力，它就消失了。</li>
+</ul>
+</li>
+<li>用户不应该看到优化开关。让程序经济运行是设计者的任务，不是用户的任务。
+<ul>
+<li>与提高界面复杂度成本相比，让用户从优化开关来获取的那点儿性能收益，换来界面复杂度的提升，往往得不偿失。</li>
+</ul>
+</li>
+<li>能简单利用其它程序来完成的任务，就不要增加本程序的复杂度。</li>
+</ol>
+<p>无论何时想增加配置选项，请考虑以下这些较普遍的问题：</p>
+<ul>
+<li>能省掉这个功能吗?为什么在加厚手册之外还要加重用户负担?</li>
+<li>能否用某种无伤大雅的方式改变程序的常规行为从而无需这个选项?</li>
+<li>这个选项是否花哨没用?是否应该少考虑用户界面的可配置性而多考虑正确性?</li>
+<li>这个选项附加的行为是否应该用一个独立的程序来代替?</li>
+</ul>
+<div class="note info simple"><p>为函数增加形参时，也可以自问上述问题</p>
+</div>
+<p>增加不必要的选项会产生诸多不良后果。其中最不易察觉但最严重的后果是对测试覆盖率的影响。</p>
+<blockquote>
+<p>除非做得非常仔细，否则增加一个开/关配置选项就会使测试量加倍。既然在实践中从来没有人完成双倍测试量，那么实际影响就是减少了特定配置获得的测试量。增加十个选项会产生 1024 倍测试量，所以不要多久就要讨论可靠性问题了。<br>
+—— Steve Johnson</p>
+</blockquote>
+<h1 id="10_5_命令行选项"><a class="header-anchor" href="#10_5_命令行选项">#</a>10.5 命令行选项</h1>
+<p>原始的 Unix 传统中，对于命令行选项偏爱小写字符而不是大写字符。</p>
+<h1 id="10_7_论打破规则"><a class="header-anchor" href="#10_7_论打破规则">#</a>10.7 论打破规则</h1>
+<p>约定都不是绝对的，但是违反这些约定会增加用户和未来开发者的磨合成本。</p>
+<ul>
+<li>如果必须打破规则，就放手去做一一但在做之前要确信自己完全知道为什么要这样做。</li>
+<li>如果确实要打破规则，必须确保常规方法进行的尝试都非常明显地失败了，同时保证遵循 <a href="/di_1_zhang_zhe_xue/#%E8%A1%A5%E6%95%91%E5%8E%9F%E5%88%99%EF%BC%9A%E5%87%BA%E7%8E%B0%E5%BC%82%E5%B8%B8%E6%97%B6%EF%BC%8C%E9%A9%AC%E4%B8%8A%E9%80%80%E5%87%BA%E5%B9%B6%E7%BB%99%E5%87%BA%E8%B6%B3%E9%87%8F%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF">补救原则</a> 给出了正确的错误反馈</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>.Net Tools 创建指南</title>
     <url>/create_.net_tools/</url>
     <content><![CDATA[<h1 id="创建一个_Net_Tool"><a class="header-anchor" href="#创建一个_Net_Tool">#</a>创建一个 .Net Tool</h1>
@@ -3759,48 +3822,27 @@ Ch 34 Themes in Software Craftsmanship</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第十章 配置</title>
-    <url>/di_10_zhang_pei_zhi%EF%BC%9Amai_chu_zheng_que_de_di_yi_bu/</url>
-    <content><![CDATA[<h1 id="10_1_什么应是可配置的"><a class="header-anchor" href="#10_1_什么应是可配置的">#</a>10.1 什么应是可配置的</h1>
-<p>对于问题：什么应是可配置的？<br>
-无畏的 Unix 回答是“一切”。Unix 程序员只要可能，就建立机制而把策略决定权交给用户。这种方式产生的程序往往功能强大，专家用户用起来会非常顺手。但它所产生的接口往往选项过多，并且配置文件像杂草一样疯长，从而彻底打击了新手和一般用户。</p>
-<p>Unix 并不打算修改这种为同行和最老练用户设计的倾向。所以，也许把问题反过来，问问“什么不应该可配置”更加有用。Unix 实践的确在这方面提供了一些指导。</p>
-<ol>
-<li>对于能够可靠的进行自动检测的东西，就不要提供配置开关。
+    <title>《Unix 编程艺术》 第十二章 优化</title>
+    <url>/di_12_zhang_you_hua/</url>
+    <content><![CDATA[<p>这将是很短的一章，因为关于性能优化，Unix 的经验告诉我们最主要的就是如何知道何时不去优化。其次，最有效的优化往往是优化之外的其它事情，如：清晰干净的设计。</p>
+<h1 id="12_1_什么都别做，就站在那儿"><a class="header-anchor" href="#12_1_什么都别做，就站在那儿">#</a>12.1 什么都别做，就站在那儿</h1>
+<p>程序员工具箱中最强大的优化技术就是不做优化。</p>
+<p>有几个理由支持这项禅式的忠告。其中一个是摩尔定律的指数效应一一最聪明、最便宜、常常也是最迅速的性能提升方法，就是等上几个月，期望硬件性能更好。</p>
 <ul>
-<li>应当尽量用自动检测来减少配置开关的数量，或者在运行时不断尝试直到成功。如果觉得这个方法不够优雅或太昂贵，问问自己是不是掉进了过早优化的陷阱。</li>
-<li>一个很好的经验法则是：提高适应能力，除非这样做会产生超过 0.7 秒的延迟。0.7 秒是一个魔数，因为，正如 Jef Raskin 设计 Canon Cat 计算机时的发现，人们几乎觉察不到少于 0.7 秒的启动延时;人们还没有来得及转移注意力，它就消失了。</li>
+<li>考虑到硬件和程序员时间成本比率，总是有更值得打发时间的事，别去优化一个工作中的系统</li>
 </ul>
-</li>
-<li>用户不应该看到优化开关。让程序经济运行是设计者的任务，不是用户的任务。
-<ul>
-<li>与提高界面复杂度成本相比，让用户从优化开关来获取的那点儿性能收益，换来界面复杂度的提升，往往得不偿失。</li>
-</ul>
-</li>
-<li>能简单利用其它程序来完成的任务，就不要增加本程序的复杂度。</li>
-</ol>
-<p>无论何时想增加配置选项，请考虑以下这些较普遍的问题：</p>
-<ul>
-<li>能省掉这个功能吗?为什么在加厚手册之外还要加重用户负担?</li>
-<li>能否用某种无伤大雅的方式改变程序的常规行为从而无需这个选项?</li>
-<li>这个选项是否花哨没用?是否应该少考虑用户界面的可配置性而多考虑正确性?</li>
-<li>这个选项附加的行为是否应该用一个独立的程序来代替?</li>
-</ul>
-<div class="note info simple"><p>为函数增加形参时，也可以自问上述问题</p>
-</div>
-<p>增加不必要的选项会产生诸多不良后果。其中最不易察觉但最严重的后果是对测试覆盖率的影响。</p>
-<blockquote>
-<p>除非做得非常仔细，否则增加一个开/关配置选项就会使测试量加倍。既然在实践中从来没有人完成双倍测试量，那么实际影响就是减少了特定配置获得的测试量。增加十个选项会产生 1024 倍测试量，所以不要多久就要讨论可靠性问题了。<br>
-—— Steve Johnson</p>
-</blockquote>
-<h1 id="10_5_命令行选项"><a class="header-anchor" href="#10_5_命令行选项">#</a>10.5 命令行选项</h1>
-<p>原始的 Unix 传统中，对于命令行选项偏爱小写字符而不是大写字符。</p>
-<h1 id="10_7_论打破规则"><a class="header-anchor" href="#10_7_论打破规则">#</a>10.7 论打破规则</h1>
-<p>约定都不是绝对的，但是违反这些约定会增加用户和未来开发者的磨合成本。</p>
-<ul>
-<li>如果必须打破规则，就放手去做一一但在做之前要确信自己完全知道为什么要这样做。</li>
-<li>如果确实要打破规则，必须确保常规方法进行的尝试都非常明显地失败了，同时保证遵循 <a href="/di_1_zhang_zhe_xue/#%E8%A1%A5%E6%95%91%E5%8E%9F%E5%88%99%EF%BC%9A%E5%87%BA%E7%8E%B0%E5%BC%82%E5%B8%B8%E6%97%B6%EF%BC%8C%E9%A9%AC%E4%B8%8A%E9%80%80%E5%87%BA%E5%B9%B6%E7%BB%99%E5%87%BA%E8%B6%B3%E9%87%8F%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF">补救原则</a> 给出了正确的错误反馈</li>
-</ul>
+<p>这是有数学上的理由的。如果仅仅只是为了减少资源使用的一个常数部分而优化，那是很不值得的。更明智的做法是集中精力将时间复杂度或空间复杂度从 $O(n^2)$ 降至 $O(n)$ 或 $O(n logn)$ 或者类似的，从一个更高次的指数降下来。线性性能增益往往很快就会被摩尔定律覆盖了。</p>
+<h1 id="12_2_先估量，后优化"><a class="header-anchor" href="#12_2_先估量，后优化">#</a>12.2 先估量，后优化</h1>
+<p>如果有真凭实据证明应用程序运行缓慢，这时 (仅当此时)才可以考虑优化代码但付诸实施前，要先估量。</p>
+<p>最初的 Unix 程序员最先学到的经验之一就是要明确瓶颈所在，直觉实在是个糟糕的向导，即使特别熟悉可疑代码的人也不例外。</p>
+<h1 id="12_3_非定域性之害"><a class="header-anchor" href="#12_3_非定域性之害">#</a>12.3 非定域性之害</h1>
+<p>最有效的代码优化方法就是保持代码短小简单。</p>
+<p>随着机器资源成本的直线下降，庞大数据结构的平均开销也随之而降一一但是因为相邻级别缓存的切换开销上升了，大型结构突破缓存容量对性能的影响也就增加了。 因此在这里，“小即是美”的建议比以往更有用，尤其是考虑到核心数据结构必须留在最快的缓存里。该建议也同样适用于代码：通常，指令加载要比执行花费的时间更多。</p>
+<p>这彻底推翻了某些传统的建议。如循环分解，去掉相对昂贵的机器指令而增加代码的总行数，那是不值得的。在 3D 图形引擎中，优化旋转操作的 $sin(x)$ 函数表在现代机器中占据 $365 \times 4$ 字节的空间在。处理器缓冲速度没有内存查询快时，这显然是个速度优化。但是现在，比起函数表产生的附加 Cache Miss 的可能开销，每次重新计算可能更快。</p>
+<p>但在将来，也许随着缓存的增大又会反过来。更普遍的是，不妨悲观地认为，许多优化方法都是暂时的而且常常随着成本比例而变化。唯一的可行方案就是先衡量后再优化。</p>
+<h1 id="12_4_吞吐量和延迟"><a class="header-anchor" href="#12_4_吞吐量和延迟">#</a>12.4 吞吐量和延迟</h1>
+<h2 id="12_4_3_缓存操作结果"><a class="header-anchor" href="#12_4_3_缓存操作结果">#</a>12.4.3 缓存操作结果</h2>
+<p>认为迫切需要缓存的时候，明智的做法是能够从更深层次来考虑，并问问为什么缓存是必须的。这比将缓存的所有边界条件都考虑到要容易得多。</p>
 ]]></content>
       <tags>
         <tag>系统设计</tag>
@@ -3894,27 +3936,55 @@ Ch 34 Themes in Software Craftsmanship</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第十二章 优化</title>
-    <url>/di_12_zhang_you_hua/</url>
-    <content><![CDATA[<p>这将是很短的一章，因为关于性能优化，Unix 的经验告诉我们最主要的就是如何知道何时不去优化。其次，最有效的优化往往是优化之外的其它事情，如：清晰干净的设计。</p>
-<h1 id="12_1_什么都别做，就站在那儿"><a class="header-anchor" href="#12_1_什么都别做，就站在那儿">#</a>12.1 什么都别做，就站在那儿</h1>
-<p>程序员工具箱中最强大的优化技术就是不做优化。</p>
-<p>有几个理由支持这项禅式的忠告。其中一个是摩尔定律的指数效应一一最聪明、最便宜、常常也是最迅速的性能提升方法，就是等上几个月，期望硬件性能更好。</p>
+    <title>《Unix 编程艺术》 第十三章 复杂度</title>
+    <url>/di_13_zhang_fu_za_du%EF%BC%9Ajin_ke_neng_jian_dan%EF%BC%8Cdan_bie_jian_dan_guo_le_tou/</url>
+    <content><![CDATA[<p>在<a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a> 末，将 Unix 的哲学概括为“KeepItSimple,Stupid!”。贯穿整个“设计”部分的不变主题就是尽可能保持简单设计的重要性。但什么是“尽可能的简单”?又如何断定?</p>
+<p>本章并不是简单地尝试给出这些问题的答案，因为根本没有答案一一而是希望读者能够在概念上有所收益，从而挖掘出自己的答案。</p>
+<h1 id="13_1_谈谈复杂度"><a class="header-anchor" href="#13_1_谈谈复杂度">#</a>13.1 谈谈复杂度</h1>
+<h2 id="13_1_1_复杂度的三个来源"><a class="header-anchor" href="#13_1_1_复杂度的三个来源">#</a>13.1.1 复杂度的三个来源</h2>
+<p>Unix 程序员追求简单的激情，源自注重实效的事实: 复杂度就是成本。复杂的软件更难于开发，难于测试，难于调试，难于维护一一最重要的，难以学习和使用。而复杂所带来的成本，开发时便汹涌而来，部署后更变本加厉。复杂是 bug 滋生的温床，在整个的软件生存期，世界都将不得安宁。</p>
+<p>复杂度的三个来源：</p>
 <ul>
-<li>考虑到硬件和程序员时间成本比率，总是有更值得打发时间的事，别去优化一个工作中的系统</li>
+<li>实现复杂度：程序员为了能够试图理解一个程序，从而建立其思维模型并调试该程序的困难程度</li>
+<li>接口复杂度：即界面复杂度。对用户而言，复杂度与记忆负担紧密关联。</li>
+<li>代码量：代码的缺陷密度，每百行代码出错率，往往是一个与实现语言种类无关的常量。更多行的代码意味着更多的 bug，而调试常常是开发中最昂贵、最耗时的部分。</li>
 </ul>
-<p>这是有数学上的理由的。如果仅仅只是为了减少资源使用的一个常数部分而优化，那是很不值得的。更明智的做法是集中精力将时间复杂度或空间复杂度从 $O(n^2)$ 降至 $O(n)$ 或 $O(n logn)$ 或者类似的，从一个更高次的指数降下来。线性性能增益往往很快就会被摩尔定律覆盖了。</p>
-<h1 id="12_2_先估量，后优化"><a class="header-anchor" href="#12_2_先估量，后优化">#</a>12.2 先估量，后优化</h1>
-<p>如果有真凭实据证明应用程序运行缓慢，这时 (仅当此时)才可以考虑优化代码但付诸实施前，要先估量。</p>
-<p>最初的 Unix 程序员最先学到的经验之一就是要明确瓶颈所在，直觉实在是个糟糕的向导，即使特别熟悉可疑代码的人也不例外。</p>
-<h1 id="12_3_非定域性之害"><a class="header-anchor" href="#12_3_非定域性之害">#</a>12.3 非定域性之害</h1>
-<p>最有效的代码优化方法就是保持代码短小简单。</p>
-<p>随着机器资源成本的直线下降，庞大数据结构的平均开销也随之而降一一但是因为相邻级别缓存的切换开销上升了，大型结构突破缓存容量对性能的影响也就增加了。 因此在这里，“小即是美”的建议比以往更有用，尤其是考虑到核心数据结构必须留在最快的缓存里。该建议也同样适用于代码：通常，指令加载要比执行花费的时间更多。</p>
-<p>这彻底推翻了某些传统的建议。如循环分解，去掉相对昂贵的机器指令而增加代码的总行数，那是不值得的。在 3D 图形引擎中，优化旋转操作的 $sin(x)$ 函数表在现代机器中占据 $365 \times 4$ 字节的空间在。处理器缓冲速度没有内存查询快时，这显然是个速度优化。但是现在，比起函数表产生的附加 Cache Miss 的可能开销，每次重新计算可能更快。</p>
-<p>但在将来，也许随着缓存的增大又会反过来。更普遍的是，不妨悲观地认为，许多优化方法都是暂时的而且常常随着成本比例而变化。唯一的可行方案就是先衡量后再优化。</p>
-<h1 id="12_4_吞吐量和延迟"><a class="header-anchor" href="#12_4_吞吐量和延迟">#</a>12.4 吞吐量和延迟</h1>
-<h2 id="12_4_3_缓存操作结果"><a class="header-anchor" href="#12_4_3_缓存操作结果">#</a>12.4.3 缓存操作结果</h2>
-<p>认为迫切需要缓存的时候，明智的做法是能够从更深层次来考虑，并问问为什么缓存是必须的。这比将缓存的所有边界条件都考虑到要容易得多。</p>
+<p>所有种种压力将程序员拖进复杂度的泥沼中，其中两个最臭名昭著的就是功能蠕变和过早优化。</p>
+<ul>
+<li>代码量、接口复杂度和实现复杂度可能同时上升。这就是功能蠕变的通常结果，所以程序员对其特别恐惧。</li>
+<li>过早的优化并不增加接口复杂度，但是对于实现复杂度和代码库规模有着负面的影响(常常特别糟糕)。</li>
+</ul>
+<p>三种复杂度陷阱：</p>
+<ul>
+<li>设计时首先考虑容易实现或代码规模，可能就会简单地将许多底层任务都抛给用户。——&gt; Manularity 陷阱</li>
+<li>迫于保持代码库适度规模的压力不得不使用极端晦涩复杂的实现技法，这往往会导致系统实现复杂度的层层叠加，成为无法调试的一团乱麻。——&gt; Blivet 陷阱</li>
+<li>如果项目设计者对实现复杂度特别敏感，而拒绝使用统一但复杂的方式来解决一整类问题，相反地更愿意对问题个体编写重复、专用代码，其结果就是代码库尺寸暴涨，而维护问题远较使用统一方法严重。——&gt; Adhocity 陷阱</li>
+</ul>
+<h2 id="13_1_3_本质的、选择的和偶然地复杂度"><a class="header-anchor" href="#13_1_3_本质的、选择的和偶然地复杂度">#</a>13.1.3 本质的、选择的和偶然地复杂度</h2>
+<p>在理想世界，Unix 程序员只愿意手工打造小巧完美的软件宝石，每个都那么小巧、那么优雅、那么完美。然而现实中很不幸的是，太多复杂问题需要复杂的解决方案。仅十行的程序，再优雅也无法控制喷气客机。</p>
+<ul>
+<li>本质复杂度：喷气客机的复杂是必然的。过去有个相当尖锐的观点，不能为简单性而牺牲掉功能，因为飞机必须要能飞。</li>
+<li>偶然复杂度：没有找到实现规定功能集合的最简方法，偶然复杂度可以由良好的设计或重新设计来去除</li>
+<li>选择复杂度：同某个期望的功能相关联，只能由改变工程的目标来去除</li>
+</ul>
+<h2 id="13_1_4_映射复杂度"><a class="header-anchor" href="#13_1_4_映射复杂度">#</a>13.1.4 映射复杂度</h2>
+<p>复杂度的不同来源必须以不同方法应对：</p>
+<ul>
+<li>代码库规模可以采用更好的工具来解决</li>
+<li>实现复杂度可以选择更好的算法来处理</li>
+<li>接口复杂度必须着眼于更好的交互设计，一种考虑了人类工程学和用户心理学在内的技能。这种技能，比编码能力更为少见。</li>
+</ul>
+<p>处理各种复杂度，必然更仰赖于见识而非方法</p>
+<ul>
+<li>通过发现更简单的方法可以去除偶然复杂度。</li>
+<li>依赖上下文环境判断哪些功能值得去做，可以去除选择复杂度。</li>
+<li>去除本质复杂度，就只能通过对现实真谛的洞察和顿悟，从根本上重新定义所要解决的问题。</li>
+</ul>
+<h2 id="13_1_5_当简洁不能胜任"><a class="header-anchor" href="#13_1_5_当简洁不能胜任">#</a>13.1.5 当简洁不能胜任</h2>
+<p>在 Unix 传统中存在一个强烈的偏好，宁可去掉功能，也不可接受可能复杂性</p>
+<p>同其他美学形式一样，我们需要注意何时设计上的简约已经的不再是有价值的自律形式，而开始成为一件伪装的苦行者外衣———一种实际上把美德作为借口来敷衍工作的纵容方式。</p>
+<h1 id="13_4_软件的适度规模"><a class="header-anchor" href="#13_4_软件的适度规模">#</a>13.4 软件的适度规模</h1>
+<p>软件很容易负载太多任务、太多需求设想而最终失败，也很容易把程序编制得过于复杂、臃肿和庞大。… 纠正这种趋势的方法就是吝啬原则：只有实证了其他方法行不通时才写庞大程序，即 <a href="/di_1_zhang_zhe_xue/#%E5%90%9D%E5%95%AC%E5%8E%9F%E5%88%99%EF%BC%9A%E9%99%A4%E9%9D%9E%E7%A1%AE%E6%97%A0%E5%AE%83%E6%B3%95%EF%BC%8C%E4%B8%8D%E8%A6%81%E7%BC%96%E5%86%99%E5%BA%9E%E5%A4%A7%E7%9A%84%E7%A8%8B%E5%BA%8F">吝啬原则：除非确无它法，不要编写庞大的程序</a></p>
 ]]></content>
       <tags>
         <tag>系统设计</tag>
@@ -3969,62 +4039,6 @@ Ch 34 Themes in Software Craftsmanship</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Unix 编程艺术》 第十三章 复杂度</title>
-    <url>/di_13_zhang_fu_za_du%EF%BC%9Ajin_ke_neng_jian_dan%EF%BC%8Cdan_bie_jian_dan_guo_le_tou/</url>
-    <content><![CDATA[<p>在<a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a> 末，将 Unix 的哲学概括为“KeepItSimple,Stupid!”。贯穿整个“设计”部分的不变主题就是尽可能保持简单设计的重要性。但什么是“尽可能的简单”?又如何断定?</p>
-<p>本章并不是简单地尝试给出这些问题的答案，因为根本没有答案一一而是希望读者能够在概念上有所收益，从而挖掘出自己的答案。</p>
-<h1 id="13_1_谈谈复杂度"><a class="header-anchor" href="#13_1_谈谈复杂度">#</a>13.1 谈谈复杂度</h1>
-<h2 id="13_1_1_复杂度的三个来源"><a class="header-anchor" href="#13_1_1_复杂度的三个来源">#</a>13.1.1 复杂度的三个来源</h2>
-<p>Unix 程序员追求简单的激情，源自注重实效的事实: 复杂度就是成本。复杂的软件更难于开发，难于测试，难于调试，难于维护一一最重要的，难以学习和使用。而复杂所带来的成本，开发时便汹涌而来，部署后更变本加厉。复杂是 bug 滋生的温床，在整个的软件生存期，世界都将不得安宁。</p>
-<p>复杂度的三个来源：</p>
-<ul>
-<li>实现复杂度：程序员为了能够试图理解一个程序，从而建立其思维模型并调试该程序的困难程度</li>
-<li>接口复杂度：即界面复杂度。对用户而言，复杂度与记忆负担紧密关联。</li>
-<li>代码量：代码的缺陷密度，每百行代码出错率，往往是一个与实现语言种类无关的常量。更多行的代码意味着更多的 bug，而调试常常是开发中最昂贵、最耗时的部分。</li>
-</ul>
-<p>所有种种压力将程序员拖进复杂度的泥沼中，其中两个最臭名昭著的就是功能蠕变和过早优化。</p>
-<ul>
-<li>代码量、接口复杂度和实现复杂度可能同时上升。这就是功能蠕变的通常结果，所以程序员对其特别恐惧。</li>
-<li>过早的优化并不增加接口复杂度，但是对于实现复杂度和代码库规模有着负面的影响(常常特别糟糕)。</li>
-</ul>
-<p>三种复杂度陷阱：</p>
-<ul>
-<li>设计时首先考虑容易实现或代码规模，可能就会简单地将许多底层任务都抛给用户。——&gt; Manularity 陷阱</li>
-<li>迫于保持代码库适度规模的压力不得不使用极端晦涩复杂的实现技法，这往往会导致系统实现复杂度的层层叠加，成为无法调试的一团乱麻。——&gt; Blivet 陷阱</li>
-<li>如果项目设计者对实现复杂度特别敏感，而拒绝使用统一但复杂的方式来解决一整类问题，相反地更愿意对问题个体编写重复、专用代码，其结果就是代码库尺寸暴涨，而维护问题远较使用统一方法严重。——&gt; Adhocity 陷阱</li>
-</ul>
-<h2 id="13_1_3_本质的、选择的和偶然地复杂度"><a class="header-anchor" href="#13_1_3_本质的、选择的和偶然地复杂度">#</a>13.1.3 本质的、选择的和偶然地复杂度</h2>
-<p>在理想世界，Unix 程序员只愿意手工打造小巧完美的软件宝石，每个都那么小巧、那么优雅、那么完美。然而现实中很不幸的是，太多复杂问题需要复杂的解决方案。仅十行的程序，再优雅也无法控制喷气客机。</p>
-<ul>
-<li>本质复杂度：喷气客机的复杂是必然的。过去有个相当尖锐的观点，不能为简单性而牺牲掉功能，因为飞机必须要能飞。</li>
-<li>偶然复杂度：没有找到实现规定功能集合的最简方法，偶然复杂度可以由良好的设计或重新设计来去除</li>
-<li>选择复杂度：同某个期望的功能相关联，只能由改变工程的目标来去除</li>
-</ul>
-<h2 id="13_1_4_映射复杂度"><a class="header-anchor" href="#13_1_4_映射复杂度">#</a>13.1.4 映射复杂度</h2>
-<p>复杂度的不同来源必须以不同方法应对：</p>
-<ul>
-<li>代码库规模可以采用更好的工具来解决</li>
-<li>实现复杂度可以选择更好的算法来处理</li>
-<li>接口复杂度必须着眼于更好的交互设计，一种考虑了人类工程学和用户心理学在内的技能。这种技能，比编码能力更为少见。</li>
-</ul>
-<p>处理各种复杂度，必然更仰赖于见识而非方法</p>
-<ul>
-<li>通过发现更简单的方法可以去除偶然复杂度。</li>
-<li>依赖上下文环境判断哪些功能值得去做，可以去除选择复杂度。</li>
-<li>去除本质复杂度，就只能通过对现实真谛的洞察和顿悟，从根本上重新定义所要解决的问题。</li>
-</ul>
-<h2 id="13_1_5_当简洁不能胜任"><a class="header-anchor" href="#13_1_5_当简洁不能胜任">#</a>13.1.5 当简洁不能胜任</h2>
-<p>在 Unix 传统中存在一个强烈的偏好，宁可去掉功能，也不可接受可能复杂性</p>
-<p>同其他美学形式一样，我们需要注意何时设计上的简约已经的不再是有价值的自律形式，而开始成为一件伪装的苦行者外衣———一种实际上把美德作为借口来敷衍工作的纵容方式。</p>
-<h1 id="13_4_软件的适度规模"><a class="header-anchor" href="#13_4_软件的适度规模">#</a>13.4 软件的适度规模</h1>
-<p>软件很容易负载太多任务、太多需求设想而最终失败，也很容易把程序编制得过于复杂、臃肿和庞大。… 纠正这种趋势的方法就是吝啬原则：只有实证了其他方法行不通时才写庞大程序，即 <a href="/di_1_zhang_zhe_xue/#%E5%90%9D%E5%95%AC%E5%8E%9F%E5%88%99%EF%BC%9A%E9%99%A4%E9%9D%9E%E7%A1%AE%E6%97%A0%E5%AE%83%E6%B3%95%EF%BC%8C%E4%B8%8D%E8%A6%81%E7%BC%96%E5%86%99%E5%BA%9E%E5%A4%A7%E7%9A%84%E7%A8%8B%E5%BA%8F">吝啬原则：除非确无它法，不要编写庞大的程序</a></p>
-]]></content>
-      <tags>
-        <tag>系统设计</tag>
         <tag>编码规范</tag>
       </tags>
   </entry>
@@ -4633,6 +4647,16 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
+    <title>《Unix 编程艺术》 第八章 微型语言</title>
+    <url>/di_8_zhang_wei_xing_yu_yan%EF%BC%9Axun_zhao_ge_chang_de_le_fu/</url>
+    <content><![CDATA[<p>Unix 有个长期传统，即包容小型的、为专门应用领域特质、大量减少程序行数的语言。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Unix 编程艺术》 第七章 多道程序设计</title>
     <url>/di_7_zhang_duo_dao_cheng_xu_she_ji%EF%BC%9Afen_li_jin_cheng_wei_du_li_de_gong_neng/</url>
     <content><![CDATA[<p>多道程序设计是设计中的荒蛮之地，几乎没有好的实践方针。许多程序员尽管精于判断如何将代码分解成子过程，然而最终还是编写出单个庞然大物般的单进程程序，而这些程序往往失败在自身的内部复杂度之上。</p>
@@ -4654,16 +4678,6 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第八章 微型语言</title>
-    <url>/di_8_zhang_wei_xing_yu_yan%EF%BC%9Axun_zhao_ge_chang_de_le_fu/</url>
-    <content><![CDATA[<p>Unix 有个长期传统，即包容小型的、为专门应用领域特质、大量减少程序行数的语言。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Unix 编程艺术》 第九章 生成</title>
     <url>/di_9_zhang_sheng_cheng%EF%BC%9Ati_sheng_gui_ge_shuo_ming_de_ceng_ci/</url>
     <content><![CDATA[<p>数据比程序逻辑更易驾驭。尽可能把设计的复杂度从程序代码转移到数据中是个好实践，选择便于人类维护和操作的数据表示法也是好实践。</p>
@@ -4681,6 +4695,40 @@ Henry Spencer</p>
       <tags>
         <tag>系统设计</tag>
         <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C# Formattable String</title>
+    <url>/formattable_string/</url>
+    <content><![CDATA[<p><code>FormattableString</code>  是 C# 6.0 中引入的新类型之一，可以避免在非必要情况下执行了格式化字符串带来的性能开销。</p>
+<p>使用如下示例如下，可以看出 <code>FormattableString</code> 将需要格式化的字符串创建和真正的格式化操作进行了拆分：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> name = <span class="string">&quot;张三&quot;</span>;</span><br><span class="line"><span class="built_in">int</span> age = <span class="number">30</span>;</span><br><span class="line"><span class="built_in">decimal</span> weight = <span class="number">60.5</span>m;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个 FormattableString</span></span><br><span class="line">FormattableString message = <span class="string">$&quot;<span class="subst">&#123;name&#125;</span> 年龄 <span class="subst">&#123;age&#125;</span>，体重 <span class="subst">&#123;weight&#125;</span> 公斤。&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 FormattableString 转换为 string 类型</span></span><br><span class="line"><span class="built_in">string</span> formattedMessage = message.ToString();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出结果</span></span><br><span class="line">Console.WriteLine(formattedMessage);</span><br></pre></td></tr></table></figure>
+<h1 id="Performance"><a class="header-anchor" href="#Performance">#</a>Performance</h1>
+<p>对于一些函数，需要在运行时判断是否需要输出 string，可以使用 <code>FormattableString</code> 保证格式化仅在真正需要使用 <code>string</code> 时才执行。这可以带来性能提升。</p>
+<p>如下性能测试函数：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test, Performance, Category(<span class="string">&quot;String&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">String_NotReallyOutput</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> unit = SampleUnit.Microsecond;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> outputStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using string&quot;</span>, unit);</span><br><span class="line">    <span class="keyword">var</span> outputFormattedStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using formatted string&quot;</span>, unit);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FakeOutput</span>(<span class="params"><span class="built_in">string</span> str</span>)</span> &#123; <span class="keyword">if</span> (<span class="literal">false</span>) Debug.Log(str); &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FormattedFakeOutput</span>(<span class="params">FormattableString fStr</span>)</span> &#123; <span class="keyword">if</span> (<span class="literal">false</span>) Debug.Log(fStr.ToString()); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> age = <span class="number">23</span>, times = <span class="number">25</span>;</span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputStr).Run();</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FormattedFakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputFormattedStr).Run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>FormattableString</code> 的版本因为避免了格式化操作的进行，带来了约 5 倍的收益：<br>
+<img src="/formattable_string/image-20230417094543917.png" alt=""></p>
+<p>即使真正需要执行 String 格式化时，使用 <code>FormattableString</code> 也不会带来性能劣化，如下性能测试代码：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test, Performance, Category(<span class="string">&quot;String&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">String_ReallyOutput</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> unit = SampleUnit.Microsecond;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> outputStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using string&quot;</span>, unit);</span><br><span class="line">    <span class="keyword">var</span> outputFormattedStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using formatted string&quot;</span>, unit);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FakeOutput</span>(<span class="params"><span class="built_in">string</span> str</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">true</span>) Debug.Log(str);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FormattedFakeOutput</span>(<span class="params">FormattableString fStr</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">true</span>) Debug.Log(fStr.ToString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> age = <span class="number">23</span>, times = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputStr).Run();</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FormattedFakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputFormattedStr).Run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>性能测试结果为：<br>
+<img src="/formattable_string/image-20230417094729230.png" alt=""></p>
+<p>但是如果在不需要进行格式化时，强制使用 <code>FormattableString</code> 则会带来性能劣化。</p>
+<p>如下代码，可以看到针对字符串实际上并没有需要拼接的数据，但对于 <code>Formattted</code> 版本的函数，为了保证形参为 <code>FormattableString</code> 仍然加上了 <code>$</code> 符：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test, Performance, Category(<span class="string">&quot;String&quot;</span>), TestCase(true), TestCase(false)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">String_UseZeroArgument</span>(<span class="params"><span class="built_in">bool</span> reallyOutput</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    MeasurementSettings outputStr = <span class="keyword">new</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using string&quot;</span>, s_Unit);</span><br><span class="line">    MeasurementSettings outputFormattedStr = <span class="keyword">new</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using formatted string&quot;</span>, s_Unit);</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (reallyOutput)</span><br><span class="line">            ReallyOutput(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            FakeOutput(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">    &#125;, outputStr).Run();</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (reallyOutput)</span><br><span class="line">            ReallyFormattedOutput(<span class="string">$&quot;Hello World&quot;</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            FakeFormattedOutput(<span class="string">$&quot;Hello World&quot;</span>);</span><br><span class="line">    &#125;, outputFormattedStr).Run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时，<code>FormattableString</code> 版本的函数在实际不需要输出时带来了约 10 倍的性能恶化：<br>
+<img src="/formattable_string/image-20230417102028637.png" alt=""></p>
+<h1 id="Override"><a class="header-anchor" href="#Override">#</a>Override</h1>
+<p>尽可能的避免 <code>string</code> 和 <code>FormattableString</code> 的函数重载，因为编译器会优先选择 <code>string</code> 形参的版本，且在一些操作时可能会隐式的将 <code>FormattableString</code> 转换为 <code>string</code>，进而导致与预期违背的行为产生。</p>
+<p>如下示例代码：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// DO NOT</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Sample</span>(<span class="params"><span class="built_in">string</span> <span class="keyword">value</span></span>)</span> =&gt; <span class="keyword">throw</span> <span class="literal">null</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Sample</span>(<span class="params">FormattableString <span class="keyword">value</span></span>)</span> =&gt; <span class="keyword">throw</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">Sample(<span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span>);</span><br><span class="line"><span class="comment">// ⚠ Call Sample(string)</span></span><br><span class="line"></span><br><span class="line">Sample((FormattableString)<span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span>);</span><br><span class="line"><span class="comment">// Call Sample(FormattableString) because of the explicit cast</span></span><br><span class="line"></span><br><span class="line">Sample((FormattableString)<span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span> + <span class="string">&quot;!&quot;</span>);</span><br><span class="line"><span class="comment">// Call Sample(string) because the operator FormattableString + string returns a string</span></span><br></pre></td></tr></table></figure>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://www.meziantou.net/interpolated-strings-advanced-usages.htm#interpolated-strings-a9996a-2">Interpolated strings: advanced usages - Meziantou’s blog</a></p>
+]]></content>
+      <tags>
+        <tag>C#</tag>
+        <tag>String</tag>
+        <tag>Performance</tag>
       </tags>
   </entry>
   <entry>
@@ -4862,27 +4910,6 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 笔记汇总</title>
-    <url>/head_first_design_patterns/</url>
-    <content><![CDATA[<p><a href="/ch_01_the_strategy_pattern">Ch 01 the Strategy Pattern</a></p>
-<p><a href="/ch_02_the_observer_pattern">Ch 02 the Observer Pattern</a></p>
-<p><a href="/ch_03_the_decorator_pattern">Ch 03 the Decorator Pattern</a></p>
-<p><a href="/ch_04_the_factory_pattern">Ch 04 the Factory Pattern</a></p>
-<p><a href="/ch_05_the_singleton_pattern">Ch 05 the Singleton Pattern</a></p>
-<p><a href="/ch_06_the_command_pattern">Ch 06 the Command Pattern</a></p>
-<p><a href="/ch_07_the_adapter_and_facade_patterns">Ch 07 the Adapter and Facade Patterns</a></p>
-<p><a href="/ch_08_the_template_method_pattern">Ch 08 the Template Method Pattern</a></p>
-<p><a href="/ch_09_the_iterator_and_composite_pattern">Ch 09 the Iterator and Composite Pattern</a></p>
-<p><a href="/ch_10_the_state_pattern">Ch 10 the State Pattern</a></p>
-<p><a href="/ch_11_the_proxy_pattern">Ch 11 the Proxy Pattern</a></p>
-<p><a href="/ch_12_the_compound_patterns">Ch 12 the Compound Patterns</a></p>
-<p><a href="/head_first_design_pattern_design_principles">Head First Design Pattern Design Principles</a></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Head First 设计模式》 - 设计原则总结</title>
     <url>/head_first_design_pattern_design_principles/</url>
     <content><![CDATA[<ol>
@@ -4899,40 +4926,6 @@ Henry Spencer</p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C# Formattable String</title>
-    <url>/formattable_string/</url>
-    <content><![CDATA[<p><code>FormattableString</code>  是 C# 6.0 中引入的新类型之一，可以避免在非必要情况下执行了格式化字符串带来的性能开销。</p>
-<p>使用如下示例如下，可以看出 <code>FormattableString</code> 将需要格式化的字符串创建和真正的格式化操作进行了拆分：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> name = <span class="string">&quot;张三&quot;</span>;</span><br><span class="line"><span class="built_in">int</span> age = <span class="number">30</span>;</span><br><span class="line"><span class="built_in">decimal</span> weight = <span class="number">60.5</span>m;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个 FormattableString</span></span><br><span class="line">FormattableString message = <span class="string">$&quot;<span class="subst">&#123;name&#125;</span> 年龄 <span class="subst">&#123;age&#125;</span>，体重 <span class="subst">&#123;weight&#125;</span> 公斤。&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 FormattableString 转换为 string 类型</span></span><br><span class="line"><span class="built_in">string</span> formattedMessage = message.ToString();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出结果</span></span><br><span class="line">Console.WriteLine(formattedMessage);</span><br></pre></td></tr></table></figure>
-<h1 id="Performance"><a class="header-anchor" href="#Performance">#</a>Performance</h1>
-<p>对于一些函数，需要在运行时判断是否需要输出 string，可以使用 <code>FormattableString</code> 保证格式化仅在真正需要使用 <code>string</code> 时才执行。这可以带来性能提升。</p>
-<p>如下性能测试函数：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test, Performance, Category(<span class="string">&quot;String&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">String_NotReallyOutput</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> unit = SampleUnit.Microsecond;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> outputStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using string&quot;</span>, unit);</span><br><span class="line">    <span class="keyword">var</span> outputFormattedStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using formatted string&quot;</span>, unit);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FakeOutput</span>(<span class="params"><span class="built_in">string</span> str</span>)</span> &#123; <span class="keyword">if</span> (<span class="literal">false</span>) Debug.Log(str); &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FormattedFakeOutput</span>(<span class="params">FormattableString fStr</span>)</span> &#123; <span class="keyword">if</span> (<span class="literal">false</span>) Debug.Log(fStr.ToString()); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> age = <span class="number">23</span>, times = <span class="number">25</span>;</span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputStr).Run();</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FormattedFakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputFormattedStr).Run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用 <code>FormattableString</code> 的版本因为避免了格式化操作的进行，带来了约 5 倍的收益：<br>
-<img src="/formattable_string/image-20230417094543917.png" alt=""></p>
-<p>即使真正需要执行 String 格式化时，使用 <code>FormattableString</code> 也不会带来性能劣化，如下性能测试代码：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test, Performance, Category(<span class="string">&quot;String&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">String_ReallyOutput</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> unit = SampleUnit.Microsecond;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> outputStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using string&quot;</span>, unit);</span><br><span class="line">    <span class="keyword">var</span> outputFormattedStr = <span class="keyword">new</span> MeasurementSettings(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using formatted string&quot;</span>, unit);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FakeOutput</span>(<span class="params"><span class="built_in">string</span> str</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">true</span>) Debug.Log(str);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">FormattedFakeOutput</span>(<span class="params">FormattableString fStr</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">true</span>) Debug.Log(fStr.ToString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">int</span> age = <span class="number">23</span>, times = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputStr).Run();</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        FormattedFakeOutput(<span class="string">$&quot;Hello World with age <span class="subst">&#123;age&#125;</span> with times <span class="subst">&#123;times&#125;</span> &quot;</span>);</span><br><span class="line">    &#125;, outputFormattedStr).Run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>性能测试结果为：<br>
-<img src="/formattable_string/image-20230417094729230.png" alt=""></p>
-<p>但是如果在不需要进行格式化时，强制使用 <code>FormattableString</code> 则会带来性能劣化。</p>
-<p>如下代码，可以看到针对字符串实际上并没有需要拼接的数据，但对于 <code>Formattted</code> 版本的函数，为了保证形参为 <code>FormattableString</code> 仍然加上了 <code>$</code> 符：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test, Performance, Category(<span class="string">&quot;String&quot;</span>), TestCase(true), TestCase(false)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">String_UseZeroArgument</span>(<span class="params"><span class="built_in">bool</span> reallyOutput</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    MeasurementSettings outputStr = <span class="keyword">new</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using string&quot;</span>, s_Unit);</span><br><span class="line">    MeasurementSettings outputFormattedStr = <span class="keyword">new</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="string">&quot;Output using formatted string&quot;</span>, s_Unit);</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (reallyOutput)</span><br><span class="line">            ReallyOutput(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            FakeOutput(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">    &#125;, outputStr).Run();</span><br><span class="line"></span><br><span class="line">    Measure.Method(() =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (reallyOutput)</span><br><span class="line">            ReallyFormattedOutput(<span class="string">$&quot;Hello World&quot;</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            FakeFormattedOutput(<span class="string">$&quot;Hello World&quot;</span>);</span><br><span class="line">    &#125;, outputFormattedStr).Run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>此时，<code>FormattableString</code> 版本的函数在实际不需要输出时带来了约 10 倍的性能恶化：<br>
-<img src="/formattable_string/image-20230417102028637.png" alt=""></p>
-<h1 id="Override"><a class="header-anchor" href="#Override">#</a>Override</h1>
-<p>尽可能的避免 <code>string</code> 和 <code>FormattableString</code> 的函数重载，因为编译器会优先选择 <code>string</code> 形参的版本，且在一些操作时可能会隐式的将 <code>FormattableString</code> 转换为 <code>string</code>，进而导致与预期违背的行为产生。</p>
-<p>如下示例代码：</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// DO NOT</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Sample</span>(<span class="params"><span class="built_in">string</span> <span class="keyword">value</span></span>)</span> =&gt; <span class="keyword">throw</span> <span class="literal">null</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Sample</span>(<span class="params">FormattableString <span class="keyword">value</span></span>)</span> =&gt; <span class="keyword">throw</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">Sample(<span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span>);</span><br><span class="line"><span class="comment">// ⚠ Call Sample(string)</span></span><br><span class="line"></span><br><span class="line">Sample((FormattableString)<span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span>);</span><br><span class="line"><span class="comment">// Call Sample(FormattableString) because of the explicit cast</span></span><br><span class="line"></span><br><span class="line">Sample((FormattableString)<span class="string">$&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span> + <span class="string">&quot;!&quot;</span>);</span><br><span class="line"><span class="comment">// Call Sample(string) because the operator FormattableString + string returns a string</span></span><br></pre></td></tr></table></figure>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="https://www.meziantou.net/interpolated-strings-advanced-usages.htm#interpolated-strings-a9996a-2">Interpolated strings: advanced usages - Meziantou’s blog</a></p>
-]]></content>
-      <tags>
-        <tag>C#</tag>
-        <tag>String</tag>
-        <tag>Performance</tag>
       </tags>
   </entry>
   <entry>
@@ -5066,6 +5059,82 @@ Henry Spencer</p>
       <tags>
         <tag>Unity</tag>
         <tag>Tutorial</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 笔记汇总</title>
+    <url>/head_first_design_patterns/</url>
+    <content><![CDATA[<p><a href="/ch_01_the_strategy_pattern">Ch 01 the Strategy Pattern</a></p>
+<p><a href="/ch_02_the_observer_pattern">Ch 02 the Observer Pattern</a></p>
+<p><a href="/ch_03_the_decorator_pattern">Ch 03 the Decorator Pattern</a></p>
+<p><a href="/ch_04_the_factory_pattern">Ch 04 the Factory Pattern</a></p>
+<p><a href="/ch_05_the_singleton_pattern">Ch 05 the Singleton Pattern</a></p>
+<p><a href="/ch_06_the_command_pattern">Ch 06 the Command Pattern</a></p>
+<p><a href="/ch_07_the_adapter_and_facade_patterns">Ch 07 the Adapter and Facade Patterns</a></p>
+<p><a href="/ch_08_the_template_method_pattern">Ch 08 the Template Method Pattern</a></p>
+<p><a href="/ch_09_the_iterator_and_composite_pattern">Ch 09 the Iterator and Composite Pattern</a></p>
+<p><a href="/ch_10_the_state_pattern">Ch 10 the State Pattern</a></p>
+<p><a href="/ch_11_the_proxy_pattern">Ch 11 the Proxy Pattern</a></p>
+<p><a href="/ch_12_the_compound_patterns">Ch 12 the Compound Patterns</a></p>
+<p><a href="/head_first_design_pattern_design_principles">Head First Design Pattern Design Principles</a></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《LLM 对程序员的冲击和影响》摘抄</title>
+    <url>/llm_dui_cheng_xu_yuan_de_chong_ji_he_ying_xiang/</url>
+    <content><![CDATA[<h1 id="LLM_的局限"><a class="header-anchor" href="#LLM_的局限">#</a>LLM 的局限</h1>
+<p>如果说 <strong>ChatGPT 实现了数字时代知识的平权，codex 类的代码语言大模型实现了基础编码能力的知识平权</strong>，进而带来软件研发的局部效率提升。 可以说，LLM 降低了软件开发的门槛，可以让更多对软件开发感兴趣的人更加轻松地参与到软件开发工作中，同时，LLM 提高了编程的效率和质量，使我们可以在更短的时间内完成更多的工作，因而能留出更多的时间让我们思考。</p>
+<p>我们面对的是软件工程的问题，<strong>编程不等于软件工程，编程只是软件工程的一部分。软件工程的四大内在特性（复杂度、不一致性、可变性、不可见性）并没有因为 LLM 的出现而发生本质上的变化，这才是软件工程面临的主要矛盾</strong>。这四点再叠加上大型软件的规模效应，其中包含软件系统本身的规模和软件研发团队的规模，问题就更严重了，即会显著提升软件研发过程中的沟通成本、决策成本、认知成本和试错成本，而这些才是软件工程问题的本质，这些本质问题自始至终都没有变过，LLM 对此也基本无能为力。</p>
+<h2 id="复杂性"><a class="header-anchor" href="#复杂性">#</a>复杂性</h2>
+<p>LLM 让局部编码变简单，或者说更高效了，但是需求分析和软件设计并没有因为 LLM 而变得简单。</p>
+<p>只有我们的需求足够的清楚，那么生成的代码才会准确。如何准确全面描述需求成为了关键。面向自然语言编程，首先你要有能力把话讲清楚。但是问题是：你能讲清楚吗？我们通过一些实践发现，<strong>要把需求描述到让它能正确写出来代码，需要的工作量似乎已经接近甚至超过编码了</strong>。为什么会这样，有两个方面的原因：</p>
+<ol>
+<li>
+<p>因为大多数的代码实现是 imperative 的，而需求描述是 declarative 的，这两者对人的要求完全不一样。我们程序员群体接受的教育是编程，而不是需求描述，也就是说程序员本来更擅长写代码，而不是描述需求。</p>
+</li>
+<li>
+<p>在当前的开发模式下，程序员直接用代码默认帮需求（产品经理）做了很多代偿。很多在需求中没有明确提及的内容被程序员用代码直接实现了（代偿）。而现在要倒过来先把需求的细节完全理清楚这个可能不是程序员当前的工作习惯。而且代码的信息熵其实要大于自然语言，程序员更善于用代码而非自然语言来描述事务。</p>
+<ul>
+<li>在当前的开发模式下，程序员直接用代码默认帮需求（产品经理）做了很多代偿。很多在需求中没有明确提及的内容被程序员用代码直接实现了（代偿）。而现在要倒过来先把需求的细节完全理清楚这个可能不是程序员当前的工作习惯。而且代码的信息熵其实要大于自然语言，程序员更善于用代码而非自然语言来描述事务。</li>
+<li>一个软件的需求，不仅仅是功能性的，还有很多非功能的需求，这些都是需要描述清楚的。另外代码实现的时候，还要考虑为可测试而设计，为可扩展而设计，为可运维而设计，为可观测而设计等等。原本这些很多是开发代偿了，现在要从需求生成代码，你必须要提前讲清楚。</li>
+</ul>
+</li>
+</ol>
+<div class="note info simple"><p>软件从业者高估了编程的复杂度，但是却低估了功能和设计的深刻度。</p>
+</div>
+<h2 id="一致性"><a class="header-anchor" href="#一致性">#</a>一致性</h2>
+<p>由于软件研发的本质依然是“<strong>知识手工业者的大规模协作</strong>”，所以我们非常需要一致性。如果系统是一致的，则意味着相似的事情以相似的方式完成，错并不可怕，怕的是错的千变万化。LLM 的出现并没有提升软件研发的一致性，甚至<strong>由于 LLM 本身的概率属性，使用 LLM 实现代码生成的不一致性问题反而是被放大了</strong></p>
+<h2 id="可变性"><a class="header-anchor" href="#可变性">#</a>可变性</h2>
+<p>软件会随着需求不断演进和变化，所以架构设计和模块抽象只能面向当下，它天然是短视的，或者说是有局限性的，这种局限性即使是最优秀的架构师也是不可逾越的。</p>
+<p>当需求发生变动后，一般是会在原有代码基础上改动，而不是直接从头全量生成全部代码，这个时候，LLM 本质上做的是局部编程的辅助（pair programming）。局部编程辅助过程中，经常需要对代码做局部修改，而这个往往并不容易。代码的信息熵大于自然语言，用信息熵更低的自然语言去描述代码，尤其是准确描述大段代码中的若干个位置往往是困难的。</p>
+<p>如果需要进一步描述如何修改就会更困难，因为大概率需要用到很多代码上下文的相关描述，所以对于 prompt 的表述要求以及长度要求都很高。要在原有代码基础上修改，就需要利用已有的代码上下文，而不是从 0 开始。要实现这一点，一个最朴素的做法就是把整个项目的代码都贴到 prompt 里，但这样并不现实。因为 GPT-3.5 限制最多只能 4096 个 tokens，GPT-4 最多 8192 个，除非项目非常小，否则根本放不下。这个问题可能需要用 LangChain 来解决了。</p>
+<p>而且 LLM 本质上不是基于修改意见（prompt）进行改写，而是基于修改意见（prompt）重新写了一份，而且 LLM 的原理决定了其会“一本正经的胡说八道”的本质，会<strong>混合捏造</strong>一些不存在的东西，可以说人工智能的混合捏造是人工智能在无知情况下的“自信”反应，而这个点在代码生成上是灾难性的，比如会将不同类型的 SQL 语句混在一起使用，会分不清 Go 语言的 <code>os.Kill</code> 和 Python 语言的 <code>os.kill()</code>。输出的代码需要人重复的阅读和理解，使得认知成本变高了。</p>
+<h2 id="不可见性"><a class="header-anchor" href="#不可见性">#</a>不可见性</h2>
+<p>软件的客观存在不具有空间的形体特征，不同的关注点，会有不同的图。综合叠加这些图是困难的，而且<strong>强行可视化的效果会造成图的异常复杂，反而失去了可视化的价值</strong>。设计无法可视化就限制了有效的沟通和交流。</p>
+<p>在实际中，很多需求和设计并不以文档的形式存在，往往会存在于程序员和架构师的脑子里，或者在讨论的过程中。就算有文档，文档和代码大概率不同步。就算文档同步，文档（需求和设计）背后经常有大量的方案对比和推敲，甚至有很多要在原有债务基础上的设计妥协，这些决策过程一般都不会明确地被记录下来。这些没有被文档化下来的知识，我们称其为<code>暗知识</code>。虽然我们说只要有足够的数据，大模型就可以学到需求和设计知识。但这些“暗知识”本身就很难被捕捉到，“足够的数据”这一前提在需求分析和软件设计可能难以满足。</p>
+<p>在实际软件开发中，需求可能一次不能表达得很清楚，需要一边开发一边逐步写清楚需求。尤其是敏捷开发更是如此。所以一些通用的，不需要特定领域知识的问题，LLM 的表现会比较好，但是那些专用的，需要特定领域知识（私域知识）的问题，LLM 就可能不是很擅长。</p>
+<div class="note info simple"><p>你能想到的多过你能说出来的，你能说出来的多过你能写下来的。所以这就天然限制了 LLM 能力的上限。</p>
+</div>
+<h1 id="工程师与_LLM_的共生"><a class="header-anchor" href="#工程师与_LLM_的共生">#</a>工程师与 LLM 的共生</h1>
+<p>在软件开发过程中，当伪代码级别的设计完成后，最后一公里的编码实现会被 LLM 替代，因为基于记忆的简单重复编码不是人的优势，而是机器的优势。</p>
+<p>这部分工作现在属于码农，也就是我们俗称的 CRUD 仔和 API Boy，所以很多不涉及设计的码农可能会被大模型替代。未来工程师需要关注业务理解、需求拆分、架构设计、设计取舍，并在此基础上通过 prompt 学会与 AI 合作，从而<strong>实现“工程师 + LLM”形成 1+1 &gt;2 的效果。这就是共生</strong>。需要注意的是，这种<strong>共生必须始终保持人的主观能动性</strong>，机器必须是 Copilot，也就是智能副驾驶，主驾驶位置必须是人，这样的人 - 机关系才能长期健康发展。这也就是为什么说微软现任 CEO 萨提亚强调 Copilot（智能副驾驶）是比 Autopilot（自动驾驶）还先进的根本原因。</p>
+<p>软件项目参与的人越来越多，分工越来越细，人和人之间需要的沟通量，也指数增长。很快你会发现，沟通花费的时间，渐渐地就比分工省下来的时间还要多。说白了，过了一个临界点，人越多不是越帮忙，而是人越多越添乱。一个人 12 个月能完成的事，不见得上 12 个人 1 个月就能完成，甚至 12 个月也未必能完成。</p>
+<ul>
+<li>《人月神话》里建议了一种组织方式，叫“外科手术式的队伍”。就像一台外科手术一样，有一个主刀大夫，软件项目也应该有一个首席程序员，其他人都是给他提供支持的。这样，就既能获得由少数头脑产生的产品完整性，又能得到多位协助人员的总体生产率，还彻底地减少了沟通的工作量。<strong>LLM 的出现，让基础编程工作一定程度上实现了自动化，这样非常有利于控制研发团队规模，保持小团队的效率优势</strong>。</li>
+</ul>
+<h1 id="未来可能基于_Prompt_编程"><a class="header-anchor" href="#未来可能基于_Prompt_编程">#</a>未来可能基于 Prompt 编程</h1>
+<p>让我们做个大胆的设想，如果当软件需求发生变化的时候，我们不再是去改代码，而是直接修改需求对应的 prompt，然后基于 prompt 直接生成完整的代码，这个将是软件开发范式的改变。在这种范式下，我们需要确保代码不能有人为修改，必须都是由 prompt 直接生成，此时我们还需要对 prompt 做版本管理，或许会出现类似今天 git 的 prompt 版本管理的新物种。</p>
+<p>此时，从本质上来看 <strong>prompt 即是代码，而原本的代码不再是代码了</strong>，这就真正实现了基于自然语言（prompt）的编程，此时的编程范式将从 prompt to code 转变为 prompt as code。</p>
+<p>但这个假设还是在以以往的逻辑在做分析，这个基础可能本来就是错误，全新的时代或许需要全新的思维模式。</p>
+]]></content>
+      <tags>
+        <tag>摘抄</tag>
+        <tag>AI</tag>
+        <tag>LLM</tag>
+        <tag>程序员</tag>
       </tags>
   </entry>
   <entry>
@@ -5262,61 +5331,6 @@ Henry Spencer</p>
       <tags>
         <tag>设计模式</tag>
         <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《LLM 对程序员的冲击和影响》摘抄</title>
-    <url>/llm_dui_cheng_xu_yuan_de_chong_ji_he_ying_xiang/</url>
-    <content><![CDATA[<h1 id="LLM_的局限"><a class="header-anchor" href="#LLM_的局限">#</a>LLM 的局限</h1>
-<p>如果说 <strong>ChatGPT 实现了数字时代知识的平权，codex 类的代码语言大模型实现了基础编码能力的知识平权</strong>，进而带来软件研发的局部效率提升。 可以说，LLM 降低了软件开发的门槛，可以让更多对软件开发感兴趣的人更加轻松地参与到软件开发工作中，同时，LLM 提高了编程的效率和质量，使我们可以在更短的时间内完成更多的工作，因而能留出更多的时间让我们思考。</p>
-<p>我们面对的是软件工程的问题，<strong>编程不等于软件工程，编程只是软件工程的一部分。软件工程的四大内在特性（复杂度、不一致性、可变性、不可见性）并没有因为 LLM 的出现而发生本质上的变化，这才是软件工程面临的主要矛盾</strong>。这四点再叠加上大型软件的规模效应，其中包含软件系统本身的规模和软件研发团队的规模，问题就更严重了，即会显著提升软件研发过程中的沟通成本、决策成本、认知成本和试错成本，而这些才是软件工程问题的本质，这些本质问题自始至终都没有变过，LLM 对此也基本无能为力。</p>
-<h2 id="复杂性"><a class="header-anchor" href="#复杂性">#</a>复杂性</h2>
-<p>LLM 让局部编码变简单，或者说更高效了，但是需求分析和软件设计并没有因为 LLM 而变得简单。</p>
-<p>只有我们的需求足够的清楚，那么生成的代码才会准确。如何准确全面描述需求成为了关键。面向自然语言编程，首先你要有能力把话讲清楚。但是问题是：你能讲清楚吗？我们通过一些实践发现，<strong>要把需求描述到让它能正确写出来代码，需要的工作量似乎已经接近甚至超过编码了</strong>。为什么会这样，有两个方面的原因：</p>
-<ol>
-<li>
-<p>因为大多数的代码实现是 imperative 的，而需求描述是 declarative 的，这两者对人的要求完全不一样。我们程序员群体接受的教育是编程，而不是需求描述，也就是说程序员本来更擅长写代码，而不是描述需求。</p>
-</li>
-<li>
-<p>在当前的开发模式下，程序员直接用代码默认帮需求（产品经理）做了很多代偿。很多在需求中没有明确提及的内容被程序员用代码直接实现了（代偿）。而现在要倒过来先把需求的细节完全理清楚这个可能不是程序员当前的工作习惯。而且代码的信息熵其实要大于自然语言，程序员更善于用代码而非自然语言来描述事务。</p>
-<ul>
-<li>在当前的开发模式下，程序员直接用代码默认帮需求（产品经理）做了很多代偿。很多在需求中没有明确提及的内容被程序员用代码直接实现了（代偿）。而现在要倒过来先把需求的细节完全理清楚这个可能不是程序员当前的工作习惯。而且代码的信息熵其实要大于自然语言，程序员更善于用代码而非自然语言来描述事务。</li>
-<li>一个软件的需求，不仅仅是功能性的，还有很多非功能的需求，这些都是需要描述清楚的。另外代码实现的时候，还要考虑为可测试而设计，为可扩展而设计，为可运维而设计，为可观测而设计等等。原本这些很多是开发代偿了，现在要从需求生成代码，你必须要提前讲清楚。</li>
-</ul>
-</li>
-</ol>
-<div class="note info simple"><p>软件从业者高估了编程的复杂度，但是却低估了功能和设计的深刻度。</p>
-</div>
-<h2 id="一致性"><a class="header-anchor" href="#一致性">#</a>一致性</h2>
-<p>由于软件研发的本质依然是“<strong>知识手工业者的大规模协作</strong>”，所以我们非常需要一致性。如果系统是一致的，则意味着相似的事情以相似的方式完成，错并不可怕，怕的是错的千变万化。LLM 的出现并没有提升软件研发的一致性，甚至<strong>由于 LLM 本身的概率属性，使用 LLM 实现代码生成的不一致性问题反而是被放大了</strong></p>
-<h2 id="可变性"><a class="header-anchor" href="#可变性">#</a>可变性</h2>
-<p>软件会随着需求不断演进和变化，所以架构设计和模块抽象只能面向当下，它天然是短视的，或者说是有局限性的，这种局限性即使是最优秀的架构师也是不可逾越的。</p>
-<p>当需求发生变动后，一般是会在原有代码基础上改动，而不是直接从头全量生成全部代码，这个时候，LLM 本质上做的是局部编程的辅助（pair programming）。局部编程辅助过程中，经常需要对代码做局部修改，而这个往往并不容易。代码的信息熵大于自然语言，用信息熵更低的自然语言去描述代码，尤其是准确描述大段代码中的若干个位置往往是困难的。</p>
-<p>如果需要进一步描述如何修改就会更困难，因为大概率需要用到很多代码上下文的相关描述，所以对于 prompt 的表述要求以及长度要求都很高。要在原有代码基础上修改，就需要利用已有的代码上下文，而不是从 0 开始。要实现这一点，一个最朴素的做法就是把整个项目的代码都贴到 prompt 里，但这样并不现实。因为 GPT-3.5 限制最多只能 4096 个 tokens，GPT-4 最多 8192 个，除非项目非常小，否则根本放不下。这个问题可能需要用 LangChain 来解决了。</p>
-<p>而且 LLM 本质上不是基于修改意见（prompt）进行改写，而是基于修改意见（prompt）重新写了一份，而且 LLM 的原理决定了其会“一本正经的胡说八道”的本质，会<strong>混合捏造</strong>一些不存在的东西，可以说人工智能的混合捏造是人工智能在无知情况下的“自信”反应，而这个点在代码生成上是灾难性的，比如会将不同类型的 SQL 语句混在一起使用，会分不清 Go 语言的 <code>os.Kill</code> 和 Python 语言的 <code>os.kill()</code>。输出的代码需要人重复的阅读和理解，使得认知成本变高了。</p>
-<h2 id="不可见性"><a class="header-anchor" href="#不可见性">#</a>不可见性</h2>
-<p>软件的客观存在不具有空间的形体特征，不同的关注点，会有不同的图。综合叠加这些图是困难的，而且<strong>强行可视化的效果会造成图的异常复杂，反而失去了可视化的价值</strong>。设计无法可视化就限制了有效的沟通和交流。</p>
-<p>在实际中，很多需求和设计并不以文档的形式存在，往往会存在于程序员和架构师的脑子里，或者在讨论的过程中。就算有文档，文档和代码大概率不同步。就算文档同步，文档（需求和设计）背后经常有大量的方案对比和推敲，甚至有很多要在原有债务基础上的设计妥协，这些决策过程一般都不会明确地被记录下来。这些没有被文档化下来的知识，我们称其为<code>暗知识</code>。虽然我们说只要有足够的数据，大模型就可以学到需求和设计知识。但这些“暗知识”本身就很难被捕捉到，“足够的数据”这一前提在需求分析和软件设计可能难以满足。</p>
-<p>在实际软件开发中，需求可能一次不能表达得很清楚，需要一边开发一边逐步写清楚需求。尤其是敏捷开发更是如此。所以一些通用的，不需要特定领域知识的问题，LLM 的表现会比较好，但是那些专用的，需要特定领域知识（私域知识）的问题，LLM 就可能不是很擅长。</p>
-<div class="note info simple"><p>你能想到的多过你能说出来的，你能说出来的多过你能写下来的。所以这就天然限制了 LLM 能力的上限。</p>
-</div>
-<h1 id="工程师与_LLM_的共生"><a class="header-anchor" href="#工程师与_LLM_的共生">#</a>工程师与 LLM 的共生</h1>
-<p>在软件开发过程中，当伪代码级别的设计完成后，最后一公里的编码实现会被 LLM 替代，因为基于记忆的简单重复编码不是人的优势，而是机器的优势。</p>
-<p>这部分工作现在属于码农，也就是我们俗称的 CRUD 仔和 API Boy，所以很多不涉及设计的码农可能会被大模型替代。未来工程师需要关注业务理解、需求拆分、架构设计、设计取舍，并在此基础上通过 prompt 学会与 AI 合作，从而<strong>实现“工程师 + LLM”形成 1+1 &gt;2 的效果。这就是共生</strong>。需要注意的是，这种<strong>共生必须始终保持人的主观能动性</strong>，机器必须是 Copilot，也就是智能副驾驶，主驾驶位置必须是人，这样的人 - 机关系才能长期健康发展。这也就是为什么说微软现任 CEO 萨提亚强调 Copilot（智能副驾驶）是比 Autopilot（自动驾驶）还先进的根本原因。</p>
-<p>软件项目参与的人越来越多，分工越来越细，人和人之间需要的沟通量，也指数增长。很快你会发现，沟通花费的时间，渐渐地就比分工省下来的时间还要多。说白了，过了一个临界点，人越多不是越帮忙，而是人越多越添乱。一个人 12 个月能完成的事，不见得上 12 个人 1 个月就能完成，甚至 12 个月也未必能完成。</p>
-<ul>
-<li>《人月神话》里建议了一种组织方式，叫“外科手术式的队伍”。就像一台外科手术一样，有一个主刀大夫，软件项目也应该有一个首席程序员，其他人都是给他提供支持的。这样，就既能获得由少数头脑产生的产品完整性，又能得到多位协助人员的总体生产率，还彻底地减少了沟通的工作量。<strong>LLM 的出现，让基础编程工作一定程度上实现了自动化，这样非常有利于控制研发团队规模，保持小团队的效率优势</strong>。</li>
-</ul>
-<h1 id="未来可能基于_Prompt_编程"><a class="header-anchor" href="#未来可能基于_Prompt_编程">#</a>未来可能基于 Prompt 编程</h1>
-<p>让我们做个大胆的设想，如果当软件需求发生变化的时候，我们不再是去改代码，而是直接修改需求对应的 prompt，然后基于 prompt 直接生成完整的代码，这个将是软件开发范式的改变。在这种范式下，我们需要确保代码不能有人为修改，必须都是由 prompt 直接生成，此时我们还需要对 prompt 做版本管理，或许会出现类似今天 git 的 prompt 版本管理的新物种。</p>
-<p>此时，从本质上来看 <strong>prompt 即是代码，而原本的代码不再是代码了</strong>，这就真正实现了基于自然语言（prompt）的编程，此时的编程范式将从 prompt to code 转变为 prompt as code。</p>
-<p>但这个假设还是在以以往的逻辑在做分析，这个基础可能本来就是错误，全新的时代或许需要全新的思维模式。</p>
-]]></content>
-      <tags>
-        <tag>摘抄</tag>
-        <tag>AI</tag>
-        <tag>LLM</tag>
-        <tag>程序员</tag>
       </tags>
   </entry>
   <entry>
@@ -5523,13 +5537,9 @@ Henry Spencer</p>
 <figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget install Microsoft.AzureStorageExplorer; winget install Microsoft.VisualStudioCode;  winget install Microsoft.AzureCLI</span><br></pre></td></tr></table></figure>
 <p>可以使用 <code>-v</code> 约定安装的版本，未指定的情况下将安装最新版本。</p>
 <p>可以使用 <code>-h</code> 或 <code>--slient</code> 保证以静默方式安装。</p>
-<blockquote>
-<p>[!Caution]</p>
-</blockquote>
-<blockquote>
-<p>如果使用了静默安装，但安装要求管理员权限且当前命令行又不具有，则可能出现错误。<br>
-因此建议在使用静默安装时，使用管理员权限打开命令行</p>
-</blockquote>
+<div class="note warning simple"><p>如果使用了静默安装，但安装要求管理员权限且当前命令行又不具有，则可能出现错误。</p>
+<p>因此建议在使用静默安装时，使用管理员权限打开命令行</p>
+</div>
 <h2 id="Uninstall"><a class="header-anchor" href="#Uninstall">#</a>Uninstall</h2>
 <p>使用 <code>uninstall</code> 卸载应用：</p>
 <figure class="highlight pwsh"><table><tr><td class="code"><pre><span class="line">winget uninstall &lt;Package ID&gt;</span><br><span class="line">// winget uninstall Microsoft.PowerShell</span><br></pre></td></tr></table></figure>
