@@ -2,7 +2,7 @@
 tags:
   - Dotnet
 created: 2023-10-21
-updated: 2023-11-16
+updated: 2024-01-01
 aliases:
   - .net Tools
 published: true
@@ -139,7 +139,7 @@ Usage:
 
 ## 打包 Tool
 
-在运行打包前，先修改 `example.cowsay.csproj` 文件，在 `<ProjectGroup>` 标签中添加如下内容：
+在运行打包前，先修改 `example.cowsay.csproj` 文件，在 `<PropertyGroup>` 标签中添加如下内容：
 
 ```xml
 <PackAsTool>true</PackAsTool>
