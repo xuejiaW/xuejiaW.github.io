@@ -9,7 +9,7 @@ cssclass:
 date: 2024-03-23 12:48
 published: true
 title: Custom SRP - Custom Render Pipeline
-descriptions: 该部分讲述了使用自定义的渲染管线在 Editor 和 Game 界面中绘制一系列 `Unlit/Color` 的物体以及 Skybox。
+description: 该部分讲述了使用自定义的渲染管线在 Editor 和 Game 界面中绘制一系列 `Unlit/Color` 的物体以及 Skybox。
 ---
 
 {% note info %}
