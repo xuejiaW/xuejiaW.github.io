@@ -76,10 +76,10 @@ public class CustomRenderPipelineAsset : RenderPipelineAsset
 所有派生自 `RenderPipelineAsset` 的类都必须实现 `CreatePipeline` 函数，Unity 使用该函数获取渲染管线的实例。
 
 之后可以通过 `Assets -> Create -> Rendering -> Custom Render Pipeline` 创造出 `RP Asset` ，结果如下所示：
-![|500](/custom_render_pipeline/untitled-6.png)
+![](/custom_render_pipeline/untitled-6.png)
 
 可以通过 `Project Settings -> Graphics -> Scriptable Render Pipeline Settings` 将自定义的 `RP Asset` 设置给 Unity，如下所示：
-![|500](/custom_render_pipeline/untitled-7.png)
+![](/custom_render_pipeline/untitled-7.png)
 
 当替换后了 `RP Asset` 后，主要有两个变化：
 
@@ -200,7 +200,7 @@ private void Submit() { m_RenderContext.Submit(); }
 {% endnote %}
 
 结果如下所示：
-![Draw the Skybox|500](/custom_render_pipeline/gif_2021-5-8_19-55-17.gif)
+![Draw the Skybox](/custom_render_pipeline/gif_2021-5-8_19-55-17.gif)
 
 ## Command Buffers
 
@@ -255,7 +255,7 @@ private void ExecuteCommandBuffer()
 {% endnote %}
 
 此时在 Frame Debugger 中既可以看到之前添加的 Buffer Name 信息：
-![Buffer Name in frame debugger|400](/custom_render_pipeline/image-20240220172114.png)
+![Buffer Name in frame debugger](/custom_render_pipeline/image-20240220172114.png)
 
 在 Profiler Window 中也能看到相应的信息：
 ![Buffer Name in Profiler](/custom_render_pipeline/image-20240220172503.png)
@@ -275,7 +275,7 @@ private void Setup()
 ```
 
 此时可以在 Frame Debugger 中看到 `Clear` 的命令，如下所示：
-![Clear Command|500](/custom_render_pipeline/image-20240220175057.png)
+![Clear Command](/custom_render_pipeline/image-20240220175057.png)
 
 {% note warning %}
 对于增加 Clear Render Target 命令的顺序，必须严格按照上述例子，即先设置 Camera Properties，再进行 Clear，再进行 BeginSample。
@@ -290,7 +290,7 @@ renderContext.SetupCameraProperties(camera);
 }
 ```
 此时的 Frame Debugger 窗口将显示如下内容：
-![Draw GL|300](/custom_render_pipeline/2024-02-20-17-33-31.png)
+![Draw GL](/custom_render_pipeline/2024-02-20-17-33-31.png)
 又因为 `CommandBuffer.ClearRenderTarget` 的实现会将 Clear 的操作放在一个以 Command Buffer 名称命名的 Sample 中，所以如下的代码将再 Frame Debugger 窗口中引发嵌套的 Sample，如下所示：
 ```csharp
 private void Setup()
@@ -377,7 +377,7 @@ private void DrawVisibleGeometry()
 `SortingSettings` 中的 `criteria` 制定了排序的标准，如这里的 `CommonOpaque` 表示使用通常渲染不透明物体时的排序规则，该规则会综合考虑 RenderQueue，材质，距离等相关信息。
 
 此时在 Frame Debugger 中查看渲染的顺序与结果，如下所示，可以看到基本是先渲染一个特定的材质，然后再渲染下一个：
-![渲染顺序与结果|500](/custom_render_pipeline/gif_2021-5-11_23-51-01.gif)
+![渲染顺序与结果](/custom_render_pipeline/gif_2021-5-11_23-51-01.gif)
 
 如果查看 `CommonOpaque` 的定义可以看到，它考虑了尽可能的减少渲染上下文的切换，从前至后渲染等因素：
 
@@ -412,12 +412,12 @@ private void DrawVisibleGeometry()
 ```
 
 则渲染的结果如下所示，几乎是一个无规律的状态在渲染：
-![Random Rendering|500](/custom_render_pipeline/gif_2021-5-11_23-54-57.gif)
+![Random Rendering](/custom_render_pipeline/gif_2021-5-11_23-54-57.gif)
 
 ## Drawing Opaque and Transparent Geometry Separately
 
 在之前的最终渲染结果中，天空盒将半透明物体的一部分遮挡掉了，如下所示：
-![Wrong Effect of Transparent Object|500](/custom_render_pipeline/untitled-10.png)
+![Wrong Effect of Transparent Object](/custom_render_pipeline/untitled-10.png)
 
 这是因为天空盒在半透明物体的之后进行渲染，而在 `Unlit/Transparent` 的 Shader 中，设置了 `ZWrite Off` ，即半透明物体不会写入深度缓冲，因此在绘制了半透明物体的部分，天空盒仍然能通过深度检测，即覆盖半透明物体。
 
@@ -441,7 +441,7 @@ private void DrawVisibleGeometry()
 ```
 
 渲染结果如下：
-![渲染结果|500](/custom_render_pipeline/untitled-11.png)
+![渲染结果](/custom_render_pipeline/untitled-11.png)
 
 # Editor Rendering
 
@@ -517,7 +517,7 @@ private void DrawUnSupportedShadersGeometry()
 ```
 
 此时结果如下：
-![渲染结果|500](/custom_render_pipeline/untitled-13.png)
+![渲染结果](/custom_render_pipeline/untitled-13.png)
 
 ## Partial Class
 
@@ -599,15 +599,15 @@ partial void DrawGizmos()
 ```
 
 其中 `context.DrawGizmos` 需要两个参数，第一个是表示当前 View 的 Camera， 第二个表示哪种 `Gizmos` 需要被绘制， `GizmoSubset.PreImageEffects` 表示受后处理影响的 `Gizmos` ， `GizmoSubset.PostImageEffects` 表示不受后处理影响的部分。这里选择渲染所有种类的 `Gizmos` 。渲染的结果如下：
-![渲染结果|500](/custom_render_pipeline/untitled-14.png)
+![渲染结果](/custom_render_pipeline/untitled-14.png)
 
 ## Drawing Unity UI
 
 在场景中添加了一个 UGUI 的 Button 后，可以看到按钮在 Game 界面中被正常的渲染了出来，如下所示：
-![Button in Game View|500](/custom_render_pipeline/untitled-15.png)
+![Button in Game View](/custom_render_pipeline/untitled-15.png)
 
 但通过 Frame Debugger 可以发现此时 UI 的渲染并没有经过自定义的 SRP 如下所示：
-![Frame Debugger for UI|500](/custom_render_pipeline/untitled-16.png)
+![Frame Debugger for UI](/custom_render_pipeline/untitled-16.png)
 
 而当将 `Canvas` 中的 `Render Mode` 修改为 `Screen Space - Camera` 或 `World Space` 后，UI 的渲染被放到了渲染半透明物体的部分中，如下所示，且此时因为在半透明的队列中先渲染了 UI，所以 UI 几乎被其他物体遮挡住了：
 
@@ -716,7 +716,7 @@ partial void PrepareBuffer()
 | ![Main Camera](/custom_render_pipeline/untitled-25.png) | ![Second Camera](/custom_render_pipeline/untitled-26.png) |
 
 此时的渲染结果如下，因为 Second Camera 仅渲染 `Ignore Raycast` Layer 的物体，又 Second Camera 会覆盖 Main Camera 的内容：
-![Second Camera|500](/custom_render_pipeline/image-20240225150054.png)
+![Second Camera](/custom_render_pipeline/image-20240225150054.png)
 
 ## Clear Flags
 
@@ -759,7 +759,7 @@ private void Setup()
 | ![Depth Only](/custom_render_pipeline/image-20240225150324.png) | ![Don't Clear](/custom_render_pipeline/image-20240225150353.png) |
 
 还可以通过调整摄像机的 `Viewport` 决定摄像机渲染结果的输出范围，如下为 `Second Camera` 的 Clear Flag 为 `Color` 且 Viewport 为 `(0.75, 0.75, 0.25, 0.25)` 时的结果：
-![|500](/custom_render_pipeline/untitled-32.png)
+![](/custom_render_pipeline/untitled-32.png)
 
 {% note info %}
 Unity 使用 `Hidden/InternalClear` shader 来进行 Clear 操作。该 Shader 中会通过 Stencil Buffer 来实现 Camera Viewport 的效果。

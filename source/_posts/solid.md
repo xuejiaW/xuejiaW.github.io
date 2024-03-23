@@ -254,7 +254,7 @@ public class Train : RailVehicle { ... }
 
 使用多个特定细分的接口比单一的总接口要好，不能强迫用户去依赖他们用不到的接口。
 
-![|400](/solid/image-20220703135800770.png)
+![](/solid/image-20220703135800770.png)
 
 ## Example
 

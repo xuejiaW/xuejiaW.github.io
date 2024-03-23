@@ -39,7 +39,7 @@ Input System 依赖 Unity 2019.1 及以上版本，本文档基于 Unity 2022.3.
 ![](/input_system_minimum_tutorial/2023-11-16-15-56-36.png)
 
 在安装 Package 后，会自动弹出如下窗口，该窗口表示 `Input System` 启用后需要重启 Editor Backend 才能正常使用，点击 `Yes` 启用 Input System，此时 Unity Editor 会自动重启：
-![启用 Input System|400](/input_system_minimum_tutorial/2023-11-16-15-54-50.png)
+![启用 Input System](/input_system_minimum_tutorial/2023-11-16-15-54-50.png)
 
 当 Unity 重启后，根据 Unity 版本的不同，可能内置的 `Input Manager` 会被关闭，如果要重新启用，可以在 `Edit` -> `Project Settings` -> `Player` -> `Other Settings` -> `Active Input Handling` 中选择 `Both`：
 ![Player Settings 中切换输出方式](/input_system_minimum_tutorial/2023-11-16-15-59-49.png)
