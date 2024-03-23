@@ -34,9 +34,7 @@ description: 本章主要介绍了软件开发中的前期准备工作，包括�
 
 {% note 'fas fa-quote-left' %}
 所使用的方法应该基于选择最新和最好的方法，而不是基于无知。它还应该与旧的和可靠的东西自由搭配。
-
 —— [Harlan Mills](https://en.wikipedia.org/wiki/harlan_mills)
-
 {% endnote %}
 
 ## 准备不充分的原因
@@ -97,9 +95,7 @@ description: 本章主要介绍了软件开发中的前期准备工作，包括�
 
 {% note 'fas fa-quote-left' %}
 如果“盒子”是约束和条件的边界，那么诀窍就是找到盒子……不要跳出它思考，你要先找到它。
-
 —— Andy Hunt / Dave Thomas _The Pragmatic Programmer_ 作者
-
 {% endnote %}
 
 问题定义定义了问题是什么，但不需要提及任何可能的解决方案
@@ -141,7 +137,6 @@ description: 本章主要介绍了软件开发中的前期准备工作，包括�
 
 {% note 'fas fa-quote-left' %}
 需求就像水一样。当它们被冷冻时，更容易建造。
-
 {% endnote %}
 
 ## 处理施工期间的需求变化
@@ -346,3 +341,4 @@ description: 本章主要介绍了软件开发中的前期准备工作，包括�
 
 完整的上游决策的检查清单：
 [Prerequisites Checklist](/ch_03_prerequisites_checklist)
+

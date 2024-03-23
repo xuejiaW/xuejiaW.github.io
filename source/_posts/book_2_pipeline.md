@@ -104,7 +104,7 @@ Warp 中指令依赖数据未准备好，必须切换另一个 Warp 继续执行
 
 ## Tessellation
 
-{% note info %}
+{% note primary %}
 曲面细分阶段中，有两个可编程的着色器， `Hull Shader` 和 `Domain Shader`
 {% endnote %}
 
@@ -222,3 +222,4 @@ Domain Shader 会根据 Hell Shader 的输出（ Patch 顶点）以及 Tessellat
 [Render Hell – Book II | Simon schreibt.](http://simonschreibt.de/gat/renderhell-book2/)
 
 [^1]: [Life of a triangler](https://developer.nvidia.com/content/life-triangle-nvidias-logical-pipeline)
+

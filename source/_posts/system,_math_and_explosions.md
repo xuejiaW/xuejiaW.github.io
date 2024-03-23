@@ -80,3 +80,4 @@ description: 系统从根本上就是复杂地，因为它不仅仅包含事物�
 # Reference
 
 [Systems, math and explosions (in no particular order) (pjonori.blog)](https://pjonori.blog/posts/systems-math-explosions/)
+

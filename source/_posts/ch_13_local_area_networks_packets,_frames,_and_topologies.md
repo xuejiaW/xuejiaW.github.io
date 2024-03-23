@@ -184,3 +184,4 @@ IEEE定义了三种对应包传递的方法：
 # Reference
 [Switching technology](https://web.archive.org/web/20171217042848/http://www.cs.virginia.edu/~mngroup/projects/mpls/documents/thesis/node8.html)
 [【计算机网络】数据交换技术和多路复用技术的正（nao）确(can)打开方式](https://www.cnblogs.com/penghuwan/p/7686059.html#_label3_1)
+

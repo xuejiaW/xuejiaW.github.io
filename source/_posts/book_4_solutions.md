@@ -56,3 +56,4 @@ Batch 还会造成一个额外的问题。在未进行 Batch 时，如果一个 
 # Reference
 
 [Render Hell – Book IV | Simon schreibt.](http://simonschreibt.de/gat/renderhell-book4/)
+
