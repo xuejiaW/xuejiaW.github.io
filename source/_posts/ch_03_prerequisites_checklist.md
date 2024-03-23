@@ -14,3 +14,4 @@ date: 2023-11-12 17:38
 - [ ] 需求是否足够明确，足以开始构建？（更详细的请参考，[Ch 03 Requirement Checklist](/ch_03_requirement_checklist)）
 - [ ] 架构是否足够明确，足以开始构建（更详细的请参考 [Ch 03 Architecture Checklist](/ch_03_architecture_checklist)
 - [ ] 你项目中的特有的风险是否已经得到了解决，以保证在施工时不会面临不必要的风险？
+

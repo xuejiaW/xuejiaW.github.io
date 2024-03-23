@@ -1,8 +1,8 @@
 ---
 tags:
-    - 设计模式
+  - 设计模式
 alias: 装饰模式
-updated: 2023-10-26
+updated: 2024-03-11
 created: 2023-05-13
 title: 《Head First 设计模式》 Ch 03 装饰模式
 published: true
@@ -133,3 +133,4 @@ Console.WriteLine(doubleMochaWhipEspresso.getDescription() + " Cost: " + doubleM
 运行结果：
 
 ![装饰模式运行结果](/ch_03_the_decorator_pattern/2019-01-15-23-43-20.png)
+

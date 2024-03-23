@@ -14,9 +14,7 @@ description: 本文为 Unity Input System 的逐步最简教程，在教程的�
 
 {% note info %}
 本教程极大程度的参考了 Unity Learn 上的官方教程[^1]，但并不是其翻译版本，而是根据我的学习过程进行相应增删改。
-
 完整工程见：[xuejiaW/InputSystemSample: A minimum unity project to illustrate how to use Unity new input system. (github.com)](https://github.com/xuejiaw/inputsystemsample)
-
 {% endnote %}
 
 
@@ -26,12 +24,10 @@ Unity 有内建的 `Input Manager` 机制，这一套机制存在了非常久的
 
 {% note primary %}
 对于新工程，Unity 官方都推荐使用 `Input System` 作为输入的解决方案，但 `Input Manager` 并不会短期内被废弃，因为历史包袱过重[^2]。
-
 {% endnote %}
 
 {% note info %}
 Input System 依赖 Unity 2019.1 及以上版本，本文档基于 Unity 2022.3.15f1 + Input System 1.7 编写
-
 {% endnote %}
 
 
@@ -61,7 +57,6 @@ Input System 依赖 Unity 2019.1 及以上版本，本文档基于 Unity 2022.3.
 
 {% note primary %}
 该 Settings Asset 作为 Input System 全局的配置，但其并不是必须项。如果未创建该文件 Unity 会使用默认的 Input System 配置。
-
 {% endnote %}
 
 当点击创建后，会在工程的根目录创建出一个 `InputSystem.inputsettings` 文件，该文件即是 Input System 的总配置文件。同时原 `Input System Package` 页面也会包含有一系列的针对于 `Input System` 的配置项：
@@ -72,7 +67,6 @@ Input System 依赖 Unity 2019.1 及以上版本，本文档基于 Unity 2022.3.
 
 {% note primary %}
 你可以随意修改 `InputSystem.inputsettings` 的位置，并不要求该文件必须在工程根目录下。
-
 {% endnote %}
 
 此时的工程状态见：
@@ -145,9 +139,7 @@ public class PlayerController : MonoBehaviour
 
 {% note primary %}
 对于 Asset 中任意名称的 Action，都可以通过 `On<ActionName>` 监听到。
-
 如果 Action 叫做 `AAA`，则可以定义 `OnAAA` 函数监听。
-
 {% endnote %}
 
 将该脚本挂载在 `Player` 上，如下所示：
@@ -186,7 +178,6 @@ public class PlayerController : MonoBehaviour
 
 {% note primary %}
 `GamePad` 的 `East` 和 `West` Button，在 Xbox 控制器上分别对应 `X` 键和 `B` 键
-
 {% endnote %}
 
 你也可以继续为 `Buttons` Action 绑定 Keyboard 的 `F1` 和 `F2` 按键，步骤如上，当绑定完成后，整个 `Buttons` Action 如下所示：
@@ -345,3 +336,4 @@ public class BallController_AutoScripts : MonoBehaviour
 
 [^1]: [Setting up the Input System - Unity Learn](https://learn.unity.com/tutorial/setting-up-the-input-system?uv=2020.1&projectid=5fc93d81edbc2a137af402b7)
 [^2]: https://forum.unity.com/threads/will-old-input-system-eventually-become-deprecated.1263932/
+

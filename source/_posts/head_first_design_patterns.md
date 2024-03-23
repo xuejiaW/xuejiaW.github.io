@@ -39,3 +39,4 @@ date: 2023-05-24
 [Ch 12 the Compound Patterns](/ch_12_the_compound_patterns)
 
 [Head First Design Pattern Design Principles](/head_first_design_pattern_design_principles)
+

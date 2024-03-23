@@ -2,7 +2,7 @@
 tags:
   - Dotnet
 created: 2023-10-21
-updated: 2024-01-01
+updated: 2024-03-07
 aliases:
   - .net Tools
 published: true
@@ -15,7 +15,6 @@ description: .Net Tools 创建教程，包含一个最简例子（一个在命�
 
 {% note info %}
 需要使用 .net 6.0 及以上的版本
-
 {% endnote %}
 
 ## 创建 .Net Tool 项目
@@ -234,3 +233,4 @@ dotnet tool update --global --add-source <sourcePath> <toolName>
 [Tutorial: Create a .NET tool - .NET CLI | Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools-how-to-create)
 
 [(4) How to create your own .NET CLI tools to make your life easier - YouTube](https://www.youtube.com/watch?v=jndgcbdzpku&ab_channel=nickchapsas)
+

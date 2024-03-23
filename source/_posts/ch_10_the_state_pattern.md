@@ -174,3 +174,4 @@ gumballMachine.EjectQuarter();
 运行结果：
 
 ![状态模式运行结果](/ch_10_the_state_pattern/2019-02-06-20-10-15.png)
+

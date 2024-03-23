@@ -19,3 +19,4 @@ date: 2023-05-23
 7. 暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）
 8. 高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don't call us ,we’ll call you）
 9. 一个类应该有且只有一个被改变的理由（A class should have only one reason to change）
+

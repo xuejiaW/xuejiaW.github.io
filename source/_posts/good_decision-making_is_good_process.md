@@ -79,3 +79,4 @@ description: 这篇文章提出了“针对一个问题做出决定的结果并�
 # Reference
 
 [Good decision-making is good process (grigorik.com)](https://ilya.grigorik.com/good-decision-making-is-good-process-used-intentionally/)
+

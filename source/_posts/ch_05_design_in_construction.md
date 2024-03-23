@@ -2,7 +2,7 @@
 tags:
   - 工程实践
 created: 2023-09-24
-updated: 2023-12-27
+updated: 2024-03-09
 date: 2023-11-12 22:30
 published: true
 title: 《Code Complete》 第五章：构建中的设计
@@ -37,7 +37,6 @@ description: 本节主要关注于代码编写时所需要进行的设计活动�
 
 {% note info %}
 所以软件开发，不能空想。在思考到一定程度后，你就需要动手去做。
-
 {% endnote %}
 
 棘手问题的一个现实例子：[塔科马海峡吊桥 ](https://zh.wikipedia.org/zh-cn/%e5%a1%94%e7%a7%91%e9%a6%ac%e6%b5%b7%e5%b3%bd%e5%90%8a%e6%a9%8b)
@@ -113,7 +112,9 @@ Brooks 认为，软件中的主要意外问题已经被解决了：
 
 所有的问题都来自于复杂性，复杂性也有本质复杂性和偶然复杂性。
 
-> [Unix 编程艺术](/unix_bian_cheng_yi_shu) 中也有类似的讨论：[13.1.3 本质的、选择的和偶然地复杂度](/di_13_zhang_fu_za_du：jin_ke_neng_jian_dan，dan_bie_jian_dan_guo_le_tou/#13_1_3_本质的、选择的和偶然地复杂度)
+{% note info %}
+[Unix 编程艺术](/unix_bian_cheng_yi_shu) 中也有类似的讨论：[13.1.3 本质的、选择的和偶然地复杂度](/di_13_zhang_fu_za_du：jin_ke_neng_jian_dan，dan_bie_jian_dan_guo_le_tou/#13_1_3_本质的、选择的和偶然地复杂度)
+{% endnote %}
 
 ### 管理复杂性的重要性
 
@@ -130,9 +131,7 @@ Dijkstra（1972 年图灵机获得者）说没有人的大脑大到足以容纳�
 
 {% note 'fas fa-quote-left' %}
 One symptom that you have bogged down in complexity overload is when you find yourself doggedly applying a method that is clearly irrelevant, at least to any outside observer. It is like the mechanically inept person whose car breaks down—so he puts water in the battery and empties the ashtrays.
-
 —— P. J. Plauger
-
 {% endnote %}
 
 在软件架构层面，可以通过将系统划分为子系统来降低问题的复杂性。人类更容易理解几条简单的信息，而不是一条复杂的信息。所有软件设计的目标都是将复杂的问题分解为几个简单的部分。子系统越独立，开发者就越能安全地一次专注于一处的复杂性上。
@@ -158,9 +157,7 @@ One symptom that you have bogged down in complexity overload is when you find yo
 
 {% note 'fas fa-quote-left' %}
 When I am working on a problem I never think about beauty. I think only how to solve the problem. But when I have finished, if the solution is not beautiful, I know it is wrong.
-
 —— R. Buckminster Fuller
-
 {% endnote %}
 
 以下是一些高质量设计的特征：
@@ -230,20 +227,22 @@ When I am working on a problem I never think about beauty. I think only how to s
 
 但在软件设计时，则完全不同。由于设计是不确定的，因此熟练应用一组有效的启发式方法是优秀软件设计的核心活动。
 
-> 算法是一组用于执行特定任务的明确定义的指令。算法是可预测的、确定性的，并且不受偶然性的影响。算法会告诉你如何从 A 点到 B 点：不走弯路，不绕道到 D、E 和 F 点。 
-> ———— [《Code Complete》第二章：丰富软件开发理解的隐喻](/ch_02_metaphors_for_a_richer_understanding_of_software_development)
+{% note 'fas fa-quote-left' %}
+算法是一组用于执行特定任务的明确定义的指令。算法是可预测的、确定性的，并且不受偶然性的影响。算法会告诉你如何从 A 点到 B 点：不走弯路，不绕道到 D、E 和 F 点。 
+———— [《Code Complete》第二章：丰富软件开发理解的隐喻](/ch_02_metaphors_for_a_richer_understanding_of_software_development)
+{% endnote %}
 
-> 启发式是一种帮助您寻找答案的技术。其结果可能会受到偶然性的影响，因为启发式方法只告诉您如何查看，而不是告诉您要查找什么。它不会告诉你如何从 A 点直接到达 B 点；它甚至可能不知道 A 点和 B 点在哪里。 
-> ———— [《Code Complete》第二章：丰富软件开发理解的隐喻](/ch_02_metaphors_for_a_richer_understanding_of_software_development)
+{% note 'fas fa-quote-left' %}
+启发式是一种帮助您寻找答案的技术。其结果可能会受到偶然性的影响，因为启发式方法只告诉您如何查看，而不是告诉您要查找什么。它不会告诉你如何从 A 点直接到达 B 点；它甚至可能不知道 A 点和 B 点在哪里。 
+———— [《Code Complete》第二章：丰富软件开发理解的隐喻](/ch_02_metaphors_for_a_richer_understanding_of_software_development)
+{% endnote %}
 
 以下是一些启发式的进行设计的方法：
 
 {% note info %}
 以下是一些进行软件设计时，可以考虑的方向，期望这些方向可以启发你对于软件设计的思考。
-
+这些方向不是相互冲突的，相反，你可以将他们结合起来思考
 {% endnote %}
-
-> 这些方向不是相互冲突的，相反，你可以将他们结合起来思考
 
 ## 寻找现实世界的物体进行参考
 
@@ -344,15 +343,15 @@ When I am working on a problem I never think about beauty. I think only how to s
 
     但类成员数据大程度上，减少了上述两个问题的发生，因为对一个数据的访问者被限定在这个类中。
 
-    > [!Caution]
-    >
-    > 上述关于*类成员数据危害比全局数据小得多* 的结论前提是，整个程序使用 _设计良好_，_小型_ 的类。如果整个程序都基于几个大型的类，那么类成员数据与全局数据的定义就变得非常模糊了
+{% note warning %}
+上述关于*类成员数据危害比全局数据小得多* 的结论前提是，整个程序使用 _设计良好_，_小型_ 的类。如果整个程序都基于几个大型的类，那么类成员数据与全局数据的定义就变得非常模糊了
+{% endnote %}
 
 -   对性能惩罚的恐惧：有些程序员认为，隐藏信息会导致性能下降，如封装了太多的类，会导致内存的频繁分配等等。但设计一个“隐藏信息”的系统，和设计一个“性能良好”的系统并不冲突，在设计系统时完全可以同时考虑这两个目标。
 
-    > [!info]
-    >
-    > 在你能够明确的测量出性能瓶颈前，对于性能的担忧都是过早的。此时你能做到，应该是尽可能的将代码模块化，以保证后续检测到性能瓶颈热区时，对它的修改不会影响到整个系统。
+{% note info %}
+在你能够明确的测量出性能瓶颈前，对于性能的担忧都是过早的。此时你能做到，应该是尽可能的将代码模块化，以保证后续检测到性能瓶颈热区时，对它的修改不会影响到整个系统。
+{% endnote %}
 
 ### 隐藏信息的价值
 
@@ -423,9 +422,7 @@ When I am working on a problem I never think about beauty. I think only how to s
 
 {% note info %}
 直观上，A 函数的输入依赖 B 函数的形参，是一个强耦合。
-
 但实际上这样的操作，让 A 并不需要关心 B 的具体实现，A 只要求其他函数提供满足要求的输入即可，提供输入的函数可以是 B，也可以是 C，所以实际上这样的做法是弱耦合。
-
 {% endnote %}
 
 #### 灵活性
@@ -440,7 +437,6 @@ When I am working on a problem I never think about beauty. I think only how to s
 
 {% note info %}
 这个例子即为后续会提到的 [语义耦合](/ch_05_design_in_construction/#语义耦合)
-
 {% endnote %}
 
 ### 耦合类型
@@ -453,7 +449,6 @@ When I am working on a problem I never think about beauty. I think only how to s
 
 {% note info %}
 因为这种耦合满足了 [可见性](/ch_05_design_in_construction/#可见性)，只要参数的个数不要太多，就不会违背 [连接数量](/ch_05_design_in_construction/#连接数量)
-
 {% endnote %}
 
 #### 对象参数耦合
@@ -469,9 +464,9 @@ When I am working on a problem I never think about beauty. I think only how to s
 以下是一些语义耦合的例子：
 
 -   `Module 1` 将一个 Magic Number 传递给 `Module 2`，以此告知 `Module 2` 应该要执行的操作。这个行为假设了 `Module 2` 能理解 `Module 1` 的 Magic Number。
-    > [!Note]
-    >
-    > 如果传递的不是 Magic Number，而是枚举值，则不算是语义耦合
+{% note info %}
+如果传递的不是 Magic Number，而是枚举值，则不算是语义耦合
+{% endnote %}
 -   `Module 2` 在 `Module 1` 修改了全局变量后，使用该全局变量的值。这个行为假设了 `Module 1` 会修改全局变量，且 `Module 2` 能理解 `Module 1` 对全局变量的修改。
 -   `Module 1` 的接口声明中表示了调用 `routine` 函数前，必然会先调用 `initialize`。所以 `Module 2` 直接调用了 `routine` 而未调用 `initialize`。这个行为假设了 `Module 2` 能理解 `Module 1` 的接口声明，且 `Module 1` 的行为不会发生改变。
 -   `Module 1` 将 Object 传递给 `Module 2`时，因为 `Module 1` 知道 `Module 2` 仅使用 Object 的 7 个方法中的 3 个，所以它仅使用这 3 个方法所需的特定数据部分初始化 Object。一旦 `Module 2` 的行为发生了变化，则 `Module 1` 的行为也需要发生变化。
@@ -481,11 +476,8 @@ When I am working on a problem I never think about beauty. I think only how to s
 
 {% note primary %}
 松耦合的核心是，一个模块提供了有效的，额外的抽象级别——一旦你编写了它，你就可以认为它是理所当然的。
-
 它降低了整个程序的复杂性，让您一次专注于一件事。
-
 如果使用模块需要你同时关注多件事情（了解其内部工作原理、修改全局数据、不确定的功能），则抽象能力就会丧失，模块帮助管理复杂性的能力也会降低或消除。
-
 {% endnote %}
 
 ## 寻找常见的设计模式
@@ -515,8 +507,10 @@ When I am working on a problem I never think about beauty. I think only how to s
 
 层次结构（Hierarchy）是一种将信息分层的方式，将概念中最抽象，或最一般的信息放在层次结构的顶部，层次结构越底部就越详细、专用。
 
-> 另一个降低复杂性的尝试是，仅让系统的一个子集可以被使用：一个简单的公共系统向所有人开放，它由一个隐藏着的一个更大、更复杂的私有系统驱动。 
-> ———— [《System, Math and Explosions》 摘抄](/system,_math_and_explosions)
+{% note 'fas fa-quote-left' %}
+另一个降低复杂性的尝试是，仅让系统的一个子集可以被使用：一个简单的公共系统向所有人开放，它由一个隐藏着的一个更大、更复杂的私有系统驱动。 
+———— [《System, Math and Explosions》 摘抄](/system,_math_and_explosions)
+{% endnote %}
 
 使用层次结构是人类组织复杂信息的自然方式：当人画一个房子时，会先画房子的轮廓，再时门窗，然后是细节，而不是从一砖一瓦逐步画出整个房子。
 
@@ -532,7 +526,6 @@ When I am working on a problem I never think about beauty. I think only how to s
 
 {% note info %}
 类似 OpenXR，Vulkan 都是 _契约_
-
 {% endnote %}
 
 ### 为测试而设计
@@ -604,7 +597,6 @@ _绑定时间（Binding Time）_ 是指将一个特定的值与一个变量绑�
 
 {% note info %}
 上一节中是关于设计时的思考方式，这一节则是在应用设计时的实践。
-
 {% endnote %}
 
 ## 迭代
@@ -616,9 +608,7 @@ _绑定时间（Binding Time）_ 是指将一个特定的值与一个变量绑�
 
 {% note primary %}
 在高级视角和低级视角之间进行切换是一种健康的动态，它创造了一种比完全从上到下或从下到上建造的结构更稳定的受力结构。
-
 从一种视角切换到另一种视角需要耗费大量的脑力，但这对于创建有效的设计至关重要。
-
 {% endnote %}
 
 当你做出了一个看似良好的设计尝试时，请不要停止。第二次尝试通常会比第一次尝试得到更好的结果，而且每次你都可以在尝试中学到可以改进整体设计的东西。在许多情况下，使用一种方式解决问题会产生见解，使你能够使用另一种更好的方法解决问题
@@ -651,11 +641,8 @@ _绑定时间（Binding Time）_ 是指将一个特定的值与一个变量绑�
 
 {% note info %}
 如果你看到一个钉子，你要解决它。
-
 你可以选择直接使用锤子（自下而上）。
-
 而不是选择一个工具，选择一个捶打类工具，选择锤子（自上而下）。
-
 {% endnote %}
 
 问问自己，“这个系统需要做什么？”毫无疑问，你可以回答这个问题。你可能会确定一些可以分配给具体类的低级职责。例如，你可能知道系统需要格式化特定的报表、计算该报表的数据、将其标题居中、在屏幕上显示报表、在打印机上打印报表等等。在确定了几个低级别的职责后，你通常会开始感到足够舒服，此时可以再次查看高层职责。
@@ -684,9 +671,7 @@ _绑定时间（Binding Time）_ 是指将一个特定的值与一个变量绑�
 
 {% note info %}
 人们拆乐高并不需要任何的说明书，但是组装乐高却需要说明书。
-
 而且即使有说明书，拼装到最后可能也会出现一些额外的零件，这些零件可能是多余的，也可能是拼装错误导致的，但你不知道是哪种情况。
-
 {% endnote %}
 
 自下而上的优点是：
@@ -714,16 +699,13 @@ _绑定时间（Binding Time）_ 是指将一个特定的值与一个变量绑�
 
 {% note primary %}
 实验原型是软件设计师对抗棘手问题的主要工具，但如果没有纪律性的使用原型，则它会引发更多的棘手问题
-
 {% endnote %}
 
 ## 多少设计就足够了？
 
 {% note 'fas fa-quote-left' %}
 We try to solve the problem by rushing through the design process so that enough time is left at the end of the project to uncover the errors that were made because we rushed through the design process.
-
 —— Glenford Myers
-
 {% endnote %}
 
 如果设计下降到你以前完成过的任务级别，或者你对于如何解决非常的确信，你或许就已经完成了设计工作，你可以开始编码。
@@ -746,18 +728,16 @@ We try to solve the problem by rushing through the design process so that enough
 
 {% note info %}
 不要做二极管
-
 {% endnote %}
 
 {% note 'fas fa-quote-left' %}
 The more dogmatic you are about applying a design method, the fewer real-life problems you are going to solve
-
 —— P.J Plauger
-
 {% endnote %}
 
 将设计看作一个棘手的，草率的，启发式的过程。不要满足于你想到的第一个设计，在必要时做原型试验，然后迭代，迭代，再迭代。最终你会对你的设计满意。
 
 [Ch 05 Design Checklist](/ch_05_design_checklist)
+
 
 

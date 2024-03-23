@@ -3,8 +3,9 @@ tags:
   - 工具
   - CLI
   - 效率提升
+  - PowerShell
 created: 2023-11-26
-updated: 2023-12-27
+updated: 2024-02-09
 date: 2023-11-27 21:50
 title: Powershell 模块：ZLocation
 published: true
@@ -59,9 +60,9 @@ ZLocation 有以下的使用方式：
       7.00 D:\Project2\unity
     ```
 
-    > [!tip]
-    >
-    > `<location>` 模糊匹配的是路径最后的节点，如有地址 `D:\Project2\unity\SubProject1`，其并不会出现在 `z -l unity` 的输出中，因为 i 根节点 `SubProject1` 中并不包含有 `unity`。
+{% note primary %}
+`<location>` 模糊匹配的是路径最后的节点，如有地址 `D:\Project2\unity\SubProject1`，其并不会出现在 `z -l unity` 的输出中，因为 i 根节点 `SubProject1` 中并不包含有 `unity`。
+{% endnote %}
 
 3. 通过 `z <location>` 命令，跳转到匹配 `<location>` 的所有路径中最常用（根据权重决定）的那个。
    ![z location](/zlocation/gif-2023-11-26-21-28-41.gif)
@@ -86,9 +87,9 @@ ZLocation 有以下的使用方式：
 
     但有时，我们明确的知道是想要跳转到 `D:\Project2\unity`，此时就可以使用 `z 2 unity` 进行跳转。
 
-    > [!caution]
-    >
-    > 子路径必须按照顺序，如上例子中，如果使用 `z unity 2` 则是无法跳转的。
+{% note warning %}
+子路径必须按照顺序，如上例子中，如果使用 `z unity 2` 则是无法跳转的。
+{% endnote %}
 
 # 工作原理
 
@@ -100,7 +101,6 @@ ZLocation 的实现原理，是修改 Powershell 的 [Prompt](https://learn.micr
 
 {% note primary %}
 因为修改的是 Prompt，所以即使是使用 `cd` 进行路径跳转，也会记录在文件中。
-
 {% endnote %}
 
 ## 实现函数
@@ -133,3 +133,4 @@ Function        Update-ZLocation    1.4.3      ZLocation
 
 [ZLocation](https://github.com/vors/zlocation)
 [终端效率提升：自动路径切换](https://zhuanlan.zhihu.com/p/50548459)
+

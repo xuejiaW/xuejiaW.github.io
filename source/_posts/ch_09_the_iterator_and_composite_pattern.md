@@ -256,3 +256,4 @@ menu.Debug();
 运行结果：
 
 ![组合模式运行结果](/ch_09_the_iterator_and_composite_pattern/2019-02-06-16-23-58.png)
+

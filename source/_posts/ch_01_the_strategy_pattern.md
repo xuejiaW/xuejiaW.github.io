@@ -121,3 +121,4 @@ blackDuck.PerformFly();
 运行结果
 
 ![策略模式运行结果](/ch_01_the_strategy_pattern/2019-01-15-00-12-45.png)
+
