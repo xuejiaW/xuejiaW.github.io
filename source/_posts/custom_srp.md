@@ -14,6 +14,7 @@ Unity Catlike 中 [Custom SRP]([unity_custom_srp_tutorials_(catlikecoding.com)](
 
 - [Custom Render Pipeline](/custom_render_pipeline)：使用自定义的渲染管线在 Editor 和 Game 界面中绘制一系列 `Unlit/Color` 的物体以及 Skybox。
 - [Draw Calls](/draw_calls)：渲染自定义的 `Unlit` 的材质渲染一系列小球，讨论了不同的节省 Draw Calls 的技术，以及讨论了不同的实现透明度的办法
+- Directional Lights：制作一系列支持方向光的 Lit Shader
 
 # Reference
 

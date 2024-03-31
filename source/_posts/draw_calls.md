@@ -5,7 +5,7 @@ tags:
   - Unity
   - SRP
 created: 2022-01-24
-updated: 2024-03-23
+updated: 2024-03-31
 date: 2024-03-23 13:53
 published: true
 title: Custom SRP - Draw Calls
@@ -41,7 +41,7 @@ Shader "Custom RP/Unlit"
 
 |                                       |                                           |                                           |
 | ------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| ![](/draw_calls/untitled.png) | ![](/draw_calls/untitled-1.png) | ![](/draw_calls/untitled-2.png) |
+| ![](/draw_calls/drawcall.png) | ![](/draw_calls/drawcall-1.png) | ![](/draw_calls/drawcall-2.png) |
 
 ## HLSL Programs
 
@@ -95,7 +95,7 @@ HLSL 和 C++ 的 `include` 逻辑类似，即直接将被 include 的文件的�
 ## Include Guard && Shader Functions
 
 `.hlsl` 文件不能通过 Unity 直接创建，但在文件浏览器中创建后，可以在 Unity 中直接查看，如下所示：
-![](/draw_calls/untitled-3.png)
+![](/draw_calls/drawcall-3.png)
 
 一个可通过编译的 `hlsl` 文件如下所示：
 
@@ -187,7 +187,7 @@ float4x4 unity_MatrixVP;
 {% endnote %}
 
 `UnityInput.hlsl` 和 `Common.hlsl` 为新增的 `.hlsl` 文件，并放置在 `ShaderLibrary` 文件夹中，前者是为了封装 Unity 内置 Uniform 变量输入，后者是为了封装一些常用的函数。即此时文件结构为：
-![Project Structure](/draw_calls/untitled-4.png)
+![Project Structure](/draw_calls/drawcall-4.png)
 
 此时的结果如下所示，即可以看到一个正确的小球，因为我们已经完成了对于顶点着色器的设置的，但小球仍然是黑色的，因为我们尚未对片段着色器做设置：
 ![Black Sphere | 300](/draw_calls/image-20240302183509.png)
@@ -317,25 +317,25 @@ Properties
 # Batch
 
 使用上述着色器，生成四个颜色不同的材质，如下所示：
-![Blue](/draw_calls/untitled-6.png)
-![Red](/draw_calls/untitled-7.png)
-![Green](/draw_calls/untitled-8.png)
+![Blue](/draw_calls/drawcall-6.png)
+![Red](/draw_calls/drawcall-7.png)
+![Green](/draw_calls/drawcall-8.png)
 ![Yellow](/draw_calls/2024-03-02-21-28-55.png)
 
 在场景内添加 76 个小球，并用上述的材质随机给小球添加，效果如下所示：
 
-![76 Spheres with random material](/draw_calls/untitled-9.png)
+![76 Spheres with random material](/draw_calls/drawcall-9.png)
 
 在 Frame Debugger 中可以看到此时一共需要用到 78 个 DrawCall ，其中 76 个绘制小球，一个绘制天空盒，一个用来 Clear。如下所示
-![Frame Debugger](/draw_calls/untitled-10.png)
+![Frame Debugger](/draw_calls/drawcall-10.png)
 
 但如果 Game 窗口的 Statistic 界面中，只能看到 77 个 `Batches` ，这是因为 `Batches` 的计算无视了 Clear 。
-![Game Statistic](/draw_calls/untitled-11.png)
+![Game Statistic](/draw_calls/drawcall-11.png)
 
 ## SRP Batcher
 
 `Batching` 是将多个 Draw Call 结合在一起的过程。在 SRP 中最简单使用 `Batching` 的方法就是激活 `SRP Batcher` 功能，但这功能仅能在兼容的 Shader 中开启，上述自定义的 `Unlit` Shader 还不支持此功能，如下所示：
-![](/draw_calls/untitled-12.png)
+![](/draw_calls/drawcall-12.png)
 
 `SRP Batcher` 本质上并没有减少 Draw Call 的数量，它只是将一些材质的 Uniform 数据缓存在 GPU 上，让 CPU 不需要每帧都去设置。这样同时减少了 CPU 处理数据的时间以及 CPU 向 GPU 传输的数据量。
 
@@ -379,7 +379,7 @@ CBUFFER_END
 ```
 
 当定义完后，Shader 就变为兼容 `SRP Batcher` ，如下所示：
-![|300 ](/draw_calls/untitled-13.png)
+![|300 ](/draw_calls/drawcall-13.png)
 
 此时在自定义的渲染管线中，开启 `SRP Batcher` 即可，可以在自定义渲染管线构造时直接启用，如下所示：
 
@@ -393,10 +393,10 @@ public CustomRenderPipeline()
 ```
 
 此时在 Game 界面的 Statistic 窗口查看，可以看到仍然显示 77 个 Batches，而 `Saved by batching` 则变成了 $-76$ 个，如下所示：
-![Frame Debugger](/draw_calls/untitled-14.png)
+![Frame Debugger](/draw_calls/drawcall-14.png)
 
 之所以 `Saved by batching` 出现负数是因为 Unity 的 Statistic 窗口对于 SRP 存在 Bug，因此更好的选择是通过 Frame Debugger 查看，如下所示可以看到仅有一个 Batch：
-![Only Batch In Frame Debugger](/draw_calls/untitled-15.png)
+![Only Batch In Frame Debugger](/draw_calls/drawcall-15.png)
 
 {% note primary %}
 上图中 Draw Calls 仍然是 76，因为 `SRP Batcher` 并未合并 DrawCall，只是在 GPU 缓存了数据，减少了数据的传输和准备时间。
@@ -477,7 +477,7 @@ Pass
 ```
 
 此时可以看到使用了该 Shader 的材质面板中出现了 `Enable GPU Instancing` 关键字，如下所示，带上该关键字后，Unity 在编译时会为 Shader 生成两份代码，一份支持 Instancing，一份不支持：
-![](/draw_calls/untitled-17.png)
+![](/draw_calls/drawcall-17.png)
 
 但勾选了选项后会发现使用了同一材质的物体并没有被合并为一个 Shader 进行渲染，这是因为 Unity 在编译时需要知道哪些数据需要被组合为 `Instanced Data`的，因此 Shader 具体的实现也需要对应的更改。
 
@@ -589,11 +589,11 @@ public class DrawMassiveMeshBall : MonoBehaviour
 `Graphics.DrawMeshInstanced` 所接纳的形参分别是绘制用的 Mesh，Mesh 中的 SubMeshIndex（这里为 0），绘制用的材质，表示绘制 Mesh 位姿的 Matrices 绘制的数量，以及所用的 Material Property Block。注意这里通过 `MaterialPropertyBlock.SetVectorArray` 将绘制小球所需要的 Colors 一次性设置给了 Material Property Block。
 
 此时可以看到的效果为：
-![Massive Spheres](/draw_calls/untitled-19.png)
+![Massive Spheres](/draw_calls/drawcall-19.png)
 
 此时可以从 Frame Debugger 中看到绘制了 1023 个小球仅用了 3 个 DrawCall：
 
-![Three Draw Call](/draw_calls/untitled-20.png)
+![Three Draw Call](/draw_calls/drawcall-20.png)
 
 ## Dynamic Batching
 
@@ -635,11 +635,11 @@ public CustomRenderPipeline()
 因为 Unity 中的默认的 Sphere 物体，顶点数是 $515$ 个，不满足上述条件 1，因此无法被 `Dynamic Batching` 在一起。而默认的 Cube 物体，顶点数为 $24$ 个，满足条件，因此可使用 Cube 作为测试 `Dynamic Batching` 的物体。
 
 如下为 76 Cube，使用了四种不同的材质，渲染的效果如下所示：
-![76 Cubes](/draw_calls/untitled-23.png)
+![76 Cubes](/draw_calls/drawcall-21.png)
 
 此时查看 Frame Debugger，可以看到 76 个 Cubes 使用了 7 个 DrawCall 完成了渲染：
 
-![7 DrawCall](/draw_calls/untitled-24.png)
+![7 DrawCall](/draw_calls/drawcall-22.png)
 
 {% note primary %}
 通常情况下， `GPU Instancing` 是比 `Dynamic Batching` 更好的解决方法，因为少了很多限制，也不会产生 Bug。
@@ -709,7 +709,7 @@ private void DrawVisibleGeometry(bool useDynamicBatching, bool useGPUInstancing)
 # Transparency
 
 在材质中的 `Render Queue` 部分，可以看到有 `Transparent` 选项，如下所示，但这里的 `Transparent` 仅是修改物体的渲染顺序，而并不会改变物体的渲染特性。即此时将 `Base Color` 调整为半透明的，最终渲染的结果仍然是完全不透明的。
-![Render Queue](/draw_calls/untitled-25.png)
+![Render Queue](/draw_calls/drawcall-23.png)
 
 ## Blend Modes
 
@@ -737,11 +737,11 @@ SubShader
 ```
 
 此时新建一个 `CustomUnlitTransparentYellow` 材质，并按如下设置：
-![CustomUnlitTransparentYellow](/draw_calls/untitled-26.png)
+![CustomUnlitTransparentYellow](/draw_calls/drawcall-24.png)
 
 并用该材质替代原来使用 `CustomUnlitYellow` 材质的小球，此时的效果如下：
 
-![Transparent Yellow Effect](/draw_calls/untitled-27.png)
+![Transparent Yellow Effect](/draw_calls/drawcall-25.png)
 
 ## Not Writing Depth
 
@@ -862,7 +862,7 @@ float4 UnlitPassFragment(Varyings input) : SV_TARGET {
 ![CustomUnlitTextureRed | 400](/draw_calls/2024-03-03-16-56-17.png)
 
 此时的场景效果如下：
-![Red Transparent Texture](/draw_calls/untitled-29.png)
+![Red Transparent Texture](/draw_calls/drawcall-27.png)
 
 在这个场景下，如果需要将 Batch 数降低到最低，应该首先开启 `CustomRP` 的 `Use SRP Batcher`，并让半透明的黄色小球的材质，也换为使用 `UnlitTransparentTexture.shader` 只不过材质为空，如下所示：
 ![Yellow Texture](/draw_calls/2024-03-03-17-10-17.png)
@@ -1005,7 +1005,7 @@ private void Awake()
 ```
 
 结果如下：
-![](/draw_calls/untitled_31.png)
+![](/draw_calls/drawcall-28.png)
 
 # Reference
 
