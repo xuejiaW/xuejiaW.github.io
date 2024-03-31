@@ -3,7 +3,7 @@ tags:
   - Unity
   - SRP
 created: 2022-01-24
-updated: 2024-03-23
+updated: 2024-03-31
 cssclass:
   - table-border
 date: 2024-03-23 12:48
@@ -44,13 +44,13 @@ Unity 工程的默认色彩空间 Gamma，而为了保证后续光照等计算�
 
 在场景中随意放置一些 Cube 和 Sphere，并附加不同的材质，结果如下图所示：
 
-![](/custom_render_pipeline/untitled.png)
+![](/custom_render_pipeline/crp.png)
 
 所使用的材质设置如下图所示：
 
 |                                                            |                                                             |                                                                                      |
 | ---------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| ![Red](/custom_render_pipeline/untitled-1.png) | ![Blue](/custom_render_pipeline/untitled-2.png) | ![Green/Yellow/White](/custom_render_pipeline/image-20220124092928056.png) |
+| ![Red](/custom_render_pipeline/crp1.png) | ![Blue](/custom_render_pipeline/crp2.png) | ![Green/Yellow/White](/custom_render_pipeline/image-20220124092928056.png) |
 
 ## Pipeline Asset
 
@@ -76,10 +76,10 @@ public class CustomRenderPipelineAsset : RenderPipelineAsset
 所有派生自 `RenderPipelineAsset` 的类都必须实现 `CreatePipeline` 函数，Unity 使用该函数获取渲染管线的实例。
 
 之后可以通过 `Assets -> Create -> Rendering -> Custom Render Pipeline` 创造出 `RP Asset` ，结果如下所示：
-![](/custom_render_pipeline/untitled-6.png)
+![](/custom_render_pipeline/crp3.png)
 
 可以通过 `Project Settings -> Graphics -> Scriptable Render Pipeline Settings` 将自定义的 `RP Asset` 设置给 Unity，如下所示：
-![](/custom_render_pipeline/untitled-7.png)
+![](/custom_render_pipeline/crp4.png)
 
 当替换后了 `RP Asset` 后，主要有两个变化：
 
@@ -417,7 +417,7 @@ private void DrawVisibleGeometry()
 ## Drawing Opaque and Transparent Geometry Separately
 
 在之前的最终渲染结果中，天空盒将半透明物体的一部分遮挡掉了，如下所示：
-![Wrong Effect of Transparent Object](/custom_render_pipeline/untitled-10.png)
+![Wrong Effect of Transparent Object](/custom_render_pipeline/crp6.png)
 
 这是因为天空盒在半透明物体的之后进行渲染，而在 `Unlit/Transparent` 的 Shader 中，设置了 `ZWrite Off` ，即半透明物体不会写入深度缓冲，因此在绘制了半透明物体的部分，天空盒仍然能通过深度检测，即覆盖半透明物体。
 
@@ -441,7 +441,7 @@ private void DrawVisibleGeometry()
 ```
 
 渲染结果如下：
-![渲染结果](/custom_render_pipeline/untitled-11.png)
+![渲染结果](/custom_render_pipeline/crp7.png)
 
 # Editor Rendering
 
@@ -517,7 +517,7 @@ private void DrawUnSupportedShadersGeometry()
 ```
 
 此时结果如下：
-![渲染结果](/custom_render_pipeline/untitled-13.png)
+![渲染结果](/custom_render_pipeline/crp9.png)
 
 ## Partial Class
 
@@ -599,24 +599,24 @@ partial void DrawGizmos()
 ```
 
 其中 `context.DrawGizmos` 需要两个参数，第一个是表示当前 View 的 Camera， 第二个表示哪种 `Gizmos` 需要被绘制， `GizmoSubset.PreImageEffects` 表示受后处理影响的 `Gizmos` ， `GizmoSubset.PostImageEffects` 表示不受后处理影响的部分。这里选择渲染所有种类的 `Gizmos` 。渲染的结果如下：
-![渲染结果](/custom_render_pipeline/untitled-14.png)
+![渲染结果](/custom_render_pipeline/crp10.png)
 
 ## Drawing Unity UI
 
 在场景中添加了一个 UGUI 的 Button 后，可以看到按钮在 Game 界面中被正常的渲染了出来，如下所示：
-![Button in Game View](/custom_render_pipeline/untitled-15.png)
+![Button in Game View](/custom_render_pipeline/crp11.png)
 
 但通过 Frame Debugger 可以发现此时 UI 的渲染并没有经过自定义的 SRP 如下所示：
-![Frame Debugger for UI](/custom_render_pipeline/untitled-16.png)
+![Frame Debugger for UI](/custom_render_pipeline/crp12.png)
 
 而当将 `Canvas` 中的 `Render Mode` 修改为 `Screen Space - Camera` 或 `World Space` 后，UI 的渲染被放到了渲染半透明物体的部分中，如下所示，且此时因为在半透明的队列中先渲染了 UI，所以 UI 几乎被其他物体遮挡住了：
 
 |                                                          |                                                          |
 | -------------------------------------------------------- | -------------------------------------------------------- |
-| ![](/custom_render_pipeline/untitled-17.png) | ![](/custom_render_pipeline/untitled-18.png) |
+| ![](/custom_render_pipeline/crp13.png) | ![](/custom_render_pipeline/crp14.png) |
 
 但无论 `Render Mode` 是什么格式，在 Scene 界面中，UI 都没有被正常的渲染出来，能看到的只有 UI 的 `Gizmo` ，如下：
-![](/custom_render_pipeline/untitled-19.png)
+![](/custom_render_pipeline/crp15.png)
 
 这是因为 UI 在 Scene 界面下，都是以 `World Space` 模式被渲染出来，而且用了不同的几何信息，且 UI 在 Scene 下的几何信息默认并没有被添加到 SRP 中。
 
@@ -669,10 +669,10 @@ public static extern void EmitWorldGeometryForSceneView(Camera cullingCamera);
 
 |                                                                   |                                                                     |                                                                       |
 | ----------------------------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| ![Hierarchy](/custom_render_pipeline/untitled-20.png) | ![Main Camera](/custom_render_pipeline/untitled-21.png) | ![Second Camera](/custom_render_pipeline/untitled-22.png) |
+| ![Hierarchy](/custom_render_pipeline/crp16.png) | ![Main Camera](/custom_render_pipeline/crp17.png) | ![Second Camera](/custom_render_pipeline/crp18.png) |
 
 此时在 Frame Debugger 中可以看到两个摄像机的渲染被合并在了一起，如下所示：
-![Red For Main, Yellow For Second](/custom_render_pipeline/untitled-23.png)
+![Red For Main, Yellow For Second](/custom_render_pipeline/crp19.png)
 
 这是因为此时两个 Camera 对应的 `CameraRenderer` 中的 `Command Buffer` 命名相同，因此 Frame Debugger 将两者的信息合并在了一起。
 
@@ -703,7 +703,7 @@ partial void PrepareBuffer()
 {% endnote %}
 
 此时 Frame Debugger 界面如下：
-![Main And Second Camera|500  ](/custom_render_pipeline/untitled-24.png)
+![Main And Second Camera|500  ](/custom_render_pipeline/crp20.png)
 
 ## Layers
 
@@ -713,7 +713,7 @@ partial void PrepareBuffer()
 
 |                                                                     |                                                                       |
 | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| ![Main Camera](/custom_render_pipeline/untitled-25.png) | ![Second Camera](/custom_render_pipeline/untitled-26.png) |
+| ![Main Camera](/custom_render_pipeline/crp21.png) | ![Second Camera](/custom_render_pipeline/crp22.png) |
 
 此时的渲染结果如下，因为 Second Camera 仅渲染 `Ignore Raycast` Layer 的物体，又 Second Camera 会覆盖 Main Camera 的内容：
 ![Second Camera](/custom_render_pipeline/image-20240225150054.png)
@@ -759,7 +759,7 @@ private void Setup()
 | ![Depth Only](/custom_render_pipeline/image-20240225150324.png) | ![Don't Clear](/custom_render_pipeline/image-20240225150353.png) |
 
 还可以通过调整摄像机的 `Viewport` 决定摄像机渲染结果的输出范围，如下为 `Second Camera` 的 Clear Flag 为 `Color` 且 Viewport 为 `(0.75, 0.75, 0.25, 0.25)` 时的结果：
-![](/custom_render_pipeline/untitled-32.png)
+![](/custom_render_pipeline/crp23.png)
 
 {% note info %}
 Unity 使用 `Hidden/InternalClear` shader 来进行 Clear 操作。该 Shader 中会通过 Stencil Buffer 来实现 Camera Viewport 的效果。
