@@ -778,29 +778,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 02 观察者模式</title>
-    <url>/ch_02_the_observer_pattern/</url>
-    <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
-<p>例如我们希望定义温度计和压力计，在天气信息发生变化时自动更新，而非自己反复的查询是否天气信息有发生变化。这里天气信息就是被观察者，而温度计和压力计就是观察者。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="观察者及被观察者接口"><a class="header-anchor" href="#观察者及被观察者接口">#</a>观察者及被观察者接口</h2>
-<figure class="highlight cs"><figcaption><span>被观察者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ISubject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">UnregisterObserver</span>(<span class="params">IObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">NotifyObservers</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>观察者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="观察者实现"><a class="header-anchor" href="#观察者实现">#</a>观察者实现</h2>
-<figure class="highlight cs"><figcaption><span>温度计</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TemperatureObserver</span> : <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ISubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TemperatureObserver</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">        <span class="keyword">this</span>.subject.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        WeatherData weatherData = subject <span class="keyword">as</span> WeatherData;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//注意这里我们是从主动从被观察者那里去获取数据</span></span><br><span class="line">        <span class="keyword">if</span> (weatherData != <span class="literal">null</span>)</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Temperature is &quot;</span> + weatherData.Temperature);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>压力计</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PressureObserver</span> : <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ISubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PressureObserver</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">        <span class="keyword">this</span>.subject.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        WeatherData weatherData = subject <span class="keyword">as</span> WeatherData;</span><br><span class="line">        <span class="keyword">if</span> (weatherData != <span class="literal">null</span>)</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Pressure is &quot;</span> + weatherData.Pressure);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="被观察者实现"><a class="header-anchor" href="#被观察者实现">#</a>被观察者实现</h2>
-<figure class="highlight cs"><figcaption><span>天气数据</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">WeatherData</span> : <span class="title">ISubject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;IObserver&gt; observersList;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Temperature &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Humidity &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Pressure &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WeatherData</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList = <span class="keyword">new</span> List&lt;IObserver&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">NotifyObservers</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.ForEach(o =&gt; o.Update(<span class="keyword">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IObserver o</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Add(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnregisterObserver</span>(<span class="params">IObserver o</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Remove(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">measurementsChanged</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        NotifyObservers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetMeasurements</span>(<span class="params"><span class="built_in">float</span> temperature, <span class="built_in">float</span> humidity, <span class="built_in">float</span> pressure</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.Temperature = temperature;</span><br><span class="line">        <span class="keyword">this</span>.Humidity = humidity;</span><br><span class="line">        <span class="keyword">this</span>.Pressure = pressure;</span><br><span class="line">        measurementsChanged();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">WeatherData weatherData = <span class="keyword">new</span> WeatherData();</span><br><span class="line">TemperatureObserver temperatureObserver = <span class="keyword">new</span> TemperatureObserver(weatherData);</span><br><span class="line">PressureObserver pressureObserver = <span class="keyword">new</span> PressureObserver(weatherData);</span><br><span class="line"></span><br><span class="line">weatherData.SetMeasurements(<span class="number">30</span>, <span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">20</span>, <span class="number">40</span>, <span class="number">5</span>);</span><br><span class="line">weatherData.UnregisterObserver(temperatureObserver);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">10</span>, <span class="number">50</span>, <span class="number">15</span>);</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_02_the_observer_pattern/2019-01-15-23-20-09.png" alt="观察者模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Code Complete》 架构检查清单</title>
     <url>/ch_03_architecture_checklist/</url>
     <content><![CDATA[<p>以下是一个好的架构应该解决的问题列表。该列表并不是要成为架构的综合指南，而是一种实用的方式来评估程序员获得的内容是否足够有营养。</p>
@@ -844,6 +821,29 @@
       <tags>
         <tag>系统设计</tag>
         <tag>工程实践</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 02 观察者模式</title>
+    <url>/ch_02_the_observer_pattern/</url>
+    <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
+<p>例如我们希望定义温度计和压力计，在天气信息发生变化时自动更新，而非自己反复的查询是否天气信息有发生变化。这里天气信息就是被观察者，而温度计和压力计就是观察者。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="观察者及被观察者接口"><a class="header-anchor" href="#观察者及被观察者接口">#</a>观察者及被观察者接口</h2>
+<figure class="highlight cs"><figcaption><span>被观察者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ISubject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">UnregisterObserver</span>(<span class="params">IObserver observer</span>)</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">NotifyObservers</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>观察者</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="观察者实现"><a class="header-anchor" href="#观察者实现">#</a>观察者实现</h2>
+<figure class="highlight cs"><figcaption><span>温度计</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TemperatureObserver</span> : <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ISubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TemperatureObserver</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">        <span class="keyword">this</span>.subject.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        WeatherData weatherData = subject <span class="keyword">as</span> WeatherData;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//注意这里我们是从主动从被观察者那里去获取数据</span></span><br><span class="line">        <span class="keyword">if</span> (weatherData != <span class="literal">null</span>)</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Temperature is &quot;</span> + weatherData.Temperature);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>压力计</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PressureObserver</span> : <span class="title">IObserver</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> ISubject subject;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PressureObserver</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">        <span class="keyword">this</span>.subject.RegisterObserver(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Update</span>(<span class="params">ISubject subject</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        WeatherData weatherData = subject <span class="keyword">as</span> WeatherData;</span><br><span class="line">        <span class="keyword">if</span> (weatherData != <span class="literal">null</span>)</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Pressure is &quot;</span> + weatherData.Pressure);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="被观察者实现"><a class="header-anchor" href="#被观察者实现">#</a>被观察者实现</h2>
+<figure class="highlight cs"><figcaption><span>天气数据</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">WeatherData</span> : <span class="title">ISubject</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;IObserver&gt; observersList;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Temperature &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Humidity &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">float</span> Pressure &#123; <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WeatherData</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList = <span class="keyword">new</span> List&lt;IObserver&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">NotifyObservers</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.ForEach(o =&gt; o.Update(<span class="keyword">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">RegisterObserver</span>(<span class="params">IObserver o</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Add(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UnregisterObserver</span>(<span class="params">IObserver o</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        observersList.Remove(o);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">measurementsChanged</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        NotifyObservers();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetMeasurements</span>(<span class="params"><span class="built_in">float</span> temperature, <span class="built_in">float</span> humidity, <span class="built_in">float</span> pressure</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.Temperature = temperature;</span><br><span class="line">        <span class="keyword">this</span>.Humidity = humidity;</span><br><span class="line">        <span class="keyword">this</span>.Pressure = pressure;</span><br><span class="line">        measurementsChanged();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">WeatherData weatherData = <span class="keyword">new</span> WeatherData();</span><br><span class="line">TemperatureObserver temperatureObserver = <span class="keyword">new</span> TemperatureObserver(weatherData);</span><br><span class="line">PressureObserver pressureObserver = <span class="keyword">new</span> PressureObserver(weatherData);</span><br><span class="line"></span><br><span class="line">weatherData.SetMeasurements(<span class="number">30</span>, <span class="number">20</span>, <span class="number">10</span>);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">20</span>, <span class="number">40</span>, <span class="number">5</span>);</span><br><span class="line">weatherData.UnregisterObserver(temperatureObserver);</span><br><span class="line">weatherData.SetMeasurements(<span class="number">10</span>, <span class="number">50</span>, <span class="number">15</span>);</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_02_the_observer_pattern/2019-01-15-23-20-09.png" alt="观察者模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1347,6 +1347,18 @@
 ]]></content>
       <tags>
         <tag>工程实践</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 05 单例模式</title>
+    <url>/ch_05_the_singleton_pattern/</url>
+    <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -1935,12 +1947,24 @@
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 05 单例模式</title>
-    <url>/ch_05_the_singleton_pattern/</url>
-    <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
+    <title>《Head First 设计模式》 Ch 06 命令模式</title>
+    <url>/ch_06_the_command_pattern/</url>
+    <content><![CDATA[<p>命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。</p>
+<p>命令模式由抽象命令类、具体命令类、接受者、调用者、客户类，五部分组成。其中接受者为被命令封装的类，调用者存放需要执行的类。</p>
+<p>我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令</p>
 <h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里使用一个<code>lockObj</code>是为了保证多线程安全，如果有多个线程在同一时间第一次调用<code>Instance</code>，则可能存在两个线程都进入了<code>instance == null</code>的分支，这就会造成两次实例化，所以我们需要通过加锁来保证线程安全。但如果我们将锁直接加在第一个<code>If</code>外，则每次调用<code>Instance</code>都有一个加锁的过程，所以这里选择在第一个 If 内加锁，锁内再次检查保证只会有一次实例化。</p>
+<h2 id="抽象命令类及实现"><a class="header-anchor" href="#抽象命令类及实现">#</a>抽象命令类及实现</h2>
+<figure class="highlight cs"><figcaption><span>抽象命令类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Undo</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>命令类实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOffCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOffCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOnCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOnCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command execute&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command undo&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="接受者"><a class="header-anchor" href="#接受者">#</a>接受者</h2>
+<figure class="highlight cs"><figcaption><span>灯</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Light</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is on&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="调用者"><a class="header-anchor" href="#调用者">#</a>调用者</h2>
+<figure class="highlight cs"><figcaption><span>远程控制</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">RemoteControl</span></span><br><span class="line">&#123;</span><br><span class="line">    Command[] commands;</span><br><span class="line">    Command lastCommond;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RemoteControl</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands = <span class="keyword">new</span> Command[<span class="number">2</span>] &#123; <span class="keyword">new</span> NoCommand(), <span class="keyword">new</span> NoCommand() &#125;;</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetCommand</span>(<span class="params"><span class="built_in">int</span> index, Command command</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index] = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnButtonClick</span>(<span class="params"><span class="built_in">int</span> index</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index].Execute();</span><br><span class="line">        lastCommond = commands[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnClickUndo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        lastCommond.Undo();</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="客户类"><a class="header-anchor" href="#客户类">#</a>客户类</h2>
+<figure class="highlight cs"><figcaption><span>函数入口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Light light = <span class="keyword">new</span> Light();</span><br><span class="line">    RemoteControl remoteControl = <span class="keyword">new</span> RemoteControl();</span><br><span class="line">    remoteControl.SetCommand(<span class="number">0</span>, <span class="keyword">new</span> LightOnCommand(light));</span><br><span class="line">    remoteControl.SetCommand(<span class="number">1</span>, <span class="keyword">new</span> LightOffCommand(light));</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">0</span>);</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">1</span>);</span><br><span class="line">    remoteControl.OnClickUndo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
+<p>运行结果：</p>
+<p><img src="/ch_06_the_command_pattern/2019-02-02-23-26-25.png" alt="命令模式测试结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -2055,30 +2079,6 @@
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 Ch 06 命令模式</title>
-    <url>/ch_06_the_command_pattern/</url>
-    <content><![CDATA[<p>命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。</p>
-<p>命令模式由抽象命令类、具体命令类、接受者、调用者、客户类，五部分组成。其中接受者为被命令封装的类，调用者存放需要执行的类。</p>
-<p>我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="抽象命令类及实现"><a class="header-anchor" href="#抽象命令类及实现">#</a>抽象命令类及实现</h2>
-<figure class="highlight cs"><figcaption><span>抽象命令类</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Execute</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Undo</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>命令类实现</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOffCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOffCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">LightOnCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> Light light;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOnCommand</span>(<span class="params">Light light</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.On();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        light.Off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoCommand</span> : <span class="title">Command</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Execute</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command execute&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Undo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No command undo&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="接受者"><a class="header-anchor" href="#接受者">#</a>接受者</h2>
-<figure class="highlight cs"><figcaption><span>灯</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Light</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">On</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is on&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Off</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;The light is off&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="调用者"><a class="header-anchor" href="#调用者">#</a>调用者</h2>
-<figure class="highlight cs"><figcaption><span>远程控制</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">RemoteControl</span></span><br><span class="line">&#123;</span><br><span class="line">    Command[] commands;</span><br><span class="line">    Command lastCommond;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RemoteControl</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands = <span class="keyword">new</span> Command[<span class="number">2</span>] &#123; <span class="keyword">new</span> NoCommand(), <span class="keyword">new</span> NoCommand() &#125;;</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetCommand</span>(<span class="params"><span class="built_in">int</span> index, Command command</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index] = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnButtonClick</span>(<span class="params"><span class="built_in">int</span> index</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        commands[index].Execute();</span><br><span class="line">        lastCommond = commands[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnClickUndo</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        lastCommond.Undo();</span><br><span class="line">        lastCommond = <span class="keyword">new</span> NoCommand();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="客户类"><a class="header-anchor" href="#客户类">#</a>客户类</h2>
-<figure class="highlight cs"><figcaption><span>函数入口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Light light = <span class="keyword">new</span> Light();</span><br><span class="line">    RemoteControl remoteControl = <span class="keyword">new</span> RemoteControl();</span><br><span class="line">    remoteControl.SetCommand(<span class="number">0</span>, <span class="keyword">new</span> LightOnCommand(light));</span><br><span class="line">    remoteControl.SetCommand(<span class="number">1</span>, <span class="keyword">new</span> LightOffCommand(light));</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">0</span>);</span><br><span class="line">    remoteControl.OnButtonClick(<span class="number">1</span>);</span><br><span class="line">    remoteControl.OnClickUndo();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试及结果"><a class="header-anchor" href="#测试及结果">#</a>测试及结果</h1>
-<p>运行结果：</p>
-<p><img src="/ch_06_the_command_pattern/2019-02-02-23-26-25.png" alt="命令模式测试结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -2846,36 +2846,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 08 模板方法模式</title>
-    <url>/ch_08_the_template_method_pattern/</url>
-    <content><![CDATA[<p>模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。</p>
-<ul>
-<li>
-<p>工厂方法&gt;模式就是模版方法模式的一种运用。</p>
-</li>
-<li>
-<p>策略模式和模版方法模式都是将算法的实现抽象出来，不同的是策略模式的实现依靠组成，而模版方法模式依靠继承。</p>
-</li>
-</ul>
-<p>例如我们需要准备咖啡和茶，准备咖啡基本步骤为烧开水，加入咖啡粉，将咖啡倒入杯子，增加牛奶或糖（可选），准备茶的基本步骤为烧开水，加入茶粉，将茶倒入杯子，增加柠檬（可选）。我们发现在制作两个饮料的过程中，烧开水和倒入杯子这两个步骤是一样的，剩下的两个步骤，向烧开的水中增加相应的粉和增加配料，这两部分也是类似的，于是我们可以用模版方法模式，将这两步骤作为抽象方法。</p>
-<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="算法模版基类"><a class="header-anchor" href="#算法模版基类">#</a>算法模版基类</h2>
-<figure class="highlight cs"><figcaption><span>咖啡因饮料模版</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrepareRecipe</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        boilWater();</span><br><span class="line">        brew();</span><br><span class="line">        pourInCup();</span><br><span class="line">        <span class="keyword">if</span> (NeedCondiments())</span><br><span class="line">            addCondiments();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">brew</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">boilWater</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Boiling Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">pourInCup</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Pouring Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<div class="note info simple"><p>例子中<code>brew</code>和<code>addCondiments</code>即为模版函数，而<code>NeedCondiments</code>这种提供了基本实现，但派生类中仍然可以重写的函数被称为钩子（<code>Hook</code>）。</p>
-</div>
-<h2 id="咖啡因饮料实现"><a class="header-anchor" href="#咖啡因饮料实现">#</a>咖啡因饮料实现</h2>
-<figure class="highlight cs"><figcaption><span>咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Coffee</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Add sugar and Milk&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Dripping coffee through filter&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Tea</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Adding lemon&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Steeping the tea&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Coffee coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">Tea tea = <span class="keyword">new</span> Tea();</span><br><span class="line">coffee.PrepareRecipe();</span><br><span class="line">Console.WriteLine();</span><br><span class="line">tea.PrepareRecipe();</span><br></pre></td></tr></table></figure>
-<p>运行结果:</p>
-<p><img src="/ch_08_the_template_method_pattern/2019-02-03-15-59-58.png" alt="模版方法模式运行结果"></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Head First 设计模式》 Ch 09 模板方法模式</title>
     <url>/ch_09_the_iterator_and_composite_pattern/</url>
     <content><![CDATA[<h1 id="迭代器模式"><a class="header-anchor" href="#迭代器模式">#</a>迭代器模式</h1>
@@ -2968,23 +2938,30 @@
       </tags>
   </entry>
   <entry>
-    <title>《Head First 设计模式》 Ch 10 状态模式</title>
-    <url>/ch_10_the_state_pattern/</url>
-    <content><![CDATA[<p>状态模式(State Pattern)允许一个对象根据其内部状态的变化来选择需要执行的操作。这个对象会看起来像是改变了它的类。</p>
-<p>状态模式定义听起来有些奇怪，实际上就是将不同状态的行为定义在不同的状态类中，然后根据状态的不同切换这些状态类，进而达到不同的行为。</p>
-<p>例如我们需要做一个口香糖贩卖机需要处理，投钱、退钱、旋转出货按钮这三个操作，然后机器有未投钱、投钱、货物卖出、货物卖完四个状态。我们可以将不同状态下对三个操作的处理定义在各自的状态类中。</p>
+    <title>《Head First 设计模式》 Ch 08 模板方法模式</title>
+    <url>/ch_08_the_template_method_pattern/</url>
+    <content><![CDATA[<p>模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。</p>
+<ul>
+<li>
+<p>工厂方法&gt;模式就是模版方法模式的一种运用。</p>
+</li>
+<li>
+<p>策略模式和模版方法模式都是将算法的实现抽象出来，不同的是策略模式的实现依靠组成，而模版方法模式依靠继承。</p>
+</li>
+</ul>
+<p>例如我们需要准备咖啡和茶，准备咖啡基本步骤为烧开水，加入咖啡粉，将咖啡倒入杯子，增加牛奶或糖（可选），准备茶的基本步骤为烧开水，加入茶粉，将茶倒入杯子，增加柠檬（可选）。我们发现在制作两个饮料的过程中，烧开水和倒入杯子这两个步骤是一样的，剩下的两个步骤，向烧开的水中增加相应的粉和增加配料，这两部分也是类似的，于是我们可以用模版方法模式，将这两步骤作为抽象方法。</p>
 <h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
-<h2 id="状态类接口"><a class="header-anchor" href="#状态类接口">#</a>状态类接口</h2>
-<figure class="highlight cs"><figcaption><span>状态类接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">State</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">InsertQuarter</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">EjectQuarter</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">TurnCrank</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Dispense</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="状态类实现"><a class="header-anchor" href="#状态类实现">#</a>状态类实现</h2>
-<figure class="highlight cs"><figcaption><span>未投钱状态</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoQuarterState</span> : <span class="title">State</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> GumballMachine gumballMachine = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NoQuarterState</span>(<span class="params">GumballMachine gumballMachine</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.gumballMachine = gumballMachine;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Dispense</span>()</span> &#123; Console.WriteLine(<span class="string">&quot;You need to pay first&quot;</span>); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">EjectQuarter</span>()</span> &#123; Console.WriteLine(<span class="string">&quot;You haven&#x27;t inserted a quarter&quot;</span>); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InsertQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        gumballMachine.SetState(gumballMachine.HasQuarterState);</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;You inserted a quarter&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TurnCrank</span>()</span> &#123; Console.WriteLine(<span class="string">&quot;You turned,but there&#x27;s no quarter&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>投钱状态</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">HasQuarterState</span> : <span class="title">State</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> GumballMachine gumballMachine = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HasQuarterState</span>(<span class="params">GumballMachine gumballMachine</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.gumballMachine = gumballMachine;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Dispense</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No gumball dispensed&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">EjectQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Quarter returned&quot;</span>);</span><br><span class="line">        gumballMachine.SetState(gumballMachine.NoQuarterState);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InsertQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;You can&#x27;t insert another quater&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TurnCrank</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;You turned&quot;</span>);</span><br><span class="line">        gumballMachine.SetState(gumballMachine.SoldState);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>货物卖出状态</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SoldState</span> : <span class="title">State</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> GumballMachine gumballMachine = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SoldState</span>(<span class="params">GumballMachine gumballMachine</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.gumballMachine = gumballMachine;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Dispense</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        gumballMachine.ReleaseBall();</span><br><span class="line">        <span class="keyword">if</span> (gumballMachine.remainGumballsNum &gt; <span class="number">0</span>)</span><br><span class="line">            gumballMachine.SetState(gumballMachine.NoQuarterState);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Opps,out of gumballs&quot;</span>);</span><br><span class="line">            gumballMachine.SetState(gumballMachine.SoldOutState);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">EjectQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Sorry,you already turned the crank&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InsertQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Please wait,we are already giving you a gumball&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TurnCrank</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Turning twice dones&#x27;t get you another gumball&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight cs"><figcaption><span>货物售完状态</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SoldOutState</span> : <span class="title">State</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> GumballMachine gumballMachine = <span class="literal">null</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SoldOutState</span>(<span class="params">GumballMachine gumballMachine</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.gumballMachine = gumballMachine;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Dispense</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No gumball dispensed&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">EjectQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;You can&#x27;t eject,you haven&#x27;t inserted a quarter yet&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InsertQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;You can&#x27;t insert a quarter,the machine is sold out&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TurnCrank</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;You turned,but there are no gumballs&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="算法模版基类"><a class="header-anchor" href="#算法模版基类">#</a>算法模版基类</h2>
+<figure class="highlight cs"><figcaption><span>咖啡因饮料模版</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PrepareRecipe</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        boilWater();</span><br><span class="line">        brew();</span><br><span class="line">        pourInCup();</span><br><span class="line">        <span class="keyword">if</span> (NeedCondiments())</span><br><span class="line">            addCondiments();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">brew</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">boilWater</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Boiling Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">pourInCup</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Pouring Water&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info simple"><p>例子中<code>brew</code>和<code>addCondiments</code>即为模版函数，而<code>NeedCondiments</code>这种提供了基本实现，但派生类中仍然可以重写的函数被称为钩子（<code>Hook</code>）。</p>
+</div>
+<h2 id="咖啡因饮料实现"><a class="header-anchor" href="#咖啡因饮料实现">#</a>咖啡因饮料实现</h2>
+<figure class="highlight cs"><figcaption><span>咖啡</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Coffee</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Add sugar and Milk&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Dripping coffee through filter&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="built_in">bool</span> <span class="title">NeedCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>茶</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Tea</span> : <span class="title">CaffeineBeverage</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">addCondiments</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Adding lemon&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">brew</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Steeping the tea&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
-<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">GumballMachine gumballMachine = <span class="keyword">new</span> GumballMachine(<span class="number">5</span>);</span><br><span class="line">gumballMachine.TurnCrank();</span><br><span class="line">gumballMachine.InsertQuarter();</span><br><span class="line">gumballMachine.EjectQuarter();</span><br><span class="line">gumballMachine.TurnCrank();</span><br><span class="line">gumballMachine.InsertQuarter();</span><br><span class="line">gumballMachine.TurnCrank();</span><br><span class="line">gumballMachine.TurnCrank();</span><br><span class="line">gumballMachine.EjectQuarter();</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<p><img src="/ch_10_the_state_pattern/2019-02-06-20-10-15.png" alt="状态模式运行结果"></p>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">Coffee coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">Tea tea = <span class="keyword">new</span> Tea();</span><br><span class="line">coffee.PrepareRecipe();</span><br><span class="line">Console.WriteLine();</span><br><span class="line">tea.PrepareRecipe();</span><br></pre></td></tr></table></figure>
+<p>运行结果:</p>
+<p><img src="/ch_08_the_template_method_pattern/2019-02-03-15-59-58.png" alt="模版方法模式运行结果"></p>
 ]]></content>
       <tags>
         <tag>设计模式</tag>
@@ -3082,6 +3059,29 @@
 ]]></content>
       <tags>
         <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 Ch 10 状态模式</title>
+    <url>/ch_10_the_state_pattern/</url>
+    <content><![CDATA[<p>状态模式(State Pattern)允许一个对象根据其内部状态的变化来选择需要执行的操作。这个对象会看起来像是改变了它的类。</p>
+<p>状态模式定义听起来有些奇怪，实际上就是将不同状态的行为定义在不同的状态类中，然后根据状态的不同切换这些状态类，进而达到不同的行为。</p>
+<p>例如我们需要做一个口香糖贩卖机需要处理，投钱、退钱、旋转出货按钮这三个操作，然后机器有未投钱、投钱、货物卖出、货物卖完四个状态。我们可以将不同状态下对三个操作的处理定义在各自的状态类中。</p>
+<h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
+<h2 id="状态类接口"><a class="header-anchor" href="#状态类接口">#</a>状态类接口</h2>
+<figure class="highlight cs"><figcaption><span>状态类接口</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">State</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">InsertQuarter</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">EjectQuarter</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">TurnCrank</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Dispense</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="状态类实现"><a class="header-anchor" href="#状态类实现">#</a>状态类实现</h2>
+<figure class="highlight cs"><figcaption><span>未投钱状态</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NoQuarterState</span> : <span class="title">State</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> GumballMachine gumballMachine = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NoQuarterState</span>(<span class="params">GumballMachine gumballMachine</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.gumballMachine = gumballMachine;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Dispense</span>()</span> &#123; Console.WriteLine(<span class="string">&quot;You need to pay first&quot;</span>); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">EjectQuarter</span>()</span> &#123; Console.WriteLine(<span class="string">&quot;You haven&#x27;t inserted a quarter&quot;</span>); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InsertQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        gumballMachine.SetState(gumballMachine.HasQuarterState);</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;You inserted a quarter&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TurnCrank</span>()</span> &#123; Console.WriteLine(<span class="string">&quot;You turned,but there&#x27;s no quarter&quot;</span>); &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>投钱状态</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">HasQuarterState</span> : <span class="title">State</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> GumballMachine gumballMachine = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HasQuarterState</span>(<span class="params">GumballMachine gumballMachine</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.gumballMachine = gumballMachine;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Dispense</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No gumball dispensed&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">EjectQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Quarter returned&quot;</span>);</span><br><span class="line">        gumballMachine.SetState(gumballMachine.NoQuarterState);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InsertQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;You can&#x27;t insert another quater&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TurnCrank</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;You turned&quot;</span>);</span><br><span class="line">        gumballMachine.SetState(gumballMachine.SoldState);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>货物卖出状态</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SoldState</span> : <span class="title">State</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> GumballMachine gumballMachine = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SoldState</span>(<span class="params">GumballMachine gumballMachine</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.gumballMachine = gumballMachine;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Dispense</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        gumballMachine.ReleaseBall();</span><br><span class="line">        <span class="keyword">if</span> (gumballMachine.remainGumballsNum &gt; <span class="number">0</span>)</span><br><span class="line">            gumballMachine.SetState(gumballMachine.NoQuarterState);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;Opps,out of gumballs&quot;</span>);</span><br><span class="line">            gumballMachine.SetState(gumballMachine.SoldOutState);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">EjectQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Sorry,you already turned the crank&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InsertQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Please wait,we are already giving you a gumball&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TurnCrank</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Turning twice dones&#x27;t get you another gumball&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><figcaption><span>货物售完状态</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SoldOutState</span> : <span class="title">State</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> GumballMachine gumballMachine = <span class="literal">null</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SoldOutState</span>(<span class="params">GumballMachine gumballMachine</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">this</span>.gumballMachine = gumballMachine;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Dispense</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;No gumball dispensed&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">EjectQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;You can&#x27;t eject,you haven&#x27;t inserted a quarter yet&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">InsertQuarter</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;You can&#x27;t insert a quarter,the machine is sold out&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TurnCrank</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;You turned,but there are no gumballs&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="测试代码及结果"><a class="header-anchor" href="#测试代码及结果">#</a>测试代码及结果</h1>
+<figure class="highlight cs"><figcaption><span>测试代码</span></figcaption><table><tr><td class="code"><pre><span class="line">GumballMachine gumballMachine = <span class="keyword">new</span> GumballMachine(<span class="number">5</span>);</span><br><span class="line">gumballMachine.TurnCrank();</span><br><span class="line">gumballMachine.InsertQuarter();</span><br><span class="line">gumballMachine.EjectQuarter();</span><br><span class="line">gumballMachine.TurnCrank();</span><br><span class="line">gumballMachine.InsertQuarter();</span><br><span class="line">gumballMachine.TurnCrank();</span><br><span class="line">gumballMachine.TurnCrank();</span><br><span class="line">gumballMachine.EjectQuarter();</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="/ch_10_the_state_pattern/2019-02-06-20-10-15.png" alt="状态模式运行结果"></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -3493,71 +3493,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Code Complete》 笔记汇总</title>
-    <url>/code_complete/</url>
-    <content><![CDATA[<p>Preface</p>
-<h1 id="Laying_the_Foundation"><a class="header-anchor" href="#Laying_the_Foundation">#</a>Laying the Foundation</h1>
-<p><a href="/ch_01_welcome_to_software_construction">Ch 01 Welcome to Software Construction</a><br>
-<a href="/ch_02_metaphors_for_a_richer_understanding_of_software_development">Ch 02 Metaphors for a Richer Understanding of Software Development</a><br>
-<a href="/ch_03_measure_twice,_cut_once_upstream_prerequisites">Ch 03 Measure Twice, Cut Once_Upstream Prerequisites</a></p>
-<ul>
-<li><a href="/ch_03_requirement_checklist">Ch 03 Requirement Checklist</a></li>
-<li><a href="/ch_03_architecture_checklist">Ch 03 Architecture Checklist</a></li>
-<li><a href="/ch_03_prerequisites_checklist">Ch 03 Prerequisites Checklist</a></li>
-</ul>
-<p><a href="/ch_04_key_construction_decisions">Ch 04 Key Construction Decisions</a></p>
-<ul>
-<li><a href="/ch_04_construction_practices_checklists">Ch 04 Construction Practices Checklists</a></li>
-</ul>
-<h1 id="Creating_High_Quality_Code"><a class="header-anchor" href="#Creating_High_Quality_Code">#</a>Creating High-Quality Code</h1>
-<p><a href="/ch_05_design_in_construction">Ch 05 Design in Construction</a></p>
-<ul>
-<li><a href="/ch_05_design_checklist">Ch 05 Design Checklist</a></li>
-</ul>
-<p><a href="/ch_06_working_classes">Ch 06 Working Classes</a></p>
-<ul>
-<li>Ch 06 Class Quality Checklist</li>
-</ul>
-<p>Ch 07 High-Quality Routines<br>
-Ch 08 Defensive Programming<br>
-Ch 09 The Pseudocode Programming Process</p>
-<h1 id="Variables"><a class="header-anchor" href="#Variables">#</a>Variables</h1>
-<p>Ch 10 General Issues In Using Variables<br>
-Ch 11 The Power of Variable Names<br>
-Ch 12 Fundamental Data Types<br>
-Ch 13 Unusual Data Types</p>
-<h1 id="Statements"><a class="header-anchor" href="#Statements">#</a>Statements</h1>
-<p>Ch 14 Organizing Straight-Line Code<br>
-Ch 15 Using Conditionals<br>
-Ch 16 Controlling Loops<br>
-Ch 17 Unusual Control Structures<br>
-Ch 18 Table-Driven Methods<br>
-Ch 19 General Control Issues</p>
-<h1 id="Code_Improvements"><a class="header-anchor" href="#Code_Improvements">#</a>Code Improvements</h1>
-<p>Ch 20 The Software-Quality Landscape<br>
-Ch 21 Collaborative Construction<br>
-Ch 22 Developer Testing<br>
-Ch 23 Debugging<br>
-Ch 24 Refactoring<br>
-Ch 25 Code-Tuning Strategies<br>
-Ch 26 Code-Tuning Techniques</p>
-<h1 id="System_Considerations"><a class="header-anchor" href="#System_Considerations">#</a>System Considerations</h1>
-<p>Ch 27 How Program Size Affects Construction<br>
-Ch 28 Managing Construction<br>
-Ch 29 Integration<br>
-Ch 30 Programming Tools</p>
-<h1 id="Software_Craftsmanship"><a class="header-anchor" href="#Software_Craftsmanship">#</a>Software Craftsmanship</h1>
-<p>Ch 31 Layout and Style<br>
-Ch 32 Self-Documenting Code<br>
-Ch 33 Personal Character<br>
-Ch 34 Themes in Software Craftsmanship</p>
-]]></content>
-      <tags>
-        <tag>系统设计</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Computer Networks and Internets》 Ch 17 中继器，网桥和交换机</title>
     <url>/ch_17_repeaters,_bridges,_and_switches/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
@@ -3658,6 +3593,71 @@ Ch 34 Themes in Software Craftsmanship</p>
       </tags>
   </entry>
   <entry>
+    <title>《Code Complete》 笔记汇总</title>
+    <url>/code_complete/</url>
+    <content><![CDATA[<p>Preface</p>
+<h1 id="Laying_the_Foundation"><a class="header-anchor" href="#Laying_the_Foundation">#</a>Laying the Foundation</h1>
+<p><a href="/ch_01_welcome_to_software_construction">Ch 01 Welcome to Software Construction</a><br>
+<a href="/ch_02_metaphors_for_a_richer_understanding_of_software_development">Ch 02 Metaphors for a Richer Understanding of Software Development</a><br>
+<a href="/ch_03_measure_twice,_cut_once_upstream_prerequisites">Ch 03 Measure Twice, Cut Once_Upstream Prerequisites</a></p>
+<ul>
+<li><a href="/ch_03_requirement_checklist">Ch 03 Requirement Checklist</a></li>
+<li><a href="/ch_03_architecture_checklist">Ch 03 Architecture Checklist</a></li>
+<li><a href="/ch_03_prerequisites_checklist">Ch 03 Prerequisites Checklist</a></li>
+</ul>
+<p><a href="/ch_04_key_construction_decisions">Ch 04 Key Construction Decisions</a></p>
+<ul>
+<li><a href="/ch_04_construction_practices_checklists">Ch 04 Construction Practices Checklists</a></li>
+</ul>
+<h1 id="Creating_High_Quality_Code"><a class="header-anchor" href="#Creating_High_Quality_Code">#</a>Creating High-Quality Code</h1>
+<p><a href="/ch_05_design_in_construction">Ch 05 Design in Construction</a></p>
+<ul>
+<li><a href="/ch_05_design_checklist">Ch 05 Design Checklist</a></li>
+</ul>
+<p><a href="/ch_06_working_classes">Ch 06 Working Classes</a></p>
+<ul>
+<li>Ch 06 Class Quality Checklist</li>
+</ul>
+<p>Ch 07 High-Quality Routines<br>
+Ch 08 Defensive Programming<br>
+Ch 09 The Pseudocode Programming Process</p>
+<h1 id="Variables"><a class="header-anchor" href="#Variables">#</a>Variables</h1>
+<p>Ch 10 General Issues In Using Variables<br>
+Ch 11 The Power of Variable Names<br>
+Ch 12 Fundamental Data Types<br>
+Ch 13 Unusual Data Types</p>
+<h1 id="Statements"><a class="header-anchor" href="#Statements">#</a>Statements</h1>
+<p>Ch 14 Organizing Straight-Line Code<br>
+Ch 15 Using Conditionals<br>
+Ch 16 Controlling Loops<br>
+Ch 17 Unusual Control Structures<br>
+Ch 18 Table-Driven Methods<br>
+Ch 19 General Control Issues</p>
+<h1 id="Code_Improvements"><a class="header-anchor" href="#Code_Improvements">#</a>Code Improvements</h1>
+<p>Ch 20 The Software-Quality Landscape<br>
+Ch 21 Collaborative Construction<br>
+Ch 22 Developer Testing<br>
+Ch 23 Debugging<br>
+Ch 24 Refactoring<br>
+Ch 25 Code-Tuning Strategies<br>
+Ch 26 Code-Tuning Techniques</p>
+<h1 id="System_Considerations"><a class="header-anchor" href="#System_Considerations">#</a>System Considerations</h1>
+<p>Ch 27 How Program Size Affects Construction<br>
+Ch 28 Managing Construction<br>
+Ch 29 Integration<br>
+Ch 30 Programming Tools</p>
+<h1 id="Software_Craftsmanship"><a class="header-anchor" href="#Software_Craftsmanship">#</a>Software Craftsmanship</h1>
+<p>Ch 31 Layout and Style<br>
+Ch 32 Self-Documenting Code<br>
+Ch 33 Personal Character<br>
+Ch 34 Themes in Software Craftsmanship</p>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>耦合与内聚</title>
     <url>/coupling/</url>
     <content><![CDATA[<h1 id="耦合与内聚"><a class="header-anchor" href="#耦合与内聚">#</a>耦合与内聚</h1>
@@ -3675,6 +3675,62 @@ Ch 34 Themes in Software Craftsmanship</p>
 ]]></content>
       <tags>
         <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>.Net 工程创建 NUnit 单元测试指南</title>
+    <url>/create_nunit_testing/</url>
+    <content><![CDATA[<div class="note primary simple"><p>完整工程见 <a href="https://github.com/xuejiaw/.net-samples/tree/main/unittestingusingnunit">UnitTestingUsingNUnit</a></p>
+</div>
+<h1 id="创建被测试工程"><a class="header-anchor" href="#创建被测试工程">#</a>创建被测试工程</h1>
+<p>为了创建单元测试工程，首先需要有一个需要被测试的工程。创建一个名为 <code>UnitTestingUsingNUnit</code> 的文件夹，进入文件夹后运行 new sln 创建一个解决方案：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">❯ dotnet new sln</span><br><span class="line">The template <span class="string">&quot;Solution File&quot;</span> was created successfully.</span><br></pre></td></tr></table></figure>
+<p>然后创建一个 <code>PrimeService</code> 文件夹，进入其中并运行 new classlib 创建一个类库：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">❯ dotnet new classlib <span class="literal">-n</span> PrimeService</span><br><span class="line">The template <span class="string">&quot;Class Library&quot;</span> was created successfully.</span><br><span class="line"></span><br><span class="line">Processing post<span class="literal">-creation</span> actions...</span><br><span class="line">Restoring D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService\PrimeService.csproj:</span><br><span class="line">  Determining projects to restore...</span><br><span class="line">  Restored D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService\PrimeService.csproj (<span class="keyword">in</span> <span class="number">44</span> ms).</span><br><span class="line">Restore succeeded.</span><br></pre></td></tr></table></figure>
+<p>默认创建的类库，会包含 <em>Class1.cs</em> 文件，我们可以将其重命名为 <code>PrimeService.cs</code> 的文件，此时的工程结构如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">├── PrimeService</span><br><span class="line">│   ├── PrimeService.cs</span><br><span class="line">│   ├── PrimeService.csproj</span><br><span class="line">└── UnitTestingUsingNUnit.sln</span><br></pre></td></tr></table></figure>
+<p>使用 sln add 命令将类库加入解决方案中：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dotnet sln add PrimeService/PrimeService.csproj</span><br></pre></td></tr></table></figure>
+<p>在 <code>PrimeService.cs</code> 中增加一个 <code>IsPrime</code> 方法，用于判断一个数是否为质数，但此时我们不实现这个函数，并抛出一个 <code>NotImplementedException</code> 异常，保证后续的测试肯定失败：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">PrimeService</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PrimeService</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">IsPrime</span>(<span class="params"><span class="built_in">int</span> candidate</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(<span class="string">&quot;Please create a test first.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至此，我们已经创建了一个需要被测试的工程。后续，我们将创建一个测试工程，用于测试这个工程中的 <code>IsPrime</code> 方法。</p>
+<h1 id="创建_NUnit_Testing"><a class="header-anchor" href="#创建_NUnit_Testing">#</a>创建 NUnit Testing</h1>
+<p>为了给这个工程增加 NUnit 测试，我们可以在该目录下运行 <code>dotnet new nunit</code> 命令新建一个 NUnit 测试工程：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dotnet new nunit <span class="literal">-n</span> PrimeService.Tests</span><br></pre></td></tr></table></figure>
+<p>运行该命令后，会在命令运行目录下生成测试工程的文件夹，如本例中为 <code>PrimeService.Tests</code> 文件夹，文件夹包含有对应的 <code>.csproj</code> 文件和一个 <code>UnitTest1.cs</code> 文件，我们将其重命名为 <code>PrimeServiceIsPrimeShould.cs</code>，此时的工程结构为：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── PrimeService</span><br><span class="line">│   ├── PrimeService.cs</span><br><span class="line">│   ├── PrimeService.csproj</span><br><span class="line">├── PrimeService.Tests</span><br><span class="line">│   ├── PrimeService.Tests.csproj</span><br><span class="line">│   ├── PrimeServiceIsPrimeShould.cs</span><br><span class="line">└── UnitTestingUsingNUnit.sln</span><br></pre></td></tr></table></figure>
+<p>此时再运行 <code>dotnet sln add</code> 命令，将新生成的测试工程的 <code>.csproj</code> 文件添加到主工程的解决方案中：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">❯ dotnet sln add .\PrimeService.Tests\PrimeService.Tests.csproj</span><br><span class="line">Project `PrimeService.Tests\PrimeService.Tests.csproj` added to the solution.</span><br></pre></td></tr></table></figure>
+<p>因为 <em>测试工程</em> 需要引用 <em>被测试工程</em> 的代码，因此我们需要使用 add reference 命令为 <em>测试工程</em> 添加 <em>被测试工程</em> 的引用：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">dotnet add .\PrimeService.Tests\PrimeService.Tests.csproj reference .\PrimeService\PrimeService.csproj</span><br></pre></td></tr></table></figure>
+<p>测试可以使用 <code>dotnet test</code> 命令运行测试，效果如下：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">❯ dotnet test</span><br><span class="line">  Determining projects to restore...</span><br><span class="line">  Restored D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService\PrimeService.csproj (<span class="keyword">in</span> <span class="number">41</span> ms).</span><br><span class="line">  Restored D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService.Tests\PrimeService.Tests.csproj (<span class="keyword">in</span> <span class="number">140</span> ms).</span><br><span class="line">  PrimeService -&gt; D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService\bin\Debug\net8.<span class="number">0</span>\PrimeService.dll</span><br><span class="line">  PrimeService.Tests -&gt; D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService.Tests\bin\Debug\net8.<span class="number">0</span>\PrimeService.Tests.dll</span><br><span class="line">Test run <span class="keyword">for</span> D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService.Tests\bin\Debug\net8.<span class="number">0</span>\PrimeService.Tests.dll (.NETCoreApp,Version=v8.<span class="number">0</span>)</span><br><span class="line">Microsoft (<span class="built_in">R</span>) Test Execution Command Line Tool Version <span class="number">17.9</span>.<span class="number">0</span> (x64)</span><br><span class="line">Copyright (c) Microsoft Corporation.  All rights reserved.</span><br><span class="line"></span><br><span class="line">Starting test execution, please wait...</span><br><span class="line">A total of <span class="number">1</span> test files matched the specified pattern.</span><br><span class="line"></span><br><span class="line">Passed!  - Failed:     <span class="number">0</span>, Passed:     <span class="number">1</span>, Skipped:     <span class="number">0</span>, Total:     <span class="number">1</span>, Duration: <span class="number">39</span> ms - PrimeService.Tests.dll (net8.<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="编写单元测试"><a class="header-anchor" href="#编写单元测试">#</a>编写单元测试</h1>
+<p>在 <code>PrimeServiceIsPrimeShould.cs</code> 文件中，我们可以编写测试代码，测试 <code>PrimeService</code> 中的 <code>IsPrime</code> 方法：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">PrimeService.Tests</span>;</span><br><span class="line"></span><br><span class="line">[<span class="meta">TestFixture</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PrimeServiceIsPrimeShould</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> PrimeService? m_PrimService = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    [<span class="meta">SetUp</span>]</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetUp</span>()</span> &#123; m_PrimService = <span class="keyword">new</span> PrimeService(); &#125;</span><br><span class="line"></span><br><span class="line">    [<span class="meta">Test</span>]</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">IsPrime_InputIs1_ReturnFalse</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> result = m_PrimService!.IsPrime(<span class="number">1</span>);</span><br><span class="line">        Assert.That(result, Is.False, <span class="string">&quot;1 should not be prime&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时运行 <code>dotnet test</code> 命令，会发现测试失败，输出如下：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">❯ dotnet test</span><br><span class="line">  Determining projects to restore...</span><br><span class="line">  All projects are up<span class="literal">-to-date</span> <span class="keyword">for</span> restore.</span><br><span class="line">  PrimeService -&gt; D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService\bin\Debug\net8.<span class="number">0</span>\PrimeService.dll</span><br><span class="line">  PrimeService.Tests -&gt; D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService.Tests\bin\Debug\net8.<span class="number">0</span>\PrimeService.Tests.dll</span><br><span class="line">Test run <span class="keyword">for</span> D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService.Tests\bin\Debug\net8.<span class="number">0</span>\PrimeService.Tests.dll (.NETCoreApp,Version=v8.<span class="number">0</span>)</span><br><span class="line">Microsoft (<span class="built_in">R</span>) Test Execution Command Line Tool Version <span class="number">17.9</span>.<span class="number">0</span> (x64)</span><br><span class="line">Copyright (c) Microsoft Corporation.  All rights reserved.</span><br><span class="line"></span><br><span class="line">Starting test execution, please wait...</span><br><span class="line">A total of <span class="number">1</span> test files matched the specified pattern.</span><br><span class="line">  Failed IsPrime_InputIs1_ReturnFalse [<span class="number">12</span> <span class="type">ms</span>]</span><br><span class="line">  Error Message:</span><br><span class="line">   System.NotImplementedException : Please create a test first.</span><br><span class="line">  Stack Trace:</span><br><span class="line">     at PrimeService.PrimeService.IsPrime(Int32 candidate) <span class="keyword">in</span> D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService\PrimeService.cs:line <span class="number">5</span></span><br><span class="line">   at PrimeService.Tests.PrimeServiceIsPrimeShould.IsPrime_InputIs1_ReturnFalse() <span class="keyword">in</span> D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService.Tests\PrimeServiceIsPrimeShould.cs:line <span class="number">14</span></span><br><span class="line">   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)</span><br><span class="line">   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Failed!  - Failed:     <span class="number">1</span>, Passed:     <span class="number">0</span>, Skipped:     <span class="number">0</span>, Total:     <span class="number">1</span>, Duration: <span class="number">12</span> ms - PrimeService.Tests.dll (net8.<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>此时如果修改 <code>PrimeService</code> 中的 <code>IsPrime</code> 方法，使在 <code>indicate</code> 小于 2 时直接返回 <code>false</code>：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">IsPrime</span>(<span class="params"><span class="built_in">int</span> candidate</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (candidate &lt; <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> NotImplementedException(<span class="string">&quot;Please create a test first.&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时再次运行 <code>dotnet test</code> 命令，会发现测试通过：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">❯ dotnet test</span><br><span class="line">  Determining projects to restore...</span><br><span class="line">  All projects are up<span class="literal">-to-date</span> <span class="keyword">for</span> restore.</span><br><span class="line">  PrimeService -&gt; D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService\bin\Debug\net8.<span class="number">0</span>\PrimeService.dll</span><br><span class="line">  PrimeService.Tests -&gt; D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService.Tests\bin\Debug\net8.<span class="number">0</span>\PrimeService.Tests.dll</span><br><span class="line">Test run <span class="keyword">for</span> D:\Github\.Net<span class="literal">-Samples</span>\UnitTestingUsingNUnit\PrimeService.Tests\bin\Debug\net8.<span class="number">0</span>\PrimeService.Tests.dll (.NETCoreApp,Version=v8.<span class="number">0</span>)</span><br><span class="line">Microsoft (<span class="built_in">R</span>) Test Execution Command Line Tool Version <span class="number">17.9</span>.<span class="number">0</span> (x64)</span><br><span class="line">Copyright (c) Microsoft Corporation.  All rights reserved.</span><br><span class="line"></span><br><span class="line">Starting test execution, please wait...</span><br><span class="line">A total of <span class="number">1</span> test files matched the specified pattern.</span><br><span class="line"></span><br><span class="line">Passed!  - Failed:     <span class="number">0</span>, Passed:     <span class="number">1</span>, Skipped:     <span class="number">0</span>, Total:     <span class="number">1</span>, Duration: <span class="number">3</span> ms - PrimeService.Tests.dll (net8.<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="针对_internal_对象的测试"><a class="header-anchor" href="#针对_internal_对象的测试">#</a>针对 internal 对象的测试</h2>
+<p>在对主工程进行测试时，常会遇到的问题时，需要对主工程中 <code>internal</code> 的对象进行测试，而测试工程默认无法访问主工程的 <code>internal</code> 对象。</p>
+<p>为了解决这个问题，可以在主工程中创建出一个 <code>AssemblyInfo.cs</code> 文件，并在其中添加如下内容，即通过 <code>InternalsVisibleTo</code> 让主工程的 <code>internal</code> 对象可以对特定的 Assembly 暴露：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Runtime.CompilerServices;</span><br><span class="line"></span><br><span class="line">[<span class="meta">assembly: InternalsVisibleTo(<span class="string">&quot;PrimeService.Tests&quot;</span>)</span>]</span><br></pre></td></tr></table></figure>
+<div class="note primary simple"><p>上述代码并不要求必须定义在 <code>AssemblyInfo.cs</code> 文件中，在任意的 <code>.cs</code> 脚本中都可以。</p>
+</div>
+<p>假设 <code>PrimeService</code> 类中有一个 <code>IsPrimeImplementation</code> 函数，其定义如下：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">internal</span> <span class="built_in">bool</span> <span class="title">IsPrimeImpl</span>(<span class="params"><span class="built_in">int</span> candidate</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">2</span>; i &lt; candidate; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (candidate % i == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在加入了 <code>AssemblyInfo</code> 后，就可以在测试工程中对 <code>IsPrimeImpl</code> 进行测试：</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">[<span class="meta">Test</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">IsPrimeImpl_Is4_ReturnFalse</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> result = m_PrimService!.IsPrimeImpl(<span class="number">4</span>);</span><br><span class="line">    Assert.That(result, Is.False, <span class="string">&quot;4 should not be prime&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-nunit">Unit testing C# with NUnit and .NET Core - .NET | Microsoft Learn</a></p>
+<p><a href="https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.internalsvisibletoattribute?view=net-8.0">InternalsVisibleToAttribute</a></p>
+]]></content>
+      <tags>
+        <tag>DotNet</tag>
+        <tag>UnitTesting/NUnit</tag>
       </tags>
   </entry>
   <entry>
@@ -3746,6 +3802,23 @@ Ch 34 Themes in Software Craftsmanship</p>
 ]]></content>
       <tags>
         <tag>Dotnet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Custom SRP</title>
+    <url>/custom_srp/</url>
+    <content><![CDATA[<p>Unity Catlike 中 <a href="%5Bunity_custom_srp_tutorials_(catlikecoding.com)%5D(https://catlikecoding.com/unity/tutorials/custom-srp/)">Custom SRP</a> 的教程学习笔记汇总，该笔记并非完全的对原教程的翻译，在学习过程中的发现的额外资料以及对原教程中未详细说明的部分都会进行相应的补充。</p>
+<ul>
+<li><a href="/custom_render_pipeline">Custom Render Pipeline</a>：使用自定义的渲染管线在 Editor 和 Game 界面中绘制一系列 <code>Unlit/Color</code> 的物体以及 Skybox。</li>
+<li><a href="/draw_calls">Draw Calls</a>：渲染自定义的 <code>Unlit</code> 的材质渲染一系列小球，讨论了不同的节省 Draw Calls 的技术，以及讨论了不同的实现透明度的办法</li>
+<li>Directional Lights：制作一系列支持方向光的 Lit Shader</li>
+</ul>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://catlikecoding.com/unity/tutorials/custom-srp/">Unity Custom SRP Tutorials (catlikecoding.com)</a></p>
+]]></content>
+      <tags>
+        <tag>Unity</tag>
+        <tag>Catlike</tag>
       </tags>
   </entry>
   <entry>
@@ -4075,23 +4148,6 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
       </tags>
   </entry>
   <entry>
-    <title>Custom SRP</title>
-    <url>/custom_srp/</url>
-    <content><![CDATA[<p>Unity Catlike 中 <a href="%5Bunity_custom_srp_tutorials_(catlikecoding.com)%5D(https://catlikecoding.com/unity/tutorials/custom-srp/)">Custom SRP</a> 的教程学习笔记汇总，该笔记并非完全的对原教程的翻译，在学习过程中的发现的额外资料以及对原教程中未详细说明的部分都会进行相应的补充。</p>
-<ul>
-<li><a href="/custom_render_pipeline">Custom Render Pipeline</a>：使用自定义的渲染管线在 Editor 和 Game 界面中绘制一系列 <code>Unlit/Color</code> 的物体以及 Skybox。</li>
-<li><a href="/draw_calls">Draw Calls</a>：渲染自定义的 <code>Unlit</code> 的材质渲染一系列小球，讨论了不同的节省 Draw Calls 的技术，以及讨论了不同的实现透明度的办法</li>
-<li>Directional Lights：制作一系列支持方向光的 Lit Shader</li>
-</ul>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="https://catlikecoding.com/unity/tutorials/custom-srp/">Unity Custom SRP Tutorials (catlikecoding.com)</a></p>
-]]></content>
-      <tags>
-        <tag>Unity</tag>
-        <tag>Catlike</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Unix 编程艺术》 第十章 配置</title>
     <url>/di_10_zhang_pei_zhi%EF%BC%9Amai_chu_zheng_que_de_di_yi_bu/</url>
     <content><![CDATA[<h1 id="10_1_什么应是可配置的"><a class="header-anchor" href="#10_1_什么应是可配置的">#</a>10.1 什么应是可配置的</h1>
@@ -4253,6 +4309,57 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
       </tags>
   </entry>
   <entry>
+    <title>《Unix 编程艺术》 第十四章 语言</title>
+    <url>/di_14_zhang_yu_yan%EF%BC%9Ac_hai_shi_fei_c/</url>
+    <content><![CDATA[<h1 id="14_1_Unix_下语言的丰饶"><a class="header-anchor" href="#14_1_Unix_下语言的丰饶">#</a>14.1 Unix 下语言的丰饶</h1>
+<p>Unix 上运行的语言种类完全可能超过计算史上其它所有操作系统的总和，至少有两个充分的理由造成了这种巨大的多样性：</p>
+<ol>
+<li>Unix 广泛用于研究和教学平台。</li>
+<li>Unix 传统鼓励专门领域语言的设计，和现在一般称为“脚本语言”的东西——为了把其它应用程序和工具胶合起来而专门设计的语言。</li>
+</ol>
+<p>“脚本语言”是个有点整脚的术语。很多通常这么称呼的主要语言 (PerlTcl、Python 等)都已经超越了最初意义的脚本用途，已经成为威力相当强大的独立通用编程语言。</p>
+<p>把所有这些语言都纳入“脚本语言”的部分原因在于，这些语言都具有非常一致的发展历程。在运行期完成解释使得动态存储管理的自动化相对容易，而这几平要求采用引用（存储地址不透明且无法进行运算）而不是传值或显式指针。使用引用可使下一步更容易实现运行期的多态性和 OO。</p>
+<h1 id="14_2_为什么不是_C"><a class="header-anchor" href="#14_2_为什么不是_C">#</a>14.2 为什么不是 C</h1>
+<p>C 和 C++以增加实现时间和调试时间为代价来优化效率。尽管以 C 或 C++编写对时间要求极高的系统程序或应用程序内核似乎还有意义，然而自从这些语言在 1980 年代崛起，世界已经发生了很大变化。在 2003 年，用几平同样的价钱能够买到的处理器快了 1000 倍，内存大了 1000 倍,，磁盘容量也大了 10000 倍。</p>
+<p>急剧下降的成本从根本上改变了编程的经济含义。大多数情况下，和 C 一样节约机器资源已经不再有任何意义。相反地，经济方面的最优选择已经变成尽可能减少调试时间、尽可能延长人类对代码的长期可维护性。</p>
+<p>C 和 C++的中心问题在于它们要求程序员自己完成内存管理—声明变量、显式管理链表、设置缓冲大小、检测或防止缓冲溢出，以及分配和回收动态存储。…尽管缺乏确凿坚实的数据，但很多经验丰富的程序员都相信，内存管理产生的 bug 时真实代码持续产生错误的最大单体来源。</p>
+<h1 id="14_3_解释型语言和混合策略"><a class="header-anchor" href="#14_3_解释型语言和混合策略">#</a>14.3 解释型语言和混合策略</h1>
+<p>避免手工管理内存的语言通过在运行期可执行体中嵌入一个内存管理器来完成内存管理。</p>
+<p>通常情况下，这些语言的运行环境分成程序部分（运行脚本本身）和解释器部分解释器管理动态存储。在 Unix（以及其它现代操作系统）中解释器内核由多个程序部分共享，减少了各个程序的实际开销。</p>
+<h1 id="14_4_语言评估"><a class="header-anchor" href="#14_4_语言评估">#</a>14.4 语言评估</h1>
+<p>混合语言是一种知识密集型（而不是编码密集型）的编程。要让它能够工作，我们不仅应该具备相当数量的多种语言应用知识，并且还必须具备能够判断这些语言在什么地方最适合、以及怎样把它们组合在一起的潜经验。</p>
+<h2 id="14_4_1_C"><a class="header-anchor" href="#14_4_1_C">#</a>14.4.1 C</h2>
+<p>尽管存在内存管理问题，但 C 语言还有一些仍然可以在其中称王称霸的生态环境要求速度最快并且具有实时需求的程序，或者与 OS 内核紧密联系的程序非常适合用 C 编写。</p>
+<p>即使更高级的语言能够满足编程的要求，我们仍然要学习 C，其中一个充分理由就是 C 能帮助我们学会在硬件体系层次上考虑问题。</p>
+<h2 id="14_4_2_C"><a class="header-anchor" href="#14_4_2_C">#</a>14.4.2 C++</h2>
+<p>当 C++在 1980 年代中期首次公布于世时，面向对象 （OO）语言正被大肆吹捧为解决软件复杂度问题的“银弹”。</p>
+<p>C++面向对象的特性对于其前辈 C 而言是个压倒性的优点其拥期望 C++能够迅速废掉更古老的 C 语言。</p>
+<p>这种情况当然并没有发生。部分可归因于 C++本身的问题:对向后兼容 C 的要求迫使 C++在设计中做出了许多妥协。而且这个要求阻碍了 C++完全自动化动态内存管理从而无法解决 C 语言最严重的问题。后来，薄弱、不成熟的标准化努力，并不能限制各个不同编译器实现者之间的功能特征竞赛，C++变得过分精微复杂了。</p>
+<p>对 C 的向上兼容；面向对象的平台；STL 和泛型等最前沿的技术工具——C++ 试图满足所有人的所有要求，但代价是 C++ 比任何一个程序员所能处理的复杂度都要高。C++ 的主要设让者已经承认他不指望任何一个程序员能够完全掌握 C++。</p>
+<p>Unix 黑客对此并没有很好的反应：一段匿名但非常著名的评论这样描述“C++:狗被钉上软肢而变成的章鱼”。</p>
+<p>C++ 最根本的问题还是在于它根本上只是另外一种传统语言。在标准模板库发明后，C++的内存管理控制有所改善，比 C 好得多，但仍然十分脆弱：除非代码仅使用对象，否则控制仍旧无用。对许多类型的应用而言，C++的 OO 特性并不重要，没有带来多少优势，陡增复杂度而已。</p>
+<p>总结：C++的最佳之处是编译效率以及面向对象和泛型编程的结合。最糟之处是它非常怪异复杂，往往鼓励过分复杂的设计。</p>
+<h2 id="14_4_3_Shell"><a class="header-anchor" href="#14_4_3_Shell">#</a>14.4.3 Shell</h2>
+<p>简单 shell 程序的编写极其容易和自然。Unix 使用解释型语言的快速原型设计传统就始于 shell。</p>
+<p>然而，随着程序规模越来越大，这些程序往往变得非常专用。部分 shell 语法（特别是其引用和声明语法规则）变得十分混乱。为了 shell 作为交互式命令行解释器的实用性而在设计中对语言部分做了折中，这些缺点就是这么来的。</p>
+<p>现在 shell 只是为最简单的包装器(那些语言使用在包装器上是大材小用)和系统启动时的初始化脚本而保留。复杂的 shell 脚本经常产生可移植性问题，主要原因并不在于 shell 本身而在于 shell 使用了某些它假定存在的程序。</p>
+<p>总结：shell 的最佳之处在于书写小型脚本非常自然快捷。最糟之处在于大型 shell 脚本必须依靠大量辅助命令，而这些辅助命今不一定在所有日标机器上都表现一致甚至不一定存在。要在大型 shell 脚本中分析依赖关系并不容易。</p>
+<h2 id="14_4_6_Python"><a class="header-anchor" href="#14_4_6_Python">#</a>14.4.6 Python</h2>
+<p>Python 的语法介于 C 语言和 Modula 系列语言之间，但有个非常罕见的特征，即代码块结构实际上用缩进来控制。</p>
+<p>Python 语言的设计是非常于净优雅，具有非常出色的模块化特性。它提供了设计者用面向对象风格编码的可能，但并不把这个选择强加于设计者(可以用更加经典的类 C 方式编码）。</p>
+<p>Python 在纯执行速度方面无法同 C 或 C++竞争(尽管在现今快速处理器上应用混合语言策略使这点已经相对不那么重要)。实际上，人们通常认为 Python 是主要脚本语言中效率最低、速度最慢的语言，这是它为运行期类型多态付出的代价。</p>
+<p>然而当心，别因为这些原因而拒绝 Python，Python 能够提供的性能实际上已经满足人多数应用程序，即使那些似乎需要更好性能的程序通常也受到网络等待或磁盘等待等外部延时的限制，从而完全抵消了 Python 解释型开销产生的影响。</p>
+<p>总结：Python 的最佳之处在于它鼓励清晰、易读的代码，易学易用，又能够扩展到大型项目。最糟之处在于，不仅相对于编译语言，而且相对于其它脚本语言，它也是效率低下、速度缓慢的。</p>
+<h2 id="14_4_7_Java"><a class="header-anchor" href="#14_4_7_Java">#</a>14.4.7 Java</h2>
+<p>Java 编程语言的设计目标是“write once, run anywhere（一次编写，到处运行）”并且支持网页中嵌入交互程序(即 applets)，可在任一个浏览器中运行。由于其所有者 Sun Microsystems 的一系列技术和战略失误，Java 没有实现这两个最初的设计目标。但它在系统编程和应用编程方面仍然十分强大，足以挑战 C 和 C++。</p>
+<p>尽管远比 C++ 小巧简单，但 Java 设计非常聪明地抓住了自动管理内存的巨大优势也抓住了支持 OO 设计这一虽小却并非不重要的优点。Java 保留了大量的类 C 语法，大多数程序员对此感觉非常舒服。它也包括支持动态载入的 C 调用并支持在 C 中把 Java 作为嵌入语言调用。Sun 公司在网上提供良好 Java 文档的工作完成得非常出色，这一点作用也不可小觑。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Unix 编程艺术》 第十三章 复杂度</title>
     <url>/di_13_zhang_fu_za_du%EF%BC%9Ajin_ke_neng_jian_dan%EF%BC%8Cdan_bie_jian_dan_guo_le_tou/</url>
     <content><![CDATA[<p>在<a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a> 末，将 Unix 的哲学概括为“KeepItSimple,Stupid!”。贯穿整个“设计”部分的不变主题就是尽可能保持简单设计的重要性。但什么是“尽可能的简单”?又如何断定?</p>
@@ -4305,57 +4412,6 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
 ]]></content>
       <tags>
         <tag>系统设计</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Unix 编程艺术》 第十四章 语言</title>
-    <url>/di_14_zhang_yu_yan%EF%BC%9Ac_hai_shi_fei_c/</url>
-    <content><![CDATA[<h1 id="14_1_Unix_下语言的丰饶"><a class="header-anchor" href="#14_1_Unix_下语言的丰饶">#</a>14.1 Unix 下语言的丰饶</h1>
-<p>Unix 上运行的语言种类完全可能超过计算史上其它所有操作系统的总和，至少有两个充分的理由造成了这种巨大的多样性：</p>
-<ol>
-<li>Unix 广泛用于研究和教学平台。</li>
-<li>Unix 传统鼓励专门领域语言的设计，和现在一般称为“脚本语言”的东西——为了把其它应用程序和工具胶合起来而专门设计的语言。</li>
-</ol>
-<p>“脚本语言”是个有点整脚的术语。很多通常这么称呼的主要语言 (PerlTcl、Python 等)都已经超越了最初意义的脚本用途，已经成为威力相当强大的独立通用编程语言。</p>
-<p>把所有这些语言都纳入“脚本语言”的部分原因在于，这些语言都具有非常一致的发展历程。在运行期完成解释使得动态存储管理的自动化相对容易，而这几平要求采用引用（存储地址不透明且无法进行运算）而不是传值或显式指针。使用引用可使下一步更容易实现运行期的多态性和 OO。</p>
-<h1 id="14_2_为什么不是_C"><a class="header-anchor" href="#14_2_为什么不是_C">#</a>14.2 为什么不是 C</h1>
-<p>C 和 C++以增加实现时间和调试时间为代价来优化效率。尽管以 C 或 C++编写对时间要求极高的系统程序或应用程序内核似乎还有意义，然而自从这些语言在 1980 年代崛起，世界已经发生了很大变化。在 2003 年，用几平同样的价钱能够买到的处理器快了 1000 倍，内存大了 1000 倍,，磁盘容量也大了 10000 倍。</p>
-<p>急剧下降的成本从根本上改变了编程的经济含义。大多数情况下，和 C 一样节约机器资源已经不再有任何意义。相反地，经济方面的最优选择已经变成尽可能减少调试时间、尽可能延长人类对代码的长期可维护性。</p>
-<p>C 和 C++的中心问题在于它们要求程序员自己完成内存管理—声明变量、显式管理链表、设置缓冲大小、检测或防止缓冲溢出，以及分配和回收动态存储。…尽管缺乏确凿坚实的数据，但很多经验丰富的程序员都相信，内存管理产生的 bug 时真实代码持续产生错误的最大单体来源。</p>
-<h1 id="14_3_解释型语言和混合策略"><a class="header-anchor" href="#14_3_解释型语言和混合策略">#</a>14.3 解释型语言和混合策略</h1>
-<p>避免手工管理内存的语言通过在运行期可执行体中嵌入一个内存管理器来完成内存管理。</p>
-<p>通常情况下，这些语言的运行环境分成程序部分（运行脚本本身）和解释器部分解释器管理动态存储。在 Unix（以及其它现代操作系统）中解释器内核由多个程序部分共享，减少了各个程序的实际开销。</p>
-<h1 id="14_4_语言评估"><a class="header-anchor" href="#14_4_语言评估">#</a>14.4 语言评估</h1>
-<p>混合语言是一种知识密集型（而不是编码密集型）的编程。要让它能够工作，我们不仅应该具备相当数量的多种语言应用知识，并且还必须具备能够判断这些语言在什么地方最适合、以及怎样把它们组合在一起的潜经验。</p>
-<h2 id="14_4_1_C"><a class="header-anchor" href="#14_4_1_C">#</a>14.4.1 C</h2>
-<p>尽管存在内存管理问题，但 C 语言还有一些仍然可以在其中称王称霸的生态环境要求速度最快并且具有实时需求的程序，或者与 OS 内核紧密联系的程序非常适合用 C 编写。</p>
-<p>即使更高级的语言能够满足编程的要求，我们仍然要学习 C，其中一个充分理由就是 C 能帮助我们学会在硬件体系层次上考虑问题。</p>
-<h2 id="14_4_2_C"><a class="header-anchor" href="#14_4_2_C">#</a>14.4.2 C++</h2>
-<p>当 C++在 1980 年代中期首次公布于世时，面向对象 （OO）语言正被大肆吹捧为解决软件复杂度问题的“银弹”。</p>
-<p>C++面向对象的特性对于其前辈 C 而言是个压倒性的优点其拥期望 C++能够迅速废掉更古老的 C 语言。</p>
-<p>这种情况当然并没有发生。部分可归因于 C++本身的问题:对向后兼容 C 的要求迫使 C++在设计中做出了许多妥协。而且这个要求阻碍了 C++完全自动化动态内存管理从而无法解决 C 语言最严重的问题。后来，薄弱、不成熟的标准化努力，并不能限制各个不同编译器实现者之间的功能特征竞赛，C++变得过分精微复杂了。</p>
-<p>对 C 的向上兼容；面向对象的平台；STL 和泛型等最前沿的技术工具——C++ 试图满足所有人的所有要求，但代价是 C++ 比任何一个程序员所能处理的复杂度都要高。C++ 的主要设让者已经承认他不指望任何一个程序员能够完全掌握 C++。</p>
-<p>Unix 黑客对此并没有很好的反应：一段匿名但非常著名的评论这样描述“C++:狗被钉上软肢而变成的章鱼”。</p>
-<p>C++ 最根本的问题还是在于它根本上只是另外一种传统语言。在标准模板库发明后，C++的内存管理控制有所改善，比 C 好得多，但仍然十分脆弱：除非代码仅使用对象，否则控制仍旧无用。对许多类型的应用而言，C++的 OO 特性并不重要，没有带来多少优势，陡增复杂度而已。</p>
-<p>总结：C++的最佳之处是编译效率以及面向对象和泛型编程的结合。最糟之处是它非常怪异复杂，往往鼓励过分复杂的设计。</p>
-<h2 id="14_4_3_Shell"><a class="header-anchor" href="#14_4_3_Shell">#</a>14.4.3 Shell</h2>
-<p>简单 shell 程序的编写极其容易和自然。Unix 使用解释型语言的快速原型设计传统就始于 shell。</p>
-<p>然而，随着程序规模越来越大，这些程序往往变得非常专用。部分 shell 语法（特别是其引用和声明语法规则）变得十分混乱。为了 shell 作为交互式命令行解释器的实用性而在设计中对语言部分做了折中，这些缺点就是这么来的。</p>
-<p>现在 shell 只是为最简单的包装器(那些语言使用在包装器上是大材小用)和系统启动时的初始化脚本而保留。复杂的 shell 脚本经常产生可移植性问题，主要原因并不在于 shell 本身而在于 shell 使用了某些它假定存在的程序。</p>
-<p>总结：shell 的最佳之处在于书写小型脚本非常自然快捷。最糟之处在于大型 shell 脚本必须依靠大量辅助命令，而这些辅助命今不一定在所有日标机器上都表现一致甚至不一定存在。要在大型 shell 脚本中分析依赖关系并不容易。</p>
-<h2 id="14_4_6_Python"><a class="header-anchor" href="#14_4_6_Python">#</a>14.4.6 Python</h2>
-<p>Python 的语法介于 C 语言和 Modula 系列语言之间，但有个非常罕见的特征，即代码块结构实际上用缩进来控制。</p>
-<p>Python 语言的设计是非常于净优雅，具有非常出色的模块化特性。它提供了设计者用面向对象风格编码的可能，但并不把这个选择强加于设计者(可以用更加经典的类 C 方式编码）。</p>
-<p>Python 在纯执行速度方面无法同 C 或 C++竞争(尽管在现今快速处理器上应用混合语言策略使这点已经相对不那么重要)。实际上，人们通常认为 Python 是主要脚本语言中效率最低、速度最慢的语言，这是它为运行期类型多态付出的代价。</p>
-<p>然而当心，别因为这些原因而拒绝 Python，Python 能够提供的性能实际上已经满足人多数应用程序，即使那些似乎需要更好性能的程序通常也受到网络等待或磁盘等待等外部延时的限制，从而完全抵消了 Python 解释型开销产生的影响。</p>
-<p>总结：Python 的最佳之处在于它鼓励清晰、易读的代码，易学易用，又能够扩展到大型项目。最糟之处在于，不仅相对于编译语言，而且相对于其它脚本语言，它也是效率低下、速度缓慢的。</p>
-<h2 id="14_4_7_Java"><a class="header-anchor" href="#14_4_7_Java">#</a>14.4.7 Java</h2>
-<p>Java 编程语言的设计目标是“write once, run anywhere（一次编写，到处运行）”并且支持网页中嵌入交互程序(即 applets)，可在任一个浏览器中运行。由于其所有者 Sun Microsystems 的一系列技术和战略失误，Java 没有实现这两个最初的设计目标。但它在系统编程和应用编程方面仍然十分强大，足以挑战 C 和 C++。</p>
-<p>尽管远比 C++ 小巧简单，但 Java 设计非常聪明地抓住了自动管理内存的巨大优势也抓住了支持 OO 设计这一虽小却并非不重要的优点。Java 保留了大量的类 C 语法，大多数程序员对此感觉非常舒服。它也包括支持动态载入的 C 调用并支持在 C 中把 Java 作为嵌入语言调用。Sun 公司在网上提供良好 Java 文档的工作完成得非常出色，这一点作用也不可小觑。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
         <tag>编码规范</tag>
       </tags>
   </entry>
@@ -4733,78 +4789,6 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第三章 对比</title>
-    <url>/di_3_zhang_dui_bi%EF%BC%9Aunix_zhe_xue_tong_qi_ta_zhe_xue_de_bi_jiao/</url>
-    <content><![CDATA[<h1 id="3_1_操作系统的风格元素"><a class="header-anchor" href="#3_1_操作系统的风格元素">#</a>3.1 操作系统的风格元素</h1>
-<h2 id="3_1_1_什么是操作系统的统一性理念"><a class="header-anchor" href="#3_1_1_什么是操作系统的统一性理念">#</a>3.1.1 什么是操作系统的统一性理念</h2>
-<p>Unix 有几个统一性的理念或象征，并塑造了它的 API 及由此形成的开发风格。其中最重要的一点应当是“一切皆文件”模型及在此基础上建立的管道概念。</p>
-<p>彻头彻尾的反 Unix 系统，就是没有任何统一性理念，胡乱堆砌起的一些唬人特性而已。</p>
-<h2 id="3_1_2_多任务能力"><a class="header-anchor" href="#3_1_2_多任务能力">#</a>3.1.2 多任务能力</h2>
-<p>Unix 系统拥有抢先式多任务（preemptive multitasking）能力。在 Unix 中，时间片由调度程序来分配，这个调度程序定期中断或抢断正在运行的进程而把控制权交给下一个进程。几乎所有的现代操作系统都支持抢占式调度。</p>
-<p>彻头彻尾的反 Unix 系统，就是绝无多任务处理能力一一或者通过对进程管理增设诸多的规定、限制和特殊情况来削弱多任务能力的一个废物。</p>
-<h2 id="3_1_3_协作进程"><a class="header-anchor" href="#3_1_3_协作进程">#</a>3.1.3 协作进程</h2>
-<p>在 Unix 中，低价的进程生成和简便的 <code>进程间通讯（IPC,Inter-Process Communication）</code> 使众多小工具、管道和过滤器组成一个均衡系统成为可能。</p>
-<p>如果操作系统的进程生成代价昂贵，且/或进程控制非常困难、不灵活，后果通常是：</p>
-<ul>
-<li>编写怪物般巨大的单个程序成为更自然的编程方式。</li>
-<li>很多策略必须在这些庞大程序中表述。</li>
-<li>当进程间不得不进行通讯时，要么只能采用笨拙、低效、不安全的机制（比如临时文件），要么就得依赖太多彼此的实现细节，要么彼此需了解对方的太多实现细节。</li>
-<li>广泛使用多线程来完成某些任务，而这些任务 Unix 只需用互通的多进程就能处理。</li>
-<li>必须学习和使用异步 IO。</li>
-</ul>
-<p>一个操作系统，如果没有灵活的 IPC 和使用 IPC 的强大传统，程序间就得通过共享结构复杂的数据实现通讯。由于一旦有新的程序加入通讯圈，圈子里所有程序的通讯问题都必须重新解决，所以解决方案的复杂度与协作程序数量的平方成正比。更糟糕的是，其中任何一个程序的数据结构发生变化，都说不定会给其它程序带来什么隐蔽的 bug。</p>
-<p>彻头彻尾的反 Unix 系统，就是让进程的生成代价高昂，让进程的控制因难而死板，让 IPC 可有可无，对它不予支持或支持很少。</p>
-<h2 id="3_1_4_内部边界"><a class="header-anchor" href="#3_1_4_内部边界">#</a>3.1.4 内部边界</h2>
-<p>Unix 至少设立了三层内部边界来防范恶意用户或有缺陷的程序：</p>
-<ol>
-<li>第一层是内存管理：Unix 用硬件自身的 <code>内存管理单元(MMU)</code> 来保证各自的进程不会侵入到其它进程的内存地址空间。</li>
-<li>第二层是为多用户设置的真正权限组——普通用户（非 Root 用户）的进程未经允许，就不能更改或者读取其他用户的文件。</li>
-<li>第三层是把涉及关键安全性的功能限制在尽可能小的可信代码块上 。在 Unix 中，即使是 shell（系统命令解释器）也不是什么特权程序。</li>
-</ol>
-<h2 id="3_1_5_文件属性和记录结构"><a class="header-anchor" href="#3_1_5_文件属性和记录结构">#</a>3.1.5 文件属性和记录结构</h2>
-<p>Unix 文件既没有记录结构也没有文件属性。</p>
-<p>对文件属性的操作系统支持会诱导程序员使用不透明的文件格式，让他们依靠文件属性将文件格式对应的解读程序绑在一起。</p>
-<h2 id="3_1_6_二进制文件格式"><a class="header-anchor" href="#3_1_6_二进制文件格式">#</a>3.1.6 二进制文件格式</h2>
-<p>彻头彻尾的反 Unix 系统，让所有文件格式都采用不透明的二进制格式，后者要用重量级的工具才能读取和编辑。</p>
-<h2 id="3_1_7_首选用户界面风格"><a class="header-anchor" href="#3_1_7_首选用户界面风格">#</a>3.1.7 首选用户界面风格</h2>
-<p>如果操作系统的 CLI 功能很弱或根本不存在，其后果会是：</p>
-<ul>
-<li>程序设计不会考虑以未预料到的方式相互协作——因为无法这样设计。输出不能用作输入。</li>
-<li>远程系统管理更难于实现，更难以使用，更强调网络。</li>
-<li>即便简单的非交互程序也将招致 GUI 开销或复杂的脚本接口。</li>
-<li>服务器、守护程序和后台进程几乎无法写出，至少很难以优雅的方式写出。</li>
-</ul>
-<p>彻头彻尾的反 Unix 系统，就是没有 CLI，没有脚本编程能力或者，存在 CLI 不能驱动的重要功能。</p>
-<h2 id="3_1_8_目标受众"><a class="header-anchor" href="#3_1_8_目标受众">#</a>3.1.8 目标受众</h2>
-<p>“客户端”可以理解为：轻量，只支持单个用户，能够在小型机器上运行，随需开关机器，没有抢先式多任务处理，为低延迟作了优化，大量资源都用在花哨的用户界面上。</p>
-<p>“服务器”可以解释为：重量，能够连续运行，为吞吐量优化，完全抢占式多任务处理以处理多重会话。所有的操作系统最初都是服务器操作系统。</p>
-<p>客户端操作系统更关注用户的视觉体验，而不是 7*24 小时的连续正常运行。</p>
-<p>彻头彻尾的反 Unix 系统，就是一个自认为比你自己更懂你在干什么的操作系统，然后雪上加霜的是，它还做错了。</p>
-<h2 id="3_1_9_开发的门坎"><a class="header-anchor" href="#3_1_9_开发的门坎">#</a>3.1.9 开发的门坎</h2>
-<p>区分操作系统的另一个重要尺度就是纯用户转变为开发者的门坎高度。这里有两个重要的成本：一是开发工具的金钱成本，另一个是成为一个熟练开发者的时间成本。</p>
-<h1 id="3_2_操作系统的比较"><a class="header-anchor" href="#3_2_操作系统的比较">#</a>3.2 操作系统的比较</h1>
-<h2 id="3_2_2_MacOS"><a class="header-anchor" href="#3_2_2_MacOS">#</a>3.2.2 MacOS</h2>
-<p>MacOS 有一个不同于 Unix 的坚定统一性理念：Mac 界面方针（the Mac InterfaceGuidelines）。</p>
-<p>这些方针非常详细地说明了应用程序 GUI 的表现形式和行为模式。这些原则的一致性在很多重要方面影响了 Mac 用户的文化。</p>
-<p>这些方针的主旨是：东西永远呆在你摆的地方。文档、目录和其它东西在桌面上都有固定的、系统不会弄乱的位置，重启后桌面依然保持原样。</p>
-<h2 id="3_2_4_Windows_NT"><a class="header-anchor" href="#3_2_4_Windows_NT">#</a>3.2.4 Windows NT</h2>
-<p>Windows NT(New Technology) 是微软为高端个人用户和服务器设计的操作系统；Windows XP 是 5.1.</p>
-<p>NT 是逐步堆积而成的，缺乏对应于 Unix “一切皆文件” 或 MacOS 左面的统一性理念。</p>
-<p>Unix 的系统配置和用户配置数据分散存放在众多的 dotfiles (名字以“.”开头的文件) 和系统数据文件中，而 NT 则集中存放在注册表中。以下后果贯穿于设计中：</p>
-<ul>
-<li>注册表使得整个系统完全不具备正交性。应用程序的单点故障就会损毁注册表，经常使得整个操作系统无法使用、必须重装。</li>
-<li>注册表蠕变 (registry creep) 现象：随着注册表的膨胀，越来越大的存取开销拖慢了所有程序的运行。</li>
-</ul>
-<h2 id="3_2_8_Linux"><a class="header-anchor" href="#3_2_8_Linux">#</a>3.2.8 Linux</h2>
-<p>Linux 并不含任何来自原始 Unix 源码树的代码，但却是一个按照 Unix 标准设计、行为像 Unix 的操作系统。</p>
-<p>包容竞争者的目标加上贴近终端用户的动力，促使 Linux 开发者广泛吸收非 Unix 操作系统的设计理念，甚至到了使传统 Unix 显得十分孤立的地步。</p>
-]]></content>
-      <tags>
-        <tag>系统设计</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Unix 编程艺术》第四章 模块化</title>
     <url>/di_4_zhang_mo_kuai_xing%EF%BC%9Abao_chi_qing_xi%EF%BC%8Cbao_chi_jian_jie/</url>
     <content><![CDATA[<blockquote>
@@ -4904,11 +4888,71 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第五章 文本化</title>
-    <url>/di_5_zhang_wen_ben_hua%EF%BC%9Ahao_xie_yi_chan_sheng_hao_shi_jian/</url>
-    <content><![CDATA[<p>序列化（保存）操作有时也称为 <code>列集(marshaling)</code>，其反向操作（载入）称为 <code>散集(unmarshaling)</code>。</p>
-<h1 id="文本化的重要性"><a class="header-anchor" href="#文本化的重要性">#</a>文本化的重要性</h1>
-<p>文本流是非常有用的通用格式，因为人无需专门工具就可以很容易地读写和编辑文本流，这些格式是透明的（或可以设计成透明的）。</p>
+    <title>《Unix 编程艺术》 第三章 对比</title>
+    <url>/di_3_zhang_dui_bi%EF%BC%9Aunix_zhe_xue_tong_qi_ta_zhe_xue_de_bi_jiao/</url>
+    <content><![CDATA[<h1 id="3_1_操作系统的风格元素"><a class="header-anchor" href="#3_1_操作系统的风格元素">#</a>3.1 操作系统的风格元素</h1>
+<h2 id="3_1_1_什么是操作系统的统一性理念"><a class="header-anchor" href="#3_1_1_什么是操作系统的统一性理念">#</a>3.1.1 什么是操作系统的统一性理念</h2>
+<p>Unix 有几个统一性的理念或象征，并塑造了它的 API 及由此形成的开发风格。其中最重要的一点应当是“一切皆文件”模型及在此基础上建立的管道概念。</p>
+<p>彻头彻尾的反 Unix 系统，就是没有任何统一性理念，胡乱堆砌起的一些唬人特性而已。</p>
+<h2 id="3_1_2_多任务能力"><a class="header-anchor" href="#3_1_2_多任务能力">#</a>3.1.2 多任务能力</h2>
+<p>Unix 系统拥有抢先式多任务（preemptive multitasking）能力。在 Unix 中，时间片由调度程序来分配，这个调度程序定期中断或抢断正在运行的进程而把控制权交给下一个进程。几乎所有的现代操作系统都支持抢占式调度。</p>
+<p>彻头彻尾的反 Unix 系统，就是绝无多任务处理能力一一或者通过对进程管理增设诸多的规定、限制和特殊情况来削弱多任务能力的一个废物。</p>
+<h2 id="3_1_3_协作进程"><a class="header-anchor" href="#3_1_3_协作进程">#</a>3.1.3 协作进程</h2>
+<p>在 Unix 中，低价的进程生成和简便的 <code>进程间通讯（IPC,Inter-Process Communication）</code> 使众多小工具、管道和过滤器组成一个均衡系统成为可能。</p>
+<p>如果操作系统的进程生成代价昂贵，且/或进程控制非常困难、不灵活，后果通常是：</p>
+<ul>
+<li>编写怪物般巨大的单个程序成为更自然的编程方式。</li>
+<li>很多策略必须在这些庞大程序中表述。</li>
+<li>当进程间不得不进行通讯时，要么只能采用笨拙、低效、不安全的机制（比如临时文件），要么就得依赖太多彼此的实现细节，要么彼此需了解对方的太多实现细节。</li>
+<li>广泛使用多线程来完成某些任务，而这些任务 Unix 只需用互通的多进程就能处理。</li>
+<li>必须学习和使用异步 IO。</li>
+</ul>
+<p>一个操作系统，如果没有灵活的 IPC 和使用 IPC 的强大传统，程序间就得通过共享结构复杂的数据实现通讯。由于一旦有新的程序加入通讯圈，圈子里所有程序的通讯问题都必须重新解决，所以解决方案的复杂度与协作程序数量的平方成正比。更糟糕的是，其中任何一个程序的数据结构发生变化，都说不定会给其它程序带来什么隐蔽的 bug。</p>
+<p>彻头彻尾的反 Unix 系统，就是让进程的生成代价高昂，让进程的控制因难而死板，让 IPC 可有可无，对它不予支持或支持很少。</p>
+<h2 id="3_1_4_内部边界"><a class="header-anchor" href="#3_1_4_内部边界">#</a>3.1.4 内部边界</h2>
+<p>Unix 至少设立了三层内部边界来防范恶意用户或有缺陷的程序：</p>
+<ol>
+<li>第一层是内存管理：Unix 用硬件自身的 <code>内存管理单元(MMU)</code> 来保证各自的进程不会侵入到其它进程的内存地址空间。</li>
+<li>第二层是为多用户设置的真正权限组——普通用户（非 Root 用户）的进程未经允许，就不能更改或者读取其他用户的文件。</li>
+<li>第三层是把涉及关键安全性的功能限制在尽可能小的可信代码块上 。在 Unix 中，即使是 shell（系统命令解释器）也不是什么特权程序。</li>
+</ol>
+<h2 id="3_1_5_文件属性和记录结构"><a class="header-anchor" href="#3_1_5_文件属性和记录结构">#</a>3.1.5 文件属性和记录结构</h2>
+<p>Unix 文件既没有记录结构也没有文件属性。</p>
+<p>对文件属性的操作系统支持会诱导程序员使用不透明的文件格式，让他们依靠文件属性将文件格式对应的解读程序绑在一起。</p>
+<h2 id="3_1_6_二进制文件格式"><a class="header-anchor" href="#3_1_6_二进制文件格式">#</a>3.1.6 二进制文件格式</h2>
+<p>彻头彻尾的反 Unix 系统，让所有文件格式都采用不透明的二进制格式，后者要用重量级的工具才能读取和编辑。</p>
+<h2 id="3_1_7_首选用户界面风格"><a class="header-anchor" href="#3_1_7_首选用户界面风格">#</a>3.1.7 首选用户界面风格</h2>
+<p>如果操作系统的 CLI 功能很弱或根本不存在，其后果会是：</p>
+<ul>
+<li>程序设计不会考虑以未预料到的方式相互协作——因为无法这样设计。输出不能用作输入。</li>
+<li>远程系统管理更难于实现，更难以使用，更强调网络。</li>
+<li>即便简单的非交互程序也将招致 GUI 开销或复杂的脚本接口。</li>
+<li>服务器、守护程序和后台进程几乎无法写出，至少很难以优雅的方式写出。</li>
+</ul>
+<p>彻头彻尾的反 Unix 系统，就是没有 CLI，没有脚本编程能力或者，存在 CLI 不能驱动的重要功能。</p>
+<h2 id="3_1_8_目标受众"><a class="header-anchor" href="#3_1_8_目标受众">#</a>3.1.8 目标受众</h2>
+<p>“客户端”可以理解为：轻量，只支持单个用户，能够在小型机器上运行，随需开关机器，没有抢先式多任务处理，为低延迟作了优化，大量资源都用在花哨的用户界面上。</p>
+<p>“服务器”可以解释为：重量，能够连续运行，为吞吐量优化，完全抢占式多任务处理以处理多重会话。所有的操作系统最初都是服务器操作系统。</p>
+<p>客户端操作系统更关注用户的视觉体验，而不是 7*24 小时的连续正常运行。</p>
+<p>彻头彻尾的反 Unix 系统，就是一个自认为比你自己更懂你在干什么的操作系统，然后雪上加霜的是，它还做错了。</p>
+<h2 id="3_1_9_开发的门坎"><a class="header-anchor" href="#3_1_9_开发的门坎">#</a>3.1.9 开发的门坎</h2>
+<p>区分操作系统的另一个重要尺度就是纯用户转变为开发者的门坎高度。这里有两个重要的成本：一是开发工具的金钱成本，另一个是成为一个熟练开发者的时间成本。</p>
+<h1 id="3_2_操作系统的比较"><a class="header-anchor" href="#3_2_操作系统的比较">#</a>3.2 操作系统的比较</h1>
+<h2 id="3_2_2_MacOS"><a class="header-anchor" href="#3_2_2_MacOS">#</a>3.2.2 MacOS</h2>
+<p>MacOS 有一个不同于 Unix 的坚定统一性理念：Mac 界面方针（the Mac InterfaceGuidelines）。</p>
+<p>这些方针非常详细地说明了应用程序 GUI 的表现形式和行为模式。这些原则的一致性在很多重要方面影响了 Mac 用户的文化。</p>
+<p>这些方针的主旨是：东西永远呆在你摆的地方。文档、目录和其它东西在桌面上都有固定的、系统不会弄乱的位置，重启后桌面依然保持原样。</p>
+<h2 id="3_2_4_Windows_NT"><a class="header-anchor" href="#3_2_4_Windows_NT">#</a>3.2.4 Windows NT</h2>
+<p>Windows NT(New Technology) 是微软为高端个人用户和服务器设计的操作系统；Windows XP 是 5.1.</p>
+<p>NT 是逐步堆积而成的，缺乏对应于 Unix “一切皆文件” 或 MacOS 左面的统一性理念。</p>
+<p>Unix 的系统配置和用户配置数据分散存放在众多的 dotfiles (名字以“.”开头的文件) 和系统数据文件中，而 NT 则集中存放在注册表中。以下后果贯穿于设计中：</p>
+<ul>
+<li>注册表使得整个系统完全不具备正交性。应用程序的单点故障就会损毁注册表，经常使得整个操作系统无法使用、必须重装。</li>
+<li>注册表蠕变 (registry creep) 现象：随着注册表的膨胀，越来越大的存取开销拖慢了所有程序的运行。</li>
+</ul>
+<h2 id="3_2_8_Linux"><a class="header-anchor" href="#3_2_8_Linux">#</a>3.2.8 Linux</h2>
+<p>Linux 并不含任何来自原始 Unix 源码树的代码，但却是一个按照 Unix 标准设计、行为像 Unix 的操作系统。</p>
+<p>包容竞争者的目标加上贴近终端用户的动力，促使 Linux 开发者广泛吸收非 Unix 操作系统的设计理念，甚至到了使传统 Unix 显得十分孤立的地步。</p>
 ]]></content>
       <tags>
         <tag>系统设计</tag>
@@ -4964,6 +5008,18 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
+    <title>《Unix 编程艺术》 第五章 文本化</title>
+    <url>/di_5_zhang_wen_ben_hua%EF%BC%9Ahao_xie_yi_chan_sheng_hao_shi_jian/</url>
+    <content><![CDATA[<p>序列化（保存）操作有时也称为 <code>列集(marshaling)</code>，其反向操作（载入）称为 <code>散集(unmarshaling)</code>。</p>
+<h1 id="文本化的重要性"><a class="header-anchor" href="#文本化的重要性">#</a>文本化的重要性</h1>
+<p>文本流是非常有用的通用格式，因为人无需专门工具就可以很容易地读写和编辑文本流，这些格式是透明的（或可以设计成透明的）。</p>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Unix 编程艺术》 第七章 多道程序设计</title>
     <url>/di_7_zhang_duo_dao_cheng_xu_she_ji%EF%BC%9Afen_li_jin_cheng_wei_du_li_de_gong_neng/</url>
     <content><![CDATA[<p>多道程序设计是设计中的荒蛮之地，几乎没有好的实践方针。许多程序员尽管精于判断如何将代码分解成子过程，然而最终还是编写出单个庞然大物般的单进程程序，而这些程序往往失败在自身的内部复杂度之上。</p>
@@ -4985,16 +5041,6 @@ Henry Spencer</p>
       </tags>
   </entry>
   <entry>
-    <title>《Unix 编程艺术》 第八章 微型语言</title>
-    <url>/di_8_zhang_wei_xing_yu_yan%EF%BC%9Axun_zhao_ge_chang_de_le_fu/</url>
-    <content><![CDATA[<p>Unix 有个长期传统，即包容小型的、为专门应用领域特质、大量减少程序行数的语言。</p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-        <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Unix 编程艺术》 第九章 生成</title>
     <url>/di_9_zhang_sheng_cheng%EF%BC%9Ati_sheng_gui_ge_shuo_ming_de_ceng_ci/</url>
     <content><![CDATA[<p>数据比程序逻辑更易驾驭。尽可能把设计的复杂度从程序代码转移到数据中是个好实践，选择便于人类维护和操作的数据表示法也是好实践。</p>
@@ -5011,6 +5057,16 @@ Henry Spencer</p>
 ]]></content>
       <tags>
         <tag>系统设计</tag>
+        <tag>编码规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Unix 编程艺术》 第八章 微型语言</title>
+    <url>/di_8_zhang_wei_xing_yu_yan%EF%BC%9Axun_zhao_ge_chang_de_le_fu/</url>
+    <content><![CDATA[<p>Unix 有个长期传统，即包容小型的、为专门应用领域特质、大量减少程序行数的语言。</p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
         <tag>编码规范</tag>
       </tags>
   </entry>
@@ -5585,6 +5641,46 @@ Unity 官方也有相关的教程 <a href="https://docs.unity3d.com/manual/sl-sh
       </tags>
   </entry>
   <entry>
+    <title>《Head First 设计模式》 - 设计原则总结</title>
+    <url>/head_first_design_pattern_design_principles/</url>
+    <content><![CDATA[<ol>
+<li>将变化的部分封装起来（Encapsulate what varies)</li>
+<li>组合优于继承（Favor composition over inheritance）</li>
+<li>面向接口编程而非实现（Program to interfaces, not implementations.）</li>
+<li>减少需要交互的类之间的耦合（Strive for loosely coupled designs between objects that interact）</li>
+<li>对拓展开放，对修改关闭（Classes should be open for extension but closed for modification.）</li>
+<li>依赖于抽象而非具体的类（ Depend on abstraction. Do not depend on concrete classes）</li>
+<li>暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）</li>
+<li>高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don’t call us ,we’ll call you）</li>
+<li>一个类应该有且只有一个被改变的理由（A class should have only one reason to change）</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Head First 设计模式》 笔记汇总</title>
+    <url>/head_first_design_patterns/</url>
+    <content><![CDATA[<p><a href="/ch_01_the_strategy_pattern">Ch 01 the Strategy Pattern</a></p>
+<p><a href="/ch_02_the_observer_pattern">Ch 02 the Observer Pattern</a></p>
+<p><a href="/ch_03_the_decorator_pattern">Ch 03 the Decorator Pattern</a></p>
+<p><a href="/ch_04_the_factory_pattern">Ch 04 the Factory Pattern</a></p>
+<p><a href="/ch_05_the_singleton_pattern">Ch 05 the Singleton Pattern</a></p>
+<p><a href="/ch_06_the_command_pattern">Ch 06 the Command Pattern</a></p>
+<p><a href="/ch_07_the_adapter_and_facade_patterns">Ch 07 the Adapter and Facade Patterns</a></p>
+<p><a href="/ch_08_the_template_method_pattern">Ch 08 the Template Method Pattern</a></p>
+<p><a href="/ch_09_the_iterator_and_composite_pattern">Ch 09 the Iterator and Composite Pattern</a></p>
+<p><a href="/ch_10_the_state_pattern">Ch 10 the State Pattern</a></p>
+<p><a href="/ch_11_the_proxy_pattern">Ch 11 the Proxy Pattern</a></p>
+<p><a href="/ch_12_the_compound_patterns">Ch 12 the Compound Patterns</a></p>
+<p><a href="/head_first_design_pattern_design_principles">Head First Design Pattern Design Principles</a></p>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Unity Input System Step-By-Step 最简教程</title>
     <url>/input_system_minimum_tutorial/</url>
     <content><![CDATA[<h1 id="Overview"><a class="header-anchor" href="#Overview">#</a>Overview</h1>
@@ -5715,46 +5811,6 @@ Unity 官方也有相关的教程 <a href="https://docs.unity3d.com/manual/sl-sh
       <tags>
         <tag>Unity</tag>
         <tag>Tutorial</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 - 设计原则总结</title>
-    <url>/head_first_design_pattern_design_principles/</url>
-    <content><![CDATA[<ol>
-<li>将变化的部分封装起来（Encapsulate what varies)</li>
-<li>组合优于继承（Favor composition over inheritance）</li>
-<li>面向接口编程而非实现（Program to interfaces, not implementations.）</li>
-<li>减少需要交互的类之间的耦合（Strive for loosely coupled designs between objects that interact）</li>
-<li>对拓展开放，对修改关闭（Classes should be open for extension but closed for modification.）</li>
-<li>依赖于抽象而非具体的类（ Depend on abstraction. Do not depend on concrete classes）</li>
-<li>暴露最少的信息给其他类（最少知识原则）（Talk only to your immediate friends）</li>
-<li>高层有对底层的管理，而底层不需要关心高层何时会调用自己（好莱坞原则）（Don’t call us ,we’ll call you）</li>
-<li>一个类应该有且只有一个被改变的理由（A class should have only one reason to change）</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Head First 设计模式》 笔记汇总</title>
-    <url>/head_first_design_patterns/</url>
-    <content><![CDATA[<p><a href="/ch_01_the_strategy_pattern">Ch 01 the Strategy Pattern</a></p>
-<p><a href="/ch_02_the_observer_pattern">Ch 02 the Observer Pattern</a></p>
-<p><a href="/ch_03_the_decorator_pattern">Ch 03 the Decorator Pattern</a></p>
-<p><a href="/ch_04_the_factory_pattern">Ch 04 the Factory Pattern</a></p>
-<p><a href="/ch_05_the_singleton_pattern">Ch 05 the Singleton Pattern</a></p>
-<p><a href="/ch_06_the_command_pattern">Ch 06 the Command Pattern</a></p>
-<p><a href="/ch_07_the_adapter_and_facade_patterns">Ch 07 the Adapter and Facade Patterns</a></p>
-<p><a href="/ch_08_the_template_method_pattern">Ch 08 the Template Method Pattern</a></p>
-<p><a href="/ch_09_the_iterator_and_composite_pattern">Ch 09 the Iterator and Composite Pattern</a></p>
-<p><a href="/ch_10_the_state_pattern">Ch 10 the State Pattern</a></p>
-<p><a href="/ch_11_the_proxy_pattern">Ch 11 the Proxy Pattern</a></p>
-<p><a href="/ch_12_the_compound_patterns">Ch 12 the Compound Patterns</a></p>
-<p><a href="/head_first_design_pattern_design_principles">Head First Design Pattern Design Principles</a></p>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -5986,6 +6042,51 @@ N&#x27; \cdot T&#x27; &amp;= (GN) \cdot (MT) \\
       </tags>
   </entry>
   <entry>
+    <title>《System, Math and Explosions》 摘抄</title>
+    <url>/system,_math_and_explosions/</url>
+    <content><![CDATA[<p>系统从根本上就是复杂地，因为它不仅仅包含事物的集合，还包含事物的连接关系。而连接关系增长的非常块。</p>
+<p>如下所示， 3 个点的集合只有 3 个连接，9 个点的集合有 36 个连接，最右侧的集合有 27 个点，链接已经增长到了 351 个，这种现象被称为<code>组合爆炸（Combinatorial Explosion）</code>：<br>
+<img src="/system,_math_and_explosions/image-20230902151352.png" alt="系统连接的复杂度"></p>
+<div class="note info simple"><p>直觉上，增长速度是指数级的，但是实际上是多项书的，但这不是这篇文章的重点。</p>
+</div>
+<h1 id="组合爆炸就是复杂性爆炸"><a class="header-anchor" href="#组合爆炸就是复杂性爆炸">#</a>组合爆炸就是复杂性爆炸</h1>
+<p>当系统内组件的数量线性增长时，组件间的连接关系会呈指数增长，也因此系统的复杂度增长的会非常快。</p>
+<h1 id="堆积如山的东西是不可预测的"><a class="header-anchor" href="#堆积如山的东西是不可预测的">#</a>堆积如山的东西是不可预测的</h1>
+<p>系统之所以是系统，是因为它的组件能相互协同工作。随着系统的发展，理解一切是如何工作的，或者系统是否还仍然有效，变得越来越困难。这会让人感到难以理解、脆弱和不可预测。到那时，系统就正式变成了一坨 *</p>
+<p>不可预测性尤其可怕。因为不可预测的结果可能是好的、坏的或可怕的。前一分钟可以是这三个的组合，下一分钟以上都不是。这就是混乱，混乱必然是不好的。</p>
+<h1 id="避免复杂性的方法也会造成复杂性"><a class="header-anchor" href="#避免复杂性的方法也会造成复杂性">#</a>避免复杂性的方法也会造成复杂性</h1>
+<p>人们已经磨练了很多工具来避免复杂性。但坏消息是治疗方法可能比疾病本身更糟糕。这并不是说这些工具本质上是不好的，而是它们具有经常被忽视的局限性。以下是一些局限性：</p>
+<h2 id="拆分混淆了复杂性"><a class="header-anchor" href="#拆分混淆了复杂性">#</a>拆分混淆了复杂性</h2>
+<p>尝试简化系统时，划分是首选方法。它是一个很好的工具，可以将一个大型的整体系统转变为一个由更小、更易于管理的子系统组成的系统。如下：</p>
+<p><img src="/system,_math_and_explosions/image-20230902153548.png" alt="拆分为小组件"></p>
+<p>可以将系统的划分，与公司的组织结构划分类比。组织结构是将庞大的系统（人员），分解为更小、更容易理解的子系统（部门）的典型定义。</p>
+<p>组织结构图一个问题是它们会在人与人之间制造人为障碍，使他们更难一起工作。这些分区实际上并不存在于人们的日常工作中，但无论如何都是为了简化的目标而创建的。团队变得孤立，过度专注于自己的目标，而失去了对更大方向的可见性。</p>
+<p>在一个系统中也是如此，如果要保证所有模块的连接与拆分前一致，将变得非常困难。因此在实际的拆分中，很可能会造就一个脱节的系统，其中的各个元素感觉不像是在一起工作的。</p>
+<h2 id="减少连接降低复杂度"><a class="header-anchor" href="#减少连接降低复杂度">#</a>减少连接降低复杂度</h2>
+<p>仅仅因为系统中的两个部分可以连接，并不意味着它们应该连接。明确减少各个部分之间的连接是降低复杂性的另一种明确方法。如下是一个仍然是 27 个点，但每个点只和自己同侧的点相连的图，可以看到连接数大大减少了：<br>
+<img src="/system,_math_and_explosions/image-20230902154148.png" alt="降低连接数"></p>
+<p>但整个解决方案不利的一面是，需要额外的认知负担来理解哪些部分相互连接以及如何连接，这个认知负担也会随着每个组件的每组选项的独特程度而增加。</p>
+<p>另一个缺陷是，规则很可能会变得越来越复杂，一旦一个系统开始有 “做_<strong>_，除非__</strong>，除非____” 的规则出现，就要假设已经有人无法连接这个规则了。</p>
+<h2 id="抽象创造了复杂性的层次"><a class="header-anchor" href="#抽象创造了复杂性的层次">#</a>抽象创造了复杂性的层次</h2>
+<p>另一个降低复杂性的尝试是，仅让系统的一个子集可以被使用：一个简单的公共系统向所有人开放，它由一个隐藏着的一个更大、更复杂的私有系统驱动。</p>
+<p>如下所示：</p>
+<p><img src="/system,_math_and_explosions/image-20230902154624.png" alt="抽象"></p>
+<p>这样的解决方案会减少认知负担，尤其是对于初学者而言。用户可以从强大的抽象系统中受益，但陷入麻烦的选择要少得多。</p>
+<p>当然也有缺点。首先，公共和私有系统意味着需要处理更多的系统。其次，抽象可能会带来长期混乱的风险，因为人们开始发现他们没有获得所有的选择。这就引出了这样的问题：“还有哪些其他选项对我来说不可用？”、“为什么我不能使用它们？”并且，“为什么系统要按照与我不同的规则进行游戏？”</p>
+<h1 id="降低复杂度的唯一真正办法"><a class="header-anchor" href="#降低复杂度的唯一真正办法">#</a>降低复杂度的唯一真正办法</h1>
+<p>如果使用得当，上概述的工具可能会非常有效。但数学就是数学。线性地移除系统中的部分，连接会减少得更快。治疗复杂性的症状通常只是重新分配它。简而言之，避免复杂性陷阱的最佳方法就是完全避免复杂性。</p>
+<h1 id="令人窒息的秩序_或_灾难性的混乱"><a class="header-anchor" href="#令人窒息的秩序_或_灾难性的混乱">#</a>令人窒息的秩序 或 灾难性的混乱</h1>
+<p>很少有人承认混乱有吸引性，但为何它还是那么普遍呢？一个答案是：因为接受混乱很舒服。</p>
+<p>避免混乱就是寻求冲突。 “是” 会助长复杂性爆炸，“不” 则让阻碍复杂度增长。 但 “不“ 会带来争议，这是痛苦的、排斥的、令人窒息的。“不” 不会让你成为聚会的焦点，而且通常需要令人难以置信的纪律才能维持。</p>
+<p>尽管 “不” 可能会让人不舒服，但这最终是防止爆炸变成爆炸的最简单方法。</p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://pjonori.blog/posts/systems-math-explosions/">Systems, math and explosions (in no particular order) (pjonori.blog)</a></p>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SOLID 原则</title>
     <url>/solid/</url>
     <content><![CDATA[<p><code>SOLID</code> 原则是面向对象编程中的五个重要设计原则，有助于增强软件的可维护性、可扩展性和可读性。</p>
@@ -6084,51 +6185,6 @@ N&#x27; \cdot T&#x27; &amp;= (GN) \cdot (MT) \\
       <tags>
         <tag>设计模式</tag>
         <tag>编码规范</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《System, Math and Explosions》 摘抄</title>
-    <url>/system,_math_and_explosions/</url>
-    <content><![CDATA[<p>系统从根本上就是复杂地，因为它不仅仅包含事物的集合，还包含事物的连接关系。而连接关系增长的非常块。</p>
-<p>如下所示， 3 个点的集合只有 3 个连接，9 个点的集合有 36 个连接，最右侧的集合有 27 个点，链接已经增长到了 351 个，这种现象被称为<code>组合爆炸（Combinatorial Explosion）</code>：<br>
-<img src="/system,_math_and_explosions/image-20230902151352.png" alt="系统连接的复杂度"></p>
-<div class="note info simple"><p>直觉上，增长速度是指数级的，但是实际上是多项书的，但这不是这篇文章的重点。</p>
-</div>
-<h1 id="组合爆炸就是复杂性爆炸"><a class="header-anchor" href="#组合爆炸就是复杂性爆炸">#</a>组合爆炸就是复杂性爆炸</h1>
-<p>当系统内组件的数量线性增长时，组件间的连接关系会呈指数增长，也因此系统的复杂度增长的会非常快。</p>
-<h1 id="堆积如山的东西是不可预测的"><a class="header-anchor" href="#堆积如山的东西是不可预测的">#</a>堆积如山的东西是不可预测的</h1>
-<p>系统之所以是系统，是因为它的组件能相互协同工作。随着系统的发展，理解一切是如何工作的，或者系统是否还仍然有效，变得越来越困难。这会让人感到难以理解、脆弱和不可预测。到那时，系统就正式变成了一坨 *</p>
-<p>不可预测性尤其可怕。因为不可预测的结果可能是好的、坏的或可怕的。前一分钟可以是这三个的组合，下一分钟以上都不是。这就是混乱，混乱必然是不好的。</p>
-<h1 id="避免复杂性的方法也会造成复杂性"><a class="header-anchor" href="#避免复杂性的方法也会造成复杂性">#</a>避免复杂性的方法也会造成复杂性</h1>
-<p>人们已经磨练了很多工具来避免复杂性。但坏消息是治疗方法可能比疾病本身更糟糕。这并不是说这些工具本质上是不好的，而是它们具有经常被忽视的局限性。以下是一些局限性：</p>
-<h2 id="拆分混淆了复杂性"><a class="header-anchor" href="#拆分混淆了复杂性">#</a>拆分混淆了复杂性</h2>
-<p>尝试简化系统时，划分是首选方法。它是一个很好的工具，可以将一个大型的整体系统转变为一个由更小、更易于管理的子系统组成的系统。如下：</p>
-<p><img src="/system,_math_and_explosions/image-20230902153548.png" alt="拆分为小组件"></p>
-<p>可以将系统的划分，与公司的组织结构划分类比。组织结构是将庞大的系统（人员），分解为更小、更容易理解的子系统（部门）的典型定义。</p>
-<p>组织结构图一个问题是它们会在人与人之间制造人为障碍，使他们更难一起工作。这些分区实际上并不存在于人们的日常工作中，但无论如何都是为了简化的目标而创建的。团队变得孤立，过度专注于自己的目标，而失去了对更大方向的可见性。</p>
-<p>在一个系统中也是如此，如果要保证所有模块的连接与拆分前一致，将变得非常困难。因此在实际的拆分中，很可能会造就一个脱节的系统，其中的各个元素感觉不像是在一起工作的。</p>
-<h2 id="减少连接降低复杂度"><a class="header-anchor" href="#减少连接降低复杂度">#</a>减少连接降低复杂度</h2>
-<p>仅仅因为系统中的两个部分可以连接，并不意味着它们应该连接。明确减少各个部分之间的连接是降低复杂性的另一种明确方法。如下是一个仍然是 27 个点，但每个点只和自己同侧的点相连的图，可以看到连接数大大减少了：<br>
-<img src="/system,_math_and_explosions/image-20230902154148.png" alt="降低连接数"></p>
-<p>但整个解决方案不利的一面是，需要额外的认知负担来理解哪些部分相互连接以及如何连接，这个认知负担也会随着每个组件的每组选项的独特程度而增加。</p>
-<p>另一个缺陷是，规则很可能会变得越来越复杂，一旦一个系统开始有 “做_<strong>_，除非__</strong>，除非____” 的规则出现，就要假设已经有人无法连接这个规则了。</p>
-<h2 id="抽象创造了复杂性的层次"><a class="header-anchor" href="#抽象创造了复杂性的层次">#</a>抽象创造了复杂性的层次</h2>
-<p>另一个降低复杂性的尝试是，仅让系统的一个子集可以被使用：一个简单的公共系统向所有人开放，它由一个隐藏着的一个更大、更复杂的私有系统驱动。</p>
-<p>如下所示：</p>
-<p><img src="/system,_math_and_explosions/image-20230902154624.png" alt="抽象"></p>
-<p>这样的解决方案会减少认知负担，尤其是对于初学者而言。用户可以从强大的抽象系统中受益，但陷入麻烦的选择要少得多。</p>
-<p>当然也有缺点。首先，公共和私有系统意味着需要处理更多的系统。其次，抽象可能会带来长期混乱的风险，因为人们开始发现他们没有获得所有的选择。这就引出了这样的问题：“还有哪些其他选项对我来说不可用？”、“为什么我不能使用它们？”并且，“为什么系统要按照与我不同的规则进行游戏？”</p>
-<h1 id="降低复杂度的唯一真正办法"><a class="header-anchor" href="#降低复杂度的唯一真正办法">#</a>降低复杂度的唯一真正办法</h1>
-<p>如果使用得当，上概述的工具可能会非常有效。但数学就是数学。线性地移除系统中的部分，连接会减少得更快。治疗复杂性的症状通常只是重新分配它。简而言之，避免复杂性陷阱的最佳方法就是完全避免复杂性。</p>
-<h1 id="令人窒息的秩序_或_灾难性的混乱"><a class="header-anchor" href="#令人窒息的秩序_或_灾难性的混乱">#</a>令人窒息的秩序 或 灾难性的混乱</h1>
-<p>很少有人承认混乱有吸引性，但为何它还是那么普遍呢？一个答案是：因为接受混乱很舒服。</p>
-<p>避免混乱就是寻求冲突。 “是” 会助长复杂性爆炸，“不” 则让阻碍复杂度增长。 但 “不“ 会带来争议，这是痛苦的、排斥的、令人窒息的。“不” 不会让你成为聚会的焦点，而且通常需要令人难以置信的纪律才能维持。</p>
-<p>尽管 “不” 可能会让人不舒服，但这最终是防止爆炸变成爆炸的最简单方法。</p>
-<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="https://pjonori.blog/posts/systems-math-explosions/">Systems, math and explosions (in no particular order) (pjonori.blog)</a></p>
-]]></content>
-      <tags>
-        <tag>系统设计</tag>
       </tags>
   </entry>
   <entry>
