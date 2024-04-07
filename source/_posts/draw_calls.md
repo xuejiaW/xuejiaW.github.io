@@ -5,7 +5,7 @@ tags:
   - Unity
   - SRP
 created: 2022-01-24
-updated: 2024-03-31
+updated: 2024-04-02
 date: 2024-03-23 13:53
 published: true
 title: Custom SRP - Draw Calls
@@ -39,8 +39,8 @@ Shader "Custom RP/Unlit"
 
 如果使用这个 Shader 创建一个材质，则该材质会默认的渲染白色，如下所示：
 
-|                                       |                                           |                                           |
-| ------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+|                                       |                                         |                                         |
+| ------------------------------------- | --------------------------------------- | --------------------------------------- |
 | ![](/draw_calls/drawcall.png) | ![](/draw_calls/drawcall-1.png) | ![](/draw_calls/drawcall-2.png) |
 
 ## HLSL Programs
@@ -254,6 +254,20 @@ float4x4 glstate_matrix_projection;
 
 其中的 `real4` 是一个根据平台定义的参数，根据不同的平台，它可能被定义为 `half4` 或 `float4` 。 `real4` 的定义在 `Core RP Pipeline` 的 `Common.hlsl` 中。
 
+{% note primary %}
+在 `UnityInput.hlsl` 中定义的变量相当于是声明，这些变量都是在 Unity Default Shader 中可以找寻到的，Unity 会负责将这些变量的值传递给 Shader。
+`Common.hlsl` 中则是通过 define，将 Unity Default Shader 中的变量名与 `Core RP Pipeline` 中函数所依赖的变量名对应起来。
+以定义在 `Core RP Pipeline` 中的 `SpaceTransforms.hlsl` 的函数 `GetObjectToWorldMatrix` 为例：
+```hlsl
+float4x4 GetObjectToWorldMatrix()
+{
+return UNITY_MATRIX_M;
+}
+```
+它依赖变量 `UNITY_MATRIX_M` ，而 `UNITY_MATRIX_M` 正是通过我们在 `Common.hlsl` 中定义的 `#define UNITY_MATRIX_M unity_ObjectToWorld` 而得到的。
+`unity_ObjectToWorld` 又进一步是因为我们在 `UnityInput.hlsl` 中声明了`float4x4 unity_ObjectToWorld`，才能正确获取到 `unity_ObjectToWorld` 的值。
+{% endnote %}
+
 因此，最终自定义的 `Common.hlsl` 如下所示：
 
 ```glsl
@@ -339,7 +353,7 @@ Properties
 
 `SRP Batcher` 本质上并没有减少 Draw Call 的数量，它只是将一些材质的 Uniform 数据缓存在 GPU 上，让 CPU 不需要每帧都去设置。这样同时减少了 CPU 处理数据的时间以及 CPU 向 GPU 传输的数据量。
 
-所有可以被 `SRP Batcher` 缓存在 GPU 的 Uniform 数据都必须定义在一块地址不变的内存中，在 `SRP` 中可以通过将数据包裹在 `cbuffer`(Constant buffer) 定义的数据块中。
+所有可以被 `SRP Batcher` 缓存在 GPU 的 Uniform 数据都必须定义在一块地址不变的内存中，在 `SRP` 中可以通过将数据包裹在 `cbuffer`(Shader Constants Buffer) 定义的数据块中。
 
 针对我们之前定义的 `UnlitPass.hlsl` Shader 就需要将 `m_BaseColor` 变量用 `cbuffer` 包裹，如下所示：
 
@@ -352,7 +366,7 @@ cbuffer UnityPerMaterial
 ```
 
 {% note warning %}
-`SRP Batcher` 要求自定义的数据类型必须要放在名为 `UnityPerMaterial` 的数据块中，所有 Unity 内置的数据类型要放在名为 `UnityPerDraw` 的数据库中。
+`SRP Batcher` 要求自定义的数据类型必须要放在名为 `UnityPerMaterial` 的数据块中，所有 Unity 内置的数据类型要放在名为 `UnityPerDraw` 的数据库中 [^2]。
 {% endnote %}
 
 但 `cbuffer` 并不是在所有的平台下都支持，如 OpenGL ES 2.0 就不支持，所以为了保证兼容性，可以可以使用如下的方式进行替代：
@@ -1018,4 +1032,5 @@ private void Awake()
 [Built-in shader variables](https://docs.unity3d.com/manual/sl-unityshadervariables.html)
 
 [^1]: [Unity - Manual: HLSL in Unity](https://docs.unity3d.com/manual/sl-shaderprograms.html)
+[^2]: [SRP Batcher: Speed up your rendering](https://blog.unity.com/engine-platform/srp-batcher-speed-up-your-rendering)
 
