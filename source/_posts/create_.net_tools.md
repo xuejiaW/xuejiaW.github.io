@@ -2,7 +2,7 @@
 tags:
   - Dotnet
 created: 2023-10-21
-updated: 2024-03-07
+updated: 2024-04-07
 aliases:
   - .net Tools
 published: true
@@ -13,8 +13,12 @@ description: .Net Tools 创建教程，包含一个最简例子（一个在命�
 
 # 创建一个 .Net Tool
 
+{% note primary %}
+示例可见 [CowSay](https://github.com/xuejiaw/.net-samples/tree/main/cowsay)
+{% endnote %}
+
 {% note info %}
-需要使用 .net 6.0 及以上的版本
+.Net Tool 需要使用 .net 6.0 及以上的版本
 {% endnote %}
 
 ## 创建 .Net Tool 项目
@@ -25,22 +29,22 @@ description: .Net Tools 创建教程，包含一个最简例子（一个在命�
 dotnet new console -n <ToolName> -f <Framework>
 ```
 
-如下例创建了一个名为 `example.cowsay` 的 .Net Tool，使用的是 .Net 7.0 的版本：
+如下例创建了一个名为 `Cowsay` 的 .Net Tool，使用的是 .Net 8.0 的版本：
 
 ```powershell
-dotnet new console -n example.cowsay -f net7.0
+dotnet new console -n CowSay -f net8.0
 ```
 
-当执行上述命令后，会在当前目录下创建一个名为 `example.cowsay` 的文件夹，其中包含了一个名为 `Program.cs` 的文件，该文件中包含了一个 `Main` 方法，该方法是 .Net Tool 的入口方法。
+当执行上述命令后，会在当前目录下创建一个名为 `CowSay` 的文件夹，其中包含了一个名为 `Program.cs` 的文件，该文件中包含了一个 `Main` 方法，该方法是 .Net Tool 的入口方法。
 
-以及包含有一个 `example.cowsay.csproj` 的文件，该文件是 .Net Tool 的项目文件。
+以及包含有一个 `CowSay.csproj` 的文件，该文件是 .Net Tool 的项目文件。
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -48,16 +52,7 @@ dotnet new console -n example.cowsay -f net7.0
 </Project>
 ```
 
-可以看到其中约定的 `TargetFramework` 是 `7.0`，也可以更改这一项，让 Tool 适配更多的 .Net 版本：
-
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp3.1;net6.0;net7.0</TargetFrameworks>
-  </PropertyGroup>
-</Project>
-```
+可以看到其中约定的 `TargetFramework` 是 `8.0`。
 
 ## 修改代码
 
@@ -66,32 +61,32 @@ dotnet new console -n example.cowsay -f net7.0
 ```csharp
 using System.Reflection;
 
-namespace example.cowsay
+namespace CowSay;
+
+internal static class Program
 {
-    internal static class Program
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
+        if (args.Length == 0)
         {
-            if (args.Length == 0)
-            {
-                string? versionString = Assembly.GetEntryAssembly()?
-                   .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-                   .InformationalVersion;
+            string? versionString = Assembly.GetEntryAssembly()?
+               .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+               .InformationalVersion;
 
-                Console.WriteLine($"Cow Say v{versionString}");
-                Console.WriteLine("-------------");
-                Console.WriteLine("\nUsage:");
-                Console.WriteLine("  Cow Say <message>");
-                return;
-            }
-
-            ShowCow(string.Join(' ', args));
+            Console.WriteLine($"Cow Say v{versionString}");
+            Console.WriteLine("-------------");
+            Console.WriteLine("\nUsage:");
+            Console.WriteLine("  Cow Say <message>");
+            return;
         }
 
-        private static void ShowCow(string message)
-        {
-            string bot = $"\n        {message}";
-            bot += @"
+        ShowCow(string.Join(' ', args));
+    }
+
+    private static void ShowCow(string message)
+    {
+        string bot = $"\n        {message}";
+        bot += @"
     __________________
                          \
                           \
@@ -100,21 +95,20 @@ namespace example.cowsay
                                  ||------||
                                  ||      ||
                             ";
-            Console.WriteLine(bot);
-        }
+        Console.WriteLine(bot);
     }
 }
 ```
 
-其中 `Main` 方法中的代码是用来处理命令行参数的，如果没有参数，一系列提示信息。如果有参数，则会将参数组合成一个 `String`` 并作为输出的小牛的 ASCII 图案中的一部分内容。
+其中 `Main` 方法中的代码是用来处理命令行参数的，如果没有参数，会打印一系列提示信息。如果有参数，则会将参数组合成一个 `string` 并作为输出的小牛的 ASCII 图案中的一部分内容。
 
 ## 运行 Tool
 
-此时在 `example.cowsay` 文件夹下执行 `dotnet run` 命令，会输出如下内容，因为此时并没有带上任何参数，所以会输出一系列提示信息：
+此时在 `CowSay` 文件夹下执行 `dotnet run` 命令，会输出如下内容，因为此时并没有带上任何参数，所以会输出一系列提示信息：
 
 ```powershell
 ❯ dotnet run
-Cow Say v1.0.0
+Cow Say v1.0.0+d0f6e0d23ad19769312547a08ad5db8cf35fa97d
 -------------
 
 Usage:
@@ -138,7 +132,7 @@ Usage:
 
 ## 打包 Tool
 
-在运行打包前，先修改 `example.cowsay.csproj` 文件，在 `<PropertyGroup>` 标签中添加如下内容：
+在运行打包前，先修改 `Cowsay.csproj` 文件，在 `<PropertyGroup>` 标签中添加如下内容：
 
 ```xml
 <PackAsTool>true</PackAsTool>
@@ -149,22 +143,22 @@ Usage:
 
 其中：
 
-- `<PackAsTool>` 标签是用来指定是否将项目打包为一个 .Net Tool
-- `<ToolCommandName>` 标签是用来指定打包后的 .Net Tool 的名称，该名称会用于后续在 CLI 中调用
-- `<PackageOutputPath>` 标签是用来指定打包后的 .Net Tool 的输出路径。
-- `<Version>` 标签标识打包后的 .Net Tool 的版本
+-   `<PackAsTool>` 标签是用来指定是否将项目打包为一个 .Net Tool
+-   `<ToolCommandName>` 标签是用来指定打包后的 .Net Tool 的名称，该名称会用于后续在 CLI 中调用
+-   `<PackageOutputPath>` 标签是用来指定打包后的 .Net Tool 的输出路径。
+-   `<Version>` 标签标识打包后的 .Net Tool 的版本
 
-此时在 `example.cowsay` 文件夹下执行 `pack` 命令进行打包：
+此时在 `CowSay` 文件夹下执行 `pack` 命令进行打包：
 
 ```powershell
 dotnet pack
 ```
 
-此时在 `example.cowsay` 文件夹下创建一个名为 `nupkg` 的文件夹，其中包含的就是可安装的 tool 文件：
+此时在 `CowSay` 文件夹下创建一个名为 `nupkg` 的文件夹，其中包含的就是可安装的 tool 文件：
 
 ```powershell
 ├───nupkg
-│       example.cowsay.1.0.1.nupkg
+│       CowSay.1.0.1.nupkg
 ```
 
 ## 安装 Global Tool
@@ -172,15 +166,19 @@ dotnet pack
 当 [打包 Tool](/create_.net_tools/#打包-tool) 生成了一个可安装的 .Net Tool 后，就可以使用 `dotnet tool install` 命令来安装该 Tool：
 
 ```powershell
-dotnet tool install --global --add-source <sourcePath> <toolName>
+dotnet tool install --global --add-source <sourcePath> <toolName> --version <version>
 ```
+
+{% note primary %}
+理论上 `--version` 不是必须的，但是在某些 .net 版本下，如 `.net 8.0.203` 中，不加上这个参数会出现错误，详见：[Issue](https://github.com/dotnet/sdk/issues/40039)
+{% endnote %}
 
 如下在安装后，即可直接运行 `coway` 命令：
 
 ```powershell
-❯ dotnet tool install --global --add-source .\nupkg\ example.cowsay
+❯ dotnet tool install --global --add-source .\nupkg CowSay --version 1.0.1
 You can invoke the tool using the following command: cowsay
-Tool 'example.cowsay' (version '1.0.0') was successfully installed.
+Tool 'cowsay' (version '1.0.1') was successfully installed.
 ❯ cowsay hello world
 
         hello world
@@ -211,7 +209,7 @@ C:\users\$env:username\.dotnet\tools
 在安装时，可以加上 `--tool-path` 参数来指定安装路径：
 
 ```powershell
-dotnet tool install --tool-path <path> --add-source <sourcePath> <toolName>
+dotnet tool install --tool-path <path> --add-source <sourcePath> <toolName> --version <version>
 ```
 
 对于指定路径的 tool，当卸载时也需要加上 `--tool-path` 参数来指定卸载路径：
@@ -223,9 +221,21 @@ dotnet tool uninstall --tool-path <path> <toolName>
 ## 更新 Tool
 
 如果修改了 Tool 并重新进行了 [打包 Tool](/create_.net_tools/#打包_Tool) 操作，可以使用 `update` 进行 tool 的更新：
+
 ```powershell
 dotnet tool update --global --add-source <sourcePath> <toolName>
-// dotnet tool update --global --add-source .\nupkg obsidian2hexo-cli
+```
+
+如我们将 `CowSay` 的版本更新为 `1.0.2` 后，并再次允许 `dotnet pack`，此时在 `.nuget` 目录下会生成一个新的 `nupkg` 文件夹，其中包含了新的 `CowSay` 的版本：
+```text
+├── nupkg
+│   ├── CowSay.1.0.1.nupkg
+│   └── CowSay.1.0.2.nupkg
+```
+
+此时可允许 `dotnet tool update` 进行更新：
+```powershell
+dotnet tool update --global --add-source .\nupkg CowSay --version 1.0.2
 ```
 
 # Reference
