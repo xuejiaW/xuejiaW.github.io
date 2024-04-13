@@ -11,6 +11,11 @@ date: 2024-04-13 10:43
 
 本篇教程通过创建一个名为 `scl` _(Sample Command Line)_ 的 .Net Tools 来说明如何使用 System.CommandLine 库为 .Net Tool 增加命令行参数解析支持。
 
+
+{% note primary %}
+完整的示例代码，可见 [SampleCommandLine](https://github.com/xuejiaw/.net-samples/tree/main/samplecommandline)
+{% endnote %}
+
 # 使用 System.CommandLine 示例
 
 ## 创建 .Net Tool
