@@ -6,7 +6,7 @@ tags:
   - UnitTesting/NUnit
 published: true
 date: 2024-04-07 20:56
-description: 为 .Net 工程创建单元测试的最简教程
+description: 为 .Net 工程创建 NUnit 单元测试的最简教程，包含创建被测试工程、创建 NUnit 测试工程、编写单元测试等内容。
 title: .Net 工程创建 NUnit 单元测试指南
 ---
 
