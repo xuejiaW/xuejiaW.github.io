@@ -1,11 +1,11 @@
 ---
 tags:
-  - Dotnet
+  - DotNet
 created: 2023-10-21
-updated: 2024-04-07
-aliases:
-  - .net Tools
+updated: 2024-04-08
 published: true
+alias:
+  - 创建 .Net Tools
 title: .Net Tools 创建指南
 date: 2023-11-05 22:25
 description: .Net Tools 创建教程，包含一个最简例子（一个在命令行输出字符的小牛）演示如何将编写的命令行程序生成为可全局运行的工具
@@ -233,7 +233,7 @@ dotnet tool update --global --add-source <sourcePath> <toolName>
 │   └── CowSay.1.0.2.nupkg
 ```
 
-此时可允许 `dotnet tool update` 进行更新：
+此时可运行 `dotnet tool update` 进行更新：
 ```powershell
 dotnet tool update --global --add-source .\nupkg CowSay --version 1.0.2
 ```
