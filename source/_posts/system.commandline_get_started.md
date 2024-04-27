@@ -2,7 +2,7 @@
 tags:
   - DotNet
 created: 2024-04-07
-updated: 2024-04-13
+updated: 2024-04-16
 published: true
 title: 使用 System.CommandLine 为 .Net Tools 添加命令行参数支持
 description: 本篇教程通过创建一个名为 scl (Sample Command Line) 的 .Net Tools 来说明如何使用 System.CommandLine 库为 .Net Tool 增加命令行参数解析支持。
@@ -10,7 +10,6 @@ date: 2024-04-13 10:43
 ---
 
 本篇教程通过创建一个名为 `scl` _(Sample Command Line)_ 的 .Net Tools 来说明如何使用 System.CommandLine 库为 .Net Tool 增加命令行参数解析支持。
-
 
 {% note primary %}
 完整的示例代码，可见 [SampleCommandLine](https://github.com/xuejiaw/.net-samples/tree/main/samplecommandline)
