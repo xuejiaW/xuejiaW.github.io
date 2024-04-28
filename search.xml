@@ -474,7 +474,9 @@
   <entry>
     <title>《Learn OpenGL》 Ch 00 创建 Window</title>
     <url>/ch_00_creating_a_window/</url>
-    <content><![CDATA[<p>在使用 OpenGL 前，首先需要创建 OpenGL 的上下文和用于绘制的窗口等，这些内容是与操作系统相关的。OpenGL 希望成为一个跨平台的工具，因此 OpenGL 本身并不复杂这些内容的处理，需要用户自己来进行相关的环境配置。</p>
+    <content><![CDATA[<div class="note primary simple"><p>本部分的实现代码，见 <a href="https://github.com/xuejiaw/learnopengl/tree/main/_00_createwindow">00_CreateWindow</a></p>
+</div>
+<p>在使用 OpenGL 前，首先需要创建 OpenGL 的上下文和用于绘制的窗口等，这些内容是与操作系统相关的。OpenGL 希望成为一个跨平台的工具，因此 OpenGL 本身并不复杂这些内容的处理，需要用户自己来进行相关的环境配置。</p>
 <p>好在一些现有的库已经帮助完成了工作，在学习 OpenGL 前首先需要进行的就是相关库的配置。</p>
 <ul>
 <li>在 <a href="/ch_00_creating_a_window/#%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B">创建工程</a> 中，创建后续所有的 OpenGL 教材存储的解决方案文件夹，每一个 OpenGL 教材都会是其中的一个项目。</li>
@@ -5879,7 +5881,7 @@ Unity 官方也有相关的教程 <a href="https://docs.unity3d.com/manual/sl-sh
     <content><![CDATA[<p>以下内容都是我学习 <a href="https://learnopengl.com/introduction">Learn OpenGL</a> 系列教程时的笔记，它很详尽，一定程度上你可以将其视作是 <a href="https://learnopengl.com/introduction">Learn OpenGL</a> 的翻译，但我在其中也加入了一些自己的理解和注释，同时也会对原始内容进行一些增删和调整，以便更好地适应我学习时的背景。</p>
 <h1 id="Getting_Started"><a class="header-anchor" href="#Getting_Started">#</a>Getting Started</h1>
 <p><a href="/ch_00_creating_a_window">Ch 00 Creating a Window</a></p>
-<p>Ch 01 Hello Window</p>
+<p><a href="/ch_01_hello_window">Ch 01 Hello Window</a></p>
 <p>Ch 02 Hello Triangle</p>
 <p>Ch 03 Shaders</p>
 <p>Ch 04 Textures</p>
@@ -7456,6 +7458,57 @@ When you are famous it is hard to work on small problems. This is what did Shan
       <tags>
         <tag>摘抄</tag>
         <tag>管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Learn OpenGL》 Ch 01 Hello Window</title>
+    <url>/ch_01_hello_window/</url>
+    <content><![CDATA[<div class="note primary simple"><p>本部分的实现代码，见 <a href="https://github.com/xuejiaw/learnopengl/tree/main/_01_hellowindow">01_CreateWindow</a></p>
+</div>
+<p>在 <a href="/ch_00_creating_a_window">Ch 00 Creating a Window</a> 的最后，我们通过一系列代码绘制出了一个纯色的面板，但并没有解释相关的代码。在这一章中，我们将从 0 逐步解释这些代码。</p>
+<h1 id="引入相关库"><a class="header-anchor" href="#引入相关库">#</a>引入相关库</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;glad/glad.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;GLFW/glfw3.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="初始化GLFW"><a class="header-anchor" href="#初始化GLFW">#</a>初始化GLFW</h1>
+<p>在 <code>main</code> 函数的最开始，初始化 <code>GLFW</code> 库，后续将使用 <code>GLFW</code> 来创建窗口。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">glfwInit</span>();</span><br><span class="line"><span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>);</span><br><span class="line"><span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>);</span><br><span class="line"><span class="built_in">glfwWindowHint</span>(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</span><br></pre></td></tr></table></figure>
+<p><code>glfwWindowHint</code>函数的第一个参数用来表示要设定的参数，所有参数都是以<code>GLFW_</code>开头，函数的第二个参数是需要设定的值。 <code>glfwWindowHint</code>接受的参数与参数值，可以在<a href="https://www.notion.so/hellow-window-8043f836bef641dcb87856decf739229">GLFW文档</a>中设置。</p>
+<h1 id="创建GLFW窗口"><a class="header-anchor" href="#创建GLFW窗口">#</a>创建GLFW窗口</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">GLFWwindow *window = <span class="built_in">glfwCreateWindow</span>(SCR_WIDTH, SCR_HEIGHT, <span class="string">&quot;LearnOpenGL&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">if</span> (window == <span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Failed to create GLFW window&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">glfwTerminate</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">glfwMakeContextCurrent</span>(window);</span><br></pre></td></tr></table></figure>
+<p>通过<code>glfwCreateWindow</code>函数创建窗口，前两个参数设置窗口的宽和高，第三个参数设置窗口名，最后两个参数教程中未做解释。该函数会返回一个<code>GLFWWINDOW</code>类型的指针。</p>
+<p><code>glfwMakeContextCurrent</code>将<code>glfwCreateWindow</code>返回的表示窗口的指针绑定给当前线程环境。</p>
+<h1 id="初始化GLAD"><a class="header-anchor" href="#初始化GLAD">#</a>初始化GLAD</h1>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (!<span class="built_in">gladLoadGLLoader</span>((GLADloadproc)glfwGetProcAddress))</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Failed to initialize GLAD&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>GLAD</code>用来管理OpenGL函数的地址，因此在调用任何的OpenGL函数前需要先对<code>GLAD</code>进行初始化。</p>
+<p>需要给<code>gladLoadGLLoader</code>指定读取函数地址的函数，函数地址是系统相关的。在绑定了窗口后，可以通过<code>glfwGetProcAddress</code>函数获取到相应系统给出的函数地址。</p>
+<p>因此需要先初始化<code>GLFW</code>，绑定<code>GLFW</code>窗口，再初始化<code>GLAD</code>，然后才能使用OpenGL相应的函数。</p>
+<h1 id="渲染循环"><a class="header-anchor" href="#渲染循环">#</a>渲染循环</h1>
+<p>此时在主函数中，就可以设置渲染循环，在其中只要 <code>glfwWindowShouldClose</code> 不返回 <code>true</code>，就意味着窗口不应该被关闭。当窗口不关闭时，就需要进行一系列的渲染操作。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">glClearColor</span>(<span class="number">0.2f</span>, <span class="number">0.3f</span>, <span class="number">0.3f</span>, <span class="number">1.0f</span>);</span><br><span class="line">    <span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glfwSwapBuffers</span>(window);</span><br><span class="line">    <span class="built_in">glfwPollEvents</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>glClearColor</code>设置<code>ClearColor</code>的颜色。</p>
+<p><code>glClear</code>设置需要清理的对象，这里仅清理颜色缓存。</p>
+<p><code>glfwSwapBuffers</code>设置双缓冲。如果仅使用单缓存时可能会有图像闪烁的原因，因为图像并不是瞬间被画出，而是从左至右，从下至上逐像素画出。为避免这种情况的发生，可以用双缓存，当前缓存在显示时，后缓存进行读取，当后缓存读完，交换前后缓存，如此，图像可瞬间画出。</p>
+<p><code>glfwPollEvents</code>用来检查是否有事件触发，包括键盘事件，鼠标事件，和窗口事件等。（即使不需要处理输入，也仍然要设定该函数）。</p>
+<h1 id="按键处理"><a class="header-anchor" href="#按键处理">#</a>按键处理</h1>
+<p>设置函数 <code>processInput</code> 处理按键信息：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">processInput</span><span class="params">(GLFWwindow *window)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">glfwGetKey</span>(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)</span><br><span class="line">        <span class="built_in">glfwSetWindowShouldClose</span>(window, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>glfwGetKey</code>用来获取当前窗口按下的按键。 <code>glfwSetWindowShouldClose</code>设置当前窗口需要被关闭，调用该函数后，窗口会被关闭。</p>
+<p><code>processInput</code>函数需要在函数主循环中被调用，保证一直检查输入状态。</p>
+<p>在<a href="/ch_01_hello_window/#%E6%B8%B2%E6%9F%93%E5%BE%AA%E7%8E%AF">渲染循环</a> 的最开始调用 <code>processInput</code> 函数，保证在渲染前处理的按键信息：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window)) &#123;</span><br><span class="line">    <span class="built_in">processInput</span>(window);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="Viewport设置"><a class="header-anchor" href="#Viewport设置">#</a>Viewport设置</h1>
+<p>当缩放窗口时，需要重新调用 <code>glViewport</code> 以保证渲染的范围与窗口的大小匹配。</p>
+<p>为做到这一点，我们定义函数 <code>framebuffer_size_callback</code> 作为窗口大小改变时的回调函数，在回调中通过 <code>glViewport</code> 函数设置视口：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">framebuffer_size_callback</span><span class="params">(GLFWwindow *window, <span class="type">int</span> width, <span class="type">int</span> height)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">glViewport</span>(<span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过 <code>glfwSetFramebufferSizeCallback</code> 将函数 <code>framebuffer_size_callback</code> 设置为窗口大小改变时的回调函数。因为注册回调只需要一次，因此将其放在渲染循环前：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">glfwSetFramebufferSizeCallback</span>(window, framebuffer_size_callback);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Main Loop</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="终止GLFW"><a class="header-anchor" href="#终止GLFW">#</a>终止GLFW</h1>
+<p>在主函数的最后，调用 <code>glfwTerminate</code> 关闭窗口：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">while</span>(!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">glfwTerminate</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://learnopengl.com/getting-started/hello-window">LearnOpenGL - Hello Window</a></p>
+]]></content>
+      <tags>
+        <tag>OpenGL</tag>
       </tags>
   </entry>
 </search>
