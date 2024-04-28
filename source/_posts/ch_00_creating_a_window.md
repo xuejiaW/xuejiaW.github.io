@@ -1,21 +1,25 @@
 ---
 created: 2021-12-14
-updated: 2024-04-27
+updated: 2024-04-28
 tags:
   - OpenGL
 title: 《Learn OpenGL》 Ch 00 创建 Window
-description: 这一节将描述如何配置使用了 GLAD 和 GLFW 库的学习 OpenGL 的工程，在本章的末尾，将绘制出一个纯色的窗口。
+description: 本章将描述如何配置 GLAD 和 GLFW 库，后续 OpenGL 的学习工程都将依赖这两个库。在本章的末尾，将给出绘制窗口的代码，以检查 GLAD 和 GLFW 库是否配置准确。
 published: true
-date: 2024-04-27 09-20
+date: 2024-04-27 09:20
 ---
+
+{% note primary %}
+本部分的实现代码，见 [00_CreateWindow](https://github.com/xuejiaw/learnopengl/tree/main/_00_createwindow)
+{% endnote %}
 
 在使用 OpenGL 前，首先需要创建 OpenGL 的上下文和用于绘制的窗口等，这些内容是与操作系统相关的。OpenGL 希望成为一个跨平台的工具，因此 OpenGL 本身并不复杂这些内容的处理，需要用户自己来进行相关的环境配置。
 
 好在一些现有的库已经帮助完成了工作，在学习 OpenGL 前首先需要进行的就是相关库的配置。
 
-- 在 [创建工程](/ch_00_creating_a_window/#创建工程) 中，创建后续所有的 OpenGL 教材存储的解决方案文件夹，每一个 OpenGL 教材都会是其中的一个项目。
-- 在 [配置 includes 和 libs 文件夹](/ch_00_creating_a_window/#配置_includes_和_libs_文件夹) 中，配置后续所有的项目需要用到的 [GLFW](/ch_00_creating_a_window/#GLFW) 和 [GLAD](/ch_00_creating_a_window/#GLAD)，他们会存储在 `includes` 和 `libs` 文件夹内。
-- 在 [配置项目](/ch_00_creating_a_window/#配置项目) 中将 `includes` 和 `libs` 引用给项目。
+-   在 [创建工程](/ch_00_creating_a_window/#创建工程) 中，创建后续所有的 OpenGL 教材存储的解决方案文件夹，每一个 OpenGL 教材都会是其中的一个项目。
+-   在 [配置 includes 和 libs 文件夹](/ch_00_creating_a_window/#配置_includes_和_libs_文件夹) 中，配置后续所有的项目需要用到的 [GLFW](/ch_00_creating_a_window/#GLFW) 和 [GLAD](/ch_00_creating_a_window/#GLAD)，他们会存储在 `includes` 和 `libs` 文件夹内。
+-   在 [配置项目](/ch_00_creating_a_window/#配置项目) 中将 `includes` 和 `libs` 引用给项目。
 
 # 创建工程
 
