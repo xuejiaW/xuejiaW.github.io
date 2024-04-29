@@ -13,7 +13,7 @@ description: 渲染自定义的 `Unlit` 的材质渲染一系列小球，讨论�
 ---
 
 {% note info %}
-该教程部分完成的工程状态可见：[Draw Calls](https://github.com/xuejiaw/customsrp/releases/tag/drawcalls)
+该教程部分完成的工程状态可见：[Draw Calls](https://github.com/xuejiaW/CustomSRP/releases/tag/DrawCalls)
 {% endnote %}
 
 # Shaders
@@ -128,8 +128,8 @@ HLSL 和 C++ 的 `include` 逻辑类似，即直接将被 include 的文件的�
 {% note info %}
 如果没有定义 `semantics` ，则会导致编译失败。
 更多关于 HLSL 的内容，可见 [High-Level Shading Language](https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl)
-其中的 `semantics` 可见 [Semantics](https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-semantics?redirectedfrom=msdn)
-Unity 官方也有相关的教程 [Shader semantics](https://docs.unity3d.com/manual/sl-shadersemantics.html)
+其中的 `semantics` 可见 [Semantics](https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-semantics?redirectedfrom=MSDN)
+Unity 官方也有相关的教程 [Shader semantics](https://docs.unity3d.com/Manual/SL-ShaderSemantics.html)
 {% endnote %}
 
 此时通过该 Shader 并不能渲染出任何物体，因为在顶点着色器中直接返回了 `0.0` 表示，即所有物体渲染的结果都会集中在屏幕正中间的一个像素上，所以不可见。
@@ -634,7 +634,7 @@ public CustomRenderPipeline()
 }
 ```
 
-对于可以被`Dynamic Batching` 的小 Mesh，Unity 也有[一系列的限制](https://docs.unity3d.com/manual/drawcallbatching.html)，如：
+对于可以被`Dynamic Batching` 的小 Mesh，Unity 也有[一系列的限制](https://docs.unity3d.com/Manual/DrawCallBatching.html)，如：
 
 1.  顶点数必须在 300 以下，顶点数据（一个顶点可能有多个顶点数据）的数量必须在 900 以下
 2.  不能有镜像的大小，如一个物体的尺寸是 $1$，另一个物体的尺寸是 $-1$，这两物体不会被 Batch 在一起。
@@ -1025,12 +1025,12 @@ private void Awake()
 
 [Draw Calls (catlikecoding.com)](https://catlikecoding.com/unity/tutorials/custom-srp/draw-calls/)
 
-[ShaderLab: adding shader programs](https://docs.unity3d.com/manual/shader-shaderlab-code-blocks.html)
+[ShaderLab: adding shader programs](https://docs.unity3d.com/Manual/shader-shaderlab-code-blocks.html)
 
-[Shader data types and precision](https://docs.unity3d.com/manual/sl-datatypesandprecision.html)
+[Shader data types and precision](https://docs.unity3d.com/Manual/SL-DataTypesAndPrecision.html)
 
-[Built-in shader variables](https://docs.unity3d.com/manual/sl-unityshadervariables.html)
+[Built-in shader variables](https://docs.unity3d.com/Manual/SL-UnityShaderVariables.html)
 
-[^1]: [Unity - Manual: HLSL in Unity](https://docs.unity3d.com/manual/sl-shaderprograms.html)
+[^1]: [Unity - Manual: HLSL in Unity](https://docs.unity3d.com/Manual/SL-ShaderPrograms.html)
 [^2]: [SRP Batcher: Speed up your rendering](https://blog.unity.com/engine-platform/srp-batcher-speed-up-your-rendering)
 

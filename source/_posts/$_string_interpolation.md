@@ -306,7 +306,7 @@ const string Hello2 = "Hello " + Username + "!";
 ## Interpolated string handlers（C# 10）
 
 C# 10 中针对高性能场景，引入了 `InterpolatedStringHandlerArgument`，具体见：
-[String Interpolation in C# 10 and .NET 6 - .NET Blog (microsoft.com)](https://devblogs.microsoft.com/dotnet/string-interpolation-in-c-10-and-net-6/?wt.mc_id=dt-mvp-5003978)
+[String Interpolation in C# 10 and .NET 6 - .NET Blog (microsoft.com)](https://devblogs.microsoft.com/dotnet/string-interpolation-in-c-10-and-net-6/?WT.mc_id=DT-MVP-5003978)
 
 # Reference
 

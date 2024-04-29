@@ -14,7 +14,7 @@ description: .Net Tools 创建教程，包含一个最简例子（一个在命�
 # 创建一个 .Net Tool
 
 {% note primary %}
-示例可见 [CowSay](https://github.com/xuejiaw/.net-samples/tree/main/cowsay)
+示例可见 [CowSay](https://github.com/xuejiaW/.Net-Samples/tree/main/CowSay)
 {% endnote %}
 
 {% note info %}
@@ -242,5 +242,5 @@ dotnet tool update --global --add-source .\nupkg CowSay --version 1.0.2
 
 [Tutorial: Create a .NET tool - .NET CLI | Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools-how-to-create)
 
-[(4) How to create your own .NET CLI tools to make your life easier - YouTube](https://www.youtube.com/watch?v=jndgcbdzpku&ab_channel=nickchapsas)
+[(4) How to create your own .NET CLI tools to make your life easier - YouTube](https://www.youtube.com/watch?v=JNDgcBDZPkU&ab_channel=NickChapsas)
 

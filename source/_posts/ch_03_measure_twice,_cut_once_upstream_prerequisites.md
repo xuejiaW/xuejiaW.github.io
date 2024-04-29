@@ -34,7 +34,7 @@ description: 本章主要介绍了软件开发中的前期准备工作，包括�
 
 {% note 'fas fa-quote-left' %}
 所使用的方法应该基于选择最新和最好的方法，而不是基于无知。它还应该与旧的和可靠的东西自由搭配。
-—— [Harlan Mills](https://en.wikipedia.org/wiki/harlan_mills)
+—— [Harlan Mills](https://en.wikipedia.org/wiki/Harlan_Mills)
 {% endnote %}
 
 ## 准备不充分的原因

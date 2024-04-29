@@ -39,7 +39,7 @@ description: 本节主要关注于代码编写时所需要进行的设计活动�
 所以软件开发，不能空想。在思考到一定程度后，你就需要动手去做。
 {% endnote %}
 
-棘手问题的一个现实例子：[塔科马海峡吊桥 ](https://zh.wikipedia.org/zh-cn/%e5%a1%94%e7%a7%91%e9%a6%ac%e6%b5%b7%e5%b3%bd%e5%90%8a%e6%a9%8b)
+棘手问题的一个现实例子：[塔科马海峡吊桥 ](https://zh.wikipedia.org/zh-cn/%E5%A1%94%E7%A7%91%E9%A6%AC%E6%B5%B7%E5%B3%BD%E5%90%8A%E6%A9%8B)
 在桥梁设计的时候，主要考虑的因素是桥梁的强度要足以支撑其负载，这个设计要素在建造时也满足了。但建造后不久，桥梁因为大风引起桥身摆动，最终导致共振而坍塌。
 在桥梁坍塌之前，工程师并不知道需要考虑空气动力学所引发的共振问题。而只有通过真正建造了这个桥梁（第一次解决问题），工程师们才了解问题中其他需要额外考虑的因素，从而建造起另一种至今仍然矗立的桥梁（第二次真正有效的解决问题）。
 
@@ -539,7 +539,7 @@ When I am working on a problem I never think about beauty. I think only how to s
 
 ### 规避失败
 
-_Design Paradigms: Case Histories of Error and Judgment in Engineering (Petroski 1994)_ 一书指出：许多重大桥梁故障的发生都是因为只关注了过去的成功，而没有充分考虑可能的故障。如果设计者仔细考虑桥梁可能失败的方式，而不是仅仅复制其他设计成功的部分，那么像 [塔科马海峡吊桥 ](https://zh.wikipedia.org/zh-cn/%e5%a1%94%e7%a7%91%e9%a6%ac%e6%b5%b7%e5%b3%bd%e5%90%8a%e6%a9%8b) 这样的失败是可以避免的。
+_Design Paradigms: Case Histories of Error and Judgment in Engineering (Petroski 1994)_ 一书指出：许多重大桥梁故障的发生都是因为只关注了过去的成功，而没有充分考虑可能的故障。如果设计者仔细考虑桥梁可能失败的方式，而不是仅仅复制其他设计成功的部分，那么像 [塔科马海峡吊桥 ](https://zh.wikipedia.org/zh-cn/%E5%A1%94%E7%A7%91%E9%A6%AC%E6%B5%B7%E5%B3%BD%E5%90%8A%E6%A9%8B) 这样的失败是可以避免的。
 
 在计算机领域中，许多知名的系统中重大的安全漏洞也都类似，如果后者能参考前者的失败原因，那么设计中的许多错误都是能规避的。
 
