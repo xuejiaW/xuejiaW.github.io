@@ -11,7 +11,7 @@ title: .Net 工程创建 NUnit 单元测试指南
 ---
 
 {% note primary %}
-完整工程见 [UnitTestingUsingNUnit](https://github.com/xuejiaw/.net-samples/tree/main/unittestingusingnunit)
+完整工程见 [UnitTestingUsingNUnit](https://github.com/xuejiaW/.Net-Samples/tree/main/UnitTestingUsingNUnit)
 {% endnote %}
 
 # 创建被测试工程

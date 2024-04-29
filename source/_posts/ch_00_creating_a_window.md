@@ -10,7 +10,7 @@ date: 2024-04-27 09:20
 ---
 
 {% note primary %}
-本部分的实现代码，见 [00_CreateWindow](https://github.com/xuejiaw/learnopengl/tree/main/_00_createwindow)
+本部分的实现代码，见 [00_CreateWindow](https://github.com/xuejiaW/LearnOpenGL/tree/main/_00_CreateWindow)
 {% endnote %}
 
 在使用 OpenGL 前，首先需要创建 OpenGL 的上下文和用于绘制的窗口等，这些内容是与操作系统相关的。OpenGL 希望成为一个跨平台的工具，因此 OpenGL 本身并不复杂这些内容的处理，需要用户自己来进行相关的环境配置。
@@ -227,5 +227,5 @@ int main()
 
 # Reference
 
-[LearnOpenGL - Creating a window](https://learnopengl.com/getting-started/creating-a-window)
+[LearnOpenGL - Creating a window](https://learnopengl.com/Getting-started/Creating-a-window)
 

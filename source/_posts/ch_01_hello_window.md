@@ -10,7 +10,7 @@ title: 《Learn OpenGL》 Ch 01 Hello Window
 ---
 
 {% note primary %}
-本部分的实现代码，见 [01_CreateWindow](https://github.com/xuejiaw/learnopengl/tree/main/_01_hellowindow)
+本部分的实现代码，见 [01_CreateWindow](https://github.com/xuejiaW/LearnOpenGL/tree/main/_01_HelloWindow)
 {% endnote %}
 
 在 [Ch 00 Creating a Window](/ch_00_creating_a_window) 的最后，我们通过一系列代码绘制出了一个纯色的面板，但并没有解释相关的代码。在这一章中，我们将从 0 逐步解释这些代码。
@@ -34,7 +34,7 @@ glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 ```
 
-`glfwWindowHint`函数的第一个参数用来表示要设定的参数，所有参数都是以`GLFW_`开头，函数的第二个参数是需要设定的值。 `glfwWindowHint`接受的参数与参数值，可以在[GLFW文档](https://www.notion.so/hellow-window-8043f836bef641dcb87856decf739229)中设置。
+`glfwWindowHint`函数的第一个参数用来表示要设定的参数，所有参数都是以`GLFW_`开头，函数的第二个参数是需要设定的值。 `glfwWindowHint`接受的参数与参数值，可以在[GLFW文档](https://www.notion.so/Hellow-Window-8043f836bef641dcb87856decf739229)中设置。
 
 # 创建GLFW窗口
 
@@ -162,4 +162,4 @@ int main()
 
 # Reference
 
-[LearnOpenGL - Hello Window](https://learnopengl.com/getting-started/hello-window)
+[LearnOpenGL - Hello Window](https://learnopengl.com/Getting-started/Hello-Window)

@@ -13,7 +13,7 @@ description: 该部分讲述了使用自定义的渲染管线在 Editor 和 Game
 ---
 
 {% note info %}
-该教程部分完成的工程状态可见：[Custom Render Pipeline](https://github.com/xuejiaw/customsrp/releases/tag/customrenderpipeline)
+该教程部分完成的工程状态可见：[Custom Render Pipeline](https://github.com/xuejiaW/CustomSRP/releases/tag/CustomRenderPipeline)
 {% endnote %}
 
 # A new Render Pipeline
@@ -366,10 +366,10 @@ private void DrawVisibleGeometry()
 -   `DrawingSettings` 的第一个形参决定了需要执行的 Shader Pass， 这里传递的 `SRPDefaultUnlit` 为 Unity 内置的 Tag，因为目前场景中的许多游戏物体选用的是 `Unlit` 中的 Shader，所以使用该 Tag。
 
 {% note info %}
-关于 [Shader Tag](https://docs.unity3d.com/manual/sl-passtags.html) 的内容，查看文档 [Built-In Shader Tag](https://docs.unity3d.com/manual/shader-predefined-pass-tags-built-in.html) 与 [SRP Shader Tag](https://docs.unity3d.com/packages/com.unity.render-pipelines.universal@11.0/manual/urp-shaders/urp-shaderlab-pass-tags.html#urp-pass-tags-lightmode)
+关于 [Shader Tag](https://docs.unity3d.com/Manual/SL-PassTags.html) 的内容，查看文档 [Built-In Shader Tag](https://docs.unity3d.com/Manual/shader-predefined-pass-tags-built-in.html) 与 [SRP Shader Tag](https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@11.0/manual/urp-shaders/urp-shaderlab-pass-tags.html#urp-pass-tags-lightmode)
 {% endnote %}
 
-`DrawingSettings` 第二个形参是物体排序相关的设置 `SortingSettings`，该变量的构造函数依赖 `camera` 变量，因为其中依赖 [`camera.transparencySortMode`](https://docs.unity3d.com/scriptreference/camera-transparencysortmode.html) 决定以什么规则来计算排序的数值大小：
+`DrawingSettings` 第二个形参是物体排序相关的设置 `SortingSettings`，该变量的构造函数依赖 `camera` 变量，因为其中依赖 [`camera.transparencySortMode`](https://docs.unity3d.com/ScriptReference/Camera-transparencySortMode.html) 决定以什么规则来计算排序的数值大小：
 
 1.  Perspective：根据摄像机与物体中心的距离
 2.  Orthographic：根据沿着摄像机 View 方向的距离
@@ -570,7 +570,7 @@ Editor Scene 下的 Gizmos Toggle 会影响 `Handles.ShouldRenderGizmos` 的返�
 {% endnote %}
 
 {% note info %}
-Unity 的 [Handles](https://docs.unity3d.com/scriptreference/handles.html) 存在许多关于 Gizmos 的帮助函数
+Unity 的 [Handles](https://docs.unity3d.com/ScriptReference/Handles.html) 存在许多关于 Gizmos 的帮助函数
 {% endnote %}
 
 `Gizmos` 的绘制应当在整个流程的最后，最终绘制 `Gizmos` 的代码如下：

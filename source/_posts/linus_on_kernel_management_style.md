@@ -125,5 +125,5 @@ description: Linux 写的一篇关于 Linux 内核管理风格的文章，辛辣
 
 # Reference
 
-[Linus on kernel management style [LWN.net]](https://lwn.net/articles/105375/)
+[Linus on kernel management style [LWN.net]](https://lwn.net/Articles/105375/)
 

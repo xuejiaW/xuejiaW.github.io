@@ -69,7 +69,7 @@ description: Terminal，Console，Shell 和 Command Line 这几个词汇经常�
 {% endnote %}
 
 {% note 'fas fa-list' %}
-[Iterm2](https://iterm2.com/) 和 Windows Terminal 都是 `Terminal`。
+Iterm2](https://iterm2.com/) 和 [Windows Terminal 都是 `Terminal`。
 {% endnote %}
 
 # Reference

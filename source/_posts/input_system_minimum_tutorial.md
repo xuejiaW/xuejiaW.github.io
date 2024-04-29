@@ -14,7 +14,7 @@ description: 本文为 Unity Input System 的逐步最简教程，在教程的�
 
 {% note info %}
 本教程极大程度的参考了 Unity Learn 上的官方教程[^1]，但并不是其翻译版本，而是根据我的学习过程进行相应增删改。
-完整工程见：[xuejiaW/InputSystemSample: A minimum unity project to illustrate how to use Unity new input system. (github.com)](https://github.com/xuejiaw/inputsystemsample)
+完整工程见：[xuejiaW/InputSystemSample: A minimum unity project to illustrate how to use Unity new input system. (github.com)](https://github.com/xuejiaW/InputSystemSample)
 {% endnote %}
 
 
@@ -47,7 +47,7 @@ Input System 依赖 Unity 2019.1 及以上版本，本文档基于 Unity 2022.3.
 至此 Input System 已经被正确安装。
 
 为方便后续的调试，Demo 工程中预先引入了 URP 和一个最简的测试场景，此时的工程的见：A
-[xuejiaW/InputSystemSample at 7d041a5604c71096b0147cd0ae672557eee517c8 (github.com)](https://github.com/xuejiaw/inputsystemsample/tree/7d041a5604c71096b0147cd0ae672557eee517c8)
+[xuejiaW/InputSystemSample at 7d041a5604c71096b0147cd0ae672557eee517c8 (github.com)](https://github.com/xuejiaW/InputSystemSample/tree/7d041a5604c71096b0147cd0ae672557eee517c8)
 
 ## 创建 Input System Assets
 
@@ -70,7 +70,7 @@ Input System 依赖 Unity 2019.1 及以上版本，本文档基于 Unity 2022.3.
 {% endnote %}
 
 此时的工程状态见：
-[xuejiaW/InputSystemSample at 62aff15fcf5c3479e5a3073af7646a6c2775e043 (github.com)](https://github.com/xuejiaw/inputsystemsample/tree/62aff15fcf5c3479e5a3073af7646a6c2775e043)
+[xuejiaW/InputSystemSample at 62aff15fcf5c3479e5a3073af7646a6c2775e043 (github.com)](https://github.com/xuejiaW/InputSystemSample/tree/62aff15fcf5c3479e5a3073af7646a6c2775e043)
 
 ## 查看 Input Debugger 窗口
 
@@ -100,7 +100,7 @@ Input System 依赖 Unity 2019.1 及以上版本，本文档基于 Unity 2022.3.
 此时按下 `WASD` 或 `上下左右`，会发现小球还 **不能** 移动，因为此时小球只是 _获取_ 到了输入信息，但还是没有 _处理_ 这些输入信息。
 
 此时工程状态见：
-[xuejiaW/InputSystemSample at ed81be6f2efcf89c72f287240c9b56ea80a24094 (github.com)](https://github.com/xuejiaw/inputsystemsample/tree/ed81be6f2efcf89c72f287240c9b56ea80a24094)
+[xuejiaW/InputSystemSample at ed81be6f2efcf89c72f287240c9b56ea80a24094 (github.com)](https://github.com/xuejiaW/InputSystemSample/tree/ed81be6f2efcf89c72f287240c9b56ea80a24094)
 
 ## 使用代码控制小球
 
@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
 ![控制小球](/input_system_minimum_tutorial/gif-2023-11-17-16-11-05.gif)
 
 此时的工程状态见：
-[xuejiaW/InputSystemSample at 9cb75b9a8719cc8e695ac32ad786adcc007494d8 (github.com)](https://github.com/xuejiaw/inputsystemsample/tree/9cb75b9a8719cc8e695ac32ad786adcc007494d8)
+[xuejiaW/InputSystemSample at 9cb75b9a8719cc8e695ac32ad786adcc007494d8 (github.com)](https://github.com/xuejiaW/InputSystemSample/tree/9cb75b9a8719cc8e695ac32ad786adcc007494d8)
 
 # 自定义 Action Asset
 
@@ -203,7 +203,7 @@ public class PlayerController : MonoBehaviour
 这是因为 `PlayerController` 脚本监听的 `Motion` 事件在 `BallControls.inputactions` 中也存在，因此我们定义的左摇杆和 `HJKL` 四个按键都能响应，即使不修改 `PlayerController` 也可以正常运行。而原 `PlayerInput.inputactions` 中的 `WASD` 我们并没有绑定，所以无法相应。
 
 此时的工程状态见：
-[xuejiaW/InputSystemSample at 8d994e47fbf7c766c87aa62ce517e7e5bdda031b (github.com)](https://github.com/xuejiaw/inputsystemsample/tree/8d994e47fbf7c766c87aa62ce517e7e5bdda031b)
+[xuejiaW/InputSystemSample at 8d994e47fbf7c766c87aa62ce517e7e5bdda031b (github.com)](https://github.com/xuejiaW/InputSystemSample/tree/8d994e47fbf7c766c87aa62ce517e7e5bdda031b)
 
 ## 创建自定义 Player Input
 
@@ -257,9 +257,9 @@ public class BallController : MonoBehaviour
 }
 ```
 
-可以看到，该脚本直接引用了之前的 `InputActionAsset` ，并使用了 [InputActionAsset.FindActionMap](https://docs.unity3d.com/packages/com.unity.inputsystem@1.7/api/unityengine.inputsystem.inputactionasset.html#unityengine_inputsystem_inputactionasset_findactionmap_system_string_system_boolean) 找寻之前创建的 `BallPlayer` Input Action Map，并在 `OnEnable` 和 `OnDisable` 时启用和禁用该 Input Action Map。
+可以看到，该脚本直接引用了之前的 `InputActionAsset` ，并使用了 InputActionAsset.FindActionMap](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.7/api/UnityEngine.InputSystem.InputActionAsset.html#UnityEngine_InputSystem_InputActionAsset_FindActionMap_System_String_System_Boolean_) 找寻之前创建的 `BallPlayer` [Input Action Map，并在 `OnEnable` 和 `OnDisable` 时启用和禁用该 Input Action Map。
 
-另外脚本中通过 [InputActionMap.FindAction](https://docs.unity3d.com/packages/com.unity.inputsystem@1.7/api/unityengine.inputsystem.inputactionmap.html#unityengine_inputsystem_inputactionmap_findaction_system_string_system_boolean) 找寻之前创建的 `Buttons` 和 `Move` Action，并监听了 Input Action 的 `performed` 事件，触发对应的回调函数 `OnButton` 和 `OnMove`。
+另外脚本中通过 InputActionMap.FindAction](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.7/api/UnityEngine.InputSystem.InputActionMap.html#UnityEngine_InputSystem_InputActionMap_FindAction_System_String_System_Boolean_) 找寻之前创建的 `Buttons` 和 `Move` Action，并监听了 [Input Action 的 `performed` 事件，触发对应的回调函数 `OnButton` 和 `OnMove`。
 
 至此 `BallController` 脚本已经完全实现了之前 `Player Input` + `PlayerController` 的功能，因此在 `Player` 游戏物体上仅需要 `BallController` 脚本即可，注意要将之前创建的 `BallControls.inputactions` 挂载至脚本中：
 ![](/input_system_minimum_tutorial/2023-11-17-17-30-55.png)
@@ -267,7 +267,7 @@ public class BallController : MonoBehaviour
 此时小球可以如同之前一样的通过手柄和键盘控制移动。
 
 此时工程状态见：
-[xuejiaW/InputSystemSample at f070c14f0671d7c1c702b270f3751aed8c003692 (github.com)](https://github.com/xuejiaw/inputsystemsample/tree/f070c14f0671d7c1c702b270f3751aed8c003692)
+[xuejiaW/InputSystemSample at f070c14f0671d7c1c702b270f3751aed8c003692 (github.com)](https://github.com/xuejiaW/InputSystemSample/tree/f070c14f0671d7c1c702b270f3751aed8c003692)
 
 ### 基于 Actions Asset 自动生成对应类
 
@@ -330,10 +330,10 @@ public class BallController_AutoScripts : MonoBehaviour
 此时将之前挂载在 `Player` 上的的 `BallController` 脚本换为 `BallController_AutoScripts` 脚本，并运行，可以看到效果与之前的效果无差别。
 
 此时工程状态见：
-[xuejiaW/InputSystemSample at a92af1df6ccfb22f2747548d2abf1a08c43a3407 (github.com)](https://github.com/xuejiaw/inputsystemsample/tree/a92af1df6ccfb22f2747548d2abf1a08c43a3407)
+[xuejiaW/InputSystemSample at a92af1df6ccfb22f2747548d2abf1a08c43a3407 (github.com)](https://github.com/xuejiaW/InputSystemSample/tree/a92af1df6ccfb22f2747548d2abf1a08c43a3407)
 
 # Reference
 
-[^1]: [Setting up the Input System - Unity Learn](https://learn.unity.com/tutorial/setting-up-the-input-system?uv=2020.1&projectid=5fc93d81edbc2a137af402b7)
+[^1]: [Setting up the Input System - Unity Learn](https://learn.unity.com/tutorial/setting-up-the-input-system?uv=2020.1&projectId=5fc93d81edbc2a137af402b7)
 [^2]: https://forum.unity.com/threads/will-old-input-system-eventually-become-deprecated.1263932/
 

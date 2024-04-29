@@ -277,6 +277,6 @@ TODO：为什么这么设计的原因。
 
 # Reference
 
-[多项式除法](https://en.wikipedia.org/wiki/polynomial_long_division)
+[多项式除法](https://en.wikipedia.org/wiki/Polynomial_long_division)
 [1's Complement Arithmetic](https://heasarc.gsfc.nasa.gov/docs/heasarc/ofwg/docs/general/checksum/node11.html)
 

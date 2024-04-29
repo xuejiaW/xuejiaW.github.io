@@ -131,6 +131,6 @@ Function        Update-ZLocation    1.4.3      ZLocation
 
 # Reference
 
-[ZLocation](https://github.com/vors/zlocation)
+[ZLocation](https://github.com/vors/ZLocation)
 [终端效率提升：自动路径切换](https://zhuanlan.zhihu.com/p/50548459)
 

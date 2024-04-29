@@ -13,13 +13,13 @@ description: 这篇摘抄来源于对 理查德·卫斯理·汉明（Richard Wes
 这篇摘抄来源于对 _理查德·卫斯理·汉明（Richard Wesley Hamming）_ 在 1986 年 3 月 7 日 的名为 `You and Your Research` 演讲的转录。
 
 {% note info %}
-Hamming，1968 年图灵机获得者，信息论中 [Hamming Distance](https://en.wikipedia.org/wiki/hamming_distance) 理论主要贡献者
+Hamming，1968 年图灵机获得者，信息论中 [Hamming Distance](https://en.wikipedia.org/wiki/Hamming_distance) 理论主要贡献者
 {% endnote %}
 
 该演讲主要聚焦在 Hamming 对 “为什么只有极少数的科学家做出了伟大的贡献，而绝大部分科学家却在时间的长流中被遗忘” 这一问题的观察和研究。
 
 {% note info %}
-以下内容是对演讲转录的摘抄，完整的演讲内容见 [You and Your Research](https://www.cs.virginia.edu/~robins/youandyourresearch.html)
+以下内容是对演讲转录的摘抄，完整的演讲内容见 [You and Your Research](https://www.cs.virginia.edu/~robins/YouAndYourResearch.html)
 {% endnote %}
 
 {% note info %}
@@ -383,5 +383,5 @@ Hamming：确实这些事有一些运气。但从另一方面，我也不知道�
 
 # Reference
 
-[You and Your Research (virginia.edu)](https://www.cs.virginia.edu/~robins/youandyourresearch.html)
+[You and Your Research (virginia.edu)](https://www.cs.virginia.edu/~robins/YouAndYourResearch.html)
 
