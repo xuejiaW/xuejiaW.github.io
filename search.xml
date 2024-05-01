@@ -506,7 +506,7 @@
 <p>解压缩下载到的 <code>glad.zip</code> 文件夹，应该得到如下的内容：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">.</span><br><span class="line">├── include</span><br><span class="line">│   ├── KHR</span><br><span class="line">│   │   └── khrplatform.h</span><br><span class="line">│   └── glad</span><br><span class="line">│       └── glad.h</span><br><span class="line">└── src</span><br><span class="line">    └── glad.c</span><br></pre></td></tr></table></figure>
 <p>在进入文件夹，运行如下两个命令来生成需要的静态链接文件。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gcc ./src/glad.c -c -I ./include/</span><br><span class="line">ar -rc glad.lib glad.o</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">gcc ./src/glad.c -c -I ./include/</span><br><span class="line">ar -rc glad.lib glad.o</span><br></pre></td></tr></table></figure>
 <div class="note primary simple"><p>gcc 可以通过 Chocolatey 安装：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">choco install mingw</span><br></pre></td></tr></table></figure></div>
 <p>然后将 <code>include</code> 目录下的内容拷贝至项目的 <code>includes</code> 目录下，将 <code>glab.lib</code> 拷贝至 <code>libs</code> 目录下。</p>
@@ -5883,7 +5883,7 @@ Unity 官方也有相关的教程 <a href="https://docs.unity3d.com/Manual/SL-Sh
 <p><a href="/ch_00_creating_a_window">Ch 00 Creating a Window</a></p>
 <p><a href="/ch_01_hello_window">Ch 01 Hello Window</a></p>
 <p><a href="/ch_02_hello_triangle">Ch 02 Hello Triangle</a></p>
-<p>Ch 03 Shaders</p>
+<p><a href="/ch_03_shaders">Ch 03 Shaders</a></p>
 <p>Ch 04 Textures</p>
 <p>Ch 05 Transformations</p>
 <p>CH 06 Coordinate System</p>
@@ -7568,8 +7568,8 @@ When you are famous it is hard to work on small problems. This is what did Shan
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> vao = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">glGenVertexArrays</span>(<span class="number">1</span>, &amp;vao);</span><br></pre></td></tr></table></figure>
 <p>完整流程代码如下：</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 绑定VAO</span></span><br><span class="line"><span class="built_in">glBindVertexArray</span>(vao);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成并绑定 VBO</span></span><br><span class="line">GLuint vbo;</span><br><span class="line"><span class="built_in">glGenBuffers</span>(<span class="number">1</span>, &amp;vbo);</span><br><span class="line"><span class="built_in">glBindBuffer</span>(GL_ARRAY_BUFFER, vbo);</span><br><span class="line"><span class="built_in">glBufferData</span>(GL_ARRAY_BUFFER, <span class="built_in">sizeof</span>(vertices), vertices, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成并绑定 EBO</span></span><br><span class="line">GLuint ebo;</span><br><span class="line"><span class="built_in">glGenBuffers</span>(<span class="number">1</span>, &amp;ebo);</span><br><span class="line"><span class="built_in">glBindBuffer</span>(GL_ELEMENT_ARRAY_BUFFER, ebo);</span><br><span class="line"><span class="built_in">glBufferData</span>(GL_ELEMENT_ARRAY_BUFFER, <span class="built_in">sizeof</span>(indices), indices, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置顶点属性指针</span></span><br><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">3</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>), <span class="built_in">static_cast</span>&lt;<span class="type">void</span>*&gt;(<span class="number">0</span>));</span><br><span class="line"><span class="built_in">glEnableVertexAttribArray</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 此时 VAO 已经设置完成，解绑 VBO，EBO，VAO</span></span><br><span class="line"><span class="built_in">glBindBuffer</span>(GL_ARRAY_BUFFER, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">glBindVertexArray</span>(<span class="number">0</span>);</span><br><span class="line"><span class="built_in">glBindBuffer</span>(GL_ELEMENT_ARRAY_BUFFER, <span class="number">0</span>); <span class="comment">// 必须在解绑VAO后才能解绑EBO</span></span><br></pre></td></tr></table></figure>
-<div class="note warning simple"><p>在解绑 VAO 前不可解绑 EBO，因为 VAO 中包含了 EBO 的设置，如果在 VAO 解绑前解绑 EBO，相当于在 VAO 中删除了相关的设置。</p>
-<p>但在解绑 VAO 前可以解绑 VBO，这是因为 VAO 中包含的并不是 VBO 本身，而是关于VBO中数据该如何解析的设置</p>
+<div class="note warning simple"><p>在解绑 VAO 前不可解绑 EBO，因为 VAO 中包含了 EBO 的设置，如果在 VAO 解绑前解绑 EBO，相当于在 VAO 中删除了相关的设置。<br>
+但在解绑 VAO 前可以解绑 VBO，这是因为 VAO 中包含的并不是 VBO 本身，而是关于VBO中数据该如何解析的设置</p>
 </div>
 <h1 id="着色器"><a class="header-anchor" href="#着色器">#</a>着色器</h1>
 <p>在之前的部分中，已经完成了将顶点数据传递给 GPU 的操作，但 GPU 并不知道如何处理这些数据，这就需要着色器来完成。着色器是运行在 GPU 上的小程序，用来处理图形的各个部分。</p>
@@ -7610,6 +7610,79 @@ When you are famous it is hard to work on small problems. This is what did Shan
 <p><code>glDrawArrays</code> 函数中，第一个参数同样为绘制的图元类型，第二个参数为 VBO 中的数据， <code>vertices</code> 中开始的索引值，第三个参数为需要绘制的顶点数量</p>
 <p>当一切完成后，运行代码的结果为：</p>
 <p><img src="/ch_02_hello_triangle/image-20211214233511740.png" alt=""></p>
+]]></content>
+      <tags>
+        <tag>OpenGL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Learn OpenGL》 Ch 03 Shaders</title>
+    <url>/ch_03_shaders/</url>
+    <content><![CDATA[<div class="note primary simple"><p>本章的实现代码，见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_03_Shaders">03_Shaders</a> 和 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_03_Shaders_Uniform">03_Shaders_Uniform</a></p>
+</div>
+<p>着色器是运行在 GPU 上的小程序，这些小程序是为了在图形渲染管线上完成特定的任务。着色器的任务只是将输入转换为特定的输出。并且各种着色器之间是无法访问到对方的，他们之间唯一的交流是通过输入和输出。</p>
+<h1 id="GLSL"><a class="header-anchor" href="#GLSL">#</a>GLSL</h1>
+<p>Shader 是由 <code>GLSL(OpenGL Shading Language)</code> 语言写成，在每个 Shader 的一开始，都通过 <code>#version</code> 声明版本，接着是一系列的输入和输出声明，之后声明 unifrom 变量（非必须），然后是 main 函数。</p>
+<p>典型的结构如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#version version_number</span></span><br><span class="line">in type in_variable_name;</span><br><span class="line">in type in_variable_name;</span><br><span class="line"></span><br><span class="line">out type out_variable_name;</span><br><span class="line"></span><br><span class="line">uniform type uniform_name;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// process input(s) and do some weird graphics stuff</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// output processed stuff to output variable</span></span><br><span class="line">  out_variable_name = weird_stuff_we_processed;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于管线开始的顶点着色器而言，通常输入的数据都是 <code>顶点属性（vertex attribute)</code>。顶点属性是有上限的，但 OpenGL 保证，最少可以传递 16 个四通道（如 <code>vec4</code>）的数据。可以通过以下代码查询最大的顶点属性数量：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> nrAttributes;</span><br><span class="line"><span class="built_in">glGetIntegerv</span>(GL_MAX_VERTEX_ATTRIBS, &amp;nrAttributes);</span><br><span class="line">std::cout &lt;&lt; <span class="string">&quot;Maximum nr of vertex attributes supported: &quot;</span> &lt;&lt; nrAttributes &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
+<h1 id="类型"><a class="header-anchor" href="#类型">#</a>类型</h1>
+<p>GLSL 定义了一系列的基础类型，都以以下的形式表示：</p>
+<ul>
+<li><code>vecn</code> ：有 n 个通道，且通道用 float 表示的 vector</li>
+<li><code>bvecn</code>：有 n 个通道，且通道用 bool 表示的 vector</li>
+<li><code>ivecn</code>：有 n 个通道，且通道用 int 表示的 vector</li>
+<li><code>uvecn</code>：有 n 个通道，且通道用 unsigned int 表示的 vector</li>
+<li><code>dvecn</code>：有 n 个通道，且通道用 double 表示的 vector</li>
+</ul>
+<p>对于属性中的通道，可以使用 <code>x, y, z</code> 来访问其中的一个通道。也可以通过这些通道组合来访问，如 <code>xy, xyz</code>。实例代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">vec2 someVec;</span><br><span class="line">vec4 differentVec = someVec.xyxx;</span><br><span class="line">vec3 anotherVec = differentVec.zyw;</span><br><span class="line">vec4 otherVec = someVec.xxxx + anotherVec.yxzy;</span><br></pre></td></tr></table></figure>
+<h1 id="输入输出"><a class="header-anchor" href="#输入输出">#</a>输入输出</h1>
+<p>GLSL 定义了 <code>in</code> 和 <code>out</code> 关键字，当输出变量与下一个着色器阶段的输入变量名字匹配他们就会传递下去。但顶点着色器和片段着色器作为整个管线的开头与结尾，有较为特殊的处理。</p>
+<p>顶点着色器中需要特殊的输入（顶点属性）， <code>layout (location = 0)</code> 。这种输入需要在 C++代码中通过 <code>glVertexAttribPointer</code> 进行传递，并在传递后通过 <code>glEnableVertexAttribArray</code>激活。 例子可见 <a href="/ch_02_hello_triangle">Hello Triangle</a>。</p>
+<p>顶点的数据可以不仅仅包含位置信息，因此 <code>layout</code> 也可以存在多个，每个单独处理一种数据。如顶点数据定义为如下形式，同时包含顶点的位置和顶点的颜色：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">constexpr</span> <span class="type">float</span> vertices[] = &#123;</span><br><span class="line">    <span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">0.5f</span>, <span class="number">0.5f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="number">-0.5f</span>, <span class="number">0.5f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>因此需要两个 <code>layout</code> 来处理数据，一个负责位置信息，一个负责顶点的颜色。顶点着色器定义如下：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="meta">#version 330 core</span></span><br><span class="line"><span class="keyword">layout</span> (<span class="keyword">location</span> = <span class="number">0</span>) <span class="keyword">in</span> <span class="type">vec3</span> aPos;   <span class="comment">// the position variable has attribute position 0</span></span><br><span class="line"><span class="keyword">layout</span> (<span class="keyword">location</span> = <span class="number">1</span>) <span class="keyword">in</span> <span class="type">vec3</span> aColor; <span class="comment">// the color variable has attribute position 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">out</span> <span class="type">vec3</span> ourColor; <span class="comment">// output a color to the fragment shader</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">gl_Position</span> = <span class="type">vec4</span>(aPos, <span class="number">1.0</span>);</span><br><span class="line">    ourColor = aColor; <span class="comment">// set ourColor to the input color we got from the vertex data</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 CPP 中传递数据的代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Position Attribute</span></span><br><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">6</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>), <span class="built_in">static_cast</span>&lt;<span class="type">void</span>*&gt;(<span class="number">0</span>));</span><br><span class="line"><span class="built_in">glEnableVertexAttribArray</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Color Attribute</span></span><br><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">1</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">6</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>), <span class="built_in">reinterpret_cast</span>&lt;<span class="type">void</span>*&gt;(<span class="number">3</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>)));</span><br><span class="line"><span class="built_in">glEnableVertexAttribArray</span>(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p>其中参数说明，在这个例子中，一个顶点的数据由 6 个 float 组成，因此第五个参数为 <code>6 * sizeof(float)</code>。而对于颜色这个信息而言，是由第 4-6 个 float 组成，因此最后一个参数为 <code>(void*)(3* sizeof(float))</code> 表示偏移量为三个 float 大小。</p>
+<p>在例子中的顶点着色器中，输出了一个名为 <code>ourColor</code> 的 <code>vec3</code> 变量，因此片段着色器中，有对应的名为 <code>ourColor</code> 的输入。而片段着色器中必须要有一个 <code>vec4</code> 的输出，表示像素的颜色。片段着色器实例如下：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="meta">#version 330 core</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span> <span class="type">vec3</span> outColor;</span><br><span class="line"><span class="keyword">out</span> <span class="type">vec4</span> FragColor;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    FragColor = <span class="type">vec4</span>(outColor, <span class="number">1.0</span>f);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时的效果为：</p>
+<p><img src="/ch_03_shaders/2024-05-01-22-03-21.png" alt="Color Attribute"></p>
+<p>实现代码可见：<br>
+<a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_03_Shaders">03_Shaders</a></p>
+<h1 id="Uniforms"><a class="header-anchor" href="#Uniforms">#</a>Uniforms</h1>
+<p><code>Uniform</code>是另一种将数据从 CPU 发送给 GPU 的方式。Uniform 有以下特征：</p>
+<ul>
+<li>Uniform 类似于全局变量的概念，因此可以整个 Shader 程序中的任意 Shader 定义。</li>
+<li>在设置了 Uniform 变量的值后，除非重置或更新数据，否则整个 Shader 程序中，Uniform 的值是保持不变的。</li>
+<li>同名的 Uniform 可以在 Shader 程序中重复声明</li>
+</ul>
+<div class="note info simple"><p>如果在 Shader 中声明了一个 Uniform 变量，但从未使用。在编译 Shader 的时候，会将这个 Uniform 变量删除。这可能会造成 CPU 侧传输数据时的 Bug。</p>
+</div>
+<p>在 Shader 中声明 Uniform 变量的方式如下：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">uniform</span> <span class="type">vec4</span> uniColor;</span><br><span class="line"></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>Uniform 变量传递的过程如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">float</span> greenValue = (<span class="built_in">sin</span>(timeValue) / <span class="number">2.0f</span>) + <span class="number">0.5f</span>;</span><br><span class="line"><span class="type">int</span> vertexColorLocation = <span class="built_in">glGetUniformLocation</span>(shaderProgram, <span class="string">&quot;uniColor&quot;</span>);</span><br><span class="line"><span class="built_in">glUseProgram</span>(shaderProgram);</span><br><span class="line"><span class="built_in">glUniform4f</span>(vertexColorLocation, <span class="number">0.0f</span>, greenValue, <span class="number">0.0f</span>, <span class="number">1.0f</span>);</span><br></pre></td></tr></table></figure>
+<p><code>glGetUniformLocation</code> 函数从 shader 程序中，找到 Uniform 变量的地址。第一个参数为 Shader 程序，第二个参数为 Uniform 变量的名称。如果返回值为-1，说明未找到。</p>
+<p><code>glUniform4f</code> 函数通过获取到的地址，传递参数。 <code>glUniform4f</code> 有很多的函数变种（不是重载），变种都依靠函数最后的两个字符决定：</p>
+<ul>
+<li>f 表示传递的通道类型为 float</li>
+<li>i 表示传递的通道类型为 int</li>
+<li>ui 表示传递的通道类型为 unsigned int</li>
+<li>fv 表示传递的是 float 的向量或数组</li>
+<li>3f 表示有三个通道</li>
+</ul>
+<div class="note warning simple"><p>当通过 <code>glGetUniformLocation</code> 获取地址时，不要求 Shader 程序被使用。但是通过类似于 <code>glUniform4f</code> 等函数赋值时，必须保证 Shader 程序被使用。</p>
+</div>
+<div class="note primary simple"><p>因为我们已经封装了 <a href="https://github.com/xuejiaW/LearnOpenGL/blob/main/utilities/Shader.h">Shader.h</a>，所以实际使用的方式会与上述的示例有所不同。</p>
+</div>
+<p>此时的结果如下所示：</p>
+<p><img src="/ch_03_shaders/gif.gif" alt=""></p>
+<p>实现代码可见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_03_Shaders_Uniform">CH 03 Shaders_Uniform</a></p>
 ]]></content>
       <tags>
         <tag>OpenGL</tag>
