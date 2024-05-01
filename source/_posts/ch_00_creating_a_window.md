@@ -123,7 +123,7 @@ GLFW 用来进行创建系统窗口 / 渲染上下文，处理用户输入等操
 
 在进入文件夹，运行如下两个命令来生成需要的静态链接文件。
 
-```
+```text
 gcc ./src/glad.c -c -I ./include/
 ar -rc glad.lib glad.o
 ```

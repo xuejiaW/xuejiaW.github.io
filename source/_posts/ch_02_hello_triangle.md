@@ -116,6 +116,7 @@ glEnableVertexAttribArray(0);
 链接顶点数据是针对于当前绑定的 vbo 而言的
 {% endnote %}
 
+
 # 顶点数组对象
 
 `顶点数组对象（vertex array object，VAO）` 如同 VBO 类似，也是个物体，因此同样需要经过生成数组 ID，绑定数组等操作。VAO 的存在是为了管理顶点数据的链接操作，当绑定了一个 VAO 后，各种关于顶点属性的解释都会被存储在这个 VAO 中。
@@ -161,7 +162,6 @@ glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); // 必须在解绑VAO后才能解绑EB
 
 {% note warning %}
 在解绑 VAO 前不可解绑 EBO，因为 VAO 中包含了 EBO 的设置，如果在 VAO 解绑前解绑 EBO，相当于在 VAO 中删除了相关的设置。
-
 但在解绑 VAO 前可以解绑 VBO，这是因为 VAO 中包含的并不是 VBO 本身，而是关于VBO中数据该如何解析的设置
 {% endnote %}
 
