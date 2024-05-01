@@ -22,7 +22,7 @@ description: 以下内容都是我学习 Learn OpenGL 系列教程时的笔记�
 
 [Ch 02 Hello Triangle](/ch_02_hello_triangle)
 
-Ch 03 Shaders
+[Ch 03 Shaders](/ch_03_shaders)
 
 Ch 04 Textures
 

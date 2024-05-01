@@ -109,6 +109,7 @@ void processInput(GLFWwindow *window)
 `processInput`函数需要在函数主循环中被调用，保证一直检查输入状态。
 
 在[渲染循环](/ch_01_hello_window/#渲染循环) 的最开始调用 `processInput` 函数，保证在渲染前处理的按键信息：
+
 ```cpp
 while (!glfwWindowShouldClose(window)) {
     processInput(window);
