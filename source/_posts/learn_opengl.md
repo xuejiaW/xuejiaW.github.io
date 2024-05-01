@@ -20,7 +20,7 @@ description: 以下内容都是我学习 Learn OpenGL 系列教程时的笔记�
 
 [Ch 01 Hello Window](/ch_01_hello_window)
 
-Ch 02 Hello Triangle
+[Ch 02 Hello Triangle](/ch_02_hello_triangle)
 
 Ch 03 Shaders
 
