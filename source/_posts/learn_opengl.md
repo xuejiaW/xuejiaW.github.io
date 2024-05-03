@@ -24,7 +24,7 @@ description: 以下内容都是我学习 Learn OpenGL 系列教程时的笔记�
 
 [Ch 03 Shaders](/ch_03_shaders)
 
-Ch 04 Textures
+[Ch 04 Textures](/ch_04_textures)
 
 Ch 05 Transformations
 
