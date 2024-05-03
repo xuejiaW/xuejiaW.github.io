@@ -5884,7 +5884,7 @@ Unity 官方也有相关的教程 <a href="https://docs.unity3d.com/Manual/SL-Sh
 <p><a href="/ch_01_hello_window">Ch 01 Hello Window</a></p>
 <p><a href="/ch_02_hello_triangle">Ch 02 Hello Triangle</a></p>
 <p><a href="/ch_03_shaders">Ch 03 Shaders</a></p>
-<p>Ch 04 Textures</p>
+<p><a href="/ch_04_textures">Ch 04 Textures</a></p>
 <p>Ch 05 Transformations</p>
 <p>CH 06 Coordinate System</p>
 <p>Ch 07 Camera</p>
@@ -7683,6 +7683,107 @@ When you are famous it is hard to work on small problems. This is what did Shan
 <p>此时的结果如下所示：</p>
 <p><img src="/ch_03_shaders/gif.gif" alt=""></p>
 <p>实现代码可见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_03_Shaders_Uniform">CH 03 Shaders_Uniform</a></p>
+]]></content>
+      <tags>
+        <tag>OpenGL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Learn OpenGL》 Ch 04 Textures</title>
+    <url>/ch_04_textures/</url>
+    <content><![CDATA[<div class="note primary simple"><p>本部分的实现代码，见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_04_Textures">04_Textures</a></p>
+</div>
+<h1 id="采样"><a class="header-anchor" href="#采样">#</a>采样</h1>
+<p>为了把纹理映射到图形上，我们需要指定三角形的每个顶点对应纹理图片的哪个地方，所以每个顶点都会关联一个 <code>纹理坐标（Texture Coordinate）</code>。</p>
+<p>如需要给一个三角形贴上砖块的纹理，可以如下设置，其中将三角形的左下角对应纹理的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(0,0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span> 点。只需要为图形的各个顶点设置纹理坐标，其余部分会自动根据顶点的纹理坐标自动采样。</p>
+<p><img src="/ch_04_textures/untitled.png" alt=""></p>
+<h1 id="纹理映射"><a class="header-anchor" href="#纹理映射">#</a>纹理映射</h1>
+<p>在采样部分中，对于每个顶点，赋值的纹理坐标都处于 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">)</mo><mo>∼</mo><mo stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(0,0) \sim (1,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 的范围内。当设置的坐标处于这个范围外时，就需要用到纹理映射。</p>
+<p>纹理映射一共有以下几种选项：</p>
+<ul>
+<li><code>GL_REPEAT</code> ：重复纹理（OpenGL 默认）</li>
+<li><code>GL_MIRRORED_REPEAT</code> ：镜像重复</li>
+<li><code>GL_CLAMP_TO_EDGE</code>：边界拉伸</li>
+<li><code>GL_CLAMP_TO_BORDER</code> ：边界填充（需要设定填充颜色）</li>
+</ul>
+<p><img src="/ch_04_textures/untitled_1.png" alt=""></p>
+<p>纹理映射可以分别对图片的三个轴进行设置，图片的三个轴称为 <code>S, T, R</code> ，并通过函数 <code>glTexParameter*</code> 设置，其中 <code>*</code> 表示要设置的参数的类型，如 <code>i</code> 表示 int。设置代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);</span><br></pre></td></tr></table></figure>
+<p>第一个参数是表示要设置的图片类型，第二个参数是图片设置的轴，第三个参数是映射的选项。</p>
+<h1 id="纹理过滤"><a class="header-anchor" href="#纹理过滤">#</a>纹理过滤</h1>
+<p>纹理坐标只考虑了纹理如何与顶点数据结合，但并没有考虑纹理和实际渲染的分辨率。当两者分辨率不同时，就需要用到纹理过滤。</p>
+<p>纹理会用实际渲染的分辨率进行渲染，因此纹理会进行相应的拉伸或缩小。因为纹理和实际的像素并没有一一对应，所以实际的像素颜色要经过纹理的插值计算。插值方式有 <code>线性插值（GL_NEAREST）</code>和 <code>邻近插值（GL_LINEAR）</code>，如下所示：</p>
+<p><img src="/ch_04_textures/untitled_2.png" alt="临近插值"></p>
+<p><img src="/ch_04_textures/untitled_3.png" alt="线性插值"></p>
+<p>其中黑十字出现的地方是真实像素的位置，其他的大格表示纹理像素。临近插值的结果由距离最近的像素的颜色决定，线性插值的结果由附近多个像素的颜色平均值决定。</p>
+<p>临近插值的画面会导致颗粒感，线性插值的画面虽然更加平滑，但会显得模糊。</p>
+<p><img src="/ch_04_textures/untitled_4_1.png" alt=""></p>
+<p>纹理过滤同样使用 <code>glTexParameter*</code> 设置，如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br></pre></td></tr></table></figure>
+<h1 id="MipMap"><a class="header-anchor" href="#MipMap">#</a>MipMap</h1>
+<p>当一个物体离我们很远时，其在屏幕中显示的范围就会变得很小，而若他仍然使用很大分辨率的纹理，那么 OpenGL 从高分辨率纹理上采样出正确的颜色就很困难。所以理想的状态是，显示范围大的物体使用高分辨率纹理，范围小的物体则使用低分辨率纹理。</p>
+<p>OpenGL 采用一个叫多级渐远纹理（Mipmap）的方法来解决这一问题，即有一系列纹理图像，后一个纹理图像的宽高是前一个纹理图像宽高的 1/2。如下所示：</p>
+<p><img src="/ch_04_textures/untitled_5.png" alt=""></p>
+<p>可以通过调用函数 <code>glGenerateMipmaps</code> 生成 Mipmap。</p>
+<p>当使用 Mipmap 时，当纹理在不同级别中切换时，会产生生硬的边界，所以同样需要过滤。当使用了 Mipmap 时有以下四种过滤方式：</p>
+<ul>
+<li><code>GL_NEAREST_MIPMAP_NEAREST</code>：使用最邻近的多级渐远纹理来匹配像素大小，并使用邻近插值进行纹理采样</li>
+<li><code>GL_LINEAR_MIPMAP_NEAREST</code>：使用最邻近的多级渐远纹理级别，并使用线性插值进行采样</li>
+<li><code>GL_NEAREST_MIPMAP_LINEAR</code>：在两个最匹配像素大小的多级渐远纹理之间进行线性插值，使用邻近插值进行采样</li>
+<li><code>GL_LINEAR_MIPMAP_LINEAR</code>：在两个邻近的多级渐远纹理之间使用线性插值，并使用线性插值进行采样</li>
+</ul>
+<p>设置采样代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br></pre></td></tr></table></figure>
+<p>注意，仅在实际渲染的分辨率小于图片分辨率时，mipmap 才有用，即关于 mipmap 的采样数值，只能在设置对象为 <code>GL_TEXTURE_MIN_FILTER</code> 时采用。</p>
+<h1 id="读取图片"><a class="header-anchor" href="#读取图片">#</a>读取图片</h1>
+<p>读取图片依赖于 Sean Barrett 开发的 <a href="https://github.com/nothings/stb/blob/master/stb_image.h">stb_image</a> 头文件，在下载头文件并放到 include 文件夹后，通过以下代码引入头文件：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> STB_IMAGE_IMPLEMENTATION</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stb_image.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>下载 <a href="https://learnopengl.com/img/textures/container.jpg">container</a> 图片，并放到 <code>resources</code> 文件夹下。</p>
+<p>通过 <code>stbi_load</code>函数读取图片文件，如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> width, height, nrChannels;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span> *data = <span class="built_in">stbi_load</span>(<span class="string">&quot;container.jpg&quot;</span>, &amp;width, &amp;height, &amp;nrChannels, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>其中获取到的 <code>data</code> 即为图片数据，供之后 OpenGL 加载使用。</p>
+<div class="note warning simple"><p>用上述数据加载图片后，会发现图片上下颠倒，这是因为 OpenGL 认为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(0,0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span> 处于左下角，而图片定义的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(0,0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span> 点处于左上角。<br>
+可以通过设置 <code>stbi_set_flip_vertically_on_load(true);</code> 直接让 stb 读取的图片进行反转。</p>
+</div>
+<h1 id="加载纹理"><a class="header-anchor" href="#加载纹理">#</a>加载纹理</h1>
+<p>OpenGL 加载纹理的流程如下</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> texture;</span><br><span class="line"><span class="built_in">glGenTextures</span>(<span class="number">1</span>, &amp;texture);</span><br><span class="line"></span><br><span class="line"><span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, texture);</span><br><span class="line"><span class="built_in">glTexImage2D</span>(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGB, width, height, <span class="number">0</span>, GL_RGB, GL_UNSIGNED_BYTE, data);</span><br><span class="line"><span class="built_in">glGenerateMipmap</span>(GL_TEXTURE_2D);</span><br></pre></td></tr></table></figure>
+<p>如同生成和绑定 VBO，VAO 等，图片的加载也需要先创建图片 ID，再绑定图片 ID。</p>
+<p>通过函数 <code>glTexImage2D</code> 加载图片数据</p>
+<ul>
+<li>第一个参数为图片的类型</li>
+<li>第二个参数为 Mipmap 的等级，即可以通过该函数单独的为某一 level 的 MipMap 设置</li>
+<li>第三个参数为目标图片的纹理类型，这里读取的是 JPG，没有 alpha 通道，所以使用 <code>GL_RGB</code>，如果读取的是 PNG 等有 alpha 通道的图片，需要使用 <code>GL_RGBA</code></li>
+<li>第四，第五个参数为目标图片的宽高</li>
+<li>第六个参数因为历史原因，始终为 0</li>
+<li>第七个参数为源图片的纹理，即通过 <code>stbi_load</code> 加载的图片的纹理类型，这里是 <code>GL_RGB</code></li>
+<li>第八个参数为源图片的数据类型</li>
+<li>第九个参数为源图片数据</li>
+</ul>
+<p>在加载完成后，可通过 <code>glGenerateMipmap</code> 函数创建 MipMap。</p>
+<p>然后可以通过 <code>glTexParameteri</code> 函数设置纹理的过滤和映射。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br></pre></td></tr></table></figure>
+<h1 id="应用纹理"><a class="header-anchor" href="#应用纹理">#</a>应用纹理</h1>
+<h2 id="设置_Texcoord"><a class="header-anchor" href="#设置_Texcoord">#</a>设置 Texcoord</h2>
+<p>当使用纹理时，对于每一个顶点，都需要设置 Texcoord，所以每个顶点需要额外增加两个 float 来表示 Texcoord：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">constexpr</span> <span class="type">float</span> vertices[] = &#123;</span><br><span class="line">    <span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">0.5f</span>, <span class="number">0.5f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="number">-0.5f</span>, <span class="number">0.5f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>相对应的，顶点着色器也要新增 Texcoord 的 layout 输入：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">layout</span> (<span class="keyword">location</span>=<span class="number">0</span>) <span class="keyword">in</span> <span class="type">vec3</span> pos;</span><br><span class="line"><span class="keyword">layout</span> (<span class="keyword">location</span>=<span class="number">1</span>) <span class="keyword">in</span> <span class="type">vec2</span> tex;</span><br><span class="line"></span><br><span class="line"><span class="keyword">out</span> <span class="type">vec2</span> tex;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    tex = atex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>传递 layout 数据的语句也需要相应的改变：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">5</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>), (<span class="type">void</span> *)<span class="number">0</span>);</span><br><span class="line"><span class="built_in">glEnableVertexAttribArray</span>(<span class="number">0</span>);</span><br><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">1</span>, <span class="number">2</span>, GL_FLOAT, GL_FALSE, <span class="number">5</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>), (<span class="type">void</span> *)(<span class="number">3</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>)));</span><br><span class="line"><span class="built_in">glEnableVertexAttribArray</span>(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="纹理单元"><a class="header-anchor" href="#纹理单元">#</a>纹理单元</h2>
+<p>在加载纹理部分中已经 CPP 侧将纹理读取至了新生成的纹理 ID 中，之后需要将纹理传递给着色器。纹理在着色器部分的对应类型为 <code>sampler2D</code>。每一个 <code>sampler2D</code> 对象被称为纹理单元，通常来说 OpenGL 最少有 16 个纹理单元。如下代码，就定义了一个纹理单元</p>
+<p>在 Fragment Shader 中，需要获取由 Vertex Shader 传递过来的 tex，</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">in</span> <span class="type">vec2</span> tex;</span><br><span class="line"><span class="keyword">uniform</span> <span class="type">sampler2D</span> ourTexture;</span><br></pre></td></tr></table></figure>
+<p>在 CPP 部分中，通过函数 <code>glActiveTexture</code> ， <code>glBindTexture</code> 和 <code>glUniform1i</code>的组合，将纹理传递给着色器。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">glActiveTexture</span>(GL_TEXTURE0);</span><br><span class="line"><span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, texture);</span><br><span class="line"><span class="built_in">glUniform1i</span>(<span class="built_in">glGetUniformLocation</span>(shader.Program, <span class="string">&quot;outTexture&quot;</span>), <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>其中的 <code>GL_TEXTURE0</code> 表示是第一个纹理单元，在激活了该单元后，通过 <code>glBindTexute</code> 将纹理 ID 与该纹理单元结合在一起。然后通过 <code>glUniform1i</code> 将纹理单元传递到着色器中，例子中 <code>glUniform1i</code> 的第二个形参，就是要传递的纹理单元，因为这里是第一个纹理单元，所以传递 0。如果有多个纹理单元，也是使用同样的传递方法，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">glActiveTexture</span>(GL_TEXTURE0);</span><br><span class="line"><span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, texture1);</span><br><span class="line"><span class="built_in">glActiveTexture</span>(GL_TEXTURE1);</span><br><span class="line"><span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, texture2);</span><br><span class="line"><span class="built_in">glUniform1i</span>(<span class="built_in">glGetUniformLocation</span>(ourShader.ID, <span class="string">&quot;texture1&quot;</span>), <span class="number">0</span>);</span><br><span class="line"><span class="built_in">glUniform1i</span>(<span class="built_in">glGetUniformLocation</span>(ourShader.ID, <span class="string">&quot;texture2&quot;</span>), <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="解析纹理"><a class="header-anchor" href="#解析纹理">#</a>解析纹理</h2>
+<p>GLSL 有内置的函数 <code>texture</code> 来解析纹理，第一个参数为类型是 <code>sampler2D</code> 的纹理变量，第二个参数为类型是 <code>vec2</code> 的 Texcoord 变量。函数的返回值是像素的颜色，因此可以直接作为着色器的输出：</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">FragColor = <span class="built_in">texture</span>(ourTexture, TexCoord);</span><br></pre></td></tr></table></figure>
+<p>此时的效果为：</p>
+<p><img src="/ch_04_textures/untitled_6.png" alt=""></p>
 ]]></content>
       <tags>
         <tag>OpenGL</tag>
