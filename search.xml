@@ -5885,7 +5885,7 @@ Unity 官方也有相关的教程 <a href="https://docs.unity3d.com/Manual/SL-Sh
 <p><a href="/ch_02_hello_triangle">Ch 02 Hello Triangle</a></p>
 <p><a href="/ch_03_shaders">Ch 03 Shaders</a></p>
 <p><a href="/ch_04_textures">Ch 04 Textures</a></p>
-<p>Ch 05 Transformations</p>
+<p><a href="/ch_05_transformations">Ch 05 Transformations</a></p>
 <p>CH 06 Coordinate System</p>
 <p>Ch 07 Camera</p>
 <p>Ch 08 Framework</p>
@@ -7784,6 +7784,31 @@ When you are famous it is hard to work on small problems. This is what did Shan
 <figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line">FragColor = <span class="built_in">texture</span>(ourTexture, TexCoord);</span><br></pre></td></tr></table></figure>
 <p>此时的效果为：</p>
 <p><img src="/ch_04_textures/untitled_6.png" alt=""></p>
+]]></content>
+      <tags>
+        <tag>OpenGL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Learn OpenGL》 Ch 05 Transformations</title>
+    <url>/ch_05_transformations/</url>
+    <content><![CDATA[<div class="note primary simple"><p>本部分的实现代码，见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_05_Transformations">05_Transformations</a></p>
+</div>
+<h1 id="GLM"><a class="header-anchor" href="#GLM">#</a>GLM</h1>
+<p>因为 OpenGL 没有自带的矩阵和向量，所以相关的变换操作需要自定义，可以选择依赖 <a href="https://github.com/g-truc/glm">GLM</a>。<a href="https://github.com/g-truc/glm">GLM</a> 库封装了一系列三位数学相关的运算，如矩阵相乘，透视矩阵生成等。GLM 是一个纯头文件的库，因此不需要额外的链接和编译，将下载的头文件放到 <code>include</code> 下即可。通过以下代码引入：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;glm/glm.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;glm/gtc/matrix_transform.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;glm/gtc/type_ptr.hpp&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="变换"><a class="header-anchor" href="#变换">#</a>变换</h1>
+<p>使用 GLM 表示变换时，通常先定义一个四维的矩阵，并依靠 GLM 中提供的函数，对矩阵进行相应操作：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">glm::mat4 trans = glm::<span class="built_in">mat4</span>(<span class="number">1.0f</span>);</span><br><span class="line">trans = <span class="built_in">translate</span>(trans, glm::<span class="built_in">vec3</span>(<span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>));</span><br><span class="line">trans = <span class="built_in">rotate</span>(trans, (GLfloat)<span class="built_in">glfwGetTime</span>() * glm::<span class="built_in">radians</span>(<span class="number">90.0f</span>), glm::<span class="built_in">vec3</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>));</span><br><span class="line">trans = <span class="built_in">scale</span>(trans, glm::<span class="built_in">vec3</span>(<span class="number">0.5f</span>, <span class="number">0.5f</span>, <span class="number">0.5f</span>));</span><br></pre></td></tr></table></figure>
+<div class="note warning simple"><p>在 OpenGL 中，vec4 是列矩阵，所以所有的乘法都是左乘。因此虽然通常变换的顺序是缩放，旋转，位移。但代码中表现为位移，旋转，缩放。</p>
+</div>
+<p>在 Shader 中对应的矩阵类型 <code>mat4</code>，可通过 Uniform 进行赋值</p>
+<figure class="highlight glsl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">uniform</span> <span class="type">mat4</span> transform;</span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">gl_Position</span> = transform * <span class="type">vec4</span>(position, <span class="number">1.0</span>f);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 C++ 侧向 <code>uniform</code> 对象传值方式如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> GLuint transformLoc = <span class="built_in">glGetUniformLocation</span>(shader.program, <span class="string">&quot;transform&quot;</span>);</span><br><span class="line"><span class="built_in">glUniformMatrix4fv</span>(transformLoc, <span class="number">1</span>, GL_FALSE, glm::<span class="built_in">value_ptr</span>(trans));</span><br></pre></td></tr></table></figure>
+<p><code>glUniformMatrix4fv</code> 的第一个参数为 Uniform 参数的地址，第二个参数为需要传递的矩阵数量，第三个参数指定矩阵是否要进行转置操作，第四个参数传递的是指针，因为 glm 定义的数据并不是 OpenGL 原生支持的数据，所以要用 GLM 的库进行转换。</p>
+<p>此时的运行效果如下：</p>
+<p><img src="/ch_05_transformations/gif.gif" alt=""></p>
 ]]></content>
       <tags>
         <tag>OpenGL</tag>
