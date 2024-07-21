@@ -1,6 +1,6 @@
 ---
 created: 2021-12-15
-updated: 2024-05-07
+updated: 2024-07-21
 tags:
   - OpenGL
 published: true
@@ -60,5 +60,5 @@ glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
 此时的运行效果如下：
 
-![](/ch_05_transformations/gif.gif)
+![Result](/ch_05_transformations/gif.gif)
 

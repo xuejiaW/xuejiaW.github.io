@@ -1,15 +1,15 @@
 ---
 tags:
-- Windows 
-- CLI
+  - Windows
+  - CLI
 alias:
-- winget
+  - winget
 created: 2023-10-30
-updated: 2023-11-09
+updated: 2024-05-09
 published: true
 description: Windows Package Manager （winget） 是微软推出的基于命令行的包管理器，类似于 Chocolatey。在 winget 杠推出的时候，其功能非常的不健全，甚至于都没有 uninstall 支持，但在最新的 Win 11 中已经默认带上了 winget，且基本可以满足日常应用的安装。
 title: Windows Package Manager（winget）使用指南
-date: 2023-11-04 19:26 
+date: 2023-11-04 19:26
 ---
 
 # 介绍
@@ -24,7 +24,7 @@ Package Manager 所管理的 Package，实际指应用（application / program�
 
 {% note info %}
 下部分基于 winget 版本 1.6.2771。
-部分 Windows 安装时自带 winget 1.2 版本，在实际使用时会遇到各种问题。 
+部分 Windows 安装时自带 winget 1.2 版本，在实际使用时会遇到各种问题。
 {% endnote %}
 
 # 安装

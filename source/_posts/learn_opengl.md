@@ -28,7 +28,7 @@ description: 以下内容都是我学习 Learn OpenGL 系列教程时的笔记�
 
 [Ch 05 Transformations](/ch_05_transformations)
 
-CH 06 Coordinate System
+[CH 06 Coordinate System](/ch_06_coordinate_system)
 
 Ch 07 Camera
 
