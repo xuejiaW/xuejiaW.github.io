@@ -8,7 +8,7 @@ alias:
 published: true
 date: 2024-07-21 14:34
 title: 《Learn OpenGL》 Ch 06 Coordinate System
-description: 本章将介绍介绍坐标系的转换和各变换矩阵，本章将使用模型矩阵，观察矩阵和投影矩阵在最后绘制一个不断旋转的 Cube。
+description: 本章将介绍坐标系的转换和各变换矩阵，本章将使用模型矩阵，观察矩阵和投影矩阵在最后绘制一个不断旋转的 Cube。
 ---
 
 {% note primary %}
