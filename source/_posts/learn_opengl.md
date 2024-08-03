@@ -30,7 +30,7 @@ description: 以下内容都是我学习 Learn OpenGL 系列教程时的笔记�
 
 [CH 06 Coordinate System](/ch_06_coordinate_system)
 
-Ch 07 Camera
+[Ch 07 Camera](/ch_07_camera)
 
 Ch 08 Framework
 
