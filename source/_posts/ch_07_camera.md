@@ -1,6 +1,6 @@
 ---
 created: 2021-12-15
-updated: 2024-08-03
+updated: 2024-08-18
 tags:
   - OpenGL
 published: true
@@ -20,7 +20,7 @@ description: 本章将介绍 View 矩阵的生成，该矩阵用来表示 Camera
 -   摄像机的右方
 -   摄像机的上方。
 
-这四个信息构成了观察矩阵，也可称为 `LookAt` 矩阵。
+这四个信息构成了 [观察矩阵](/ch_06_coordinate_system/#观察矩阵) ，也可称为 `LookAt` 矩阵。
 
 $$
 \text { LookAt }=\left[\begin{array}{cccc}

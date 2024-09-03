@@ -1,6 +1,6 @@
 ---
 created: 2021-12-15
-updated: 2024-07-21
+updated: 2024-08-18
 tags:
   - OpenGL
 alias:
@@ -70,6 +70,14 @@ glm::mat4 model;
 model = glm::translate(model, glm::vec3(10.0f, 0.0f, 20.0f));
 ```
 
+位移，旋转，缩放分别通过 `translate`，`rotate` 和 `scale` 进行，如下所示：
+```cpp
+glm::mat4 model(1.0f);
+model = translate(model, glm::vec3(-0.5f, -0.5f, 0.0f));
+model = rotate(model, (GLfloat)glfwGetTime() * glm::radians(90.0f), glm::vec3(0.5f, 1.0f, 0));
+model = scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+```
+
 ## 观察矩阵
 
 观察矩阵在摄像机课程中会详细介绍，这里仅仅做一个摄像机后退的效果。
@@ -77,7 +85,7 @@ model = glm::translate(model, glm::vec3(10.0f, 0.0f, 20.0f));
 因为为 OpenGL 是右手坐标系，所以 $-Z$是朝向前方的。如果要做摄像机后退的效果，实际上等同于场景前移。
 
 ```cpp
-glm::mat4 view;
+glm::mat4 view(1.0f);
 view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 ```
 
@@ -88,11 +96,11 @@ glm 中封装了正射投影和透视投影需要的矩阵：平头矩阵和透�
 ```cpp
 
 // 平头矩阵
-glm::mat4 projection;
+glm::mat4 projection(1.0f);
 projection = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f, 0.1f, 100.0f);
 
 // 透视矩阵
-glm::mat4 projection;
+glm::mat4 projection(1.0f);
 projection = glm::perspective(45.0f, screenWidth / screenHeight, 0.1f, 100.0f);
 ```
 

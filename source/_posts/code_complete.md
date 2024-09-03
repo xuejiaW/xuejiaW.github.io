@@ -6,12 +6,12 @@ Author:
   - Steve McConnell
 Alias:
   - 代码大全
-Cover: https://d1b14unh5d6w7g.cloudfront.net/0735619670.01.S001.JUMBOXXX.jpg?Expires=1694316384&Signature=UQcJfo3PqSKmxoQNqRaiqv5147nDwUyzDbT3EOw9NXv2UQ9TqgpUVTmZTGkVwaV9FpCa-3oUiWKmU7zcXhclnQPoZnFV~-QjZER-PzdrbFuOL3ZZDdl7jcisqyb8Jzi0DZR6EHNVSUiFwd2ErtdzvSMIdzVyVHqplqyrM-b~hCQ_&Key-Pair-Id=APKAIUO27P366FGALUMQ
+Cover: https://m.media-amazon.com/images/I/61GzazUmKyL._AC_UF1000,1000_QL80_.jpg
 ISBN: 978-0735619678
 Category: 软件工程
 CompleteDate: 
 created: 2023-09-09
-updated: 2023-12-27
+updated: 2024-08-28
 published: true
 title: 《Code Complete》 笔记汇总
 description: 《Code Complete》（译名 《代码大全》）一书笔记，本书被誉为“软件开发领域的圣经”，其作者 Steve McConnel 多年在微软负责软件工程的最佳实践和过程改进。本书关注代码构建质量和工程可维护性，书中结合了非常多的日常开发中会遇到的案例，绝不仅是形而上学的进行理论分析。

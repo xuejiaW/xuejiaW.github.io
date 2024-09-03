@@ -1,6 +1,6 @@
 ---
 created: 2021-12-15
-updated: 2024-07-21
+updated: 2024-08-18
 tags:
   - OpenGL
 published: true
@@ -35,7 +35,7 @@ trans = scale(trans, glm::vec3(0.5f, 0.5f, 0.5f));
 ```
 
 {% note warning %}
-在 OpenGL 中，vec4 是列矩阵，所以所有的乘法都是左乘。因此虽然通常变换的顺序是缩放，旋转，位移。但代码中表现为位移，旋转，缩放。
+在 GLM 中，vec4 是列矩阵，所以所有的乘法都是左乘。因此虽然通常变换的顺序是缩放，旋转，位移。但代码中表现为位移，旋转，缩放。
 {% endnote %}
 
 在 Shader 中对应的矩阵类型 `mat4`，可通过 Uniform 进行赋值
