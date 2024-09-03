@@ -1,6 +1,6 @@
 ---
 created: 2023-05-04
-updated: 2024-08-29
+updated: 2024-09-03
 Cover: https://images-na.ssl-images-amazon.com/images/I/51Dake5LWcL._SX404_BO1,204,203,200_.jpg
 Author:
   - Fletcher Dunn
@@ -16,11 +16,12 @@ date: 2024-08-29 22:58
 ---
 
 {% note info %}
-为了方便阅读，谨记：
--   在本书中，默认计算的向量都是行向量
+为了方便阅读，谨记本书中的一些前提约束，本书中：
+- 计算的向量都是行向量
+- 采取的计算都是左手坐标系
 {% endnote %}
 
-Ch 01 笛卡尔坐标系
+[Ch 01 笛卡尔坐标系](/ch_01_cartesian_coordinate_systems)
 
 Ch 02 Vectors
 
