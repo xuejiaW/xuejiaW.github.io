@@ -2,7 +2,7 @@
 tags:
   - DotNet
 created: 2023-10-21
-updated: 2024-04-08
+updated: 2024-09-02
 published: true
 alias:
   - 创建 .Net Tools
@@ -10,8 +10,6 @@ title: .Net Tools 创建指南
 date: 2023-11-05 22:25
 description: .Net Tools 创建教程，包含一个最简例子（一个在命令行输出字符的小牛）演示如何将编写的命令行程序生成为可全局运行的工具
 ---
-
-# 创建一个 .Net Tool
 
 {% note primary %}
 示例可见 [CowSay](https://github.com/xuejiaW/.Net-Samples/tree/main/CowSay)
@@ -21,7 +19,7 @@ description: .Net Tools 创建教程，包含一个最简例子（一个在命�
 .Net Tool 需要使用 .net 6.0 及以上的版本
 {% endnote %}
 
-## 创建 .Net Tool 项目
+# 创建 .Net Tool 项目
 
 使用 `dotnet new` 命令创建一个新的 .Net Tool：
 
@@ -54,7 +52,7 @@ dotnet new console -n CowSay -f net8.0
 
 可以看到其中约定的 `TargetFramework` 是 `8.0`。
 
-## 修改代码
+# 修改代码
 
 将 `Program.cs` 中的代码修改为如下内容：
 
@@ -102,7 +100,7 @@ internal static class Program
 
 其中 `Main` 方法中的代码是用来处理命令行参数的，如果没有参数，会打印一系列提示信息。如果有参数，则会将参数组合成一个 `string` 并作为输出的小牛的 ASCII 图案中的一部分内容。
 
-## 运行 Tool
+# 运行 Tool
 
 此时在 `CowSay` 文件夹下执行 `dotnet run` 命令，会输出如下内容，因为此时并没有带上任何参数，所以会输出一系列提示信息：
 
@@ -130,7 +128,7 @@ Usage:
                                  ||      ||
 ```
 
-## 打包 Tool
+# 打包 Tool
 
 在运行打包前，先修改 `Cowsay.csproj` 文件，在 `<PropertyGroup>` 标签中添加如下内容：
 
@@ -161,7 +159,7 @@ dotnet pack
 │       CowSay.1.0.1.nupkg
 ```
 
-## 安装 Global Tool
+# 安装 Global Tool
 
 当 [打包 Tool](/create_.net_tools/#打包-tool) 生成了一个可安装的 .Net Tool 后，就可以使用 `dotnet tool install` 命令来安装该 Tool：
 
@@ -197,7 +195,7 @@ Tool 'cowsay' (version '1.0.1') was successfully installed.
 dotnet tool uninstall -g <toolName>
 ```
 
-### 安装路径控制
+## 安装路径控制
 
 在 Windows 下默认 Tool 安装的路径是：
 
@@ -218,7 +216,7 @@ dotnet tool install --tool-path <path> --add-source <sourcePath> <toolName> --ve
 dotnet tool uninstall --tool-path <path> <toolName>
 ```
 
-## 更新 Tool
+# 更新 Tool
 
 如果修改了 Tool 并重新进行了 [打包 Tool](/create_.net_tools/#打包_Tool) 操作，可以使用 `update` 进行 tool 的更新：
 
@@ -227,6 +225,7 @@ dotnet tool update --global --add-source <sourcePath> <toolName>
 ```
 
 如我们将 `CowSay` 的版本更新为 `1.0.2` 后，并再次允许 `dotnet pack`，此时在 `.nuget` 目录下会生成一个新的 `nupkg` 文件夹，其中包含了新的 `CowSay` 的版本：
+
 ```text
 ├── nupkg
 │   ├── CowSay.1.0.1.nupkg
@@ -234,8 +233,39 @@ dotnet tool update --global --add-source <sourcePath> <toolName>
 ```
 
 此时可运行 `dotnet tool update` 进行更新：
+
 ```powershell
 dotnet tool update --global --add-source .\nupkg CowSay --version 1.0.2
+```
+
+{% note primary %}
+至此，一个最简单的 .Net Tool 就创建完成了。但如果要将其发布 上，还需要进行一些额外的操作。
+{% endnote %}
+
+# 增加 License
+
+在 XML 中添加以下的内容即可将 License 文件打包到 NuGet 包中：
+
+```xml
+    <PropertyGroup>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../LICENSE" Pack="true" PackagePath=""/>
+    </ItemGroup>
+```
+
+# 增加 README
+
+```xml
+    <PropertyGroup>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../README.md" Pack="true" PackagePath=""/>
+    </ItemGroup>
 ```
 
 # Reference
@@ -244,3 +274,6 @@ dotnet tool update --global --add-source .\nupkg CowSay --version 1.0.2
 
 [(4) How to create your own .NET CLI tools to make your life easier - YouTube](https://www.youtube.com/watch?v=JNDgcBDZPkU&ab_channel=NickChapsas)
 
+[NuGet pack and restore as MSBuild targets | Microsoft Learn](https://learn.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-license-expression-or-a-license-file)
+
+[NuGet pack and restore as MSBuild targets | Microsoft Learn](https://learn.microsoft.com/en-us/nuget/reference/msbuild-targets#packagereadmefile)
