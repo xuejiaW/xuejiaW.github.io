@@ -25,7 +25,7 @@ date: 2024-08-29 22:58
 
 [Ch 02 向量](/ch_02_vectors)
 
-Ch 03 Multiple Coordinate Spaces
+[Ch 03 坐标系](/ch_03_multiple_coordinate_spaces)
 
 Ch 04 Introduction to Matrices
 
