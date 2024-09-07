@@ -10,7 +10,7 @@ description: 关于将法线从 Model Space 转换到 World Space 的矩阵的�
 date: 2024-04-02 11:58
 ---
 
-Normal Matrix 是用来将法线从 Model Space 转换到 World Spaces 的。
+Normal Matrix 是用来将法线从 [Model Space](/ch_03_multiple_coordinate_spaces/#Object_Space) 转换到 [World Spaces](/ch_03_multiple_coordinate_spaces/#World_Spaces) 的。
 
 相对于将顶点位置从 Model Space 转换到 View Space，法线的转换有两点需要额外考虑：
 
