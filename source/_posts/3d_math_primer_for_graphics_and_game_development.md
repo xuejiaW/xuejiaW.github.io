@@ -1,6 +1,6 @@
 ---
 created: 2023-05-04
-updated: 2024-09-04
+updated: 2024-09-08
 Cover: https://images-na.ssl-images-amazon.com/images/I/51Dake5LWcL._SX404_BO1,204,203,200_.jpg
 Author:
   - Fletcher Dunn
@@ -17,8 +17,8 @@ date: 2024-08-29 22:58
 
 {% note info %}
 为了方便阅读，谨记本书中的一些前提约束，本书中：
-- 计算的向量都是行向量
-- 采取的计算都是左手坐标系
+-   计算的向量都是行向量
+-   采取的计算都是左手坐标系
 {% endnote %}
 
 [Ch 01 笛卡尔坐标系](/ch_01_cartesian_coordinate_systems)
@@ -27,7 +27,7 @@ date: 2024-08-29 22:58
 
 [Ch 03 坐标系](/ch_03_multiple_coordinate_spaces)
 
-Ch 04 Introduction to Matrices
+[Ch 04 矩阵简介](/ch_04_introduction_to_matrices)
 
 Ch 05 Matrices and Linear Transformations
 
