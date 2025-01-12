@@ -1,6 +1,6 @@
 ---
 created: 2023-05-04
-updated: 2024-09-08
+updated: 2024-09-09
 Cover: https://images-na.ssl-images-amazon.com/images/I/51Dake5LWcL._SX404_BO1,204,203,200_.jpg
 Author:
   - Fletcher Dunn
@@ -29,7 +29,7 @@ date: 2024-08-29 22:58
 
 [Ch 04 矩阵简介](/ch_04_introduction_to_matrices)
 
-Ch 05 Matrices and Linear Transformations
+Ch 05 矩阵和变换
 
 Ch 06 More on Matrices
 
