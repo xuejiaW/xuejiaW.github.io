@@ -2,7 +2,7 @@
 tags:
   - DotNet
 created: 2024-04-07
-updated: 2024-04-16
+updated: 2024-12-29
 published: true
 title: 使用 System.CommandLine 为 .Net Tools 添加命令行参数支持
 description: 本篇教程通过创建一个名为 scl (Sample Command Line) 的 .Net Tools 来说明如何使用 System.CommandLine 库为 .Net Tool 增加命令行参数解析支持。
@@ -15,9 +15,7 @@ date: 2024-04-13 10:43
 完整的示例代码，可见 [SampleCommandLine](https://github.com/xuejiaW/.Net-Samples/tree/main/SampleCommandLine)
 {% endnote %}
 
-# 使用 System.CommandLine 示例
-
-## 创建 .Net Tool
+# 创建 .Net Tool
 
 {% note primary %}
 创建 .Net Tool 的完整说明可见 [.Net Tools 创建指南](/create_.net_tools)
@@ -61,7 +59,7 @@ dotnet tool install --global --add-source .\nupkg SampleCommandLine --version 0.
 Hello, World!
 ```
 
-## 安装并使用 System.CommandLine Package
+# 安装并使用 System.CommandLine Package
 
 使用 add package 命令为项目增加 `System.CommandLine` 包：
 
@@ -107,7 +105,7 @@ public static class Program
 
 即此时我们定义 `scl` 命令，其接受一个 `--file` 参数，用于指定一个文件，当 `scl` 命令被触发时，将读取该文件的内容并输出到控制台。
 
-## 测试 .Net Tool
+# 测试 .Net Tool
 
 当上述代码完成后，可以重新打包并安装 `scl` 进行测试：
 
@@ -166,7 +164,7 @@ Options:
 教程的后续部分，为了方便测试，会直接使用 `dotnet run` 进行测试。
 {% endnote %}
 
-## 增加 Sub Commands 和更多 Options
+# 增加 Sub Commands 和更多 Options
 
 我们将 `Program.cs` 的代码修改为内容：
 
@@ -236,7 +234,7 @@ public static class Program
 
 此时的工程状态可见 [Patch](https://github.com/xuejiaW/.Net-Samples/commit/2ef65d6e7dfba041cd9e9dc7e4b811d931f3ca4b)。
 
-## 增加更多的 Sub Commands 及自定义验证
+# 增加更多的 Sub Commands 及自定义验证
 
 为了后续的测试方便，我们可以将文件 [sampleQuotes.txt](https://github.com/dotnet/samples/raw/main/csharp/getting-started/console-teleprompter/sampleQuotes.txt) 放置在工程中。
 
@@ -244,7 +242,7 @@ public static class Program
 
 -   为 `fileOption` 增加一个验证，使得当传入的文件不存在时，输出自定义的错误信息。当该 Option 未调用时，以默认值 `sampleQuotes.txt` 作为文件。
     -   设为 Global Option，使得其可以在所有的 Sub Commands 中使用。
--   增加一个新的 Sub Command `quote`，并未该 Sub Command 设定两个 Sub Commands `add` 和 `remove`，分别用于添加和删除名言：
+-   增加一个新的 Sub Command `quote`，并为该 Sub Command 设定两个 Sub Commands `add` 和 `remove`，分别用于添加和删除名言：
     -   `delete` 命令，命令定义一个 `searchTermsOption` ，该 Option 接受多个参数，当一行的内容包含任意参数时，删除该行。
     -   `add` 命令，为该命令定义两个 Arguments，分别作为名言的作者和内容。
         -   为 `add` 命令设置一个 Alias `insert` -> 学习如何设置 Alias
@@ -268,7 +266,7 @@ scl
 -   如何定义 Arguments
 -   如何设置 Alias
 
-### 验证 Option
+## 验证 Option
 
 可通过如下的代码，为 `fileOption` 增加验证，：
 
@@ -302,7 +300,7 @@ FileInfo? GetFileInfo(ArgumentResult result)
 -   当 `Tokens` 的数量为 0 时，即没有设定 `--file` 时，返回默认的文件路径 `sampleQuotes.txt`
 -   否则正常返回文件路径
 
-### 设置 Global Option
+## 设置 Global Option
 
 将 `fileOption` 作为 Global Option 赋值给 Root Command，此时原先的 `readCommand` 就可以将 `fileOption` 的添加删除：
 
@@ -324,7 +322,7 @@ quotesCommand.AddCommand(readCommand);
 rootCommand.AddCommand(quotesCommand);
 ```
 
-### 设定支持多个 Arguments 的 Option
+## 设定支持多个 Arguments 的 Option
 
 增加一个 `searchTermsOption` 用于 `delete` 命令，该命令使用 `IsRequired` 表示该选项是必须的，可以使用 `AllowMultipleArgumentsPerToken` 表示该选项可以接受多个参数，为 `delete` 命令设定处理函数 `DeleteFromFile`，当一行的内容包含所有的参数时，删除该行：
 
@@ -363,7 +361,7 @@ scl quotes delete --search-terms David "You can do"
 --David Allen
 ```
 
-### 设定 Arguments
+## 设定 Arguments
 
 定义两个 Arguments 作为 `add` 命令的参数，分别用于指定名言的内容和作者：
 
@@ -404,7 +402,7 @@ scl quotes add "Hello world!" "Nancy Davolio"
 +-Nancy Davolio
 ```
 
-### 设置 Alias
+## 设置 Alias
 
 为 `add` 命令设置一个 Alias `insert`：
 
