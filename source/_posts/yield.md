@@ -2,16 +2,20 @@
 tags:
   - CSharp
 created: 2025-01-11
-updated: 2025-01-12
+updated: 2025-01-19
 published: true
 title: C# Yield 关键字
 date: 2025-01-12
 description: 介绍 C# 中 Yield 关键字的用法和工作原理，且通过一个示例说明如何通过 Yield 关键字节省性能。
 ---
 
-`yield` 用来在 Iterator 中提供返回值的关键字，`yield return` 和直接使用 return 不同的点在于它可以保持当前状态并在下次对 `Iterator` 调用 `MoveNext` 时继续执行,`yield break` 则是用来结束迭代器。
+# Yield 概述
 
-本文会首先通过用 Yield 改写代码的示例来说明 `yield` 的用法，然后会介绍 `yield` 更具体的工作原理。
+`yield` 用来在 Iterator 中返回数据的关键字，`yield return` 和直接使用 return 不同的点在于它可以在返回数据的同时保持当前迭代器的状态并在下次对 `Iterator` 调用 `MoveNext` 时继续迭代器的执行，`yield break` 则是用来结束迭代器。 
+
+可以认为 `yield` 实现了 [迭代器模式](/ch_09_the_iterator_and_composite_pattern/#迭代器模式) ，它可以用来延迟数据的获取（例如针对一个集合，不需要一次性获得所有数据，而是在每一个数据真正使用时才获取）。 
+
+本文会首先通过用 Yield 改写代码的示例来说明 `yield` 的用法以说明上述的介绍，然后会介绍 `yield` 更具体的工作原理。
 
 # 使用 Yield 改写代码的示例
 
@@ -139,7 +143,7 @@ public interface IEnumerator
 
 当使用 `foreach`  对 `IEnumerable` 对象进行迭代时，它实际上会对 `IEumberable` 对象调用 `GetEnumerator` 函数获取 `IEnumerator`，并使用其中的 `MoveNext` 和 `Current` 判断是否仍然有下一个元素和获取当前元素。
 
-即上述使用 `foreach` 的 `ProcessPayment` 函数会被编译成类似如下的代码：
+即上述使用 `foreach` 的 `ProcessPayment` 函数实际上会被编译成类似如下的代码，在其中真正依赖的是通过 `IEnumerable.GetEnumerator` 获取的 `IEnumerator`： 
 ```csharp
 private static void ProcessPaymentUsingWhile()
 {
@@ -155,6 +159,39 @@ private static void ProcessPaymentUsingWhile()
     }
 }
 ```
+
+也因此，可以直接定义 `yield` 返回的数据类型为 `IEnumerator`，并手动调用 `MoveNext` 和 `Current` 来获取元素，如下：
+```csharp
+private static IEnumerator<Payment> GetPaymentsEnumerator(int count)
+{
+    for (int i = 0; i != count; i++)
+    {
+        var p = new Payment();
+        p.id = i;
+        p.name = "Payment " + i;
+        yield return p;
+    }
+}
+
+public static void ProcessPaymentUsingWhileBasedOnIEnumerator()
+{
+    IEnumerator<Payment> payment = GetPaymentsEnumerator(10000);
+    while (payment.MoveNext())
+    {
+        Payment p = payment.Current;
+        if (p.id < 10)
+            Console.WriteLine($"Payment ID: {p.id}, Name: {p.name}");
+        else
+            break;
+    }
+}
+```
+
+{% note info %}
+定义返回 `IEnumerable` 的函数是为了可以直接使用 `foreach` 进行迭代，`yield` 本身并不依赖 `IEnumerable`。Unity 中定义的 [Coroutine](/yield_and_coroutine) 同样包含 `yield` 关键字，但并不依赖 `IEnumerable`，而是要求返回 `IEnumerator`。
+{% endnote %}
+
+## yield 的执行顺序
 
 `yield` 的作用就是在迭代器中返回一个值或信号（ `yield break` 表示迭代器结束），并保持迭代器的当前状态。当调用迭代器 `MoveNext` 时，其执行逻辑为：
 - 如果是首次迭代，则执行语句直到遇到 `yield return`，返回一个值，并保持当前状态，挂起迭代器。迭代器的调用者可以获取到这个值并对其进行处理
