@@ -2,7 +2,7 @@
 tags:
   - CSharp
 created: 2025-01-11
-updated: 2025-01-19
+updated: 2025-01-24
 published: true
 title: C# Yield 关键字
 date: 2025-01-12
@@ -241,7 +241,6 @@ Caller: 4
 Iterator: yielded 4
 Iterator: end
 ```
-
 
 # Reference
 
