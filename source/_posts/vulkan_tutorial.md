@@ -1,6 +1,6 @@
 ---
 created: 2022-02-17
-updated: 2025-03-30
+updated: 2025-04-06
 tags:
   - Vulkan
 Author:
@@ -25,9 +25,9 @@ title: 《Vulkan Tutorial》 学习笔记汇总
 ## Setup
 
 [Ch 03 Base Code](/ch_03_base_code)：绘制一个三角形的基本代码结构，定义了 `HelloTriangleApplication` 类的基本结构，包含了 `initVulkan` / `mainLoop` / `cleanup` 等函数。
-Ch 04 Instance
-Ch 05 Validation Layers
-Ch 06 Physical devices and queue families
+[Ch 04 Instance](/ch_04_instance)：创建一个 Vulkan 的 Instance，Instance 是应用与 Vulkan 库的连接，在创建过程中会有相应的操作告知 Driver 你的应用的一些细节。
+[Ch 05 Validation Layers](/ch_05_validation_layers)：Validation Layer 是 Vulkan 的一个调试工具，它会在运行时检查 API 调用的正确性，帮助开发者发现潜在的错误。
+[Ch 06 Physical devices and queue families](/ch_06_physical_devices_and_queue_families): 选择符合要求的物理设备和 Queue Family，物理设备是 Vulkan 的一个重要概念，它表示了一个支持 Vulkan 的 GPU 设备，Queue Family 则是物理设备的一个属性，表示了该设备支持的命令队列类型。
 Ch 07 Logical device and queues
 
 ## Presentation
@@ -44,8 +44,12 @@ Ch 13 Fixed Functions
 Ch 14 Render Passes
 Ch 15 Conclusion
 
+## Drawing
+
+
 # Reference
 
 1. https://vulkan-tutorial.com/
 
-
+[Understanding Vulkan® Objects - AMD GPUOpen](https://gpuopen.com/learn/understanding-vulkan-objects/)：Vulkan 中各关系的示意图
+[GitHub - David-DiGioia/vulkan-diagrams: Diagrams showing relationships between Vulkan objects and how they're used.](https://github.com/David-DiGioia/vulkan-diagrams?tab=readme-ov-file)：另一个看上去更详细的关于 Vulkan 中 Object 的关系示意图
