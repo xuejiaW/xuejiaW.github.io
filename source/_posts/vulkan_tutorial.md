@@ -1,6 +1,6 @@
 ---
 created: 2022-02-17
-updated: 2025-04-06
+updated: 2025-04-12
 tags:
   - Vulkan
 Author:
@@ -28,12 +28,12 @@ title: 《Vulkan Tutorial》 学习笔记汇总
 [Ch 04 Instance](/ch_04_instance)：创建一个 Vulkan 的 Instance，Instance 是应用与 Vulkan 库的连接，在创建过程中会有相应的操作告知 Driver 你的应用的一些细节。
 [Ch 05 Validation Layers](/ch_05_validation_layers)：Validation Layer 是 Vulkan 的一个调试工具，它会在运行时检查 API 调用的正确性，帮助开发者发现潜在的错误。
 [Ch 06 Physical devices and queue families](/ch_06_physical_devices_and_queue_families): 选择符合要求的物理设备和 Queue Family，物理设备是 Vulkan 的一个重要概念，它表示了一个支持 Vulkan 的 GPU 设备，Queue Family 则是物理设备的一个属性，表示了该设备支持的命令队列类型。
-Ch 07 Logical device and queues
+[Ch 07 Logical device and queues](/ch_07_logical_device_and_queues)：创建 Logical Device（`VkDevice`）与 Physical Devices （`VkPhysicalDevice`）交互，在创建 Logical Devices 时还需要指定需要从 Physical Devices 的 Queue Family 中创建多少 Queue。
 
 ## Presentation
 
-Ch 08 Window Surface
-Ch 09 Swap Chain
+[Ch 08 Window Surface](/ch_08_window_surface)：创建 Surface 用于建立 Vulkan 和 Window 系统之间的连接，Surface 是对于系统中的窗口或显示设备的抽象，应用通过与 Surface 的交互来实现与系统窗口的访问。
+[Ch 09 Swap Chain](/ch_09_swap_chain)：在 Vulkan 中必须显式的创建 Swap Chain。SwapChain 是与 Surface 绑定的数据结构，其包含了多个 Image，应用渲染时会将渲染的结果放置到这些 Image 中，当调用 Present 时，SwapChain 会将这些 Image 通过其与 Surface 绑定，传递给 Surface，Surface 再将这些 Image 显示到平台的窗口或屏幕上。
 Ch 10 Image views
 
 ## Graphics pipeline basics
