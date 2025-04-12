@@ -2,7 +2,7 @@
 tags:
   - Vulkan
 created: 2022-03-10
-updated: 2025-04-06
+updated: 2025-04-07
 date: 2025-04-06 10:31
 published: true
 title: 《Vulkan Tutorial》 笔记 06：物理设备和 Queue Family
@@ -96,9 +96,9 @@ bool PhysicalDevicesMgr::isDeviceSuitable(VkPhysicalDevice device)
 
 # Queue families
 
-Vulkan 中的几乎所有操作，都需要提交指令给 Queue。Vulkan 中存在各种不同类型的队列，如会存在一个 Queue 只允许处理计算的命令，而存在另一个 Queue Family 只允许内存的传输，再另一个 Queue 可以处理计算和内存传输的命令等。同一种类型的 Queue 会被封装在一个Queue Family 中。
+Vulkan 中的几乎所有操作，都需要提交指令给 Queue。Vulkan 中存在各种不同类型的队列，如会存在一个 Queue 只允许处理计算的命令，而存在另一个 Queue 只允许内存的传输，再另一个 Queue 可以处理计算和内存传输的命令等。同一种类型的 Queue 会被封装在一个Queue Family 中。
 
-首先需要从设备中查询设备支持的 Queue Families 列表，并找出支持想要执行的命令的特定 Queue Family。因为需要寻找的 Queue Family 可能不止一个，因此封装一个结构体表示所有需要的 Queue Family 的 indices，在这一章暂时只有一个表示 graphics 的 queue family 的 index，同时增加函数 `isComplete` 表示是否正确找到了 graphics queue family：
+首先需要从 Physical Devices 中查询设备支持的 Queue Families 列表，并找出支持想要执行的命令的特定 Queue Family。因为需要寻找的 Queue Family 可能不止一个，因此封装一个结构体表示所有需要的 Queue Family 的 indices，在这一章暂时只有一个表示 graphics 的 queue family 的 index，同时增加函数 `isComplete` 表示是否正确找到了 graphics queue family：
 ```cpp
 struct QueueFamilyIndices
 {
