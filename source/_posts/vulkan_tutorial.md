@@ -38,8 +38,8 @@ title: 《Vulkan Tutorial》 学习笔记汇总
 
 ## Graphics pipeline basics
 
-Ch 11 Introduction
-Ch 12 Shader Modules
+[Ch 11 Graphics Pipeline Introduction](/ch_11_graphics_pipeline_introduction)
+[Ch 12 Shader Modules](/ch_12_shader_modules)
 Ch 13 Fixed Functions
 Ch 14 Render Passes
 Ch 15 Conclusion
