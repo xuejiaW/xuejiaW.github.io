@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>《Vulkan Tutorial》 笔记 12：Shader Module | 三叔的数字花园</title><meta name="author" content="三叔"><meta name="copyright" content="三叔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="VkShaderModule 类用以封装和管理已编译好的着色器代码，本节将说明如何创建 Shader Module，以及如何将其传递给渲染管线的特定阶段。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Vulkan Tutorial》 笔记 12：Shader Module">
+<meta property="og:url" content="https://tuncle.blog/ch_12_shader_modules/index.html">
+<meta property="og:site_name" content="三叔的数字花园">
+<meta property="og:description" content="VkShaderModule 类用以封装和管理已编译好的着色器代码，本节将说明如何创建 Shader Module，以及如何将其传递给渲染管线的特定阶段。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuncle.blog/img/avatar.jpg">
+<meta property="article:published_time" content="2025-04-13T07:18:00.000Z">
+<meta property="article:modified_time" content="2025-04-12T16:00:00.000Z">
+<meta property="article:author" content="三叔">
+<meta property="article:tag" content="Vulkan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuncle.blog/img/avatar.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://tuncle.blog/ch_12_shader_modules/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-2QHMY59T5S"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2QHMY59T5S');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: 三叔","link":"链接: ","source":"来源: 三叔的数字花园","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '《Vulkan Tutorial》 笔记 12：Shader Module',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-04-13 00:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="三叔的数字花园" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">121</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">38</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-paw"></i><span> 我的</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li><li><a class="site-page child" href="/reading/"><i class="fa-fw fas fa-book"></i><span> 阅读</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/atom.xml"><i class="fa-fw fas fa-rss"></i><span> RSS</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="三叔的数字花园"><span class="site-name">三叔的数字花园</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-paw"></i><span> 我的</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li><li><a class="site-page child" href="/reading/"><i class="fa-fw fas fa-book"></i><span> 阅读</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/atom.xml"><i class="fa-fw fas fa-rss"></i><span> RSS</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">《Vulkan Tutorial》 笔记 12：Shader Module</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2025-04-13T07:18:00.000Z" title="发表于 2025-04-13 15:18:00">2025-04-13</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/ch_12_shader_modules/" data-flag-title="《Vulkan Tutorial》 笔记 12：Shader Module"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><div class="note info simple"><p>本部分结果可参考 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xuejiaW/LearnVulkan/tree/main/_12_Shader_Modules">12_Shader_Modules</a></p>
+</div>
+<p>与早期图形 API 不同的是，Vulkan 的 Shader 必须是一个<code>字节文件（bytecode format）</code>，而非像 GLSL 或 HLSL 这样可读性高的文本。Vulkan 需要的字节文件类型被称为 <code>SPIR-V</code>。</p>
+<div class="note info simple"><p>使用字节文件的好处在于，GPU 厂商所制作的将 Shader 转换为 native code 的编译器会简单很多。原先对于 GLSL 这样的文本，每一家 GPU 厂商对于标准的理解可能存在偏差，因此如果在某家 GPU 上能成功运行的某些冷门的 Syntex，很可能在另一家上就无法运行或存在错误效果。</p>
+</div>
+<div class="note info simple"><p>虽然 Vulkan 要求 <code>SPIR-V</code> ，但这不意味着开发者需要手写这些字节文件。Khronos 提供了与厂商无关的编译器的标准，可以将 GLSL 编译为 SPIR-V。<br>
+这里会使用谷歌推出的 <code>glslc.exe</code> 进行翻译</p>
+</div>
+<h1 id="Vertex_Shader"><a class="header-anchor" href="#Vertex_Shader">#</a>Vertex Shader</h1>
+<p>如在 OpenGL 中定义的 <a href="/ch_02_hello_triangle/#%E9%A1%B6%E7%82%B9%E6%95%B0%E6%8D%AE">顶点数据</a> 一样，Vulkan 的顶点数据同样在 NDC 空间中，如下所示。只不过 Vulkan 和 OpenGL 对于 NDC 空间 Y 轴定义是相反的（OpenGL 将底部 Y 值定义为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span>，而 Vulkan 定义为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>）：</p>
+<p><img src="/ch_12_shader_modules/image-20220826091812725.png" alt="Vulkan NDC Space"></p>
+<p>为了绘制一个三角形，定义如下的 Vertex Shader：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 450</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#extension GL_ARB_separate_shader_objects: enable</span></span><br><span class="line"><span class="meta">#extension GL_KHR_vulkan_glsl: enable</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">layout</span> (<span class="keyword">location</span> = <span class="number">0</span>) <span class="keyword">out</span> <span class="type">vec3</span> fragColor;</span><br><span class="line"></span><br><span class="line"><span class="type">vec2</span> positions[<span class="number">3</span>] = <span class="type">vec2</span>[](</span><br><span class="line"><span class="type">vec2</span>(<span class="number">0.0</span>, <span class="number">-0.5</span>),</span><br><span class="line"><span class="type">vec2</span>(<span class="number">0.5</span>, <span class="number">-0.5</span>),</span><br><span class="line"><span class="type">vec2</span>(<span class="number">-0.5</span>, <span class="number">-0.5</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="type">vec3</span> colors[<span class="number">3</span>] = <span class="type">vec3</span>[](</span><br><span class="line"><span class="type">vec3</span>(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>),</span><br><span class="line"><span class="type">vec3</span>(<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>),</span><br><span class="line"><span class="type">vec3</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">gl_Position</span> = <span class="type">vec4</span>(positions[gl_VertexIndex], <span class="number">0.0</span>, <span class="number">1.0</span>);</span><br><span class="line">    fragColor = colors[gl_VertexIndex];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info simple"><p>为了暂时保持教程的简洁性，这里直接将顶点数据写在 Vertex Shader 中，避免了传输顶点数据这些 CPU-&gt; GPU 操作的定义。</p>
+</div>
+<h1 id="Fragment_Shader"><a class="header-anchor" href="#Fragment_Shader">#</a>Fragment Shader</h1>
+<p>定义的 Fragment Shader 如下：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 450</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#extension GL_ARB_separate_shader_objects: enable</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">layout</span> (<span class="keyword">location</span> = <span class="number">0</span>) <span class="keyword">in</span> <span class="type">vec3</span> fragColor;</span><br><span class="line"><span class="keyword">layout</span> (<span class="keyword">location</span> = <span class="number">0</span>) <span class="keyword">out</span> <span class="type">vec4</span> outCOlor;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> main()</span><br><span class="line">&#123;</span><br><span class="line">    outCOlor = <span class="type">vec4</span>(fragColor, <span class="number">1.0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="编译_Shaders"><a class="header-anchor" href="#编译_Shaders">#</a>编译 Shaders</h1>
+<p>因为 <code>glslc</code> 已经包含在了 Vulkan 的 SDK 中，因此可以通过类似如下的语句，直接将 shader 编译为 <code>SPIR-V</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\VulkanSDK\1.3.204.1\Bin\glslc.exe shader.vert -o vert.spv</span><br><span class="line">C:\VulkanSDK\1.3.204.1\Bin\glslc.exe shader.frag -o frag.spv</span><br></pre></td></tr></table></figure>
+<p>这样就能将之前章节中的 glsl shader 文件编译为 <code>.spv</code> 后缀的 <code>SPIR-V</code> 字节码。</p>
+<div class="note primary simple"><p>本教程中可以使用脚本 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xuejiaW/LearnVulkan/blob/main/CompileShader.ps1">CompileShaders</a> 将一个目录下的所有 shader 文件编译为 <code>SPIR-V</code> 字节码。使用方法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">. .\CompileShader.ps1</span><br><span class="line">Compile-Shaders &lt;FolderPath&gt;</span><br></pre></td></tr></table></figure>
+<p>对于文件夹内的文件，名字将保留并且后缀改为 <code>.spv</code>，且加上 Vert/Frag。例如 <code>shader.vert</code> 将被编译为 <code>shaderVert.spv</code>。</p>
+</div>
+<h1 id="读取_Shaders"><a class="header-anchor" href="#读取_Shaders">#</a>读取 Shaders</h1>
+<p>定义类 <code>ShadersMgr</code> 管理 Shader 的创建和销毁。为了方便起见，Shader 的创建和销毁都在 <code>createGraphicsPipeline</code> 中进行。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ShadersMgr</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> VkShaderModule <span class="title">createShaderModule</span><span class="params">(<span class="type">const</span> std::string&amp; fileName)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">destroyShaderModule</span><span class="params">(VkShaderModule shaderModule)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> std::vector&lt;<span class="type">char</span>&gt; <span class="title">readFile</span><span class="params">(<span class="type">const</span> std::string&amp; fileName)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>为了读取之前编译好的 SPIR-V 字节码，首先定义帮助函数 <code>ShadersMgr::readFile</code>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::vector&lt;<span class="type">char</span>&gt; <span class="title">ShadersMgr::readFile</span><span class="params">(<span class="type">const</span> std::string&amp; fileName)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">std::ifstream <span class="title">file</span><span class="params">(fileName, std::ios::ate | std::ios::binary)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (!file.<span class="built_in">is_open</span>())</span><br><span class="line">        <span class="keyword">throw</span> std::<span class="built_in">runtime_error</span>(<span class="string">&quot;Failed to open file &quot;</span> + fileName);</span><br><span class="line"></span><br><span class="line">    <span class="type">const</span> <span class="type">size_t</span> fileSize = file.<span class="built_in">tellg</span>();</span><br><span class="line">    <span class="function">std::vector&lt;<span class="type">char</span>&gt; <span class="title">buffer</span><span class="params">(fileSize)</span></span>;</span><br><span class="line">    file.<span class="built_in">seekg</span>(<span class="number">0</span>);</span><br><span class="line">    file.<span class="built_in">read</span>(buffer.<span class="built_in">data</span>(), fileSize);</span><br><span class="line">    file.<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">return</span> buffer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div class="note info simple"><p>在 <code>readFile</code> 中，打开文件时使用了 flag <code>ate</code> 和 <code>binary</code>，后者是因为读取的 SPIR-V Shader 是二进制文件，因此设定为 <code>binary</code> 可以减少文本转换。<br>
+前者是表明从文件的最后打开，这样的话，在文件一打开时就能知道文件的总长度。因此可以直接通过 <code>tellg</code> 获取长度。</p>
+</div>
+<h1 id="创建_VK_Shader_Modules"><a class="header-anchor" href="#创建_VK_Shader_Modules">#</a>创建 VK Shader Modules</h1>
+<p>在将获取到的 Shader 传递给渲染管线之前，比如要将它封装在 <code>VkShaderModule</code> 中，该类用以封装和管理已编译好的着色器代码，为此创造函数 <code>ShadersMgr::createShaderModule</code>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">VkShaderModule <span class="title">ShadersMgr::createShaderModule</span><span class="params">(<span class="type">const</span> std::string&amp; fileName)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> code = <span class="built_in">readFile</span>(fileName);</span><br><span class="line"></span><br><span class="line">    VkShaderModuleCreateInfo createInfo&#123;&#125;;</span><br><span class="line">    createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;</span><br><span class="line">    createInfo.codeSize = code.<span class="built_in">size</span>();</span><br><span class="line">    createInfo.pCode = <span class="built_in">reinterpret_cast</span>&lt;<span class="type">const</span> <span class="type">uint32_t</span>*&gt;(code.<span class="built_in">data</span>());</span><br><span class="line"></span><br><span class="line">    VkShaderModule shaderModule;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">vkCreateShaderModule</span>(LogicDevicesMgr::device, &amp;createInfo, <span class="literal">nullptr</span>, &amp;shaderModule) != VK_SUCCESS)</span><br><span class="line">        <span class="keyword">throw</span> std::<span class="built_in">runtime_error</span>(<span class="string">&quot;Failed to create shader module!&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> shaderModule;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类似的，需要创建 <code>destroyShaderModule</code> 函数来销毁 Shader Module：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">ShadersMgr::destroyShaderModule</span><span class="params">(VkShaderModule shaderModule)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vkDestroyShaderModule</span>(LogicDevicesMgr::device, shaderModule, <span class="literal">nullptr</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Shader_Stage_创建"><a class="header-anchor" href="#Shader_Stage_创建">#</a>Shader Stage 创建</h1>
+<p>为了真正的使用创建出来的 Shader Module，需要将其指定给管线的特定阶段（如顶点阶段/着色阶段）。指定的过程，可以通过 <code>VkPipelineShaderStageCreateInfo</code> 实现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GraphicsPipelineMgr::createGraphicsPipeline</span><span class="params">(<span class="type">const</span> std::string&amp; vertFileName, <span class="type">const</span> std::string&amp; fragFileName)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    VkShaderModule vertShaderModule = ShadersMgr::<span class="built_in">createShaderModule</span>(vertFileName);</span><br><span class="line">    VkShaderModule fragShaderModule = ShadersMgr::<span class="built_in">createShaderModule</span>(fragFileName);</span><br><span class="line"></span><br><span class="line">    VkPipelineShaderStageCreateInfo vertShaderStageCreateInfo = &#123;&#125;;</span><br><span class="line">    vertShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;</span><br><span class="line">    vertShaderStageCreateInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;</span><br><span class="line">    vertShaderStageCreateInfo.<span class="keyword">module</span> = vertShaderModule;</span><br><span class="line">    vertShaderStageCreateInfo.pName = <span class="string">&quot;main&quot;</span>;</span><br><span class="line"></span><br><span class="line">    VkPipelineShaderStageCreateInfo fragShaderStageCreateInfo = &#123;&#125;;</span><br><span class="line">    fragShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;</span><br><span class="line">    fragShaderStageCreateInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;</span><br><span class="line">    fragShaderStageCreateInfo.<span class="keyword">module</span> = fragShaderModule;</span><br><span class="line">    fragShaderStageCreateInfo.pName = <span class="string">&quot;main&quot;</span>;</span><br><span class="line"></span><br><span class="line">    VkPipelineShaderStageCreateInfo shaderStages[] = &#123;vertShaderStageCreateInfo, fragShaderStageCreateInfo&#125;;</span><br><span class="line"></span><br><span class="line">    ShadersMgr::<span class="built_in">destroyShaderModule</span>(vertShaderModule);</span><br><span class="line">    ShadersMgr::<span class="built_in">destroyShaderModule</span>(fragShaderModule);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里修改了 <code>createGraphicsPipeline</code> 函数的签名，增加了两个参数 <code>vertFileName</code> 和 <code>fragFileName</code>，用来传递编译好的 <code>.spv</code> 文件路径。</p>
+<p>此时在 <code>initVulkan</code> 中调用 <code>createGraphicsPipeline</code> 时，传入编译好的 Shader 文件路径用以创建 Graphics Pipeline：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::initVulkan</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    GraphicsPipelineMgr::<span class="built_in">createGraphicsPipeline</span>(<span class="string">&quot;Shaders/TriangleVert.spv&quot;</span>,</span><br><span class="line">                                                <span class="string">&quot;Shaders/TriangleFrag.spv&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>stage</code> 用来指定这个 StageCreateInfo 属于那个阶段。<code>pName</code> 用来指定 Shader 的入口，即 Shader 函数中的入口函数，如上面代码中的 <code>main</code>。</p>
+<div class="note info simple"><p><code>pName</code> 的存在意味着可以在一个 Shader 中定义不同的入口还是表示不同的 Shader。比如可以在一个 Shader 中定义 <code>main</code> 和 <code>main2</code>，然后在不同的 Stage 中使用不同的入口函数。</p>
+</div>
+<p>在上述代码的最后，将两个创建出来的 Stage 存在在一起构成 <code>shaderStages</code>，该变量在进一步创建 GraphicsPipeline 时会需要用到。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="Tuncle">三叔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tuncle.blog/ch_12_shader_modules/">https://tuncle.blog/ch_12_shader_modules/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tuncle.blog" target="_blank">三叔的数字花园</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Vulkan/">Vulkan</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="twitter, wechat, weibo"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/ch_11_graphics_pipeline_introduction/" title="《Vulkan Tutorial》 笔记 11：图形管线介绍"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《Vulkan Tutorial》 笔记 11：图形管线介绍</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vertex_Shader"><span class="toc-text">Vertex Shader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Fragment_Shader"><span class="toc-text">Fragment Shader</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%96%E8%AF%91_Shaders"><span class="toc-text">编译 Shaders</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96_Shaders"><span class="toc-text">读取 Shaders</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA_VK_Shader_Modules"><span class="toc-text">创建 VK Shader Modules</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Shader_Stage_%E5%88%9B%E5%BB%BA"><span class="toc-text">Shader Stage 创建</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2025 By 三叔</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Keep Writing</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey: 'z1vCYavVUbCGuMjNMcrsvShN',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', 'G-2QHMY59T5S', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
