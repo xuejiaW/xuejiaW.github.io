@@ -1,6 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>XR 立体渲染模式</title>
+    <url>/stereo_rendering_mode/</url>
+    <content><![CDATA[<p>在 XR 中物体通常需要以立体（in sterro）的方式被渲染，即一个内容需要被绘制到左眼和右眼的纹理中，这种渲染方式被称为 <code>立体渲染（Stereo-Rendering）</code>，本文将介绍几种立体渲染的方式，包括：</p>
+<ul>
+<li><code>Multi-Pass</code>：左眼和右眼画面由两张纹理构成，并分别绘制左眼和右眼画面。这是最原始，兼容性最好的渲染方式，但拥有较差的性能。</li>
+<li><code>Single-Pass</code>：左眼和右眼由一个纹理构成，通常是目前常规应用首先的渲染方式，拥有较好的性能。该模式有较多的变种，如 <code>Single-Pass Double Wide</code>，<code>Single-Pass Instanced</code>，<code>Single-Pass Multi-View</code> 等。</li>
+<li><code>Quad-View</code>：一种较新的渲染方式，将左右眼画面进一步拆分为 <code>Inner-Left</code>和 <code>Inner-Right</code>，<code>Outer-Left</code> 和 <code>Outer-Right</code> 四个视图，通过 <code>Inner</code> 和 <code>Outer</code> 不同的 PPD（Pixels Per Degree）来提升画面的清晰度。该模式通常在支持眼动追踪的设备上使用。</li>
+</ul>
+<h1 id="Multi_Pass"><a class="header-anchor" href="#Multi_Pass">#</a>Multi-Pass</h1>
+<p>在 Multi-Pass 渲染模式下，需要为每个眼睛创建一个单独的渲染纹理（Texture2D），并在每个眼睛的渲染循环中分别绘制左眼和右眼的画面。Multi-Pass 渲染模式的优点是兼容性好，支持所有 XR 设备，但性能较差，因为针对每一个物体都需要进行两次渲染，此外，每一次渲染时都需要切换渲染纹理（这就是被称为多 Pass 的原因）。</p>
+<p>其示意图如下所示</p>
+<iframe
+  style="border: 1px solid #ccc; border-radius: 0.5rem;"
+  src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/ab120e5e01e009e7cbdaad58694d545d/raw/e96516222e4a02c44f3d1eb0cce09a1e4c8ca6e0/MultiPass.ins"
+  width="100%"
+  height="500"
+  frameborder="0"
+  allowfullscreen
+></iframe>
+<h1 id="Single_Pass"><a class="header-anchor" href="#Single_Pass">#</a>Single-Pass</h1>
+<p>顾名思义，Single-Pass 就是渲染目标只有一张纹理，在这个前提下，Single-Pass 有多种变种模式，每一个变种都有其自己的渲染方式：</p>
+<div class="note info simple"><p>一个常见的误解是认为 Single-Pass 就是同一目标一次渲染完成左眼和右眼画面，Multi-Pass 是两次渲染完成左眼和右眼画面。<br>
+实际上，Single-Pass 和 Multi-Pass 的区别在于渲染目标的数量，Single-Pass 只有一张纹理，而 Multi-Pass 有多张纹理。在 single-Pass Double Wide 的情况下，Single Pass 同样需要两次渲染来完成左眼和右眼画面的渲染。</p>
+</div>
+<h2 id="Single_Pass_Double_Wide"><a class="header-anchor" href="#Single_Pass_Double_Wide">#</a>Single-Pass Double Wide</h2>
+<p>Single-Pass Double Wide 方案用一张宽度是单个眼睛画面两倍的纹理来同时表示左眼和右眼画面，其中左半部分是左眼，右半部分是右眼。其示意图如下所示：</p>
+<iframe
+  style="border: 1px solid #ccc; border-radius: 0.5rem;"
+  src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/7ab6ab47a1fd5b21b58ce9b7b0be7183/raw/a48932f4b40d8671472b34aaa8fff82f28c0939f/SinglePass-DoubleWide.ins"
+  width="100%"
+  height="500"
+  frameborder="0"
+  allowfullscreen
+></iframe>
+<p>可以看到在 Single-Pass Double Wide 方案下:</p>
+<ul>
+<li>每个对象仍然需要被 <strong>两次</strong> 渲染至左眼和右眼部分，只不过现在是通过一个纹理来表示左眼和右眼画面。</li>
+<li>渲染采用了 ping-pong 的方式，即渲染的目标会在左右眼部分以 <code>Left-Right-Right-Left-Left-....</code> 的方式切换（见上示意）。这样的好处只需要遍历一次所有需要的对象，即能完成左右眼的渲染，也因此减少了渲染时上下文的切换和需要执行的 Command 数量。</li>
+</ul>
+<p>Single-Pass Double Wide 方案基本已经被淘汰，因为它仍然需要对每个对象做两次渲染，且其 ping-pong 的方式会极大的增加管线复杂度。</p>
+<p>目前的设备通常都支持 Single-Pass Instanced 或 Single-Pass MultiView，这两种方案也有更高的性能。</p>
+<h2 id="Single_Pass_Instanced_Single_Pass_MultiView"><a class="header-anchor" href="#Single_Pass_Instanced_Single_Pass_MultiView">#</a>Single-Pass Instanced / Single-Pass MultiView</h2>
+<p>Single-Pass Instanced 和 Single-Pass MultiView 方案都是用一张纹理数组来表示表示左眼和右眼画面，其中 Index 0 是左眼，Index 1 是右眼。该两者的优点是都是节省了纹理切换的开销，且每个物体可以通过 <strong>一次</strong> 渲染同时被绘制到左眼和右眼画面上，其缺点都在于兼容性，这两种默认都要求设备需要支持特定的 GPU 特性，以及渲染时的 Shader 需要做一定的适配。</p>
+<p>这两种方案所需要的特性和 Shader 的修改都是为了两个目的：</p>
+<ol>
+<li>可以通过一次渲染同时绘制到左眼和右眼画面上，但绘制时需要区分左右眼的 View Matrix
+<ul>
+<li>Instanced：使用 GPU 的 Instancing 特性来实现，使用 Instance ID 区分左右眼的 View Matrix</li>
+<li>MultiView：依靠 MultiView 拓展<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>，使用其中的 <code>gl_ViewID_OVR</code> 区分左右眼的 View Matrix</li>
+</ul>
+</li>
+<li>在渲染时可以指定渲染目标纹理的 Index
+<ul>
+<li>Instanced：依赖各平台的 GPU 特性来实现，如 DirectX 11 的 <code>VPAndRTArrayIndexFromAnyShaderFeedingRasterizer</code>，OpenGL 的 <code>GL_NV_viewport_array2</code>, <code>GL_AMD_vertex_shader_layer</code>, <code>GL_ARB_shader_viewport_layer_array</code></li>
+<li>MultiView：依靠 MultiView 拓展<sup class="footnote-ref"><a href="#fn1" id="fnref1:1">[1:1]</a></sup>，使用其中的 <code>FramebufferTextureMultiviewOV</code> 来指定渲染目标纹理的 Index</li>
+</ul>
+</li>
+</ol>
+<div class="note info simple"><p>指定渲染目标纹理的 Index 的 Instanced 拓展，如 <code>GL_NV_viewport_array2</code> 等在移动端 OpenGLES 下并不支持，所以在移动端为了实现渲染到目标纹理的不同 Index 的目的，必须依赖 MultiView 拓展。</p>
+</div>
+<div class="note primary simple"><p>Instanced 方案和 MultiView 方案几乎就是同样的实现目标的两种方式，因为特性支持的不同，Instanced 方案在 PC 端的支持更好，而 MultiView 方案在移动端的支持更好。<br>
+为方便描述，后续不再区分 Instanced / Multiview，直接称为 Multiview。</p>
+</div>
+<iframe
+  style="border: 1px solid #ccc; border-radius: 0.5rem;"
+  src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/23b397698b0c69473b7a6664ed736018/raw/90eb5af9ccca84d291408495ba1222510b7d0203/SinglePass-Instanced-MultiView.ins"
+  width="100%"
+  height="500"
+  frameborder="0"
+  allowfullscreen
+></iframe>
+<h1 id="Quad_View"><a class="header-anchor" href="#Quad_View">#</a>Quad-View</h1>
+<p>Quad-View 是一种较新的渲染方式，它是 Foveation Rendering 的一种实现方式，它将左右眼画面进一步拆分为 <code>Inner-Left</code>和 <code>Inner-Right</code>，<code>Outer-Left</code> 和 <code>Outer-Right</code> 四个视图。<code>Outer</code> 画面使用原始的 Fov 进行渲染，<code>Inner</code> 画面则是较小的 FOV，这样即使 <code>Inner</code> 和 <code>Outer</code> 的分辨率相同，<code>Inner</code> 画面也会拥有较高的 PPD（Pixels Per Degree），也因此 <code>Inner</code> 画面会有更高的清晰度。</p>
+<p>下图展现了同一个场景内中，单一眼的 Outer 和 Inner 画面，这里 Outer 的横向 FOV 约为 90°，Inner 的横向 FOV 约为 40°：<br>
+<img src="/stereo_rendering_mode/stereo_rendering_mode_2025-03-28-17-42-27.excalidraw.svg" alt="Outer vs Inner"></p>
+<div class="note primary simple"><p>Quad-Views 通常在支持眼动追踪的设备上使用，Inner 画面的渲染区域由眼动注视的区域来决定。</p>
+</div>
+<p>针对 Quad-View 的四个视图的渲染方式又有两个变种：</p>
+<ul>
+<li><code>Single-Pass</code>：通过 <strong>一个</strong> Array Size 为 4 的纹理数组来表示四个视图，使用 Multview 的方式一次性更新四个视图的画面。</li>
+<li><code>Multi-Pass</code>：通过 <strong>两个</strong> Array Size 为 2 的纹理数组来表示 Inner 的左右眼画面和 Outer 的左右眼画面，使用两次绘制分别更新 Inner 和 Outer 的画面，每次绘制都使用 Multview 的方式来同时更新左右眼画面。</li>
+</ul>
+<div class="note info simple"><p>理论上，QuadViews 还可以有更多的组合方式，如：</p>
+<ul>
+<li>通过 4 个 Texture2D 来表示四个视图，使用 Multi-Pass 的方式通过四个 DrawCall 来更新四个视图的画面。</li>
+<li>使用 2 个 Texture2D 表示 Outer 的左右眼，再使用一个 Array Size 为 2 的 Texture2DArray 表示 Inner 的左右眼。先通过两个 DrawCall 更新左右眼 Outer，再通过一个 DrawCall 更新左右眼 Inner。<br>
+但这些组合方式并没有带来额外的收益，因此这里不进行讨论</li>
+</ul>
+</div>
+<div class="note info simple"><p>在 Unity XR 中，最多支持 ArraySize 为 2 的 <code>Texture2DArray</code>，因此在 Unity 中 Quad-View 只能通过 Multi-Pass 的方式来实现。</p>
+</div>
+<p>Single-Pass 和 Multi-Pass 有各自的好处，也因此这两种方案都有各自适合的场景：</p>
+<ul>
+<li>Single-Pass 方案的性能更好，但它限制所有的视图必须是一样的分辨率。</li>
+<li>Multi-Pass 则是牺牲了一部分性能，却让 Inner 和 Outer 可以有各自的分辨率</li>
+</ul>
+<div class="note info simple"><p>无论 QuadViews 使用 Single-Pass 还是 Multi-Pass，其都依赖 MultiView 渲染相应支持。</p>
+</div>
+<h2 id="Quad_Views_with_Single_Pass"><a class="header-anchor" href="#Quad_Views_with_Single_Pass">#</a>Quad-Views with Single-Pass</h2>
+<p>在 Quad-Views with Single-Pass 模式下，Inner/Outer 针对每个物体通过一次 DrawCall 同时更新到四个 View 中，示意图如下所示：</p>
+<iframe
+  src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/f3d8a451f1491170a37e39f912c18813/raw/12d16fbe47ac54fd1a3fe44fa49db8fe4e1e65ec/Quad-View-SinglePass.ins"
+  width="100%"
+  height="500"
+  frameborder="0"
+  allowfullscreen
+></iframe>
+<h2 id="Quad_Views_with_Multi_Pass"><a class="header-anchor" href="#Quad_Views_with_Multi_Pass">#</a>Quad-Views with Multi-Pass</h2>
+<p>在 Quad-Views with Multi-Pass 下，每一个 DrawCall 会分别将内容绘制到 Outer（或 Inner） 的左右眼画面上，示意图如下所示：</p>
+<iframe
+  src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/ce7259a1aee59f021a0bc809cf69182c/raw/094e5e20d37e4a5f7e1064b1d6276778822b0e0c/QuadView-MultiPass.ins"
+  width="100%"
+  height="500"
+  frameborder="0"
+  allowfullscreen
+></iframe>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://github.com/mbucchia/Quad-Views-Foveated">Quad-Views Foveated</a></p>
+<p><a href="https://docs.unity3d.com/2019.4/Documentation/Manual/SinglePassStereoRendering.html">Single Pass Stereo rendering (Double-Wide rendering)</a></p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a href="https://registry.khronos.org/OpenGL/extensions/OVR/OVR_multiview.txt">OVR_multiview</a> <a href="#fnref1" class="footnote-backref">↩︎</a> <a href="#fnref1:1" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <tags>
+        <tag>Unity</tag>
+        <tag>XR</tag>
+        <tag>Rendering</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Vulkan Tutorial》 笔记 13：Fixed Functions</title>
     <url>/ch_13_fixed_functions/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_13_Fixed_Functions">13_Fixed_Functions</a></p>
