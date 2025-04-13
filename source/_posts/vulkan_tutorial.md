@@ -1,6 +1,6 @@
 ---
 created: 2022-02-17
-updated: 2025-04-12
+updated: 2025-04-13
 tags:
   - Vulkan
 Author:
@@ -34,7 +34,7 @@ title: 《Vulkan Tutorial》 学习笔记汇总
 
 [Ch 08 Window Surface](/ch_08_window_surface)：创建 Surface 用于建立 Vulkan 和 Window 系统之间的连接，Surface 是对于系统中的窗口或显示设备的抽象，应用通过与 Surface 的交互来实现与系统窗口的访问。
 [Ch 09 Swap Chain](/ch_09_swap_chain)：在 Vulkan 中必须显式的创建 Swap Chain。SwapChain 是与 Surface 绑定的数据结构，其包含了多个 Image，应用渲染时会将渲染的结果放置到这些 Image 中，当调用 Present 时，SwapChain 会将这些 Image 通过其与 Surface 绑定，传递给 Surface，Surface 再将这些 Image 显示到平台的窗口或屏幕上。
-Ch 10 Image views
+[Ch 10 Image Views](/ch_10_image_views)
 
 ## Graphics pipeline basics
 
