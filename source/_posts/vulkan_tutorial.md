@@ -34,13 +34,13 @@ title: 《Vulkan Tutorial》 学习笔记汇总
 
 [Ch 08 Window Surface](/ch_08_window_surface)：创建 Surface 用于建立 Vulkan 和 Window 系统之间的连接，Surface 是对于系统中的窗口或显示设备的抽象，应用通过与 Surface 的交互来实现与系统窗口的访问。
 [Ch 09 Swap Chain](/ch_09_swap_chain)：在 Vulkan 中必须显式的创建 Swap Chain。SwapChain 是与 Surface 绑定的数据结构，其包含了多个 Image，应用渲染时会将渲染的结果放置到这些 Image 中，当调用 Present 时，SwapChain 会将这些 Image 通过其与 Surface 绑定，传递给 Surface，Surface 再将这些 Image 显示到平台的窗口或屏幕上。
-[Ch 10 Image Views](/ch_10_image_views)
+[Ch 10 Image Views](/ch_10_image_views)：为了使用在 Swap Chain 最后获取的 VkImage，需要首先创建 VkImageView 对象。该对象作为外部对这个 Image 的 View，即该对象描述了该如何访问 Image，以及需要访问 Image 的哪一部分。
 
 ## Graphics pipeline basics
 
-[Ch 11 Graphics Pipeline Introduction](/ch_11_graphics_pipeline_introduction)
-[Ch 12 Shader Modules](/ch_12_shader_modules)
-Ch 13 Fixed Functions
+[Ch 11 Graphics Pipeline Introduction](/ch_11_graphics_pipeline_introduction)：Vulkan 中需要自己设定图形渲染管线，在一些旧的图形 API 如 OpenGL 中，时可以通过一些函数修改渲染管线的，如通过 `glBlendFunc` 修改管线中对于混合的操作。但在 Vulkan 中管线几乎是完全不变的，因此每当需要修改管线设置，就必须重新创建管线
+[Ch 12 Shader Modules](/ch_12_shader_modules)：VkShaderModule 类用以封装和管理已编译好的着色器代码，本节将说明如何创建 Shader Module，以及如何将其传递给渲染管线的特定阶段。
+[Ch 13 Fixed Functions](/ch_13_fixed_functions)：在这一节中，会设定创建 Pipeline 中除了 Shader Modules 剩下的固定函数的一些操作，如 Viewport Size / Color Blending 模式，这些在 Vulklan 中都需要在创建渲染管线时设定
 Ch 14 Render Passes
 Ch 15 Conclusion
 
