@@ -38,3 +38,7 @@ void HelloTriangleApplication::initVulkan()
 ```
 
 在后续的章节中，我们将逐步完善 `createGraphicsPipeline` 函数，最终实现一个完整的渲染管线。
+- [Ch 12 Shader Modules](/ch_12_shader_modules)：介绍了如何创建和管理 VkShaderModule，即如何将编译好的 SPIR-V 着色器字节码加载到 Vulkan，并封装为 Shader Module。还讲解了如何将 Shader Module 绑定到渲染管线的各个可编程阶段（如顶点和片元着色器）。
+- [Ch 13 Fixed Functions](/ch_13_fixed_functions)：讲解了渲染管线中各类固定功能阶段（Fixed Functions）的配置，包括顶点输入（Vertex Input）、输入装配（Input Assembly）、视口与裁剪（Viewport & Scissor）、光栅化（Rasterization）、多重采样（Multisampling）、颜色混合（Color Blending）、动态状态（Dynamic State）等，以及如何创建和管理 VkPipelineLayout。
+- [Ch 14 Render Passes](/ch_14_render_passes)：介绍了如何创建和配置 VkRenderPass，包括 Attachment、Subpass、Attachment Reference 的设置。Render Pass 用于描述渲染时 Framebuffer 的结构和渲染流程，是管线创建的重要依赖对象。
+- [Ch 15 Conclusion](/ch_15_conclusion)：对前面各章节内容进行了整合，梳理了完整的渲染管线创建流程。总结了 Shader Stage、Fixed Functions、Pipeline Layout、Render Pass 等对象如何协同，最终通过 VkGraphicsPipelineCreateInfo 和 vkCreateGraphicsPipelines 创建出完整的 Graphics Pipeline，并说明了销毁流程。

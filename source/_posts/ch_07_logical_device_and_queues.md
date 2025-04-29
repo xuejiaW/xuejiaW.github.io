@@ -13,6 +13,13 @@ description: 在创建了 Physical Device（VkPhysicalDevice） 后需要建立�
 本部分结果可参考 [07_Logical_Device_Queue](https://github.com/xuejiaW/LearnVulkan/tree/main/_07_Logical_Device_Queue)
 {% endnote %}
 
+
+{% note info %}
+本章涉及到的关键对象如下所示：
+![](/ch_07_logical_device_and_queues/logical_device_and_queues.excalidraw.svg)
+{% endnote %}
+
+
 # 介绍
 
 在创建了 Physical Device（`VkPhysicalDevice`） 后需要建立一个 Logical Device （`VkDevice`）来与之交互。创建 Logical Device 的过程与创建 Instance 类似，都需要描述需要的 Features。在创建 Logical Devices 时还需要指定需要从 Physical Devices 的 Queue Family 中创建多少 Queue。
@@ -20,7 +27,7 @@ description: 在创建了 Physical Device（VkPhysicalDevice） 后需要建立�
 增加成员变量 `VkDevice device` 表示 Logical Device，并封装函数 `createLogicalDevice` 创建 Logical Device。该函数需要在选择了合适的 Physical Device 和 Queue Family 后使用。我们定义类 `LogicalDeviceMgr` 来管理 Logical Device 的创建和销毁，其头文件如下所示：
 ```cpp
 // LogicalDeviceMgr.h
-class LogicDevicesMgr
+class LogicalDeviceMgr
 {
 public:
     void static createLogicalDevice();
@@ -28,7 +35,6 @@ public:
     static VkDevice device;
     static VkQueue graphicsQueue;
 };
-
 ```
 
 在 `HelloTriangleApplication` 的 `initVulkan` 函数中调用 `createLogicalDevice` 函数创建 Logical Device：
@@ -38,7 +44,7 @@ void HelloTriangleApplication::initVulkan()
     createInstance();
     DebugMessengerMgr::setupDebugMessenger(instance);
     PhysicalDevicesMgr::pickPhysicalDevice(instance);
-    LogicDevicesMgr::createLogicalDevice();
+    LogicalDeviceMgr::createLogicalDevice();
 }
 ```
 
@@ -46,7 +52,7 @@ void HelloTriangleApplication::initVulkan()
 ```cpp
 void HelloTriangleApplication::cleanup()
 {
-    LogicDevicesMgr::destroyLogicalDevice();
+    LogicalDeviceMgr::destroyLogicalDevice();
     // ...
 }
 ```
@@ -69,6 +75,10 @@ queueCreateInfo.queueCount = 1;
 queueCreateInfo.pQueuePriorities = &queuePriority;
 ```
 
+{% note primary %}
+如果需要从同一个 Queue Family 创建多个队列，则 `queueCreateInfo.pQueuePriorities` 应为长度为 `queueCount` 的数组，每个队列都需要指定优先级。
+{% endnote %}
+
 # 指定 Device Feature
 
 之后需要创建需要的 Device Feature，如在 [Physical devices and queue families](/ch_06_physical_devices_and_queue_families) 中选择 Physical Device 时一样，可以通过 `vkGetPhysicalDeviceFeatures` 获取。但目前暂时将指明 Feature 的 `VkPhysicalDeviceFeatures` 设定为空，后续真正使用时再修改：
@@ -88,13 +98,14 @@ createInfo.pQueueCreateInfos = &queueCreateInfo;
 createInfo.queueCreateInfoCount = 1;
 createInfo.pEnabledFeatures = &deviceFeatures;
 createInfo.enabledExtensionCount = 0;
+createInfo.ppEnabledExtensionNames = nullptr;
 ```
 
 其中如同创建 Instance 时一样，需要指定 Extensions，但与创建 Instance 时不一样的是，这里的 Extensions 是针对设备而言的。如 `VK_KHR_swapchain` 就是一个设备相关的拓展，但在这一章中暂时不指定拓展，因此将 `enabledExtensionCount` 设为 0。
 
 
 {% note info %}
-在早期的 Vulkan 版本中，创建 VkDevice 时也可以指定 Validation Layer。然而，这种做法已经被逐渐淘汰和弃用。Vulkan 规范现在建议在设备层级不要指定任何自定义 Layer，因为设备层可以从 Instance 的 Layer 中继承，而不必重复定义。因此这里并未处理 `createInfo.enabledLayerCount` 和 `createInfo.ppEnabledExtensionNames` 这两个参数。
+Vulkan 1.0 及之后，创建 VkDevice 时不应再指定 Validation Layer。设备层的 Layer 参数已被废弃，所有 Layer 只在 Instance 层指定即可。因此 `createInfo.enabledLayerCount` 应为 0，`createInfo.ppEnabledLayerNames` 应为 nullptr。
 {% endnote %}
 
 此时可以通过 `vkCreateDevice` 函数创建 Logical Device:
@@ -106,7 +117,18 @@ if (vkCreateDevice(PhysicalDevicesMgr::physicalDevice, &createInfo, nullptr, &de
 }
 ```
 
-# Retrieving queue handles
+# 销毁 Logical Device
+
+销毁 Logical Device 时，所有从该设备创建的对象（包括队列）都会被隐式销毁。销毁函数如下所示：
+
+```cpp
+void LogicalDeviceMgr::destroyLogicalDevice()
+{
+    vkDestroyDevice(device, nullptr);
+}
+```
+
+# 获取 Queue Handle
 
 Queue 在 Logical Device 创建时会被自动创建，但仍需要创建一个 Handle 作为与之交互的接口，即 `LogicalDeviceMgr` 中的 `VkQueue graphicsQueue`。获取 `VkQueue` 的函数如下所示：
 ```cpp

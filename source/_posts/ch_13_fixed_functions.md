@@ -2,7 +2,7 @@
 tags:
   - Vulkan
 created: 2022-08-28
-updated: 2025-04-13
+updated: 2025-04-16
 date: 2025-04-13 20:38
 published: true
 title: 《Vulkan Tutorial》 笔记 13：Fixed Functions
@@ -11,6 +11,11 @@ description: 在这一节中，会设定创建 Pipeline 中除了 Shader Modules
 
 {% note info %}
 本部分结果可参考 [13_Fixed_Functions](https://github.com/xuejiaW/LearnVulkan/tree/main/_13_Fixed_Functions)
+{% endnote %}
+
+{% note info %}
+本章涉及到的关键对象和流程如下所示
+![](/ch_13_fixed_functions/ch_13_fixed_functions.excalidraw.svg)
 {% endnote %}
 
 [Shader Modules](/ch_12_shader_modules) 指定了渲染管线中可编程的Vertex / Fragment 着色器。在这一节中，会设定剩下的固定函数的一些操作，如 Viewport Size / Color Blending 模式，这些在 Vulklan 中都需要在创建渲染管线时设定，而在如 OpenGL 这样较老的图形 API 中，则可以在运行时修改。
@@ -118,7 +123,7 @@ VkPipelineInputAssemblyStateCreateInfo GraphicsPipelineMgr::getInputAssemblyStat
 - `VK_PRIMITIVE_TOPOLOGY_LINE_LIST`:  每两个顶点构成一个直线，即 `ABCD`，会构成 `AB` 和 `CD` 两条线段。
 - `VK_PRIMITIVE_TOPOLOGY_LINE_STRIP`: 每个顶点与前一个顶点构成一条直线，即 `ABC` 会构成 `AB` 和 `BC` 两条线段。
 - `VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST`:  每三个顶点构成一个三角形，即 `ABCDEF`，会构成 `ABC` 和 `DEF` 两个三角形。
-- `VK_PRIMITIVE_TOPOLOGY_LINE_STRIP`: 每个顶点与前两个顶点构成一个三角形，即 `ABCD` 会构成 `ABC` 和 `BCD` 两个三角形
+- `VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP`: 每个顶点与前两个顶点构成一个三角形，即 `ABCD` 会构成 `ABC` 和 `BCD` 两个三角形
 
 `primitiveRestartEnable` 决定是否开启图元重启功能，当设为 `VK_TRUE` 后，当 indices 为 `0xFFFF` 和 `0xFFFFFFFF` 会开始重启。
 
@@ -133,7 +138,8 @@ Viewport 部分如下：
 VkPipelineViewportStateCreateInfo GraphicsPipelineMgr::getViewportStateCreateInfo()
 {
     // ...
-    VkViewport viewport{};
+    // Use static to ensure it persists beyond the function call:
+    static VkViewport viewport{};
     viewport.x = 0.0f;
     viewport.y = 0.0f;
     viewport.width = (float)swapChainExtent.width;
@@ -153,7 +159,8 @@ Scissor 定义部分如下：
 VkPipelineViewportStateCreateInfo GraphicsPipelineMgr::getViewportStateCreateInfo()
 {
     // ...
-    VkRect2D scissor{};
+    // Use static to ensure it persists beyond the function call:
+    static VkRect2D scissor{};
     scissor.offset = { 0,0 };
     scissor.extent = swapChainExtent;
     // ...
@@ -199,14 +206,17 @@ VkPipelineRasterizationStateCreateInfo GraphicsPipelineMgr::getRasterizationStat
 }
 ```
 
- `depthBiasClamp` 表示是否需要将 Discard 的 片段 Clamp 到 near 和 far 平面。这个功能在一些特殊场景，如计算阴影贴图时需要。
+{% note info %}
+`depthClampEnable` 控制是否将超出近平面和远平面的片元深度值 clamp 到合法范围。开启该功能需要物理设备支持。  
+`polygonMode` 设为 `VK_POLYGON_MODE_LINE` 或 `VK_POLYGON_MODE_POINT` 可能需要启用 `fillModeNonSolid` 设备特性，部分硬件仅支持 `VK_POLYGON_MODE_FILL`。
+{% endnote %}
 
 `rasterizerDiscardEnable` 表示所有的几何是否都不需要通过光栅化阶段，如果设为 `VK_TRUE`，基本就不会有任何输出到 Framebuffer。
 
 `polygonMode` 决定怎么根据 Geometry 生成 Fragment，这个数值有以下选项：
 - `VK_POLYGON_MODE_FILL`：用 Fragment 填充整个 Polygon
-- `VK_POLYGON_MODE_LINE`：用 LIne 绘制 Polygon 的边缘
-- `VK_POLYGON_MODE_POINT`：用点绘制 Polygon 的顶点
+- `VK_POLYGON_MODE_LINE`：用 Line 绘制 Polygon 的边缘（部分硬件需要扩展支持）
+- `VK_POLYGON_MODE_POINT`：用点绘制 Polygon 的顶点（部分硬件需要扩展支持）
 
 `cullMode` 用来指定剔除前向面还是背向面，`frontFace` 用来指定怎么样的顶点顺序会被认为是前向面。
 
@@ -268,6 +278,10 @@ VkPipelineColorBlendStateCreateInfo GraphicsPipelineMgr::getColorBlendStateCreat
 }
 ```
 
+{% note primary %}
+如果 `blendEnable = VK_FALSE`，则所有混合相关参数会被忽略，颜色值会直接写入 framebuffer。
+{% endnote %}
+
 其中 `VkPipelineColorBlendAttachmentState` 配置每一个 Attachment 的混合方式，即针对一个 Attachment 中的每一个颜色通道，是否需要进行混合操作，以及混合的方式。
 
 `VkPipelineColorBlendStateCreateInfo` 配置所有 Attachments 全局的混合配置，其中主要通过 `logicOp` 设置的位运算将各 Attachments 结果混合在一起。另外 `blendConstants` 用来配置混合操作的常量值，如果在配置 `VkPipelineColorBlendAttachmentState` 时设置的 Blend Factor 是和常数相关的，如 `VK_BLEND_FACTOR_CONSTANT_COLOR`，则需要在这里配置常量值。
@@ -279,7 +293,8 @@ VkPipelineColorBlendStateCreateInfo GraphicsPipelineMgr::getColorBlendStateCreat
 ```cpp
 VkPipelineDynamicStateCreateInfo GraphicsPipelineMgr::getVKDynamicStateCreateInfo()
 {
-    VkDynamicState dynamicStates[] = {VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_LINE_WIDTH};
+    // Use static to ensure it persists beyond the function call:
+    static VkDynamicState dynamicStates[] = {VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_LINE_WIDTH};
 
     VkPipelineDynamicStateCreateInfo dynamicState{};
     dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
@@ -336,3 +351,4 @@ void HelloTriangleApplication::cleanup()
     // ...
 }
 ```
+
