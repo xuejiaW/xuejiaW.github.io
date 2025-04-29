@@ -13,6 +13,10 @@ description: 选择符合要求的物理设备和 Queue Family，物理设备是
 本部分结果可参考 [06_Physical_Devices_Queue_Families](https://github.com/xuejiaW/LearnVulkan/tree/main/_06_Physical_Devices_Queue_Families)
 {% endnote %}
 
+{% note info %}
+本章涉及到的关键对象如下所示：
+![](/ch_06_physical_devices_and_queue_families/physicaldevices.excalidraw.svg)
+{% endnote %}
 
 # 选择物理设备和 Queue Family
 
@@ -43,7 +47,7 @@ void HelloTriangleApplication::initVulkan()
 对于 Vulkan 而言，可以选择多张适合的显卡并同时使用，但在教程中仅会使用一张。
 {% endnote %}
 
-显卡设备以 `VkPhysicalDevice` 表示，该物体会在 `VkInstance` 销毁时被隐式的卸载，因此不需要在 `cleanup` 中进行额外的删除操作。
+显卡设备以 `VkPhysicalDevice` 表示，该对象会在 `VkInstance` 销毁时被隐式卸载，因此不需要在 `cleanup` 中进行额外的删除操作。
 
 找寻适合的显卡的过程与找寻 Extensions 的过程很接近，通过 `vkEnumeratePhysicalDevices` 函数找寻支持 Vulkan 的显卡列表和数目：
 ```cpp
@@ -76,7 +80,7 @@ void PhysicalDevicesMgr::pickPhysicalDevice(VkInstance instance)
 
 # 检查设备是否合适
 
-对于设备的基础属性，如 `name`，`type` 和支持的 Vulkan 类型都可以通过 `vkGetPhysicalDeviceProperties` 查询。对于设备的可选特性，如纹理压缩，64 bit floats 等则可以通过 `vkGetPhysicalDeviceFeatures` 查询。
+对于设备的基础属性，如 `name`，设备类型和支持的 Vulkan 版本都可以通过 `vkGetPhysicalDeviceProperties` 查询。对于设备的可选特性，如纹理压缩、64 bit floats 等则可以通过 `vkGetPhysicalDeviceFeatures` 查询。
 
 如下，查询设备的基础属性和可选特性后，将独显且支持几何 Shader 的显卡视作为合适显卡：
 ```cpp
@@ -96,9 +100,9 @@ bool PhysicalDevicesMgr::isDeviceSuitable(VkPhysicalDevice device)
 
 # Queue families
 
-Vulkan 中的几乎所有操作，都需要提交指令给 Queue。Vulkan 中存在各种不同类型的队列，如会存在一个 Queue 只允许处理计算的命令，而存在另一个 Queue 只允许内存的传输，再另一个 Queue 可以处理计算和内存传输的命令等。同一种类型的 Queue 会被封装在一个Queue Family 中。
+Vulkan 中的几乎所有操作，都需要提交指令给 Queue。Vulkan 中存在各种不同类型的队列，如只允许处理计算的命令的 Queue，只允许内存传输的 Queue，或可以处理多种命令的 Queue。同一种类型的 Queue 会被封装在一个 Queue Family 中。
 
-首先需要从 Physical Devices 中查询设备支持的 Queue Families 列表，并找出支持想要执行的命令的特定 Queue Family。因为需要寻找的 Queue Family 可能不止一个，因此封装一个结构体表示所有需要的 Queue Family 的 indices，在这一章暂时只有一个表示 graphics 的 queue family 的 index，同时增加函数 `isComplete` 表示是否正确找到了 graphics queue family：
+首先需要从 Physical Device 查询设备支持的 Queue Families 列表，并找出支持想要执行的命令的特定 Queue Family。因为需要寻找的 Queue Family 可能不止一个，因此封装一个结构体表示所有需要的 Queue Family 的 indices，在这一章暂时只有一个表示 graphics 的 queue family 的 index，同时增加函数 `isComplete` 表示是否正确找到了 graphics queue family：
 ```cpp
 struct QueueFamilyIndices
 {
@@ -112,10 +116,9 @@ struct QueueFamilyIndices
 
 函数 `findQueueFamilies` 的作用仅是找寻 Queue，因此即使一个 queue 未找到也不一定是错误发生。这里用 Optional 来表示 Queue Index，因为任何的 Int 值都可能是 Queue Index，用一个 Magic Number 表示未找到的情形并不安全。
 
-如下可定义类 `QueueFamilyMgr` 并封装函数 `findQueueFamilies` 函数获取需要的 Queue Families 的 indices：
+如下可定义类 `QueueFamilyMgr` 并封装函数 `findQueueFamilies` 获取需要的 Queue Families 的 indices：
 
 ```cpp
-
 class QueueFamilyMgr
 {
 public:
@@ -149,9 +152,9 @@ QueueFamilyIndices QueueFamilyMgr::findQueueFamilies(VkPhysicalDevice device)
 }
 ```
 
-其中的 `VkQueueFamilyProperties` 结构体中包含一些关于 Queue Family 的细节，包括支持的 Operations 类型（`queueFlags`）以及可以从这个 Family 中创建出多少个 queue（`queueCount`）。
+`VkQueueFamilyProperties` 结构体中包含一些关于 Queue Family 的细节，包括支持的操作类型（`queueFlags`）以及可以从这个 Family 中创建多少个 queue（`queueCount`）。
 
-此时需要修改 `PhysicalDevicesMgr::isDeviceSuitable` 函数中需要检测找寻到的 QueueFamilyIndices 是否满足需求：
+此时需要修改 `PhysicalDevicesMgr::isDeviceSuitable` 函数，检测找寻到的 QueueFamilyIndices 是否满足需求：
 
 ```cpp
 bool PhysicalDevicesMgr::isDeviceSuitable(VkPhysicalDevice device)
@@ -171,4 +174,4 @@ bool PhysicalDevicesMgr::isDeviceSuitable(VkPhysicalDevice device)
 }
 ```
 
-至此，已经完整的找寻了正确的物理显卡，下一步就是创建合适的逻辑设备与之交互。
+至此，已经完整地找寻了正确的物理显卡，下一步就是创建合适的逻辑设备与之交互。

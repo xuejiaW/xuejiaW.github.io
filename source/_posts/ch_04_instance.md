@@ -13,6 +13,12 @@ description: 对于一个 Vulkan 应用而言，你首先需要通过创建一�
 本部分结果可参考 [04_Instance](https://github.com/xuejiaW/LearnVulkan/tree/main/_04_Instance)
 {% endnote %}
 
+
+{% note info %}
+本章涉及到的关键对象如下所示：
+![](/ch_04_instance/vulkaninstance.excalidraw.svg)
+{% endnote %}
+
 对于一个 Vulkan 应用而言，你首先需要通过创建一个 `instance` 来初始化 Vulkan 库， `instance` 是应用与 Vulkan 库的连接，在创建过程中会有相应的操作告知 Driver 你的应用的一些细节。为创建 Instance，首先在头文件中需要在本节中定义的函数和变量，`createInstance` 用来创建实例并放在 `instance` 中，`checkAvailableExtensions` 用来检查当前系统支持的 Extensions，`checkRequiredGlfwExtensions` 用来检查 GLFW 需要的 Extensions，这两个函数在 `createInstance` 中被调用：
 
  ```cpp
@@ -45,11 +51,11 @@ void HelloTriangleApplication::initVulkan()
 
 # 创建一个 Instance
 
-对一个 Vulkan 程序而言，首先需要创建一个 `instace`，它用来连接应用与 Vulkan 库，同时也会将程序的一些细节指示给驱动。
+对一个 Vulkan 程序而言，首先需要创建一个 `instance`，它用来连接应用与 Vulkan 库，同时也会将程序的一些细节指示给驱动。
 
 创建 Instance 的完整实现如下所示：
 
-```csharp
+```cpp
 void HelloTriangleApplication::createInstance()
 {
     VkApplicationInfo appInfo{};
@@ -82,16 +88,16 @@ void HelloTriangleApplication::createInstance()
 
 其中首先需要创建两个结构体 [VkApplicationInfo](https://registry.khronos.org/vulkan/specs/latest/man/html/VkApplicationInfo.html) 和 [VkInstanceCreateInfo](https://registry.khronos.org/vulkan/specs/latest/man/html/VkInstanceCreateInfo.html)：
 - `VkApplicationInfo`透露了关于应用的一些信息，驱动可以根据这些信息对程序做一些优化，例如其中的 `engine` 告诉驱动该 Vulkan 应用是否有使用游戏引擎，如这里没有使用，因此将其设为 `No Engine`，反之可能是 `Unreal Engine` 或 `Unity` 等。
-- `VkInstanceCrateInfo` 描述了创建 Instance 所需要的信息。
+- `VkInstanceCreateInfo` 描述了创建 Instance 所需要的信息。
     - 因为 Vulkan 本身是一个与平台不相关的接口，因此在 Create Info 中需要描述它所依赖的平台的相关的 Extension（如 Surface），这些 Extension 可以从 GLFW 的接口 `glfwGetRequiredInstanceExtensions` 中获取。
-    - CreateInfo 中的 `enabledLayerCount` 和 `ppEnabledLayerNames` 用来表示启用的 [Validation Layers](/ch_05_validation_layers)，这里暂时不启用，因此将 `enabledLayouCount` 设为 0。
+    - CreateInfo 中的 `enabledLayerCount` 和 `ppEnabledLayerNames` 用来指定启用的 [Validation Layers](/ch_05_validation_layers)，这里暂时不启用，因此将 `enabledLayerCount` 设为 0，并将 ppEnabledLayerNames 设为 nullptr。
 
 {% note info %}
 Vulkan 设计中，许多函数需要的信息都是通过结构体，而不是一系列函数形参。
 {% endnote %}
 
-之后通过 `vkCreateInstance` 函数具体创建了 Instance：
-```csharp
+之后通过 `vkCreateInstance` 函数实际创建 Instance：
+```cpp
 if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS)
 {
 	throw std::runtime_error("failed to create instance!");
@@ -113,22 +119,20 @@ if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS)
 可以通过 `vkEnumerateInstanceExtensionProperties` 函数获取所有支持的 extensions，其中第一个参数为用来过滤 extensions 的 [Validation Layers](/ch_05_validation_layers) 的名称，这里暂不使用，第二个参数为 extensions 的数目，第三个参数为所有 extension 的数据。
 
 使用示例如下所示：
-```csharp
+```cpp
 void HelloTriangleApplication::checkAvailableExtensions(const VkInstanceCreateInfo& createInfo)
 {
+    uint32_t extensionCount = 0;
+    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
+    std::vector<VkExtensionProperties> extensions(extensionCount);
 
-	uint32_t extensionCount = 0;
-	vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
-	std::vector<VkExtensionProperties> extensions(extensionCount);
+    vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
 
-	vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
-
-	std::cout << "available extensions:\n";
-
-	for (const auto& extension : extensions)
-	{
-		std::cout << '\t' << extension.extensionName << std::endl;
-	}
+    std::cout << "available extensions:\n";
+    for (const auto& extension : extensions)
+    {
+        std::cout << '\t' << extension.extensionName << '\n';
+    }
 }
 ```
 
@@ -189,7 +193,7 @@ required extensions:
 
  最后需要处理在应用退出时，销毁创建好 Instance， 该步骤可以通过 `vkDestroyInstance` 函数实现：
 
- ```csharp
+ ```cpp
 void HelloTriangleApplication::cleanup()
 {
     vkDestroyInstance(instance, nullptr);

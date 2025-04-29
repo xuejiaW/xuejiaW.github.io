@@ -13,7 +13,13 @@ description: VkShaderModule 类用以封装和管理已编译好的着色器代�
 本部分结果可参考 [12_Shader_Modules](https://github.com/xuejiaW/LearnVulkan/tree/main/_12_Shader_Modules)
 {% endnote %}
 
-与早期图形 API 不同的是，Vulkan 的 Shader 必须是一个`字节文件（bytecode format）`，而非像 GLSL 或 HLSL 这样可读性高的文本。Vulkan 需要的字节文件类型被称为 `SPIR-V`。
+{% note info %}
+本章涉及到的关键对象和流程如下所示
+![](/ch_12_shader_modules/ch_12_shader_modules.excalidraw.svg)
+{% endnote %}
+
+
+与早期图形 API 不同的是，Vulkan 的 Shader 必须是一个`中间字节码格式（intermediate bytecode format）`，而非像 GLSL 或 HLSL 这样可读性高的文本。Vulkan 需要的字节文件类型被称为 `SPIR-V`。
 
 {% note info %}
 使用字节文件的好处在于，GPU 厂商所制作的将 Shader 转换为 native code 的编译器会简单很多。原先对于 GLSL 这样的文本，每一家 GPU 厂商对于标准的理解可能存在偏差，因此如果在某家 GPU 上能成功运行的某些冷门的 Syntex，很可能在另一家上就无法运行或存在错误效果。
@@ -42,8 +48,8 @@ layout (location = 0) out vec3 fragColor;
 
 vec2 positions[3] = vec2[](
 vec2(0.0, -0.5),
-vec2(0.5, -0.5),
-vec2(-0.5, -0.5)
+vec2(0.5, 0.5),
+vec2(-0.5, 0.5)
 );
 
 vec3 colors[3] = vec3[](
@@ -73,11 +79,11 @@ void main()
 #extension GL_ARB_separate_shader_objects: enable
 
 layout (location = 0) in vec3 fragColor;
-layout (location = 0) out vec4 outCOlor;
+layout (location = 0) out vec4 outColor;
 
 void main()
 {
-    outCOlor = vec4(fragColor, 1.0);
+    outColor = vec4(fragColor, 1.0);
 }
 ```
 

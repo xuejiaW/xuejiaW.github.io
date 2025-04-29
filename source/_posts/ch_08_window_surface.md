@@ -6,38 +6,44 @@ tags:
 date: 2025-04-08
 published: true
 title: 《Vulkan Tutorial》 笔记 08： 窗口 Surface
-description: 因为 Vulkan 是一个平台不相关的 API，所以它无法直接与 Window 操作系统交互。为了建立 Vulkan 和 Window 操作系统之间的连接，就需要使用 `WSI（Window System Integration）` 拓展，其中最关键的就是 Surface。
+description: 因为 Vulkan 是一个平台不相关的 API，所以它无法直接与 Window 操作系统交互。为了建立 Vulkan 和 Window 操作系统之间的连接，就需要使用 `WSI（Window System Integration）` 拓展，其中最关键的就是 Surface。在本节中，会首先创建 Surface，并通过该 Surface 查询可以正确处理 Presentation 的队列族和队列。
 ---
 
 {% note info %}
 本部分结果可参考 [08_Window_Surface](https://github.com/xuejiaW/LearnVulkan/tree/main/_08_Window_Surface)
 {% endnote %}
 
-因为 Vulkan 是一个平台不相关的 API，所以它无法直接与 Window 操作系统交互。为了建立 Vulkan 和 Window 操作系统之间的连接，就需要使用 `WSI（Window System Integration）` 拓展，其中最关键的就是 Surface。
+{% note info %}
+本章涉及到的关键对象和流程如下所示
+![](/ch_08_window_surface/windowsurface.excalidraw.svg)
+{% endnote %}
+
+Vulkan 是一个平台无关的 API，无法直接与操作系统的窗口系统交互。为了实现 Vulkan 与操作系统窗口系统的集成，需要使用 WSI（Window System Integration）相关扩展，其中最核心的是 `VK_KHR_surface`。Surface 是对操作系统窗口系统表面的抽象，允许 Vulkan 呈现图像到屏幕上。
 
 {% note info %}
-Surface 是对于系统中的窗口或显示设备的抽象，应用通过与 Surface 的交互来实现与系统窗口的访问。
+Surface 表示一个可以作为渲染目标的窗口系统，应用通过与 Surface 的交互来访问系统窗口。
+{% endnote %}
+
+在本章中，将介绍如何通过 GLFW 创建 window surface，并修改之前章节中物理设备选择（[物理设备和 Queue Family](/ch_06_physical_devices_and_queue_families/#选择物理设备和_queue_family)）和 [创建 Logical Device](/ch_07_logical_device_and_queues/#创建_logical_device)的过程，通过创建的 Surface 来找寻可以正确处理 presentation 支持的队列族。
+
+{% note info %}
+在图形 API（如 Vulkan、DirectX、OpenGL）中，Presentation 指的是“将渲染结果显示到屏幕上的过程”。
+- 渲染（Rendering）：GPU 负责把你的 3D 场景、模型、纹理等数据，经过一系列计算，最终生成一张图像（通常是帧缓冲区中的一帧）。
+- 呈现（Presentation）：把这张已经渲染好的图像，从 GPU 的帧缓冲区（或交换链中的图像）提交给操作系统的窗口系统，最终显示在用户屏幕上。
 {% endnote %}
 
 
-在这一章会首先讨论 `WSI` 中的 `VK_KHR_surafce`，它定义了 `VkSurfaceKHR` 对象标识用于作为画面的 Surface  的抽象。Window Surface 可以通过 GLFW 获取，它需要在创建了 Instance 后马上被创建，因为它会影响 Physical device 的选择。本章会介绍如何创建 Window Surface，并且修改 Physical device 选择的代码以检查物理设备是否有支持 Presentation 的 Queue family，并在创建 Logical device 时创建 Presentation Queue。
-
 {% note info %}
-Presentation 是指将已渲染的图形图像提交给窗口系统进行显示。这通常包括将图像从 Vulkan 的 GPU 内存转移到可以被显示器读取显示的格式和位置。Presentation 必须与底层的窗口系统集成（WSI），这就需要使用特定的 Vulkan 扩展，比如 VK_KHR_surface 和 VK_KHR_swapchain。这些扩展使 Vulkan 能够与不同的操作系统窗口系统（如 Windows、Linux、Android 等）兼容。
-{% endnote %}
-
-
-{% note info %}
-`VK_KHR_surface`是一个 instance 层面的拓展，在创建 Instance 前就已经通过函数 `glfwGetRequiredInstanceExtensions` 获取到
+`VK_KHR_surface` 是 instance 级扩展。需要在创建 instance 时启用。可以通过 `glfwGetRequiredInstanceExtensions` 获取需要启用的扩展名称列表。
 {% endnote %}
 
 {% note primary %}
-Window surface 在 Vulkan 中实际上是可选的，如果应用纯粹是作为离屏渲染使用，就不再需要创建 Window surface。 在 OpenGL 中 surface 必须被创建，因此纯粹离屏的应用还需要进行创建不可见的 window 这样的 Hack。
+在 Vulkan 中，window surface 是可选的。如果应用仅用于离屏渲染，则无需创建 surface。
 {% endnote %}
 
 # 创建 Window surface
 
-首先定义类 `SurfaceMgr` 用以管理 Surface 的创建和销毁，其中使用类成员 `surface` 来存储创建的 Surface。该类的定义如下：
+首先定义类 `SurfaceMgr` 用于管理 surface 的创建和销毁，surface 句柄类型为 `VkSurfaceKHR`，初始值应为 `VK_NULL_HANDLE`。
 
 ```cpp
 class SurfaceMgr
@@ -52,7 +58,7 @@ public:
 函数实现如下：
 
 ```cpp
-VkSurfaceKHR SurfaceMgr::surface = nullptr;
+VkSurfaceKHR SurfaceMgr::surface = VK_NULL_HANDLE;
 
 void SurfaceMgr::createSurface(VkInstance instance, GLFWwindow* window)
 {
@@ -94,7 +100,7 @@ void HelloTriangleApplication::cleanup()
 ```
 
 {% note info %}
-`glfwCreateWindowSurface` 函数封装了在个平台创建 Surface 的过程。在 Windows 平台下该函数即封装了为 Windows 提供的 `vkCreateWin32SurfaceKHR`。
+`glfwCreateWindowSurface` 函数封装了在各个平台创建 Surface 的过程。在 Windows 平台下该函数即封装了为 Windows 提供的 `vkCreateWin32SurfaceKHR`。
 {% endnote %}
 
 # 找寻支持 Presentation 的物理设备
