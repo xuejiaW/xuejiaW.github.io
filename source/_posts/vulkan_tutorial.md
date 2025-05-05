@@ -1,6 +1,6 @@
 ---
 created: 2022-02-17
-updated: 2025-04-29
+updated: 2025-05-05
 tags:
   - Vulkan
 Author:
@@ -45,9 +45,9 @@ title: 《Vulkan Tutorial》 学习笔记汇总
 
 ## Drawing
 
-Ch 16 Framebuffers
-Ch 17 Command Buffers
-Ch 18 Rendering And Presentation
+[Ch 16 Framebuffers](/ch_16_framebuffers):  创建 FrameBuffer 对象，FrameBuffer 在 Vulkan 中用于封装一组图像视图（如颜色、深度等附件），作为渲染目标，其需要与之前创建的 RenderPass 兼容。
+[Ch 17 Command Buffers](/ch_17_command_buffers)：Vulkan 中的命令（如绘制操作和内存传输）并不是通过函数调用直接执行的。开发者必须将所有想要执行的操作记录（Record）在 Command Buffer 对象中。目前我们已经创建了绘制三角形所需要的绝大部分对象，因此可以开始通过 Command Buffer 来记录绘制三角形的命令了。
+[Ch 18 Rendering And Presentation](/ch_18_rendering_and_presentation)：本章描述了最终渲染三角形和将其显示到屏幕上的过程，在其中需要创建信号量（Semaphore）和栅栏（Fence）实现 CPU 与 GPU 及队列间的同步，确保渲染流程各阶段正确有序地执行和呈现
 
 # Reference
 
