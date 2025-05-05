@@ -2,7 +2,7 @@
 tags:
   - Vulkan
 created: 2022-08-28
-updated: 2025-04-16
+updated: 2025-05-05
 date: 2025-04-13 20:38
 published: true
 title: 《Vulkan Tutorial》 笔记 13：Fixed Functions
