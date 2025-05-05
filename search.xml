@@ -1,6 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>《Vulkan Tutorial》 笔记 18：Rendering And Presentation</title>
+    <url>/ch_18_rendering_and_presentation/</url>
+    <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_18_RenderingAndPresentation">18_RenderingAndPresentation</a></p>
+</div>
+<div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
+<img src="/ch_18_rendering_and_presentation/ch_18_rendering_and_presentation.excalidraw.svg" alt=""></p>
+</div>
+<p>在本章，将结合之前所有章节中创建的 Vulkan Object，并绘制出一个三角形（终于！）。</p>
+<p>在本章节中我们首先会为绘制三角形做最后的准备，创建绘制时需要的同步对象，我们定义类 <code>SyncObjectMgr</code> 并在其中定义 <code>createSyncObjects</code> 函数来创建同步对象，和 <code>destroySyncObjects</code> 函数来销毁同步对象，我们在 <code>HelloTriangleApplication::initVulkan</code> 中调用 <code>createSyncObjects</code> 函数来创建同步对象，并在 <code>cleanup</code> 中调用 <code>destroySyncObjects</code> 函数来销毁同步对象。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::initVulkan</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ....</span></span><br><span class="line">    SyncObjectsMgr::<span class="built_in">createSyncObjects</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::cleanup</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    SyncObjectsMgr::<span class="built_in">destroySyncObjects</span>();</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <code>HelloTriangleApplication</code> 中增加 <code>drawFrame</code> 函数进行绘制，并在 <code>mainLoop</code> 函数中调用它：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::mainLoop</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">glfwPollEvents</span>();</span><br><span class="line">        <span class="built_in">drawFrame</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="同步"><a class="header-anchor" href="#同步">#</a>同步</h2>
+<p>Vulkan 的一个核心设计理念是CPU 与 GPU 上执行操作的同步是显式的。CPU 的各种操作的顺序，是依靠各种 Synchronization Primitives 来控制的。</p>
+<p>在本章节中，许多操作需要我们显式的控制，因为他们本质上是在 GPU 上执行的操作。我们需要在 CPU 上等待 GPU 完成操作，这些操作包括：</p>
+<ul>
+<li>从 Swap Chain 中获取 Image</li>
+<li>执行绘制到获取到的 Image 上的 Commands</li>
+<li>将绘制好的纹理 Present 到屏幕上，并将其返回给 SwapChain</li>
+</ul>
+<p>上述的每一个操作都是通过 CPU 侧单个函数的调用实现的，但这些操作实际上都需要 GPU 侧执行，即函数调用将在实际操作完成前就返回，而且这些异步操作的执行顺序也是未定义的，当某些操作有相互的依赖关系时就需要我们显式的控制它们的执行顺序，这时就是 Synchronization Primitives 发挥作用的时候。</p>
+<h3 id="Semaphore"><a class="header-anchor" href="#Semaphore">#</a>Semaphore</h3>
+<p>Semaphore 是 Vulkan 中的 Synchronization Primitives 的一种，它是一个信号量，表示 GPU 侧的操作是否完成。Semaphore 可用于同步同一队列或不同队列上的操作，确保某些 GPU 操作在其他操作完成后再执行。</p>
+<p>Vulkan 中有两种信号量类型：binary semaphore 和 timeline semaphore。timeline semaphore 仅在 Vulkan 1.2 及以上版本可用，支持更灵活的同步方式。本教程仅使用 binary semaphore。</p>
+<p>一个 binary 信号量要么是 signaled，要么是 unsignaled。signaled 的信号量表示 GPU 侧的操作已经完成，unsignaled 的信号量表示 GPU 侧的操作还没有完成。使用信号量来控制队列操作顺序的方式是：当某个操作完成后，将信号量变为 signaled，另一个操作在执行时需要等待这个信号量变为 signaled 才能执行。</p>
+<p>例如，假设我们有信号量 S 和我们想要按顺序执行的队列操作 A 和 B。我们告诉 Vulkan 操作 A 在完成执行时将信号量 S 置为 signaled，而操作 B 在开始执行之前将“等待”信号量 S 为 signaled。当操作 A 完成时，信号量 S 将被置为 signaled，而操作 B 在 S 被置为 signaled 之前不会开始。操作 B 开始执行后，binary semaphore 会自动变为 unsignaled 状态，从而允许它再次使用。</p>
+<p>伪代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">VkCommandBuffer A, B = ... <span class="comment">// record command buffers</span></span><br><span class="line">VkSemaphore S = ... <span class="comment">// create a semaphore</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// enqueue A, signal S when done - starts executing immediately</span></span><br><span class="line"><span class="built_in">vkQueueSubmit</span>(work: A, signal: S, wait: None)</span><br><span class="line"></span><br><span class="line"><span class="comment">// enqueue B, wait on S to start</span></span><br><span class="line"><span class="built_in">vkQueueSubmit</span>(work: B, signal: None, wait: S)</span><br></pre></td></tr></table></figure>
+<p>注意在上述代码片段中，<code>vkQueueSubmit</code> 函数和 <code>vkQueueSubmit</code> 函数的调用都将立即完成，B 操作的等待是发生在 GPU 上。在 CPU 侧是继续允许而不阻塞的。</p>
+<p>如果要实现 CPU 阻塞的目的，需要另一种 Synchronization Primitives，Fence。</p>
+<h3 id="Fence"><a class="header-anchor" href="#Fence">#</a>Fence</h3>
+<p>Fence 的作用类似于信号量，也是用于同步执行，但它用于决定 CPU 上的操作执行顺序。简单来说，如果 CPU 侧需要知道 GPU 侧的何时完成某些操作，则使用 Fence。</p>
+<p>与信号量类似，fences 处于 Signed 或 unsigned 状态。每当我们提交要执行的操作时，都可以将一个 fence 附加到该操作上。当操作完成时，fence 将被发出信号。然后，我们可以让 CPU 等待该 fence 被发出信号，以确保在 CPU 继续执行之前，GPU 已经完成了所有依赖操作。</p>
+<p>一个实际的例子是截图。假设我们已经在 GPU 上完成了所有的绘制操作。现在需要将图图片从 GPU 转移到 CPU，然后 CPU 将数据从内存保存到文件中。我们有 Command Buffer A 来执行数据传输（Transfer）和 fence F。我们提交 Command Buffer A 和 fence F，然后立即告诉 CPU 等待 F 变为 signed。这里的等待会导致 CPU 的阻塞，直到 Command Buffer A 完成执行。也因为有这个阻塞，当 CPU 进行执行时，说明 GPU 已经完成了绘制和数据传输操作，即 CPU 可以安全的将数据从内存保存至本地文件。</p>
+<p>伪代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">VkCommandBuffer A = ... <span class="comment">// record command buffer</span></span><br><span class="line">VkFence F = ... <span class="comment">// create a fence</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// enqueue A, signal F when done - starts executing immediately</span></span><br><span class="line"><span class="built_in">vkQueueSubmit</span>(work: A, signal: F, wait: None)</span><br><span class="line"></span><br><span class="line"><span class="comment">// wait for F to be signaled</span></span><br><span class="line"><span class="built_in">vkWaitForFences</span>(F) <span class="comment">// blocks CPU until F is signaled</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">save_screenshot_to_disk</span>() <span class="comment">// won&#x27;t run until the transfer is done</span></span><br></pre></td></tr></table></figure>
+<p>Fences 必须手动重置为 unsigned 的状态。这是因为 fences 用于控制 CPU 的执行，因此 CPU 可以决定何时重置 fence。而信号量是在 GPU 上执行的，因此没法由 CPU介入来决定何时重置，因此信号量会在 GPU 上自动重置为 unsigned 的状态。</p>
+<div class="note info simple"><p>总之，semaphore 用于指定 GPU 上操作的执行顺序，而 fence 用于使 CPU 和 GPU 相互同步。binary semaphore 在被等待后自动变为 unsignaled 状态，fence 需要手动重置。</p>
+</div>
+<h3 id="创建同步对象"><a class="header-anchor" href="#创建同步对象">#</a>创建同步对象</h3>
+<p>在我们的案例中，由三个地方需要使用同步对象：</p>
+<ul>
+<li>操作 SwapChain 时：这种情况下需要使用 Semaphore，因为 SwapChain 的处理都在 GPU 中，我们并不想阻塞 CPU。在 SwapChain 的操作时，需要两个 Semaphore
+<ul>
+<li>一个用于等待 SwapChain 中有可用的 Image</li>
+<li>另一个用于等待 GPU 完成绘制操作，告知系统可以将绘制好的 Image Present 到屏幕上。</li>
+</ul>
+</li>
+<li>等待 GPU 完成上一帧的绘制：在这种情况下需要使用 Fence。因为我们想要阻塞 &gt;CPU，避免它在上一帧尚未完成时就提交下一帧的数据。</li>
+</ul>
+<p>因此我们在 <code>SyncObjectMgr</code> 中定义了两个 Semaphore 和一个 Fence。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SyncObjectsMgr</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="type">static</span> VkSemaphore imageAvailableSemaphore;</span><br><span class="line">    <span class="type">static</span> VkSemaphore renderFinishedSemaphore;</span><br><span class="line">    <span class="type">static</span> VkFence inFlightFence;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>createSyncObjects</code> 函数来创建同步对象，其实现如下，代码逻辑比较直观，分别使用 <code>VkSemaphoreCreateInfo</code> 和 <code>VkFenceCreateInfo</code> 来创建 Semaphore 和 Fence 对象，并检查创建是否成功：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">SyncObjectsMgr::createSyncObjects</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    VkSemaphoreCreateInfo semaphoreCreateInfo&#123;&#125;;</span><br><span class="line">    semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;</span><br><span class="line"></span><br><span class="line">    VkFenceCreateInfo fenceCreateInfo&#123;&#125;;</span><br><span class="line">    fenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;</span><br><span class="line">    fenceCreateInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">vkCreateSemaphore</span>(LogicDevicesMgr::device, &amp;semaphoreCreateInfo, <span class="literal">nullptr</span>, &amp;imageAvailableSemaphore) != VK_SUCCESS ||</span><br><span class="line">        <span class="built_in">vkCreateSemaphore</span>(LogicDevicesMgr::device, &amp;semaphoreCreateInfo, <span class="literal">nullptr</span>, &amp;renderFinishedSemaphore) != VK_SUCCESS ||</span><br><span class="line">        <span class="built_in">vkCreateFence</span>(LogicDevicesMgr::device, &amp;fenceCreateInfo, <span class="literal">nullptr</span>, &amp;inFlightFence) != VK_SUCCESS)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> std::<span class="built_in">runtime_error</span>(<span class="string">&quot;failed to create sync objects for a frame&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述调用中使用 <code>VK_FENCE_CREATE_SIGNALED_BIT</code> 表示创建的 Fence 对象默认就处于 signaled 的状态，这样在创建后就可以直接使用它，而不需要在使用前重置它。</p>
+<p>在 <code>destroySyncObjects</code> 函数中销毁 Semaphore 和 Fence 对象：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">SyncObjectsMgr::destroySyncObjects</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vkDestroySemaphore</span>(LogicDevicesMgr::device, imageAvailableSemaphore, <span class="literal">nullptr</span>);</span><br><span class="line">    <span class="built_in">vkDestroySemaphore</span>(LogicDevicesMgr::device, renderFinishedSemaphore, <span class="literal">nullptr</span>);</span><br><span class="line">    <span class="built_in">vkDestroyFence</span>(LogicDevicesMgr::device, inFlightFence, <span class="literal">nullptr</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="绘制"><a class="header-anchor" href="#绘制">#</a>绘制</h2>
+<h3 id="等待上一帧画面绘制完成"><a class="header-anchor" href="#等待上一帧画面绘制完成">#</a>等待上一帧画面绘制完成</h3>
+<p>当我们创建了同步对象后，就可以开始绘制了。在 <code>drawFrame</code> 函数中，首先需要需要等待 GPU 完成上一帧的绘制操作，这时需要使用 Fence 来阻塞 CPU，直到 GPU 完成操作。我们使用 <code>vkWaitForFences</code> 函数来等待 Fence 被 signaled。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::drawFrame</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">vkWaitForFences</span>(LogicDevicesMgr::device, <span class="number">1</span>, &amp;SyncObjectsMgr::inFlightFence, VK_TRUE, UINT64_MAX);</span><br><span class="line">    <span class="comment">// ....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>vkWaitForFences</code> 函数可以传递一系列 Fence 对象用于等待，在这里我们仅等待一个 <code>VkFence</code> 对象。形参中的布尔值表示是否需要等待传入的所有的 <code>VkFence</code> 都被 signaled，<code>UINT64_MAX</code> 表示等待的超时时间，这里我们设置为最大值，表示一直等待。</p>
+<p>当等待所有的 Fence 都 signaled 后，我们需要重置 Fence 的状态为 unsigned，这样才能在下一帧中使用它。我们使用 <code>vkResetFences</code> 函数来重置 Fence 的状态：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::drawFrame</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">vkWaitForFences</span>(LogicDevicesMgr::device, <span class="number">1</span>, &amp;SyncObjectsMgr::inFlightFence, VK_TRUE, UINT64_MAX);</span><br><span class="line">    <span class="built_in">vkResetFences</span>(LogicDevicesMgr::device, <span class="number">1</span>, &amp;SyncObjectsMgr::inFlightFence);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="从_Swap_Chain_中获取_Image"><a class="header-anchor" href="#从_Swap_Chain_中获取_Image">#</a>从 Swap Chain 中获取 Image</h3>
+<p>通过函数 <code>vkAcquireNextImageKHR</code> 来获取 Swap Chain 中的 Image：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::drawFrame</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="type">uint32_t</span> imageIndex = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">vkAcquireNextImageKHR</span>(LogicDevicesMgr::device, SwapChainMgr::swapChain, UINT64_MAX, SyncObjectsMgr::imageAvailableSemaphore, VK_NULL_HANDLE,</span><br><span class="line">                          &amp;imageIndex);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<ul>
+<li><code>LogicDevicesMgr::device</code> 是逻辑设备的句柄</li>
+<li><code>SwapChainMgr::swapChain</code> 是 Swap Chain 的句柄</li>
+<li>
+<ul>
+<li><code>UINT64_MAX</code> 表示等待的超时时间，这里我们设置为最大值，表示一直等待。</li>
+</ul>
+</li>
+<li><code>SyncObjectsMgr::imageAvailableSemaphore</code> 是用于等待 GPU 完成绘制操作的 Semaphore 对象</li>
+<li><code>VK_NULL_HANDLE</code> 表示不需要使用 Fence 来等待 GPU 完成操作</li>
+<li><code>imageIndex</code> 是一个输出参数，表示当前可用的 Image 的索引值。</li>
+</ul>
+<h4 id="记录_Comamnd_Buffer"><a class="header-anchor" href="#记录_Comamnd_Buffer">#</a>记录 Comamnd Buffer</h4>
+<p>当获取到可以绘制的 Image 后，就可以开始准备绘制的 Command Buffer。首先需要调用 <code>vkResetCommandBuffer</code> 函数来重置 Command Buffer 的状态，然后通过我们在 <a href="/ch_17_command_buffers">Ch 17 Command Buffers</a> 中定义的函数 <code>recordCommandBuffer</code> 来记录绘制的命令。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::drawFrame</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="built_in">vkResetCommandBuffer</span>(CommandBuffersMgr::commandBuffer, <span class="comment">/*VkCommandBufferResetFlagBits*/</span> <span class="number">0</span>);</span><br><span class="line">    <span class="built_in">recordCommandBuffer</span>(CommandBuffersMgr::commandBuffer, imageIndex);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="提交_CommandBuffer"><a class="header-anchor" href="#提交_CommandBuffer">#</a>提交 CommandBuffer</h3>
+<p>提交 Command Buffer 的操作是通过 <code>vkQueueSubmit</code> 函数，其完整的相关调用如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::drawFrame</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    VkSubmitInfo submitInfo&#123;&#125;;</span><br><span class="line">    submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;</span><br><span class="line"></span><br><span class="line">    VkSemaphore waitSemaphores[] = &#123;SyncObjectsMgr::imageAvailableSemaphore&#125;;</span><br><span class="line">    VkPipelineStageFlags waitStages[] = &#123;VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT&#125;;</span><br><span class="line">    submitInfo.waitSemaphoreCount = <span class="number">1</span>;</span><br><span class="line">    submitInfo.pWaitSemaphores = waitSemaphores;</span><br><span class="line">    submitInfo.pWaitDstStageMask = waitStages;</span><br><span class="line">    submitInfo.commandBufferCount = <span class="number">1</span>;</span><br><span class="line">    submitInfo.pCommandBuffers = &amp;CommandBuffersMgr::commandBuffer;</span><br><span class="line"></span><br><span class="line">    VkSemaphore signalSemaphores[] = &#123;SyncObjectsMgr::renderFinishedSemaphore&#125;;</span><br><span class="line">    submitInfo.signalSemaphoreCount = <span class="number">1</span>;</span><br><span class="line">    submitInfo.pSignalSemaphores = signalSemaphores;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">vkQueueSubmit</span>(LogicDevicesMgr::graphicsQueue, <span class="number">1</span>, &amp;submitInfo, SyncObjectsMgr::inFlightFence) != VK_SUCCESS)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> std::<span class="built_in">runtime_error</span>(<span class="string">&quot;failed to submit draw command buffer!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>pWaitSemaphores</code> 和 <code>pWaitDstStageMask</code> 分别表示 Semaphore 和 Pipeline Stage 的数组，他们之间存在相互绑定的关系，即 Stage 中 Index 为 n 的元素要执行，必须等待 Semaphores 中 Index 为 n 的信号量被 signaled。</p>
+<p>如在本例中，要执行 <code>VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT</code> 阶段的操作，必须等待 <code>SyncObjectsMgr::imageAvailableSemaphore</code> 信号量被 signaled。</p>
+<div class="note info simple"><p>这里等待 <code>SyncObjectsMgr::imageAvailableSemaphore</code> 的阶段是 <code>VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT</code>，表示在 Color Attachment 输出阶段等待信号量被 signaled。<br>
+这也意味着，即使 Image 尚未获取到，诸如 Vertex Shader 这样与 Color Attachment 输出无关的阶段也会被执行。</p>
+</div>
+<p>然后的 <code>pCommandBuffers</code> 表示需要被提交的 Command Buffer 数组。</p>
+<p>最后的 <code>pSignalSemaphores</code> 表示在提交的 Command Buffer 被执行完成后，需要被 signaled 的 Semaphore 数组。</p>
+<h3 id="Subpass_依赖"><a class="header-anchor" href="#Subpass_依赖">#</a>Subpass 依赖</h3>
+<p>在 <a href="/ch_14_render_passes">Ch 14 Render Passes</a> 中我们有定义 过 Render Pass 的 Subpass，但当时我们并没有指定 Subpass 之间的依赖关系。</p>
+<p>目前我们需要开始绘制了，因此需要定义绘制管线中，每个阶段的依赖关系。</p>
+<p>Subpass 之间的依赖关系是通过 <code>VkSubpassDependency</code> 来定义的。</p>
+<p>目前我们只有一个 SubPass，即用于绘制的 SubPass。但整个 Render Pass 在绘制前和绘制后，还有隐式依赖的 SubPass。</p>
+<p>我们在 <code>GraphicsPepelineMgr::createRenderPass</code> 中需补充的关于 Subpass 依赖的代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GraphicsPipelineMgr::createRenderPass</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    VkSubpassDependency dependency&#123;&#125;;</span><br><span class="line">    dependency.srcSubpass = VK_SUBPASS_EXTERNAL;</span><br><span class="line">    dependency.dstSubpass = <span class="number">0</span>;</span><br><span class="line">    dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;</span><br><span class="line">    dependency.srcAccessMask = <span class="number">0</span>;</span><br><span class="line">    dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;</span><br><span class="line">    dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    renderPassInfo.dependencyCount = <span class="number">1</span>;</span><br><span class="line">    renderPassInfo.pDependencies = &amp;dependency;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中关键的就是定义 <code>VkSubpassDependency</code> 结构体，其中：</p>
+<ul>
+<li><code>srcSubpass</code> 和 <code>dstSubpass</code> 分别表示依赖的 Subpass 的索引值，其中 <code>dstSubpass</code> 依赖于 <code>srcSubpass</code>。在这里 <code>VK_SUBPASS_EXTERNAL</code> 表示依赖的是 Render Pass 外隐式的 Subpass，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span> 表示当前的 Subpass。</li>
+<li><code>srcStageMask</code> 和 <code>dstStageMask</code> 分别表示依赖的两个 Subpass 的 Stage Mask，即 <code>dstSubpass</code> 的 B Stage 依赖于 <code>srcSubpass</code> 的 A Stage 完成。<code>srcAccessMask</code> 和 <code>dstAccessMask</code> 分别表示依赖的两个 Subpass 的 Access Mask，即 <code>dstSubpass</code> 的 B Stage 依赖于 <code>srcSubpass</code> 的 A Stage 完成，并且 <code>dstSubpass</code> 的 B Stage 需要访问 <code>srcSubpass</code> 的 A Stage 中的资源。
+<ul>
+<li>这里 <code>srcAccessMask</code> 设置为 0，表示 <code>srcSubpass</code> 中没有要同步的内存访问。</li>
+</ul>
+</li>
+</ul>
+<div class="note info simple"><p>何为“内存访问同步”？<br>
+内存访问同步指的是：为了保证后一个操作能安全地访问某块内存，需要等待前一个操作对这块内存的访问完成。<br>
+在前面的案例中，<code>srcAccessMask</code> 设置为 0，表示 <code>srcSubpass</code> 阶段没有需要同步的内存访问，也就是说 <code>dstSubpass</code> 阶段不关心 <code>srcSubpass</code> 是否读完或写完内存。</p>
+<ul>
+<li><strong>有需要同步的内存访问</strong>：前面有人在写/读内存，后面的操作必须等他们写/读完才能继续。</li>
+<li><strong>没有需要同步的内存访问</strong>：前面没人动这块内存，后面的操作可以直接用，不用等。</li>
+</ul>
+</div>
+<h3 id="Presnetation"><a class="header-anchor" href="#Presnetation">#</a>Presnetation</h3>
+<p>当定义好了 Subpass 之间的依赖关系后，就可以设定绘制完成后如何将 Image Present 到屏幕上了并将绘制完的 Image 返回给 SwapChain。通过 <code>vkQueuePresentKHR</code> 函数来实现 Presentation：</p>
+<p>其完整代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::drawFrame</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    VkPresentInfoKHR presentInfo&#123;&#125;;</span><br><span class="line">    presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;</span><br><span class="line"></span><br><span class="line">    presentInfo.waitSemaphoreCount = <span class="number">1</span>;</span><br><span class="line">    presentInfo.pWaitSemaphores = signalSemaphores;</span><br><span class="line"></span><br><span class="line">    VkSwapchainKHR swapChains[] = &#123;SwapChainMgr::swapChain&#125;;</span><br><span class="line">    presentInfo.swapchainCount = <span class="number">1</span>;</span><br><span class="line">    presentInfo.pSwapchains = swapChains;</span><br><span class="line">    presentInfo.pImageIndices = &amp;imageIndex;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vkQueuePresentKHR</span>(LogicDevicesMgr::graphicsQueue, &amp;presentInfo);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的实现还是相对直观的，我们需要等待 <code>signalSemaphores</code> (即定义的 <code>SyncObjectsMgr::renderFinishedSemaphore</code> )被 signaled，然后将 <code>imageIndex</code> 中的 Image Present 到 <code>SwapChainMgr::swapChain</code> 中。</p>
+<p>至此，当运行代码后，应当可以看到绘制出了一个三角形：</p>
+<p><img src="/ch_18_rendering_and_presentation/2025-04-23-23-10-13.png" alt=""></p>
+<p>只不过在退出应用后， Validation Layer 会提示我们 <code>vkDestroySemaphore</code> 的调用失败了：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">validation layer:Validation Error: [ VUID-vkDestroySemaphore-semaphore-05149 ] | MessageID = 0x93e24db1 | vkDestroySemaphore(): can&#x27;t be called on VkSemaphore 0xd175b40000000013[] that is currently in use by VkQueue 0x21a1dd8e680[].</span><br></pre></td></tr></table></figure>
+<p>这是因为 <code>drawFrame</code> 的操作是异步的，当程序退出并尝试 Clear 时，一些信号量仍然在 GPU 中处于等待状态，因此是不能被销毁的。</p>
+<p>为了解决这个问题，我们可以在 <code>mainLoop</code> 正式退出前，通过函数 <code>vkDeviceWaitIdle</code> 等待 Logic Device 完成了所有操作：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::mainLoop</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">glfwPollEvents</span>();</span><br><span class="line">        <span class="built_in">drawFrame</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vkDeviceWaitIdle</span>(LogicDevicesMgr::device);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+]]></content>
+      <tags>
+        <tag>Vulkan</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Vulkan Tutorial》 笔记 17：Command Buffers</title>
+    <url>/ch_17_command_buffers/</url>
+    <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_17_CommandBuffers">17_CommandBuffers</a></p>
+</div>
+<div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
+<img src="/ch_17_command_buffers/ch_17_command_buffers.excalidraw.svg" alt=""></p>
+</div>
+<p>Vulkan 中的命令（如绘制操作和内存传输）并不是通过函数调用直接执行的。开发者必须将所有想要执行的操作记录（Record）在 Command Buffer 对象中。</p>
+<p>这样做的好处是，当开发者准备好告诉 Vulkan 我们想要做什么时，所有的命令都可以一起提交，Vulkan 可以更有效地处理这些命令，因为 Vulkan 知道所有命令的上下文。Vulkan 允许在多个线程中记录命令，这样可以充分利用多核 CPU 的优势。</p>
+<p>目前我们已经创建了绘制三角形所需要的绝大部分对象，因此可以开始通过 Command Buffer 来记录绘制三角形的命令了。</p>
+<div class="note info simple"><p>记录命令（Record Commands）指的是将 Command Buffer 中的命令写入到 Command Buffer 对象中。提交命令（Submit Commands）指的是将 Command Buffer 中的命令提交给 GPU 执行。</p>
+</div>
+<h2 id="Command_Pools"><a class="header-anchor" href="#Command_Pools">#</a>Command Pools</h2>
+<p>在创建 Command Buffers 之前，我们必须先创建一个 Command Pool。Command Pool 管理用于存储 Command Buffer 的内存，即 Command Buffer 是从 Command Pool 中分配的。</p>
+<p>定义类 <code>CommandBuffersMgr</code>，并在其中定义成员变量 <code>VkCommandPool commandPool</code> 和两个函数 <code>createCommandPool</code> 和 <code>destroyCommandPool</code>，分别用于创建和销毁 Command Pool。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CommandBuffersMgr</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">createCommandPool</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">destroyCommandPool</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="type">static</span> VkCommandPool commandPool;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>createCommandPool</code> 函数的实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">CommandBuffersMgr::createCommandPool</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> indices = QueueFamilyMgr::<span class="built_in">findQueueFamilies</span>(PhysicalDevicesMgr::physicalDevice);</span><br><span class="line">    VkCommandPoolCreateInfo poolInfo&#123;&#125;;</span><br><span class="line">    poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;</span><br><span class="line">    poolInfo.queueFamilyIndex = indices.graphicsFamily.<span class="built_in">value</span>();</span><br><span class="line">    poolInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">vkCreateCommandPool</span>(LogicDevicesMgr::device, &amp;poolInfo, <span class="literal">nullptr</span>, &amp;commandPool) != VK_SUCCESS)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> std::<span class="built_in">runtime_error</span>(<span class="string">&quot;failed to create command pool!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建 Command Pool 时需要指定 <code>queueFamilyIndex</code>，即每个 Command Pool 只能分配提交到特定 Queue Family 的 Command Buffer，这样设计的原因是：</p>
+<ul>
+<li>不同的 Queue Family 可能有不同的内存访问特性，而将 Command Pool 与 Queue Family 允许驱动程序做出更好的内存分配决策。</li>
+<li>不同的 Queue Family 代表不同的硬件功能单元，Command Pool 与特定 Queue Family 关联确保命令使用正确的硬件单元</li>
+</ul>
+<p>在这里我们需要绘制三角形，因此我们需要使用 <code>graphicsFamily</code>，即图形命令队列的 Queue Family。</p>
+<p>创建 Command Pool 时指定的 <code>flags</code>（类型为 <code>VK_COMMAND_POOL_CREATE</code>），有两个可选项：</p>
+<ul>
+<li><code>VK_COMMAND_POOL_CREATE_TRANSIENT_BIT</code>：<strong>性能提示</strong> 标志位，表示从 Pool 中分配的 Command Buffer 需要频繁的被变换。当这个标志被设置时，驱动对 Command Buffer 的的内存分配策略可能会：
+<ul>
+<li>使用更快，但生命周期较短的的内存分配器来分配 Command Buffer 的内存</li>
+<li>可能会优先考虑写入速度而不是读取速度</li>
+<li>可能不会对 Command Buffer 做额外的优化（因为内容很快会被覆盖）</li>
+</ul>
+</li>
+<li><code>VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT</code>：<strong>行为控制</strong> 标志位，表示 Command Buffer 可以被重置（reset），即 Command Buffer 的内容可以被清除并重新使用。如果这个标志位未被置上，则必须要 Reset 整个 Command Pool 实现重置 Command Buffer 的效果。</li>
+</ul>
+<div class="note info simple"><p>Command Pool 销毁时，会自动释放从该 Pool 分配的所有 Command Buffer，无需手动销毁 Command Buffer。</p>
+</div>
+<h2 id="分配_Command_buffer"><a class="header-anchor" href="#分配_Command_buffer">#</a>分配 Command buffer</h2>
+<p>在 <code>CommandBuffersMgr</code> 中增加成员变量 <code>VkCommandBuffer commandBuffer</code>，用于存储 Command Buffer 的句柄和函数 <code>createCommandBuffer</code>，用于创建 Command Buffer。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CommandBuffersMgr</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">createCommandBuffer</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="type">static</span> VkCommandBuffer commandBuffer;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<div class="note info simple"><p>因为 Command Buffer 将在其 Command Pool 被销毁时自动释放，因此我们不需要定义显式的 <code>destroyCommandBuffer</code> 函数。</p>
+</div>
+<p><code>createCommandBuffer</code> 函数的实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">CommandBuffersMgr::createCommandBuffer</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    VkCommandBufferAllocateInfo allocInfo&#123;&#125;;</span><br><span class="line">    allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;</span><br><span class="line">    allocInfo.commandPool = commandPool;</span><br><span class="line">    allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;</span><br><span class="line">    allocInfo.commandBufferCount = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">vkAllocateCommandBuffers</span>(LogicDevicesMgr::device, &amp;allocInfo, &amp;commandBuffer) != VK_SUCCESS)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> std::<span class="built_in">runtime_error</span>(<span class="string">&quot;failed to allocate command buffer!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>level</code> 变量指定 Command Buffer 的类型，分为两种：</p>
+<ul>
+<li><code>VK_COMMAND_BUFFER_LEVEL_PRIMARY</code>：主 Command Buffer，可以被提交到 Queue 上执行</li>
+<li><code>VK_COMMAND_BUFFER_LEVEL_SECONDARY</code>：次 Command Buffer，不能被提交到 Queue 上执行，只能被主 Command Buffer 调用</li>
+</ul>
+<div class="note info simple"><p>主命令缓冲区和次命令缓冲区的区别在于主命令缓冲区可以直接提交到队列上执行，而次命令缓冲区不能直接提交到队列上执行，只能被主命令缓冲区调用。<br>
+之所以需要次级命令缓冲区，是因为它们可以被多个主命令缓冲区共享，从而减少内存使用和 CPU 开销。也可以让主命令缓冲区可以根据条件决定是否执行特定的次级命令缓冲区，实现复杂的条件渲染逻辑。</p>
+</div>
+<h2 id="记录命令"><a class="header-anchor" href="#记录命令">#</a>记录命令</h2>
+<p>最后在 <code>HelloTriangleApplication</code> 中增加函数 <code>recordCommandBuffer</code>，用于记录绘制指令至 Command Buffer 中。函数的整体实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::recordCommandBuffer</span><span class="params">(VkCommandBuffer commandBuffer, <span class="type">uint32_t</span> imageIndex)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    VkCommandBufferBeginInfo beginInfo&#123;&#125;;</span><br><span class="line">    beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;</span><br><span class="line">    beginInfo.flags = <span class="number">0</span>;</span><br><span class="line">    beginInfo.pInheritanceInfo = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">vkBeginCommandBuffer</span>(commandBuffer, &amp;beginInfo) != VK_SUCCESS)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> std::<span class="built_in">runtime_error</span>(<span class="string">&quot;Failed to begin recording command buffer!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    VkRenderPassBeginInfo renderPassInfo&#123;&#125;;</span><br><span class="line">    renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;</span><br><span class="line">    renderPassInfo.renderPass = GraphicsPipelineMgr::renderPass;</span><br><span class="line">    renderPassInfo.framebuffer = FrameBuffersMgr::swapChainFramebuffers[imageIndex];</span><br><span class="line">    renderPassInfo.renderArea.offset = &#123;<span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    renderPassInfo.renderArea.extent = SwapChainMgr::imageExtent;</span><br><span class="line"></span><br><span class="line">    VkClearValue clearValue&#123;&#123;&#123;<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>&#125;&#125;&#125;;</span><br><span class="line">    renderPassInfo.clearValueCount = <span class="number">1</span>;</span><br><span class="line">    renderPassInfo.pClearValues = &amp;clearValue;</span><br><span class="line">    <span class="built_in">vkCmdBeginRenderPass</span>(commandBuffer, &amp;renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vkCmdBindPipeline</span>(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, GraphicsPipelineMgr::graphicsPipeline);</span><br><span class="line">    VkViewport viewport&#123;&#125;;</span><br><span class="line">    viewport.x = <span class="number">0.0f</span>;</span><br><span class="line">    viewport.y = <span class="number">0.0f</span>;</span><br><span class="line">    viewport.width = <span class="built_in">static_cast</span>&lt;<span class="type">float</span>&gt;(SwapChainMgr::imageExtent.width);</span><br><span class="line">    viewport.height = <span class="built_in">static_cast</span>&lt;<span class="type">float</span>&gt;(SwapChainMgr::imageExtent.height);</span><br><span class="line">    viewport.minDepth = <span class="number">0.0f</span>;</span><br><span class="line">    viewport.maxDepth = <span class="number">1.0f</span>;</span><br><span class="line">    <span class="built_in">vkCmdSetViewport</span>(commandBuffer, <span class="number">0</span>, <span class="number">1</span>, &amp;viewport);</span><br><span class="line"></span><br><span class="line">    VkRect2D scissor&#123;&#125;;</span><br><span class="line">    scissor.offset = &#123;<span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line">    scissor.extent = SwapChainMgr::imageExtent;</span><br><span class="line">    <span class="built_in">vkCmdSetScissor</span>(commandBuffer, <span class="number">0</span>, <span class="number">1</span>, &amp;scissor);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vkCmdDraw</span>(commandBuffer, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vkCmdEndRenderPass</span>(commandBuffer);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">vkEndCommandBuffer</span>(commandBuffer) != VK_SUCCESS)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">throw</span> std::<span class="built_in">runtime_error</span>(<span class="string">&quot;Failed to record command buffer!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>VkBeginCommandBuffer</code>，<code>vkCmdBeginRenderPass</code> 、<code>vkCmdBindPipeline</code>、 <code>vkCmdDraw</code>和 <code>vkCmdEndRenderPass</code> 和 <code>vkEndCommandBuffer</code> 是关键的周期函数，他们的作用分别是：</p>
+<ul>
+<li><code>vkBeginCommandBuffer</code>：开始记录 Command Buffer</li>
+<li><code>vkCmdBeginRenderPass</code>：开始渲染 Pass</li>
+<li><code>vkCmdBindPipeline</code>：绑定图形管线</li>
+<li><code>vkCmdDraw</code>：绘制命令</li>
+<li><code>vkCmdEndRenderPass</code>：结束渲染 Pass</li>
+<li><code>vkEndCommandBuffer</code>：结束记录 Command Buffer</li>
+</ul>
+<p>在 <code>vkBeginCommandBuffer</code> 和 <code>vkEndCommandBuffer</code> 中的所有需要被记录至 Command Buffer 中的命令都以 <code>vkCmd</code> 开头，且这些函数都返回 <code>void</code> 类型的值。</p>
+<p>这里之所以需要调用 <code>vkCmdSetViewport</code> 和 <code>vkCmdSetScissor</code> 函数，是因为我们在 <a href="/ch_13_fixed_functions/#dynamic_state">Dynamic State</a> 中指定了 <code>VK_DYNAMIC_STATE_VIEWPORT</code> 和 <code>VK_DYNAMIC_STATE_SCISSOR</code>，表示我们需要在每次绘制时都设置 Viewport 和 Scissor。</p>
+<h3 id="开始_Command_Buffer"><a class="header-anchor" href="#开始_Command_Buffer">#</a>开始 Command Buffer</h3>
+<p>通过函数 <code>vkBeginCommandBuffer</code> 开始记录 Command Buffer。函数的参数 <code>VkCommandBufferBeginInfo</code> 结构体中有两个重要的成员变量：</p>
+<ul>
+<li><code>flags</code>：指定 Command Buffer 的行为，分为以下几种：
+<ul>
+<li><code>VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT</code>：表示 Command Buffer 只会被提交一次，并在提交后不会重复使用。</li>
+<li><code>VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT</code>：表示 Command Buffer 是仅在 Render Pass 中被使用的次级 Command Buffer。</li>
+<li><code>VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT</code>：表示 Command Buffer 可以在仍处于执行状态时，被再次提交</li>
+</ul>
+</li>
+<li><code>pInheritanceInfo</code>：指定 Command Buffer 的继承信息，只有在 <code>VK_COMMAND_BUFFER_LEVEL_SECONDARY</code> 时才需要使用。可以指定 Command Buffer 的父级 Command Buffer 和渲染 Pass 的信息。</li>
+</ul>
+<p>当调用 <code>vkBeginCommandBuffer</code> 函数时，如果 Command Buffer 至今被 Record 过，即之前已经调用过vkBeginCommandBuffer和vkEndCommandBuffer），那么再次调用vkBeginCommandBuffer会自动重置这个命令缓冲区，清除其中所有之前记录的命令。</p>
+<h3 id="开始_Render_Pass"><a class="header-anchor" href="#开始_Render_Pass">#</a>开始 Render Pass</h3>
+<p><code>vkCmdBeginRenderPass</code> 函数用于开始一个 Render Pass。函数的参数 <code>VkRenderPassBeginInfo</code> 结构体中有几个重要的成员变量：</p>
+<ul>
+<li><code>renderPass</code>：指定 Render Pass 的句柄</li>
+<li><code>framebuffer</code>：指定 Framebuffer 的句柄</li>
+<li><code>renderArea</code>：指定 Render Pass 的渲染区域</li>
+<li><code>clearValueCount</code>：指定清除颜色的数量</li>
+<li><code>pClearValues</code>：指定清除颜色的值</li>
+</ul>
+<p>对于 <code>vkCmdBeginRenderPass</code> 的最后一个形参 <code>VkSubpassContents</code> 表示在 Render Pass 中，Drawing Command 将如何被记录：</p>
+<ul>
+<li><code>VK_SUBPASS_CONTENTS_INLINE</code>：表示 Drawing Command 将被记录在 Primary Command Buffer 中</li>
+<li><code>VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS</code>：表示 Drawing Command 是记录在 Secondary Command Buffer 中</li>
+</ul>
+<p>之所以需要有 <code>VkSubpassContents</code> 是因为这样声明 Command 的来源，驱动可以做出更好的优化决策：</p>
+<ul>
+<li>当使用 <code>VK_SUBPASS_CONTENTS_INLINE</code> 时，驱动知道所有命令都在同一缓冲区中</li>
+<li>当使用 <code>VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS</code> 时，驱动知道需要处理命令缓冲区切换</li>
+</ul>
+<h3 id="基本渲染命令"><a class="header-anchor" href="#基本渲染命令">#</a>基本渲染命令</h3>
+<p>在绘制前，首先需要通过 <code>vkCmdBindPipeline</code> 函数绑定图形管线，其中的参数 <code>VkPipelineBindPoint</code> 指定管线的类型，这里选为 <code>VK_PIPELINE_BIND_POINT_GRAPHICS</code>，表示绑定图形管线。</p>
+<p>然后需要使用 <code>vkCmdSetViewport</code> 和 <code>vkCmdSetScissor</code> 函数设置视口和裁剪区域。视口和裁剪区域的设置是为了告诉 Vulkan 如何将渲染结果映射到屏幕上。</p>
+<p>之所以这里需要设置 Viewport 和 Scissor，是因为我们在 <a href="/ch_13_fixed_functions/#dynamic_state">Dynamic State</a> 中指定了 <code>VK_DYNAMIC_STATE_VIEWPORT</code> 和 <code>VK_DYNAMIC_STATE_SCISSOR</code>，表示我们需要在每次绘制时都设置 Viewport 和 Scissor。</p>
+<p>然后我们调用 <code>vkCmdDraw</code> 函数绘制三角形，其中的参数 <code>3</code> 表示绘制 3 个顶点，<code>1</code> 表示绘制 1 个实例，<code>0</code> 表示从第 0 个顶点开始绘制，<code>0</code> 表示从第 0 个实例开始绘制。</p>
+<h3 id="结束设置"><a class="header-anchor" href="#结束设置">#</a>结束设置</h3>
+<p>最后通过 <code>vkCmdEndRenderPass</code> 函数结束 Render Pass，并最后通过 <code>vkEndCommandBuffer</code> 函数结束 Command Buffer 的记录，即表示 Command Buffer 准备完成。</p>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+]]></content>
+      <tags>
+        <tag>Vulkan</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Vulkan Tutorial》 笔记 16：FrameBuffers</title>
+    <url>/ch_16_framebuffers/</url>
+    <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_16_FrameBuffers">16_FrameBuffers</a></p>
+</div>
+<div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
+<img src="/ch_16_framebuffers/ch_16_framebuffers.excalidraw.svg" alt=""></p>
+</div>
+<p>在 <a href="/ch_14_render_passes">Ch 14 Render Passes</a> 中我们已经创建了一个有着和 <code>swapChainImageFormat</code> 一样格式的 <code>colorAttachment</code> 的 <code>RenderPass</code>。</p>
+<p>现在我们需要创建一个与和这个 <code>RenderPass</code> 所兼容的 <code>FrameBuffer</code>。Framebuffer 是一个包含了多个图像的集合，这些图像可以是颜色、深度或模板缓冲区。在我们的案例中，目前只有一个 Color Attachment。</p>
+<div class="note info simple"><p>RenderPass 和 Framebuffer 是 <strong>兼容</strong> 的关系。在后续部分，你会看到在创建 <code>Framebuffer</code> 时需要传入 <code>RenderPass</code> 的句柄。这个 <code>RenderPass</code> 只是用来验证 <code>Framebuffer</code> 中的 Attachment 是否和 <code>RenderPass</code> 中的 Attachment 兼容，并不是绑定关系。实际上，只要 Framebuffer 的 attachment 配置（数量、格式、尺寸等）与其他 RenderPass 兼容，也可以与这些 RenderPass 一起使用。</p>
+</div>
+<p>Attachment 所使用的 Image，取决于 <code>swapChain</code> 的 Image。因此我们需要为 SwapChain 中的每一个 Image 都创建一个 Framebuffer。</p>
+<p>创建类 <code>FrameBuffersMgr</code> 如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FrameBuffersMgr</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">createFramebuffers</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">destroyFramebuffers</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="type">static</span> std::vector&lt;VkFramebuffer&gt; swapChainFramebuffers;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>swapChainFramebuffers</code> 是一个 <code>std::vector&lt;VkFramebuffer&gt;</code>，用来存储每个 Framebuffer 的句柄，其中的每一个元素与 <code>swapChain</code> 中的 Image 一一对应。</p>
+<p><code>createFramebuffers</code> 函数的实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">FrameBuffersMgr::createFramebuffers</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    swapChainFramebuffers.<span class="built_in">resize</span>(SwapChainMgr::imageViews.<span class="built_in">size</span>());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; SwapChainMgr::imageViews.<span class="built_in">size</span>(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        VkImageView attachments[] = &#123;SwapChainMgr::imageViews[i]&#125;;</span><br><span class="line">        VkFramebufferCreateInfo framebufferInfo = &#123;&#125;;</span><br><span class="line">        framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;</span><br><span class="line">        framebufferInfo.renderPass = GraphicsPipelineMgr::renderPass;</span><br><span class="line">        framebufferInfo.attachmentCount = <span class="number">1</span>;</span><br><span class="line">        framebufferInfo.pAttachments = attachments;</span><br><span class="line">        framebufferInfo.width = SwapChainMgr::imageExtent.width;</span><br><span class="line">        framebufferInfo.height = SwapChainMgr::imageExtent.height;</span><br><span class="line">        framebufferInfo.layers = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">vkCreateFramebuffer</span>(LogicDevicesMgr::device, &amp;framebufferInfo, <span class="literal">nullptr</span>, &amp;swapChainFramebuffers[i]) != VK_SUCCESS)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">throw</span> std::<span class="built_in">runtime_error</span>(<span class="string">&quot;failed to create framebuffer&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>VkFramebufferCreateInfo</code> 的构造比较直观：</p>
+<ul>
+<li><code>sType</code>：结构体类型</li>
+<li><code>renderPass</code>：需要使用的 FrameBuffer 的 Render Pass</li>
+<li><code>attachmentCount</code>：Attachment 的数量</li>
+<li><code>pAttachments</code>：Attachment 的 Image View 数组</li>
+<li><code>width</code>：Framebuffer 的宽度，即与绑定的 Image 的宽度相同</li>
+<li><code>height</code>：Framebuffer 的高度，即绑定的 Image 的高度相同</li>
+<li><code>layers</code>：Framebuffer 的层数，通常为 1，除非是 XR 应用</li>
+</ul>
+<p><code>destroyFramebuffers</code> 函数的实现如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">FrameBuffersMgr::destroyFramebuffers</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> framebuffer : swapChainFramebuffers)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">vkDestroyFramebuffer</span>(LogicDevicesMgr::device, framebuffer, <span class="literal">nullptr</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 <code>HelloTriangleApplication::initVulkan</code>  和 <code>HelloTriangleApplication::cleanupSwapChain</code> 中分别调用 <code>createFramebuffers</code> 和  <code>destroyFramebuffers</code>：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::initVulkan</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    FrameBuffersMgr::<span class="built_in">createFramebuffers</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">HelloTriangleApplication::cleanupSwapChain</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    FrameBuffersMgr::<span class="built_in">destroyFramebuffers</span>();</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Vulkan</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Vulkan Tutorial》 笔记 15：Pipeline Conclusion</title>
     <url>/ch_15_conclusion/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_15_Pipeline_Conclusion">15_Pipeline_Conclusion</a></p>
@@ -1064,9 +1349,9 @@
 <a href="/ch_14_render_passes">Ch 14 Render Passes</a>：本章介绍了 Vulkan 中 Render Pass 的作用、关键结构体及其创建流程，讲解了如何描述和管理渲染过程中的附件与子通道，为后续渲染管线的搭建打下基础。<br>
 <a href="/ch_15_conclusion">Ch 15 Conclusion</a>：本章将介绍如何将之前的章节中创建的对象组合在一起，创建出一个完整的渲染管线。</p>
 <h2 id="Drawing"><a class="header-anchor" href="#Drawing">#</a>Drawing</h2>
-<p>Ch 16 Framebuffers<br>
-Ch 17 Command Buffers<br>
-Ch 18 Rendering And Presentation</p>
+<p><a href="/ch_16_framebuffers">Ch 16 Framebuffers</a>:  创建 FrameBuffer 对象，FrameBuffer 在 Vulkan 中用于封装一组图像视图（如颜色、深度等附件），作为渲染目标，其需要与之前创建的 RenderPass 兼容。<br>
+<a href="/ch_17_command_buffers">Ch 17 Command Buffers</a>：Vulkan 中的命令（如绘制操作和内存传输）并不是通过函数调用直接执行的。开发者必须将所有想要执行的操作记录（Record）在 Command Buffer 对象中。目前我们已经创建了绘制三角形所需要的绝大部分对象，因此可以开始通过 Command Buffer 来记录绘制三角形的命令了。<br>
+<a href="/ch_18_rendering_and_presentation">Ch 18 Rendering And Presentation</a>：本章描述了最终渲染三角形和将其显示到屏幕上的过程，在其中需要创建信号量（Semaphore）和栅栏（Fence）实现 CPU 与 GPU 及队列间的同步，确保渲染流程各阶段正确有序地执行和呈现</p>
 <h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
 <ol>
 <li><a href="https://vulkan-tutorial.com/">https://vulkan-tutorial.com/</a></li>
