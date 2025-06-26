@@ -1,9 +1,9 @@
 ---
 tags:
-    - 图形学
-    - 数学
+  - 图形学
+  - 数学
 created: 2023-05-04
-updated: 2024-03-31
+updated: 2025-06-22
 published: true
 date: 2024-09-07 10:45
 title: 《3D 数学基础》 第三章 坐标系
