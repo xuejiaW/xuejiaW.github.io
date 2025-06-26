@@ -2,10 +2,11 @@
 tags:
   - Vulkan
 created: 2025-04-22
-updated: 2025-05-05
+updated: 2025-06-22
 published: true
 title: 《Vulkan Tutorial》 笔记 18：Rendering And Presentation
 description: 本章描述了最终渲染三角形和将其显示到屏幕上的过程，在其中需要创建信号量（Semaphore）和栅栏（Fence）实现 CPU 与 GPU 及队列间的同步，确保渲染流程各阶段正确有序地执行和呈现
+date: 2025-05-08 21:00
 ---
 
 {% note info %}
@@ -318,8 +319,11 @@ void GraphicsPipelineMgr::createRenderPass()
 
 其中关键的就是定义 `VkSubpassDependency` 结构体，其中：
 - `srcSubpass` 和 `dstSubpass` 分别表示依赖的 Subpass 的索引值，其中 `dstSubpass` 依赖于 `srcSubpass`。在这里 `VK_SUBPASS_EXTERNAL` 表示依赖的是 Render Pass 外隐式的 Subpass，$0$ 表示当前的 Subpass。
-- `srcStageMask` 和 `dstStageMask` 分别表示依赖的两个 Subpass 的 Stage Mask，即 `dstSubpass` 的 B Stage 依赖于 `srcSubpass` 的 A Stage 完成。`srcAccessMask` 和 `dstAccessMask` 分别表示依赖的两个 Subpass 的 Access Mask，即 `dstSubpass` 的 B Stage 依赖于 `srcSubpass` 的 A Stage 完成，并且 `dstSubpass` 的 B Stage 需要访问 `srcSubpass` 的 A Stage 中的资源。
-  - 这里 `srcAccessMask` 设置为 0，表示 `srcSubpass` 中没有要同步的内存访问。
+- `srcStageMask` / `dstStageMask`：指定依赖的起点和终点的管线阶段（可能是多个）。
+- `srcAccessMask` / `dstAccessMask`：指定需要同步的访问类型（读、写等）
+
+依赖的关系为：只有在 `srcSubpass` 的 `srcStageMask` 管线阶段中所有指定的 `srcAccessMask` 类型访问 **全部** 完成后，`dstSubpass` 的 `dstStageMask` 阶段才能开始对资源进行 `dstAccessMask` 类型的访问
+
 
 {% note info %}
 何为“内存访问同步”？

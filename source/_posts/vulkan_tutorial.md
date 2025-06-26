@@ -1,6 +1,6 @@
 ---
 created: 2022-02-17
-updated: 2025-05-08
+updated: 2025-05-31
 tags:
   - Vulkan
 Author:
@@ -10,6 +10,7 @@ ISBN:
 date: 2025-03-29 13:40
 published: true
 title: 《Vulkan Tutorial》 学习笔记汇总
+descriptrion: Vulkan 的学习指南，
 ---
 
 # 准备
@@ -49,6 +50,25 @@ title: 《Vulkan Tutorial》 学习笔记汇总
 [Ch 17 Command Buffers](/ch_17_command_buffers)：Vulkan 中的命令（如绘制操作和内存传输）并不是通过函数调用直接执行的。开发者必须将所有想要执行的操作记录（Record）在 Command Buffer 对象中。目前我们已经创建了绘制三角形所需要的绝大部分对象，因此可以开始通过 Command Buffer 来记录绘制三角形的命令了。
 [Ch 18 Rendering And Presentation](/ch_18_rendering_and_presentation)：本章描述了最终渲染三角形和将其显示到屏幕上的过程，在其中需要创建信号量（Semaphore）和栅栏（Fence）实现 CPU 与 GPU 及队列间的同步，确保渲染流程各阶段正确有序地执行和呈现
 [Ch 19 Frame in Flight](/ch_19_frame_in_flight): 对渲染循环进行改进，通过创建多个 Command Buffer 和信号量来实现多帧渲染，允许 CPU 和 GPU 同时工作，避免 CPU 在 GPU 渲染时处于空闲状态。
+Ch 20 Swap chain recreation: 
+
+# Vertex Buffers
+
+Ch 21 Vertex Input Description And Buffer Creation
+
+Ch 22 Staging Buffer
+
+Ch 23 Index Buffer
+
+# Uniform Buffers
+
+Ch 24 Uniform Buffers
+
+# Images
+
+Ch 25 Images
+Ch 26 Image View And Sampler
+
 
 # Reference
 

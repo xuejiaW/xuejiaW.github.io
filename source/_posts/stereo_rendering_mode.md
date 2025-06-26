@@ -4,7 +4,7 @@ tags:
   - XR
   - Rendering
 created: 2025-03-31
-updated: 2025-04-13
+updated: 2025-06-15
 date: 2025-04-13 22:02
 published: true
 title: XR 立体渲染模式
