@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>分辨率是什么？从信号与采样的角度分析分辨率 | 三叔的数字花园</title><meta name="author" content="三叔"><meta name="copyright" content="三叔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="分辨率描述图像的像素数量，反映对连续信号的采样频率。分辨率越高，采样频率越高，越能还原高频细节。然而，分辨率并非越高越好，需与信号频率匹配。采样定理指出，采样频率需至少为信号最高频率的两倍才能准确还原。傅里叶变换揭示信号可分解为不同频率的正弦波，高频对应细节部分（如物体边缘）。因此，分辨率不足时，高频信号（如黑白突变）易出现锯齿。优化显示效果需平衡分辨率与信号频率，避免过度采样浪费资源">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分辨率是什么？从信号与采样的角度分析分辨率">
+<meta property="og:url" content="https://tuncle.blog/what_is_resolution/index.html">
+<meta property="og:site_name" content="三叔的数字花园">
+<meta property="og:description" content="分辨率描述图像的像素数量，反映对连续信号的采样频率。分辨率越高，采样频率越高，越能还原高频细节。然而，分辨率并非越高越好，需与信号频率匹配。采样定理指出，采样频率需至少为信号最高频率的两倍才能准确还原。傅里叶变换揭示信号可分解为不同频率的正弦波，高频对应细节部分（如物体边缘）。因此，分辨率不足时，高频信号（如黑白突变）易出现锯齿。优化显示效果需平衡分辨率与信号频率，避免过度采样浪费资源">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tuncle.blog/img/avatar.jpg">
+<meta property="article:published_time" content="2025-06-20T03:13:00.000Z">
+<meta property="article:modified_time" content="2025-06-21T16:00:00.000Z">
+<meta property="article:author" content="三叔">
+<meta property="article:tag" content="图形学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuncle.blog/img/avatar.jpg"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://tuncle.blog/what_is_resolution/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-2QHMY59T5S"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2QHMY59T5S');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"作者: 三叔","link":"链接: ","source":"来源: 三叔的数字花园","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '分辨率是什么？从信号与采样的角度分析分辨率',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-06-22 00:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="三叔的数字花园" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">130</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">40</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-paw"></i><span> 我的</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li><li><a class="site-page child" href="/reading/"><i class="fa-fw fas fa-book"></i><span> 阅读</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/atom.xml"><i class="fa-fw fas fa-rss"></i><span> RSS</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="三叔的数字花园"><span class="site-name">三叔的数字花园</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group hide" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-paw"></i><span> 我的</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li><li><a class="site-page child" href="/reading/"><i class="fa-fw fas fa-book"></i><span> 阅读</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/atom.xml"><i class="fa-fw fas fa-rss"></i><span> RSS</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">分辨率是什么？从信号与采样的角度分析分辨率</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2025-06-20T03:13:00.000Z" title="发表于 2025-06-20 11:13:00">2025-06-20</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/what_is_resolution/" data-flag-title="分辨率是什么？从信号与采样的角度分析分辨率"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p><code>分辨率</code> 是个我们非常熟悉的的词汇，我们会说一张图片的分辨率是 1920x1080，或者说一个显示器的分辨率是 4K。我们总是很本能的认为分辨率很重要，且常常认为分辨率越高越好，但事实确实如此吗。这篇文章会从技术细节的角度去阐述分辨率究竟是什么，以及为何分辨率对显示效果如此的重要，即我们目标回答三个问题：</p>
+<ol>
+<li>分辨率是什么？</li>
+<li>为何分辨率如此重要？</li>
+<li>分辨率越高越好吗？</li>
+</ol>
+<p>以照片为例，当我们拍摄了一张照片，并说这个照片的分辨率是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1920</mn><mo>×</mo><mn>1080</mn></mrow><annotation encoding="application/x-tex">1920\times 1080</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1920</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1080</span></span></span></span> 时，我们实际上是在描述这张照片的像素数，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1920</mn><mo>×</mo><mn>1080</mn></mrow><annotation encoding="application/x-tex">1920\times1080</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1920</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1080</span></span></span></span> 表示这张照片的宽度有 1920 个像素，高度有 1080 个像素。</p>
+<p>这里的每一个像素都是我们在拍照时，相机对真实世界的 <code>采样</code> 结果。所以，为了更好的理解分辨率，我们需要先了解 <code>采样</code> 的概念。</p>
+<h2 id="什么是采样"><a class="header-anchor" href="#什么是采样">#</a>什么是采样</h2>
+<p>采样是指在一个连续的信号中，选择离散的点来代表这个信号，这个解释无疑又引入了两个概念：<code>信号</code> 和 <code>离散</code>。</p>
+<div class="note primary simple"><p>当想要尽可能准确而又彻底的解释一个概念时，通常会不幸的发现，需要解释的概念会越来越多。</p>
+</div>
+<h3 id="什么是离散信号"><a class="header-anchor" href="#什么是离散信号">#</a>什么是离散信号</h3>
+<p>信号是指在时间或空间上变化的物理量，例如你听到的声音，你看到的颜色，或者你触摸到物体的感受，他们都是信号。在真实世界里，信号都是连续的。我们可以举一个非常极端的简化场景，你在一个完全黑色的房间内，看着一堵墙，墙的颜色从左至右分别是纯粹的黑，然后均匀逐渐变为纯粹的白，再逐渐变为纯粹的黑。</p>
+<p>那么你视野中会看到一段连续的黑色，然后逐渐变换为白色，然后再逐渐变换为黑色，如果我们通过一个函数图来描述你的视野，那么会是这样一张图，其中 X 轴表示你视野从左至右，Y 轴表示颜色，0 是黑色，1 是白色：</p>
+<p><img src="/what_is_resolution/2025-05-30-15-51-22.excalidraw.svg" alt="视野中的黑白"></p>
+<p>无疑，你视野中看到的内容是连续的，所以这里的图形也是连续的，这里用数值表示的颜色即是一个连续的信号。</p>
+<p>当你在这个房间内用手机拍了一张照片时，并在电脑上查看照片时，乍一眼看，你会觉得照片上的黑白变换同样是均匀且连续的，但你将照片放大后。你会发现你看到了一个个纯色的色块，颜色是以“色块”为最小单位变换的，这些色块就是照片的像素，所以照片并不是“均匀”连续变换的，而是以像素为单位跳跃着变换的，即它是离散的。</p>
+<p><img src="/what_is_resolution/image-20250530160133.png" alt=""></p>
+<p>同样的，如果以函数图来表示照片中的颜色变化，那么就会变成这样，其中每一个小点即表示一个像素：</p>
+<p><img src="/what_is_resolution/2025-05-30-16-03-18.excalidraw.svg" alt=""></p>
+<p>当你看照片的时候，你会觉得照片中的颜色变化是连续的，这是因为你的大脑做了一个类似于将离散信号还原为连续信号的过程，即你的大脑会将上述图中的一个个小点连接起来，形成一条连续的曲线。</p>
+<h3 id="采样频率"><a class="header-anchor" href="#采样频率">#</a>采样频率</h3>
+<p>在上一节中，我们通过两个例子说明了连续信号（你的视野）和离散信号（照片）之间的区别，采样就是让连续信号变为离散信号的过程。</p>
+<p>采样最关键的信息，是采样的 <code>间隔</code>，间隔可能是均匀的，也可能是不均匀的。均匀采样是指在连续信号中，按照固定的间隔来选择点，而不均匀采样则是按照不规则的间隔来选择点。</p>
+<ul>
+<li>当用图片来表示时，图片中的每一个像素的大小是相同的，所以图片是均匀采样的。</li>
+</ul>
+<div class="note info simple"><p>分辨率即是每一个方向上的采样次数，分辨率越高也就意味着每个方向上的采样点数越多。</p>
+</div>
+<p>当采样是均匀采样时，采样中最关键的信息就成为了采样的频率，即每单位长度内采样的点数。采样频率越高，间隔越短，同等长度下采样的点数就越多，离散信号也就越接近于连续信号。</p>
+<div class="note primary simple"><p>所以问题 “为什么分辨率很重要”，可以等效为“为什么采样频率很重要”。</p>
+</div>
+<div class="note info simple"><p>从一张照片的分辨率角度出发，如果你拍摄的焦距和视角是固定的，那么“单位长度”就是相机的采景框中你所能看到的内容，对于使用相同焦距的一系列照片，一张照片的分辨率越高，即意味着这张照片的采样频率越高。<br>
+请注意，这里强调了 “焦距”的概念，这是因为采样频率不仅仅取决于采样的次数，还取决于采样的范围。即一个照片的采样频率由两部分决定：</p>
+<ul>
+<li>焦距：焦距决定了你拍摄的视角范围，焦距越长，视角范围越小。对于分辨率相同的情况下，焦距越长，采样频率就越高。</li>
+<li>分辨率：分辨率决定了每个方向上的采样点数。对于焦距相同的情况下，分辨率越高，采样频率就越高。</li>
+</ul>
+</div>
+<div class="note primary simple"><p>对于虚拟渲染而言，与焦距类似的概念是 FOV，渲染的内容多少受 FOV 影响：</p>
+<ul>
+<li>当分辨率相同时，FOV 越大，采样频率越低</li>
+<li>当 FOV 相同时，分辨率越高，采样频率越高</li>
+</ul>
+</div>
+<p>在上一节的例子中，因为采样的频率不算低，所以我们根据离散信号，是能够很本能的还原出连续信号的，但如果采样的频率过低，那么则无法正确的还原连续信号。</p>
+<p>同样的，我们可以举一个极端的例子，还是在这个纯黑并有一堵黑白渐变墙的房间，假设我们用一张分辨率为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1\times 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 的照片来拍摄这个墙，那么我们得到的照片使用函数绘制会是这样的：</p>
+<p><img src="/what_is_resolution/2025-05-30-16-55-38.excalidraw.svg" alt="一像素"></p>
+<p>无疑，当你看着这张只有 1 像素的照片时，无论如何，你的大脑都无法将其还原为连续的黑白渐变曲线。所以这里，1 像素的图片是无法还原原始的连续信号的。但是，假设房间是纯粹的黑色，而墙也是纯粹的黑，即你的视野中看到的都是纯粹的黑色，那么这个 1 像素的照片，同样满足你的视野中看到的内容。</p>
+<p>在这两个例子中（<em>纯黑的房间内有一个颜色连续变化的墙</em> vs <em>纯黑的房间内有一个纯黑的墙</em>），我们使用了相同的焦距的拍摄了两张都是分辨率 为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1\times 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 的照片，但在第一个例子中，我们无法还原出连续信号，而在第二个例子中，我们可以还原出连续信号。</p>
+<p>无疑，这个例子说明了采样频率并不是唯一的因素，原始信号的内容同样会影响我们是否能还原出准确的连续信号。那么有一个问题就会冒出来“对于一个恒定的采样频率，它能还原哪些原始信号”，这个问题的答案是：<code>采样定理</code>。</p>
+<h2 id="采样定理"><a class="header-anchor" href="#采样定理">#</a>采样定理</h2>
+<p>采样定理是一个数学定理，它描述了如何从离散信号中恢复连续信号。采样定理的核心内容是：如果一个连续信号的最高频率为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">f_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，如果以大于或等于 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msub><mi>f</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">2f_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 的频率进行采样，就可以完全恢复这个信号。这里的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msub><mi>f</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">2f_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 也被称为 <code>奈奎斯特频率（Nyquist frequency）</code>。</p>
+<div class="note info simple"><p>从采样定理中可以看出，采样结果是否能正确还原连续信号，取决于两部分：</p>
+<ul>
+<li>原始信号的最高频率是多少</li>
+<li>采样频率是否足够高</li>
+</ul>
+</div>
+<p>我们已经知道对于一张焦距固定的图片而言，采样频率就是分辨率，此时剩下的问题是，我该如何知道真实世界中的信号的最高频率是多少呢？比如在我们的例子中，对于一个黑白渐变的墙面，即使我用一个函数图像画出了它渐变的样子（参考上面的绘制的连续信号函数图），我又该如何知道这个函数的最高频率呢？</p>
+<p>问题的解答是 <code>傅里叶变换（Fourier Transform）</code>。</p>
+<h3 id="傅里叶变换"><a class="header-anchor" href="#傅里叶变换">#</a>傅里叶变换</h3>
+<p>傅里叶变换是一个数学工具，它可以将一个任意连续信号分解为一组正弦波的叠加。通过傅里叶变换，我们可以将任意一个信号拆分为多个不同频率的正弦波，这些正弦波中频率最高的那个即为这个信号的最高频率。</p>
+<p>例如以下的一个连续信号：</p>
+<img src="/what_is_resolution/gif_2025-5-30_17-53-53.gif" width="50%" />
+<p>可以拆分为两个不同频率的正弦波的叠加。其中图例中下方的正弦波有着更高的频率，这个连续信号的最高频率即为下方的正弦波的频率：</p>
+<img src="/what_is_resolution/gif_2025-5-30_17-54-19.gif" width="50%" />
+<p>越是尖锐的变化，频率就越高，最尖锐的变换无疑就是一个垂直的线段，如下为一段包含有近似垂直线段的连续信号：</p>
+<img src="/what_is_resolution/gif_2025-5-30_17-57-43.gif" width="50%" />
+<p>为了能正确的复原这段信号，我们需要有一系列的正弦波叠加，而随着叠加的正弦波频率越高，我们就越能复现这个连续信号，这个连续信号的最高频率即为其完美复现时所叠加的最高频率的正弦波：</p>
+<img src="/what_is_resolution/gif_2025-5-30_17-58-35.gif" width="50%" />
+<p>从上述的示例中，不难看出，对于一个信号，它变换的越快，想要复原它就需要越高频率的正弦波，也即意味着它的最高频率越高，也意味着需要越高的采样频率来还原这个原始信号。</p>
+<p>在我们的日常生活中，我们通过 “细节” 这个词来描述快速的变化的部分，对于细节多的内容，我们通常需要更高的采样频率（同焦距/FOV 下，即更高的分辨率）。</p>
+<p>还是以房中之墙为例，如果房间与墙壁都是纯粹的黑，那么你的视野内是没有任何的变化的，无疑这时没有任何的细节。而当那堵墙存在变化时，它变化的越快，你需要察觉的“细节”就越多。</p>
+<ul>
+<li>正因为人对于变化快的内容更难察觉，所以才会用“<strong>细节</strong>”这个词去描绘。</li>
+</ul>
+<h2 id="总结"><a class="header-anchor" href="#总结">#</a>总结</h2>
+<p>至此，我们已经拥有了从信号角度去解析分辨率的所有工具，文章一开始的三个问题，在之前的论述中都已经解答了，现在我们再次总结下回答：</p>
+<ol>
+<li>
+<p>分辨率是什么？</p>
+<p>分辨率是一张图片上每个方向上的采样点数，分辨率越高即意味着每个方向上的采样点数越多。在图片所要展现的内容固定的情况下，分辨率越高意味着对所要展现的内容的采样频率越高，也因此意味着对于所要展现的内容的还原越准确。</p>
+</li>
+<li>
+<p>为何分辨率如此重要？</p>
+<p>因为分辨率越高通常意味着采样频率越高，而采样频率越高就意味着我们可以还原的信号的频率越高，也就意味着我们可以还原的细节越多。</p>
+</li>
+<li>
+<p>分辨率越高越好吗？</p>
+<p>如上所属，分辨率越高越能还原原始的内容，所以在不考虑成本的前提下，分辨率是越高越好的。</p>
+<p>但如果考虑成本，则分辨率的高低需要取决于它所展现的内容的细节程度，即内容的频率。对于一个内容的频率越高的内容，分辨率就需要越高才能正确还原这个内容；而对于一个内容的频率较低的内容，分辨率就可以相对较低。</p>
+</li>
+</ol>
+<div class="note primary simple"><p>在分辨率固定的情况下，降低内容的频率（即降低内容的细节）也可以让我们准确的还原出内容。</p>
+</div>
+<p>我们也能解释一些虚拟渲染时，常见的现象：</p>
+<ol>
+<li>
+<p>图片中黑白突变的部分容易出现锯齿/摩尔纹<br>
+图像中黑色到白色的突变，即是一个垂直的变化（从 0 → 1），由上所述，可以知道这个变化所蕴含的频率极高。<br>
+也因此，这种黑白图标的图片在被渲染时容易出现锯齿/摩尔纹，因为渲染时的采样频率（由分辨率和 FOV 共同决定）已经无法满足原始信号（黑白突变）的最高频率。</p>
+</li>
+<li>
+<p>锯齿总是出现在物体的边缘</p>
+<p>因为物体的边缘通常是一个快速变化的部分（A 物体和 B 物体放在一起， A 物体的边缘意味着 A 物体的颜色与 B 物体的颜色之间的突变），即它的频率较高。由于渲染时的采样频率无法满足这个频率，所以会出现锯齿。</p>
+</li>
+</ol>
+<p>希望这篇文章能让你更了解分辨率，其中的几个结论你需要牢记于心，这对你理解与优化一些显示效果至关重要：</p>
+<ol>
+<li>分辨率与采样频率强相关</li>
+<li>原始信号的频率与采样频率是否匹配，直接决定了采样后的结果是否可以还原原始信号
+<ul>
+<li>采样频率受采样次数（分辨率）和采样范围（焦距）影响</li>
+<li>原始信号频率受内容细节影响</li>
+</ul>
+</li>
+<li>越细节的内容就表示原始信号的频率越高，采样频率需要越高才能还原出原始信号</li>
+</ol>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.jezzamon.com/fourier/">An Interactive Introduction to Fourier Transforms</a>：文章中的傅里叶变换说明主要来自于此，在这个网站中，你也可以绘制任意的曲线来进行傅里叶展开。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="Tuncle">三叔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tuncle.blog/what_is_resolution/">https://tuncle.blog/what_is_resolution/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tuncle.blog" target="_blank">三叔的数字花园</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">图形学</a></div><div class="post_share"><div class="social-share" data-image="/img/avatar.jpg" data-sites="twitter, wechat, weibo"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/ch_19_frame_in_flight/" title="《Vulkan Tutorial》 笔记 19：Frame in Flight"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">《Vulkan Tutorial》 笔记 19：Frame in Flight</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%87%87%E6%A0%B7"><span class="toc-text">什么是采样</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%A6%BB%E6%95%A3%E4%BF%A1%E5%8F%B7"><span class="toc-text">什么是离散信号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%87%E6%A0%B7%E9%A2%91%E7%8E%87"><span class="toc-text">采样频率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%87%E6%A0%B7%E5%AE%9A%E7%90%86"><span class="toc-text">采样定理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="toc-text">傅里叶变换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2025 By 三叔</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Keep Writing</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey: 'z1vCYavVUbCGuMjNMcrsvShN',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', 'G-2QHMY59T5S', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
