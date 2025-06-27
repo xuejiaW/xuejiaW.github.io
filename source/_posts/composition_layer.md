@@ -74,7 +74,7 @@ description: XR系统中的合成层（Composition Layer）机制通过将不同
 
 对于上述 YVR Home 的场景，应用负责提交 *帧* 给 Compositor，*帧* 中会包含有各个合成层的内容，Compositor 会将这些合成层的内容合成为最终的图像会展现在屏幕上，如下示意图：
 
-![App Submit Frame](/composition_layer/singleapplication.svg)
+![App Submit Frame](/composition_layer/singleapplication.excalidraw.svg)
 
 你可以看到一帧中可以携带多个合成层，且合成层是有顺序的（上示意图中的 $0$、$-1$、$-2$），Compositor 会按照从低到高的顺序将合成层内容合成为最终的图像，即先渲染 $-2$ 层，再渲染 $-1$ 层，最后渲染 $0$ 层（[画家算法](https://en.wikipedia.org/wiki/Painter%27s_algorithm))。
 
