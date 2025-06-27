@@ -2,7 +2,7 @@
 tags:
   - XR
 created: 2025-06-04
-updated: 2025-06-26
+updated: 2025-06-27
 published: true
 title: XR 合成层（Composition Layer）概念详解
 date: 2025-06-26 22:10
@@ -59,7 +59,7 @@ description: XR系统中的合成层（Composition Layer）机制通过将不同
 关于 XR 中非点对点渲染引入显示效果劣化的讨论，见 Resolution in XR
 {% endnote %}
 
-因为合成器将 Eye Buffer 绘制倒最终显示缓冲区上这个过程是不可避免的，其上述的第二次非点对点采样是不可避免的。因此合成层的设计目的是为了减少将虚拟内容绘制到 Eye Buffer 上时的非点对点采样，即第一次非点对点采样。
+因为合成器将 Eye Buffer 绘制到最终显示缓冲区上这个过程是不可避免的，其上述的第二次非点对点采样是不可避免的。因此合成层的设计目的是为了减少将虚拟内容绘制到 Eye Buffer 上时的非点对点采样，即第一次非点对点采样。
 
 以上面展现的 YVR2 Home 的例子为例，他的 UI 内容是通过 Quad Layer 直接交给系统合成器的，其会被合成器处理并最终上屏，因此之只经过了一次非点对点采样，借此提升了清晰度。
 
@@ -74,7 +74,7 @@ description: XR系统中的合成层（Composition Layer）机制通过将不同
 
 对于上述 YVR Home 的场景，应用负责提交 *帧* 给 Compositor，*帧* 中会包含有各个合成层的内容，Compositor 会将这些合成层的内容合成为最终的图像会展现在屏幕上，如下示意图：
 
-![App Submit Frame](/composition_layer/singleapplication.excalidraw.svg)
+![App Submit Frame](/composition_layer/singleapplication.svg)
 
 你可以看到一帧中可以携带多个合成层，且合成层是有顺序的（上示意图中的 $0$、$-1$、$-2$），Compositor 会按照从低到高的顺序将合成层内容合成为最终的图像，即先渲染 $-2$ 层，再渲染 $-1$ 层，最后渲染 $0$ 层（[画家算法](https://en.wikipedia.org/wiki/Painter%27s_algorithm))。
 
