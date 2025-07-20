@@ -5,6 +5,7 @@
 nav:
     logo: # image
     display_title: true
+    display_post_title: true # 新增：在文章页导航栏显示文章标题
     fixed: true # fixed navigation bar
 
 # Menu 目錄
@@ -22,12 +23,15 @@ menu:
 # Code Blocks (代碼相關)
 # --------------------------------------
 
-highlight_theme: darker #  darker / pale night / light / ocean / mac / mac light / false
-highlight_copy: true # copy button
-highlight_lang: true # show the code language
-highlight_shrink: false # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
-highlight_height_limit: 300 # unit: px
-code_word_wrap: false
+code_blocks:
+    theme: darker # darker / pale night / light / ocean / mac / mac light / false
+    macStyle: false # mac样式
+    height_limit: 300 # unit: px 代码块高度限制
+    word_wrap: false # 代码自动换行
+    copy: true # copy button
+    language: true # show the code language
+    shrink: false # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
+    fullpage: false # 代码块全屏模式
 
 # Social Settings (社交圖標設置)
 # formal:
@@ -209,11 +213,14 @@ noticeOutdate:
 # Footer Settings
 # --------------------------------------
 footer:
+    nav: # 新增：导航栏配置，可以是 menu 或者自定义链接
     owner:
-        enable: 2023
+        enable: true
         since: 2023
+    copyright: 
+        enable: true
+        version: true # 显示版本信息
     custom_text: Keep Writing
-    copyright: true # Copyright of theme and framework
 
 # aside (側邊欄)
 # --------------------------------------
@@ -268,6 +275,13 @@ aside:
         post_count: true
         last_push_date: true
         sort_order: # Don't modify the setting unless you know how it works
+        runtime_date: # 建站日期，可选
+    card_newest_comments:
+        enable: false
+        sort_order: null
+        limit: 6
+        storage: 10 # unit: mins, save data to localStorage
+        avatar: true
 
 # busuanzi count for PV / UV in site
 # 訪問人數
@@ -283,12 +297,13 @@ runtimeshow:
     publish_date:
 
 # Aside widget - Newest Comments
-newest_comments:
-    enable: false
-    sort_order: # Don't modify the setting unless you know how it works
-    limit: 6
-    storage: 10 # unit: mins, save data to localStorage
-    avatar: true
+# 移至 aside.card_newest_comments 配置中，此处配置已废弃
+# newest_comments:
+#     enable: false
+#     sort_order: # Don't modify the setting unless you know how it works
+#     limit: 6
+#     storage: 10 # unit: mins, save data to localStorage
+#     avatar: true
 
 # Bottom right button (右下角按鈕)
 # --------------------------------------
@@ -335,6 +350,9 @@ rightside_item_order:
     hide: # readmode,translate,darkmode,hideAside
     show: # toc,chat,comment
 
+# 右侧配置按钮动画效果
+rightside_config_animation: true
+
 # Math (數學)
 # --------------------------------------
 # About the per_page
@@ -342,66 +360,58 @@ rightside_item_order:
 # if you set it to false, it will load mathjax/katex script according to your setting (add the 'mathjax: true' in page's front-matter)
 # (false 需要時加載，須在使用的 Markdown Front-matter 加上 mathjax: true)
 
-# MathJax
-mathjax:
-    enable: false
-    per_page: false
-
-# KaTeX
-katex:
-    enable: true
+math:
+    use: katex # 可选 mathjax, katex
     per_page: true
     hide_scrollbar: true
+    mathjax:
+        enableMenu: true
+        tags: 'none'
+    katex:
+        copy_tex: false
 
 # search (搜索)
 # see https://butterfly.js.org/posts/ceeb73f/#搜索系統
 # --------------------------------------
 
-# Algolia search
-algolia_search:
-    enable: false
-    hits:
-        per_page: 6
+search:
+    use: local_search # 可选 algolia_search / local_search / docsearch
+    placeholder: # 搜索框占位文字
+    
+    # Algolia search
+    algolia_search:
+        hitsPerPage: 6
 
-# Local search
-local_search:
-    enable: true
-    # Preload the search data when the page loads.
-    preload: false
-    # Show top n results per article, show all results by setting to -1
-    top_n_per_article: 1
-    # Unescape html strings to the readable one.
-    unescape: true
-    CDN:
+    # Local search
+    local_search:
+        preload: true
+        # Show top n results per article, show all results by setting to -1
+        top_n_per_article: 1
+        # Unescape html strings to the readable one.
+        unescape: true
+        CDN:
 
-# Docsearch
-docsearch:
-    enable: false
-    appId:
-    apiKey:
-    indexName:
-    option:
+    # Docsearch
+    docsearch:
+        appId:
+        apiKey:
+        indexName:
+        option:
 
 # Share System (分享)
 # --------------------------------------
 
-# AddThis
-# https://www.addthis.com/
-addThis:
-    enable: false
-    pubid:
+share:
+    use: sharejs # sharejs / addtoany / addThis
+    sharejs:
+        sites: twitter,wechat,weibo
+    addtoany:
+        item: facebook,twitter,wechat,sina_weibo,facebook_messenger,email,copy_link
+    addThis:
+        pubid:
 
-# Share.js
-# https://github.com/overtrue/share.js
-sharejs:
-    enable: true
-    sites: twitter, wechat, weibo
-
-# AddToAny
-# https://www.addtoany.com/
-addtoany:
-    enable: false
-    item: facebook,twitter,wechat,sina_weibo,facebook_messenger,email,copy_link
+# Comments System
+# --------------------------------------
 
 # Comments System
 # --------------------------------------
@@ -409,7 +419,7 @@ addtoany:
 comments:
     # Up to two comments system, the first will be shown as default
     # Choose: Disqus/Disqusjs/Livere/Gitalk/Valine/Waline/Utterances/Facebook Comments/Twikoo/Giscus/Remark42/Artalk
-    use: Valine # Disqus
+    use: Giscus # Disqus
     text: true # Display the comment name next to the button
     # lazyload: The comment system will be load when comment element enters the browser's viewport.
     # If you set it to true, the comment count will be invalid
@@ -495,13 +505,18 @@ twikoo:
 # Giscus
 # https://giscus.app/
 giscus:
-    repo:
-    repo_id:
-    category_id:
+    repo: xuejiaW/xuejiaW.github.io
+    repo_id: MDEwOlJlcG9zaXRvcnkxNjIxNTc2MTY=
+    category_id: DIC_kwDOCapUMM4CtM2t
     theme:
         light: light
         dark: dark
     option:
+        data-mapping: pathname
+        data-strict: '0'
+        data-reactions-enabled: '1'
+        data-emit-metadata: '0'
+        data-input-position: top
 
 # Remark42
 # https://remark42.com/docs/configuration/frontend/
@@ -521,12 +536,10 @@ artalk:
 # Chat Services
 # --------------------------------------
 
-# Chat Button [recommend]
-# It will create a button in the bottom right corner of website, and hide the origin button
-chat_btn: false
-
-# The origin chat button is displayed when scrolling up, and the button is hidden when scrolling down
-chat_hide_show: false
+chat:
+    use: # 可选 chatra, tidio, daovoice, crisp, messenger
+    rightside_button: false
+    button_hide_show: false
 
 # chatra
 # https://chatra.io/
@@ -569,6 +582,10 @@ baidu_analytics:
 # Google Analytics
 # https://analytics.google.com/analytics/web/
 google_analytics: G-2QHMY59T5S
+
+# Google Tag Manager
+# https://tagmanager.google.com/
+google_tag_manager:
 
 # Cloudflare Analytics
 # https://www.cloudflare.com/zh-tw/web-analytics/
@@ -868,6 +885,7 @@ lazyload:
     field: site # site/post
     placeholder:
     blur: false
+    native: false # 原生 lazy loading
 
 # PWA
 # See https://github.com/JLHwung/hexo-offline
