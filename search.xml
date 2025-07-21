@@ -1,108 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Understanding XR Composition Layers - A Comprehensive Guide</title>
-    <url>/en/composition_layer/</url>
-    <content><![CDATA[<p>For an XR system, applications pass the content they want to display through <code>Composition Layers</code> to the system’s <code>Compositor</code>, which then composites these layers into a final image that is rendered to the screen and ultimately presented to the user.</p>
-<p>Under the OpenXR specification, common composition layer types include:</p>
+    <title>XR 合成层（Composition Layer）概念详解</title>
+    <url>/composition_layer/</url>
+    <content><![CDATA[<p>对于一个 XR 系统而言，各应用将它所要展示的内容通过 <code>合成层（Composition Layer）</code> 传递给系统的 <code>合成器（Compositor）</code>，合成器将这些内容合成为最终的图像渲染至屏幕上并最终展示的给用户。</p>
+<p>在 OpenXR 规范下，常见的合成层包括：</p>
 <ul>
-<li>Projection Layer: Images rendered using standard projection matrices from the perspective of left and right eye positions. This is the most conventional layer type—virtually all XR applications have one Projection Layer, and the vast majority only use a single Projection Layer.
+<li>Projection Layer：从左右眼位置出发，使用标准的投影矩阵渲染的图像。这是最惯常的合成层类型，几乎所有的 XR 应用有一个 Projection Layer，绝大部分的 XR 也仅有一个 Projection Layer。
 <ul>
-<li>In XR terminology, “Eye Buffer” essentially refers to the Projection Layer.</li>
+<li>在 XR 中，Eye Buffer 一词基本就是指 Projection Layer。</li>
 </ul>
 </li>
-<li>Quad Layer: A planar image layer, typically used to display UI elements or other flat content, such as videos.</li>
-<li>Cylinder Layer: A cylindrical image layer, suitable for displaying wraparound content like curved UI or curved video playback.</li>
-<li>Cube Layer: A cubic image layer, suitable for displaying panoramic content.</li>
-<li>Equirect Layer: An equirectangular image layer, suitable for displaying panoramic content.</li>
+<li>Quad Layer：一个平面图像层，通常用于展示 UI 元素或其他平面内容，例如视频。</li>
+<li>Cylinder Layer：一个圆柱形图像层，适用于展示环绕式内容，例如曲面的 UI 或曲面播放视频。</li>
+<li>Cube Layer：一个立方体图像层，适用于展示全景内容。</li>
+<li>Equirect Layer：一个等距矩形图像层，适用于展示全景内容。</li>
 </ul>
-<h2 id="Practical_Example"><a class="header-anchor" href="#Practical_Example">#</a>Practical Example</h2>
-<p>The Home environment on the YVR2 device uses composition layers to submit different content types. For example, when you see the following scene in Home:</p>
+<h2 id="实践案例"><a class="header-anchor" href="#实践案例">#</a>实践案例</h2>
+<p>对于在 YVR2 设备的 Home 中就使用了合成层来提交不同的内容，例如你在 Home 看到如下的画面：</p>
 <p><img src="/composition_layer/2025-06-05-10-23-47.png" alt="Content"></p>
-<p>It’s actually composed of three composition layers submitted by Home:</p>
+<p>实际上是由 Home 提交的三个合成层共同构成：</p>
 <ol>
 <li>
-<p>A Projection Layer that renders the Home background image.</p>
+<p>一个 Projection Layer，绘制了 Home 的背景图像。</p>
 <p><img src="/composition_layer/2025-06-05-10-46-23.png" alt="Projection Layer"></p>
 </li>
 <li>
-<p>A Quad Layer used to display the app library</p>
+<p>一个 Quad Layer，用以表示应用库</p>
 <p><img src="/composition_layer/1_0.png" alt="Quad Layer"></p>
 </li>
 <li>
-<p>Another Quad Layer representing the bottom status bar</p>
+<p>另一个 Quad Layer 表示底部状态栏</p>
 <p><img src="/composition_layer/1_2.png" alt="Another Quad Layer"></p>
 </li>
 </ol>
-<h2 id="Why_Do_We_Need_Composition_Layers"><a class="header-anchor" href="#Why_Do_We_Need_Composition_Layers">#</a>Why Do We Need Composition Layers?</h2>
-<p>Before exploring more about composition layers, we must first answer the fundamental question: <em>Why do we need composition layers?</em> After all, we shouldn’t waste time on valueless concepts.</p>
-<p>The concept of composition layers isn’t unique to XR devices. In traditional hardware systems like smartphones and computers, applications also submit content to the system’s compositor using similar mechanisms, which then composite this content into the final image that gets rendered to the screen and displayed to the user.</p>
+<h2 id="为何需要合成层"><a class="header-anchor" href="#为何需要合成层">#</a>为何需要合成层</h2>
+<p>在描述更多关于合成层的内容前，首先要回答的问题是 <em>为何我们需要合成层？</em>，毕竟我们不需要浪费时间在一个没有价值的概念上。</p>
+<p>合成层的概念并不是 XR 设备独有的，在传统的硬件设备中，例如手机和电脑，应用也会通过类似的方式将内容提交给系统的合成器，合成器将这些内容合成为最终的图像渲染至屏幕上并最终展示给用户。</p>
 <ul>
-<li><strong>Windows</strong>: Since Vista, Windows introduced the <strong>Desktop Window Manager (DWM)</strong>, which collects graphical content from application windows, applies visual effects, and composites them into the final display output. After Windows 10, the more modern <strong>Windows Composition Engine</strong> was introduced to work alongside DWM.</li>
-<li><strong>Android</strong>: Uses <strong>SurfaceFlinger</strong>, an Android system service responsible for managing application graphics buffers (Surfaces), compositing them in Z-order, and finally outputting to display devices (this process is often referred to as <em>scanout</em>).</li>
+<li><strong>Windows</strong>: 自 Vista 系统开始引入了 <strong>Desktop Window Manager (DWM)</strong>，DWM负责收集各应用窗口的图形内容，应用视觉效果，并将它们合成为最终显示的画面。在Windows 10后，还引入了更现代的 <strong>Windows Composition Engine</strong> 与 DWM 协同工作。</li>
+<li><strong>Android</strong>: 使用的是<strong>SurfaceFlinger</strong>，它是Android的系统服务，负责管理各应用的图形缓冲区(Surfaces)，将它们按Z轴顺序合成，并最终输出到显示设备（此过程后续简称为 <em>上屏</em>）。</li>
 </ul>
-<p>However, the ATW (Asynchronous Time Warp) and distortion correction work performed by XR system Compositors doesn’t exist in traditional systems, and both of these introduce unavoidable <strong>non-point-to-point</strong> sampling during composition.</p>
-<p>Therefore, in XR systems, content using traditional rendering paths must undergo at least <strong>two non-point-to-point</strong> sampling operations before being seen by the user, and each non-point-to-point sampling in rendering introduces quality degradation:</p>
+<p>但 XR 系统中的 Compositor 所要做的 ATW 工作（Asynchronous Time Warp）和畸变矫正在传统的系统中是不存在的，而这两者都会让合成时引入不可避免的 <strong>非点对点</strong> 采样。</p>
+<p>因此在 XR 中，对于一个使用传统渲染路径的内容而言，其至少需要经过 <strong>两次非点对点</strong> 的采样两次才能最终被用户看到，而渲染中每一次非点对点的采样，都会引入效果的劣化。</p>
 <ul>
-<li>First non-point-to-point sampling: Virtual content rendered onto the Eye Buffer</li>
-<li>Second non-point-to-point sampling: Compositor renders Eye Buffer content to the final display buffer for scanout</li>
+<li>第一次非点对点采样：虚拟内容绘制到 Eye Buffer 上</li>
+<li>第二次非点对点采样：Compositor 将 Eye Buffer 中的内容绘制到最终的显示缓冲区进行上屏。</li>
 </ul>
-<div class="note primary simple"><p>For discussion about how non-point-to-point rendering in XR introduces display quality degradation, see Resolution in XR</p>
+<div class="note primary simple"><p>关于 XR 中非点对点渲染引入显示效果劣化的讨论，见 Resolution in XR</p>
 </div>
-<p>Since the compositor rendering the Eye Buffer to the final display buffer is unavoidable, the second non-point-to-point sampling mentioned above cannot be eliminated. Therefore, composition layers are designed to reduce the non-point-to-point sampling when rendering virtual content to the Eye Buffer—the first non-point-to-point sampling.</p>
-<p>Using the YVR2 Home example shown above, its UI content is submitted directly to the system compositor through Quad Layers, which are processed by the compositor and finally sent for scanout, thus experiencing only one non-point-to-point sampling, thereby improving sharpness.</p>
-<div class="note info simple"><p>Strictly speaking, in Unity applications, displaying UI content using Quad Layers still involves two sampling operations. This is because the content on the Quad Layer consists of UI assets rendered onto the Quad Layer’s texture. However, this rendering process uses orthographic projection and can achieve true point-to-point sampling by matching the Quad Layer resolution with the UI element resolution, avoiding non-point-to-point sampling.<br>
-Therefore, using Quad Layers to display UI avoids one non-point-to-point sampling operation, rather than reducing the total number of sampling operations.</p>
+<p>因为合成器将 Eye Buffer 绘制到最终显示缓冲区上这个过程是不可避免的，其上述的第二次非点对点采样是不可避免的。因此合成层的设计目的是为了减少将虚拟内容绘制到 Eye Buffer 上时的非点对点采样，即第一次非点对点采样。</p>
+<p>以上面展现的 YVR2 Home 的例子为例，他的 UI 内容是通过 Quad Layer 直接交给系统合成器的，其会被合成器处理并最终上屏，因此之只经过了一次非点对点采样，借此提升了清晰度。</p>
+<div class="note info simple"><p>严格而言，在 Unity 应用中，使用 Quad Layer 展现 UI 内容时，仍然是经历了两次采样。因为 Quad Layer 上的内容，是 UI 素材被渲染至了 Quad Layer 的纹理上，只不过这个渲染过程是正交投影，且可以通过 Quad Layer 的分辨率与 UI 元素分辨率的匹配来避免非点对点采样，以达到真正的点对点采样。<br>
+因此使用了 Quad Layer 展现 UI 的过程，是避免了一次非点对点采样，而不是减少了一次采样。</p>
 </div>
-<p>Separating content using composition layers has another potential benefit: content separation introduces finer control granularity. For example, you can provide higher render scale and enable MSAA for the Eye Buffer while using default render scale and no MSAA for UI Quad Layers, maintaining UI sharpness while reducing Eye Buffer rendering overhead.</p>
-<h2 id="Composition_Layer_Submission"><a class="header-anchor" href="#Composition_Layer_Submission">#</a>Composition Layer Submission</h2>
-<p>For the YVR Home scenario described above, the application is responsible for submitting <em>frames</em> to the Compositor. Each <em>frame</em> contains content from various composition layers, which the Compositor composites into the final image displayed on the screen, as shown in the following diagram:</p>
+<p>使用合成层拆分内容还有一个潜在的好处在于，内容的拆分引入了更细的控制颗粒度，例如可以对 Eye Buffer 提供更高的渲染倍率和开启 MSAA，但对于 UI 的 Quad Layer 则采用默认的渲染倍率和不开启 MSAA，这样可以在保证 UI 清晰度的同时，减少 Eye Buffer 的渲染开销。</p>
+<h2 id="合成层的提交"><a class="header-anchor" href="#合成层的提交">#</a>合成层的提交</h2>
+<p>对于上述 YVR Home 的场景，应用负责提交 <em>帧</em> 给 Compositor，<em>帧</em> 中会包含有各个合成层的内容，Compositor 会将这些合成层的内容合成为最终的图像会展现在屏幕上，如下示意图：</p>
 <p><img src="/composition_layer/singleapplication.excalidraw.svg" alt="App Submit Frame"></p>
-<p>You can see that a frame can carry multiple composition layers, and these layers have an ordering (shown as <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">2</span></span></span></span> in the diagram above). The Compositor composites the layer content into the final image in order from low to high, rendering layer <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">2</span></span></span></span> first, then layer <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span>, and finally layer <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span> (<a href="https://en.wikipedia.org/wiki/Painter%27s_algorithm">painter’s algorithm</a>).</p>
-<p>Typically, applications fix the Projection Layer (Eye Buffer layer) as layer <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>, and layers composited <strong>before</strong> the Eye Buffer layer (with negative composition order) are called <code>Underlay Layers</code>, while layers composited <strong>after</strong> the Eye Buffer layer (with positive composition order) are called <code>Overlay Layers</code>. Therefore, in the example above, layer <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span> (red in the image below) is an Underlay Layer, while layers <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">1, 2, 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span></span></span></span> are Overlay Layers (translucent green, blue, and pink layers in the image below).</p>
-<p><img src="/composition_layer/2025-06-06-15-34-36.png" alt="Composition Diagram"></p>
-<div class="note info simple"><p>This is precisely why in the example above, the regions in YVR Home’s layer 0 where UI should be displayed are transparent. Without transparent regions, when layer 0 is rendered, it would cover the previously rendered layers <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">2</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span>, preventing the content of layers <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">2</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span> from being visible in the final image.<br>
-Applications typically achieve this by rendering an object that writes an Alpha value of 0 to make portions of the image transparent. This operation is often called <em>punching a hole</em>.</p>
+<p>你可以看到一帧中可以携带多个合成层，且合成层是有顺序的（上示意图中的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">2</span></span></span></span>），Compositor 会按照从低到高的顺序将合成层内容合成为最终的图像，即先渲染 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">2</span></span></span></span> 层，再渲染 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span> 层，最后渲染 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span> 层（<a href="https://en.wikipedia.org/wiki/Painter%27s_algorithm">画家算法</a>)。</p>
+<p>通常应用中会固定 Project Layer （Eye Buffer 层）是第 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span> 层，并将在 Eye Buffer 层<strong>前</strong>合成的层（合成顺序为负数）称为 <code>Underlay Layer</code>，而在 Eye Buffer 层<strong>后</strong>合成的层（合成顺序为正数）称为 <code>Overlay Layer</code>。因此在上述的例子中，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span> 层(下图红色)是 Underlay Layer，而 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">1,2,3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span></span></span></span> 层是 Overlay Layer（下图半透明的绿，蓝，粉色层）。</p>
+<p><img src="/composition_layer/2025-06-06-15-34-36.png" alt="合成示意"></p>
+<div class="note info simple"><p>也正因为如此，在上述的例子中，YVR Home 的第 0 层中应当显示 UI 的区域是透明的，如果没有透明区域，当第 0 层绘制时会将之前的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">2</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span> 层内容覆盖掉，导致最终的图像中看不到 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">2</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span> 层的内容。<br>
+应用通常可以通过绘制绘制一个写入 Alpha 为 0 的物体来将画面中的部分区域变为透明区域，这个操作在很多时候被称为 <em>打洞（Punch a hole）</em></p>
 </div>
-<h3 id="Multi_Application_Composition"><a class="header-anchor" href="#Multi_Application_Composition">#</a>Multi-Application Composition</h3>
-<p>The concept of composition layers is not limited to single applications. From the Compositor’s perspective, it simply receives <em>frames</em> from various applications and is responsible for compositing them into the final image. The number of applications submitting frames to the Compositor at any given time doesn’t matter.</p>
-<p>A typical example of multi-application composition is the <a href="https://developers.meta.com/horizon/documentation/unity/unity-overlays/">Focus Awareness</a> (FA) functionality provided by various XR platforms. For instance, when an MR application on the Play For Dream MR device activates the FA functionality, you would see the following interface:</p>
+<h3 id="多应用合成"><a class="header-anchor" href="#多应用合成">#</a>多应用合成</h3>
+<p>合成层的概念并非局限在单个应用中。对于 Compositor 而言，它只是接纳来自于各个应用的<em>帧</em> 并负责将其合成为最终的图像，至于同一时间内有多少个应用提交帧给 Compositor 并不重要。</p>
+<p>多应用合成的典型例子为各 XR 平台提供的 <a href="https://developers.meta.com/horizon/documentation/unity/unity-overlays/">Focus Awareness</a> （后简称为 <code>FA</code>）功能，如在 Play For Dream MR 设备上一款 MR 应用唤醒了 FA 功能后，所看到的如下界面：</p>
 <p><img src="/composition_layer/2025-06-13-09-54-13.png" alt="PFDM"></p>
-<p>This requires three components:</p>
+<p>它需要由三部分构成：</p>
 <ul>
-<li>The system’s Pass-Through Service submits a VST layer, rendering the device’s see-through view</li>
-<li>The VD application submits a Cylinder Layer, providing curved UI content</li>
-<li>Spatial Home submits a Projection Layer, rendering the exit confirmation dialog and controllers</li>
+<li>系统的 Pass-Through Service 提交 VST 层，绘制了设备透视的画面</li>
+<li>VD 应用提交的 Cylinder Layer 层，提供了曲面的 UI 内容时</li>
+<li>Spatial Home 提交的 Projection Layer 层，绘制了退出确认的弹框和手柄。</li>
 </ul>
-<p>The diagram below illustrates this:</p>
+<p>其示意图如下：</p>
 <p><img src="/composition_layer/multiapplication.excalidraw.svg" alt="MultiApplication"></p>
-<p>The system Compositor follows certain strategies to organize applications that submit frames at the same time, such as prioritizing the Pass-Through view submitted by the Pass-Through Service first, then compositing frames from regular applications, and finally compositing frames from system applications (SpatialHome).</p>
-<div class="note info simple"><p>The ordering rules for frames submitted by multiple applications are not defined in the OpenXR standard. Therefore, different platforms may have significant variations.<br>
-However, these rules typically only concern XR vendors, since regular developers’ XR applications don’t actively couple with other XR applications, so they don’t need to worry about multi-application composition rules.</p>
+<p>系统 Compositor 会根据一定的策略将同一时间提交帧的应用进行划分，如优先合成 Pass-Through Service 提交的 Pass-Through 画面，再合成普通应用提交的画面，再最终合成系统应用（SpatialHome）提交的画面。</p>
+<div class="note info simple"><p>对于多个应用提交的帧的排序的规则，在 OpenXR 标准中并没有定义。因此可平台可能存在较大的差异。<br>
+但该规则也通常只需要 XR 厂商关心，因为普通开发者的 XR 应用并不会主动与其他的 XR 应用耦合，因此也就不需要关心多应用合成的规则。</p>
 </div>
-<h2 id="Drawbacks_of_Composition_Layers"><a class="header-anchor" href="#Drawbacks_of_Composition_Layers">#</a>Drawbacks of Composition Layers</h2>
-<p>As mentioned earlier, composition layers are designed to reduce the non-point-to-point sampling when rendering virtual content to the Eye Buffer—specifically the first non-point-to-point sampling—to achieve improved clarity. However, composition layers are not a silver bullet. You need to understand the drawbacks they introduce to make better decisions about whether your XR application should use composition layers.</p>
-<h3 id="Increased_Development_Complexity"><a class="header-anchor" href="#Increased_Development_Complexity">#</a>Increased Development Complexity</h3>
-<p>For applications that only use the Eye Buffer (a single Projection Layer), all content rendering goes directly through the rendering engine to the Eye Buffer. The rendering engine handles all rendering details, and developers only need to focus on content design and implementation.</p>
-<p>However, when additional composition layers are introduced, developers must also consider how to render content to these extra layers. Particularly when using Underlay composition layers, <em>punching holes</em> in the Eye Buffer content is required to ensure that Underlay layer content can properly show through.</p>
-<p>Additionally, since compositing multiple layers is simply an application of the painter’s algorithm, achieving more sophisticated blending and occlusion effects requires more complex processing during the <em>hole punching</em> stage, such as obtaining the composition layer’s content and determining the transparency of the holes.</p>
-<h3 id="Difficulty_in_Global_Effect_Control"><a class="header-anchor" href="#Difficulty_in_Global_Effect_Control">#</a>Difficulty in Global Effect Control</h3>
-<p>When content is submitted to the system Compositor using additional composition layers, the application has no control over the composition layer content when rendering the Eye Buffer, because the final display of composition layers is determined by the system’s Compositor.</p>
-<p>For example, if you want to apply post-processing effects to the entire application’s final image, such as Gaussian blur or global fog effects, since the Eye Buffer doesn’t contain the content from additional composition layers, post-processing effects applied to the Eye Buffer cannot affect the content in the additional composition layers.</p>
-<div class="note info simple"><p>Developers can choose to apply post-processing effects to additional composition layers when rendering content to them, but this exacerbates the increase in development complexity. Even so, there are some unavoidable issues:</p>
+<h2 id="合成层的弊端"><a class="header-anchor" href="#合成层的弊端">#</a>合成层的弊端</h2>
+<p>在前面已经提到了合成层的设计目的是为了减少将虚拟内容绘制到 Eye Buffer 上时的非点对点采样，即第一次非点对点采样，来达到清晰度的效果。但合成层并非银弹，你需要了解合成层所带来的弊端，才能更好的决策你的 XR 应用是否需要使用合成层。</p>
+<h3 id="增加的开发复杂性"><a class="header-anchor" href="#增加的开发复杂性">#</a>增加的开发复杂性</h3>
+<p>对于仅使用 Eye Buffer（单一 Projection Layer）的应用而言，所有内容的渲染都直接通过渲染引擎绘制到 Eye Buffer 上，渲染引擎会处理好所有的渲染细节，开发者只需要关注内容的设计和实现即可。</p>
+<p>而当引入了额外的合成层后，开发者还需要关心该如何将内容渲染到额外合成层上。特别是当使用了 Underlay 合成层时，还需要对 Eye Buffer 的内容进行 <em>打洞</em> 操作，以保证 Underlay 合成层的内容可以正常的透出。</p>
+<p>同时由于多个合成层的合并管控只是画家算法的简单应用，如果要做到较为完美的混和和遮挡效果，需要在 <em>打洞</em> 时进行更为复杂的处理，例如获取合成层的内容画面，决定洞的透明度等。</p>
+<h3 id="难以进行全局效果的管控"><a class="header-anchor" href="#难以进行全局效果的管控">#</a>难以进行全局效果的管控</h3>
+<p>当内容使用额外的合成层提交给系统 Compositor 时，应用在渲染 Eye Buffer 时，对于合成层中内容是无法管控的，因为合成层最终的显示是由系统的 Compositor 决定的。</p>
+<p>例如希望对整个应用最终的画面进行后处理效果，如高斯模糊，全局雾化等，由于 Eye Buffer 中并不包含有额外合成层的内容，所以对 Eye Buffer 的后处理效果是无法影响到额外合成层的内容的。</p>
+<div class="note info simple"><p>开发者可以选择在向额外合成层绘制内容时，通过增加对额外合成层的后处理效果来实现类似的效果，但这会加剧开发复杂性的增加。且即使如此，也有一些无法规避的问题：</p>
 <ul>
-<li>Effects like Gaussian blur that require sampling neighboring pixels will produce obvious artifacts at the boundaries between additional composition layers and the Eye Buffer.</li>
-<li>If additional composition layer content is submitted via Surface SwapChain, the application layer is not responsible for rendering content to the additional composition layers and therefore cannot apply any post-processing to that content.</li>
+<li>诸如高斯模糊这样的需要对相邻像素进行采样的效果，额外合成层和 Eye Buffer 交界处会产生明显的错误效果。</li>
+<li>如果额外合成层的内容是通过 Surface SwapChain 方式提交画面，那么应用层并不负责向额外合成层绘制内容，也就无法对额外合成层的内容进行任何的后处理。</li>
 </ul>
 </div>
-<p>Similarly, control over Eye Buffer rendering modes, such as foveated rendering, cannot affect additional composition layers.</p>
-<h3 id="Additional_Performance_Overhead"><a class="header-anchor" href="#Additional_Performance_Overhead">#</a>Additional Performance Overhead</h3>
-<p>Since composition layer content needs to be composited by the system Compositor, the more content that needs compositing, the greater the load on the system Compositor. The Compositor cannot afford to <strong>drop frames</strong>, as any dropped frames would cause frame freeze phenomena that severely impact user experience.</p>
-<p>Furthermore, composition layers can increase performance overhead in certain situations. For example, when rendering UI through composition layers, the application must switch render targets when drawing UI versus other objects (UI needs to be drawn to additional composition layers, while other objects need to be drawn to the Eye Buffer). Render target switching undoubtedly introduces some performance overhead.</p>
-<p>Additionally, because additional composition layers and Eye Buffer content are separate, some optimizations that rely on depth occlusion cannot be performed. For example, when a controller occludes UI:</p>
+<p>又比如对 Eye Buffer 渲染模式的管控，诸如注视点渲染，也无法对额外的合成层带来变化。</p>
+<h3 id="额外的性能负载"><a class="header-anchor" href="#额外的性能负载">#</a>额外的性能负载</h3>
+<p>由于合成层的内容需要由系统 Compositor 进行合成，因此需要合成的内容越多，系统 Compositor 的负载就越大。而 Compositor 是不允许 <strong>掉帧</strong> 出现的，其一旦发生掉帧就会产生定屏现象，严重影响用户体验。</p>
+<p>另外合成层在某些情况下也会增加性能开销，例如通过合成层绘制 UI，它要求应用在绘制 UI 和绘制其他物体时进行渲染目标的切换（UI 需要绘制到额外合成层上，而其他物体需要绘制到 Eye Buffer 上），渲染目标的切换无疑会带来部分性能开销。</p>
+<p>此外由于额外合成层与 Eye Buffer 的内容是分离的，一些依靠深度遮挡进行的效果优化也无法进行，例如手柄遮挡住 UI 时：</p>
 <ul>
-<li>If both are drawn to the Eye Buffer, and the controller is drawn before the UI, then the occluded portions of the UI would not be rendered due to depth test failure.</li>
-<li>If the UI is drawn to additional composition layers, then the complete UI must be rendered regardless.</li>
+<li>如果都绘制到 Eye Buffer 上，且先绘制手柄再绘制 UI，那么被遮挡的 UI 部分会因为深度测试失败而不被绘制。</li>
+<li>如果 UI 绘制到额外合成层上，那么无论如何都需要绘制完整的 UI</li>
 </ul>
 <h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
 <p><a href="https://docs.unity3d.com/Packages/com.unity.xr.compositionlayers@2.0/manual/overview.html">Composition layers | XR Composition Layers | 2.0.0</a></p>
@@ -113,138 +113,138 @@ However, these rules typically only concern XR vendors, since regular developers
       </tags>
   </entry>
   <entry>
-    <title>What is Resolution? Analyzing Resolution Through Signal Processing and Sampling Theory</title>
-    <url>/en/what_is_resolution/</url>
-    <content><![CDATA[<p><code>Resolution</code> is a term we’re all very familiar with. We say an image has a resolution of 1920x1080, or that a monitor has 4K resolution. We instinctively understand that resolution is important, and often assume that higher resolution is always better—but is this really the case? This article will examine resolution from a technical perspective, exploring what resolution truly is and why it has such a significant impact on display quality. We aim to answer three key questions:</p>
+    <title>分辨率是什么？从信号与采样的角度分析分辨率</title>
+    <url>/what_is_resolution/</url>
+    <content><![CDATA[<p><code>分辨率</code> 是个我们非常熟悉的的词汇，我们会说一张图片的分辨率是 1920x1080，或者说一个显示器的分辨率是 4K。我们总是很本能的认为分辨率很重要，且常常认为分辨率越高越好，但事实确实如此吗。这篇文章会从技术细节的角度去阐述分辨率究竟是什么，以及为何分辨率对显示效果如此的重要，即我们目标回答三个问题：</p>
 <ol>
-<li>What is resolution?</li>
-<li>Why is resolution so important?</li>
-<li>Is higher resolution always better?</li>
+<li>分辨率是什么？</li>
+<li>为何分辨率如此重要？</li>
+<li>分辨率越高越好吗？</li>
 </ol>
-<p>Using photography as an example, when we capture a photo and say it has a resolution of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1920</mn><mo>×</mo><mn>1080</mn></mrow><annotation encoding="application/x-tex">1920\times 1080</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1920</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1080</span></span></span></span>, we’re actually describing the pixel count of that image. <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1920</mn><mo>×</mo><mn>1080</mn></mrow><annotation encoding="application/x-tex">1920\times1080</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1920</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1080</span></span></span></span> means the photo contains 1920 pixels in width and 1080 pixels in height.</p>
-<p>Each of these pixels represents a <code>sampling</code> result of the real world captured by the camera. To better understand resolution, we first need to grasp the concept of <code>sampling</code>.</p>
-<h2 id="What_is_Sampling"><a class="header-anchor" href="#What_is_Sampling">#</a>What is Sampling?</h2>
-<p>Sampling refers to selecting discrete points from a continuous signal to represent that signal. This definition inevitably introduces two more concepts: <code>signals</code> and <code>discrete</code>.</p>
-<div class="note primary simple"><p>When trying to explain a concept as accurately and thoroughly as possible, you’ll unfortunately find that the number of concepts requiring explanation keeps growing.</p>
+<p>以照片为例，当我们拍摄了一张照片，并说这个照片的分辨率是 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1920</mn><mo>×</mo><mn>1080</mn></mrow><annotation encoding="application/x-tex">1920\times 1080</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1920</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1080</span></span></span></span> 时，我们实际上是在描述这张照片的像素数，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1920</mn><mo>×</mo><mn>1080</mn></mrow><annotation encoding="application/x-tex">1920\times1080</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1920</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1080</span></span></span></span> 表示这张照片的宽度有 1920 个像素，高度有 1080 个像素。</p>
+<p>这里的每一个像素都是我们在拍照时，相机对真实世界的 <code>采样</code> 结果。所以，为了更好的理解分辨率，我们需要先了解 <code>采样</code> 的概念。</p>
+<h2 id="什么是采样"><a class="header-anchor" href="#什么是采样">#</a>什么是采样</h2>
+<p>采样是指在一个连续的信号中，选择离散的点来代表这个信号，这个解释无疑又引入了两个概念：<code>信号</code> 和 <code>离散</code>。</p>
+<div class="note primary simple"><p>当想要尽可能准确而又彻底的解释一个概念时，通常会不幸的发现，需要解释的概念会越来越多。</p>
 </div>
-<h3 id="What_Are_Discrete_Signals"><a class="header-anchor" href="#What_Are_Discrete_Signals">#</a>What Are Discrete Signals?</h3>
-<p>A signal refers to a physical quantity that varies over time or space—for example, the sounds you hear, the colors you see, or the sensations you feel when touching objects. These are all signals. In the real world, signals are continuous. Let’s consider an extremely simplified scenario: you’re in a completely black room, looking at a wall where the color gradually transitions from pure black on the left to pure white in the center, then back to pure black on the right.</p>
-<p>In your field of vision, you’d see a continuous gradient from black to white and back to black. If we represent your visual field with a function graph, it would look like this, where the X-axis represents your field of view from left to right, and the Y-axis represents color intensity (0 = black, 1 = white):</p>
-<p><img src="/what_is_resolution/2025-05-30-15-51-22.excalidraw.svg" alt="Black and white in field of vision"></p>
-<p>Clearly, what you see in your field of vision is continuous, so the graph is also continuous. The numerical representation of color here is a continuous signal.</p>
-<p>When you take a photo in this room with your phone and view it on a computer, at first glance, you might think the black-to-white transition in the photo is equally smooth and continuous. However, when you zoom in on the photo, you’ll discover individual blocks of solid color—the color changes in discrete “blocks” rather than continuously. These blocks are the pixels of the photo, so the photo isn’t truly “smoothly” continuous but jumps from pixel to pixel in discrete steps.</p>
+<h3 id="什么是离散信号"><a class="header-anchor" href="#什么是离散信号">#</a>什么是离散信号</h3>
+<p>信号是指在时间或空间上变化的物理量，例如你听到的声音，你看到的颜色，或者你触摸到物体的感受，他们都是信号。在真实世界里，信号都是连续的。我们可以举一个非常极端的简化场景，你在一个完全黑色的房间内，看着一堵墙，墙的颜色从左至右分别是纯粹的黑，然后均匀逐渐变为纯粹的白，再逐渐变为纯粹的黑。</p>
+<p>那么你视野中会看到一段连续的黑色，然后逐渐变换为白色，然后再逐渐变换为黑色，如果我们通过一个函数图来描述你的视野，那么会是这样一张图，其中 X 轴表示你视野从左至右，Y 轴表示颜色，0 是黑色，1 是白色：</p>
+<p><img src="/what_is_resolution/2025-05-30-15-51-22.excalidraw.svg" alt="视野中的黑白"></p>
+<p>无疑，你视野中看到的内容是连续的，所以这里的图形也是连续的，这里用数值表示的颜色即是一个连续的信号。</p>
+<p>当你在这个房间内用手机拍了一张照片时，并在电脑上查看照片时，乍一眼看，你会觉得照片上的黑白变换同样是均匀且连续的，但你将照片放大后。你会发现你看到了一个个纯色的色块，颜色是以“色块”为最小单位变换的，这些色块就是照片的像素，所以照片并不是“均匀”连续变换的，而是以像素为单位跳跃着变换的，即它是离散的。</p>
 <p><img src="/what_is_resolution/image-20250530160133.png" alt=""></p>
-<p>Similarly, if we represent the color changes in the photo as a function graph, it would look like this, where each dot represents a pixel:</p>
+<p>同样的，如果以函数图来表示照片中的颜色变化，那么就会变成这样，其中每一个小点即表示一个像素：</p>
 <p><img src="/what_is_resolution/2025-05-30-16-03-18.excalidraw.svg" alt=""></p>
-<p>When you look at the photo, you perceive the color changes as continuous because your brain performs a process similar to reconstructing a continuous signal from discrete data—your brain connects the individual dots in the graph above to form a continuous curve.</p>
-<h3 id="Sampling_Frequency"><a class="header-anchor" href="#Sampling_Frequency">#</a>Sampling Frequency</h3>
-<p>In the previous section, we illustrated the difference between continuous signals (your vision) and discrete signals (photographs) through two examples. Sampling is the process of converting continuous signals into discrete signals.</p>
-<p>The most critical aspect of sampling is the sampling <code>interval</code>, which can be uniform or non-uniform. Uniform sampling refers to selecting points at fixed intervals from a continuous signal, while non-uniform sampling selects points at irregular intervals.</p>
+<p>当你看照片的时候，你会觉得照片中的颜色变化是连续的，这是因为你的大脑做了一个类似于将离散信号还原为连续信号的过程，即你的大脑会将上述图中的一个个小点连接起来，形成一条连续的曲线。</p>
+<h3 id="采样频率"><a class="header-anchor" href="#采样频率">#</a>采样频率</h3>
+<p>在上一节中，我们通过两个例子说明了连续信号（你的视野）和离散信号（照片）之间的区别，采样就是让连续信号变为离散信号的过程。</p>
+<p>采样最关键的信息，是采样的 <code>间隔</code>，间隔可能是均匀的，也可能是不均匀的。均匀采样是指在连续信号中，按照固定的间隔来选择点，而不均匀采样则是按照不规则的间隔来选择点。</p>
 <ul>
-<li>When representing images, each pixel in an image is the same size, so images use uniform sampling.</li>
+<li>当用图片来表示时，图片中的每一个像素的大小是相同的，所以图片是均匀采样的。</li>
 </ul>
-<div class="note info simple"><p>Resolution is the number of sampling points in each direction. Higher resolution means more sampling points in each direction.</p>
+<div class="note info simple"><p>分辨率即是每一个方向上的采样次数，分辨率越高也就意味着每个方向上的采样点数越多。</p>
 </div>
-<p>When sampling is uniform, the most critical information becomes the sampling frequency—the number of sampling points per unit length. Higher sampling frequency means shorter intervals, more sampling points over the same length, and the discrete signal becomes closer to the continuous signal.</p>
-<div class="note primary simple"><p>Therefore, the question “why is resolution important?” is equivalent to “why is sampling frequency important?”</p>
+<p>当采样是均匀采样时，采样中最关键的信息就成为了采样的频率，即每单位长度内采样的点数。采样频率越高，间隔越短，同等长度下采样的点数就越多，离散信号也就越接近于连续信号。</p>
+<div class="note primary simple"><p>所以问题 “为什么分辨率很重要”，可以等效为“为什么采样频率很重要”。</p>
 </div>
-<div class="note info simple"><p>From a photo resolution perspective, if you capture images with fixed focal length and field of view, the “unit length” refers to what you can see within the camera’s frame. For a series of photos taken with the same focal length, higher resolution means higher sampling frequency.<br>
-Note the emphasis on “focal length” here, because sampling frequency depends not only on the number of samples but also on the sampling range. A photo’s sampling frequency is determined by two factors:</p>
+<div class="note info simple"><p>从一张照片的分辨率角度出发，如果你拍摄的焦距和视角是固定的，那么“单位长度”就是相机的采景框中你所能看到的内容，对于使用相同焦距的一系列照片，一张照片的分辨率越高，即意味着这张照片的采样频率越高。<br>
+请注意，这里强调了 “焦距”的概念，这是因为采样频率不仅仅取决于采样的次数，还取决于采样的范围。即一个照片的采样频率由两部分决定：</p>
 <ul>
-<li>Focal length: determines your field of view range. Longer focal length means smaller field of view. With the same resolution, longer focal length results in higher sampling frequency.</li>
-<li>Resolution: determines the number of sampling points in each direction. With the same focal length, higher resolution results in higher sampling frequency.</li>
-</ul>
-</div>
-<div class="note primary simple"><p>For virtual rendering, the concept similar to focal length is FOV, which affects how much content is rendered:</p>
-<ul>
-<li>With the same resolution, larger FOV results in lower sampling frequency</li>
-<li>With the same FOV, higher resolution results in higher sampling frequency</li>
+<li>焦距：焦距决定了你拍摄的视角范围，焦距越长，视角范围越小。对于分辨率相同的情况下，焦距越长，采样频率就越高。</li>
+<li>分辨率：分辨率决定了每个方向上的采样点数。对于焦距相同的情况下，分辨率越高，采样频率就越高。</li>
 </ul>
 </div>
-<p>In the previous example, because the sampling frequency wasn’t too low, we could intuitively reconstruct the continuous signal from the discrete signal. However, if the sampling frequency is too low, we cannot correctly reconstruct the continuous signal.</p>
-<p>Similarly, let’s consider an extreme example. In the same pure black room with a black-to-white gradient wall, suppose we capture a photo with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1\times 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> resolution. The resulting photo, when plotted as a function, would look like this:</p>
-<p><img src="/what_is_resolution/2025-05-30-16-55-38.excalidraw.svg" alt="One pixel"></p>
-<p>Clearly, when looking at this 1-pixel photo, no matter what, your brain cannot reconstruct it into a continuous black-to-white gradient curve. So here, the 1-pixel image cannot restore the original continuous signal. However, if the room is pure black and the wall is also pure black—meaning everything in your field of vision is pure black—then this 1-pixel photo would accurately represent what you see.</p>
-<p>In these two examples (<em>pure black room with a gradient wall</em> vs <em>pure black room with a pure black wall</em>), we captured two photos with the same focal length and both with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1\times 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> resolution. But in the first example, we cannot reconstruct the continuous signal, while in the second example, we can.</p>
-<p>This example clearly shows that sampling frequency isn’t the only factor—the content of the original signal also affects whether we can accurately reconstruct the continuous signal. This raises the question: “For a given sampling frequency, which original signals can it reconstruct?” The answer to this question is the <code>Sampling Theorem</code>.</p>
-<h2 id="Sampling_Theorem"><a class="header-anchor" href="#Sampling_Theorem">#</a>Sampling Theorem</h2>
-<p>The sampling theorem is a mathematical theorem that describes how to recover a continuous signal from a discrete signal. The core principle of the sampling theorem states: if a continuous signal has a maximum frequency of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">f_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, and you sample it at a frequency greater than or equal to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msub><mi>f</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">2f_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, then you can perfectly recover the original signal. This <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msub><mi>f</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">2f_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is also known as the <code>Nyquist frequency</code>.</p>
-<div class="note info simple"><p>From the sampling theorem, we can see that whether sampling results can correctly reconstruct a continuous signal depends on two factors:</p>
+<div class="note primary simple"><p>对于虚拟渲染而言，与焦距类似的概念是 FOV，渲染的内容多少受 FOV 影响：</p>
 <ul>
-<li>What is the maximum frequency of the original signal</li>
-<li>Whether the sampling frequency is sufficiently high</li>
+<li>当分辨率相同时，FOV 越大，采样频率越低</li>
+<li>当 FOV 相同时，分辨率越高，采样频率越高</li>
 </ul>
 </div>
-<p>We already know that for a photo with fixed focal length, the sampling frequency is essentially the resolution. The remaining question is: how can I determine the maximum frequency of real-world signals? For example, in our case of a black-to-white gradient wall, even though I can plot its gradient with a function graph (as shown in the continuous signal function graph above), how do I determine the maximum frequency of this function?</p>
-<p>The answer to this question is the <code>Fourier Transform</code>.</p>
-<h3 id="Fourier_Transform"><a class="header-anchor" href="#Fourier_Transform">#</a>Fourier Transform</h3>
-<p>The Fourier transform is a mathematical tool that can decompose any continuous signal into a superposition of sine waves. Through the Fourier transform, we can break down any signal into multiple sine waves of different frequencies, and the highest frequency among these sine waves is the maximum frequency of the signal.</p>
-<p>For example, the following continuous signal:</p>
+<p>在上一节的例子中，因为采样的频率不算低，所以我们根据离散信号，是能够很本能的还原出连续信号的，但如果采样的频率过低，那么则无法正确的还原连续信号。</p>
+<p>同样的，我们可以举一个极端的例子，还是在这个纯黑并有一堵黑白渐变墙的房间，假设我们用一张分辨率为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1\times 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 的照片来拍摄这个墙，那么我们得到的照片使用函数绘制会是这样的：</p>
+<p><img src="/what_is_resolution/2025-05-30-16-55-38.excalidraw.svg" alt="一像素"></p>
+<p>无疑，当你看着这张只有 1 像素的照片时，无论如何，你的大脑都无法将其还原为连续的黑白渐变曲线。所以这里，1 像素的图片是无法还原原始的连续信号的。但是，假设房间是纯粹的黑色，而墙也是纯粹的黑，即你的视野中看到的都是纯粹的黑色，那么这个 1 像素的照片，同样满足你的视野中看到的内容。</p>
+<p>在这两个例子中（<em>纯黑的房间内有一个颜色连续变化的墙</em> vs <em>纯黑的房间内有一个纯黑的墙</em>），我们使用了相同的焦距的拍摄了两张都是分辨率 为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1\times 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 的照片，但在第一个例子中，我们无法还原出连续信号，而在第二个例子中，我们可以还原出连续信号。</p>
+<p>无疑，这个例子说明了采样频率并不是唯一的因素，原始信号的内容同样会影响我们是否能还原出准确的连续信号。那么有一个问题就会冒出来“对于一个恒定的采样频率，它能还原哪些原始信号”，这个问题的答案是：<code>采样定理</code>。</p>
+<h2 id="采样定理"><a class="header-anchor" href="#采样定理">#</a>采样定理</h2>
+<p>采样定理是一个数学定理，它描述了如何从离散信号中恢复连续信号。采样定理的核心内容是：如果一个连续信号的最高频率为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">f_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，如果以大于或等于 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msub><mi>f</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">2f_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 的频率进行采样，就可以完全恢复这个信号。这里的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msub><mi>f</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">2f_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 也被称为 <code>奈奎斯特频率（Nyquist frequency）</code>。</p>
+<div class="note info simple"><p>从采样定理中可以看出，采样结果是否能正确还原连续信号，取决于两部分：</p>
+<ul>
+<li>原始信号的最高频率是多少</li>
+<li>采样频率是否足够高</li>
+</ul>
+</div>
+<p>我们已经知道对于一张焦距固定的图片而言，采样频率就是分辨率，此时剩下的问题是，我该如何知道真实世界中的信号的最高频率是多少呢？比如在我们的例子中，对于一个黑白渐变的墙面，即使我用一个函数图像画出了它渐变的样子（参考上面的绘制的连续信号函数图），我又该如何知道这个函数的最高频率呢？</p>
+<p>问题的解答是 <code>傅里叶变换（Fourier Transform）</code>。</p>
+<h3 id="傅里叶变换"><a class="header-anchor" href="#傅里叶变换">#</a>傅里叶变换</h3>
+<p>傅里叶变换是一个数学工具，它可以将一个任意连续信号分解为一组正弦波的叠加。通过傅里叶变换，我们可以将任意一个信号拆分为多个不同频率的正弦波，这些正弦波中频率最高的那个即为这个信号的最高频率。</p>
+<p>例如以下的一个连续信号：</p>
 <img src="/what_is_resolution/gif_2025-5-30_17-53-53.gif" width="50%" />
-<p>can be decomposed into a superposition of two sine waves with different frequencies. The sine wave at the bottom of the diagram has a higher frequency, and the maximum frequency of this continuous signal is the frequency of the bottom sine wave:</p>
+<p>可以拆分为两个不同频率的正弦波的叠加。其中图例中下方的正弦波有着更高的频率，这个连续信号的最高频率即为下方的正弦波的频率：</p>
 <img src="/what_is_resolution/gif_2025-5-30_17-54-19.gif" width="50%" />
-<p>The sharper the changes, the higher the frequency. The sharpest possible change is undoubtedly a vertical line segment. Here is a continuous signal containing an approximately vertical line segment:</p>
+<p>越是尖锐的变化，频率就越高，最尖锐的变换无疑就是一个垂直的线段，如下为一段包含有近似垂直线段的连续信号：</p>
 <img src="/what_is_resolution/gif_2025-5-30_17-57-43.gif" width="50%" />
-<p>To correctly reconstruct this signal, we need a superposition of sine waves. As the frequencies of the superposed sine waves get higher, we can better reproduce this continuous signal. The maximum frequency of this continuous signal is the frequency of the highest-frequency sine wave when perfectly reconstructed:</p>
+<p>为了能正确的复原这段信号，我们需要有一系列的正弦波叠加，而随着叠加的正弦波频率越高，我们就越能复现这个连续信号，这个连续信号的最高频率即为其完美复现时所叠加的最高频率的正弦波：</p>
 <img src="/what_is_resolution/gif_2025-5-30_17-58-35.gif" width="50%" />
-<p>From the above examples, it’s clear that for any signal, the faster it changes, the higher the frequency sine waves needed to reconstruct it, which means its maximum frequency is higher and requires a higher sampling frequency to restore the original signal.</p>
-<p>In our daily lives, we use the word “detail” to describe rapidly changing parts. For content with more detail, we typically need higher sampling frequencies (i.e., higher resolution under the same focal length/FOV).</p>
-<p>Using our wall example again: if the room and wall are pure black, then there’s no change in your field of vision, and clearly there are no details. But when the wall has variations, the faster it changes, the more “detail” you need to perceive.</p>
+<p>从上述的示例中，不难看出，对于一个信号，它变换的越快，想要复原它就需要越高频率的正弦波，也即意味着它的最高频率越高，也意味着需要越高的采样频率来还原这个原始信号。</p>
+<p>在我们的日常生活中，我们通过 “细节” 这个词来描述快速的变化的部分，对于细节多的内容，我们通常需要更高的采样频率（同焦距/FOV 下，即更高的分辨率）。</p>
+<p>还是以房中之墙为例，如果房间与墙壁都是纯粹的黑，那么你的视野内是没有任何的变化的，无疑这时没有任何的细节。而当那堵墙存在变化时，它变化的越快，你需要察觉的“细节”就越多。</p>
 <ul>
-<li>Precisely because people find it harder to perceive rapidly changing content, we use the word “<strong>detail</strong>” to describe it.</li>
+<li>正因为人对于变化快的内容更难察觉，所以才会用“<strong>细节</strong>”这个词去描绘。</li>
 </ul>
-<h2 id="Summary"><a class="header-anchor" href="#Summary">#</a>Summary</h2>
-<p>We now have all the tools needed to analyze resolution from a signal processing perspective. The three questions posed at the beginning of this article have all been answered through our discussion. Let me summarize the answers:</p>
+<h2 id="总结"><a class="header-anchor" href="#总结">#</a>总结</h2>
+<p>至此，我们已经拥有了从信号角度去解析分辨率的所有工具，文章一开始的三个问题，在之前的论述中都已经解答了，现在我们再次总结下回答：</p>
 <ol>
 <li>
-<p>What is resolution?</p>
-<p>Resolution is the number of sampling points in each direction of an image. Higher resolution means more sampling points in each direction. When the content to be displayed is fixed, higher resolution means higher sampling frequency for that content, which results in more accurate reconstruction of the content.</p>
+<p>分辨率是什么？</p>
+<p>分辨率是一张图片上每个方向上的采样点数，分辨率越高即意味着每个方向上的采样点数越多。在图片所要展现的内容固定的情况下，分辨率越高意味着对所要展现的内容的采样频率越高，也因此意味着对于所要展现的内容的还原越准确。</p>
 </li>
 <li>
-<p>Why is resolution so important?</p>
-<p>Because higher resolution typically means higher sampling frequency, and higher sampling frequency means we can reconstruct signals with higher frequencies, enabling us to preserve more detail.</p>
+<p>为何分辨率如此重要？</p>
+<p>因为分辨率越高通常意味着采样频率越高，而采样频率越高就意味着我们可以还原的信号的频率越高，也就意味着我们可以还原的细节越多。</p>
 </li>
 <li>
-<p>Is higher resolution always better?</p>
-<p>As explained above, higher resolution enables better restoration of original content, so without considering cost, higher resolution is indeed better.</p>
-<p>However, when considering cost, the appropriate resolution level depends on the detail level (frequency) of the content being displayed. Content with higher frequency requires higher resolution for correct reconstruction, while content with lower frequency can use relatively lower resolution.</p>
+<p>分辨率越高越好吗？</p>
+<p>如上所属，分辨率越高越能还原原始的内容，所以在不考虑成本的前提下，分辨率是越高越好的。</p>
+<p>但如果考虑成本，则分辨率的高低需要取决于它所展现的内容的细节程度，即内容的频率。对于一个内容的频率越高的内容，分辨率就需要越高才能正确还原这个内容；而对于一个内容的频率较低的内容，分辨率就可以相对较低。</p>
 </li>
 </ol>
-<div class="note primary simple"><p>With fixed resolution, reducing the content frequency (i.e., reducing detail) can also allow us to accurately reconstruct the content.</p>
+<div class="note primary simple"><p>在分辨率固定的情况下，降低内容的频率（即降低内容的细节）也可以让我们准确的还原出内容。</p>
 </div>
-<p>We can also explain some common phenomena in virtual rendering:</p>
+<p>我们也能解释一些虚拟渲染时，常见的现象：</p>
 <ol>
 <li>
-<p>Sharp black-white transitions in images are prone to aliasing/moiré patterns<br>
-Black-to-white transitions in images represent vertical changes (from 0 → 1), which as we’ve discussed, contain extremely high frequencies.<br>
-This is why images with sharp black-white elements are prone to aliasing/moiré patterns when rendered—the sampling frequency during rendering (determined by resolution and FOV) cannot satisfy the maximum frequency of the original signal (black-white transitions).</p>
+<p>图片中黑白突变的部分容易出现锯齿/摩尔纹<br>
+图像中黑色到白色的突变，即是一个垂直的变化（从 0 → 1），由上所述，可以知道这个变化所蕴含的频率极高。<br>
+也因此，这种黑白图标的图片在被渲染时容易出现锯齿/摩尔纹，因为渲染时的采样频率（由分辨率和 FOV 共同决定）已经无法满足原始信号（黑白突变）的最高频率。</p>
 </li>
 <li>
-<p>Aliasing always appears at object edges</p>
-<p>Object edges are typically areas of rapid change (when object A and object B are adjacent, the edge of object A represents a sudden transition between A’s color and B’s color), meaning they have high frequency. When the sampling frequency during rendering cannot satisfy this frequency, aliasing occurs.</p>
+<p>锯齿总是出现在物体的边缘</p>
+<p>因为物体的边缘通常是一个快速变化的部分（A 物体和 B 物体放在一起， A 物体的边缘意味着 A 物体的颜色与 B 物体的颜色之间的突变），即它的频率较高。由于渲染时的采样频率无法满足这个频率，所以会出现锯齿。</p>
 </li>
 </ol>
-<p>I hope this article helps you better understand resolution. You should remember several key conclusions, as they are crucial for understanding and optimizing display effects:</p>
+<p>希望这篇文章能让你更了解分辨率，其中的几个结论你需要牢记于心，这对你理解与优化一些显示效果至关重要：</p>
 <ol>
-<li>Resolution is strongly correlated with sampling frequency</li>
-<li>Whether the original signal frequency matches the sampling frequency directly determines if the sampled result can reconstruct the original signal
+<li>分辨率与采样频率强相关</li>
+<li>原始信号的频率与采样频率是否匹配，直接决定了采样后的结果是否可以还原原始信号
 <ul>
-<li>Sampling frequency is affected by the number of samples (resolution) and sampling range (focal length)</li>
-<li>Original signal frequency is affected by content detail</li>
+<li>采样频率受采样次数（分辨率）和采样范围（焦距）影响</li>
+<li>原始信号频率受内容细节影响</li>
 </ul>
 </li>
-<li>More detailed content means higher original signal frequency, requiring higher sampling frequency to reconstruct the original signal</li>
+<li>越细节的内容就表示原始信号的频率越高，采样频率需要越高才能还原出原始信号</li>
 </ol>
 <h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
-<p><a href="https://www.jezzamon.com/fourier/">An Interactive Introduction to Fourier Transforms</a>: The Fourier transform explanations in this article are primarily based on this resource. On this website, you can also draw arbitrary curves to perform Fourier decomposition.</p>
+<p><a href="https://www.jezzamon.com/fourier/">An Interactive Introduction to Fourier Transforms</a>：文章中的傅里叶变换说明主要来自于此，在这个网站中，你也可以绘制任意的曲线来进行傅里叶展开。</p>
 ]]></content>
       <tags>
-        <tag>Graphics</tag>
+        <tag>图形学</tag>
       </tags>
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 19：Frame in Flight</title>
-    <url>/en/ch_19_frame_in_flight/</url>
+    <url>/ch_19_frame_in_flight/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_19_FramesInFlight">19_FramesInFlight</a></p>
 </div>
 <p>在之前的章节中，已经可以正确的绘制出一个三角形了，但目前 渲染循环中有一个明显的缺陷，即我们必须等待上一个帧完成才能开始渲染下一个帧，这导致 CPU 侧不必要的闲置，因为当 GPU 正在绘制时，CPU 可以开始准备下一个帧的渲染。</p>
@@ -274,7 +274,7 @@ This is why images with sharp black-white elements are prone to aliasing/moiré 
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 18：Rendering And Presentation</title>
-    <url>/en/ch_18_rendering_and_presentation/</url>
+    <url>/ch_18_rendering_and_presentation/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_18_RenderingAndPresentation">18_RenderingAndPresentation</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
@@ -408,7 +408,7 @@ This is why images with sharp black-white elements are prone to aliasing/moiré 
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 17：Command Buffers</title>
-    <url>/en/ch_17_command_buffers/</url>
+    <url>/ch_17_command_buffers/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_17_CommandBuffers">17_CommandBuffers</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
@@ -520,7 +520,7 @@ This is why images with sharp black-white elements are prone to aliasing/moiré 
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 16：FrameBuffers</title>
-    <url>/en/ch_16_framebuffers/</url>
+    <url>/ch_16_framebuffers/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_16_FrameBuffers">16_FrameBuffers</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
@@ -557,7 +557,7 @@ This is why images with sharp black-white elements are prone to aliasing/moiré 
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 15：Pipeline Conclusion</title>
-    <url>/en/ch_15_conclusion/</url>
+    <url>/ch_15_conclusion/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_15_Pipeline_Conclusion">15_Pipeline_Conclusion</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
@@ -591,7 +591,7 @@ This is why images with sharp black-white elements are prone to aliasing/moiré 
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 14：Render Passes</title>
-    <url>/en/ch_14_render_passes/</url>
+    <url>/ch_14_render_passes/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_14_Render_passes">14_Render_Passes</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
@@ -673,17 +673,17 @@ This is why images with sharp black-white elements are prone to aliasing/moiré 
       </tags>
   </entry>
   <entry>
-    <title>XR Stereo Rendering Modes</title>
-    <url>/en/stereo_rendering_mode/</url>
-    <content><![CDATA[<p>In XR, objects typically need to be rendered in stereo, meaning content must be drawn to both left and right eye textures. This rendering approach is called <code>Stereo Rendering</code>. This article covers several stereo rendering techniques, including:</p>
+    <title>XR 立体渲染模式</title>
+    <url>/stereo_rendering_mode/</url>
+    <content><![CDATA[<p>在 XR 中物体通常需要以立体（in sterro）的方式被渲染，即一个内容需要被绘制到左眼和右眼的纹理中，这种渲染方式被称为 <code>立体渲染（Stereo-Rendering）</code>，本文将介绍几种立体渲染的方式，包括：</p>
 <ul>
-<li><code>Multi-Pass</code>: Left and right eye frames use separate textures and are rendered individually. This is the most primitive, most compatible rendering method, but has poor performance.</li>
-<li><code>Single-Pass</code>: Left and right eyes use a single texture, typically the preferred rendering method for current applications with better performance. This mode has several variants such as <code>Single-Pass Double Wide</code>, <code>Single-Pass Instanced</code>, <code>Single-Pass Multi-View</code>, etc.</li>
-<li><code>Quad-View</code>: A newer rendering approach that further divides left and right eye frames into four views: <code>Inner-Left</code> and <code>Inner-Right</code>, <code>Outer-Left</code> and <code>Outer-Right</code>. It improves image clarity through different PPD (Pixels Per Degree) for <code>Inner</code> and <code>Outer</code> regions. This mode is typically used on devices with eye-tracking support.</li>
+<li><code>Multi-Pass</code>：左眼和右眼画面由两张纹理构成，并分别绘制左眼和右眼画面。这是最原始，兼容性最好的渲染方式，但拥有较差的性能。</li>
+<li><code>Single-Pass</code>：左眼和右眼由一个纹理构成，通常是目前常规应用首先的渲染方式，拥有较好的性能。该模式有较多的变种，如 <code>Single-Pass Double Wide</code>，<code>Single-Pass Instanced</code>，<code>Single-Pass Multi-View</code> 等。</li>
+<li><code>Quad-View</code>：一种较新的渲染方式，将左右眼画面进一步拆分为 <code>Inner-Left</code>和 <code>Inner-Right</code>，<code>Outer-Left</code> 和 <code>Outer-Right</code> 四个视图，通过 <code>Inner</code> 和 <code>Outer</code> 不同的 PPD（Pixels Per Degree）来提升画面的清晰度。该模式通常在支持眼动追踪的设备上使用。</li>
 </ul>
 <h1 id="Multi_Pass"><a class="header-anchor" href="#Multi_Pass">#</a>Multi-Pass</h1>
-<p>In Multi-Pass rendering mode, a separate render texture (Texture2D) is created for each eye, and left and right eye frames are drawn separately in each eye’s rendering loop. The advantage of Multi-Pass rendering mode is good compatibility, supporting all XR devices. However, performance is poor because every object needs to be rendered twice, and render targets must be switched for each rendering pass (which is why it’s called multi-pass).</p>
-<p>The diagram below illustrates this approach:</p>
+<p>在 Multi-Pass 渲染模式下，需要为每个眼睛创建一个单独的渲染纹理（Texture2D），并在每个眼睛的渲染循环中分别绘制左眼和右眼的画面。Multi-Pass 渲染模式的优点是兼容性好，支持所有 XR 设备，但性能较差，因为针对每一个物体都需要进行两次渲染，此外，每一次渲染时都需要切换渲染纹理（这就是被称为多 Pass 的原因）。</p>
+<p>其示意图如下所示</p>
 <iframe
   style="border: 1px solid #ccc; border-radius: 0.5rem;"
   src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/ab120e5e01e009e7cbdaad58694d545d/raw/e96516222e4a02c44f3d1eb0cce09a1e4c8ca6e0/MultiPass.ins"
@@ -693,12 +693,12 @@ This is why images with sharp black-white elements are prone to aliasing/moiré 
   allowfullscreen
 ></iframe>
 <h1 id="Single_Pass"><a class="header-anchor" href="#Single_Pass">#</a>Single-Pass</h1>
-<p>As the name suggests, Single-Pass uses only one texture as the render target. Under this premise, Single-Pass has multiple variant modes, each with its own rendering approach:</p>
-<div class="note info simple"><p>A common misconception is that Single-Pass means rendering both left and right eye frames in a single pass, while Multi-Pass requires two rendering passes for left and right eye frames.<br>
-In reality, the difference between Single-Pass and Multi-Pass lies in the number of render targets: Single-Pass uses one texture, while Multi-Pass uses multiple textures. In the case of Single-Pass Double Wide, Single-Pass still requires two rendering passes to complete left and right eye frame rendering.</p>
+<p>顾名思义，Single-Pass 就是渲染目标只有一张纹理，在这个前提下，Single-Pass 有多种变种模式，每一个变种都有其自己的渲染方式：</p>
+<div class="note info simple"><p>一个常见的误解是认为 Single-Pass 就是同一目标一次渲染完成左眼和右眼画面，Multi-Pass 是两次渲染完成左眼和右眼画面。<br>
+实际上，Single-Pass 和 Multi-Pass 的区别在于渲染目标的数量，Single-Pass 只有一张纹理，而 Multi-Pass 有多张纹理。在 single-Pass Double Wide 的情况下，Single Pass 同样需要两次渲染来完成左眼和右眼画面的渲染。</p>
 </div>
 <h2 id="Single_Pass_Double_Wide"><a class="header-anchor" href="#Single_Pass_Double_Wide">#</a>Single-Pass Double Wide</h2>
-<p>The Single-Pass Double Wide approach uses a texture with twice the width of a single eye frame to represent both left and right eye frames simultaneously, where the left half contains the left eye view and the right half contains the right eye view. The diagram below illustrates this approach:</p>
+<p>Single-Pass Double Wide 方案用一张宽度是单个眼睛画面两倍的纹理来同时表示左眼和右眼画面，其中左半部分是左眼，右半部分是右眼。其示意图如下所示：</p>
 <iframe
   style="border: 1px solid #ccc; border-radius: 0.5rem;"
   src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/7ab6ab47a1fd5b21b58ce9b7b0be7183/raw/a48932f4b40d8671472b34aaa8fff82f28c0939f/SinglePass-DoubleWide.ins"
@@ -707,34 +707,34 @@ In reality, the difference between Single-Pass and Multi-Pass lies in the number
   frameborder="0"
   allowfullscreen
 ></iframe>
-<p>As shown, in the Single-Pass Double Wide approach:</p>
+<p>可以看到在 Single-Pass Double Wide 方案下:</p>
 <ul>
-<li>Each object still needs to be rendered <strong>twice</strong> to the left and right eye portions, except now both eye views are represented using a single texture.</li>
-<li>Rendering uses a ping-pong approach, where the render target switches between left and right eye portions in a <code>Left-Right-Right-Left-Left-....</code> pattern (as shown in the diagram above). The advantage is that only one pass through all required objects is needed to complete both left and right eye rendering, thus reducing rendering context switches and the number of commands that need to be executed.</li>
+<li>每个对象仍然需要被 <strong>两次</strong> 渲染至左眼和右眼部分，只不过现在是通过一个纹理来表示左眼和右眼画面。</li>
+<li>渲染采用了 ping-pong 的方式，即渲染的目标会在左右眼部分以 <code>Left-Right-Right-Left-Left-....</code> 的方式切换（见上示意）。这样的好处只需要遍历一次所有需要的对象，即能完成左右眼的渲染，也因此减少了渲染时上下文的切换和需要执行的 Command 数量。</li>
 </ul>
-<p>The Single-Pass Double Wide approach has been largely deprecated because it still requires two rendering passes per object and its ping-pong method significantly increases pipeline complexity.</p>
-<p>Current devices typically support Single-Pass Instanced or Single-Pass MultiView, both offering better performance.</p>
+<p>Single-Pass Double Wide 方案基本已经被淘汰，因为它仍然需要对每个对象做两次渲染，且其 ping-pong 的方式会极大的增加管线复杂度。</p>
+<p>目前的设备通常都支持 Single-Pass Instanced 或 Single-Pass MultiView，这两种方案也有更高的性能。</p>
 <h2 id="Single_Pass_Instanced_Single_Pass_MultiView"><a class="header-anchor" href="#Single_Pass_Instanced_Single_Pass_MultiView">#</a>Single-Pass Instanced / Single-Pass MultiView</h2>
-<p>Both Single-Pass Instanced and Single-Pass MultiView use a texture array to represent left and right eye frames, where Index 0 is the left eye and Index 1 is the right eye. The advantage of both approaches is reduced texture switching overhead, and each object can be rendered to both left and right eye frames through a <strong>single</strong> rendering pass. The disadvantage is compatibility - both require devices to support specific GPU features and require shader adaptations.</p>
-<p>These two approaches require specific features and shader modifications for two purposes:</p>
+<p>Single-Pass Instanced 和 Single-Pass MultiView 方案都是用一张纹理数组来表示表示左眼和右眼画面，其中 Index 0 是左眼，Index 1 是右眼。该两者的优点是都是节省了纹理切换的开销，且每个物体可以通过 <strong>一次</strong> 渲染同时被绘制到左眼和右眼画面上，其缺点都在于兼容性，这两种默认都要求设备需要支持特定的 GPU 特性，以及渲染时的 Shader 需要做一定的适配。</p>
+<p>这两种方案所需要的特性和 Shader 的修改都是为了两个目的：</p>
 <ol>
-<li>To render to both left and right eye frames in a single pass while distinguishing between left and right eye View Matrices
+<li>可以通过一次渲染同时绘制到左眼和右眼画面上，但绘制时需要区分左右眼的 View Matrix
 <ul>
-<li>Instanced: Uses GPU instancing features, using Instance ID to distinguish left and right eye View Matrices</li>
-<li>MultiView: Relies on MultiView extensions<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>, using <code>gl_ViewID_OVR</code> to distinguish left and right eye View Matrices</li>
+<li>Instanced：使用 GPU 的 Instancing 特性来实现，使用 Instance ID 区分左右眼的 View Matrix</li>
+<li>MultiView：依靠 MultiView 拓展<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>，使用其中的 <code>gl_ViewID_OVR</code> 区分左右眼的 View Matrix</li>
 </ul>
 </li>
-<li>To specify the render target texture Index during rendering
+<li>在渲染时可以指定渲染目标纹理的 Index
 <ul>
-<li>Instanced: Relies on platform-specific GPU features, such as DirectX 11’s <code>VPAndRTArrayIndexFromAnyShaderFeedingRasterizer</code>, OpenGL’s <code>GL_NV_viewport_array2</code>, <code>GL_AMD_vertex_shader_layer</code>, <code>GL_ARB_shader_viewport_layer_array</code></li>
-<li>MultiView: Relies on MultiView extensions<sup class="footnote-ref"><a href="#fn1" id="fnref1:1">[1:1]</a></sup>, using <code>FramebufferTextureMultiviewOV</code> to specify the render target texture Index</li>
+<li>Instanced：依赖各平台的 GPU 特性来实现，如 DirectX 11 的 <code>VPAndRTArrayIndexFromAnyShaderFeedingRasterizer</code>，OpenGL 的 <code>GL_NV_viewport_array2</code>, <code>GL_AMD_vertex_shader_layer</code>, <code>GL_ARB_shader_viewport_layer_array</code></li>
+<li>MultiView：依靠 MultiView 拓展<sup class="footnote-ref"><a href="#fn1" id="fnref1:1">[1:1]</a></sup>，使用其中的 <code>FramebufferTextureMultiviewOV</code> 来指定渲染目标纹理的 Index</li>
 </ul>
 </li>
 </ol>
-<div class="note info simple"><p>Instanced extensions for specifying render target texture Index, such as <code>GL_NV_viewport_array2</code>, are not supported on mobile OpenGLES. Therefore, on mobile platforms, MultiView extensions are required to achieve rendering to different texture array indices.</p>
+<div class="note info simple"><p>指定渲染目标纹理的 Index 的 Instanced 拓展，如 <code>GL_NV_viewport_array2</code> 等在移动端 OpenGLES 下并不支持，所以在移动端为了实现渲染到目标纹理的不同 Index 的目的，必须依赖 MultiView 拓展。</p>
 </div>
-<div class="note primary simple"><p>Instanced and MultiView approaches are essentially two different ways to achieve the same implementation goals. Due to different feature support, Instanced works better on PC platforms while MultiView works better on mobile platforms.<br>
-For convenience, we’ll refer to both as Multiview in the following sections.</p>
+<div class="note primary simple"><p>Instanced 方案和 MultiView 方案几乎就是同样的实现目标的两种方式，因为特性支持的不同，Instanced 方案在 PC 端的支持更好，而 MultiView 方案在移动端的支持更好。<br>
+为方便描述，后续不再区分 Instanced / Multiview，直接称为 Multiview。</p>
 </div>
 <iframe
   style="border: 1px solid #ccc; border-radius: 0.5rem;"
@@ -745,34 +745,34 @@ For convenience, we’ll refer to both as Multiview in the following sections.</
   allowfullscreen
 ></iframe>
 <h1 id="Quad_View"><a class="header-anchor" href="#Quad_View">#</a>Quad-View</h1>
-<p>Quad-View is a newer rendering approach that implements Foveated Rendering. It further divides left and right eye frames into four views: <code>Inner-Left</code> and <code>Inner-Right</code>, <code>Outer-Left</code> and <code>Outer-Right</code>. The <code>Outer</code> views are rendered using the original FOV, while the <code>Inner</code> views use a smaller FOV. This way, even if <code>Inner</code> and <code>Outer</code> have the same resolution, the <code>Inner</code> views will have higher PPD (Pixels Per Degree), resulting in higher clarity for the <code>Inner</code> regions.</p>
-<p>The diagram below shows the Outer and Inner views of a single eye in the same scene, where Outer has approximately 90° horizontal FOV and Inner has approximately 40° horizontal FOV:<br>
+<p>Quad-View 是一种较新的渲染方式，它是 Foveation Rendering 的一种实现方式，它将左右眼画面进一步拆分为 <code>Inner-Left</code>和 <code>Inner-Right</code>，<code>Outer-Left</code> 和 <code>Outer-Right</code> 四个视图。<code>Outer</code> 画面使用原始的 Fov 进行渲染，<code>Inner</code> 画面则是较小的 FOV，这样即使 <code>Inner</code> 和 <code>Outer</code> 的分辨率相同，<code>Inner</code> 画面也会拥有较高的 PPD（Pixels Per Degree），也因此 <code>Inner</code> 画面会有更高的清晰度。</p>
+<p>下图展现了同一个场景内中，单一眼的 Outer 和 Inner 画面，这里 Outer 的横向 FOV 约为 90°，Inner 的横向 FOV 约为 40°：<br>
 <img src="/stereo_rendering_mode/stereo_rendering_mode_2025-03-28-17-42-27.excalidraw.svg" alt="Outer vs Inner"></p>
-<div class="note primary simple"><p>Quad-Views are typically used on devices with eye-tracking support, where the Inner view rendering region is determined by the eye gaze area.</p>
+<div class="note primary simple"><p>Quad-Views 通常在支持眼动追踪的设备上使用，Inner 画面的渲染区域由眼动注视的区域来决定。</p>
 </div>
-<p>For the rendering of Quad-View’s four views, there are two variants:</p>
+<p>针对 Quad-View 的四个视图的渲染方式又有两个变种：</p>
 <ul>
-<li><code>Single-Pass</code>: Uses <strong>one</strong> texture array with Array Size of 4 to represent the four views, updating all four views simultaneously using Multiview.</li>
-<li><code>Multi-Pass</code>: Uses <strong>two</strong> texture arrays with Array Size of 2 each to represent Inner left/right eye frames and Outer left/right eye frames, using two rendering passes to separately update Inner and Outer frames, where each rendering pass uses Multiview to simultaneously update left and right eye frames.</li>
+<li><code>Single-Pass</code>：通过 <strong>一个</strong> Array Size 为 4 的纹理数组来表示四个视图，使用 Multview 的方式一次性更新四个视图的画面。</li>
+<li><code>Multi-Pass</code>：通过 <strong>两个</strong> Array Size 为 2 的纹理数组来表示 Inner 的左右眼画面和 Outer 的左右眼画面，使用两次绘制分别更新 Inner 和 Outer 的画面，每次绘制都使用 Multview 的方式来同时更新左右眼画面。</li>
 </ul>
-<div class="note info simple"><p>Theoretically, QuadViews could have more combinations, such as:</p>
+<div class="note info simple"><p>理论上，QuadViews 还可以有更多的组合方式，如：</p>
 <ul>
-<li>Using 4 Texture2D objects to represent the four views, using Multi-Pass approach with four DrawCalls to update the four view frames.</li>
-<li>Using 2 Texture2D objects for Outer left and right eyes, plus one Texture2DArray with Array Size of 2 for Inner left and right eyes. First updating left and right Outer with two DrawCalls, then updating left and right Inner with one DrawCall.<br>
-However, these combinations don’t provide additional benefits, so they are not discussed here.</li>
+<li>通过 4 个 Texture2D 来表示四个视图，使用 Multi-Pass 的方式通过四个 DrawCall 来更新四个视图的画面。</li>
+<li>使用 2 个 Texture2D 表示 Outer 的左右眼，再使用一个 Array Size 为 2 的 Texture2DArray 表示 Inner 的左右眼。先通过两个 DrawCall 更新左右眼 Outer，再通过一个 DrawCall 更新左右眼 Inner。<br>
+但这些组合方式并没有带来额外的收益，因此这里不进行讨论</li>
 </ul>
 </div>
-<div class="note info simple"><p>Unity XR only supports <code>Texture2DArray</code> with maximum ArraySize of 2, so Quad-View in Unity can only be implemented using Multi-Pass approach.</p>
+<div class="note info simple"><p>在 Unity XR 中，最多支持 ArraySize 为 2 的 <code>Texture2DArray</code>，因此在 Unity 中 Quad-View 只能通过 Multi-Pass 的方式来实现。</p>
 </div>
-<p>Single-Pass and Multi-Pass each have their own advantages, making both suitable for different scenarios:</p>
+<p>Single-Pass 和 Multi-Pass 有各自的好处，也因此这两种方案都有各自适合的场景：</p>
 <ul>
-<li>Single-Pass offers better performance, but limits all views to the same resolution.</li>
-<li>Multi-Pass sacrifices some performance but allows Inner and Outer to have different resolutions.</li>
+<li>Single-Pass 方案的性能更好，但它限制所有的视图必须是一样的分辨率。</li>
+<li>Multi-Pass 则是牺牲了一部分性能，却让 Inner 和 Outer 可以有各自的分辨率</li>
 </ul>
-<div class="note info simple"><p>Regardless of whether QuadViews uses Single-Pass or Multi-Pass, both depend on MultiView rendering support.</p>
+<div class="note info simple"><p>无论 QuadViews 使用 Single-Pass 还是 Multi-Pass，其都依赖 MultiView 渲染相应支持。</p>
 </div>
 <h2 id="Quad_Views_with_Single_Pass"><a class="header-anchor" href="#Quad_Views_with_Single_Pass">#</a>Quad-Views with Single-Pass</h2>
-<p>In Quad-Views with Single-Pass mode, each object simultaneously updates all four views (Inner/Outer) through a single DrawCall, as illustrated below:</p>
+<p>在 Quad-Views with Single-Pass 模式下，Inner/Outer 针对每个物体通过一次 DrawCall 同时更新到四个 View 中，示意图如下所示：</p>
 <iframe
   src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/f3d8a451f1491170a37e39f912c18813/raw/12d16fbe47ac54fd1a3fe44fa49db8fe4e1e65ec/Quad-View-SinglePass.ins"
   width="100%"
@@ -781,7 +781,7 @@ However, these combinations don’t provide additional benefits, so they are not
   allowfullscreen
 ></iframe>
 <h2 id="Quad_Views_with_Multi_Pass"><a class="header-anchor" href="#Quad_Views_with_Multi_Pass">#</a>Quad-Views with Multi-Pass</h2>
-<p>In Quad-Views with Multi-Pass mode, each DrawCall draws content to either Outer (or Inner) left and right eye frames separately, as illustrated below:</p>
+<p>在 Quad-Views with Multi-Pass 下，每一个 DrawCall 会分别将内容绘制到 Outer（或 Inner） 的左右眼画面上，示意图如下所示：</p>
 <iframe
   src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/ce7259a1aee59f021a0bc809cf69182c/raw/094e5e20d37e4a5f7e1064b1d6276778822b0e0c/QuadView-MultiPass.ins"
   width="100%"
@@ -808,7 +808,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 13：Fixed Functions</title>
-    <url>/en/ch_13_fixed_functions/</url>
+    <url>/ch_13_fixed_functions/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_13_Fixed_Functions">13_Fixed_Functions</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
@@ -903,7 +903,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 12：Shader Module</title>
-    <url>/en/ch_12_shader_modules/</url>
+    <url>/ch_12_shader_modules/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_12_Shader_Modules">12_Shader_Modules</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
@@ -963,7 +963,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 11：图形管线介绍</title>
-    <url>/en/ch_11_graphics_pipeline_introduction/</url>
+    <url>/ch_11_graphics_pipeline_introduction/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_11_Graphics_Pipeline_Introduction">11_Graphics_Pipeline_Introduction</a></p>
 </div>
 <p>Vulkan 中需要自己设定 渲染管线，在一些旧的图形 API 如 OpenGL 中，时可以通过一些函数修改渲染管线的，如通过 <code>glBlendFunc</code> 修改管线中对于混合的操作。但在 Vulkan 中管线几乎是完全不变的，因此每当需要修改管线设置，就必须重新创建管线。</p>
@@ -986,7 +986,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 10： Image Views</title>
-    <url>/en/ch_10_image_views/</url>
+    <url>/ch_10_image_views/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_10_ImageView">10_ImageView</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
@@ -1029,7 +1029,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 09： Swap Chain</title>
-    <url>/en/ch_09_swap_chain/</url>
+    <url>/ch_09_swap_chain/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_09_SwapChain">09_SwapChain</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
@@ -1133,7 +1133,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 08： 窗口 Surface</title>
-    <url>/en/ch_08_window_surface/</url>
+    <url>/ch_08_window_surface/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_08_Window_Surface">08_Window_Surface</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象和流程如下所示<br>
@@ -1180,7 +1180,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 07： 逻辑设备和队列</title>
-    <url>/en/ch_07_logical_device_and_queues/</url>
+    <url>/ch_07_logical_device_and_queues/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_07_Logical_Device_Queue">07_Logical_Device_Queue</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象如下所示：<br>
@@ -1231,7 +1231,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 06：物理设备和 Queue Family</title>
-    <url>/en/ch_06_physical_devices_and_queue_families/</url>
+    <url>/ch_06_physical_devices_and_queue_families/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_06_Physical_Devices_Queue_Families">06_Physical_Devices_Queue_Families</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象如下所示：<br>
@@ -1271,7 +1271,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 05： Validation Layers</title>
-    <url>/en/ch_05_validation_layers/</url>
+    <url>/ch_05_validation_layers/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分重构前的代码可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_05_Validation_Layers">_05_Validation_Layer</a><br>
 重构后的代码可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_05a_Refactor_Validation_Layer">_05a_Refactor_Validation_Layer</a></p>
 </div>
@@ -1365,7 +1365,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 04：Instance</title>
-    <url>/en/ch_04_instance/</url>
+    <url>/ch_04_instance/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_04_Instance">04_Instance</a></p>
 </div>
 <div class="note info simple"><p>本章涉及到的关键对象如下所示：<br>
@@ -1424,7 +1424,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 03：基本代码结构</title>
-    <url>/en/ch_03_base_code/</url>
+    <url>/ch_03_base_code/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_03_Base_Code">03_Base_Code</a></p>
 </div>
 <h1 id="基本结构"><a class="header-anchor" href="#基本结构">#</a>基本结构</h1>
@@ -1457,7 +1457,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 02：开发环境</title>
-    <url>/en/ch_02_development_environment/</url>
+    <url>/ch_02_development_environment/</url>
     <content><![CDATA[<div class="note info simple"><p>本部分结果可参考 <a href="https://github.com/xuejiaW/LearnVulkan/tree/main/_02_Development_Environment">02_Development_Environment</a></p>
 </div>
 <div class="note info simple"><p>本教程使用 VS 2022 进行开发，并使用 C++ 17 标准进行编译。</p>
@@ -1505,7 +1505,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 01：概览</title>
-    <url>/en/ch_01_overview/</url>
+    <url>/ch_01_overview/</url>
     <content><![CDATA[<p>这一部分会先介绍 Vulkan 以及它解决的问题，然后会阐述绘制第一个三角形所需要的组成部分。</p>
 <h1 id="Vulkan_的起源"><a class="header-anchor" href="#Vulkan_的起源">#</a>Vulkan 的起源</h1>
 <p>早期的图形 API 诞生时是为了配合当时的显卡硬件，大多是采用可配置固定管线实现。随着显卡的架构及硬件发展，显卡也提供了更多的可编程功能，这些可编程功能也逐步的被添加进早期的图形 API 中。但因为这些图形 API 诞生时的设计目标架构与目前的显卡架构已经存在比较大的差异，许多的工作被隐藏在显卡的驱动中，这也就是为何显卡的驱动也会极大程度的影响程序的性能的原因。</p>
@@ -1584,7 +1584,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 笔记 00：简介</title>
-    <url>/en/ch_00_introduction/</url>
+    <url>/ch_00_introduction/</url>
     <content><![CDATA[<p>Vulkan 是由 Khronos 提供了一套新图形 API，旨在为现代显卡提供更优秀的抽象能力，进而可以让开发者可以更好的描述自己需要应用执行的操作。与传统的 OpenGL 和 Direct3D 相比，Vulkan更少的依赖于驱动行为。</p>
 <div class="note info simple"><p>Vulkan 的设计想法与 Direct3D 12 及 Metal 类似，但 Vulkan 提供了跨平台的能力</p>
 </div>
@@ -1596,7 +1596,7 @@ However, these combinations don’t provide additional benefits, so they are not
   </entry>
   <entry>
     <title>《Vulkan Tutorial》 学习笔记汇总</title>
-    <url>/en/vulkan_tutorial/</url>
+    <url>/vulkan_tutorial/</url>
     <content><![CDATA[<h1 id="准备"><a class="header-anchor" href="#准备">#</a>准备</h1>
 <p><a href="/ch_00_introduction">Ch 00 Introduction</a>：简单的介绍 Vulkan API 的背景和设计目标。</p>
 <p><a href="/ch_01_overview">Ch 01 Overview</a>：介绍 Vulkan 和它的优点，以及绘制一个三角形所需要的步骤和其中设计的部分概念，同时也介绍了 Vulkan API 的约束。</p>
@@ -1646,7 +1646,7 @@ Ch 26 Image View And Sampler</p>
   </entry>
   <entry>
     <title>Unity Coroutine 与 Yield 的关系</title>
-    <url>/en/yield_and_coroutine/</url>
+    <url>/yield_and_coroutine/</url>
     <content><![CDATA[<div class="note info simple"><p>本文主要介绍 Unity 中的协程（Coroutine）和 Yield 的关系，建议先阅读 <a href="/yield">Yield</a> 了解 Yield 的基本概念。</p>
 </div>
 <h1 id="Unity_协程"><a class="header-anchor" href="#Unity_协程">#</a>Unity 协程</h1>
@@ -1723,7 +1723,7 @@ Ch 26 Image View And Sampler</p>
   </entry>
   <entry>
     <title>C# Yield 关键字</title>
-    <url>/en/yield/</url>
+    <url>/yield/</url>
     <content><![CDATA[<h1 id="Yield_概述"><a class="header-anchor" href="#Yield_概述">#</a>Yield 概述</h1>
 <p><code>yield</code> 用来在 Iterator 中返回数据的关键字，<code>yield return</code> 和直接使用 return 不同的点在于它可以在返回数据的同时保持当前迭代器的状态并在下次对 <code>Iterator</code> 调用 <code>MoveNext</code> 时继续迭代器的执行，<code>yield break</code> 则是用来结束迭代器。</p>
 <p>可以认为 <code>yield</code> 实现了 <a href="/ch_09_the_iterator_and_composite_pattern/#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F">迭代器模式</a> ，它可以用来延迟数据的获取（例如针对一个集合，不需要一次性获得所有数据，而是在每一个数据真正使用时才获取）。</p>
@@ -1786,7 +1786,7 @@ Ch 26 Image View And Sampler</p>
   </entry>
   <entry>
     <title>《3D 数学基础》第四章 矩阵简介</title>
-    <url>/en/ch_04_introduction_to_matrices/</url>
+    <url>/ch_04_introduction_to_matrices/</url>
     <content><![CDATA[<h1 id="矩阵的数学定义"><a class="header-anchor" href="#矩阵的数学定义">#</a>矩阵的数学定义</h1>
 <p>在线性代数中，矩阵是由一系列数字按行和列排布组成。</p>
 <div class="note primary simple"><p>可以将向量看作是标量的集合，把矩阵看作是向量的集合。</p>
@@ -1934,7 +1934,7 @@ M347 1759 V0 H263 V1759 v0 v1759 h84z"/></svg></span></span></span><span class="
   </entry>
   <entry>
     <title>绕任意轴旋转的旋转矩阵推导</title>
-    <url>/en/rotate_about_arbitary_axis/</url>
+    <url>/rotate_about_arbitary_axis/</url>
     <content><![CDATA[<div class="note info simple"><p>针对对于任意轴的旋转矩阵，思路同样是求基本向量在旋转后的结果。</p>
 </div>
 <p>向量<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">v</mi></mrow><annotation encoding="application/x-tex">\mathbf{v}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4444em;"></span><span class="mord mathbf" style="margin-right:0.01597em;">v</span></span></span></span>在绕任意轴 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> 旋转<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">θ</span></span></span></span>角度后变为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold">v</mi><msup><mrow></mrow><mo mathvariant="bold" lspace="0em" rspace="0em">′</mo></msup></msup></mrow><annotation encoding="application/x-tex">\mathbf{v^{&#x27;}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9425em;"></span><span class="mord"><span class="mord mathbf" style="margin-right:0.01597em;">v</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9425em;"><span style="top:-2.9425em;margin-right:0.05em;"><span class="pstrut" style="height:2.5795em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathbf mtight">′</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>，表达式为：</p>
@@ -2013,7 +2013,7 @@ M347 1759 V0 H263 V1759 v2400 v1759 h84z"/></svg></span></span></span><span clas
   </entry>
   <entry>
     <title>《3D 数学基础》 第三章 坐标系</title>
-    <url>/en/ch_03_multiple_coordinate_spaces/</url>
+    <url>/ch_03_multiple_coordinate_spaces/</url>
     <content><![CDATA[<h1 id="一些有用的坐标系"><a class="header-anchor" href="#一些有用的坐标系">#</a>一些有用的坐标系</h1>
 <p>之所以需要不同的坐标系，是因为一些信息仅在某些坐标系下是有意义的，或者只能在某坐标系下获得，或更容易得到。</p>
 <h2 id="世界坐标系"><a class="header-anchor" href="#世界坐标系">#</a>世界坐标系</h2>
@@ -2096,7 +2096,7 @@ M347 1759 V0 H263 V1759 v2400 v1759 h84z"/></svg></span></span></span><span clas
   </entry>
   <entry>
     <title>《3D 数学基础》 第二章 向量</title>
-    <url>/en/ch_02_vectors/</url>
+    <url>/ch_02_vectors/</url>
     <content><![CDATA[<h1 id="向量的数学定义"><a class="header-anchor" href="#向量的数学定义">#</a>向量的数学定义</h1>
 <p>从数学角度看</p>
 <ul>
@@ -2428,7 +2428,7 @@ M347 1759 V0 H263 V1759 v0 v1759 h84z"/></svg></span></span></span><span class="
   </entry>
   <entry>
     <title>《3D 数学基础》 第一章 笛卡尔坐标系</title>
-    <url>/en/ch_01_cartesian_coordinate_systems/</url>
+    <url>/ch_01_cartesian_coordinate_systems/</url>
     <content><![CDATA[<div class="note primary simple"><p>图形学第一定理：如果看起来结果是对的，那么就是对的<br>
 If it looks right, it is right.</p>
 </div>
@@ -2515,7 +2515,7 @@ c^2 = a^2 +b^2 -2ab \cos C \\
   </entry>
   <entry>
     <title>.Net Tools 发布指南</title>
-    <url>/en/publish_.net_tools/</url>
+    <url>/publish_.net_tools/</url>
     <content><![CDATA[<p>在 <a href="/create_.net_tools">创建 .Net Tools </a> 中讲解了如何从零创建一个 .Net Tool，本文将讲解如何将 .Net Tool 发布到 <a href="https://www.nuget.org/">NuGet</a> 上。</p>
 <div class="note info simple"><p><a href="https://www.nuget.org/">NuGet</a> 是最大的 .Net 包管理组织，你可以在上面找到大量的 .Net 包，也可以将自己的包发布到上面。<br>
 本文假设你已经创建了一个 .Net Tool（.nuget 文件），并且已经有了一个 NuGet 账号。</p>
@@ -2554,7 +2554,7 @@ c^2 = a^2 +b^2 -2ab \cos C \\
   </entry>
   <entry>
     <title>《3D Math Primer For Graphics and Game Development》 笔记汇总</title>
-    <url>/en/3d_math_primer_for_graphics_and_game_development/</url>
+    <url>/3d_math_primer_for_graphics_and_game_development/</url>
     <content><![CDATA[<div class="note info simple"><p>为了方便阅读，谨记本书中的一些前提约束，本书中：</p>
 <ul>
 <li>计算的向量都是行向量</li>
@@ -2578,7 +2578,7 @@ c^2 = a^2 +b^2 -2ab \cos C \\
   </entry>
   <entry>
     <title>《Learn OpenGL》 Ch 07 Camera</title>
-    <url>/en/ch_07_camera/</url>
+    <url>/ch_07_camera/</url>
     <content><![CDATA[<div class="note primary simple"><p>本部分的实现代码，见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_07_Camera">07_Camera</a></p>
 </div>
 <p>关于摄像机的实现，实际上就是调整观察矩阵的问题。为了确定观察矩阵，需要确认四个信息：</p>
@@ -2649,7 +2649,7 @@ M347 1759 V0 H263 V1759 v1200 v1759 h84z"/></svg></span></span></span><span clas
   </entry>
   <entry>
     <title>《Learn OpenGL》 Ch 06 Coordinate System</title>
-    <url>/en/ch_06_coordinate_system/</url>
+    <url>/ch_06_coordinate_system/</url>
     <content><![CDATA[<div class="note primary simple"><p>本部分的实现代码，见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_06_CoordinateSystem">06_CoordinateSystem</a></p>
 </div>
 <h1 id="坐标系统"><a class="header-anchor" href="#坐标系统">#</a>坐标系统</h1>
@@ -2715,7 +2715,7 @@ M347 1759 V0 H263 V1759 v1200 v1759 h84z"/></svg></span></span></span><span clas
   </entry>
   <entry>
     <title>《Learn OpenGL》 Ch 05 Transformations</title>
-    <url>/en/ch_05_transformations/</url>
+    <url>/ch_05_transformations/</url>
     <content><![CDATA[<div class="note primary simple"><p>本部分的实现代码，见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_05_Transformations">05_Transformations</a></p>
 </div>
 <h1 id="GLM"><a class="header-anchor" href="#GLM">#</a>GLM</h1>
@@ -2740,7 +2740,7 @@ M347 1759 V0 H263 V1759 v1200 v1759 h84z"/></svg></span></span></span><span clas
   </entry>
   <entry>
     <title>《Learn OpenGL》 Ch 04 Textures</title>
-    <url>/en/ch_04_textures/</url>
+    <url>/ch_04_textures/</url>
     <content><![CDATA[<div class="note primary simple"><p>本部分的实现代码，见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_04_Textures">04_Textures</a></p>
 </div>
 <h1 id="采样"><a class="header-anchor" href="#采样">#</a>采样</h1>
@@ -2841,7 +2841,7 @@ M347 1759 V0 H263 V1759 v1200 v1759 h84z"/></svg></span></span></span><span clas
   </entry>
   <entry>
     <title>《Learn OpenGL》 Ch 03 Shaders</title>
-    <url>/en/ch_03_shaders/</url>
+    <url>/ch_03_shaders/</url>
     <content><![CDATA[<div class="note primary simple"><p>本章的实现代码，见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_03_Shaders">03_Shaders</a> 和 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_03_Shaders_Uniform">03_Shaders_Uniform</a></p>
 </div>
 <p>着色器是运行在 GPU 上的小程序，这些小程序是为了在图形渲染管线上完成特定的任务。着色器的任务只是将输入转换为特定的输出。并且各种着色器之间是无法访问到对方的，他们之间唯一的交流是通过输入和输出。</p>
@@ -2914,7 +2914,7 @@ M347 1759 V0 H263 V1759 v1200 v1759 h84z"/></svg></span></span></span><span clas
   </entry>
   <entry>
     <title>《Learn OpenGL》 Ch 02 Hello Triangle</title>
-    <url>/en/ch_02_hello_triangle/</url>
+    <url>/ch_02_hello_triangle/</url>
     <content><![CDATA[<div class="note primary simple"><p>本部分的实现代码，见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_02_HelloTriangle">02_HelloTriangle</a></p>
 </div>
 <h1 id="渲染管线"><a class="header-anchor" href="#渲染管线">#</a>渲染管线</h1>
@@ -3018,7 +3018,7 @@ M347 1759 V0 H263 V1759 v1200 v1759 h84z"/></svg></span></span></span><span clas
   </entry>
   <entry>
     <title>《Learn OpenGL》 Ch 01 Hello Window</title>
-    <url>/en/ch_01_hello_window/</url>
+    <url>/ch_01_hello_window/</url>
     <content><![CDATA[<div class="note primary simple"><p>本部分的实现代码，见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_01_HelloWindow">01_CreateWindow</a></p>
 </div>
 <p>在 <a href="/ch_00_creating_a_window">Ch 00 Creating a Window</a> 的最后，我们通过一系列代码绘制出了一个纯色的面板，但并没有解释相关的代码。在这一章中，我们将从 0 逐步解释这些代码。</p>
@@ -3069,7 +3069,7 @@ M347 1759 V0 H263 V1759 v1200 v1759 h84z"/></svg></span></span></span><span clas
   </entry>
   <entry>
     <title>《Learn OpenGL》 Ch 00 创建 Window</title>
-    <url>/en/ch_00_creating_a_window/</url>
+    <url>/ch_00_creating_a_window/</url>
     <content><![CDATA[<div class="note primary simple"><p>本部分的实现代码，见 <a href="https://github.com/xuejiaW/LearnOpenGL/tree/main/_00_CreateWindow">00_CreateWindow</a></p>
 </div>
 <p>在使用 OpenGL 前，首先需要创建 OpenGL 的上下文和用于绘制的窗口等，这些内容是与操作系统相关的。OpenGL 希望成为一个跨平台的工具，因此 OpenGL 本身并不复杂这些内容的处理，需要用户自己来进行相关的环境配置。</p>
@@ -3131,7 +3131,7 @@ M347 1759 V0 H263 V1759 v1200 v1759 h84z"/></svg></span></span></span><span clas
   </entry>
   <entry>
     <title>《Learn OpenGL》 学习笔记汇总</title>
-    <url>/en/learn_opengl/</url>
+    <url>/learn_opengl/</url>
     <content><![CDATA[<p>以下内容都是我学习 <a href="https://learnopengl.com/Introduction">Learn OpenGL</a> 系列教程时的笔记，它很详尽，一定程度上你可以将其视作是 <a href="https://learnopengl.com/Introduction">Learn OpenGL</a> 的翻译，但我在其中也加入了一些自己的理解和注释，同时也会对原始内容进行一些增删和调整，以便更好地适应我学习时的背景。</p>
 <h1 id="Getting_Started"><a class="header-anchor" href="#Getting_Started">#</a>Getting Started</h1>
 <p><a href="/ch_00_creating_a_window">Ch 00 Creating a Window</a></p>
@@ -3181,7 +3181,7 @@ Ch 34 SSAO</p>
   </entry>
   <entry>
     <title>使用 System.CommandLine 为 .Net Tools 添加命令行参数支持</title>
-    <url>/en/system.commandline_get_started/</url>
+    <url>/system.commandline_get_started/</url>
     <content><![CDATA[<p>本篇教程通过创建一个名为 <code>scl</code> <em>(Sample Command Line)</em> 的 .Net Tools 来说明如何使用 System.CommandLine 库为 .Net Tool 增加命令行参数解析支持。</p>
 <div class="note primary simple"><p>完整的示例代码，可见 <a href="https://github.com/xuejiaW/.Net-Samples/tree/main/SampleCommandLine">SampleCommandLine</a></p>
 </div>
@@ -3309,7 +3309,7 @@ Ch 34 SSAO</p>
   </entry>
   <entry>
     <title>.Net 工程创建 NUnit 单元测试指南</title>
-    <url>/en/create_nunit_testing/</url>
+    <url>/create_nunit_testing/</url>
     <content><![CDATA[<div class="note primary simple"><p>完整工程见 <a href="https://github.com/xuejiaW/.Net-Samples/tree/main/UnitTestingUsingNUnit">UnitTestingUsingNUnit</a></p>
 </div>
 <h1 id="创建被测试工程"><a class="header-anchor" href="#创建被测试工程">#</a>创建被测试工程</h1>
@@ -3365,7 +3365,7 @@ Ch 34 SSAO</p>
   </entry>
   <entry>
     <title>Normal Matrix 矩阵推导</title>
-    <url>/en/normal_matrix/</url>
+    <url>/normal_matrix/</url>
     <content><![CDATA[<p>Normal Matrix 是用来将法线从 <a href="/ch_03_multiple_coordinate_spaces/#Object_Space">Model Space</a> 转换到 <a href="/ch_03_multiple_coordinate_spaces/#World_Spaces">World Spaces</a> 的。</p>
 <p>相对于将顶点位置从 Model Space 转换到 View Space，法线的转换有两点需要额外考虑：</p>
 <ol>
@@ -3443,7 +3443,7 @@ N&#x27; \cdot T&#x27; &amp;= (GN) \cdot (MT) \\
   </entry>
   <entry>
     <title>Custom SRP - Draw Calls</title>
-    <url>/en/draw_calls/</url>
+    <url>/draw_calls/</url>
     <content><![CDATA[<div class="note info simple"><p>该教程部分完成的工程状态可见：<a href="https://github.com/xuejiaW/CustomSRP/releases/tag/DrawCalls">Draw Calls</a></p>
 </div>
 <h1 id="Shaders"><a class="header-anchor" href="#Shaders">#</a>Shaders</h1>
@@ -3752,7 +3752,7 @@ Unity 官方也有相关的教程 <a href="https://docs.unity3d.com/Manual/SL-Sh
   </entry>
   <entry>
     <title>Custom SRP - Custom Render Pipeline</title>
-    <url>/en/custom_render_pipeline/</url>
+    <url>/custom_render_pipeline/</url>
     <content><![CDATA[<div class="note info simple"><p>该教程部分完成的工程状态可见：<a href="https://github.com/xuejiaW/CustomSRP/releases/tag/CustomRenderPipeline">Custom Render Pipeline</a></p>
 </div>
 <h1 id="A_new_Render_Pipeline"><a class="header-anchor" href="#A_new_Render_Pipeline">#</a>A new Render Pipeline</h1>
@@ -4078,7 +4078,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>Custom SRP</title>
-    <url>/en/custom_srp/</url>
+    <url>/custom_srp/</url>
     <content><![CDATA[<p>Unity Catlike 中 <a href="%5Bunity_custom_srp_tutorials_(catlikecoding.com)%5D(https://catlikecoding.com/unity/tutorials/custom-srp/)">Custom SRP</a> 的教程学习笔记汇总，该笔记并非完全的对原教程的翻译，在学习过程中的发现的额外资料以及对原教程中未详细说明的部分都会进行相应的补充。</p>
 <ul>
 <li><a href="/custom_render_pipeline">Custom Render Pipeline</a>：使用自定义的渲染管线在 Editor 和 Game 界面中绘制一系列 <code>Unlit/Color</code> 的物体以及 Skybox。</li>
@@ -4095,7 +4095,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Terminal, Console, Shell, Command Line 之间的关系》</title>
-    <url>/en/difference_between_terminal,_console,_shell,_and_command_line/</url>
+    <url>/difference_between_terminal,_console,_shell,_and_command_line/</url>
     <content><![CDATA[<p><code>Terminal</code>，<code>Console</code>，<code>Shell</code> 和 <code>Command Line</code> 这几个词汇经常同时被使用，也因此他们的含义很容易被混淆。本文将尝试解释这几个词汇的含义。</p>
 <div class="note icon-padding simple"><i class="note-icon fas fa-clipboard-list"></i><p>用户输入的文本命令是 <code>Command Line</code>，<code>Shell</code> 负责将其转译成操作系统能够理解的指令，并获取操作系统的执行结果。<br>
 <code>Terminal</code> 和 <code>Console</code> 负责提供用户可以输入 <code>Command Line</code> 的界面和展示命令的执行结果。</p>
@@ -4145,7 +4145,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Code Complete》 第六章：类的实践</title>
-    <url>/en/ch_06_working_classes/</url>
+    <url>/ch_06_working_classes/</url>
     <content><![CDATA[<h1 id="6_1_类基础：抽象数据类型"><a class="header-anchor" href="#6_1_类基础：抽象数据类型">#</a>6.1 类基础：抽象数据类型</h1>
 <p>抽象数据类型（Abstract data type, ADT）是一系列 <em>数据</em> 和操作这些数据的函数集合。</p>
 <div class="note info simple"><p>可以将 ADT 看作为对 <strong>一个</strong> 事物的合理封装</p>
@@ -4443,7 +4443,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>Powershell 模块：ZLocation</title>
-    <url>/en/zlocation/</url>
+    <url>/zlocation/</url>
     <content><![CDATA[<p>ZLocation 是 PowerShell 中的一个 Module，其可以追踪你访问各个地址的历时，并通过 <code>z</code> 命令快速访问你最常使用的目录。</p>
 <h1 id="安装方式"><a class="header-anchor" href="#安装方式">#</a>安装方式</h1>
 <p>可使用如下的命令安装 ZLocation：</p>
@@ -4517,7 +4517,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>Unity Input System Step-By-Step 最简教程</title>
-    <url>/en/input_system_minimum_tutorial/</url>
+    <url>/input_system_minimum_tutorial/</url>
     <content><![CDATA[<h1 id="Overview"><a class="header-anchor" href="#Overview">#</a>Overview</h1>
 <div class="note info simple"><p>本教程极大程度的参考了 Unity Learn 上的官方教程[^1]，但并不是其翻译版本，而是根据我的学习过程进行相应增删改。<br>
 完整工程见：<a href="https://github.com/xuejiaW/InputSystemSample">xuejiaW/InputSystemSample: A minimum unity project to illustrate how to use Unity new input system. (github.com)</a></p>
@@ -4650,7 +4650,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Code Complete》 第五章：构建中的设计</title>
-    <url>/en/ch_05_design_in_construction/</url>
+    <url>/ch_05_design_in_construction/</url>
     <content><![CDATA[<p>在小型项目中，许多 <em>理论上处于编码外</em> 的活动也会被认为是编码。在一些较大的项目中，架构仅解决了系统级的问题，而将许多设计工作留在编码部分。在真正的大型项目中，前期的设计可能会足够的详细，让编码真正的只需要关心编码本身，但这种详细的设计实际上很少会出现。</p>
 <p>设计可以有许多不同的形式，可以是：</p>
 <ul>
@@ -5171,7 +5171,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Code Complete》 设计检查清单</title>
-    <url>/en/ch_05_design_checklist/</url>
+    <url>/ch_05_design_checklist/</url>
     <content><![CDATA[<p>设计清单，帮助你在设计完成后，确认自己的设计是否理想，合适。</p>
 <h1 id="设计实践"><a class="header-anchor" href="#设计实践">#</a>设计实践</h1>
 <ul>
@@ -5203,7 +5203,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Code Complete》第四章：关键构建决策</title>
-    <url>/en/ch_04_key_construction_decisions/</url>
+    <url>/ch_04_key_construction_decisions/</url>
     <content><![CDATA[<h1 id="4_1_编程语言的选择"><a class="header-anchor" href="#4_1_编程语言的选择">#</a>4.1 编程语言的选择</h1>
 <p>编程语言的选择会通过多种方式影响生产力和代码质量。</p>
 <p>程序员使用熟悉的语言比使用不熟悉的语言更有效率。IBM 的一项早期研究发现，对一个语言有丰富经验的程序员的工作效率是那些经验很少的程序员的三倍多</p>
@@ -5230,7 +5230,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Code Complete》 构建实践检查清单</title>
-    <url>/en/ch_04_construction_practices_checklists/</url>
+    <url>/ch_04_construction_practices_checklists/</url>
     <content><![CDATA[<p>这一节中包含有在编码时，需要检查的内容。</p>
 <h1 id="Coding"><a class="header-anchor" href="#Coding">#</a>Coding</h1>
 <ul>
@@ -5267,7 +5267,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Code Complete》第三章：测量两次，切割一次——前期准备</title>
-    <url>/en/ch_03_measure_twice,_cut_once_upstream_prerequisites/</url>
+    <url>/ch_03_measure_twice,_cut_once_upstream_prerequisites/</url>
     <content><![CDATA[<p>与建筑施工一样，项目的成败很大程度上在施工开始前就已经确定。如果地基没有打好或者规划不充分，施工期间你能做的最好的事情就是将损害降到最低。</p>
 <p>木匠的名言“测量两次，切割一次”，与软件开发的构建部分高度相关。</p>
 <p>最糟糕的软件项目最终会进行两次或三次或更多次的构建。对于软件来说，将项目中最昂贵的部分做两次是一个糟糕的主意，就像在任何其他工作中一样。</p>
@@ -5503,7 +5503,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Code Complete》先决条件检查清单</title>
-    <url>/en/ch_03_prerequisites_checklist/</url>
+    <url>/ch_03_prerequisites_checklist/</url>
     <content><![CDATA[<p>关于所有上游先决条件的检查表：</p>
 <ul>
 <li>[ ] 你是否已经确定了你正在从事的软件项目的类型并适当地调整了你的方法（迭代 或 顺序）？</li>
@@ -5518,7 +5518,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Code Complete》 架构检查清单</title>
-    <url>/en/ch_03_architecture_checklist/</url>
+    <url>/ch_03_architecture_checklist/</url>
     <content><![CDATA[<p>以下是一个好的架构应该解决的问题列表。该列表并不是要成为架构的综合指南，而是一种实用的方式来评估程序员获得的内容是否足够有营养。</p>
 <p>使用此清单作为起点。与<a href="/ch_03_requirement_checklist">需求清单</a> 一样，如果你正在处理一个非正式项目，你会发现一些甚至不需要考虑的项目。如果你正在从事一个较大的项目，那么大多数项目都会很有用。</p>
 <h2 id="具体的架构主题"><a class="header-anchor" href="#具体的架构主题">#</a>具体的架构主题</h2>
@@ -5564,7 +5564,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Code Complete》需求检查清单</title>
-    <url>/en/ch_03_requirement_checklist/</url>
+    <url>/ch_03_requirement_checklist/</url>
     <content><![CDATA[<p>需求清单包含一系列你可以用来询问自己的，有关项目需求的问题。</p>
 <p>使用该列表作为施工时的健全性检查，以确定构建前的需求准备工作的坚固程度。</p>
 <p>并非所有清单问题都适用于你的项目。</p>
@@ -5620,7 +5620,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Code Complete》第二章：丰富软件开发理解的隐喻</title>
-    <url>/en/ch_02_metaphors_for_a_richer_understanding_of_software_development/</url>
+    <url>/ch_02_metaphors_for_a_richer_understanding_of_software_development/</url>
     <content><![CDATA[<p>计算机科学拥有在所有领域中最丰富多彩的语言，在计算机科学中，我们会听到诸如 “病毒”，“特洛伊木马”，“蠕虫”，“崩溃” 等一系列看似与计算机无直接关系的词汇。</p>
 <p>这些词汇都是隐喻，它们描述了特定的软件现象。生动的隐喻可以帮助人们增加对软件开发过程的理解。</p>
 <div class="note info simple"><p>这里提到的 “隐喻（比喻）” 和 “类比” 在语境上极为类似，本节中可以将两者视为一物。</p>
@@ -5746,7 +5746,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Code Complete》第一章：欢迎来到软件构建</title>
-    <url>/en/ch_01_welcome_to_software_construction/</url>
+    <url>/ch_01_welcome_to_software_construction/</url>
     <content><![CDATA[<p>这本书是关于软件<strong>构建</strong>的，构建是建造的过程。在一些语境下，构建过程可能包括规划、设计、检查等部分，但大多情况下“构建”是指创建某些东西时真正动手的那部分。</p>
 <h1 id="什么是软件构建？"><a class="header-anchor" href="#什么是软件构建？">#</a>什么是软件构建？</h1>
 <p>软件开发是一个复杂的过程，在过去 25 年中，研究人员已经确定了软件开发中的许多不同活动，包括：</p>
@@ -5798,7 +5798,7 @@ Profiler 可以通过 <code>Window -&gt; Analysis -&gt; Profiler</code> 打开�
   </entry>
   <entry>
     <title>《Code Complete》 笔记汇总</title>
-    <url>/en/code_complete/</url>
+    <url>/code_complete/</url>
     <content><![CDATA[<p>Preface</p>
 <h1 id="Laying_the_Foundation"><a class="header-anchor" href="#Laying_the_Foundation">#</a>Laying the Foundation</h1>
 <p><a href="/ch_01_welcome_to_software_construction">Ch 01 Welcome to Software Construction</a><br>
@@ -5863,7 +5863,7 @@ Ch 34 Themes in Software Craftsmanship</p>
   </entry>
   <entry>
     <title>.Net Tools 创建指南</title>
-    <url>/en/create_.net_tools/</url>
+    <url>/create_.net_tools/</url>
     <content><![CDATA[<div class="note primary simple"><p>示例可见 <a href="https://github.com/xuejiaW/.Net-Samples/tree/main/CowSay">CowSay</a></p>
 </div>
 <div class="note info simple"><p>.Net Tool 需要使用 .net 6.0 及以上的版本</p>
@@ -5942,7 +5942,7 @@ Ch 34 Themes in Software Craftsmanship</p>
   </entry>
   <entry>
     <title>Windows Package Manager（winget）使用指南</title>
-    <url>/en/windows_package_manager/</url>
+    <url>/windows_package_manager/</url>
     <content><![CDATA[<h1 id="介绍"><a class="header-anchor" href="#介绍">#</a>介绍</h1>
 <p>Windows Package Manager （winget） 是微软推出的基于命令行的包管理器，类似于 Chocolatey。</p>
 <div class="note info simple"><p>Package Manager 所管理的 Package，实际指应用（application / program）</p>
@@ -6011,7 +6011,7 @@ Ch 34 Themes in Software Craftsmanship</p>
   </entry>
   <entry>
     <title>《蛤蟆先生去看心理医生》 摘抄</title>
-    <url>/en/ha_ma_xian_sheng_qu_kan_xin_li_yi_sheng/</url>
+    <url>/ha_ma_xian_sheng_qu_kan_xin_li_yi_sheng/</url>
     <content><![CDATA[<h1 id="第三章_初见咨询师"><a class="header-anchor" href="#第三章_初见咨询师">#</a>第三章 初见咨询师</h1>
 <p>心理咨询向来是一个自发的过程，咨询师和来访者双方都得出于自愿。所以这就意味着，只有当你是为自己而不是为取悦朋友们才想咨询的时候，我们才能真正合作。</p>
 <h1 id="第四章_抑郁的原因"><a class="header-anchor" href="#第四章_抑郁的原因">#</a>第四章 抑郁的原因</h1>
@@ -6127,7 +6127,7 @@ Ch 34 Themes in Software Craftsmanship</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第二十章 未来</title>
-    <url>/en/di_20_zhang_wei_lai%EF%BC%9Awei_ji_yu_ji_yu/</url>
+    <url>/di_20_zhang_wei_lai%EF%BC%9Awei_ji_yu_ji_yu/</url>
     <content><![CDATA[<h1 id="20_5_Unix_文化中的问题"><a class="header-anchor" href="#20_5_Unix_文化中的问题">#</a>20.5 Unix 文化中的问题</h1>
 <p>在 2000 年，当花了三天时间参加了一个 Macintosh 开发者会议之后，我愈发清晰地意识到了更大的心理问题。沉浸在一个同 Unix 世界假设基础完全相反的编程环境中真是个给人启迪的经历。</p>
 <p>Macintosh 程序员最为关心用户体验。他们是建筑设计师和装饰家。他们由外而内进行设计，首先就问“我们需要支持哪种交互?”，然后构建隐藏其后的程序逻辑来满足用户界面设计的需求。</p>
@@ -6145,7 +6145,7 @@ Ch 34 Themes in Software Craftsmanship</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第十九章 开放源码</title>
-    <url>/en/di_19_zhang_kai_fang_yuan_ma%EF%BC%9Azai_unix_xin_she_qu_zhong_bian_cheng/</url>
+    <url>/di_19_zhang_kai_fang_yuan_ma%EF%BC%9Azai_unix_xin_she_qu_zhong_bian_cheng/</url>
     <content><![CDATA[<p>当 Unix 实践最接近开放源码时，就欣欣向荣，反之则停滞不前。</p>
 <h1 id="19_1_Unix_和开放源码"><a class="header-anchor" href="#19_1_Unix_和开放源码">#</a>19.1 Unix 和开放源码</h1>
 <p>开源开发的规则很简单:</p>
@@ -6214,7 +6214,7 @@ Ch 34 Themes in Software Craftsmanship</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第十八章 文档</title>
-    <url>/en/di_18_zhang_wen_dang%EF%BC%9Axiang_wang_luo_shi_jie_chan_shi_dai_ma/</url>
+    <url>/di_18_zhang_wen_dang%EF%BC%9Axiang_wang_luo_shi_jie_chan_shi_dai_ma/</url>
     <content><![CDATA[<blockquote>
 <p>我从没见过一个愿意阅读 17000 页文档的人，如果有，我会杀了他，这样人的基因必须抹去<br>
 —— Joseph Costello</p>
@@ -6252,7 +6252,7 @@ Ch 34 Themes in Software Craftsmanship</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第十七章 可移植性</title>
-    <url>/en/di_17_zhang_ke_yi_zhi_xing%EF%BC%9Aruan_jian_ke_yi_zhi_xing_yu_zun_xun_biao_zhun/</url>
+    <url>/di_17_zhang_ke_yi_zhi_xing%EF%BC%9Aruan_jian_ke_yi_zhi_xing_yu_zun_xun_biao_zhun/</url>
     <content><![CDATA[<p>移植性一直是 Unix 的主要优势。Unix 程序员往往设想硬件是易变的，只有 Unix API 本是稳定的。</p>
 <p>Unix 程序员往往尽量避免软件依赖于某种特殊易逝的技术， 而严谨地遵循开放标准。这<br>
 种考虑可移植性的编码习惯在 Unix 传统中根深蒂固，甚至应用于那些一次性小型单用途<br>
@@ -6293,7 +6293,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>猪小兵的故事</title>
-    <url>/en/zhu_xiao_bing_de_gu_shi/</url>
+    <url>/zhu_xiao_bing_de_gu_shi/</url>
     <content><![CDATA[<p>程序员为什么会重新发明轮子？原因很多，从狭隘的技术原因到程序员心理状态，再到软件生产系统的经济学，方方面面都会导致如此行为，这种特有的顽疾正在蔓延。</p>
 <p>猪小兵是个刚走出大学的程序员，拿到了第一份正式工作，让我们假设他或她已经知道了代码重用的价值并且满怀青春的准备大干一把。</p>
 <p>小兵的第一个项目是随团队编制一个大型应用。为了实例说明的方便，让我们认为那是一个帮助终端用户能够智能构造查询和浏览庞大数据库的 GUI。项目经理已经组合了他们认为适合的工具和组件集，不仅包括开发语言，也包括许多程序库。</p>
@@ -6319,7 +6319,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第十六章 重用</title>
-    <url>/en/di_16_zhang_zhong_yong%EF%BC%9Alun_bu_yao_zhong_xin_fa_ming_lun_zi/</url>
+    <url>/di_16_zhang_zhong_yong%EF%BC%9Alun_bu_yao_zhong_xin_fa_ming_lun_zi/</url>
     <content><![CDATA[<p>不愿做不必要的工作是程序员的一大美德。</p>
 <p>和其它耗在软件开发的花费比起来，时间无疑是最宝贵和最有价值的: 所以相应地，该耗费在解决新问题，而不是对那些已存在确切解决方案的问题老调重弹。这种态度对于开发投入来说，无论是在人员资本的“软”含义，还是在投资经济收益的“硬”含义都可以收到最好的回报。</p>
 <blockquote>
@@ -6359,7 +6359,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第十五章 工具</title>
-    <url>/en/di_15_zhang_gong_ju%EF%BC%9Akai_fa_de_zhan_shu/</url>
+    <url>/di_15_zhang_gong_ju%EF%BC%9Akai_fa_de_zhan_shu/</url>
     <content><![CDATA[<h1 id="15_4_make：自动化编译"><a class="header-anchor" href="#15_4_make：自动化编译">#</a>15.4 make：自动化编译</h1>
 <h2 id="15_4_3_通用生成目标"><a class="header-anchor" href="#15_4_3_通用生成目标">#</a>15.4.3 通用生成目标</h2>
 <p>关于通用生成目标应该表示什么，以及它们该如何命名已经有了一组良好的约定。遵从这些会让自己的 makefile 更容易理解和使用：</p>
@@ -6400,7 +6400,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第十四章 语言</title>
-    <url>/en/di_14_zhang_yu_yan%EF%BC%9Ac_hai_shi_fei_c/</url>
+    <url>/di_14_zhang_yu_yan%EF%BC%9Ac_hai_shi_fei_c/</url>
     <content><![CDATA[<h1 id="14_1_Unix_下语言的丰饶"><a class="header-anchor" href="#14_1_Unix_下语言的丰饶">#</a>14.1 Unix 下语言的丰饶</h1>
 <p>Unix 上运行的语言种类完全可能超过计算史上其它所有操作系统的总和，至少有两个充分的理由造成了这种巨大的多样性：</p>
 <ol>
@@ -6451,7 +6451,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第十三章 复杂度</title>
-    <url>/en/di_13_zhang_fu_za_du%EF%BC%9Ajin_ke_neng_jian_dan%EF%BC%8Cdan_bie_jian_dan_guo_le_tou/</url>
+    <url>/di_13_zhang_fu_za_du%EF%BC%9Ajin_ke_neng_jian_dan%EF%BC%8Cdan_bie_jian_dan_guo_le_tou/</url>
     <content><![CDATA[<p>在<a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a> 末，将 Unix 的哲学概括为“KeepItSimple,Stupid!”。贯穿整个“设计”部分的不变主题就是尽可能保持简单设计的重要性。但什么是“尽可能的简单”?又如何断定?</p>
 <p>本章并不是简单地尝试给出这些问题的答案，因为根本没有答案一一而是希望读者能够在概念上有所收益，从而挖掘出自己的答案。</p>
 <h1 id="13_1_谈谈复杂度"><a class="header-anchor" href="#13_1_谈谈复杂度">#</a>13.1 谈谈复杂度</h1>
@@ -6507,7 +6507,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Linus on Kernel Management Style》 翻译</title>
-    <url>/en/linus_on_kernel_management_style/</url>
+    <url>/linus_on_kernel_management_style/</url>
     <content><![CDATA[<p>这是一篇关于描述期望的 Linux Kernel 管理风格的简短文章，它在某种程度上与 CodeStyle 文档类似，是避免一遍又一遍的回答相同（或相似）的问题。</p>
 <div class="note info simple"><p>本文档并非通过解决问题来实现避免回答问题，而是让提问者痛苦地，显然地意识到我们也没有任何思路解决问题。</p>
 </div>
@@ -6586,7 +6586,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第十二章 优化</title>
-    <url>/en/di_12_zhang_you_hua/</url>
+    <url>/di_12_zhang_you_hua/</url>
     <content><![CDATA[<p>这将是很短的一章，因为关于性能优化，Unix 的经验告诉我们最主要的就是如何知道何时不去优化。其次，最有效的优化往往是优化之外的其它事情，如：清晰干净的设计。</p>
 <h1 id="12_1_什么都别做，就站在那儿"><a class="header-anchor" href="#12_1_什么都别做，就站在那儿">#</a>12.1 什么都别做，就站在那儿</h1>
 <p>程序员工具箱中最强大的优化技术就是不做优化。</p>
@@ -6614,7 +6614,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第十一章 接口</title>
-    <url>/en/di_11_zhang_jie_kou%EF%BC%9Aunix_huan_jing_xia_de_yong_hu_jie_kou_she_ji_mo_shi/</url>
+    <url>/di_11_zhang_jie_kou%EF%BC%9Aunix_huan_jing_xia_de_yong_hu_jie_kou_she_ji_mo_shi/</url>
     <content><![CDATA[<p>在 Unix 接口设计的传统中，会反复涉足两个主题：</p>
 <ol>
 <li>与其他程序通信方式的前瞻性设计</li>
@@ -6698,7 +6698,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第十章 配置</title>
-    <url>/en/di_10_zhang_pei_zhi%EF%BC%9Amai_chu_zheng_que_de_di_yi_bu/</url>
+    <url>/di_10_zhang_pei_zhi%EF%BC%9Amai_chu_zheng_que_de_di_yi_bu/</url>
     <content><![CDATA[<h1 id="10_1_什么应是可配置的"><a class="header-anchor" href="#10_1_什么应是可配置的">#</a>10.1 什么应是可配置的</h1>
 <p>对于问题：什么应是可配置的？<br>
 无畏的 Unix 回答是“一切”。Unix 程序员只要可能，就建立机制而把策略决定权交给用户。这种方式产生的程序往往功能强大，专家用户用起来会非常顺手。但它所产生的接口往往选项过多，并且配置文件像杂草一样疯长，从而彻底打击了新手和一般用户。</p>
@@ -6747,7 +6747,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第九章 生成</title>
-    <url>/en/di_9_zhang_sheng_cheng%EF%BC%9Ati_sheng_gui_ge_shuo_ming_de_ceng_ci/</url>
+    <url>/di_9_zhang_sheng_cheng%EF%BC%9Ati_sheng_gui_ge_shuo_ming_de_ceng_ci/</url>
     <content><![CDATA[<p>数据比程序逻辑更易驾驭。尽可能把设计的复杂度从程序代码转移到数据中是个好实践，选择便于人类维护和操作的数据表示法也是好实践。</p>
 <h1 id="9_1_数据驱动编程"><a class="header-anchor" href="#9_1_数据驱动编程">#</a>9.1 数据驱动编程</h1>
 <p>数据驱动编程有时会跟面向对象混淆起来，后者是另一种以数据组织为中心的风格。它们之间至少有两点不同。</p>
@@ -6767,7 +6767,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第八章 微型语言</title>
-    <url>/en/di_8_zhang_wei_xing_yu_yan%EF%BC%9Axun_zhao_ge_chang_de_le_fu/</url>
+    <url>/di_8_zhang_wei_xing_yu_yan%EF%BC%9Axun_zhao_ge_chang_de_le_fu/</url>
     <content><![CDATA[<p>Unix 有个长期传统，即包容小型的、为专门应用领域特质、大量减少程序行数的语言。</p>
 ]]></content>
       <tags>
@@ -6777,7 +6777,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第七章 多道程序设计</title>
-    <url>/en/di_7_zhang_duo_dao_cheng_xu_she_ji%EF%BC%9Afen_li_jin_cheng_wei_du_li_de_gong_neng/</url>
+    <url>/di_7_zhang_duo_dao_cheng_xu_she_ji%EF%BC%9Afen_li_jin_cheng_wei_du_li_de_gong_neng/</url>
     <content><![CDATA[<p>多道程序设计是设计中的荒蛮之地，几乎没有好的实践方针。许多程序员尽管精于判断如何将代码分解成子过程，然而最终还是编写出单个庞然大物般的单进程程序，而这些程序往往失败在自身的内部复杂度之上。</p>
 <p>Unix 设计风格都运用“做单件事并做好” 的方法，强调用定义良好的进程间通信或共享文件来联通小型进程。</p>
 <p>尽管将程序划分成协作进程带来了全局复杂度降低的好处，但代价是我们必须更多地关注在进程间传递信息和命令的协议设计(在所有种类的软件系统中，接口都是 bug聚集之地)。<br>
@@ -6798,7 +6798,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第六章 透明性</title>
-    <url>/en/di_6_zhang_tou_ming_xing%EF%BC%9Alai_dian_er_guang/</url>
+    <url>/di_6_zhang_tou_ming_xing%EF%BC%9Alai_dian_er_guang/</url>
     <content><![CDATA[<div class="note icon-padding simple"><i class="note-icon fas fa-quote-left"></i><p>美在计算科学中的地位，要比在其它任何技术中的地位都重要，因为软件是太复杂了。美是抵御复杂的终极武器。 - David Gelernter</p>
 </div>
 <p>如果没有阴暗的角落和隐藏的深度，软件系统就是透明的。</p>
@@ -6846,7 +6846,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第五章 文本化</title>
-    <url>/en/di_5_zhang_wen_ben_hua%EF%BC%9Ahao_xie_yi_chan_sheng_hao_shi_jian/</url>
+    <url>/di_5_zhang_wen_ben_hua%EF%BC%9Ahao_xie_yi_chan_sheng_hao_shi_jian/</url>
     <content><![CDATA[<p>序列化（保存）操作有时也称为 <code>列集(marshaling)</code>，其反向操作（载入）称为 <code>散集(unmarshaling)</code>。</p>
 <h1 id="文本化的重要性"><a class="header-anchor" href="#文本化的重要性">#</a>文本化的重要性</h1>
 <p>文本流是非常有用的通用格式，因为人无需专门工具就可以很容易地读写和编辑文本流，这些格式是透明的（或可以设计成透明的）。</p>
@@ -6858,7 +6858,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《System, Math and Explosions》 摘抄</title>
-    <url>/en/system,_math_and_explosions/</url>
+    <url>/system,_math_and_explosions/</url>
     <content><![CDATA[<p>系统从根本上就是复杂地，因为它不仅仅包含事物的集合，还包含事物的连接关系。而连接关系增长的非常块。</p>
 <p>如下所示， 3 个点的集合只有 3 个连接，9 个点的集合有 36 个连接，最右侧的集合有 27 个点，链接已经增长到了 351 个，这种现象被称为<code>组合爆炸（Combinatorial Explosion）</code>：<br>
 <img src="/system,_math_and_explosions/image-20230902151352.png" alt="系统连接的复杂度"></p>
@@ -6903,7 +6903,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Good decision-making is good process》 摘抄</title>
-    <url>/en/good_decision-making_is_good_process/</url>
+    <url>/good_decision-making_is_good_process/</url>
     <content><![CDATA[<h1 id="用自己的术语定义问题"><a class="header-anchor" href="#用自己的术语定义问题">#</a>用自己的术语定义问题</h1>
 <p>当遇到问题时，要克制住立即寻找解决方案的冲动。花时间理解问题并用自己的术语定义它，这个过程可以帮助你和定义原始问题的人弄清楚：</p>
 <ol>
@@ -6968,7 +6968,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》第四章 模块化</title>
-    <url>/en/di_4_zhang_mo_kuai_xing%EF%BC%9Abao_chi_qing_xi%EF%BC%8Cbao_chi_jian_jie/</url>
+    <url>/di_4_zhang_mo_kuai_xing%EF%BC%9Abao_chi_qing_xi%EF%BC%8Cbao_chi_jian_jie/</url>
     <content><![CDATA[<blockquote>
 <p>软件设计有两种方式：一种是设计得极为简洁，没有看得到的缺陷；另一种是设计得极为复杂，有缺陷也看不出来。第一种方式的难度要大得多。<br>
 —— 《皇帝的旧衣》 C.A.R.Hoare</p>
@@ -7067,7 +7067,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第三章 对比</title>
-    <url>/en/di_3_zhang_dui_bi%EF%BC%9Aunix_zhe_xue_tong_qi_ta_zhe_xue_de_bi_jiao/</url>
+    <url>/di_3_zhang_dui_bi%EF%BC%9Aunix_zhe_xue_tong_qi_ta_zhe_xue_de_bi_jiao/</url>
     <content><![CDATA[<h1 id="3_1_操作系统的风格元素"><a class="header-anchor" href="#3_1_操作系统的风格元素">#</a>3.1 操作系统的风格元素</h1>
 <h2 id="3_1_1_什么是操作系统的统一性理念"><a class="header-anchor" href="#3_1_1_什么是操作系统的统一性理念">#</a>3.1.1 什么是操作系统的统一性理念</h2>
 <p>Unix 有几个统一性的理念或象征，并塑造了它的 API 及由此形成的开发风格。其中最重要的一点应当是“一切皆文件”模型及在此基础上建立的管道概念。</p>
@@ -7139,7 +7139,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第二章 历史</title>
-    <url>/en/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji/</url>
+    <url>/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji/</url>
     <content><![CDATA[<h1 id="2_1_Unix_起源于历史，1969_1995"><a class="header-anchor" href="#2_1_Unix_起源于历史，1969_1995">#</a>2.1 Unix 起源于历史，1969-1995</h1>
 <p>小型实验原型系统的后继产品往往备受令人讨厌的“第二版效应”折磨。由于迫切希望把所有首次开发时遗漏的功能都添加进去，往往导致设计十分庞大、过于复杂。其实，还有一个因不常遇到而鲜为人知的“第三版效应”：有时候，在第二系统不堪自身重负而崩溃之后，有可能返璞归真，走上正道。</p>
 ]]></content>
@@ -7150,7 +7150,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》 第一章 哲学</title>
-    <url>/en/di_1_zhang_zhe_xue/</url>
+    <url>/di_1_zhang_zhe_xue/</url>
     <content><![CDATA[<h1 id="1_4_Unix_之失"><a class="header-anchor" href="#1_4_Unix_之失">#</a>1.4 Unix 之失</h1>
 <p>最终的用户永远比操作系统设计人员更清楚他们究竟需要什么。</p>
 <p>用错误的方法解决正确的问题，总比用正确的方法解决错误的问题好</p>
@@ -7265,7 +7265,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《Unix 编程艺术》笔记汇总</title>
-    <url>/en/unix_bian_cheng_yi_shu/</url>
+    <url>/unix_bian_cheng_yi_shu/</url>
     <content><![CDATA[<h1 id="Part_1_Context"><a class="header-anchor" href="#Part_1_Context">#</a>Part 1 Context</h1>
 <p><a href="/di_1_zhang_zhe_xue">第 1 章 哲学</a><br>
 <a href="/di_2_zhang_li_shi%E2%80%94%E2%80%94shuang_liu_ji">第 2 章 历史——双流记</a><br>
@@ -7298,7 +7298,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《5% 的改变》 摘抄</title>
-    <url>/en/bai_fen_zhi_5_de_gai_bian/</url>
+    <url>/bai_fen_zhi_5_de_gai_bian/</url>
     <content><![CDATA[<h1 id="引言"><a class="header-anchor" href="#引言">#</a>引言</h1>
 <p>在心理咨询界，有一条近乎行业共识的准则，那就是不要在咨询中提供建议。这不是故弄玄虚，明知道答案却非要卖关子，而是我们相信，来访者遇到的困境绝非听别人几句话就能解决  (  或者说，几句话就能解决的问题也不至于特意在这里求助  ) 。每个咨询师都了解成功的干预有多难，某种意义上像在打擂台，对抗一个名叫“惯性”的对手。</p>
 <p>这些建议真是有益的吗？这件事也值得怀疑。凭什么认定来访者按照我们的建议做就是好的？它是心理咨询师的主观认识和个人偏好：我们认为什么是重要的，习惯用哪些办法解决困难。这偏好适用于咨询师，却未必适合其他人。</p>
@@ -7428,7 +7428,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《LLM 对程序员的冲击和影响》摘抄</title>
-    <url>/en/llm_dui_cheng_xu_yuan_de_chong_ji_he_ying_xiang/</url>
+    <url>/llm_dui_cheng_xu_yuan_de_chong_ji_he_ying_xiang/</url>
     <content><![CDATA[<h1 id="LLM_的局限"><a class="header-anchor" href="#LLM_的局限">#</a>LLM 的局限</h1>
 <p>如果说 <strong>ChatGPT 实现了数字时代知识的平权，codex 类的代码语言大模型实现了基础编码能力的知识平权</strong>，进而带来软件研发的局部效率提升。 可以说，LLM 降低了软件开发的门槛，可以让更多对软件开发感兴趣的人更加轻松地参与到软件开发工作中，同时，LLM 提高了编程的效率和质量，使我们可以在更短的时间内完成更多的工作，因而能留出更多的时间让我们思考。</p>
 <p>我们面对的是软件工程的问题，<strong>编程不等于软件工程，编程只是软件工程的一部分。软件工程的四大内在特性（复杂度、不一致性、可变性、不可见性）并没有因为 LLM 的出现而发生本质上的变化，这才是软件工程面临的主要矛盾</strong>。这四点再叠加上大型软件的规模效应，其中包含软件系统本身的规模和软件研发团队的规模，问题就更严重了，即会显著提升软件研发过程中的沟通成本、决策成本、认知成本和试错成本，而这些才是软件工程问题的本质，这些本质问题自始至终都没有变过，LLM 对此也基本无能为力。</p>
@@ -7483,7 +7483,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《卓有成效的管理者》 摘抄</title>
-    <url>/en/zhuo_you_cheng_xiao_de_guan_li_zhe/</url>
+    <url>/zhuo_you_cheng_xiao_de_guan_li_zhe/</url>
     <content><![CDATA[<h1 id="前言"><a class="header-anchor" href="#前言">#</a>前言</h1>
 <p>本书的主题却是关于如何自我管理才能成为卓有成效的管理者的 ，实际上，让自身成效不高的管理者管好他们的同事与下属，那几乎是不可能的事。</p>
 <h1 id="第一章_卓有成效是可以学会的"><a class="header-anchor" href="#第一章_卓有成效是可以学会的">#</a>第一章 卓有成效是可以学会的</h1>
@@ -7883,7 +7883,7 @@ Henry Spencer</p>
   </entry>
   <entry>
     <title>《You and Your Research》 摘抄</title>
-    <url>/en/you_and_your_research/</url>
+    <url>/you_and_your_research/</url>
     <content><![CDATA[<p>这篇摘抄来源于对 <em>理查德·卫斯理·汉明（Richard Wesley Hamming）</em> 在 1986 年 3 月 7 日 的名为 <code>You and Your Research</code> 演讲的转录。</p>
 <div class="note info simple"><p>Hamming，1968 年图灵机获得者，信息论中 <a href="https://en.wikipedia.org/wiki/Hamming_distance">Hamming Distance</a> 理论主要贡献者</p>
 </div>
@@ -8218,7 +8218,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>C# Formattable String</title>
-    <url>/en/formattable_string/</url>
+    <url>/formattable_string/</url>
     <content><![CDATA[<p><code>FormattableString</code>  是 C# 6.0 中引入的新类型之一，可以避免在非必要情况下执行了格式化字符串带来的性能开销。</p>
 <p>使用如下示例如下，可以看出 <code>FormattableString</code> 将需要格式化的字符串创建和真正的格式化操作进行了拆分：</p>
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> name = <span class="string">&quot;张三&quot;</span>;</span><br><span class="line"><span class="built_in">int</span> age = <span class="number">30</span>;</span><br><span class="line"><span class="built_in">decimal</span> weight = <span class="number">60.5</span>m;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个 FormattableString</span></span><br><span class="line">FormattableString message = <span class="string">$&quot;<span class="subst">&#123;name&#125;</span> 年龄 <span class="subst">&#123;age&#125;</span>，体重 <span class="subst">&#123;weight&#125;</span> 公斤。&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 FormattableString 转换为 string 类型</span></span><br><span class="line"><span class="built_in">string</span> formattedMessage = message.ToString();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出结果</span></span><br><span class="line">Console.WriteLine(formattedMessage);</span><br></pre></td></tr></table></figure>
@@ -8252,7 +8252,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>C# $ 字符串插值</title>
-    <url>/en/$_string_interpolation/</url>
+    <url>/$_string_interpolation/</url>
     <content><![CDATA[<h1 id="字符"><a class="header-anchor" href="#字符">#</a>$ 字符</h1>
 <p>字符串插值（String Interpolation）有许多的实现方式，其中使用 <code>$</code> 字符在现代 C# 中时比较推荐的方式，它提供类似于 <code>String.Format</code> 的效果。</p>
 <div class="note info simple"><p>实际根据 <code>$</code> 使用场景的不同，编译器会选择用不同的方式实现字符串插值，<code>String.Format</code> 只是其中一种，具体见 <a href="/$_string_interpolation/#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82">实现细节</a></p>
@@ -8366,7 +8366,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>SOLID 原则</title>
-    <url>/en/solid/</url>
+    <url>/solid/</url>
     <content><![CDATA[<p><code>SOLID</code> 原则是面向对象编程中的五个重要设计原则，有助于增强软件的可维护性、可扩展性和可读性。</p>
 <h1 id="S_Single_Responsibility_Principle_单一职责"><a class="header-anchor" href="#S_Single_Responsibility_Principle_单一职责">#</a>S- Single Responsibility Principle 单一职责</h1>
 <p>单一原则要求一个类只能承担一个职责，并且只能有一个潜在的原因去更改这个类。</p>
@@ -8467,7 +8467,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>耦合与内聚</title>
-    <url>/en/coupling/</url>
+    <url>/coupling/</url>
     <content><![CDATA[<h1 id="耦合与内聚"><a class="header-anchor" href="#耦合与内聚">#</a>耦合与内聚</h1>
 <p>当一个类与另一个类存在关系时，称这两个类存在<code>依赖(Dependency )</code>或`耦合(Coupling)``。如果两个类相互依赖，则修改其中的一个就可能会影响到另一个的执行逻辑。</p>
 <p>当一个类的内部组件（如方法、属性等）彼此紧密关联，并共同完成某个功能时，称这个类具有<code>内聚(Cohesion)</code>。如果一个类内部的组件高度聚焦在明确的任务上，那么这个类更易于维护和理解。</p>
@@ -8487,7 +8487,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Computer Networks and Internets》 笔记汇总</title>
-    <url>/en/computer_networks_and_internets/</url>
+    <url>/computer_networks_and_internets/</url>
     <content><![CDATA[<h1 id="Introduction_And_Internet_Applications"><a class="header-anchor" href="#Introduction_And_Internet_Applications">#</a>Introduction And Internet Applications</h1>
 <p><a href="/ch_01_introduction_and_overview">Ch 01 Introduction And Overview</a></p>
 <h1 id="Data_Communication_Basics"><a class="header-anchor" href="#Data_Communication_Basics">#</a>Data Communication Basics</h1>
@@ -8509,7 +8509,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Computer Networks and Internets》 Ch 17 中继器，网桥和交换机</title>
-    <url>/en/ch_17_repeaters,_bridges,_and_switches/</url>
+    <url>/ch_17_repeaters,_bridges,_and_switches/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
 <p>这一章会介绍关于扩展 LAN 的方法，如中继器（Repeaters）和网桥（Bridges），也会介绍在网桥存在循环时解决死循环的<code>生成树算法(Spannning tree algorithms)</code>。最后会讨论交换机和网桥之间的关系。</p>
 <h1 id="Distance_Limitation_And_LAN_Design"><a class="header-anchor" href="#Distance_Limitation_And_LAN_Design">#</a>Distance Limitation And LAN Design</h1>
@@ -8587,7 +8587,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Computer Networks and Internets》 Ch 16 无线网络技术</title>
-    <url>/en/ch_16_wireless_networking_technologies/</url>
+    <url>/ch_16_wireless_networking_technologies/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
 <p>这一章主要介绍计算机网络无线部分的技术。</p>
 <p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>16.2</mn></mrow><annotation encoding="application/x-tex">16.2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">16.2</span></span></span></span>节对无线技术依据网络的覆盖范围做了分类。<br>
@@ -8741,7 +8741,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Computer Networks and Internets》 Ch 14 MAC 层</title>
-    <url>/en/ch_14_the_ieee_mac_sublayer/</url>
+    <url>/ch_14_the_ieee_mac_sublayer/</url>
     <content><![CDATA[<ul>
 <li>这一章原书中的Statiion一词，在笔记中翻译为<code>终端</code>。</li>
 </ul>
@@ -8830,7 +8830,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Computer Networks and Internets》 Ch 13 局域网：数据包，帧 和拓扑结构</title>
-    <url>/en/ch_13_local_area_networks_packets,_frames,_and_topologies/</url>
+    <url>/ch_13_local_area_networks_packets,_frames,_and_topologies/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
 <p>这一部分将介绍分组交换技术，拓扑结构，硬件地址寻址，帧的概念。</p>
 <h1 id="Circuit_Switching_And_Analog_Communication"><a class="header-anchor" href="#Circuit_Switching_And_Analog_Communication">#</a>Circuit Switching And Analog Communication</h1>
@@ -8947,7 +8947,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Computer Networks and Internets》 Ch 11 复用与解复用</title>
-    <url>/en/ch_11_multiplexing_and_demultiplexing/</url>
+    <url>/ch_11_multiplexing_and_demultiplexing/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
 <p>这一部分将介绍将多个心愿的数据流合并在一起的复用，和将合并后数据流拆分的解复用。</p>
 <h1 id="The_Concept_Of_Multiplexing"><a class="header-anchor" href="#The_Concept_Of_Multiplexing">#</a>The Concept Of Multiplexing</h1>
@@ -9041,7 +9041,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Computer Networks and Internets》 Ch 10 调制与调制器</title>
-    <url>/en/ch_10_modulation_and_modems/</url>
+    <url>/ch_10_modulation_and_modems/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
 <p>这一章讨论数据通信中的调制与调制器相关的内容。</p>
 <p>调制是利用高频的信息来携带原始数据，将分别讨论当原始数据是模拟信号和数字信号的情况。</p>
@@ -9097,7 +9097,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Computer Networks and Internets》 Ch 08 可靠性及信道编码</title>
-    <url>/en/ch_08_reliability_and_channel_coding/</url>
+    <url>/ch_08_reliability_and_channel_coding/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
 <p>这一部分将介绍信息传输过程中发生错误的原因，以及纠错的方式——信道编码。本部分将着重介绍前向错误纠正技术，并引出汉明距离等概念。</p>
 <h1 id="The_Three_Main_Sources_Of_Transmission_Errors"><a class="header-anchor" href="#The_Three_Main_Sources_Of_Transmission_Errors">#</a>The Three Main Sources Of Transmission Errors</h1>
@@ -9317,7 +9317,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Computer Networks and Internets》 Ch 07 传播媒介</title>
-    <url>/en/ch_07_transmission_media/</url>
+    <url>/ch_07_transmission_media/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
 <p>这一章将会给出传播媒介的分类，介绍电信号，无线信号，光信号各自的传输特征。在本章节的最后，介绍了奈奎斯特定律和香农理论，分别给出了理想情况和实际情况下最大的信息传输率。</p>
 <h1 id="Guided_And_Unguided_Transmission"><a class="header-anchor" href="#Guided_And_Unguided_Transmission">#</a>Guided And Unguided Transmission</h1>
@@ -9524,7 +9524,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Computer Networks and Internets》 Ch 06 信源与信号</title>
-    <url>/en/ch_06_information_sources_and_signals/</url>
+    <url>/ch_06_information_sources_and_signals/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
 <p>这一章讲解释<code>信源（Information Sources）</code>和携带信息的信号的特征。</p>
 <h1 id="Information_Sources"><a class="header-anchor" href="#Information_Sources">#</a>Information Sources</h1>
@@ -9635,7 +9635,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Computer Networks and Internets》 Ch 05 信息传输概览</title>
-    <url>/en/ch_05_overview_of_data_communications/</url>
+    <url>/ch_05_overview_of_data_communications/</url>
     <content><![CDATA[<h1 id="Introduction"><a class="header-anchor" href="#Introduction">#</a>Introduction</h1>
 <p>这一章主要是分析通过物理媒介进行信息传递的方法，例如线，光和无线电波等。这些方式在一些细节上不同，但所有方法的基本原理是相通的。</p>
 <h1 id="The_Essence_Of_Data_Communications"><a class="header-anchor" href="#The_Essence_Of_Data_Communications">#</a>The Essence Of Data Communications</h1>
@@ -9699,7 +9699,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Computer Networks and Internets》 Ch 01 介绍与概览</title>
-    <url>/en/ch_01_introduction_and_overview/</url>
+    <url>/ch_01_introduction_and_overview/</url>
     <content><![CDATA[<h1 id="Growth_Of_Computer_Networking"><a class="header-anchor" href="#Growth_Of_Computer_Networking">#</a>Growth Of Computer Networking</h1>
 <p>计算机网络正在持续的爆炸性成长。在 1970 年代它只是一个非常小范围的研究课题，在 1980 年也只有几个网站，但到现在计算机网络f经成为了生活中的一部分。</p>
 <h1 id="Why_Networking_Seems_Complex"><a class="header-anchor" href="#Why_Networking_Seems_Complex">#</a>Why Networking Seems Complex</h1>
@@ -9805,7 +9805,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Render Hell》 笔记汇总</title>
-    <url>/en/render_hell/</url>
+    <url>/render_hell/</url>
     <content><![CDATA[<ul>
 <li><a href="/book_1_overview">Book 1 Overview</a></li>
 <li><a href="/book_2_pipeline">Book 2 Pipeline</a></li>
@@ -9821,7 +9821,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Render Hell》 第四部分 解决方法</title>
-    <url>/en/book_4_solutions/</url>
+    <url>/book_4_solutions/</url>
     <content><![CDATA[<h1 id="Sorting"><a class="header-anchor" href="#Sorting">#</a>Sorting</h1>
 <p>对于多个 Meshes，多个 Materials 的情况，可以通过排序将同一种 Material 的 Mesh 放在一起减少 Render State 的切换，如下所示：<br>
 <img src="/book_4_solutions/optimisation_sorting_01.gif" alt="重新排序以减少 State 切换"></p>
@@ -9854,7 +9854,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Render Hell》 第三部分 常见问题</title>
-    <url>/en/book_3_problems/</url>
+    <url>/book_3_problems/</url>
     <content><![CDATA[<h1 id="Many_Draw_Calls_Many_Commands"><a class="header-anchor" href="#Many_Draw_Calls_Many_Commands">#</a>Many Draw Calls / Many Commands</h1>
 <p>对于一个 API 而言，它不仅仅是将命令发送给 GPU，它还会有额外的如驱动翻译等的开销，因此应当尽可能的使用更少的命令。</p>
 <div class="note info simple"><p>对于新的图形 API，如 DirectX12， Vulkan 等，命令的开销会相对较少，但仍然应当尽可能的减少命令的数量。</p>
@@ -9880,7 +9880,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Render Hell》 第二部分 管线</title>
-    <url>/en/book_2_pipeline/</url>
+    <url>/book_2_pipeline/</url>
     <content><![CDATA[<h1 id="GPU_Core"><a class="header-anchor" href="#GPU_Core">#</a>GPU Core</h1>
 <p>在 GPU Core 中有两个运算单元 <code>floating point unit(FP UNIT)</code> 和 <code>integer unit (INT UNIT)</code> ，当 GPU Core 接收到数据后，会通过这两个运算单元进行计算。</p>
 <p><img src="/book_2_pipeline/gif_9-14-2021_9-27-55_am.gif" alt="FP / Int Unit"></p>
@@ -10008,7 +10008,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Render Hell》 第一部分 概览</title>
-    <url>/en/book_1_overview/</url>
+    <url>/book_1_overview/</url>
     <content><![CDATA[<div class="note info simple"><p>这一部分简单介绍了一些 GPU 的涉及的概念。</p>
 </div>
 <h1 id="Copy_the_Data"><a class="header-anchor" href="#Copy_the_Data">#</a>Copy the Data</h1>
@@ -10048,7 +10048,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《贪婪的多巴胺》 摘抄</title>
-    <url>/en/tan_lan_de_duo_ba_an/</url>
+    <url>/tan_lan_de_duo_ba_an/</url>
     <content><![CDATA[<p>《贪婪的多巴胺》 笔记摘抄。该书主要从生物学角度介绍了多巴胺对人行为及心理的影响。主要的包括：</p>
 <ul>
 <li>多巴胺与当下因子：当下因子让人关注当下，多巴胺让人关注未来</li>
@@ -10143,7 +10143,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 笔记汇总</title>
-    <url>/en/head_first_design_patterns/</url>
+    <url>/head_first_design_patterns/</url>
     <content><![CDATA[<p><a href="/ch_01_the_strategy_pattern">Ch 01 the Strategy Pattern</a></p>
 <p><a href="/ch_02_the_observer_pattern">Ch 02 the Observer Pattern</a></p>
 <p><a href="/ch_03_the_decorator_pattern">Ch 03 the Decorator Pattern</a></p>
@@ -10164,7 +10164,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 - 设计原则总结</title>
-    <url>/en/head_first_design_pattern_design_principles/</url>
+    <url>/head_first_design_pattern_design_principles/</url>
     <content><![CDATA[<ol>
 <li>将变化的部分封装起来（Encapsulate what varies)</li>
 <li>组合优于继承（Favor composition over inheritance）</li>
@@ -10183,7 +10183,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 12 复合模式</title>
-    <url>/en/ch_12_the_compound_patterns/</url>
+    <url>/ch_12_the_compound_patterns/</url>
     <content><![CDATA[<p>复合模式（Compound Pattern）是通过两个或以上的设计模式形成一个可以解决一般性问题的通用框架。</p>
 <p>MVC 框架就是一种组合模式，<code>Controller</code>和<code>View</code>之间使用了策略模式， <code>View</code>中只存<code>Controller</code>的接口，进而达到可以随时切换不同<code>Controller</code>的目的。<code>Model</code>和<code>View</code>之间使用了观察者模式，<code>View</code>作为观察者，<code>Model</code>作为被观察者，当<code>Model</code>的数据发生变化时，<code>View</code>相应改变。而<code>View</code>本身使用了组合模式，比如按钮中可能存在子按钮，窗口中存在子窗口等等。</p>
 <p>我们以音量调节作为一个最简的 MVC 框架示例。</p>
@@ -10209,7 +10209,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 11 代理模式</title>
-    <url>/en/ch_11_the_proxy_pattern/</url>
+    <url>/ch_11_the_proxy_pattern/</url>
     <content><![CDATA[<p>代理模式（Proxy Pattern）为对象提供一个代理进而控制对其的访问。</p>
 <p>例如我们需要加载一张图片，但加载图片是个访问网络或 IO 的操作，我们不希望这个这个操作阻塞 UI 线程，于是我们可以定义一个代理来进行多线程的加载，并在加载完成后显示图片。</p>
 <h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
@@ -10231,7 +10231,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 10 状态模式</title>
-    <url>/en/ch_10_the_state_pattern/</url>
+    <url>/ch_10_the_state_pattern/</url>
     <content><![CDATA[<p>状态模式(State Pattern)允许一个对象根据其内部状态的变化来选择需要执行的操作。这个对象会看起来像是改变了它的类。</p>
 <p>状态模式定义听起来有些奇怪，实际上就是将不同状态的行为定义在不同的状态类中，然后根据状态的不同切换这些状态类，进而达到不同的行为。</p>
 <p>例如我们需要做一个口香糖贩卖机需要处理，投钱、退钱、旋转出货按钮这三个操作，然后机器有未投钱、投钱、货物卖出、货物卖完四个状态。我们可以将不同状态下对三个操作的处理定义在各自的状态类中。</p>
@@ -10254,7 +10254,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 09 模板方法模式</title>
-    <url>/en/ch_09_the_iterator_and_composite_pattern/</url>
+    <url>/ch_09_the_iterator_and_composite_pattern/</url>
     <content><![CDATA[<h1 id="迭代器模式"><a class="header-anchor" href="#迭代器模式">#</a>迭代器模式</h1>
 <p>迭代器模式(Iterator Pattern)提供了一种访问聚合对象但不需要关心其内部实现方法的方式。</p>
 <p>例如我们存在两个菜单，第一个菜单表示早餐，第二个表示晚餐，第一个菜单其中的菜品用<code>List</code>来存储，第二个菜单其中的菜品用<code>Array</code>来存储。在这种情况下就需要使用迭代器模式，为两个菜单提供一个供外部调用的访问菜品的接口。</p>
@@ -10290,7 +10290,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 08 模板方法模式</title>
-    <url>/en/ch_08_the_template_method_pattern/</url>
+    <url>/ch_08_the_template_method_pattern/</url>
     <content><![CDATA[<p>模版方法模式（Template Method Pattern）定义了一个算法的操作步骤，但其中的某些步骤需要派生来对应实现。</p>
 <ul>
 <li>
@@ -10320,7 +10320,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 07 适配器模式和外观模式</title>
-    <url>/en/ch_07_the_adapter_and_facade_patterns/</url>
+    <url>/ch_07_the_adapter_and_facade_patterns/</url>
     <content><![CDATA[<h1 id="适配器模式"><a class="header-anchor" href="#适配器模式">#</a>适配器模式</h1>
 <p>适配器模式（Adapter Pattern）将一个类的接口转换为用户想要的另一个接口。适配器模式将原先因为接口不兼容的一些类可以一起工作。</p>
 <p>例如我们有已经实现的火鸡类和鸭子类，其中鸭子的鸣叫我们使用<code>Quack</code>，火鸡的鸣叫我们用<code>Goggle</code>，两个接口不相同，但在某些情况下，我们不希望具体区分是火鸡还是鸭子，只希望他们都能叫，这时候就需要用适配器模式，将火鸡或鸭子伪装成同一个类。</p>
@@ -10359,7 +10359,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 06 命令模式</title>
-    <url>/en/ch_06_the_command_pattern/</url>
+    <url>/ch_06_the_command_pattern/</url>
     <content><![CDATA[<p>命令模式（Command Pattern）将一个请求封装为一个对象，进而将拥有不同的请求的物体参数化，并且还可以请求排队，打印请求日志，支持可逆操作。</p>
 <p>命令模式由抽象命令类、具体命令类、接受者、调用者、客户类，五部分组成。其中接受者为被命令封装的类，调用者存放需要执行的类。</p>
 <p>我们以一个远程控制装置作为例子，远程控制装置有两个按钮和一个撤回按钮。我们通过命令模式来将远程控制类与具体需要做的操作（如开灯）解耦。在例子中程序入口即为客户端，远程装置为调用者，灯为接受者，有开灯与关灯两个命令</p>
@@ -10383,7 +10383,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 05 单例模式</title>
-    <url>/en/ch_05_the_singleton_pattern/</url>
+    <url>/ch_05_the_singleton_pattern/</url>
     <content><![CDATA[<p>单例模式(Singleton Pattern)可能是最简单，也是被应用最为广泛的设计模式。单例模式保证一个类只会存在一个实例，并且提供了一个公共的接口来访问该实例。</p>
 <h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
 <figure class="highlight cs"><figcaption><span>单例模式</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">object</span> lockObj = <span class="keyword">new</span> <span class="built_in">object</span>();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton Instance</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">lock</span> (lockObj)</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                        instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(<span class="string">&quot;Constructor the Singleton&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -10395,7 +10395,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 04 工厂模式</title>
-    <url>/en/ch_04_the_factory_pattern/</url>
+    <url>/ch_04_the_factory_pattern/</url>
     <content><![CDATA[<p>工厂模式是为了将对象的实例化与对对象的操作解耦。因为有时我们会根据情况的不同，实例化出对象的不同版本，而我们不希望这种对于情况的判断与逻辑代码耦合在一起。</p>
 <p>工厂模式有三个较为常见的变种，简单工厂模式，工厂方法模式，抽象工厂模式，下面会以创建披萨为例子来具体说明。</p>
 <h1 id="简单工厂模式"><a class="header-anchor" href="#简单工厂模式">#</a>简单工厂模式</h1>
@@ -10468,7 +10468,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 03 装饰模式</title>
-    <url>/en/ch_03_the_decorator_pattern/</url>
+    <url>/ch_03_the_decorator_pattern/</url>
     <content><![CDATA[<p>装饰模式（Decorator Pattern） 提供了一个动态增加一个类功能的方法，主要实现思想是通过一个作为装饰者的类（<code>Decorators</code>）包裹被装饰类（<code>Component</code>）（装饰类以及被装饰类都有共同的基类），<code>Decorators</code> 会在 <code>Component</code> 类的某一个函数执行前或后进行一些操作，进而达到增加功能的作用。</p>
 <p>装饰模式主要实现了“代码应该对扩展功能开放而对于修改关闭”的面向对象原则，它在增加新功能的前提下，不需要改动既有的代码，只需要增加新的 <code>Decorators</code> 并且包含既有的 <code>Component</code> 即可。</p>
 <p>例如我们要计算一杯咖啡的价格，而这杯咖啡的价格还会受到额外的配料的影响，比如要加抹茶需要额外支付 0.2 元，加奶泡需要额外支付 0.3 元等。如果对各种配料都各自使用一个类来表示，则会存在较多的类需要维护，而且一旦配料发生变化等，还需要进行代码修改。而使用装饰模式则可以将原始的咖啡作为被装饰类，而所有的配料都是装饰类，则配料的更改仅需要增加或删除外部的装饰类即可。</p>
@@ -10495,7 +10495,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 02 观察者模式</title>
-    <url>/en/ch_02_the_observer_pattern/</url>
+    <url>/ch_02_the_observer_pattern/</url>
     <content><![CDATA[<p>观察者模式（Observer Pattern）定义了一种一对多的依赖关系，当被观察者（<code>Subject</code>）的状态发生变化时，它将会通知观察者们（<code>Observers</code>）进行某种操作。</p>
 <p>例如我们希望定义温度计和压力计，在天气信息发生变化时自动更新，而非自己反复的查询是否天气信息有发生变化。这里天气信息就是被观察者，而温度计和压力计就是观察者。</p>
 <h1 id="代码示例"><a class="header-anchor" href="#代码示例">#</a>代码示例</h1>
@@ -10518,7 +10518,7 @@ When you are famous it is hard to work on small problems. This is what did Shan
   </entry>
   <entry>
     <title>《Head First 设计模式》 Ch 01 策略模式</title>
-    <url>/en/ch_01_the_strategy_pattern/</url>
+    <url>/ch_01_the_strategy_pattern/</url>
     <content><![CDATA[<p>策略模式（Strategy Pattern）是使用一些独立的类来各自封装一些通用的算法，这些封装类都继承自同一个接口，该接口定义了算法。对于调用类来说，它只保存一个算法接口的对象，而这个对象所指代的特定算法则可以在运行时动态更改。</p>
 <p>例如有我们有一个项目需要描述鸭子，可能有 50 种不同的鸭子都派生自基类 <code>Duck</code>，鸭子一共有三种飞行方式。这时候我们如果将某一种特定的飞行方式写在基类中，则不是使用这个飞行方式的所有派生鸭子都需要对该方法重写。如果我们不在基类中定义，而在各个派生类中实现，则可能多个有相同飞行方式的鸭子派生类都有相同的代码定义飞行方式，这造成了代码冗余。</p>
 <p>所以我们可以使用策略模式，将三种飞行方式都派生自接口 <code>FlyBehavior</code>，并在鸭子基类中定义变量<code>FlyBehavior</code>，然后在派生类中选择各自需要的飞行方式即可。</p>
