@@ -1,180 +1,178 @@
 ---
 tags:
-  - 图形学
-aliases:
-  - 分辨率是什么
+  - Graphics
 created: 2025-05-23
 updated: 2025-06-22
 published: true
-title: 分辨率是什么？从信号与采样的角度分析分辨率
-description: 分辨率描述图像的像素数量，反映对连续信号的采样频率。分辨率越高，采样频率越高，越能还原高频细节。然而，分辨率并非越高越好，需与信号频率匹配。采样定理指出，采样频率需至少为信号最高频率的两倍才能准确还原。傅里叶变换揭示信号可分解为不同频率的正弦波，高频对应细节部分（如物体边缘）。因此，分辨率不足时，高频信号（如黑白突变）易出现锯齿。优化显示效果需平衡分辨率与信号频率，避免过度采样浪费资源
+title: What is Resolution? Analyzing Resolution Through Signal Processing and Sampling Theory
+description: Resolution describes the pixel count of an image, reflecting the sampling frequency of continuous signals. Higher resolution means higher sampling frequency, enabling better reconstruction of high-frequency details. However, higher resolution isn't always better - it must match signal frequency requirements. The sampling theorem states that sampling frequency must be at least twice the maximum signal frequency for accurate reconstruction. Fourier transforms reveal that signals decompose into sine waves of different frequencies, with high frequencies corresponding to fine details like object edges. Insufficient resolution causes aliasing in high-frequency signals like sharp black-white transitions. Optimizing display quality requires balancing resolution with signal frequency to avoid resource waste from oversampling.
 date: 2025-06-20 11:13
 ---
 
-`分辨率` 是个我们非常熟悉的的词汇，我们会说一张图片的分辨率是 1920x1080，或者说一个显示器的分辨率是 4K。我们总是很本能的认为分辨率很重要，且常常认为分辨率越高越好，但事实确实如此吗。这篇文章会从技术细节的角度去阐述分辨率究竟是什么，以及为何分辨率对显示效果如此的重要，即我们目标回答三个问题：
-1. 分辨率是什么？
-2. 为何分辨率如此重要？
-3. 分辨率越高越好吗？
+`Resolution` is a term we're all very familiar with. We say an image has a resolution of 1920x1080, or that a monitor has 4K resolution. We instinctively understand that resolution is important, and often assume that higher resolution is always better—but is this really the case? This article will examine resolution from a technical perspective, exploring what resolution truly is and why it has such a significant impact on display quality. We aim to answer three key questions:
+1. What is resolution?
+2. Why is resolution so important?
+3. Is higher resolution always better?
 
-以照片为例，当我们拍摄了一张照片，并说这个照片的分辨率是 $1920\times 1080$ 时，我们实际上是在描述这张照片的像素数，$1920\times1080$ 表示这张照片的宽度有 1920 个像素，高度有 1080 个像素。
+Using photography as an example, when we capture a photo and say it has a resolution of $1920\times 1080$, we're actually describing the pixel count of that image. $1920\times1080$ means the photo contains 1920 pixels in width and 1080 pixels in height.
 
-这里的每一个像素都是我们在拍照时，相机对真实世界的 `采样` 结果。所以，为了更好的理解分辨率，我们需要先了解 `采样` 的概念。
+Each of these pixels represents a `sampling` result of the real world captured by the camera. To better understand resolution, we first need to grasp the concept of `sampling`.
 
-## 什么是采样
+## What is Sampling?
 
-采样是指在一个连续的信号中，选择离散的点来代表这个信号，这个解释无疑又引入了两个概念：`信号` 和 `离散`。
+Sampling refers to selecting discrete points from a continuous signal to represent that signal. This definition inevitably introduces two more concepts: `signals` and `discrete`.
 
 {% note primary %}
-当想要尽可能准确而又彻底的解释一个概念时，通常会不幸的发现，需要解释的概念会越来越多。
+When trying to explain a concept as accurately and thoroughly as possible, you'll unfortunately find that the number of concepts requiring explanation keeps growing.
 {% endnote %}
 
-### 什么是离散信号
+### What Are Discrete Signals?
 
-信号是指在时间或空间上变化的物理量，例如你听到的声音，你看到的颜色，或者你触摸到物体的感受，他们都是信号。在真实世界里，信号都是连续的。我们可以举一个非常极端的简化场景，你在一个完全黑色的房间内，看着一堵墙，墙的颜色从左至右分别是纯粹的黑，然后均匀逐渐变为纯粹的白，再逐渐变为纯粹的黑。
+A signal refers to a physical quantity that varies over time or space—for example, the sounds you hear, the colors you see, or the sensations you feel when touching objects. These are all signals. In the real world, signals are continuous. Let's consider an extremely simplified scenario: you're in a completely black room, looking at a wall where the color gradually transitions from pure black on the left to pure white in the center, then back to pure black on the right.
 
-那么你视野中会看到一段连续的黑色，然后逐渐变换为白色，然后再逐渐变换为黑色，如果我们通过一个函数图来描述你的视野，那么会是这样一张图，其中 X 轴表示你视野从左至右，Y 轴表示颜色，0 是黑色，1 是白色：
+In your field of vision, you'd see a continuous gradient from black to white and back to black. If we represent your visual field with a function graph, it would look like this, where the X-axis represents your field of view from left to right, and the Y-axis represents color intensity (0 = black, 1 = white):
 
-![视野中的黑白](/what_is_resolution/2025-05-30-15-51-22.excalidraw.svg)
+![Black and white in field of vision](/what_is_resolution/2025-05-30-15-51-22.excalidraw.svg)
 
-无疑，你视野中看到的内容是连续的，所以这里的图形也是连续的，这里用数值表示的颜色即是一个连续的信号。
+Clearly, what you see in your field of vision is continuous, so the graph is also continuous. The numerical representation of color here is a continuous signal.
 
-当你在这个房间内用手机拍了一张照片时，并在电脑上查看照片时，乍一眼看，你会觉得照片上的黑白变换同样是均匀且连续的，但你将照片放大后。你会发现你看到了一个个纯色的色块，颜色是以“色块”为最小单位变换的，这些色块就是照片的像素，所以照片并不是“均匀”连续变换的，而是以像素为单位跳跃着变换的，即它是离散的。
+When you take a photo in this room with your phone and view it on a computer, at first glance, you might think the black-to-white transition in the photo is equally smooth and continuous. However, when you zoom in on the photo, you'll discover individual blocks of solid color—the color changes in discrete "blocks" rather than continuously. These blocks are the pixels of the photo, so the photo isn't truly "smoothly" continuous but jumps from pixel to pixel in discrete steps.
 
 ![](/what_is_resolution/image-20250530160133.png)
 
-同样的，如果以函数图来表示照片中的颜色变化，那么就会变成这样，其中每一个小点即表示一个像素：
+Similarly, if we represent the color changes in the photo as a function graph, it would look like this, where each dot represents a pixel:
 
 ![](/what_is_resolution/2025-05-30-16-03-18.excalidraw.svg)
 
-当你看照片的时候，你会觉得照片中的颜色变化是连续的，这是因为你的大脑做了一个类似于将离散信号还原为连续信号的过程，即你的大脑会将上述图中的一个个小点连接起来，形成一条连续的曲线。
+When you look at the photo, you perceive the color changes as continuous because your brain performs a process similar to reconstructing a continuous signal from discrete data—your brain connects the individual dots in the graph above to form a continuous curve.
 
-### 采样频率
+### Sampling Frequency
 
-在上一节中，我们通过两个例子说明了连续信号（你的视野）和离散信号（照片）之间的区别，采样就是让连续信号变为离散信号的过程。
+In the previous section, we illustrated the difference between continuous signals (your vision) and discrete signals (photographs) through two examples. Sampling is the process of converting continuous signals into discrete signals.
 
-采样最关键的信息，是采样的 `间隔`，间隔可能是均匀的，也可能是不均匀的。均匀采样是指在连续信号中，按照固定的间隔来选择点，而不均匀采样则是按照不规则的间隔来选择点。
-- 当用图片来表示时，图片中的每一个像素的大小是相同的，所以图片是均匀采样的。
+The most critical aspect of sampling is the sampling `interval`, which can be uniform or non-uniform. Uniform sampling refers to selecting points at fixed intervals from a continuous signal, while non-uniform sampling selects points at irregular intervals.
+- When representing images, each pixel in an image is the same size, so images use uniform sampling.
 
 {% note info %}
-分辨率即是每一个方向上的采样次数，分辨率越高也就意味着每个方向上的采样点数越多。
+Resolution is the number of sampling points in each direction. Higher resolution means more sampling points in each direction.
 {% endnote %}
 
-当采样是均匀采样时，采样中最关键的信息就成为了采样的频率，即每单位长度内采样的点数。采样频率越高，间隔越短，同等长度下采样的点数就越多，离散信号也就越接近于连续信号。
+When sampling is uniform, the most critical information becomes the sampling frequency—the number of sampling points per unit length. Higher sampling frequency means shorter intervals, more sampling points over the same length, and the discrete signal becomes closer to the continuous signal.
 
 {% note primary %}
-所以问题 “为什么分辨率很重要”，可以等效为“为什么采样频率很重要”。
+Therefore, the question "why is resolution important?" is equivalent to "why is sampling frequency important?"
 {% endnote %}
 
 {% note info %}
-从一张照片的分辨率角度出发，如果你拍摄的焦距和视角是固定的，那么“单位长度”就是相机的采景框中你所能看到的内容，对于使用相同焦距的一系列照片，一张照片的分辨率越高，即意味着这张照片的采样频率越高。
-请注意，这里强调了 “焦距”的概念，这是因为采样频率不仅仅取决于采样的次数，还取决于采样的范围。即一个照片的采样频率由两部分决定：
-- 焦距：焦距决定了你拍摄的视角范围，焦距越长，视角范围越小。对于分辨率相同的情况下，焦距越长，采样频率就越高。
-- 分辨率：分辨率决定了每个方向上的采样点数。对于焦距相同的情况下，分辨率越高，采样频率就越高。
+From a photo resolution perspective, if you capture images with fixed focal length and field of view, the "unit length" refers to what you can see within the camera's frame. For a series of photos taken with the same focal length, higher resolution means higher sampling frequency.
+Note the emphasis on "focal length" here, because sampling frequency depends not only on the number of samples but also on the sampling range. A photo's sampling frequency is determined by two factors:
+- Focal length: determines your field of view range. Longer focal length means smaller field of view. With the same resolution, longer focal length results in higher sampling frequency.
+- Resolution: determines the number of sampling points in each direction. With the same focal length, higher resolution results in higher sampling frequency.
 {% endnote %}
 
 {% note primary %}
-对于虚拟渲染而言，与焦距类似的概念是 FOV，渲染的内容多少受 FOV 影响：
-- 当分辨率相同时，FOV 越大，采样频率越低
-- 当 FOV 相同时，分辨率越高，采样频率越高
+For virtual rendering, the concept similar to focal length is FOV, which affects how much content is rendered:
+- With the same resolution, larger FOV results in lower sampling frequency
+- With the same FOV, higher resolution results in higher sampling frequency
 {% endnote %}
 
-在上一节的例子中，因为采样的频率不算低，所以我们根据离散信号，是能够很本能的还原出连续信号的，但如果采样的频率过低，那么则无法正确的还原连续信号。
+In the previous example, because the sampling frequency wasn't too low, we could intuitively reconstruct the continuous signal from the discrete signal. However, if the sampling frequency is too low, we cannot correctly reconstruct the continuous signal.
 
-同样的，我们可以举一个极端的例子，还是在这个纯黑并有一堵黑白渐变墙的房间，假设我们用一张分辨率为 $1\times 1$ 的照片来拍摄这个墙，那么我们得到的照片使用函数绘制会是这样的：
+Similarly, let's consider an extreme example. In the same pure black room with a black-to-white gradient wall, suppose we capture a photo with $1\times 1$ resolution. The resulting photo, when plotted as a function, would look like this:
 
-![一像素](/what_is_resolution/2025-05-30-16-55-38.excalidraw.svg)
+![One pixel](/what_is_resolution/2025-05-30-16-55-38.excalidraw.svg)
 
-无疑，当你看着这张只有 1 像素的照片时，无论如何，你的大脑都无法将其还原为连续的黑白渐变曲线。所以这里，1 像素的图片是无法还原原始的连续信号的。但是，假设房间是纯粹的黑色，而墙也是纯粹的黑，即你的视野中看到的都是纯粹的黑色，那么这个 1 像素的照片，同样满足你的视野中看到的内容。
+Clearly, when looking at this 1-pixel photo, no matter what, your brain cannot reconstruct it into a continuous black-to-white gradient curve. So here, the 1-pixel image cannot restore the original continuous signal. However, if the room is pure black and the wall is also pure black—meaning everything in your field of vision is pure black—then this 1-pixel photo would accurately represent what you see.
 
-在这两个例子中（*纯黑的房间内有一个颜色连续变化的墙* vs *纯黑的房间内有一个纯黑的墙*），我们使用了相同的焦距的拍摄了两张都是分辨率 为 $1\times 1$ 的照片，但在第一个例子中，我们无法还原出连续信号，而在第二个例子中，我们可以还原出连续信号。
+In these two examples (*pure black room with a gradient wall* vs *pure black room with a pure black wall*), we captured two photos with the same focal length and both with $1\times 1$ resolution. But in the first example, we cannot reconstruct the continuous signal, while in the second example, we can.
 
-无疑，这个例子说明了采样频率并不是唯一的因素，原始信号的内容同样会影响我们是否能还原出准确的连续信号。那么有一个问题就会冒出来“对于一个恒定的采样频率，它能还原哪些原始信号”，这个问题的答案是：`采样定理`。
+This example clearly shows that sampling frequency isn't the only factor—the content of the original signal also affects whether we can accurately reconstruct the continuous signal. This raises the question: "For a given sampling frequency, which original signals can it reconstruct?" The answer to this question is the `Sampling Theorem`.
 
-## 采样定理
+## Sampling Theorem
 
-采样定理是一个数学定理，它描述了如何从离散信号中恢复连续信号。采样定理的核心内容是：如果一个连续信号的最高频率为 $f_{max}$，如果以大于或等于 $2f_{max}$ 的频率进行采样，就可以完全恢复这个信号。这里的 $2f_{max}$ 也被称为 `奈奎斯特频率（Nyquist frequency）`。
+The sampling theorem is a mathematical theorem that describes how to recover a continuous signal from a discrete signal. The core principle of the sampling theorem states: if a continuous signal has a maximum frequency of $f_{max}$, and you sample it at a frequency greater than or equal to $2f_{max}$, then you can perfectly recover the original signal. This $2f_{max}$ is also known as the `Nyquist frequency`.
 
 {% note info %}
-从采样定理中可以看出，采样结果是否能正确还原连续信号，取决于两部分：
-- 原始信号的最高频率是多少
-- 采样频率是否足够高
+From the sampling theorem, we can see that whether sampling results can correctly reconstruct a continuous signal depends on two factors:
+- What is the maximum frequency of the original signal
+- Whether the sampling frequency is sufficiently high
 {% endnote %}
 
-我们已经知道对于一张焦距固定的图片而言，采样频率就是分辨率，此时剩下的问题是，我该如何知道真实世界中的信号的最高频率是多少呢？比如在我们的例子中，对于一个黑白渐变的墙面，即使我用一个函数图像画出了它渐变的样子（参考上面的绘制的连续信号函数图），我又该如何知道这个函数的最高频率呢？
+We already know that for a photo with fixed focal length, the sampling frequency is essentially the resolution. The remaining question is: how can I determine the maximum frequency of real-world signals? For example, in our case of a black-to-white gradient wall, even though I can plot its gradient with a function graph (as shown in the continuous signal function graph above), how do I determine the maximum frequency of this function?
 
-问题的解答是 `傅里叶变换（Fourier Transform）`。
+The answer to this question is the `Fourier Transform`.
 
-### 傅里叶变换
+### Fourier Transform
 
-傅里叶变换是一个数学工具，它可以将一个任意连续信号分解为一组正弦波的叠加。通过傅里叶变换，我们可以将任意一个信号拆分为多个不同频率的正弦波，这些正弦波中频率最高的那个即为这个信号的最高频率。
+The Fourier transform is a mathematical tool that can decompose any continuous signal into a superposition of sine waves. Through the Fourier transform, we can break down any signal into multiple sine waves of different frequencies, and the highest frequency among these sine waves is the maximum frequency of the signal.
 
-例如以下的一个连续信号：
+For example, the following continuous signal:
 
 <img src="/what_is_resolution/gif_2025-5-30_17-53-53.gif" width="50%" />
 
-可以拆分为两个不同频率的正弦波的叠加。其中图例中下方的正弦波有着更高的频率，这个连续信号的最高频率即为下方的正弦波的频率：
+can be decomposed into a superposition of two sine waves with different frequencies. The sine wave at the bottom of the diagram has a higher frequency, and the maximum frequency of this continuous signal is the frequency of the bottom sine wave:
 
 <img src="/what_is_resolution/gif_2025-5-30_17-54-19.gif" width="50%" />
 
-越是尖锐的变化，频率就越高，最尖锐的变换无疑就是一个垂直的线段，如下为一段包含有近似垂直线段的连续信号：
+The sharper the changes, the higher the frequency. The sharpest possible change is undoubtedly a vertical line segment. Here is a continuous signal containing an approximately vertical line segment:
 
 <img src="/what_is_resolution/gif_2025-5-30_17-57-43.gif" width="50%" />
 
-为了能正确的复原这段信号，我们需要有一系列的正弦波叠加，而随着叠加的正弦波频率越高，我们就越能复现这个连续信号，这个连续信号的最高频率即为其完美复现时所叠加的最高频率的正弦波：
+To correctly reconstruct this signal, we need a superposition of sine waves. As the frequencies of the superposed sine waves get higher, we can better reproduce this continuous signal. The maximum frequency of this continuous signal is the frequency of the highest-frequency sine wave when perfectly reconstructed:
 
 <img src="/what_is_resolution/gif_2025-5-30_17-58-35.gif" width="50%" />
 
 
-从上述的示例中，不难看出，对于一个信号，它变换的越快，想要复原它就需要越高频率的正弦波，也即意味着它的最高频率越高，也意味着需要越高的采样频率来还原这个原始信号。
+From the above examples, it's clear that for any signal, the faster it changes, the higher the frequency sine waves needed to reconstruct it, which means its maximum frequency is higher and requires a higher sampling frequency to restore the original signal.
 
-在我们的日常生活中，我们通过 “细节” 这个词来描述快速的变化的部分，对于细节多的内容，我们通常需要更高的采样频率（同焦距/FOV 下，即更高的分辨率）。
+In our daily lives, we use the word "detail" to describe rapidly changing parts. For content with more detail, we typically need higher sampling frequencies (i.e., higher resolution under the same focal length/FOV).
 
-还是以房中之墙为例，如果房间与墙壁都是纯粹的黑，那么你的视野内是没有任何的变化的，无疑这时没有任何的细节。而当那堵墙存在变化时，它变化的越快，你需要察觉的“细节”就越多。
-- 正因为人对于变化快的内容更难察觉，所以才会用“**细节**”这个词去描绘。
+Using our wall example again: if the room and wall are pure black, then there's no change in your field of vision, and clearly there are no details. But when the wall has variations, the faster it changes, the more "detail" you need to perceive.
+- Precisely because people find it harder to perceive rapidly changing content, we use the word "**detail**" to describe it.
 
-## 总结
+## Summary
 
-至此，我们已经拥有了从信号角度去解析分辨率的所有工具，文章一开始的三个问题，在之前的论述中都已经解答了，现在我们再次总结下回答：
+We now have all the tools needed to analyze resolution from a signal processing perspective. The three questions posed at the beginning of this article have all been answered through our discussion. Let me summarize the answers:
 
-1. 分辨率是什么？
+1. What is resolution?
    
-   分辨率是一张图片上每个方向上的采样点数，分辨率越高即意味着每个方向上的采样点数越多。在图片所要展现的内容固定的情况下，分辨率越高意味着对所要展现的内容的采样频率越高，也因此意味着对于所要展现的内容的还原越准确。
+   Resolution is the number of sampling points in each direction of an image. Higher resolution means more sampling points in each direction. When the content to be displayed is fixed, higher resolution means higher sampling frequency for that content, which results in more accurate reconstruction of the content.
 
 
-2. 为何分辨率如此重要？
+2. Why is resolution so important?
 
-    因为分辨率越高通常意味着采样频率越高，而采样频率越高就意味着我们可以还原的信号的频率越高，也就意味着我们可以还原的细节越多。
+    Because higher resolution typically means higher sampling frequency, and higher sampling frequency means we can reconstruct signals with higher frequencies, enabling us to preserve more detail.
 
 
-3. 分辨率越高越好吗？
+3. Is higher resolution always better?
    
-    如上所属，分辨率越高越能还原原始的内容，所以在不考虑成本的前提下，分辨率是越高越好的。
+    As explained above, higher resolution enables better restoration of original content, so without considering cost, higher resolution is indeed better.
 
-    但如果考虑成本，则分辨率的高低需要取决于它所展现的内容的细节程度，即内容的频率。对于一个内容的频率越高的内容，分辨率就需要越高才能正确还原这个内容；而对于一个内容的频率较低的内容，分辨率就可以相对较低。
+    However, when considering cost, the appropriate resolution level depends on the detail level (frequency) of the content being displayed. Content with higher frequency requires higher resolution for correct reconstruction, while content with lower frequency can use relatively lower resolution.
 
 {% note primary %}
-在分辨率固定的情况下，降低内容的频率（即降低内容的细节）也可以让我们准确的还原出内容。
+With fixed resolution, reducing the content frequency (i.e., reducing detail) can also allow us to accurately reconstruct the content.
 {% endnote %}
 
 
-我们也能解释一些虚拟渲染时，常见的现象：
+We can also explain some common phenomena in virtual rendering:
 
-1. 图片中黑白突变的部分容易出现锯齿/摩尔纹
-    图像中黑色到白色的突变，即是一个垂直的变化（从 0 → 1），由上所述，可以知道这个变化所蕴含的频率极高。 
-    也因此，这种黑白图标的图片在被渲染时容易出现锯齿/摩尔纹，因为渲染时的采样频率（由分辨率和 FOV 共同决定）已经无法满足原始信号（黑白突变）的最高频率。
+1. Sharp black-white transitions in images are prone to aliasing/moiré patterns
+    Black-to-white transitions in images represent vertical changes (from 0 → 1), which as we've discussed, contain extremely high frequencies. 
+    This is why images with sharp black-white elements are prone to aliasing/moiré patterns when rendered—the sampling frequency during rendering (determined by resolution and FOV) cannot satisfy the maximum frequency of the original signal (black-white transitions).
 
-2. 锯齿总是出现在物体的边缘
+2. Aliasing always appears at object edges
 
-    因为物体的边缘通常是一个快速变化的部分（A 物体和 B 物体放在一起， A 物体的边缘意味着 A 物体的颜色与 B 物体的颜色之间的突变），即它的频率较高。由于渲染时的采样频率无法满足这个频率，所以会出现锯齿。
+    Object edges are typically areas of rapid change (when object A and object B are adjacent, the edge of object A represents a sudden transition between A's color and B's color), meaning they have high frequency. When the sampling frequency during rendering cannot satisfy this frequency, aliasing occurs.
 
-希望这篇文章能让你更了解分辨率，其中的几个结论你需要牢记于心，这对你理解与优化一些显示效果至关重要：
-1. 分辨率与采样频率强相关
-2. 原始信号的频率与采样频率是否匹配，直接决定了采样后的结果是否可以还原原始信号
-    - 采样频率受采样次数（分辨率）和采样范围（焦距）影响
-    - 原始信号频率受内容细节影响
-3. 越细节的内容就表示原始信号的频率越高，采样频率需要越高才能还原出原始信号
+I hope this article helps you better understand resolution. You should remember several key conclusions, as they are crucial for understanding and optimizing display effects:
+1. Resolution is strongly correlated with sampling frequency
+2. Whether the original signal frequency matches the sampling frequency directly determines if the sampled result can reconstruct the original signal
+    - Sampling frequency is affected by the number of samples (resolution) and sampling range (focal length)
+    - Original signal frequency is affected by content detail
+3. More detailed content means higher original signal frequency, requiring higher sampling frequency to reconstruct the original signal
 
 # Reference
 
-[An Interactive Introduction to Fourier Transforms](https://www.jezzamon.com/fourier/)：文章中的傅里叶变换说明主要来自于此，在这个网站中，你也可以绘制任意的曲线来进行傅里叶展开。
+[An Interactive Introduction to Fourier Transforms](https://www.jezzamon.com/fourier/): The Fourier transform explanations in this article are primarily based on this resource. On this website, you can also draw arbitrary curves to perform Fourier decomposition.
 

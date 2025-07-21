@@ -4,150 +4,148 @@ tags:
 created: 2025-06-04
 updated: 2025-06-27
 published: true
-title: XR 合成层（Composition Layer）概念详解
+title: Understanding XR Composition Layers - A Comprehensive Guide
 date: 2025-06-26 22:10
-description: XR系统中的合成层（Composition Layer）机制通过将不同类型的内容拆分为独立层（如Projection、Quad、Cylinder等层），由合成器（Compositor）合并后输出到屏幕。这种设计主要解决了传统XR渲染路径中两次非点对点采样导致的画质劣化问题，通过让UI等平面内容直接以合成层提交，减少了一次采样环节。典型案例显示，YVR2设备的Home界面由背景的Projection层和两个UI的Quad层共同构成。合成层还支持多应用内容整合，如MR场景中透视画面、曲面UI和系统弹框的协同显示
+description: XR Composition Layer architecture separates different content types into independent layers (Projection, Quad, Cylinder, etc.) that are merged by the Compositor before display. This design primarily addresses image quality degradation from dual non-point-to-point sampling in traditional XR rendering pipelines by allowing UI and flat content to be submitted directly as composition layers, eliminating one sampling stage. Real-world examples show YVR2's Home interface composed of a background Projection layer and two UI Quad layers. Composition layers also enable multi-application content integration, such as coordinated display of passthrough video, curved UI, and system dialogs in MR scenarios.
 ---
 
-对于一个 XR 系统而言，各应用将它所要展示的内容通过 `合成层（Composition Layer）` 传递给系统的 `合成器（Compositor）`，合成器将这些内容合成为最终的图像渲染至屏幕上并最终展示的给用户。
+For an XR system, applications pass the content they want to display through `Composition Layers` to the system's `Compositor`, which then composites these layers into a final image that is rendered to the screen and ultimately presented to the user.
 
-在 OpenXR 规范下，常见的合成层包括：
+Under the OpenXR specification, common composition layer types include:
 
-- Projection Layer：从左右眼位置出发，使用标准的投影矩阵渲染的图像。这是最惯常的合成层类型，几乎所有的 XR 应用有一个 Projection Layer，绝大部分的 XR 也仅有一个 Projection Layer。
-  - 在 XR 中，Eye Buffer 一词基本就是指 Projection Layer。
-- Quad Layer：一个平面图像层，通常用于展示 UI 元素或其他平面内容，例如视频。
-- Cylinder Layer：一个圆柱形图像层，适用于展示环绕式内容，例如曲面的 UI 或曲面播放视频。
-- Cube Layer：一个立方体图像层，适用于展示全景内容。
-- Equirect Layer：一个等距矩形图像层，适用于展示全景内容。
+- Projection Layer: Images rendered using standard projection matrices from the perspective of left and right eye positions. This is the most conventional layer type—virtually all XR applications have one Projection Layer, and the vast majority only use a single Projection Layer.
+  - In XR terminology, "Eye Buffer" essentially refers to the Projection Layer.
+- Quad Layer: A planar image layer, typically used to display UI elements or other flat content, such as videos.
+- Cylinder Layer: A cylindrical image layer, suitable for displaying wraparound content like curved UI or curved video playback.
+- Cube Layer: A cubic image layer, suitable for displaying panoramic content.
+- Equirect Layer: An equirectangular image layer, suitable for displaying panoramic content.
 
-## 实践案例
+## Practical Example
 
-对于在 YVR2 设备的 Home 中就使用了合成层来提交不同的内容，例如你在 Home 看到如下的画面：
+The Home environment on the YVR2 device uses composition layers to submit different content types. For example, when you see the following scene in Home:
 
 ![Content](/composition_layer/2025-06-05-10-23-47.png)
 
-实际上是由 Home 提交的三个合成层共同构成：
+It's actually composed of three composition layers submitted by Home:
 
-1. 一个 Projection Layer，绘制了 Home 的背景图像。
+1. A Projection Layer that renders the Home background image.
 
     ![Projection Layer](/composition_layer/2025-06-05-10-46-23.png)
 
-2. 一个 Quad Layer，用以表示应用库
+2. A Quad Layer used to display the app library
 
     ![Quad Layer](/composition_layer/1_0.png)
    
-3. 另一个 Quad Layer 表示底部状态栏
+3. Another Quad Layer representing the bottom status bar
 
     ![Another Quad Layer](/composition_layer/1_2.png)
 
 
-## 为何需要合成层
+## Why Do We Need Composition Layers?
 
-在描述更多关于合成层的内容前，首先要回答的问题是 *为何我们需要合成层？*，毕竟我们不需要浪费时间在一个没有价值的概念上。
+Before exploring more about composition layers, we must first answer the fundamental question: *Why do we need composition layers?* After all, we shouldn't waste time on valueless concepts.
 
-合成层的概念并不是 XR 设备独有的，在传统的硬件设备中，例如手机和电脑，应用也会通过类似的方式将内容提交给系统的合成器，合成器将这些内容合成为最终的图像渲染至屏幕上并最终展示给用户。
-- **Windows**: 自 Vista 系统开始引入了 **Desktop Window Manager (DWM)**，DWM负责收集各应用窗口的图形内容，应用视觉效果，并将它们合成为最终显示的画面。在Windows 10后，还引入了更现代的 **Windows Composition Engine** 与 DWM 协同工作。
-- **Android**: 使用的是**SurfaceFlinger**，它是Android的系统服务，负责管理各应用的图形缓冲区(Surfaces)，将它们按Z轴顺序合成，并最终输出到显示设备（此过程后续简称为 *上屏*）。
+The concept of composition layers isn't unique to XR devices. In traditional hardware systems like smartphones and computers, applications also submit content to the system's compositor using similar mechanisms, which then composite this content into the final image that gets rendered to the screen and displayed to the user.
+- **Windows**: Since Vista, Windows introduced the **Desktop Window Manager (DWM)**, which collects graphical content from application windows, applies visual effects, and composites them into the final display output. After Windows 10, the more modern **Windows Composition Engine** was introduced to work alongside DWM.
+- **Android**: Uses **SurfaceFlinger**, an Android system service responsible for managing application graphics buffers (Surfaces), compositing them in Z-order, and finally outputting to display devices (this process is often referred to as *scanout*).
 
-但 XR 系统中的 Compositor 所要做的 ATW 工作（Asynchronous Time Warp）和畸变矫正在传统的系统中是不存在的，而这两者都会让合成时引入不可避免的 **非点对点** 采样。
+However, the ATW (Asynchronous Time Warp) and distortion correction work performed by XR system Compositors doesn't exist in traditional systems, and both of these introduce unavoidable **non-point-to-point** sampling during composition.
 
-因此在 XR 中，对于一个使用传统渲染路径的内容而言，其至少需要经过 **两次非点对点** 的采样两次才能最终被用户看到，而渲染中每一次非点对点的采样，都会引入效果的劣化。
-- 第一次非点对点采样：虚拟内容绘制到 Eye Buffer 上
-- 第二次非点对点采样：Compositor 将 Eye Buffer 中的内容绘制到最终的显示缓冲区进行上屏。
+Therefore, in XR systems, content using traditional rendering paths must undergo at least **two non-point-to-point** sampling operations before being seen by the user, and each non-point-to-point sampling in rendering introduces quality degradation:
+- First non-point-to-point sampling: Virtual content rendered onto the Eye Buffer
+- Second non-point-to-point sampling: Compositor renders Eye Buffer content to the final display buffer for scanout
 
 {% note primary %}
-关于 XR 中非点对点渲染引入显示效果劣化的讨论，见 Resolution in XR
+For discussion about how non-point-to-point rendering in XR introduces display quality degradation, see Resolution in XR
 {% endnote %}
 
-因为合成器将 Eye Buffer 绘制到最终显示缓冲区上这个过程是不可避免的，其上述的第二次非点对点采样是不可避免的。因此合成层的设计目的是为了减少将虚拟内容绘制到 Eye Buffer 上时的非点对点采样，即第一次非点对点采样。
+Since the compositor rendering the Eye Buffer to the final display buffer is unavoidable, the second non-point-to-point sampling mentioned above cannot be eliminated. Therefore, composition layers are designed to reduce the non-point-to-point sampling when rendering virtual content to the Eye Buffer—the first non-point-to-point sampling.
 
-以上面展现的 YVR2 Home 的例子为例，他的 UI 内容是通过 Quad Layer 直接交给系统合成器的，其会被合成器处理并最终上屏，因此之只经过了一次非点对点采样，借此提升了清晰度。
+Using the YVR2 Home example shown above, its UI content is submitted directly to the system compositor through Quad Layers, which are processed by the compositor and finally sent for scanout, thus experiencing only one non-point-to-point sampling, thereby improving sharpness.
 
 {% note info %}
-严格而言，在 Unity 应用中，使用 Quad Layer 展现 UI 内容时，仍然是经历了两次采样。因为 Quad Layer 上的内容，是 UI 素材被渲染至了 Quad Layer 的纹理上，只不过这个渲染过程是正交投影，且可以通过 Quad Layer 的分辨率与 UI 元素分辨率的匹配来避免非点对点采样，以达到真正的点对点采样。
-因此使用了 Quad Layer 展现 UI 的过程，是避免了一次非点对点采样，而不是减少了一次采样。
+Strictly speaking, in Unity applications, displaying UI content using Quad Layers still involves two sampling operations. This is because the content on the Quad Layer consists of UI assets rendered onto the Quad Layer's texture. However, this rendering process uses orthographic projection and can achieve true point-to-point sampling by matching the Quad Layer resolution with the UI element resolution, avoiding non-point-to-point sampling.
+Therefore, using Quad Layers to display UI avoids one non-point-to-point sampling operation, rather than reducing the total number of sampling operations.
 {% endnote %}
 
-使用合成层拆分内容还有一个潜在的好处在于，内容的拆分引入了更细的控制颗粒度，例如可以对 Eye Buffer 提供更高的渲染倍率和开启 MSAA，但对于 UI 的 Quad Layer 则采用默认的渲染倍率和不开启 MSAA，这样可以在保证 UI 清晰度的同时，减少 Eye Buffer 的渲染开销。
+Separating content using composition layers has another potential benefit: content separation introduces finer control granularity. For example, you can provide higher render scale and enable MSAA for the Eye Buffer while using default render scale and no MSAA for UI Quad Layers, maintaining UI sharpness while reducing Eye Buffer rendering overhead.
 
-## 合成层的提交
+## Composition Layer Submission
 
-对于上述 YVR Home 的场景，应用负责提交 *帧* 给 Compositor，*帧* 中会包含有各个合成层的内容，Compositor 会将这些合成层的内容合成为最终的图像会展现在屏幕上，如下示意图：
+For the YVR Home scenario described above, the application is responsible for submitting *frames* to the Compositor. Each *frame* contains content from various composition layers, which the Compositor composites into the final image displayed on the screen, as shown in the following diagram:
 
 ![App Submit Frame](/composition_layer/singleapplication.excalidraw.svg)
 
-你可以看到一帧中可以携带多个合成层，且合成层是有顺序的（上示意图中的 $0$、$-1$、$-2$），Compositor 会按照从低到高的顺序将合成层内容合成为最终的图像，即先渲染 $-2$ 层，再渲染 $-1$ 层，最后渲染 $0$ 层（[画家算法](https://en.wikipedia.org/wiki/Painter%27s_algorithm))。
+You can see that a frame can carry multiple composition layers, and these layers have an ordering (shown as $0$, $-1$, $-2$ in the diagram above). The Compositor composites the layer content into the final image in order from low to high, rendering layer $-2$ first, then layer $-1$, and finally layer $0$ ([painter's algorithm](https://en.wikipedia.org/wiki/Painter%27s_algorithm)).
 
-通常应用中会固定 Project Layer （Eye Buffer 层）是第 $0$ 层，并将在 Eye Buffer 层**前**合成的层（合成顺序为负数）称为 `Underlay Layer`，而在 Eye Buffer 层**后**合成的层（合成顺序为正数）称为 `Overlay Layer`。因此在上述的例子中，$-1$ 层(下图红色)是 Underlay Layer，而 $1,2,3$ 层是 Overlay Layer（下图半透明的绿，蓝，粉色层）。
+Typically, applications fix the Projection Layer (Eye Buffer layer) as layer $0$, and layers composited **before** the Eye Buffer layer (with negative composition order) are called `Underlay Layers`, while layers composited **after** the Eye Buffer layer (with positive composition order) are called `Overlay Layers`. Therefore, in the example above, layer $-1$ (red in the image below) is an Underlay Layer, while layers $1, 2, 3$ are Overlay Layers (translucent green, blue, and pink layers in the image below).
 
-
-![合成示意](/composition_layer/2025-06-06-15-34-36.png)
+![Composition Diagram](/composition_layer/2025-06-06-15-34-36.png)
 
 {% note info %}
-也正因为如此，在上述的例子中，YVR Home 的第 0 层中应当显示 UI 的区域是透明的，如果没有透明区域，当第 0 层绘制时会将之前的 $-2$ 和 $-1$ 层内容覆盖掉，导致最终的图像中看不到 $-2$ 和 $-1$ 层的内容。
-应用通常可以通过绘制绘制一个写入 Alpha 为 0 的物体来将画面中的部分区域变为透明区域，这个操作在很多时候被称为 *打洞（Punch a hole）*
+This is precisely why in the example above, the regions in YVR Home's layer 0 where UI should be displayed are transparent. Without transparent regions, when layer 0 is rendered, it would cover the previously rendered layers $-2$ and $-1$, preventing the content of layers $-2$ and $-1$ from being visible in the final image.
+Applications typically achieve this by rendering an object that writes an Alpha value of 0 to make portions of the image transparent. This operation is often called *punching a hole*.
 {% endnote %}
 
-### 多应用合成
+### Multi-Application Composition
 
-合成层的概念并非局限在单个应用中。对于 Compositor 而言，它只是接纳来自于各个应用的*帧* 并负责将其合成为最终的图像，至于同一时间内有多少个应用提交帧给 Compositor 并不重要。
+The concept of composition layers is not limited to single applications. From the Compositor's perspective, it simply receives *frames* from various applications and is responsible for compositing them into the final image. The number of applications submitting frames to the Compositor at any given time doesn't matter.
 
-多应用合成的典型例子为各 XR 平台提供的 [Focus Awareness](https://developers.meta.com/horizon/documentation/unity/unity-overlays/) （后简称为 `FA`）功能，如在 Play For Dream MR 设备上一款 MR 应用唤醒了 FA 功能后，所看到的如下界面：
+A typical example of multi-application composition is the [Focus Awareness](https://developers.meta.com/horizon/documentation/unity/unity-overlays/) (FA) functionality provided by various XR platforms. For instance, when an MR application on the Play For Dream MR device activates the FA functionality, you would see the following interface:
 
 ![PFDM](/composition_layer/2025-06-13-09-54-13.png)
 
-它需要由三部分构成：
-- 系统的 Pass-Through Service 提交 VST 层，绘制了设备透视的画面
-- VD 应用提交的 Cylinder Layer 层，提供了曲面的 UI 内容时
-- Spatial Home 提交的 Projection Layer 层，绘制了退出确认的弹框和手柄。
+This requires three components:
+- The system's Pass-Through Service submits a VST layer, rendering the device's see-through view
+- The VD application submits a Cylinder Layer, providing curved UI content
+- Spatial Home submits a Projection Layer, rendering the exit confirmation dialog and controllers
 
-其示意图如下：
+The diagram below illustrates this:
 
 ![MultiApplication](/composition_layer/multiapplication.excalidraw.svg)
 
-系统 Compositor 会根据一定的策略将同一时间提交帧的应用进行划分，如优先合成 Pass-Through Service 提交的 Pass-Through 画面，再合成普通应用提交的画面，再最终合成系统应用（SpatialHome）提交的画面。
+The system Compositor follows certain strategies to organize applications that submit frames at the same time, such as prioritizing the Pass-Through view submitted by the Pass-Through Service first, then compositing frames from regular applications, and finally compositing frames from system applications (SpatialHome).
 
 {% note info %}
-对于多个应用提交的帧的排序的规则，在 OpenXR 标准中并没有定义。因此可平台可能存在较大的差异。
-但该规则也通常只需要 XR 厂商关心，因为普通开发者的 XR 应用并不会主动与其他的 XR 应用耦合，因此也就不需要关心多应用合成的规则。
+The ordering rules for frames submitted by multiple applications are not defined in the OpenXR standard. Therefore, different platforms may have significant variations.
+However, these rules typically only concern XR vendors, since regular developers' XR applications don't actively couple with other XR applications, so they don't need to worry about multi-application composition rules.
 {% endnote %}
 
-## 合成层的弊端
+## Drawbacks of Composition Layers
 
-在前面已经提到了合成层的设计目的是为了减少将虚拟内容绘制到 Eye Buffer 上时的非点对点采样，即第一次非点对点采样，来达到清晰度的效果。但合成层并非银弹，你需要了解合成层所带来的弊端，才能更好的决策你的 XR 应用是否需要使用合成层。
+As mentioned earlier, composition layers are designed to reduce the non-point-to-point sampling when rendering virtual content to the Eye Buffer—specifically the first non-point-to-point sampling—to achieve improved clarity. However, composition layers are not a silver bullet. You need to understand the drawbacks they introduce to make better decisions about whether your XR application should use composition layers.
 
-### 增加的开发复杂性
+### Increased Development Complexity
 
-对于仅使用 Eye Buffer（单一 Projection Layer）的应用而言，所有内容的渲染都直接通过渲染引擎绘制到 Eye Buffer 上，渲染引擎会处理好所有的渲染细节，开发者只需要关注内容的设计和实现即可。
+For applications that only use the Eye Buffer (a single Projection Layer), all content rendering goes directly through the rendering engine to the Eye Buffer. The rendering engine handles all rendering details, and developers only need to focus on content design and implementation.
 
-而当引入了额外的合成层后，开发者还需要关心该如何将内容渲染到额外合成层上。特别是当使用了 Underlay 合成层时，还需要对 Eye Buffer 的内容进行 *打洞* 操作，以保证 Underlay 合成层的内容可以正常的透出。
+However, when additional composition layers are introduced, developers must also consider how to render content to these extra layers. Particularly when using Underlay composition layers, *punching holes* in the Eye Buffer content is required to ensure that Underlay layer content can properly show through.
 
-同时由于多个合成层的合并管控只是画家算法的简单应用，如果要做到较为完美的混和和遮挡效果，需要在 *打洞* 时进行更为复杂的处理，例如获取合成层的内容画面，决定洞的透明度等。
+Additionally, since compositing multiple layers is simply an application of the painter's algorithm, achieving more sophisticated blending and occlusion effects requires more complex processing during the *hole punching* stage, such as obtaining the composition layer's content and determining the transparency of the holes.
 
-### 难以进行全局效果的管控
+### Difficulty in Global Effect Control
 
-当内容使用额外的合成层提交给系统 Compositor 时，应用在渲染 Eye Buffer 时，对于合成层中内容是无法管控的，因为合成层最终的显示是由系统的 Compositor 决定的。
+When content is submitted to the system Compositor using additional composition layers, the application has no control over the composition layer content when rendering the Eye Buffer, because the final display of composition layers is determined by the system's Compositor.
 
-例如希望对整个应用最终的画面进行后处理效果，如高斯模糊，全局雾化等，由于 Eye Buffer 中并不包含有额外合成层的内容，所以对 Eye Buffer 的后处理效果是无法影响到额外合成层的内容的。
+For example, if you want to apply post-processing effects to the entire application's final image, such as Gaussian blur or global fog effects, since the Eye Buffer doesn't contain the content from additional composition layers, post-processing effects applied to the Eye Buffer cannot affect the content in the additional composition layers.
 
 {% note info %}
-开发者可以选择在向额外合成层绘制内容时，通过增加对额外合成层的后处理效果来实现类似的效果，但这会加剧开发复杂性的增加。且即使如此，也有一些无法规避的问题：
-- 诸如高斯模糊这样的需要对相邻像素进行采样的效果，额外合成层和 Eye Buffer 交界处会产生明显的错误效果。
-- 如果额外合成层的内容是通过 Surface SwapChain 方式提交画面，那么应用层并不负责向额外合成层绘制内容，也就无法对额外合成层的内容进行任何的后处理。
+Developers can choose to apply post-processing effects to additional composition layers when rendering content to them, but this exacerbates the increase in development complexity. Even so, there are some unavoidable issues:
+- Effects like Gaussian blur that require sampling neighboring pixels will produce obvious artifacts at the boundaries between additional composition layers and the Eye Buffer.
+- If additional composition layer content is submitted via Surface SwapChain, the application layer is not responsible for rendering content to the additional composition layers and therefore cannot apply any post-processing to that content.
 {% endnote %}
 
-又比如对 Eye Buffer 渲染模式的管控，诸如注视点渲染，也无法对额外的合成层带来变化。
+Similarly, control over Eye Buffer rendering modes, such as foveated rendering, cannot affect additional composition layers.
 
-### 额外的性能负载
+### Additional Performance Overhead
 
-由于合成层的内容需要由系统 Compositor 进行合成，因此需要合成的内容越多，系统 Compositor 的负载就越大。而 Compositor 是不允许 **掉帧** 出现的，其一旦发生掉帧就会产生定屏现象，严重影响用户体验。
+Since composition layer content needs to be composited by the system Compositor, the more content that needs compositing, the greater the load on the system Compositor. The Compositor cannot afford to **drop frames**, as any dropped frames would cause frame freeze phenomena that severely impact user experience.
 
-另外合成层在某些情况下也会增加性能开销，例如通过合成层绘制 UI，它要求应用在绘制 UI 和绘制其他物体时进行渲染目标的切换（UI 需要绘制到额外合成层上，而其他物体需要绘制到 Eye Buffer 上），渲染目标的切换无疑会带来部分性能开销。
+Furthermore, composition layers can increase performance overhead in certain situations. For example, when rendering UI through composition layers, the application must switch render targets when drawing UI versus other objects (UI needs to be drawn to additional composition layers, while other objects need to be drawn to the Eye Buffer). Render target switching undoubtedly introduces some performance overhead.
 
-此外由于额外合成层与 Eye Buffer 的内容是分离的，一些依靠深度遮挡进行的效果优化也无法进行，例如手柄遮挡住 UI 时：
-- 如果都绘制到 Eye Buffer 上，且先绘制手柄再绘制 UI，那么被遮挡的 UI 部分会因为深度测试失败而不被绘制。
-- 如果 UI 绘制到额外合成层上，那么无论如何都需要绘制完整的 UI
-
+Additionally, because additional composition layers and Eye Buffer content are separate, some optimizations that rely on depth occlusion cannot be performed. For example, when a controller occludes UI:
+- If both are drawn to the Eye Buffer, and the controller is drawn before the UI, then the occluded portions of the UI would not be rendered due to depth test failure.
+- If the UI is drawn to additional composition layers, then the complete UI must be rendered regardless.
 
 # Reference
 
