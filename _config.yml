@@ -130,3 +130,51 @@ hexo_submit_urls_to_search_engine:
     replace_with:
 ignore:
   - source-en/
+
+# hexo-neat 配置 - 压缩优化
+neat_enable: true
+neat_html:
+  enable: true
+  exclude:
+    - '**/*.min.html'
+neat_css:
+  enable: true
+  exclude:
+    - '**/*.min.css'
+neat_js:
+  enable: true
+  mangle: true
+  compress: {}
+  exclude:
+    - '**/*.min.js'
+
+# hexo-filter-optimize 配置
+filter_optimize:
+  enable: true
+  # 移除不必要的标签
+  remove_comments: false
+  css:
+    enable: true
+    # 内联小于10KB的CSS文件
+    inlines:
+      enable: true
+      threshold: 10
+    # 预加载CSS文件
+    preload:
+      enable: true
+      threshold: 50
+    # 异步加载CSS
+    async:
+      enable: true
+      exclude:
+        - '*.min.css'
+  js:
+    enable: true
+    # 预加载JS文件
+    preload:
+      enable: true
+    async:
+      enable: true
+  # HTML压缩
+  html:
+    enable: true
