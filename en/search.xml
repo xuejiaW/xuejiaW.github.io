@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Understanding XR Composition Layers - A Comprehensive Guide</title>
+    <url>/en/composition_layer/</url>
+    <content><![CDATA[<p>For an XR system, applications pass the content they want to display through <code>Composition Layers</code> to the system’s <code>Compositor</code>, which then composites these layers into a final image that is rendered to the screen and ultimately presented to the user.</p>
+<p>Under the OpenXR specification, common composition layer types include:</p>
+<ul>
+<li>Projection Layer: Images rendered using standard projection matrices from the perspective of left and right eye positions. This is the most conventional layer type—virtually all XR applications have one Projection Layer, and the vast majority only use a single Projection Layer.
+<ul>
+<li>In XR terminology, “Eye Buffer” essentially refers to the Projection Layer.</li>
+</ul>
+</li>
+<li>Quad Layer: A planar image layer, typically used to display UI elements or other flat content, such as videos.</li>
+<li>Cylinder Layer: A cylindrical image layer, suitable for displaying wraparound content like curved UI or curved video playback.</li>
+<li>Cube Layer: A cubic image layer, suitable for displaying panoramic content.</li>
+<li>Equirect Layer: An equirectangular image layer, suitable for displaying panoramic content.</li>
+</ul>
+<h2 id="Practical_Example"><a class="header-anchor" href="#Practical_Example">#</a>Practical Example</h2>
+<p>The Home environment on the YVR2 device uses composition layers to submit different content types. For example, when you see the following scene in Home:</p>
+<p><img src="/composition_layer/2025-06-05-10-23-47.png" alt="Content"></p>
+<p>It’s actually composed of three composition layers submitted by Home:</p>
+<ol>
+<li>
+<p>A Projection Layer that renders the Home background image.</p>
+<p><img src="/composition_layer/2025-06-05-10-46-23.png" alt="Projection Layer"></p>
+</li>
+<li>
+<p>A Quad Layer used to display the app library</p>
+<p><img src="/composition_layer/1_0.png" alt="Quad Layer"></p>
+</li>
+<li>
+<p>Another Quad Layer representing the bottom status bar</p>
+<p><img src="/composition_layer/1_2.png" alt="Another Quad Layer"></p>
+</li>
+</ol>
+<h2 id="Why_Do_We_Need_Composition_Layers"><a class="header-anchor" href="#Why_Do_We_Need_Composition_Layers">#</a>Why Do We Need Composition Layers?</h2>
+<p>Before exploring more about composition layers, we must first answer the fundamental question: <em>Why do we need composition layers?</em> After all, we shouldn’t waste time on valueless concepts.</p>
+<p>The concept of composition layers isn’t unique to XR devices. In traditional hardware systems like smartphones and computers, applications also submit content to the system’s compositor using similar mechanisms, which then composite this content into the final image that gets rendered to the screen and displayed to the user.</p>
+<ul>
+<li><strong>Windows</strong>: Since Vista, Windows introduced the <strong>Desktop Window Manager (DWM)</strong>, which collects graphical content from application windows, applies visual effects, and composites them into the final display output. After Windows 10, the more modern <strong>Windows Composition Engine</strong> was introduced to work alongside DWM.</li>
+<li><strong>Android</strong>: Uses <strong>SurfaceFlinger</strong>, an Android system service responsible for managing application graphics buffers (Surfaces), compositing them in Z-order, and finally outputting to display devices (this process is often referred to as <em>scanout</em>).</li>
+</ul>
+<p>However, the ATW (Asynchronous Time Warp) and distortion correction work performed by XR system Compositors doesn’t exist in traditional systems, and both of these introduce unavoidable <strong>non-point-to-point</strong> sampling during composition.</p>
+<p>Therefore, in XR systems, content using traditional rendering paths must undergo at least <strong>two non-point-to-point</strong> sampling operations before being seen by the user, and each non-point-to-point sampling in rendering introduces quality degradation:</p>
+<ul>
+<li>First non-point-to-point sampling: Virtual content rendered onto the Eye Buffer</li>
+<li>Second non-point-to-point sampling: Compositor renders Eye Buffer content to the final display buffer for scanout</li>
+</ul>
+<div class="note primary simple"><p>For discussion about how non-point-to-point rendering in XR introduces display quality degradation, see Resolution in XR</p>
+</div>
+<p>Since the compositor rendering the Eye Buffer to the final display buffer is unavoidable, the second non-point-to-point sampling mentioned above cannot be eliminated. Therefore, composition layers are designed to reduce the non-point-to-point sampling when rendering virtual content to the Eye Buffer—the first non-point-to-point sampling.</p>
+<p>Using the YVR2 Home example shown above, its UI content is submitted directly to the system compositor through Quad Layers, which are processed by the compositor and finally sent for scanout, thus experiencing only one non-point-to-point sampling, thereby improving sharpness.</p>
+<div class="note info simple"><p>Strictly speaking, in Unity applications, displaying UI content using Quad Layers still involves two sampling operations. This is because the content on the Quad Layer consists of UI assets rendered onto the Quad Layer’s texture. However, this rendering process uses orthographic projection and can achieve true point-to-point sampling by matching the Quad Layer resolution with the UI element resolution, avoiding non-point-to-point sampling.<br>
+Therefore, using Quad Layers to display UI avoids one non-point-to-point sampling operation, rather than reducing the total number of sampling operations.</p>
+</div>
+<p>Separating content using composition layers has another potential benefit: content separation introduces finer control granularity. For example, you can provide higher render scale and enable MSAA for the Eye Buffer while using default render scale and no MSAA for UI Quad Layers, maintaining UI sharpness while reducing Eye Buffer rendering overhead.</p>
+<h2 id="Composition_Layer_Submission"><a class="header-anchor" href="#Composition_Layer_Submission">#</a>Composition Layer Submission</h2>
+<p>For the YVR Home scenario described above, the application is responsible for submitting <em>frames</em> to the Compositor. Each <em>frame</em> contains content from various composition layers, which the Compositor composites into the final image displayed on the screen, as shown in the following diagram:</p>
+<p><img src="/composition_layer/singleapplication.excalidraw.svg" alt="App Submit Frame"></p>
+<p>You can see that a frame can carry multiple composition layers, and these layers have an ordering (shown as <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span>, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">2</span></span></span></span> in the diagram above). The Compositor composites the layer content into the final image in order from low to high, rendering layer <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">2</span></span></span></span> first, then layer <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span>, and finally layer <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span> (<a href="https://en.wikipedia.org/wiki/Painter%27s_algorithm">painter’s algorithm</a>).</p>
+<p>Typically, applications fix the Projection Layer (Eye Buffer layer) as layer <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>, and layers composited <strong>before</strong> the Eye Buffer layer (with negative composition order) are called <code>Underlay Layers</code>, while layers composited <strong>after</strong> the Eye Buffer layer (with positive composition order) are called <code>Overlay Layers</code>. Therefore, in the example above, layer <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span> (red in the image below) is an Underlay Layer, while layers <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">1, 2, 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span></span></span></span> are Overlay Layers (translucent green, blue, and pink layers in the image below).</p>
+<p><img src="/composition_layer/2025-06-06-15-34-36.png" alt="Composition Diagram"></p>
+<div class="note info simple"><p>This is precisely why in the example above, the regions in YVR Home’s layer 0 where UI should be displayed are transparent. Without transparent regions, when layer 0 is rendered, it would cover the previously rendered layers <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">2</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span>, preventing the content of layers <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">2</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span> from being visible in the final image.<br>
+Applications typically achieve this by rendering an object that writes an Alpha value of 0 to make portions of the image transparent. This operation is often called <em>punching a hole</em>.</p>
+</div>
+<h3 id="Multi_Application_Composition"><a class="header-anchor" href="#Multi_Application_Composition">#</a>Multi-Application Composition</h3>
+<p>The concept of composition layers is not limited to single applications. From the Compositor’s perspective, it simply receives <em>frames</em> from various applications and is responsible for compositing them into the final image. The number of applications submitting frames to the Compositor at any given time doesn’t matter.</p>
+<p>A typical example of multi-application composition is the <a href="https://developers.meta.com/horizon/documentation/unity/unity-overlays/">Focus Awareness</a> (FA) functionality provided by various XR platforms. For instance, when an MR application on the Play For Dream MR device activates the FA functionality, you would see the following interface:</p>
+<p><img src="/composition_layer/2025-06-13-09-54-13.png" alt="PFDM"></p>
+<p>This requires three components:</p>
+<ul>
+<li>The system’s Pass-Through Service submits a VST layer, rendering the device’s see-through view</li>
+<li>The VD application submits a Cylinder Layer, providing curved UI content</li>
+<li>Spatial Home submits a Projection Layer, rendering the exit confirmation dialog and controllers</li>
+</ul>
+<p>The diagram below illustrates this:</p>
+<p><img src="/composition_layer/multiapplication.excalidraw.svg" alt="MultiApplication"></p>
+<p>The system Compositor follows certain strategies to organize applications that submit frames at the same time, such as prioritizing the Pass-Through view submitted by the Pass-Through Service first, then compositing frames from regular applications, and finally compositing frames from system applications (SpatialHome).</p>
+<div class="note info simple"><p>The ordering rules for frames submitted by multiple applications are not defined in the OpenXR standard. Therefore, different platforms may have significant variations.<br>
+However, these rules typically only concern XR vendors, since regular developers’ XR applications don’t actively couple with other XR applications, so they don’t need to worry about multi-application composition rules.</p>
+</div>
+<h2 id="Drawbacks_of_Composition_Layers"><a class="header-anchor" href="#Drawbacks_of_Composition_Layers">#</a>Drawbacks of Composition Layers</h2>
+<p>As mentioned earlier, composition layers are designed to reduce the non-point-to-point sampling when rendering virtual content to the Eye Buffer—specifically the first non-point-to-point sampling—to achieve improved clarity. However, composition layers are not a silver bullet. You need to understand the drawbacks they introduce to make better decisions about whether your XR application should use composition layers.</p>
+<h3 id="Increased_Development_Complexity"><a class="header-anchor" href="#Increased_Development_Complexity">#</a>Increased Development Complexity</h3>
+<p>For applications that only use the Eye Buffer (a single Projection Layer), all content rendering goes directly through the rendering engine to the Eye Buffer. The rendering engine handles all rendering details, and developers only need to focus on content design and implementation.</p>
+<p>However, when additional composition layers are introduced, developers must also consider how to render content to these extra layers. Particularly when using Underlay composition layers, <em>punching holes</em> in the Eye Buffer content is required to ensure that Underlay layer content can properly show through.</p>
+<p>Additionally, since compositing multiple layers is simply an application of the painter’s algorithm, achieving more sophisticated blending and occlusion effects requires more complex processing during the <em>hole punching</em> stage, such as obtaining the composition layer’s content and determining the transparency of the holes.</p>
+<h3 id="Difficulty_in_Global_Effect_Control"><a class="header-anchor" href="#Difficulty_in_Global_Effect_Control">#</a>Difficulty in Global Effect Control</h3>
+<p>When content is submitted to the system Compositor using additional composition layers, the application has no control over the composition layer content when rendering the Eye Buffer, because the final display of composition layers is determined by the system’s Compositor.</p>
+<p>For example, if you want to apply post-processing effects to the entire application’s final image, such as Gaussian blur or global fog effects, since the Eye Buffer doesn’t contain the content from additional composition layers, post-processing effects applied to the Eye Buffer cannot affect the content in the additional composition layers.</p>
+<div class="note info simple"><p>Developers can choose to apply post-processing effects to additional composition layers when rendering content to them, but this exacerbates the increase in development complexity. Even so, there are some unavoidable issues:</p>
+<ul>
+<li>Effects like Gaussian blur that require sampling neighboring pixels will produce obvious artifacts at the boundaries between additional composition layers and the Eye Buffer.</li>
+<li>If additional composition layer content is submitted via Surface SwapChain, the application layer is not responsible for rendering content to the additional composition layers and therefore cannot apply any post-processing to that content.</li>
+</ul>
+</div>
+<p>Similarly, control over Eye Buffer rendering modes, such as foveated rendering, cannot affect additional composition layers.</p>
+<h3 id="Additional_Performance_Overhead"><a class="header-anchor" href="#Additional_Performance_Overhead">#</a>Additional Performance Overhead</h3>
+<p>Since composition layer content needs to be composited by the system Compositor, the more content that needs compositing, the greater the load on the system Compositor. The Compositor cannot afford to <strong>drop frames</strong>, as any dropped frames would cause frame freeze phenomena that severely impact user experience.</p>
+<p>Furthermore, composition layers can increase performance overhead in certain situations. For example, when rendering UI through composition layers, the application must switch render targets when drawing UI versus other objects (UI needs to be drawn to additional composition layers, while other objects need to be drawn to the Eye Buffer). Render target switching undoubtedly introduces some performance overhead.</p>
+<p>Additionally, because additional composition layers and Eye Buffer content are separate, some optimizations that rely on depth occlusion cannot be performed. For example, when a controller occludes UI:</p>
+<ul>
+<li>If both are drawn to the Eye Buffer, and the controller is drawn before the UI, then the occluded portions of the UI would not be rendered due to depth test failure.</li>
+<li>If the UI is drawn to additional composition layers, then the complete UI must be rendered regardless.</li>
+</ul>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://docs.unity3d.com/Packages/com.unity.xr.compositionlayers@2.0/manual/overview.html">Composition layers | XR Composition Layers | 2.0.0</a></p>
+<p><a href="https://developers.meta.com/horizon/documentation/unity/os-compositor-layers">Compositor layers | Meta Horizon OS Developers</a></p>
+]]></content>
+      <tags>
+        <tag>XR</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>What is Resolution? Analyzing Resolution Through Signal Processing and Sampling Theory</title>
+    <url>/en/what_is_resolution/</url>
+    <content><![CDATA[<p><code>Resolution</code> is a term we’re all very familiar with. We say an image has a resolution of 1920x1080, or that a monitor has 4K resolution. We instinctively understand that resolution is important, and often assume that higher resolution is always better—but is this really the case? This article will examine resolution from a technical perspective, exploring what resolution truly is and why it has such a significant impact on display quality. We aim to answer three key questions:</p>
+<ol>
+<li>What is resolution?</li>
+<li>Why is resolution so important?</li>
+<li>Is higher resolution always better?</li>
+</ol>
+<p>Using photography as an example, when we capture a photo and say it has a resolution of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1920</mn><mo>×</mo><mn>1080</mn></mrow><annotation encoding="application/x-tex">1920\times 1080</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1920</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1080</span></span></span></span>, we’re actually describing the pixel count of that image. <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1920</mn><mo>×</mo><mn>1080</mn></mrow><annotation encoding="application/x-tex">1920\times1080</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1920</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1080</span></span></span></span> means the photo contains 1920 pixels in width and 1080 pixels in height.</p>
+<p>Each of these pixels represents a <code>sampling</code> result of the real world captured by the camera. To better understand resolution, we first need to grasp the concept of <code>sampling</code>.</p>
+<h2 id="What_is_Sampling"><a class="header-anchor" href="#What_is_Sampling">#</a>What is Sampling?</h2>
+<p>Sampling refers to selecting discrete points from a continuous signal to represent that signal. This definition inevitably introduces two more concepts: <code>signals</code> and <code>discrete</code>.</p>
+<div class="note primary simple"><p>When trying to explain a concept as accurately and thoroughly as possible, you’ll unfortunately find that the number of concepts requiring explanation keeps growing.</p>
+</div>
+<h3 id="What_Are_Discrete_Signals"><a class="header-anchor" href="#What_Are_Discrete_Signals">#</a>What Are Discrete Signals?</h3>
+<p>A signal refers to a physical quantity that varies over time or space—for example, the sounds you hear, the colors you see, or the sensations you feel when touching objects. These are all signals. In the real world, signals are continuous. Let’s consider an extremely simplified scenario: you’re in a completely black room, looking at a wall where the color gradually transitions from pure black on the left to pure white in the center, then back to pure black on the right.</p>
+<p>In your field of vision, you’d see a continuous gradient from black to white and back to black. If we represent your visual field with a function graph, it would look like this, where the X-axis represents your field of view from left to right, and the Y-axis represents color intensity (0 = black, 1 = white):</p>
+<p><img src="/what_is_resolution/2025-05-30-15-51-22.excalidraw.svg" alt="Black and white in field of vision"></p>
+<p>Clearly, what you see in your field of vision is continuous, so the graph is also continuous. The numerical representation of color here is a continuous signal.</p>
+<p>When you take a photo in this room with your phone and view it on a computer, at first glance, you might think the black-to-white transition in the photo is equally smooth and continuous. However, when you zoom in on the photo, you’ll discover individual blocks of solid color—the color changes in discrete “blocks” rather than continuously. These blocks are the pixels of the photo, so the photo isn’t truly “smoothly” continuous but jumps from pixel to pixel in discrete steps.</p>
+<p><img src="/what_is_resolution/image-20250530160133.png" alt=""></p>
+<p>Similarly, if we represent the color changes in the photo as a function graph, it would look like this, where each dot represents a pixel:</p>
+<p><img src="/what_is_resolution/2025-05-30-16-03-18.excalidraw.svg" alt=""></p>
+<p>When you look at the photo, you perceive the color changes as continuous because your brain performs a process similar to reconstructing a continuous signal from discrete data—your brain connects the individual dots in the graph above to form a continuous curve.</p>
+<h3 id="Sampling_Frequency"><a class="header-anchor" href="#Sampling_Frequency">#</a>Sampling Frequency</h3>
+<p>In the previous section, we illustrated the difference between continuous signals (your vision) and discrete signals (photographs) through two examples. Sampling is the process of converting continuous signals into discrete signals.</p>
+<p>The most critical aspect of sampling is the sampling <code>interval</code>, which can be uniform or non-uniform. Uniform sampling refers to selecting points at fixed intervals from a continuous signal, while non-uniform sampling selects points at irregular intervals.</p>
+<ul>
+<li>When representing images, each pixel in an image is the same size, so images use uniform sampling.</li>
+</ul>
+<div class="note info simple"><p>Resolution is the number of sampling points in each direction. Higher resolution means more sampling points in each direction.</p>
+</div>
+<p>When sampling is uniform, the most critical information becomes the sampling frequency—the number of sampling points per unit length. Higher sampling frequency means shorter intervals, more sampling points over the same length, and the discrete signal becomes closer to the continuous signal.</p>
+<div class="note primary simple"><p>Therefore, the question “why is resolution important?” is equivalent to “why is sampling frequency important?”</p>
+</div>
+<div class="note info simple"><p>From a photo resolution perspective, if you capture images with fixed focal length and field of view, the “unit length” refers to what you can see within the camera’s frame. For a series of photos taken with the same focal length, higher resolution means higher sampling frequency.<br>
+Note the emphasis on “focal length” here, because sampling frequency depends not only on the number of samples but also on the sampling range. A photo’s sampling frequency is determined by two factors:</p>
+<ul>
+<li>Focal length: determines your field of view range. Longer focal length means smaller field of view. With the same resolution, longer focal length results in higher sampling frequency.</li>
+<li>Resolution: determines the number of sampling points in each direction. With the same focal length, higher resolution results in higher sampling frequency.</li>
+</ul>
+</div>
+<div class="note primary simple"><p>For virtual rendering, the concept similar to focal length is FOV, which affects how much content is rendered:</p>
+<ul>
+<li>With the same resolution, larger FOV results in lower sampling frequency</li>
+<li>With the same FOV, higher resolution results in higher sampling frequency</li>
+</ul>
+</div>
+<p>In the previous example, because the sampling frequency wasn’t too low, we could intuitively reconstruct the continuous signal from the discrete signal. However, if the sampling frequency is too low, we cannot correctly reconstruct the continuous signal.</p>
+<p>Similarly, let’s consider an extreme example. In the same pure black room with a black-to-white gradient wall, suppose we capture a photo with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1\times 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> resolution. The resulting photo, when plotted as a function, would look like this:</p>
+<p><img src="/what_is_resolution/2025-05-30-16-55-38.excalidraw.svg" alt="One pixel"></p>
+<p>Clearly, when looking at this 1-pixel photo, no matter what, your brain cannot reconstruct it into a continuous black-to-white gradient curve. So here, the 1-pixel image cannot restore the original continuous signal. However, if the room is pure black and the wall is also pure black—meaning everything in your field of vision is pure black—then this 1-pixel photo would accurately represent what you see.</p>
+<p>In these two examples (<em>pure black room with a gradient wall</em> vs <em>pure black room with a pure black wall</em>), we captured two photos with the same focal length and both with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">1\times 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> resolution. But in the first example, we cannot reconstruct the continuous signal, while in the second example, we can.</p>
+<p>This example clearly shows that sampling frequency isn’t the only factor—the content of the original signal also affects whether we can accurately reconstruct the continuous signal. This raises the question: “For a given sampling frequency, which original signals can it reconstruct?” The answer to this question is the <code>Sampling Theorem</code>.</p>
+<h2 id="Sampling_Theorem"><a class="header-anchor" href="#Sampling_Theorem">#</a>Sampling Theorem</h2>
+<p>The sampling theorem is a mathematical theorem that describes how to recover a continuous signal from a discrete signal. The core principle of the sampling theorem states: if a continuous signal has a maximum frequency of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">f_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, and you sample it at a frequency greater than or equal to <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msub><mi>f</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">2f_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, then you can perfectly recover the original signal. This <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msub><mi>f</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">2f_{max}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">2</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ma</span><span class="mord mathnormal mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is also known as the <code>Nyquist frequency</code>.</p>
+<div class="note info simple"><p>From the sampling theorem, we can see that whether sampling results can correctly reconstruct a continuous signal depends on two factors:</p>
+<ul>
+<li>What is the maximum frequency of the original signal</li>
+<li>Whether the sampling frequency is sufficiently high</li>
+</ul>
+</div>
+<p>We already know that for a photo with fixed focal length, the sampling frequency is essentially the resolution. The remaining question is: how can I determine the maximum frequency of real-world signals? For example, in our case of a black-to-white gradient wall, even though I can plot its gradient with a function graph (as shown in the continuous signal function graph above), how do I determine the maximum frequency of this function?</p>
+<p>The answer to this question is the <code>Fourier Transform</code>.</p>
+<h3 id="Fourier_Transform"><a class="header-anchor" href="#Fourier_Transform">#</a>Fourier Transform</h3>
+<p>The Fourier transform is a mathematical tool that can decompose any continuous signal into a superposition of sine waves. Through the Fourier transform, we can break down any signal into multiple sine waves of different frequencies, and the highest frequency among these sine waves is the maximum frequency of the signal.</p>
+<p>For example, the following continuous signal:</p>
+<img src="/what_is_resolution/gif_2025-5-30_17-53-53.gif" width="50%" />
+<p>can be decomposed into a superposition of two sine waves with different frequencies. The sine wave at the bottom of the diagram has a higher frequency, and the maximum frequency of this continuous signal is the frequency of the bottom sine wave:</p>
+<img src="/what_is_resolution/gif_2025-5-30_17-54-19.gif" width="50%" />
+<p>The sharper the changes, the higher the frequency. The sharpest possible change is undoubtedly a vertical line segment. Here is a continuous signal containing an approximately vertical line segment:</p>
+<img src="/what_is_resolution/gif_2025-5-30_17-57-43.gif" width="50%" />
+<p>To correctly reconstruct this signal, we need a superposition of sine waves. As the frequencies of the superposed sine waves get higher, we can better reproduce this continuous signal. The maximum frequency of this continuous signal is the frequency of the highest-frequency sine wave when perfectly reconstructed:</p>
+<img src="/what_is_resolution/gif_2025-5-30_17-58-35.gif" width="50%" />
+<p>From the above examples, it’s clear that for any signal, the faster it changes, the higher the frequency sine waves needed to reconstruct it, which means its maximum frequency is higher and requires a higher sampling frequency to restore the original signal.</p>
+<p>In our daily lives, we use the word “detail” to describe rapidly changing parts. For content with more detail, we typically need higher sampling frequencies (i.e., higher resolution under the same focal length/FOV).</p>
+<p>Using our wall example again: if the room and wall are pure black, then there’s no change in your field of vision, and clearly there are no details. But when the wall has variations, the faster it changes, the more “detail” you need to perceive.</p>
+<ul>
+<li>Precisely because people find it harder to perceive rapidly changing content, we use the word “<strong>detail</strong>” to describe it.</li>
+</ul>
+<h2 id="Summary"><a class="header-anchor" href="#Summary">#</a>Summary</h2>
+<p>We now have all the tools needed to analyze resolution from a signal processing perspective. The three questions posed at the beginning of this article have all been answered through our discussion. Let me summarize the answers:</p>
+<ol>
+<li>
+<p>What is resolution?</p>
+<p>Resolution is the number of sampling points in each direction of an image. Higher resolution means more sampling points in each direction. When the content to be displayed is fixed, higher resolution means higher sampling frequency for that content, which results in more accurate reconstruction of the content.</p>
+</li>
+<li>
+<p>Why is resolution so important?</p>
+<p>Because higher resolution typically means higher sampling frequency, and higher sampling frequency means we can reconstruct signals with higher frequencies, enabling us to preserve more detail.</p>
+</li>
+<li>
+<p>Is higher resolution always better?</p>
+<p>As explained above, higher resolution enables better restoration of original content, so without considering cost, higher resolution is indeed better.</p>
+<p>However, when considering cost, the appropriate resolution level depends on the detail level (frequency) of the content being displayed. Content with higher frequency requires higher resolution for correct reconstruction, while content with lower frequency can use relatively lower resolution.</p>
+</li>
+</ol>
+<div class="note primary simple"><p>With fixed resolution, reducing the content frequency (i.e., reducing detail) can also allow us to accurately reconstruct the content.</p>
+</div>
+<p>We can also explain some common phenomena in virtual rendering:</p>
+<ol>
+<li>
+<p>Sharp black-white transitions in images are prone to aliasing/moiré patterns<br>
+Black-to-white transitions in images represent vertical changes (from 0 → 1), which as we’ve discussed, contain extremely high frequencies.<br>
+This is why images with sharp black-white elements are prone to aliasing/moiré patterns when rendered—the sampling frequency during rendering (determined by resolution and FOV) cannot satisfy the maximum frequency of the original signal (black-white transitions).</p>
+</li>
+<li>
+<p>Aliasing always appears at object edges</p>
+<p>Object edges are typically areas of rapid change (when object A and object B are adjacent, the edge of object A represents a sudden transition between A’s color and B’s color), meaning they have high frequency. When the sampling frequency during rendering cannot satisfy this frequency, aliasing occurs.</p>
+</li>
+</ol>
+<p>I hope this article helps you better understand resolution. You should remember several key conclusions, as they are crucial for understanding and optimizing display effects:</p>
+<ol>
+<li>Resolution is strongly correlated with sampling frequency</li>
+<li>Whether the original signal frequency matches the sampling frequency directly determines if the sampled result can reconstruct the original signal
+<ul>
+<li>Sampling frequency is affected by the number of samples (resolution) and sampling range (focal length)</li>
+<li>Original signal frequency is affected by content detail</li>
+</ul>
+</li>
+<li>More detailed content means higher original signal frequency, requiring higher sampling frequency to reconstruct the original signal</li>
+</ol>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://www.jezzamon.com/fourier/">An Interactive Introduction to Fourier Transforms</a>: The Fourier transform explanations in this article are primarily based on this resource. On this website, you can also draw arbitrary curves to perform Fourier decomposition.</p>
+]]></content>
+      <tags>
+        <tag>Graphics</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>XR Stereo Rendering Modes</title>
+    <url>/en/stereo_rendering_mode/</url>
+    <content><![CDATA[<p>In XR, objects typically need to be rendered in stereo, meaning content must be drawn to both left and right eye textures. This rendering approach is called <code>Stereo Rendering</code>. This article covers several stereo rendering techniques, including:</p>
+<ul>
+<li><code>Multi-Pass</code>: Left and right eye frames use separate textures and are rendered individually. This is the most primitive, most compatible rendering method, but has poor performance.</li>
+<li><code>Single-Pass</code>: Left and right eyes use a single texture, typically the preferred rendering method for current applications with better performance. This mode has several variants such as <code>Single-Pass Double Wide</code>, <code>Single-Pass Instanced</code>, <code>Single-Pass Multi-View</code>, etc.</li>
+<li><code>Quad-View</code>: A newer rendering approach that further divides left and right eye frames into four views: <code>Inner-Left</code> and <code>Inner-Right</code>, <code>Outer-Left</code> and <code>Outer-Right</code>. It improves image clarity through different PPD (Pixels Per Degree) for <code>Inner</code> and <code>Outer</code> regions. This mode is typically used on devices with eye-tracking support.</li>
+</ul>
+<h1 id="Multi_Pass"><a class="header-anchor" href="#Multi_Pass">#</a>Multi-Pass</h1>
+<p>In Multi-Pass rendering mode, a separate render texture (Texture2D) is created for each eye, and left and right eye frames are drawn separately in each eye’s rendering loop. The advantage of Multi-Pass rendering mode is good compatibility, supporting all XR devices. However, performance is poor because every object needs to be rendered twice, and render targets must be switched for each rendering pass (which is why it’s called multi-pass).</p>
+<p>The diagram below illustrates this approach:</p>
+<iframe
+  style="border: 1px solid #ccc; border-radius: 0.5rem;"
+  src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/ab120e5e01e009e7cbdaad58694d545d/raw/e96516222e4a02c44f3d1eb0cce09a1e4c8ca6e0/MultiPass.ins"
+  width="100%"
+  height="500"
+  frameborder="0"
+  allowfullscreen
+></iframe>
+<h1 id="Single_Pass"><a class="header-anchor" href="#Single_Pass">#</a>Single-Pass</h1>
+<p>As the name suggests, Single-Pass uses only one texture as the render target. Under this premise, Single-Pass has multiple variant modes, each with its own rendering approach:</p>
+<div class="note info simple"><p>A common misconception is that Single-Pass means rendering both left and right eye frames in a single pass, while Multi-Pass requires two rendering passes for left and right eye frames.<br>
+In reality, the difference between Single-Pass and Multi-Pass lies in the number of render targets: Single-Pass uses one texture, while Multi-Pass uses multiple textures. In the case of Single-Pass Double Wide, Single-Pass still requires two rendering passes to complete left and right eye frame rendering.</p>
+</div>
+<h2 id="Single_Pass_Double_Wide"><a class="header-anchor" href="#Single_Pass_Double_Wide">#</a>Single-Pass Double Wide</h2>
+<p>The Single-Pass Double Wide approach uses a texture with twice the width of a single eye frame to represent both left and right eye frames simultaneously, where the left half contains the left eye view and the right half contains the right eye view. The diagram below illustrates this approach:</p>
+<iframe
+  style="border: 1px solid #ccc; border-radius: 0.5rem;"
+  src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/7ab6ab47a1fd5b21b58ce9b7b0be7183/raw/a48932f4b40d8671472b34aaa8fff82f28c0939f/SinglePass-DoubleWide.ins"
+  width="100%"
+  height="500"
+  frameborder="0"
+  allowfullscreen
+></iframe>
+<p>As shown, in the Single-Pass Double Wide approach:</p>
+<ul>
+<li>Each object still needs to be rendered <strong>twice</strong> to the left and right eye portions, except now both eye views are represented using a single texture.</li>
+<li>Rendering uses a ping-pong approach, where the render target switches between left and right eye portions in a <code>Left-Right-Right-Left-Left-....</code> pattern (as shown in the diagram above). The advantage is that only one pass through all required objects is needed to complete both left and right eye rendering, thus reducing rendering context switches and the number of commands that need to be executed.</li>
+</ul>
+<p>The Single-Pass Double Wide approach has been largely deprecated because it still requires two rendering passes per object and its ping-pong method significantly increases pipeline complexity.</p>
+<p>Current devices typically support Single-Pass Instanced or Single-Pass MultiView, both offering better performance.</p>
+<h2 id="Single_Pass_Instanced_Single_Pass_MultiView"><a class="header-anchor" href="#Single_Pass_Instanced_Single_Pass_MultiView">#</a>Single-Pass Instanced / Single-Pass MultiView</h2>
+<p>Both Single-Pass Instanced and Single-Pass MultiView use a texture array to represent left and right eye frames, where Index 0 is the left eye and Index 1 is the right eye. The advantage of both approaches is reduced texture switching overhead, and each object can be rendered to both left and right eye frames through a <strong>single</strong> rendering pass. The disadvantage is compatibility - both require devices to support specific GPU features and require shader adaptations.</p>
+<p>These two approaches require specific features and shader modifications for two purposes:</p>
+<ol>
+<li>To render to both left and right eye frames in a single pass while distinguishing between left and right eye View Matrices
+<ul>
+<li>Instanced: Uses GPU instancing features, using Instance ID to distinguish left and right eye View Matrices</li>
+<li>MultiView: Relies on MultiView extensions<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>, using <code>gl_ViewID_OVR</code> to distinguish left and right eye View Matrices</li>
+</ul>
+</li>
+<li>To specify the render target texture Index during rendering
+<ul>
+<li>Instanced: Relies on platform-specific GPU features, such as DirectX 11’s <code>VPAndRTArrayIndexFromAnyShaderFeedingRasterizer</code>, OpenGL’s <code>GL_NV_viewport_array2</code>, <code>GL_AMD_vertex_shader_layer</code>, <code>GL_ARB_shader_viewport_layer_array</code></li>
+<li>MultiView: Relies on MultiView extensions<sup class="footnote-ref"><a href="#fn1" id="fnref1:1">[1:1]</a></sup>, using <code>FramebufferTextureMultiviewOV</code> to specify the render target texture Index</li>
+</ul>
+</li>
+</ol>
+<div class="note info simple"><p>Instanced extensions for specifying render target texture Index, such as <code>GL_NV_viewport_array2</code>, are not supported on mobile OpenGLES. Therefore, on mobile platforms, MultiView extensions are required to achieve rendering to different texture array indices.</p>
+</div>
+<div class="note primary simple"><p>Instanced and MultiView approaches are essentially two different ways to achieve the same implementation goals. Due to different feature support, Instanced works better on PC platforms while MultiView works better on mobile platforms.<br>
+For convenience, we’ll refer to both as Multiview in the following sections.</p>
+</div>
+<iframe
+  style="border: 1px solid #ccc; border-radius: 0.5rem;"
+  src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/23b397698b0c69473b7a6664ed736018/raw/90eb5af9ccca84d291408495ba1222510b7d0203/SinglePass-Instanced-MultiView.ins"
+  width="100%"
+  height="500"
+  frameborder="0"
+  allowfullscreen
+></iframe>
+<h1 id="Quad_View"><a class="header-anchor" href="#Quad_View">#</a>Quad-View</h1>
+<p>Quad-View is a newer rendering approach that implements Foveated Rendering. It further divides left and right eye frames into four views: <code>Inner-Left</code> and <code>Inner-Right</code>, <code>Outer-Left</code> and <code>Outer-Right</code>. The <code>Outer</code> views are rendered using the original FOV, while the <code>Inner</code> views use a smaller FOV. This way, even if <code>Inner</code> and <code>Outer</code> have the same resolution, the <code>Inner</code> views will have higher PPD (Pixels Per Degree), resulting in higher clarity for the <code>Inner</code> regions.</p>
+<p>The diagram below shows the Outer and Inner views of a single eye in the same scene, where Outer has approximately 90° horizontal FOV and Inner has approximately 40° horizontal FOV:<br>
+<img src="/stereo_rendering_mode/stereo_rendering_mode_2025-03-28-17-42-27.excalidraw.svg" alt="Outer vs Inner"></p>
+<div class="note primary simple"><p>Quad-Views are typically used on devices with eye-tracking support, where the Inner view rendering region is determined by the eye gaze area.</p>
+</div>
+<p>For the rendering of Quad-View’s four views, there are two variants:</p>
+<ul>
+<li><code>Single-Pass</code>: Uses <strong>one</strong> texture array with Array Size of 4 to represent the four views, updating all four views simultaneously using Multiview.</li>
+<li><code>Multi-Pass</code>: Uses <strong>two</strong> texture arrays with Array Size of 2 each to represent Inner left/right eye frames and Outer left/right eye frames, using two rendering passes to separately update Inner and Outer frames, where each rendering pass uses Multiview to simultaneously update left and right eye frames.</li>
+</ul>
+<div class="note info simple"><p>Theoretically, QuadViews could have more combinations, such as:</p>
+<ul>
+<li>Using 4 Texture2D objects to represent the four views, using Multi-Pass approach with four DrawCalls to update the four view frames.</li>
+<li>Using 2 Texture2D objects for Outer left and right eyes, plus one Texture2DArray with Array Size of 2 for Inner left and right eyes. First updating left and right Outer with two DrawCalls, then updating left and right Inner with one DrawCall.<br>
+However, these combinations don’t provide additional benefits, so they are not discussed here.</li>
+</ul>
+</div>
+<div class="note info simple"><p>Unity XR only supports <code>Texture2DArray</code> with maximum ArraySize of 2, so Quad-View in Unity can only be implemented using Multi-Pass approach.</p>
+</div>
+<p>Single-Pass and Multi-Pass each have their own advantages, making both suitable for different scenarios:</p>
+<ul>
+<li>Single-Pass offers better performance, but limits all views to the same resolution.</li>
+<li>Multi-Pass sacrifices some performance but allows Inner and Outer to have different resolutions.</li>
+</ul>
+<div class="note info simple"><p>Regardless of whether QuadViews uses Single-Pass or Multi-Pass, both depend on MultiView rendering support.</p>
+</div>
+<h2 id="Quad_Views_with_Single_Pass"><a class="header-anchor" href="#Quad_Views_with_Single_Pass">#</a>Quad-Views with Single-Pass</h2>
+<p>In Quad-Views with Single-Pass mode, each object simultaneously updates all four views (Inner/Outer) through a single DrawCall, as illustrated below:</p>
+<iframe
+  src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/f3d8a451f1491170a37e39f912c18813/raw/12d16fbe47ac54fd1a3fe44fa49db8fe4e1e65ec/Quad-View-SinglePass.ins"
+  width="100%"
+  height="500"
+  frameborder="0"
+  allowfullscreen
+></iframe>
+<h2 id="Quad_Views_with_Multi_Pass"><a class="header-anchor" href="#Quad_Views_with_Multi_Pass">#</a>Quad-Views with Multi-Pass</h2>
+<p>In Quad-Views with Multi-Pass mode, each DrawCall draws content to either Outer (or Inner) left and right eye frames separately, as illustrated below:</p>
+<iframe
+  src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/ce7259a1aee59f021a0bc809cf69182c/raw/094e5e20d37e4a5f7e1064b1d6276778822b0e0c/QuadView-MultiPass.ins"
+  width="100%"
+  height="500"
+  frameborder="0"
+  allowfullscreen
+></iframe>
+<h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1>
+<p><a href="https://github.com/mbucchia/Quad-Views-Foveated">Quad-Views Foveated</a></p>
+<p><a href="https://docs.unity3d.com/2019.4/Documentation/Manual/SinglePassStereoRendering.html">Single Pass Stereo rendering (Double-Wide rendering)</a></p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a href="https://registry.khronos.org/OpenGL/extensions/OVR/OVR_multiview.txt">OVR_multiview</a> <a href="#fnref1" class="footnote-backref">↩︎</a> <a href="#fnref1:1" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+      <tags>
+        <tag>XR</tag>
+        <tag>Unity</tag>
+        <tag>Rendering</tag>
+      </tags>
+  </entry>
+</search>
