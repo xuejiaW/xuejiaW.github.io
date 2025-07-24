@@ -922,14 +922,10 @@ css_prefix: true
 # 插入代码到头部 </head> 之前 和 底部 </body> 之前
 inject:
     head:
-        - <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
-        - <link rel="preload" href="/css/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        - <noscript><link rel="stylesheet" href="/css/index.css"></noscript>
-        - <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        - <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"></noscript>
-        # - <link rel="stylesheet" href="/xxx.css">
+        # 页面性能优化脚本
+        - <script src="/js/performance-optimization.js"></script>
     bottom:
-        # - <script src="xxxx"></script>
+        - <script defer src="/self/js/switch-language.js"></script>
 
 # CDN
 # Don't modify the following settings unless you know how they work
@@ -953,7 +949,9 @@ CDN:
     custom_format:
 
     option:
-        # main_css:
+        # 禁用主要的CSS同步加载，改用inject异步加载
+        main_css: false
+        fontawesome: false
         # main:
         # utils:
         # translate:
@@ -996,7 +994,6 @@ CDN:
         # fireworks:
         # click_heart:
         # ClickShowText:
-        # fontawesome:
         # flickr_justified_gallery_js:
         # flickr_justified_gallery_css:
         # aplayer_css:
