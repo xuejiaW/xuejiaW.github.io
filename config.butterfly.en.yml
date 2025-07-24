@@ -922,14 +922,10 @@ css_prefix: true
 # 插入代码到头部 </head> 之前 和 底部 </body> 之前
 inject:
     head:
-        - <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
-        - <link rel="preload" href="/en/css/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        - <noscript><link rel="stylesheet" href="/en/css/index.css"></noscript>
-        - <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        - <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"></noscript>
-        # - <link rel="stylesheet" href="/xxx.css">
+        # 页面性能优化脚本
+        - <script src="/js/performance-optimization.js"></script>
     bottom:
-        # - <script src="xxxx"></script>
+        - <script defer src="/self/js/switch-language.js"></script>
 
 # CDN
 # Don't modify the following settings unless you know how they work
@@ -953,59 +949,6 @@ CDN:
     custom_format:
 
     option:
-        # main_css:
-        # main:
-        # utils:
-        # translate:
-        # local_search:
-        # algolia_js:
-        # algolia_search:
-        # instantsearch:
-        # docsearch_js:
-        # docsearch_css:
-        # pjax:
-        # gitalk:
-        # gitalk_css:
-        # blueimp_md5:
-        # valine:
-        # disqusjs:
-        # disqusjs_css:
-        # twikoo:
-        # waline_js:
-        # waline_css:
-        # giscus:
-        # sharejs:
-        # sharejs_css:
-        # mathjax:
-        # katex:
-        # katex_copytex:
-        # mermaid:
-        # canvas_ribbon:
-        # canvas_fluttering_ribbon:
-        # canvas_nest:
-        # lazyload:
-        # instantpage:
-        # typed:
-        # pangu:
-        # fancybox_css:
-        # fancybox:
-        # medium_zoom:
-        # snackbar_css:
-        # snackbar:
-        # activate_power_mode:
-        # fireworks:
-        # click_heart:
-        # ClickShowText:
-        fontawesome: https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css
-        # flickr_justified_gallery_js:
-        # flickr_justified_gallery_css:
-        # aplayer_css:
-        # aplayer_js:
-        # meting_js:
-        # prismjs_js:
-        # prismjs_lineNumber_js:
-        # prismjs_autoloader:
-        # artalk_js:
-        # artalk_css:
-        # busuanzi:
-        # abcjs_basic_js:
+        # 禁用主要的CSS同步加载，改用inject异步加载
+        main_css: false
+        fontawesome: false
