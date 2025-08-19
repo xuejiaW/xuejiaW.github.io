@@ -10,7 +10,11 @@
     function addDNSPrefetch() {
         const prefetchLinks = [
             { rel: 'dns-prefetch', href: '//cdn.jsdelivr.net' },
-            { rel: 'preconnect', href: 'https://cdn.jsdelivr.net', crossorigin: true }
+            { rel: 'preconnect', href: 'https://cdn.jsdelivr.net', crossorigin: true },
+            { rel: 'dns-prefetch', href: '//www.googletagmanager.com' },
+            { rel: 'preconnect', href: 'https://www.googletagmanager.com' },
+            { rel: 'dns-prefetch', href: '//fonts.googleapis.com' },
+            { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: true }
         ];
         
         prefetchLinks.forEach(linkConfig => {
@@ -40,6 +44,14 @@
         #nav .site-name{font-size:1.1rem;font-weight:bold;color:var(--font-color)}
         #content-inner{min-height:calc(100vh - 60px)}
         .loading{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--preloader-bg);z-index:9999;display:flex;align-items:center;justify-content:center;color:var(--preloader-color)}
+        /* 防止布局偏移 */
+        .site-meta .avatar{width:110px;height:110px;min-width:110px;min-height:110px}
+        .site-meta .avatar img{width:100%;height:100%;object-fit:cover;background-color:#f0f0f0}
+        .menus_items{min-height:50px}
+        /* 字体优化 */
+        @font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:swap}
+        @font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400;font-display:swap}
+        @font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;font-display:swap}
         @keyframes header-effect{0%{opacity:0;transform:translateY(-20px)}100%{opacity:1;transform:translateY(0)}}
         `;
         
