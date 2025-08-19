@@ -1,0 +1,355 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>XR Stereo Rendering Modes | 三叔的数字花园</title><meta name="author" content="三叔"><meta name="copyright" content="三叔"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="In XR, objects typically need to be rendered in stereo, meaning content must be drawn to both left and right eye textures. This rendering approach is called Stereo Rendering. This article covers vario"><meta property="og:type" content="article"><meta property="og:title" content="XR Stereo Rendering Modes"><meta property="og:url" content="https://tuncle.blog/en/stereo_rendering_mode/index.html"><meta property="og:site_name" content="三叔的数字花园"><meta property="og:description" content="In XR, objects typically need to be rendered in stereo, meaning content must be drawn to both left and right eye textures. This rendering approach is called Stereo Rendering. This article covers vario"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://tuncle.blog/en/img/avatar.jpg"><meta property="article:published_time" content="2025-04-13T14:02:00.000Z"><meta property="article:modified_time" content="2025-06-14T16:00:00.000Z"><meta property="article:author" content="三叔"><meta property="article:tag" content="XR"><meta property="article:tag" content="Unity"><meta property="article:tag" content="Rendering"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://tuncle.blog/en/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "XR Stereo Rendering Modes",
+  "url": "https://tuncle.blog/en/stereo_rendering_mode/",
+  "image": "https://tuncle.blog/en/img/avatar.jpg",
+  "datePublished": "2025-04-13T14:02:00.000Z",
+  "dateModified": "2025-06-14T16:00:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "三叔",
+      "url": "https://tuncle.blog/en/Tuncle"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/en/img/avatar.jpg"><link rel="canonical" href="https://tuncle.blog/en/stereo_rendering_mode/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""><link rel="stylesheet" href="/en/false"><link rel="stylesheet" href="/en/false"><script>(() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()</script><script async src="https://www.googletagmanager.com/gtag/js?id=G-2QHMY59T5S"></script><script>window.dataLayer = window.dataLayer || []
+function gtag(){dataLayer.push(arguments)}
+gtag('js', new Date())
+gtag('config', 'G-2QHMY59T5S')
+btf.addGlobalFn('pjaxComplete', () => {
+  gtag('config', 'G-2QHMY59T5S', {'page_path': window.location.pathname})
+}, 'google_analytics')</script><script>const GLOBAL_CONFIG = {
+  root: '/en/',
+  algolia: undefined,
+  localSearch: {"path":"/en/search.xml","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"No results found for: ${query}","hits_stats":"${hits} articles found"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":300,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"limitCount":200,"languages":{"author":"Author: 三叔","link":"Link: ","source":"Source: 三叔的数字花园","info":"Copyright belongs to the author. For commercial use, please contact the author for authorization. For non-commercial use, please indicate the source."}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE={title:"XR Stereo Rendering Modes",isHighlightShrink:!1,isToc:!0,pageType:"post"}</script><script src="/js/performance-optimization.js"></script><script src="/js/font-optimization.js"></script><script src="/js/image-optimization.js"></script><link rel="stylesheet" href="/css/layout-fix.css"><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/en/atom.xml" title="三叔的数字花园" type="application/atom+xml"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/en/img/avatar.jpg" onerror='this.onerror=null,this.src="/en/img/friend_404.gif"' alt="avatar"></div><div class="site-data text-center"><a href="/en/archives/"><div class="headline">Articles</div><div class="length-num">3</div></a><a href="/en/tags/"><div class="headline">Tags</div><div class="length-num">4</div></a><a href="/en/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/en/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/en/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page child" href="/en/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/en/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-paw"></i><span> 我的</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/en/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li><li><a class="site-page child" href="/en/reading/"><i class="fa-fw fas fa-book"></i><span> 阅读</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/en/atom.xml"><i class="fa-fw fas fa-rss"></i><span> RSS</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-language"></i><span> 语言</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/en/en"><i class="fa-fw fa-solid fa-language multiple-language-switch"></i><span> English</span></a></li><li><a class="site-page child" href="/en/zh"><i class="fa-fw fa-solid fa-language multiple-language-switch"></i><span> 中文</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img fixed" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/en/"><span class="site-name">三叔的数字花园</span></a><a class="nav-page-title" href="/en/"><span class="site-name">XR Stereo Rendering Modes</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span> Back to Home</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/en/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group hide"><i class="fa-fw fas fa-list"></i><span> 目录</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/en/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page child" href="/en/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/en/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-paw"></i><span> 我的</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/en/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li><li><a class="site-page child" href="/en/reading/"><i class="fa-fw fas fa-book"></i><span> 阅读</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/en/atom.xml"><i class="fa-fw fas fa-rss"></i><span> RSS</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-language"></i><span> 语言</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/en/en"><i class="fa-fw fa-solid fa-language multiple-language-switch"></i><span> English</span></a></li><li><a class="site-page child" href="/en/zh"><i class="fa-fw fa-solid fa-language multiple-language-switch"></i><span> 中文</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">XR Stereo Rendering Modes</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">Created</span><time datetime="2025-04-13T14:02:00.000Z" title="Created 2025-04-13 22:02:00">2025-04-13</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">1.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>8mins</span></span></div></div></div><article class="container post-content" id="article-container"><p>In XR, objects typically need to be rendered in stereo, meaning content must be drawn to both left and right eye textures. This rendering approach is called <code>Stereo Rendering</code>. This article covers several stereo rendering techniques, including:</p><ul><li><code>Multi-Pass</code>: Left and right eye frames use separate textures and are rendered individually. This is the most primitive, most compatible rendering method, but has poor performance.</li><li><code>Single-Pass</code>: Left and right eyes use a single texture, typically the preferred rendering method for current applications with better performance. This mode has several variants such as <code>Single-Pass Double Wide</code>, <code>Single-Pass Instanced</code>, <code>Single-Pass Multi-View</code>, etc.</li><li><code>Quad-View</code>: A newer rendering approach that further divides left and right eye frames into four views: <code>Inner-Left</code> and <code>Inner-Right</code>, <code>Outer-Left</code> and <code>Outer-Right</code>. It improves image clarity through different PPD (Pixels Per Degree) for <code>Inner</code> and <code>Outer</code> regions. This mode is typically used on devices with eye-tracking support.</li></ul><h1 id="Multi_Pass"><a class="header-anchor" href="#Multi_Pass">#</a>Multi-Pass</h1><p>In Multi-Pass rendering mode, a separate render texture (Texture2D) is created for each eye, and left and right eye frames are drawn separately in each eye’s rendering loop. The advantage of Multi-Pass rendering mode is good compatibility, supporting all XR devices. However, performance is poor because every object needs to be rendered twice, and render targets must be switched for each rendering pass (which is why it’s called multi-pass).</p><p>The diagram below illustrates this approach:</p><iframe style="border:1px solid #ccc;border-radius:.5rem" src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/ab120e5e01e009e7cbdaad58694d545d/raw/e96516222e4a02c44f3d1eb0cce09a1e4c8ca6e0/MultiPass.ins" width="100%" height="500" frameborder="0" allowfullscreen></iframe><h1 id="Single_Pass"><a class="header-anchor" href="#Single_Pass">#</a>Single-Pass</h1><p>As the name suggests, Single-Pass uses only one texture as the render target. Under this premise, Single-Pass has multiple variant modes, each with its own rendering approach:</p><div class="note info simple"><p>A common misconception is that Single-Pass means rendering both left and right eye frames in a single pass, while Multi-Pass requires two rendering passes for left and right eye frames.<br>In reality, the difference between Single-Pass and Multi-Pass lies in the number of render targets: Single-Pass uses one texture, while Multi-Pass uses multiple textures. In the case of Single-Pass Double Wide, Single-Pass still requires two rendering passes to complete left and right eye frame rendering.</p></div><h2 id="Single_Pass_Double_Wide"><a class="header-anchor" href="#Single_Pass_Double_Wide">#</a>Single-Pass Double Wide</h2><p>The Single-Pass Double Wide approach uses a texture with twice the width of a single eye frame to represent both left and right eye frames simultaneously, where the left half contains the left eye view and the right half contains the right eye view. The diagram below illustrates this approach:</p><iframe style="border:1px solid #ccc;border-radius:.5rem" src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/7ab6ab47a1fd5b21b58ce9b7b0be7183/raw/a48932f4b40d8671472b34aaa8fff82f28c0939f/SinglePass-DoubleWide.ins" width="100%" height="500" frameborder="0" allowfullscreen></iframe><p>As shown, in the Single-Pass Double Wide approach:</p><ul><li>Each object still needs to be rendered <strong>twice</strong> to the left and right eye portions, except now both eye views are represented using a single texture.</li><li>Rendering uses a ping-pong approach, where the render target switches between left and right eye portions in a <code>Left-Right-Right-Left-Left-....</code> pattern (as shown in the diagram above). The advantage is that only one pass through all required objects is needed to complete both left and right eye rendering, thus reducing rendering context switches and the number of commands that need to be executed.</li></ul><p>The Single-Pass Double Wide approach has been largely deprecated because it still requires two rendering passes per object and its ping-pong method significantly increases pipeline complexity.</p><p>Current devices typically support Single-Pass Instanced or Single-Pass MultiView, both offering better performance.</p><h2 id="Single_Pass_Instanced_Single_Pass_MultiView"><a class="header-anchor" href="#Single_Pass_Instanced_Single_Pass_MultiView">#</a>Single-Pass Instanced / Single-Pass MultiView</h2><p>Both Single-Pass Instanced and Single-Pass MultiView use a texture array to represent left and right eye frames, where Index 0 is the left eye and Index 1 is the right eye. The advantage of both approaches is reduced texture switching overhead, and each object can be rendered to both left and right eye frames through a <strong>single</strong> rendering pass. The disadvantage is compatibility - both require devices to support specific GPU features and require shader adaptations.</p><p>These two approaches require specific features and shader modifications for two purposes:</p><ol><li>To render to both left and right eye frames in a single pass while distinguishing between left and right eye View Matrices<ul><li>Instanced: Uses GPU instancing features, using Instance ID to distinguish left and right eye View Matrices</li><li>MultiView: Relies on MultiView extensions<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>, using <code>gl_ViewID_OVR</code> to distinguish left and right eye View Matrices</li></ul></li><li>To specify the render target texture Index during rendering<ul><li>Instanced: Relies on platform-specific GPU features, such as DirectX 11’s <code>VPAndRTArrayIndexFromAnyShaderFeedingRasterizer</code>, OpenGL’s <code>GL_NV_viewport_array2</code>, <code>GL_AMD_vertex_shader_layer</code>, <code>GL_ARB_shader_viewport_layer_array</code></li><li>MultiView: Relies on MultiView extensions<sup class="footnote-ref"><a href="#fn1" id="fnref1:1">[1:1]</a></sup>, using <code>FramebufferTextureMultiviewOV</code> to specify the render target texture Index</li></ul></li></ol><div class="note info simple"><p>Instanced extensions for specifying render target texture Index, such as <code>GL_NV_viewport_array2</code>, are not supported on mobile OpenGLES. Therefore, on mobile platforms, MultiView extensions are required to achieve rendering to different texture array indices.</p></div><div class="note primary simple"><p>Instanced and MultiView approaches are essentially two different ways to achieve the same implementation goals. Due to different feature support, Instanced works better on PC platforms while MultiView works better on mobile platforms.<br>For convenience, we’ll refer to both as Multiview in the following sections.</p></div><iframe style="border:1px solid #ccc;border-radius:.5rem" src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/23b397698b0c69473b7a6664ed736018/raw/90eb5af9ccca84d291408495ba1222510b7d0203/SinglePass-Instanced-MultiView.ins" width="100%" height="500" frameborder="0" allowfullscreen></iframe><h1 id="Quad_View"><a class="header-anchor" href="#Quad_View">#</a>Quad-View</h1><p>Quad-View is a newer rendering approach that implements Foveated Rendering. It further divides left and right eye frames into four views: <code>Inner-Left</code> and <code>Inner-Right</code>, <code>Outer-Left</code> and <code>Outer-Right</code>. The <code>Outer</code> views are rendered using the original FOV, while the <code>Inner</code> views use a smaller FOV. This way, even if <code>Inner</code> and <code>Outer</code> have the same resolution, the <code>Inner</code> views will have higher PPD (Pixels Per Degree), resulting in higher clarity for the <code>Inner</code> regions.</p><p>The diagram below shows the Outer and Inner views of a single eye in the same scene, where Outer has approximately 90° horizontal FOV and Inner has approximately 40° horizontal FOV:<br><img src="/stereo_rendering_mode/stereo_rendering_mode_2025-03-28-17-42-27.excalidraw.svg" alt="Outer vs Inner"></p><div class="note primary simple"><p>Quad-Views are typically used on devices with eye-tracking support, where the Inner view rendering region is determined by the eye gaze area.</p></div><p>For the rendering of Quad-View’s four views, there are two variants:</p><ul><li><code>Single-Pass</code>: Uses <strong>one</strong> texture array with Array Size of 4 to represent the four views, updating all four views simultaneously using Multiview.</li><li><code>Multi-Pass</code>: Uses <strong>two</strong> texture arrays with Array Size of 2 each to represent Inner left/right eye frames and Outer left/right eye frames, using two rendering passes to separately update Inner and Outer frames, where each rendering pass uses Multiview to simultaneously update left and right eye frames.</li></ul><div class="note info simple"><p>Theoretically, QuadViews could have more combinations, such as:</p><ul><li>Using 4 Texture2D objects to represent the four views, using Multi-Pass approach with four DrawCalls to update the four view frames.</li><li>Using 2 Texture2D objects for Outer left and right eyes, plus one Texture2DArray with Array Size of 2 for Inner left and right eyes. First updating left and right Outer with two DrawCalls, then updating left and right Inner with one DrawCall.<br>However, these combinations don’t provide additional benefits, so they are not discussed here.</li></ul></div><div class="note info simple"><p>Unity XR only supports <code>Texture2DArray</code> with maximum ArraySize of 2, so Quad-View in Unity can only be implemented using Multi-Pass approach.</p></div><p>Single-Pass and Multi-Pass each have their own advantages, making both suitable for different scenarios:</p><ul><li>Single-Pass offers better performance, but limits all views to the same resolution.</li><li>Multi-Pass sacrifices some performance but allows Inner and Outer to have different resolutions.</li></ul><div class="note info simple"><p>Regardless of whether QuadViews uses Single-Pass or Multi-Pass, both depend on MultiView rendering support.</p></div><h2 id="Quad_Views_with_Single_Pass"><a class="header-anchor" href="#Quad_Views_with_Single_Pass">#</a>Quad-Views with Single-Pass</h2><p>In Quad-Views with Single-Pass mode, each object simultaneously updates all four views (Inner/Outer) through a single DrawCall, as illustrated below:</p><iframe src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/f3d8a451f1491170a37e39f912c18813/raw/12d16fbe47ac54fd1a3fe44fa49db8fe4e1e65ec/Quad-View-SinglePass.ins" width="100%" height="500" frameborder="0" allowfullscreen></iframe><h2 id="Quad_Views_with_Multi_Pass"><a class="header-anchor" href="#Quad_Views_with_Multi_Pass">#</a>Quad-Views with Multi-Pass</h2><p>In Quad-Views with Multi-Pass mode, each DrawCall draws content to either Outer (or Inner) left and right eye frames separately, as illustrated below:</p><iframe src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/ce7259a1aee59f021a0bc809cf69182c/raw/094e5e20d37e4a5f7e1064b1d6276778822b0e0c/QuadView-MultiPass.ins" width="100%" height="500" frameborder="0" allowfullscreen></iframe><h1 id="Reference"><a class="header-anchor" href="#Reference">#</a>Reference</h1><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/mbucchia/Quad-Views-Foveated">Quad-Views Foveated</a></p><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.unity3d.com/2019.4/Documentation/Manual/SinglePassStereoRendering.html">Single Pass Stereo rendering (Double-Wide rendering)</a></p><hr class="footnotes-sep"><section class="footnotes"><ol class="footnotes-list"><li id="fn1" class="footnote-item"><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://registry.khronos.org/OpenGL/extensions/OVR/OVR_multiview.txt">OVR_multiview</a> <a href="#fnref1" class="footnote-backref">↩︎</a> <a href="#fnref1:1" class="footnote-backref">↩︎</a></p></li></ol></section></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="Tuncle">三叔</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://tuncle.blog/en/stereo_rendering_mode/">https://tuncle.blog/en/stereo_rendering_mode/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/en/tags/XR/">XR</a><a class="post-meta__tags" href="/en/tags/Unity/">Unity</a><a class="post-meta__tags" href="/en/tags/Rendering/">Rendering</a></div><div class="post-share"><div class="social-share" data-image="/en/img/avatar.jpg" data-sites="twitter,wechat,weibo"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload='this.media="all"'><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>Sponsor</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/en/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/en/img/wechat.jpg" alt="wechat"></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/en/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/en/img/alipay.jpg" alt="alipay"></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/en/what_is_resolution/" title="What is Resolution? Analyzing Resolution Through Signal Processing and Sampling Theory"><div class="cover" style="background:var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">What is Resolution? Analyzing Resolution Through Signal Processing and Sampling Theory</div></div><div class="info-2"><div class="info-item-1">Resolution describes the pixel count of an image, reflecting the sampling frequency of continuous signals. Higher resolution means higher sampling frequency, enabling better reconstruction of high-frequency details. However, higher resolution isn't always better - it must match signal frequency requirements. The sampling theorem states that sampling frequency must be at least twice the maximum signal frequency for accurate reconstruction. Fourier transforms reveal that signals decompose into sine waves of different frequencies, with high frequencies corresponding to fine details like object edges. Insufficient resolution causes aliasing in high-frequency signals like sharp black-white transitions. Optimizing display quality requires balancing resolution with signal frequency to avoid resource waste from oversampling.</div></div></div></a></nav><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div><div class="comment-switch"><span class="first-comment">Giscus</span><span id="switch-btn"></span><span class="second-comment">Valine</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Multi_Pass"><span class="toc-text">Multi-Pass</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Single_Pass"><span class="toc-text">Single-Pass</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Single_Pass_Double_Wide"><span class="toc-text">Single-Pass Double Wide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Single_Pass_Instanced_Single_Pass_MultiView"><span class="toc-text">Single-Pass Instanced &#x2F; Single-Pass MultiView</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Quad_View"><span class="toc-text">Quad-View</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quad_Views_with_Single_Pass"><span class="toc-text">Quad-Views with Single-Pass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Quad_Views_with_Multi_Pass"><span class="toc-text">Quad-Views with Multi-Pass</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background:0 0"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2023 - 2025 By 三叔</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 6.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.2</a></span></div><div class="footer_custom_text">Keep Writing</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/en/js/utils.js"></script><script src="/en/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(async () => {
+  const showKatex = () => {
+    document.querySelectorAll('#article-container .katex').forEach(el => el.classList.add('katex-show'))
+  }
+
+  if (!window.katex_js_css) {
+    window.katex_js_css = true
+    await btf.getCSS('https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css')
+    if (false) {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js')
+    }
+  }
+
+  showKatex()
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = {"data-mapping":"pathname","data-strict":"0","data-reactions-enabled":"1","data-emit-metadata":"0","data-input-position":"top"}
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'xuejiaW/xuejiaW.github.io',
+      'data-repo-id': 'MDEwOlJlcG9zaXRvcnkxNjIxNTc2MTY=',
+      'data-category-id': 'DIC_kwDOCapUMM4CtM2t',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const initValine = (el, path) => {
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyValine = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+
+    const valineConfig = {
+      el: '#vcomment',
+      appId: 'TGA1EB8Nf5aw6uJBpw45pBJQ-gzGzoHsz',
+      appKey: 'z1vCYavVUbCGuMjNMcrsvShN',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      visitor: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || window.location.pathname
+    }
+
+    new Valine(valineConfig)
+  }
+
+  const loadValine = async (el, path) => {
+    if (typeof Valine === 'function') {
+      initValine(el, path)
+    } else {
+      await btf.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine(el, path)
+    }
+  }
+
+  if (isShuoshuo) {
+    'Giscus' === 'Valine'
+      ? window.shuoshuoComment = { loadComment: loadValine }
+      : window.loadOtherComment = loadValine
+    return
+  }
+
+  if ('Giscus' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><script defer src="/self/js/switch-language.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","meta[property=\"og:description\"]","link[rel=\"canonical\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: true,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/en/404.html') : window.location.href = '/en/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span> Loading Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"></div></div><hr><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/en/js/search/local-search.js"></script></div></div></body></html>
