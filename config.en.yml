@@ -152,20 +152,20 @@ neat_js:
 filter_optimize:
   enable: true
   # 移除不必要的标签
-  remove_comments: true
+  remove_comments: false
   css:
     enable: true
-    # 内联小于15KB的关键CSS文件
+    # 内联小于10KB的CSS文件
     inlines:
       enable: true
-      threshold: 15
-    # 禁用preload，我们通过inject手动处理
+      threshold: 10
+    # 预加载CSS文件
     preload:
-      enable: false
+      enable: true
       threshold: 50
     # 异步加载CSS
     async:
-      enable: false
+      enable: true
       exclude:
         - '*.min.css'
   js:
@@ -178,11 +178,3 @@ filter_optimize:
   # HTML压缩
   html:
     enable: true
-    # 移除空白字符
-    removeComments: true
-    removeCommentsFromCDATA: true
-    removeCDATASectionsFromCDATA: true
-    collapseWhitespace: true
-    collapseBooleanAttributes: true
-    removeAttributeQuotes: false
-    removeRedundantAttributes: true
