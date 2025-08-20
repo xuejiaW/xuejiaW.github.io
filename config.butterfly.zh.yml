@@ -922,39 +922,14 @@ css_prefix: true
 # 插入代码到头部 </head> 之前 和 底部 </body> 之前
 inject:
     head:
-        # 最小化内联关键代码 - 只处理DNS预取和关键CSS
-        - <script>
-            (function(){
-                // DNS预取 - 立即执行
-                var prefetch = [
-                    {rel:'dns-prefetch',href:'//cdn.jsdelivr.net'},
-                    {rel:'preconnect',href:'https://cdn.jsdelivr.net',crossorigin:true},
-                    {rel:'dns-prefetch',href:'//www.googletagmanager.com'}
-                ];
-                prefetch.forEach(function(config){
-                    var link = document.createElement('link');
-                    Object.keys(config).forEach(function(key){
-                        if(key==='crossorigin'&&config[key])link.setAttribute('crossorigin','');
-                        else link[key]=config[key];
-                    });
-                    document.head.appendChild(link);
-                });
-                
-                // 异步加载其他优化脚本
-                setTimeout(function(){
-                    ['/js/performance-optimization.js','/js/font-optimization.js','/js/image-optimization.js']
-                    .forEach(function(src){
-                        var s=document.createElement('script');
-                        s.src=src;s.async=true;
-                        document.head.appendChild(s);
-                    });
-                },100);
-            })();
-          </script>
-        # 内联关键CSS防止布局偏移
-        - <style>.site-meta .avatar{width:110px!important;height:110px!important;min-width:110px;min-height:110px}.site-meta .avatar img{width:100%!important;height:100%!important;object-fit:cover;background-color:#f0f0f0}.menus_items{min-height:50px}img[src="/img/avatar.jpg"]{width:110px;height:110px;aspect-ratio:1/1}</style>
+        - <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+        - <link rel="preload" href="/css/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        - <noscript><link rel="stylesheet" href="/css/index.css"></noscript>
+        - <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        - <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"></noscript>
+        # - <link rel="stylesheet" href="/xxx.css">
     bottom:
-        - <script defer src="/self/js/switch-language.js"></script>
+        # - <script src="xxxx"></script>
 
 # CDN
 # Don't modify the following settings unless you know how they work
@@ -963,7 +938,7 @@ CDN:
     # The CDN provider of internal scripts (主題內部 js 的 cdn 配置)
     # option: local/jsdelivr/unpkg/cdnjs/custom
     # Dev version can only choose. ( dev版的主題只能設置為 local )
-    internal_provider: jsdelivr
+    internal_provider: local
 
     # The CDN provider of third party scripts (第三方 js 的 cdn 配置)
     # option: local/jsdelivr/unpkg/cdnjs/custom
@@ -971,16 +946,14 @@ CDN:
     third_party_provider: jsdelivr
 
     # Add version number to url, true or false
-    version: true
+    version: false
 
     # Custom format
     # For example: https://cdn.staticfile.org/${cdnjs_name}/${version}/${min_cdnjs_file}
     custom_format:
 
     option:
-        # 禁用主要的CSS同步加载，改用inject异步加载
-        main_css: false
-        fontawesome: false
+        # main_css:
         # main:
         # utils:
         # translate:
@@ -1023,6 +996,7 @@ CDN:
         # fireworks:
         # click_heart:
         # ClickShowText:
+        # fontawesome:
         # flickr_justified_gallery_js:
         # flickr_justified_gallery_css:
         # aplayer_css:
