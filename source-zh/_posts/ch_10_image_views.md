@@ -2,9 +2,9 @@
 tags:
   - Vulkan
 created: 2022-08-23
-updated: 2025-04-13
+updated: 2025-09-01
 date: 2025-04-13 11:30
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 10： Image Views
 description: 为了使用在 Swap Chain 最后获取的 VkImage，需要首先创建 VkImageView 对象。该对象作为外部对这个 Image 的 View，即该对象描述了该如何访问 Image，以及需要访问 Image 的哪一部分。如可以创建一个 Image View，描述该 Image 应该作为一个 2D 深度纹理，且不需要任何的 Mipmap Level。
 ---

@@ -1,11 +1,11 @@
 ---
 tags:
-    - 设计模式
-    - 编码规范
+  - 设计模式
+  - 编码规范
 created: 2023-08-27
-updated: 2023-10-07
-published: true
-date: 2023-10-06 15:22 
+updated: 2025-09-01
+publishStatus: published
+date: 2023-10-06 15:22
 title: 《Unix 编程艺术》 第十六章 重用
 ---
 

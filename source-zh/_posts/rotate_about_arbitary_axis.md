@@ -3,8 +3,8 @@ tags:
   - 图形学
   - 数学
 created: 2023-05-04
-updated: 2024-09-08
-published: true
+updated: 2025-09-01
+publishStatus: published
 aliases: 绕任意轴旋转的旋转矩阵推导
 date: 2024-09-08 12:44
 title: 绕任意轴旋转的旋转矩阵推导

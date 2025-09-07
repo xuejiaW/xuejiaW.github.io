@@ -2,10 +2,10 @@
 tags:
   - 设计模式
 alias: 装饰模式
-updated: 2024-03-11
+updated: 2025-09-01
 created: 2023-05-13
 title: 《Head First 设计模式》 Ch 03 装饰模式
-published: true
+publishStatus: published
 description: 本篇来自于 《Head First Design Pattern》 第三章，介绍了装饰模式的定义及运用。
 date: 2023-05-05
 ---

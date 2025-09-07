@@ -1,11 +1,11 @@
 ---
 tags:
-- 工程实践
+  - 工程实践
 created: 2023-09-21
-updated: 2023-11-17
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: 《Code Complete》先决条件检查清单
-date: 2023-11-12 17:38 
+date: 2023-11-12 17:38
 ---
 
 关于所有上游先决条件的检查表：

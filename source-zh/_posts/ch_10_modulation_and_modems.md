@@ -1,10 +1,10 @@
 ---
 created: 2022-02-02
-updated: 2023-06-06
+updated: 2025-09-01
 tags:
-    - 计算机网络
+  - 计算机网络
 title: 《Computer Networks and Internets》 Ch 10 调制与调制器
-published: true
+publishStatus: published
 date: 2023-06-04 15:34
 description: 本篇为 《Computer Networks and Internets》 的第十章笔记， 这一部分将介绍调制的概念，包括振幅调制，频移调制，移相调制，且会分别根据原始数据是模拟信号和数字信号两种情况进行讨论。在本章的最后，会对进行调制的设备——调制器进行简单的介绍。
 ---

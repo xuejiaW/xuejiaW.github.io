@@ -3,11 +3,11 @@ tags:
   - Unity
   - SRP
 created: 2022-01-24
-updated: 2024-03-31
+updated: 2025-09-01
 cssclass:
   - table-border
 date: 2024-03-23 12:48
-published: true
+publishStatus: published
 title: Custom SRP - Custom Render Pipeline
 description: 该部分讲述了使用自定义的渲染管线在 Editor 和 Game 界面中绘制一系列 `Unlit/Color` 的物体以及 Skybox。
 ---

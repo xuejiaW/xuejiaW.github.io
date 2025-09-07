@@ -2,9 +2,9 @@
 tags:
   - Vulkan
 created: 2022-08-28
-updated: 2025-05-05
+updated: 2025-09-01
 date: 2025-04-13 20:38
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 13：Fixed Functions
 description: 在这一节中，会设定创建 Pipeline 中除了 Shader Modules 剩下的固定函数的一些操作，如 Viewport Size / Color Blending 模式，这些在 Vulklan 中都需要在创建渲染管线时设定，而在如 OpenGL 这样较老的图形 API 中，则可以在运行时修改。
 ---

@@ -1,10 +1,10 @@
 ---
 created: 2022-03-12
-updated: 2025-04-12
+updated: 2025-09-01
 tags:
   - Vulkan
 date: 2025-04-08
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 08： 窗口 Surface
 description: 因为 Vulkan 是一个平台不相关的 API，所以它无法直接与 Window 操作系统交互。为了建立 Vulkan 和 Window 操作系统之间的连接，就需要使用 `WSI（Window System Integration）` 拓展，其中最关键的就是 Surface。在本节中，会首先创建 Surface，并通过该 Surface 查询可以正确处理 Presentation 的队列族和队列。
 ---

@@ -1,11 +1,11 @@
 ---
 created: 2022-02-02
-updated: 2023-06-13
+updated: 2025-09-01
 tags:
-    - 计算机网络
-published: true
+  - 计算机网络
+publishStatus: published
 title: 《Computer Networks and Internets》 Ch 05 信息传输概览
-date: 2023-06-03 16:59 
+date: 2023-06-03 16:59
 description: 本篇为 《Computer Networks and Internets》 的第五章笔记，这一章主要分析了通过物理媒介进行信息传递的框架，概述了多信源通过物理媒介进行信息传递的方式。
 ---
 

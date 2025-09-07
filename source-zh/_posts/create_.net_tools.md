@@ -2,8 +2,8 @@
 tags:
   - DotNet
 created: 2023-10-21
-updated: 2024-09-02
-published: true
+updated: 2025-09-01
+publishStatus: published
 alias:
   - 创建 .Net Tools
 title: .Net Tools 创建指南

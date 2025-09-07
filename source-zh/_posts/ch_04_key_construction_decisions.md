@@ -1,12 +1,12 @@
 ---
 tags:
-    - 工程实践
+  - 工程实践
 created: 2023-09-24
-updated: 2023-11-17
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: 《Code Complete》第四章：关键构建决策
 description: 本章主要介绍了构建软件时的一些关键决策，包括编程语言的选择、编码约定、你在科技浪潮中的位置、构建实践的选择。
-date: 2023-11-12 20:34 
+date: 2023-11-12 20:34
 ---
 
 # 4.1 编程语言的选择

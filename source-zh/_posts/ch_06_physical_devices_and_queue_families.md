@@ -2,9 +2,9 @@
 tags:
   - Vulkan
 created: 2022-03-10
-updated: 2025-04-07
+updated: 2025-09-01
 date: 2025-04-06 10:31
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 06：物理设备和 Queue Family
 description: 选择符合要求的物理设备和 Queue Family，物理设备是 Vulkan 的一个重要概念，它表示了一个支持 Vulkan 的 GPU 设备，Queue Family 则是物理设备的一个属性，表示了该设备支持的命令队列类型。
 ---

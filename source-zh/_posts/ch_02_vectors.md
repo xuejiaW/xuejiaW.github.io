@@ -3,10 +3,10 @@ tags:
   - 图形学
   - 数学
 created: 2023-05-04
-updated: 2024-09-08
+updated: 2025-09-01
 date: 2024-09-07 10:09
 title: 《3D 数学基础》 第二章 向量
-published: true
+publishStatus: published
 description: 本文主要介绍了向量的基本概念，包括向量的数学定义，向量的几何意义，笛卡尔坐标系中的向量，向量求反，向量与标量相乘，向量加法和减法，向量长度，单位向量，距离公式，向量点乘，向量叉乘等。
 ---
 

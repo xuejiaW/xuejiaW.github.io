@@ -1,9 +1,9 @@
 ---
 created: 2021-12-15
-updated: 2024-05-01
+updated: 2025-09-01
 tags:
   - OpenGL
-published: true
+publishStatus: published
 date: 2024-05-01 10:15
 title: 《Learn OpenGL》 Ch 03 Shaders
 description: 在 Ch 02 Hello Triangles 中，我们已经使用了 Shader，但在 Ch 02 中并没有详细的介绍。在本章中，会详细的介绍 Shader 的相关内容以及两种向 Shader 传递数据的方式 - Uniform 和 Attributes。

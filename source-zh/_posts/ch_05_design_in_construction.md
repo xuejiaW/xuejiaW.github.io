@@ -2,9 +2,9 @@
 tags:
   - 工程实践
 created: 2023-09-24
-updated: 2024-03-09
+updated: 2025-09-01
 date: 2023-11-12 22:30
-published: true
+publishStatus: published
 title: 《Code Complete》 第五章：构建中的设计
 description: 本节主要关注于代码编写时所需要进行的设计活动，包括设计需要面临的挑战，一个良好的设计应该具备的特征，以及如何进行设计。
 ---

@@ -1,12 +1,12 @@
 ---
 tags:
-    - 设计模式
-    - 编码规范
+  - 设计模式
+  - 编码规范
 created: 2023-08-27
-updated: 2023-10-07
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: 《Unix 编程艺术》 第十七章 可移植性
-date: 2023-10-06 16:18  
+date: 2023-10-06 16:18
 ---
 
 移植性一直是 Unix 的主要优势。Unix 程序员往往设想硬件是易变的，只有 Unix API 本是稳定的。

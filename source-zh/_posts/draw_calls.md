@@ -5,9 +5,9 @@ tags:
   - Unity
   - SRP
 created: 2022-01-24
-updated: 2024-04-02
+updated: 2025-09-01
 date: 2024-03-23 13:53
-published: true
+publishStatus: published
 title: Custom SRP - Draw Calls
 description: 渲染自定义的 `Unlit` 的材质渲染一系列小球，讨论了不同的节省 Draw Calls 的技术，以及讨论了不同的实现透明度的办法
 ---

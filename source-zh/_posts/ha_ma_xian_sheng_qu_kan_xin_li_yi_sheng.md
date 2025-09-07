@@ -1,16 +1,16 @@
 ---
 tags:
   - 心理学
-Author: 
-- 罗伯特·戴博德
+Author:
+  - 罗伯特·戴博德
 Cover: https://weread-1258476243.file.myqcloud.com/weread/cover/81/YueWen_35551088/t7_YueWen_35551088.jpg
 ISBN: 9787201161693
 Category: 心理-心理学应用
 CompleteDate: 2023-07
 created: 2023-10-12
-updated: 2023-11-17
-date: 2023-10-15 16:26 
-published: true
+updated: 2025-09-01
+date: 2023-10-15 16:26
+publishStatus: published
 title: 《蛤蟆先生去看心理医生》 摘抄
 description: 这本书以蛤蟆先生与心理医生对话的方式，介绍了人自我状态的三种构成：儿童，父母，成人。秃鹫医生帮助蛤蟆先生从儿童状态走向了成人状态，并给出了人生坐标理论：根据我怎么看别人，和别人怎么看我，来区分四种人格，并鼓励走向“我好，别人也好”的坐标。
 ---

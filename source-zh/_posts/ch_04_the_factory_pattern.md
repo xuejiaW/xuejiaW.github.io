@@ -1,10 +1,10 @@
 ---
 tags:
-    - 设计模式
-updated: 2023-05-28
+  - 设计模式
+updated: 2025-09-01
 created: 2023-05-14
 title: 《Head First 设计模式》 Ch 04 工厂模式
-published: true
+publishStatus: published
 description: 本篇来自于 《Head First Design Pattern》 第四章，介绍了装饰模式的定义及运用。
 date: 2023-05-06
 ---

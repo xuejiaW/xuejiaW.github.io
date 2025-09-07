@@ -1,12 +1,12 @@
 ---
 created: 2022-01-05
-updated: 2023-10-26
+updated: 2025-09-01
 tags:
-    - GPU
+  - GPU
 title: 《Render Hell》 第四部分 解决方法
-published: true
-date: 2023-05-29 22:18 
-description:  这一部分会阐述解决第三部分常见问题中描述的问题的方法
+publishStatus: published
+date: 2023-05-29 22:18
+description: 这一部分会阐述解决第三部分常见问题中描述的问题的方法
 ---
 
 # Sorting

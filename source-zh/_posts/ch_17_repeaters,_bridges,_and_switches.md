@@ -1,11 +1,11 @@
 ---
 created: 2022-02-02
-updated: 2023-06-06
+updated: 2025-09-01
 tags:
-    - 计算机网络
+  - 计算机网络
 title: 《Computer Networks and Internets》 Ch 17 中继器，网桥和交换机
-published: true
-date: 2023-06-04 16:11 
+publishStatus: published
+date: 2023-06-04 16:11
 description: 本篇为 《Computer Networks and Internets》 的第十七章笔记， 这一章会介绍关于扩展 LAN 的方法，如中继器（Repeaters）和网桥（Bridges），也会介绍在网桥存在循环时解决死循环的`生成树算法(Spannning tree algorithms)`。最后会讨论交换机和网桥之间的关系。
 ---
 

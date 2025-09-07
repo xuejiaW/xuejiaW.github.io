@@ -2,9 +2,9 @@
 tags:
   - Vulkan
 created: 2025-05-05
-updated: 2025-06-22
+updated: 2025-09-01
 date: 2025-05-08 22:00
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 19：Frame in Flight
 description: 对渲染循环进行改进，通过创建多个 Command Buffer 和信号量来实现多帧渲染，允许 CPU 和 GPU 同时工作，避免 CPU 在 GPU 渲染时处于空闲状态。
 ---

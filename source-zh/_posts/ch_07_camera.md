@@ -1,9 +1,9 @@
 ---
 created: 2021-12-15
-updated: 2024-08-18
+updated: 2025-09-01
 tags:
   - OpenGL
-published: true
+publishStatus: published
 date: 2024-08-03 10:06
 title: 《Learn OpenGL》 Ch 07 Camera
 description: 本章将介绍 View 矩阵的生成，该矩阵用来表示 Camera 的位置和方向，在本章将使用键盘和鼠标控制 Camera 的位置和角度。

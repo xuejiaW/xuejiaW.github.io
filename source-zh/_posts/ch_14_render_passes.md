@@ -1,10 +1,10 @@
 ---
 created: 2022-08-30
-updated: 2025-04-29
+updated: 2025-09-01
 tags:
   - Vulkan
 date: 2025-04-20 20:38
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 14：Render Passes
 description: 本章介绍了 Vulkan 中 Render Pass 的作用、关键结构体及其创建流程，讲解了如何描述和管理渲染过程中的附件与子通道，为后续渲染管线的搭建打下基础。
 ---

@@ -2,9 +2,9 @@
 tags:
   - 工程实践
 created: 2023-11-11
-updated: 2023-12-24
+updated: 2025-09-01
 date: 2023-11-12 22:29
-published: true
+publishStatus: published
 title: 《Code Complete》 设计检查清单
 ---
 

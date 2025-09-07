@@ -1,12 +1,12 @@
 ---
 alias:
-- Cohension
-- 高内聚，低耦合
+  - Cohension
+  - 高内聚，低耦合
 tags:
-- 编码规范 
+  - 编码规范
 created: 2023-06-11
-updated: 2023-10-26
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: 耦合与内聚
 date: 2023-06-12 21:27
 description: 本篇简略的介绍内聚与耦合的概念，并以图描绘模块间耦合内聚程度不同时的表现。

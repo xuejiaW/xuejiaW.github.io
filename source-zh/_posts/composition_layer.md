@@ -2,8 +2,8 @@
 tags:
   - XR
 created: 2025-06-04
-updated: 2025-06-27
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: XR 合成层（Composition Layer）概念详解
 date: 2025-06-26 22:10
 description: XR系统中的合成层（Composition Layer）机制通过将不同类型的内容拆分为独立层（如Projection、Quad、Cylinder等层），由合成器（Compositor）合并后输出到屏幕。这种设计主要解决了传统XR渲染路径中两次非点对点采样导致的画质劣化问题，通过让UI等平面内容直接以合成层提交，减少了一次采样环节。典型案例显示，YVR2设备的Home界面由背景的Projection层和两个UI的Quad层共同构成。合成层还支持多应用内容整合，如MR场景中透视画面、曲面UI和系统弹框的协同显示

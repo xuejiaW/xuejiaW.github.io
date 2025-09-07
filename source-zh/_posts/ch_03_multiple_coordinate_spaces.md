@@ -3,8 +3,8 @@ tags:
   - 图形学
   - 数学
 created: 2023-05-04
-updated: 2025-06-22
-published: true
+updated: 2025-09-01
+publishStatus: published
 date: 2024-09-07 10:45
 title: 《3D 数学基础》 第三章 坐标系
 description: 本文主要介绍了不同坐标系的概念，以及坐标系转换的基本公式。

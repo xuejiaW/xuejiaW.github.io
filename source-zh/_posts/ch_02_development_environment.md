@@ -2,9 +2,9 @@
 tags:
   - Vulkan
 created: 2022-02-24
-updated: 2025-03-30
+updated: 2025-09-01
 date: 2025-03-29 13:45
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 02：开发环境
 ---
 

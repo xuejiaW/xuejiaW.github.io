@@ -2,9 +2,9 @@
 tags:
   - 管理
 created: 2023-09-04
-updated: 2024-05-13
+updated: 2025-09-01
 date: 2023-09-06 22:13
-published: true
+publishStatus: published
 title: 《Linus on Kernel Management Style》 翻译
 description: Linux 写的一篇关于 Linux 内核管理风格的文章，辛辣，又有见地，非常 Linus 个人风格的一篇文章。原文用的一些语句很微妙，虽然我已经尽可能的让翻译更通顺，但感觉失去了原文的一些风采，所以可能的话，去读原文吧。
 ---

@@ -1,12 +1,12 @@
 ---
 tags:
-    - 系统设计
+  - 系统设计
 created: 2023-08-27
-updated: 2023-10-17
+updated: 2025-09-01
 alias:
-- The Tale of J.Random Newbie
+  - The Tale of J.Random Newbie
 title: 猪小兵的故事
-published: true
+publishStatus: published
 date: 2023-10-06 15:29
 description: 本故事取自 《Unix 编程艺术》 第 16 章，故事描述了一个叫猪小兵的程序员在开发者的痛苦，进而引出了软件公司对于重用代码的矛盾复杂的情节，并得出要关注软件重用的结论。
 ---

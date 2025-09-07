@@ -1,14 +1,14 @@
 ---
 created: 2022-02-17
-updated: 2025-05-31
+updated: 2025-09-01
 tags:
   - Vulkan
 Author:
   - Khronos Group
-Cover: https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Vulkan_API_logo.svg/1200px-Vulkan_API_logo.svg.png
-ISBN: 
+Cover: "[[Vulkan Tutorial.png]]"
+ISBN:
 date: 2025-03-29 13:40
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 学习笔记汇总
 descriptrion: Vulkan 的学习指南，
 ---

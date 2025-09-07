@@ -3,8 +3,8 @@ tags:
   - 系统设计
   - 工程实践
 created: 2023-09-16
-updated: 2023-12-27
-published: true
+updated: 2025-09-01
+publishStatus: published
 date: 2023-11-12 14:30
 title: 《Code Complete》第二章：丰富软件开发理解的隐喻
 description: 本章主要介绍了软件开发中的隐喻，包括隐喻的重要性，常见的软件开发隐喻，以及如何使用隐喻。

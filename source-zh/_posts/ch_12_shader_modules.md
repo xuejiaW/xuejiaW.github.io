@@ -2,9 +2,9 @@
 tags:
   - Vulkan
 created: 2022-08-26
-updated: 2025-04-13
+updated: 2025-09-01
 date: 2025-04-13 15:18
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 12：Shader Module
 description: VkShaderModule 类用以封装和管理已编译好的着色器代码，本节将说明如何创建 Shader Module，以及如何将其传递给渲染管线的特定阶段。
 ---

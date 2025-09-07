@@ -1,11 +1,11 @@
 ---
 created: 2022-02-02
-updated: 2023-06-06
+updated: 2025-09-01
 tags:
-    - 计算机网络
+  - 计算机网络
 title: 《Computer Networks and Internets》 Ch 08 可靠性及信道编码
-published: true
-date: 2023-06-04 15:32 
+publishStatus: published
+date: 2023-06-04 15:32
 description: 本篇为 《Computer Networks and Internets》 的第八章笔记， 这一部分将介绍信息传输过程中发生错误的原因，以及纠错的方式——信道编码。本部分将着重介绍前向错误纠正技术，并引出汉明距离等概念。
 ---
 

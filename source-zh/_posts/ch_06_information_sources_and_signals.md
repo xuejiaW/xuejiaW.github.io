@@ -1,11 +1,11 @@
 ---
 created: 2022-02-02
-updated: 2023-06-04
+updated: 2025-09-01
 tags:
-    - 计算机网络
-published: true
+  - 计算机网络
+publishStatus: published
 title: 《Computer Networks and Internets》 Ch 06 信源与信号
-date: 2023-06-03 22:06 
+date: 2023-06-03 22:06
 description: 本篇为 《Computer Networks and Internets》 的第六章笔记，本章节主要介绍数据传输框架中的输入，信源和携带信息的信号的特征。包括了模拟信号和数字信号的定义，两者各自带宽的计算方式。模拟信号转换为数字信号的过程：采样、量化、编码的细节等。
 ---
 

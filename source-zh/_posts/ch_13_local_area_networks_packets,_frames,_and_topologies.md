@@ -1,10 +1,10 @@
 ---
 created: 2022-02-02
-updated: 2023-06-06
+updated: 2025-09-01
 tags:
-    - 计算机网络
+  - 计算机网络
 title: 《Computer Networks and Internets》 Ch 13 局域网：数据包，帧 和拓扑结构
-published: true
+publishStatus: published
 date: 2023-06-04 15:40
 description: 本篇为 《Computer Networks and Internets》 的第十三章笔记， 这一部分将介绍分组交换技术，拓扑结构，硬件地址寻址，帧的概念。
 ---

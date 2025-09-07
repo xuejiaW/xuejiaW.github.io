@@ -1,11 +1,11 @@
 ---
 tags:
-    - 系统设计
-    - 编码规范
+  - 系统设计
+  - 编码规范
 created: 2023-08-12
-updated: 2023-10-26
-date: 2023-09-03 10:57 
-published: true
+updated: 2025-09-01
+date: 2023-09-03 10:57
+publishStatus: published
 title: 《Unix 编程艺术》 第十一章 接口
 ---
 

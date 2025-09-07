@@ -3,10 +3,10 @@ tags:
   - 系统设计
   - 工程实践
 created: 2023-09-17
-updated: 2023-12-13
+updated: 2025-09-01
 date: 2023-11-12 15:31
 title: 《Code Complete》需求检查清单
-published: true
+publishStatus: published
 ---
 
 需求清单包含一系列你可以用来询问自己的，有关项目需求的问题。

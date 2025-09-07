@@ -1,10 +1,10 @@
 ---
 created: 2022-02-02
-updated: 2023-06-06
+updated: 2025-09-01
 tags:
-    - 计算机网络
+  - 计算机网络
 title: 《Computer Networks and Internets》 Ch 11 复用与解复用
-published: true
+publishStatus: published
 date: 2023-06-04 15:35
 description: 本篇为 《Computer Networks and Internets》 的第十一章笔记， 这一部分将介绍将多个心愿的数据流合并在一起的复用，和将合并后数据流拆分的解复用。
 ---

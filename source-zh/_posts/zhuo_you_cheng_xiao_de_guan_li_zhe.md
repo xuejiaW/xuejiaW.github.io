@@ -1,17 +1,17 @@
 ---
 tags:
-    -  管理
-    - 摘抄
+  - 管理
+  - 摘抄
 Author: 彼得·德鲁克
 Cover: https://weread-1258476243.file.myqcloud.com/weread/cover/94/YueWen_25131310/t7_YueWen_25131310.jpg
 ISBN: 9787111604020
 Category: 经济理财-管理
 CompleteDate: 2023-03
 created: 2023-07-08
-updated: 2023-11-18
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: 《卓有成效的管理者》 摘抄
-date: 2023-07-09 11:33 
+date: 2023-07-09 11:33
 description: 本书的主题是关于如何通过自我管理成为卓有成效的管理者。让自身成效不高的管理者管好他们的同事与下属，那几乎是不可能的事。本书中的 “管理者” 泛指知识工作者，只要该知识工作者对组织负有贡献的责任，那他就是一位管理者。
 ---
 

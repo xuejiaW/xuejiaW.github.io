@@ -1,10 +1,10 @@
 ---
 tags:
-    - 设计模式
+  - 设计模式
 created: 2022-02-02
-updated: 2023-05-28
+updated: 2025-09-01
 title: 《Head First 设计模式》 Ch 09 模板方法模式
-published: true
+publishStatus: published
 description: 本篇来自于 《Head First Design Pattern》 第九章，介绍了迭代器模式和组合模式的定义及运用。
 date: 2023-05-11
 ---

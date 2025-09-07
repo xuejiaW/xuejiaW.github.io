@@ -1,12 +1,12 @@
 ---
 tags:
-    - 设计模式
-    - 编码规范
+  - 设计模式
+  - 编码规范
 created: 2023-08-26
-updated: 2023-10-07
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: 《Unix 编程艺术》 第十四章 语言
-date: 2023-10-06 15:09 
+date: 2023-10-06 15:09
 description: Unix 上运行的语言种类完全可能超过计算史上其它所有操作系统的总和，本节介绍了 Unix 中部分语言的特征，以及该语言在何种情况下合适，哪种情况下不合适。
 ---
 

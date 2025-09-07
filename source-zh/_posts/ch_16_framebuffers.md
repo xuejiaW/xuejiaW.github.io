@@ -2,9 +2,9 @@
 tags:
   - Vulkan
 created: 2022-09-03
-updated: 2025-05-05
+updated: 2025-09-01
 date: 2025-04-25 20:38
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 16：FrameBuffers
 description: 创建 用于封装一组图像视图（如颜色、深度等附件），作为渲染目标 的 FrameBuffer 对象，其需要与之前创建的 RenderPass 兼容。
 ---

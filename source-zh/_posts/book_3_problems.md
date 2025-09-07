@@ -1,11 +1,11 @@
 ---
 created: 2022-01-05
-updated: 2023-10-26
+updated: 2025-09-01
 tags:
-    - GPU
+  - GPU
 title: 《Render Hell》 第三部分 常见问题
-published: true
-date: 2023-05-29 22:04 
+publishStatus: published
+date: 2023-05-29 22:04
 description: 本部分中介绍了渲染过程中常见的问题，这些问题的解决方式会在第四部分解决方案中阐述
 ---
 
