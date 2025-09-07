@@ -3,9 +3,9 @@ tags:
   - Unity
   - Tutorial
 created: 2023-11-16
-updated: 2023-12-06
+updated: 2025-09-01
 title: Unity Input System Step-By-Step 最简教程
-published: true
+publishStatus: published
 date: 2023-11-19 15:33
 description: 本文为 Unity Input System 的逐步最简教程，在教程的最后可以使用游戏手柄和键盘控制场景中的小球移动，内有相应源码工程。本教程极大程度的参考了 Unity Learn 上的官方教程，但并不是其翻译版本，而是根据我的学习过程进行相应增删改。
 ---

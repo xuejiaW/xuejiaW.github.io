@@ -1,11 +1,11 @@
 ---
 created: 2022-02-02
-updated: 2023-06-04
+updated: 2025-09-01
 tags:
-    - 计算机网络
+  - 计算机网络
 title: 《Computer Networks and Internets》 Ch 07 传播媒介
-published: true
-date: 2023-06-03 23:01 
+publishStatus: published
+date: 2023-06-03 23:01
 description: 本篇为 《Computer Networks and Internets》 的第七章笔记， 这一章将会给出传播媒介的分类，介绍电信号，无线信号，光信号各自的传输特征。在本章节的最后，介绍了奈奎斯特定律和香农理论，分别给出了理想情况和实际情况下最大的信息传输率。
 ---
 

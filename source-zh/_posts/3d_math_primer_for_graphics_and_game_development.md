@@ -1,12 +1,12 @@
 ---
 created: 2023-05-04
-updated: 2024-09-09
+updated: 2025-09-01
 Cover: https://images-na.ssl-images-amazon.com/images/I/51Dake5LWcL._SX404_BO1,204,203,200_.jpg
 Author:
   - Fletcher Dunn
   - Ian Parberry
 ISBN: 978-1568817231
-published: true
+publishStatus: published
 title: 《3D Math Primer For Graphics and Game Development》 笔记汇总
 tags:
   - 图形学

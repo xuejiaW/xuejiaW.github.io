@@ -1,11 +1,11 @@
 ---
 tags:
-    - 系统设计
-    - 编码规范
+  - 系统设计
+  - 编码规范
 created: 2023-08-13
-updated: 2023-10-07
-published: true
-date: 2023-10-06 11:56 
+updated: 2025-09-01
+publishStatus: published
+date: 2023-10-06 11:56
 title: 《Unix 编程艺术》 第十三章 复杂度
 ---
 

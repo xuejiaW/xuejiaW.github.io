@@ -1,10 +1,10 @@
 ---
 created: 2022-08-23
-updated: 2025-04-13
+updated: 2025-09-01
 tags:
   - Vulkan
 date: 2025-04-13 11:44
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 11：图形管线介绍
 description: Vulkan 中需要自己设定图形渲染管线，在一些旧的图形 API 如 OpenGL 中，时可以通过一些函数修改渲染管线的，如通过 `glBlendFunc` 修改管线中对于混合的操作。但在 Vulkan 中管线几乎是完全不变的，因此每当需要修改管线设置，就必须重新创建管线。
 ---

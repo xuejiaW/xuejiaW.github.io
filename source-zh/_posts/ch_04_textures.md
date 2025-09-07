@@ -1,9 +1,9 @@
 ---
 created: 2021-12-15
-updated: 2024-05-03
+updated: 2025-09-01
 tags:
   - OpenGL
-published: true
+publishStatus: published
 date: 2024-05-03 10:31
 title: 《Learn OpenGL》 Ch 04 Textures
 description: 在本章中，将学习依赖库 `Stb_Image` 读取纹理并在 OpenGL 中加载使用纹理。还将介绍关于纹理的采样，映射，过滤和 MipMap 等相关内容。

@@ -1,19 +1,19 @@
 ---
 tags:
-- 自然科学
-- 心理
-- 科普
+  - 自然科学
+  - 心理
+  - 科普
 Author:
-- 丹尼尔·利伯曼
-- 迈克尔·E.朗
+  - 丹尼尔·利伯曼
+  - 迈克尔·E.朗
 Cover: https://wfqqreader-1252317822.image.myqcloud.com/cover/9/41626009/t7_41626009.jpg
 ISBN: 9787521731583
 Category: 科学技术-自然科学
 created: 2023-02-12
-updated: 2023-11-10
+updated: 2025-09-01
 Completecreated: 2023-02
 title: 《贪婪的多巴胺》 摘抄
-published: true
+publishStatus: published
 date: 2023-05-27
 ---
 

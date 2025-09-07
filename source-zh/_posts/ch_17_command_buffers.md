@@ -2,9 +2,9 @@
 tags:
   - Vulkan
 created: 2025-04-18
-updated: 2025-05-05
+updated: 2025-09-01
 date: 2025-04-29 20:38
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 17：Command Buffers
 description: Vulkan 中的命令（如绘制操作和内存传输）并不是通过函数调用直接执行的。开发者必须将所有想要执行的操作记录（Record）在 Command Buffer 对象中。在之前的章节中已经创建了绘制三角形所需要的绝大部分对象，本章定义 Command Buffer 来记录绘制三角形的命令了。
 ---

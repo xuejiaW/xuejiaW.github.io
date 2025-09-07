@@ -5,8 +5,8 @@ tags:
 alias:
   - 发布 .Net Tools
 created: 2024-09-02
-updated: 2024-09-03
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: .Net Tools 发布指南
 date: 2024-09-02 21:44
 description: .Net Tools 发布教程，包含手动发布和命令行发布两种方式

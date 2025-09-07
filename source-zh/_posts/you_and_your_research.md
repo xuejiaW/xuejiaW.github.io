@@ -1,12 +1,12 @@
 ---
 tags:
-- 摘抄
-- How-To
+  - 摘抄
+  - How-To
 created: 2023-06-18
-updated: 2023-11-09
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: 《You and Your Research》 摘抄
-date: 2023-06-27 21:28 
+date: 2023-06-27 21:28
 description: 这篇摘抄来源于对 理查德·卫斯理·汉明（Richard Wesley Hamming） 在 1986 年 3 月 7 日 的名为 `You and Your Research` 演讲的转录。</br> 该演讲主要聚焦在 Hamming 对 “为什么只有极少数的科学家做出了伟大的贡献，而绝大部分科学家却在时间的长流中被遗忘” 这一问题的观察和研究。
 ---
 

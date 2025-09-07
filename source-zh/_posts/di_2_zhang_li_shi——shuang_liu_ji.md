@@ -1,10 +1,10 @@
 ---
 tags:
-    - 系统设计
-    - 编码规范
+  - 系统设计
+  - 编码规范
 created: 2022-06-05
-updated: 2023-08-28
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: 《Unix 编程艺术》 第二章 历史
 date: 2023-08-28 21:49
 description: 阐述了 Unix 发展过程中的一些重要事件，大多是事件本身的记录，阅读时没有太多的感触，因此没有做太多的笔记。

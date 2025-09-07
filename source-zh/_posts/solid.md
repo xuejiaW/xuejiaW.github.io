@@ -1,12 +1,12 @@
 ---
 tags:
-    - 设计模式
-    - 编码规范 
+  - 设计模式
+  - 编码规范
 created: 2023-06-07
-updated: 2023-11-18
+updated: 2025-09-01
 title: SOLID 原则
-published: true
-date: 2023-06-12 21:37 
+publishStatus: published
+date: 2023-06-12 21:37
 description: 本篇主要内容来自于 Unity 电子书 《Level Up Your Code With Game Programming Patterns》，讲解如何遵循 SOLID 原则让 Unity 中常见的实现变得更容易维护。</br> `SOLID` 原则是面向对象编程中的五个重要设计原则，有助于增强软件的可维护性、可扩展性和可读性。
 ---
 

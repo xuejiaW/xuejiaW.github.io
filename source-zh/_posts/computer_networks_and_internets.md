@@ -1,14 +1,14 @@
 ---
 created: 2022-02-02
-updated: 2023-06-06
+updated: 2025-09-01
 tags:
-    - 计算机网络
+  - 计算机网络
 Author: Douglas E.Comer
 Cover: https://images-na.ssl-images-amazon.com/images/I/41Th1SfZ6GL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg
 ISBN: 978-0133587937
 title: 《Computer Networks and Internets》 笔记汇总
-published: true
-date: 2023-06-04 16:13 
+publishStatus: published
+date: 2023-06-04 16:13
 description: 《Computer Networks and Internets》一书是我硕士课程时期使用的教材，这本书涵盖了计算机网络的各个层次，包括硬件、软件、协议、互联网地址、以太网、TCP/IP、路由、本地网络、广域网络、无线网络等众多主题。
 ---
 # Introduction And Internet Applications

@@ -3,9 +3,9 @@ tags:
   - 工程实践
   - 代码质量
 created: 2023-11-14
-updated: 2023-12-27
+updated: 2025-09-01
 date: 2023-12-27 21:50
-published: true
+publishStatus: published
 title: 《Code Complete》 第六章：类的实践
 description: 本节主要关注于类的实践，包括一个好的类的特征（良好的抽象，良好的封装），在实现类的过程中，需要关注的问题，如应当使用组合和继承的时机，应当如何处理成员函数和成员变量等。
 ---

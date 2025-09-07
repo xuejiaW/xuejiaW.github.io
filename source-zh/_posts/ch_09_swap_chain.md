@@ -1,10 +1,10 @@
 ---
 created: 2022-03-12
-updated: 2025-04-14
+updated: 2025-09-01
 tags:
   - Vulkan
 date: 2025-04-12
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 09： Swap Chain
 description: 在 Vulkan 中必须显式的创建 Swap Chain。SwapChain 是与 Surface 绑定的数据结构，其包含了多个 Image，应用渲染时会将渲染的结果放置到这些 Image 中，当调用 Present 时，SwapChain 会将这些 Image 通过其与 Surface 绑定，传递给 Surface，Surface 再将这些 Image 显示到平台的窗口或屏幕上。
 ---

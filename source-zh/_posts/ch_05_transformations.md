@@ -1,9 +1,9 @@
 ---
 created: 2021-12-15
-updated: 2024-08-18
+updated: 2025-09-01
 tags:
   - OpenGL
-published: true
+publishStatus: published
 date: 2024-05-07 10:11
 title: 《Learn OpenGL》 Ch 05 Transformations
 description: 本章将介绍如何通过库 GLM 实现位移/旋转/缩放等操作，在本章的最后，会绘制一个在屏幕左下角不断旋转的缩小后的 Quad。

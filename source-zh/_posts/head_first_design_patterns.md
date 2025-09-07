@@ -1,15 +1,15 @@
 ---
 created: 2022-02-02
-updated: 2023-06-20
+updated: 2025-09-01
 tags:
-    - 设计模式
+  - 设计模式
 Author:
-    - Eric Freeman
-    - Elisabeth Robson
+  - Eric Freeman
+  - Elisabeth Robson
 Cover: https://images-na.ssl-images-amazon.com/images/I/61APhXCksuL._SX430_BO1,204,203,200_.jpg
 ISBN: 978-0596007126
 title: 《Head First 设计模式》 笔记汇总
-published: true
+publishStatus: published
 description: 本篇为 Head First Design Patterns 的笔记汇总
 date: 2023-05-24
 ---

@@ -1,11 +1,11 @@
 ---
 tags:
-    - 设计模式
-    - 编码规范
+  - 设计模式
+  - 编码规范
 created: 2023-08-14
-updated: 2023-09-03
+updated: 2025-09-01
 date: 2023-09-03 10:32
-published: true
+publishStatus: published
 title: 《Unix 编程艺术》 第八章 微型语言
 ---
 

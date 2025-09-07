@@ -1,10 +1,10 @@
 ---
 created: 2022-03-12
-updated: 2025-04-12
+updated: 2025-09-01
 tags:
   - Vulkan
 date: 2025-04-07
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 07： 逻辑设备和队列
 description: 在创建了 Physical Device（VkPhysicalDevice） 后需要建立一个 Logical Device （VkDevice）来与之交互。在创建 Logical Devices 时还需要指定需要从 Physical Devices 的 Queue Family 中创建多少 Queue。
 ---

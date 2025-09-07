@@ -1,9 +1,9 @@
 ---
 created: 2023-10-30
-updated: 2024-04-28
+updated: 2025-09-01
 tags:
   - OpenGL
-published: true
+publishStatus: published
 description: 本章从 0 解释该如何通过 GLFW 和 GLAD 创建一个窗口，该窗口有渲染循环，可通过按键关闭窗口，可处理窗口大小时的回调。
 date: 2024-04-28
 title: 《Learn OpenGL》 Ch 01 Hello Window

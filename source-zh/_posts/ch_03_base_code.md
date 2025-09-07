@@ -1,10 +1,10 @@
 ---
 created: 2022-02-28
-updated: 2025-03-30
+updated: 2025-09-01
 tags:
   - Vulkan
 date: 2025-03-30 16:42
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 03：基本代码结构
 ---
 

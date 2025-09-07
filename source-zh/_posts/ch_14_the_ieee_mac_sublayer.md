@@ -1,11 +1,11 @@
 ---
 created: 2022-02-02
-updated: 2023-06-06
+updated: 2025-09-01
 tags:
-    - 计算机网络
+  - 计算机网络
 title: 《Computer Networks and Internets》 Ch 14 MAC 层
-published: true
-date: 2023-06-04 16:03 
+publishStatus: published
+date: 2023-06-04 16:03
 description: 本篇为 《Computer Networks and Internets》 的第十四章笔记， 这一章将会深入讨论MAC层，包括多路访问协议（multi-access protocols）以及静态和动态信道分配。
 ---
 

@@ -4,9 +4,9 @@ tags:
   - XR
   - Rendering
 created: 2025-03-31
-updated: 2025-06-15
+updated: 2025-09-07
 date: 2025-04-13 22:02
-published: true
+publishStatus: published
 title: XR 立体渲染模式
 description: 在 XR 中物体通常需要以立体（in sterro）的方式被渲染，即一个内容需要被绘制到左眼和右眼的纹理中，这种渲染方式被称为 `立体渲染视图（Stereo-Rendering）`，本文将介绍几种立体渲染的方式，包括常见的 `Multi-Pass` 和 `Multi-View`，以及通常针对眼动设备的 `Quad-View` 方式。主要将说明这些方式在渲染时所用的纹理数量和 DrawCall 数量的差异。
 keywords:
@@ -152,7 +152,7 @@ Single-Pass 和 Multi-Pass 有各自的好处，也因此这两种方案都有�
 在 Quad-Views with Multi-Pass 下，每一个 DrawCall 会分别将内容绘制到 Outer（或 Inner） 的左右眼画面上，示意图如下所示：
 
 <iframe
-  src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/ce7259a1aee59f021a0bc809cf69182c/raw/094e5e20d37e4a5f7e1064b1d6276778822b0e0c/QuadView-MultiPass.ins"
+  src="https://inscribed.app/embed?type=slider-template&gist_url=https://gist.githubusercontent.com/xuejiaW/ce7259a1aee59f021a0bc809cf69182c/raw/935d7b8d355d00538c076a8607ca1a61524d416c/QuadView-MultiPass.ins"
   width="100%"
   height="500"
   frameborder="0"

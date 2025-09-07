@@ -1,12 +1,12 @@
 ---
 tags:
-    - 工程实践
-    - 系统设计
+  - 工程实践
+  - 系统设计
 created: 2023-09-20
-updated: 2023-11-18
-date: 2023-11-12 17:36 
+updated: 2025-09-01
+date: 2023-11-12 17:36
 title: 《Code Complete》 架构检查清单
-published: true
+publishStatus: published
 ---
 
 以下是一个好的架构应该解决的问题列表。该列表并不是要成为架构的综合指南，而是一种实用的方式来评估程序员获得的内容是否足够有营养。

@@ -5,10 +5,10 @@ tags:
   - 效率提升
   - PowerShell
 created: 2023-11-26
-updated: 2024-02-09
+updated: 2025-09-01
 date: 2023-11-27 21:50
 title: Powershell 模块：ZLocation
-published: true
+publishStatus: published
 description: ZLocation 是 PowerShell 中的一个 Module，其可以追踪访问各个地址的历时，并通过 `z` 命令快速访问你最常使用的目录，有效的降低了每次通过反复 `cd` 来进入路径的操作数量。
 ---
 

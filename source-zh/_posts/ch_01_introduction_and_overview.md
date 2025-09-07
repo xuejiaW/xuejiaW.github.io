@@ -1,11 +1,11 @@
 ---
 tags:
-    - 计算机网络
+  - 计算机网络
 created: 2022-02-02
-updated: 2023-06-04
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: 《Computer Networks and Internets》 Ch 01 介绍与概览
-date: 2023-06-03 16:03 
+date: 2023-06-03 16:03
 description: 本篇为 《Computer Networks and Internets》 的第一章笔记，该章节首先介绍了计算机网络的五个关键领域，并简略介绍了其中的 TCP/IP 架构，阅读本章后可以对设备在网络中通信流程有基本的框架概念。
 ---
 

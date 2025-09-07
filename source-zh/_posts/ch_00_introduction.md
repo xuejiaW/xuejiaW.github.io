@@ -2,9 +2,9 @@
 tags:
   - Vulkan
 created: 2022-02-17
-updated: 2025-03-29
+updated: 2025-09-01
 date: 2025-03-29 13:41
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 00：简介
 ---
 

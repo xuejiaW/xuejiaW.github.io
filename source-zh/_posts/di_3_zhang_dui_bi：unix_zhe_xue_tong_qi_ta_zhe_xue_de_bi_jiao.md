@@ -1,10 +1,10 @@
 ---
 created: 2022-06-05
-updated: 2023-09-01
+updated: 2025-09-01
 tags:
-    - 系统设计
-    - 编码规范
-published: true
+  - 系统设计
+  - 编码规范
+publishStatus: published
 title: 《Unix 编程艺术》 第三章 对比
 date: 2023-08-28 22:04
 description: 阐述了 Unix 作为操作系统的几个统一性理念，包含有对多任务，协作进程，二进制文件，CLI 等内容的思考，也对比了与 MacOS，Windows 等操作系统的差异。

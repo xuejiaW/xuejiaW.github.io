@@ -1,10 +1,10 @@
 ---
 tags:
-    - 设计模式
-    - 编码规范
+  - 设计模式
+  - 编码规范
 created: 2023-08-27
-updated: 2023-10-07
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: 《Unix 编程艺术》 第十五章 工具
 date: 2023-10-06 15:15
 description: 本章介绍 Unix 中使用的工具，如版本控制，Makefile，Profiling 等工具。

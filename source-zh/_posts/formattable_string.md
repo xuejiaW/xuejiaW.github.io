@@ -1,14 +1,17 @@
 ---
 tags:
-- C#
-- Performance
-- String
-updated: 2023-06-15
+  - Performance
+  - String
+  - CSharp
+updated: 2025-09-01
 created: 2023-05-22
-date: 2023-06-15 21:08 
-published: true
+date: 2023-06-15 21:08
+publishStatus: published
 title: C# Formattable String
 description: ormattableString` 是 C# 6.0 中引入的新类型之一，可以避免在非必要情况下执行了格式化字符串带来的性能开销。
+PublishedPlatform:
+  - CSDN
+  - ZHIHU
 ---
 
 `FormattableString`  是 C# 6.0 中引入的新类型之一，可以避免在非必要情况下执行了格式化字符串带来的性能开销。

@@ -1,11 +1,11 @@
 ---
 created: 2021-12-14
-updated: 2024-04-28
+updated: 2025-09-01
 tags:
   - OpenGL
 title: 《Learn OpenGL》 Ch 00 创建 Window
 description: 本章将描述如何配置 GLAD 和 GLFW 库，后续 OpenGL 的学习工程都将依赖这两个库。在本章的末尾，将给出绘制窗口的代码，以检查 GLAD 和 GLFW 库是否配置准确。
-published: true
+publishStatus: published
 date: 2024-04-27 09:20
 ---
 

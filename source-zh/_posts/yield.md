@@ -2,8 +2,8 @@
 tags:
   - CSharp
 created: 2025-01-11
-updated: 2025-01-24
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: C# Yield 关键字
 date: 2025-01-12
 description: 介绍 C# 中 Yield 关键字的用法和工作原理，且通过一个示例说明如何通过 Yield 关键字节省性能。

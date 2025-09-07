@@ -3,9 +3,9 @@ tags:
   - 图形学
   - 数学
 created: 2023-05-04
-updated: 2024-09-08
+updated: 2025-09-01
 title: 《3D 数学基础》第四章 矩阵简介
-published: true
+publishStatus: published
 date: 2024-09-08 14:27
 description: 本文主要介绍了矩阵的数学定义，矩阵的维度和表示方法，方阵，单位矩阵，矩阵转置，矩阵与标量相乘，两个矩阵相乘，矩阵与向量相乘，向量转置，矩阵的几何意义等内容。
 ---

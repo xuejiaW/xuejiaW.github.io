@@ -2,9 +2,9 @@
 tags:
   - Vulkan
 created: 2022-03-06
-updated: 2025-04-06
+updated: 2025-09-01
 date: 2025-03-31 16:42
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 04：Instance
 description: 对于一个 Vulkan 应用而言，你首先需要通过创建一个 `instance` 来初始化 Vulkan 库， `instance` 是应用与 Vulkan 库的连接，在创建过程中会有相应的操作告知 Driver 你的应用的一些细节
 ---

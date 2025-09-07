@@ -1,9 +1,9 @@
 ---
 created: 2021-12-14
-updated: 2024-05-01
+updated: 2025-09-01
 tags:
   - OpenGL
-published: true
+publishStatus: published
 date: 2024-05-01 08:15
 title: 《Learn OpenGL》 Ch 02 Hello Triangle
 description: 本章将介绍如何通过 OpenGL 绘制由两个三角形构成的四边形，包括顶点数据的设置，顶点缓冲对象的创建，着色器的编译和链接，以及最后的绘制。

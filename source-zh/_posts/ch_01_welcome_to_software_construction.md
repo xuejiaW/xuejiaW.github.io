@@ -1,11 +1,11 @@
 ---
 tags:
-    - 系统设计
-    - 工程实践
+  - 系统设计
+  - 工程实践
 created: 2023-09-12
-updated: 2023-11-18
+updated: 2025-09-01
 date: 2023-11-12 14:29
-published: true
+publishStatus: published
 title: 《Code Complete》第一章：欢迎来到软件构建
 description: 这一节主要介绍了软件构建的概念，以及为什么软件构建很重要，本书的其余部分将会围绕软件构建展开。
 ---

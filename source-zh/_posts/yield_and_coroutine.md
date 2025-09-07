@@ -3,8 +3,8 @@ tags:
   - Unity
   - CSharp
 created: 2025-01-14
-updated: 2025-01-24
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: Unity Coroutine 与 Yield 的关系
 date: 2025-01-24
 description: 本文主要介绍 Unity 中的协程（Coroutine）和 Yield 的关系，分别会在 Unity 中进行协程原理的论证，以及通过 .Net Tool 自定义一个简易的协程系统说明协程原理。

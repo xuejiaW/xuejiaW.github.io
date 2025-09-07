@@ -1,17 +1,17 @@
 ---
 created: 2022-04-28
-updated: 2023-09-03
+updated: 2025-09-01
 tags:
-- 编码规范
-- 系统设计
+  - 编码规范
+  - 系统设计
 Author:
-- Eric S. Raymond
+  - Eric S. Raymond
 Cover: https://images-na.ssl-images-amazon.com/images/I/51DY+7Ow9uL._SX401_BO1,204,203,200_.jpg
 ISBN: 978-4756149480
-published: true
+publishStatus: published
 description: 《Unix 编程艺术》一书笔记汇总。该书虽然叫做 “编程艺术”，但和具体的编程却关系不大，更多的是系统设计和编码原则。
 title: 《Unix 编程艺术》笔记汇总
-date: 2023-08-27 22:20 
+date: 2023-08-27 22:20
 ---
 
 # Part 1 Context

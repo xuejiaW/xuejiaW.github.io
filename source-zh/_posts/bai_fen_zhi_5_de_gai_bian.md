@@ -1,17 +1,17 @@
 ---
 tags:
-- 心理
-- 摘抄
+  - 心理
+  - 摘抄
 Author: 李松蔚
 Cover: https://weread-1258476243.file.myqcloud.com/weread/cover/10/cpPlatform_g2goG4PupEn6bGnzrLrK4a/t7_cpPlatform_g2goG4PupEn6bGnzrLrK4a.jpg
 ISBN: 9787541163777
 Category: 心理-积极心理学
-CompleteDate:  2023-04
+CompleteDate: 2023-04
 created: 2023-07-04
-updated: 2023-07-30
+updated: 2025-09-01
 title: 《5% 的改变》 摘抄
-date: 2023-07-29 16:48 
-published: true
+date: 2023-07-29 16:48
+publishStatus: published
 description: 这本书是心理学家李松蔚在网络上进行心理干预的精彩案例合集。李松蔚在对咨询者的回答中，很少给出了常规意义上“明确的”，“有指导性” 的意见，而更多的是站在咨询者的角度上去探寻咨询者的问题的本身，然后给出一个非常小的行动建议，并观察行动的结果。<br> 人在遇到问题时，往往想要有一个 “大” 的解决方案，而对”大“方案的期待，又常常让人挫败，沮丧和自我否定，最终产生的改变是 0 %。李松蔚的解决方法则是很大程度的接纳自己，再做出改变 5 % 的计划。计划很小，所以不会有心理负担，进而能带来实实在在的改变，而这改变的经验又可能引出更大的改变。
 ---
 

@@ -1,13 +1,15 @@
 ---
 tags:
   - String
-  - C#
+  - CSharp
 created: 2021-12-09
-updated: 2024-01-17
+updated: 2025-09-01
 date: 2023-06-13 21:55
-published: true
+publishStatus: published
 title: C# $ 字符串插值
 description: 在C#中，$ 字符被用于字符串插值，这是一种简化字符串中变量值插入和格式化的方法，使得代码更加简洁和易于阅读。本篇会介绍 $ 字符的使用方式即实现细节。
+PublishedPlatform:
+  - CSDN
 ---
 
 # $ 字符

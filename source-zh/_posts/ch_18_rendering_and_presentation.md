@@ -2,8 +2,8 @@
 tags:
   - Vulkan
 created: 2025-04-22
-updated: 2025-06-22
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 18：Rendering And Presentation
 description: 本章描述了最终渲染三角形和将其显示到屏幕上的过程，在其中需要创建信号量（Semaphore）和栅栏（Fence）实现 CPU 与 GPU 及队列间的同步，确保渲染流程各阶段正确有序地执行和呈现
 date: 2025-05-08 21:00

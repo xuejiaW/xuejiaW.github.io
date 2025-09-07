@@ -1,11 +1,11 @@
 ---
 created: 2022-01-25
-updated: 2024-03-23
+updated: 2025-09-01
 tags:
   - Unity
   - Catlike
 date: 2024-03-23 12:47
-published: true
+publishStatus: published
 title: Custom SRP
 description: Unity Catlike 中 Custom SRP 教程学习笔记汇总，该笔记并非完全的对原教程的翻译，在学习过程中的发现的额外资料以及对原教程中未详细说明的部分都会进行相应的补充。
 ---

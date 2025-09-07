@@ -3,9 +3,9 @@ tags:
   - 系统设计
   - 工程实践
 created: 2023-09-17
-updated: 2024-01-04
+updated: 2025-09-01
 date: 2023-11-12 17:48
-published: true
+publishStatus: published
 title: 《Code Complete》第三章：测量两次，切割一次——前期准备
 description: 本章主要介绍了软件开发中的前期准备工作，包括问题定义，需求，架构设计。这些准备工作就如同建造大楼前的地基，如果地基没有打好或者规划不充分，施工期间你能做的最好的事情就是将损害降到最低。
 ---

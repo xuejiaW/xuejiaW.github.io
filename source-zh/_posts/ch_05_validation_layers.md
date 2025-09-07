@@ -2,9 +2,9 @@
 tags:
   - Vulkan
 created: 2022-03-06
-updated: 2025-04-06
+updated: 2025-09-01
 date: 2025-03-31 21:11
-published: true
+publishStatus: published
 title: 《Vulkan Tutorial》 笔记 05： Validation Layers
 ---
 

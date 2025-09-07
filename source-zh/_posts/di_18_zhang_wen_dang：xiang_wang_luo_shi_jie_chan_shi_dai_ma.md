@@ -1,12 +1,12 @@
 ---
 tags:
-    - 设计模式
-    - 编码规范
+  - 设计模式
+  - 编码规范
 created: 2023-08-27
-updated: 2023-10-07
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: 《Unix 编程艺术》 第十八章 文档
-date: 2023-10-06 16:20 
+date: 2023-10-06 16:20
 description: 本节描述了 Unix 对于文档风格的偏爱，其并不倾向于所见即所得的文档，而更喜欢以标记为中心的工具。
 ---
 

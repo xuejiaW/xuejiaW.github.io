@@ -1,9 +1,9 @@
 ---
 created: 2022-09-03
-updated: 2025-05-05
+updated: 2025-09-01
 tags:
   - Vulkan
-published: true
+publishStatus: published
 date: 2025-04-23 20:38
 title: 《Vulkan Tutorial》 笔记 15：Pipeline Conclusion
 description: 本章将介绍如何将之前的章节中创建的对象组合在一起，创建出一个完整的渲染管线。

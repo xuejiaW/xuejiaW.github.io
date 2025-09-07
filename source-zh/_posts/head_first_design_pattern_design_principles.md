@@ -1,11 +1,11 @@
 ---
-tags: 
-    - 设计模式
+tags:
+  - 设计模式
 alias: 设计模式
 created: 2022-02-02
-updated: 2023-08-22
+updated: 2025-09-01
 title: 《Head First 设计模式》 - 设计原则总结
-published: true
+publishStatus: published
 description: 本篇来自于 《Head First Design Pattern》 ，总结了书中概括的设计原则
 date: 2023-05-23
 ---

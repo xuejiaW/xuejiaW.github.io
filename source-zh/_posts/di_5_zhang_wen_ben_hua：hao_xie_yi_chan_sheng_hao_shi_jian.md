@@ -1,11 +1,11 @@
 ---
 tags:
-    - 系统设计
-    - 编码规范
+  - 系统设计
+  - 编码规范
 created: 2022-06-20
-updated: 2023-09-03
-published: true
-date: 2023-09-03 10:01 
+updated: 2025-09-01
+publishStatus: published
+date: 2023-09-03 10:01
 title: 《Unix 编程艺术》 第五章 文本化
 ---
 

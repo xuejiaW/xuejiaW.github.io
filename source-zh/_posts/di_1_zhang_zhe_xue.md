@@ -1,10 +1,10 @@
 ---
 created: 2022-04-28
-updated: 2023-12-27
+updated: 2025-09-01
 tags:
   - 系统设计
   - 编码规范
-published: true
+publishStatus: published
 alias:
   - Unix 原则
 title: 《Unix 编程艺术》 第一章 哲学

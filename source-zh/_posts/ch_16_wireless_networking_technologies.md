@@ -1,11 +1,11 @@
 ---
 created: 2022-02-02
-updated: 2023-06-06
+updated: 2025-09-01
 tags:
-    - 计算机网络
+  - 计算机网络
 title: 《Computer Networks and Internets》 Ch 16 无线网络技术
-published: true
-date: 2023-06-04 16:05 
+publishStatus: published
+date: 2023-06-04 16:05
 description: 本篇为 《Computer Networks and Internets》 的第十六章笔记，介绍了个人局域网， ISM 评语，Wifi 对象，WiMax 等技术。
 ---
 

@@ -2,8 +2,8 @@
 tags:
   - 工具
 created: 2024-01-12
-updated: 2024-03-23
-published: true
+updated: 2025-09-01
+publishStatus: published
 date: 2024-02-10 12:48
 title: 《Terminal, Console, Shell, Command Line 之间的关系》
 description: Terminal，Console，Shell 和 Command Line 这几个词汇经常同时被使用，也因此他们的含义很容易被混淆。本文将尝试解释这几个词汇的含义。

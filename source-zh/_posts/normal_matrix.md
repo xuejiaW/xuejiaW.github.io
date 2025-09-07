@@ -3,8 +3,8 @@ tags:
   - 图形学
   - 数学
 created: 2024-03-24
-updated: 2024-04-07
-published: true
+updated: 2025-09-01
+publishStatus: published
 title: Normal Matrix 矩阵推导
 description: 关于将法线从 Model Space 转换到 World Space 的矩阵的推导，解释了为何法线的变化，需要用到 Model Matrix 的逆矩阵的转置。
 date: 2024-04-02 11:58
